@@ -3,11 +3,15 @@ import Settings_gradle.Group.*
 rootProject.name="-amm-java-9-91-2024"
 
 
-student("asbrodov", G2_2) {
+student("sbrodov.andrey", G2_2) {
     lab(0)
 }
 
-student("dsbrodova", G9) {
+student("sbrodova.daria", G9) {
+    lab(0)
+}
+
+student("sbrodova.daria", G91) {
     lab(0)
 }
 
