@@ -23,12 +23,17 @@ public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         System.out.print("Введите количество домов: ");
-        int count = in.nextInt();
-        int[] nums = new int[count];
-        for (int i = 0; i < count; i++) {
-            System.out.printf("Введите дом №%d: ", i + 1);
-            nums[i] = in.nextInt();
+        try {
+            int count = in.nextInt();
+            int[] nums = new int[count];
+            for (int i = 0; i < count; i++) {
+                System.out.printf("Введите дом №%d: ", i + 1);
+                nums[i] = in.nextInt();
+            }
+            System.out.println("Ответ: " + robberSum(nums));
+        } catch (Exception e) {
+            System.out.println("Вы ошиблись!");
         }
-        System.out.println("Ответ: " + robberSum(nums));
+
     }
 }
