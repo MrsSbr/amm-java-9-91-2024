@@ -20,6 +20,10 @@ student("belozerov.alexei", G91) {
     lab(0)
 }
 
+student("gonnykh.alexander", G91) {
+    lab(0)
+}
+
 student("nelezin.oleg", G9) {
     lab(0)
 }
