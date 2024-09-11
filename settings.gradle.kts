@@ -26,6 +26,7 @@ student("belozerov.alexei", G91) {
 
 student("gonnykh.alexander", G91) {
     lab(0)
+    lab(1)
 }
 
 student("nelezin.oleg", G9) {
