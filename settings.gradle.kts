@@ -1,6 +1,6 @@
 import Settings_gradle.Group.*
 
-rootProject.name="-amm-java-9-91-2024"
+rootProject.name = "-amm-java-9-91-2024"
 
 
 student("sbrodov.andrey", G2_2) {
@@ -15,11 +15,15 @@ student("sbrodova.daria", G91) {
     lab(0)
 }
 
+student("belozerov.alexei", G91) {
+    lab(0)
+}
+
 
 // DSL для подпроектов [Не трогать]
 includeProject("template-lab0", file("template/lab0"))
 
-enum class Group {G9, G91, G2_2}
+enum class Group { G9, G91, G2_2 }
 
 fun student(name: String, group: Group, block: LabsAppender.() -> Unit = {}) {
     LabsAppender(name, group).apply(block)
@@ -31,8 +35,8 @@ class LabsAppender(private val student: String, private val group: Group) {
         val title = "$student-lab$labNum"
         path.mkdirs()
         includeProject(
-            title = title,
-            path = path
+                title = title,
+                path = path
         )
     }
 }
