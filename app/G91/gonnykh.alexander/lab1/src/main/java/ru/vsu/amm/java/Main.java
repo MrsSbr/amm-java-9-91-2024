@@ -32,7 +32,7 @@ public class Main {
             }
             System.out.println("Ответ: " + robberSum(nums));
         } catch (Exception e) {
-            System.out.println("Вы ошиблись!!");
+            System.out.println("Вы ошиблись!!!");
         }
 
     }
