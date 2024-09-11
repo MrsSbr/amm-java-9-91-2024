@@ -3,15 +3,17 @@ import Settings_gradle.Group.*
 rootProject.name="-amm-java-9-91-2024"
 
 
-
+student("asbrodov", G2_2) {
+    lab(0)
+}
 
 
 // DSL для подпроектов [Не трогать]
 includeProject("template-lab0", file("template/lab0"))
 
-enum class Group {G9, G91}
+enum class Group {G9, G91, G2_2}
 
-fun student(name: String, group: Group, block: LabsAppender.() -> Unit) {
+fun student(name: String, group: Group, block: LabsAppender.() -> Unit = {}) {
     LabsAppender(name, group).apply(block)
 }
 
