@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Main {
+public class FindIntersection {
 
     public static void main(String[] args) {
         int[] nums1 = initArray(Constants.FIRST_MESSAGE);
