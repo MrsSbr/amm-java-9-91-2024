@@ -66,7 +66,7 @@ public class WalkingRobotSimulation {
 
             int answer = maxDistance(commands, obstacles);
             if (answer >= 0) {
-                System.out.println(MessagesConsole.ANSWER + maxDistance(commands, obstacles));
+                System.out.println(MessagesConsole.ANSWER + answer);
             } else {
                 System.out.println(MessagesConsole.ERROR_MESSAGE);
             }
