@@ -19,19 +19,11 @@ student("sbrodova.daria", G91) {
     lab(0)
 }
 
-student("kurkina.tanya", G91) {
-    lab(0)
-}
-
 student("belozerov.alexei", G91) {
     lab(0)
 }
 
 student("gonnykh.alexander", G91) {
-    lab(0)
-}
-
-student("ulyanov.leonid", G91) {
     lab(0)
 }
 
