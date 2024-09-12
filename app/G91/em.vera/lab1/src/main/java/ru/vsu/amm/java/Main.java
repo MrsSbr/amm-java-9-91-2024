@@ -15,7 +15,7 @@ public class Main {
             }
             System.out.println("Enter watering can capacity:");
             int capacity = Integer.parseInt(bufferedReader.readLine());
-            System.out.println("Steps amount: " + wateringPlants(plants, capacity));
+            System.out.println("Amount of steps: " + wateringPlants(plants, capacity));
 
         } catch (IOException | NumberFormatException e) {
             System.out.println(e.getMessage());
