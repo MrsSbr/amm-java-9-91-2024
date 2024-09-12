@@ -36,6 +36,7 @@ student("golukovich.timofey", G9) {
     lab(0)
 }
 
+
 student("golukovich.timofey", G9) {
     lab(1)
 }

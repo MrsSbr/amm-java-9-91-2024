@@ -1,20 +1,23 @@
 package ru.vsu.amm.java;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class ConverterToRoman {
-    private final HashMap<Integer, Character> convertToRoman;
+    private final Map<Integer, Character> convertToRoman = new HashMap<Integer, Character>() {
+        {
+            put(0, 'N');
+            put(1, 'I');
+            put(5, 'V');
+            put(10, 'X');
+            put(50, 'L');
+            put(100, 'C');
+            put(500, 'D');
+            put(1000, 'M');
+        }
+    };
 
     public ConverterToRoman() {
-        convertToRoman = new HashMap<>();
-        convertToRoman.put(0, 'N');
-        convertToRoman.put(1, 'I');
-        convertToRoman.put(5, 'V');
-        convertToRoman.put(10, 'X');
-        convertToRoman.put(50, 'L');
-        convertToRoman.put(100, 'C');
-        convertToRoman.put(500, 'D');
-        convertToRoman.put(1000, 'M');
     }
 
     public String convertToRoman(int number) {
