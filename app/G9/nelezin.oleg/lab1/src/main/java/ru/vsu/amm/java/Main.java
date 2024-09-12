@@ -1,5 +1,6 @@
 package ru.vsu.amm.java;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -58,11 +59,6 @@ public class Main {
             }
         }
 
-        int[] result = new int[intersection.size()];
-        int i = 0;
-        for (int num: intersection) {
-            result[i++] = num;
-        }
-        return result;
+        return intersection.stream().mapToInt(Integer::intValue).toArray();
     }
 }
