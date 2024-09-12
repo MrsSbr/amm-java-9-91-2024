@@ -11,13 +11,17 @@ public class Main {
         int[] nums2 = initArray(Constants.SECOND_MESSAGE);
 
         int[] result = intersectionOfArrays(nums1, nums2);
-        System.out.println("Пересечение:");
-        for (int num: result) {
-            System.out.print(num + " ");
+        System.out.println("Пересечение: ");
+        for (int i = 0; i < result.length; ++i) {
+            if (i != result.length - 1) {
+                System.out.print(result[i] + " ");
+            } else {
+                System.out.print(result[i]);
+            }
         }
     }
 
-    public static int[] initArray(String message) {
+    static int[] initArray(String message) {
         int[] intArr = new int[0];
         try {
             Scanner scanner = new Scanner(System.in);
@@ -25,25 +29,23 @@ public class Main {
             String[] stringArr = scanner.nextLine().split(" ");
             intArr = new int[stringArr.length];
             if (intArr.length > 1000) {
-                throw new ConditionException(Constants.CONDITION_ERROR_MESSAGE);
+                throw new IllegalArgumentException(Constants.CONDITION_ERROR_MESSAGE);
             }
 
             for (int i = 0; i < intArr.length; ++i) {
                 intArr[i] = Integer.parseInt(stringArr[i]);
                 if (intArr[i] > 1000 || intArr[i] < 0) {
-                    throw new ConditionException(Constants.CONDITION_ERROR_MESSAGE);
+                    throw new IllegalArgumentException(Constants.CONDITION_ERROR_MESSAGE);
                 }
             }
-        } catch (ConditionException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-        } catch (Exception e) {
-            System.out.println(Constants.ERROR_MESSAGE);
+            e.printStackTrace();
         }
-
         return intArr;
     }
 
-    public static int[] intersectionOfArrays(int[] nums1, int[] nums2) {
+    static int[] intersectionOfArrays(int[] nums1, int[] nums2) {
         Set<Integer> setForNums1 = new HashSet<>();
         for (int num: nums1) {
             setForNums1.add(num);
