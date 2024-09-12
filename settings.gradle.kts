@@ -19,11 +19,19 @@ student("sbrodova.daria", G91) {
     lab(0)
 }
 
+student("kurkina.tanya", G91) {
+    lab(0)
+}
+
 student("belozerov.alexei", G91) {
     lab(0)
 }
 
 student("gonnykh.alexander", G91) {
+    lab(0)
+}
+
+student("ulyanov.leonid", G91) {
     lab(0)
 }
 
@@ -37,6 +45,10 @@ student("golukovich.timofey", G9) {
 
 student("golukovich.timofey", G9) {
     lab(1)
+}
+
+student("dolzhenkov.dmitrii", G91) {
+    lab(0)
 }
 
 // DSL для подпроектов [Не трогать]
@@ -54,8 +66,8 @@ class LabsAppender(private val student: String, private val group: Group) {
         val title = "$student-lab$labNum"
         path.mkdirs()
         includeProject(
-                title = title,
-                path = path
+            title = title,
+            path = path
         )
     }
 }
