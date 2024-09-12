@@ -1,6 +1,5 @@
 package ru.vsu.amm.java;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
