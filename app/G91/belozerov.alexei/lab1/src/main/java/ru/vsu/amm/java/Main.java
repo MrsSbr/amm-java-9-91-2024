@@ -1,32 +1,36 @@
 package ru.vsu.amm.java;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
 public class Main {
+
+    public static int TaskRemoveDuplicatesFromSortedArray(int[] sortedArray) {
+        int numberOfOriginElems = 1;
+        for (int i = 0; i < sortedArray.length - 1; i++) {
+            if (sortedArray[i] != sortedArray[i + 1]) {
+                sortedArray[numberOfOriginElems++] = sortedArray[i + 1];
+            }
+        }
+        return numberOfOriginElems;
+    }
+
     public static void main(String[] args) {
-        // Ввод данных
-        int[] nums = new int[]{};
-        System.out.print("Введите элементы массива nums через пробел\n --> ");
+        System.out.print("Введите элементы отсортированного массива через пробел\n --> ");
         try (BufferedReader bf = new BufferedReader(new InputStreamReader(System.in))) {
-            String[] stringNums = bf.readLine().split(" ");
-            int n = stringNums.length;
-            nums = new int[n];
-            for (int i = 0; i < n; ++i) {
-                nums[i] = Integer.parseInt(stringNums[i]);
+            String[] strSortedArray = bf.readLine().split(" +");
+            int[] sortedArray = new int[strSortedArray.length];
+            for (int i = 0; i < strSortedArray.length; i++) {
+                sortedArray[i] = Integer.parseInt(strSortedArray[i]);
             }
-        } catch (Exception e) {
+            System.out.println("numberOfOriginElems = "
+                    + TaskRemoveDuplicatesFromSortedArray(sortedArray)
+                    + ", " + "sortedArray = " + Arrays.toString(sortedArray));
+        } catch (IOException | NumberFormatException e) {
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
-        // Алгоритм
-        int k = 1;
-        for (int i = 0; i < nums.length - 1; ++i) {
-            if (nums[i] != nums[i + 1]) {
-                nums[k++] = nums[i + 1];
-            }
-        }
-        // Вывод результата
-        System.out.println("k = " + k + ", " + "nums = " + Arrays.toString(nums));
     }
 }
