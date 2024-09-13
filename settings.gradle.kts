@@ -50,6 +50,10 @@ student("em.vera", G91) {
     lab(1)
 }
 
+student("golukovich.timofey", G9) {
+    lab(1)
+}
+
 student("dolzhenkov.dmitrii", G91) {
     lab(0)
 }
