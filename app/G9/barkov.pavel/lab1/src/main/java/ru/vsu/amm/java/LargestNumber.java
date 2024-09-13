@@ -5,13 +5,11 @@ import java.util.Objects;
 
 public class LargestNumber {
 
-    public static void buildNumber(String[] numbers)
-    {
+    public static void buildNumber(String[] numbers) {
         Arrays.sort(numbers, (String x, String y) -> (y + x).compareTo(x + y));
     }
 
-    public static String[] intArrayToString(int[] nums)
-    {
+    public static String[] intArrayToString(int[] nums) {
         String[] numbers = new String[nums.length];
         for (int i = 0; i < nums.length; i++) {
             numbers[i] = Objects.toString(nums[i]);
