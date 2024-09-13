@@ -10,7 +10,7 @@ public class Lab1 {
             throw new ArrayLengthOutOfBoundsException("Exception has occurred: " +
                     "the array length is more than 30,000!");
         }
-        if (Arrays.stream(prices).anyMatch(x -> x == 0 || x > 10000)) {
+        if (Arrays.stream(prices).anyMatch(x -> x < 0 || x > 10000)) {
             throw new ValueOutOfBoundsException("Exception has occurred: " +
                     "the array contains a value outside of the segment [0; 10,000]!");
         }
