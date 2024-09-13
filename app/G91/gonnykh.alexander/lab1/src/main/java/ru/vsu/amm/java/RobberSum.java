@@ -1,6 +1,7 @@
 package ru.vsu.amm.java;
 
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class RobberSum {
@@ -33,11 +34,8 @@ public class RobberSum {
                 nums[i] = in.nextInt();
             }
             System.out.println(ConstantsOutput.ANSWER_MESSAGE + robberSumSolve(nums));
-        } catch (InputMismatchException e) {
+        } catch (IllegalStateException | NoSuchElementException e) {
             System.out.println(ConstantsOutput.ERROR_MESSAGE);
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
