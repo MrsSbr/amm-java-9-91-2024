@@ -31,8 +31,7 @@ public class Lab1 {
                 Each number should represent an integer datatype and must be between 0 and 10,000.
                 The amount of numbers should be between 1 and 30,000.""");
         System.out.print("> ");
-        try {
-            Scanner sc = new Scanner(System.in);
+        try (Scanner sc = new Scanner(System.in)) {
             int[] prices = Arrays.stream(sc.nextLine().split(" "))
                     .mapToInt(Integer::parseInt)
                     .toArray();
