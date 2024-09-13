@@ -4,23 +4,23 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Lab1 {
-    public static int maxProfit(int[] prices) throws ArrayLengthOutOfBoundsException,
-            ValueOutOfBoundsException {
+    public static int maxProfit(int[] prices) throws NumberFormatException,
+            IndexOutOfBoundsException {
         if (prices.length > 30000) {
-            throw new ArrayLengthOutOfBoundsException("Exception has occurred: " +
+            throw new IndexOutOfBoundsException("Exception has occurred: " +
                     "the array length is more than 30,000!");
         }
         if (Arrays.stream(prices).anyMatch(x -> x < 0 || x > 10000)) {
-            throw new ValueOutOfBoundsException("Exception has occurred: " +
+            throw new NumberFormatException("Exception has occurred: " +
                     "the array contains a value outside of the segment [0; 10,000]!");
         }
         int res = 0;
-        int startPrice = prices[0];
-        for (int i = 1; i < prices.length; i++) {
-            if (startPrice < prices[i]) {
-                res += prices[i] - startPrice;
+        int minimum = prices[0];
+        for (int price : prices) {
+            if (price >= minimum) {
+                res += price - minimum;
             }
-            startPrice = prices[i];
+            minimum = price;
         }
         return res;
     }
@@ -32,14 +32,14 @@ public class Lab1 {
                 The amount of numbers should be between 1 and 30,000.""");
         System.out.print("> ");
         try (Scanner sc = new Scanner(System.in)) {
-            int[] prices = Arrays.stream(sc.nextLine().split(" "))
+            int[] prices = Arrays.stream(sc.nextLine().split("\\s+"))
                     .mapToInt(Integer::parseInt)
                     .toArray();
             try {
                 System.out.print("The maximum profit for the given prices is "
                         + maxProfit(prices) + ".");
-            } catch (ArrayLengthOutOfBoundsException
-                     | ValueOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException
+                     | NumberFormatException e) {
                 System.out.print(e.getMessage());
             }
         } catch (java.lang.NumberFormatException e) {
