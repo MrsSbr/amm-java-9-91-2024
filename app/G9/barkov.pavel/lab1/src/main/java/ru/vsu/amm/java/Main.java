@@ -1,4 +1,4 @@
-package ru.vsu.amm.java;
+//package ru.vsu.amm.java;
 
 import java.util.Arrays;
 import java.util.Objects;
