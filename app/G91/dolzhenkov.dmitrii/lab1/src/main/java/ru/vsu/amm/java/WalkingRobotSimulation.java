@@ -4,10 +4,14 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class WalkingRobotSimulation {
-
+    
+    private static final int[][] DIRECTION = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    
     public static int maxDistance(int[] commands, int[][] obstacles) {
-        int x = 0, y = 0, maxDistance = 0, d = 0;
-        int[][] direction = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        int x = 0;
+        int y = 0;
+        int maxDistance = 0;
+        int d = 0;
         for (int command : commands) {
             switch (command) {
                 case -1:
@@ -18,8 +22,8 @@ public class WalkingRobotSimulation {
                     break;
                 case 1, 2, 3, 4, 5, 6, 7, 8, 9:
                     for (int i = 0; i < command; i++) {
-                        int nextX = x + direction[d][0];
-                        int nextY = y + direction[d][1];
+                        int nextX = x + DIRECTION[d][0];
+                        int nextY = y + DIRECTION[d][1];
                         boolean flag = false;
                         for (int[] obstacle : obstacles) {
                             if (obstacle[0] == nextX && obstacle[1] == nextY) {
@@ -39,14 +43,11 @@ public class WalkingRobotSimulation {
                     return -1;
             }
         }
-
         return maxDistance;
     }
 
     public static void main(String[] args) {
         try (Scanner in = new Scanner(System.in)) {
-
-
             System.out.print(MessagesConsole.ENTERING_NUMBER_OF_OBSTACLES);
             int countObstacles = in.nextInt();
             int[][] obstacles = new int[countObstacles][2];
@@ -73,7 +74,7 @@ public class WalkingRobotSimulation {
         } catch (InputMismatchException e) {
             System.out.println(MessagesConsole.ERROR_MESSAGE);
             e.printStackTrace();
-        } catch (Exception e) {
+        } catch (IllegalStateException | NoSuchElementException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
