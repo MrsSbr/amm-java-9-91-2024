@@ -11,18 +11,23 @@ public class FindIntersection {
         int[] nums2 = initArray(Constants.SECOND_MESSAGE);
 
         int[] result = intersectionOfArrays(nums1, nums2);
-        System.out.println("Пересечение: ");
-        for (int i = 0; i < result.length; ++i) {
-            if (i != result.length - 1) {
-                System.out.print(result[i] + " ");
-            } else {
-                System.out.print(result[i]);
+
+        if (result == null || result.length == 0) {
+            System.out.println("Нет пересечения");
+        } else {
+            System.out.println("Пересечение: ");
+            for (int i = 0; i < result.length; ++i) {
+                if (i != result.length - 1) {
+                    System.out.print(result[i] + " ");
+                } else {
+                    System.out.print(result[i]);
+                }
             }
         }
     }
 
     static int[] initArray(String message) {
-        int[] intArr = new int[0];
+        int[] intArr = null;
         try {
             Scanner scanner = new Scanner(System.in);
             System.out.println(message);
