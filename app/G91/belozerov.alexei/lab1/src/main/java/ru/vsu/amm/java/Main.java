@@ -28,7 +28,7 @@ public class Main {
             }
             System.out.println("numberOfOriginElems = "
                     + TaskRemoveDuplicatesFromSortedArray(sortedArray)
-                    + ", " + "sortedArray = " + Arrays.toString(sortedArray));
+                    + ", sortedArray = " + Arrays.toString(sortedArray));
         } catch (IOException | NumberFormatException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
