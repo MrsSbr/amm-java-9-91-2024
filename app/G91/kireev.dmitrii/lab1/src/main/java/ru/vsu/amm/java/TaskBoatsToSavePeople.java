@@ -6,13 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TaskBoatsToSavePeople {
-
-    private static Scanner scanner = new Scanner(System.in);
-    private static List<Integer> people = new ArrayList<>();
-    private static int limit;
-
-
-    private static int boatsCountingAlgorithm() {
+    
+    private static int boatsCountingAlgorithm(List<Integer> people,int limit) {
 
         int boatsCount = 0;
         int smallestWeightIndex = 0;
@@ -35,16 +30,26 @@ public class TaskBoatsToSavePeople {
 
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        List<Integer> people = new ArrayList<>();
+        int limit = 0;
+        
         System.out.println("please enter PEOPLE array (num num num num)");
         String inputString = scanner.nextLine();
-        String[] inputNumbers = inputString.split("[ ]+");
-
+        String[] inputNumbers = inputString.split("\\s+");
+        
+        try{
         for (String number : inputNumbers) {
             people.add(Integer.parseInt(number));
+        }
+        } catch(NumberFormatException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         System.out.println("enter limit");
         limit = scanner.nextInt();
-        System.out.println(boatsCountingAlgorithm());
+        
+        System.out.println(boatsCountingAlgorithm(people,limit));
     }
 }
