@@ -26,7 +26,7 @@ public class FindIntersection {
         try {
             Scanner scanner = new Scanner(System.in);
             System.out.println(message);
-            String[] stringArr = scanner.nextLine().split(" ");
+            String[] stringArr = scanner.nextLine().split("\\s+");
             intArr = new int[stringArr.length];
             if (intArr.length > 1000) {
                 throw new IllegalArgumentException(Constants.CONDITION_ERROR_MESSAGE);
@@ -58,6 +58,9 @@ public class FindIntersection {
             }
         }
 
-        return intersection.stream().mapToInt(Integer::intValue).toArray();
+        return intersection
+                .stream()
+                .mapToInt(Integer::intValue)
+                .toArray();
     }
 }
