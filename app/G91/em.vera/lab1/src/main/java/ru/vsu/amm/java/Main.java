@@ -25,7 +25,8 @@ public class Main {
     }
 
     private static int wateringPlants(int[] plants, int capacity) {
-        int steps = 0, waterVolume = capacity;
+        int steps = 0;
+        int waterVolume = capacity;
         for (int i = 0; i < plants.length; i++) {
             waterVolume -= plants[i];
             steps++;
