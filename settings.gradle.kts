@@ -25,6 +25,7 @@ student("kurkina.tanya", G91) {
 
 student("belozerov.alexei", G91) {
     lab(0)
+    lab(1)
 }
 
 student("gonnykh.alexander", G91) {
@@ -37,18 +38,30 @@ student("ulyanov.leonid", G91) {
 
 student("nelezin.oleg", G9) {
     lab(0)
+    lab(1)
 }
 
 student("golukovich.timofey", G9) {
     lab(0)
+}
+student("em.vera", G91) {
+    lab(0)
+    lab(1)
 }
 
 student("dolzhenkov.dmitrii", G91) {
     lab(0)
 }
 
-student("popova.anastasia", G91)
-{
+student("popova.anastasia", G91) {
+    lab(0)
+}
+
+student("gadzhiev.maksym", G9) {
+    lab(0)
+}
+
+student("barkov.pavel", G9) {
     lab(0)
 }
 
