@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
             System.out.println("Enter array elements divided by space:");
-            String[] plantsStr = bufferedReader.readLine().split(" +");
+            String[] plantsStr = bufferedReader.readLine().split("\\s+");
             int[] plants = new int[plantsStr.length];
             for (int i = 0; i < plants.length; i++) {
                 plants[i] = Integer.parseInt(plantsStr[i]);
