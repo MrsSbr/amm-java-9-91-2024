@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class Main {
 
-    public static int TaskRemoveDuplicatesFromSortedArray(int[] sortedArray) {
+    public static int removeDuplicatesFromSortedArray(int[] sortedArray) {
         int numberOfOriginElems = 1;
         for (int i = 0; i < sortedArray.length - 1; i++) {
             if (sortedArray[i] != sortedArray[i + 1]) {
