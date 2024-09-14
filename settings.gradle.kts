@@ -79,6 +79,10 @@ student("garshin.maxim", G9) {
     lab(0)
 }
 
+student("shipilova.viktoria", G9) {
+    lab(0)
+}
+
 // DSL для подпроектов [Не трогать]
 includeProject("template-lab0", file("template/lab0"))
 
