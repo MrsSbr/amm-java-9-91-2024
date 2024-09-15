@@ -59,6 +59,10 @@ student("dolzhenkov.dmitrii", G91) {
     lab(1)
 }
 
+student("popova.anastasia", G91) {
+    lab(0)
+}
+
 student("gadzhiev.maksym", G9) {
     lab(0)
 }
