@@ -14,15 +14,13 @@ public class Lab1 {
             throw new NumberFormatException("Exception has occurred: " +
                     "the array contains a value outside of the segment [0; 10,000]!");
         }
-        int res = 0;
-        int minimum = prices[0];
-        for (int price : prices) {
-            if (price >= minimum) {
-                res += price - minimum;
+        int profit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1]) {
+                profit += prices[i] - prices[i - 1];
             }
-            minimum = price;
         }
-        return res;
+        return profit;
     }
 
     public static void main(String[] args) {
@@ -35,15 +33,11 @@ public class Lab1 {
             int[] prices = Arrays.stream(sc.nextLine().split("\\s+"))
                     .mapToInt(Integer::parseInt)
                     .toArray();
-            try {
-                System.out.print("The maximum profit for the given prices is "
-                        + maxProfit(prices) + ".");
-            } catch (IndexOutOfBoundsException
-                     | NumberFormatException e) {
-                System.out.print(e.getMessage());
-            }
-        } catch (java.lang.NumberFormatException e) {
-            System.out.println("Exception has occurred: Not a number!");
+            System.out.print("The maximum profit for the given prices is "
+                    + maxProfit(prices) + ".");
+        } catch (IndexOutOfBoundsException
+                 | NumberFormatException e) {
+            System.out.print(e.getMessage());
         }
     }
 }
