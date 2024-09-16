@@ -42,6 +42,11 @@ student("nelezin.oleg", G9) {
 student("golukovich.timofey", G9) {
     lab(0)
 }
+
+student("barbashina.irina", G9) {
+    lab(0)
+}
+
 student("em.vera", G91) {
     lab(0)
 }
@@ -49,6 +54,7 @@ student("em.vera", G91) {
 student("dolzhenkov.dmitrii", G91) {
     lab(0)
 }
+
 
 // DSL для подпроектов [Не трогать]
 includeProject("template-lab0", file("template/lab0"))
