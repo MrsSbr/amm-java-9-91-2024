@@ -33,8 +33,16 @@ student("gonnykh.alexander", G91) {
     lab(1)
 }
 
+student("simonov.ivan", G91) {
+    lab(0)
+}
+
 student("ulyanov.leonid", G91) {
     lab(0)
+}
+
+student("ulyanov.leonid", G91) {
+    lab(1)
 }
 
 student("nelezin.oleg", G9) {
@@ -56,6 +64,11 @@ student("golukovich.timofey", G9) {
 
 student("dolzhenkov.dmitrii", G91) {
     lab(0)
+    lab(1)
+}
+
+student("popova.anastasia", G91) {
+    lab(0)
 }
 
 student("gadzhiev.maksym", G9) {
@@ -67,6 +80,22 @@ student("barkov.pavel", G9) {
 }
 
 student("anikandrov.andrey", G9) {
+    lab(0)
+}
+
+student("kanatnikov.maxim", G9) {
+    lab(0)
+}
+
+student("barkov.pavel", G9) {
+    lab(1)
+}
+
+student("garshin.maxim", G9) {
+    lab(0)
+}
+
+student("shipilova.viktoria", G9) {
     lab(0)
 }
 
