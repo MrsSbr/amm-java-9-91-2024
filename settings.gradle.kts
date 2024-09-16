@@ -79,6 +79,10 @@ student("barkov.pavel", G9) {
     lab(0)
 }
 
+student("anikandrov.andrey", G9) {
+    lab(0)
+}
+
 student("kanatnikov.maxim", G9) {
     lab(0)
 }
