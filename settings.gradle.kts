@@ -19,7 +19,12 @@ student("sbrodova.daria", G91) {
     lab(0)
 }
 
+
 student("kurkina.tanya", G91) {
+    lab(0)
+}
+
+student("sergacheva.victoria", G91) {
     lab(0)
 }
 
