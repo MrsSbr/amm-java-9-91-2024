@@ -34,7 +34,9 @@ public class SatelliteController {
         System.out.println(militarySatellite);
         System.out.println();
 
-
+        System.out.println("Ромашка equals Подсолнух: " + weatherSatellite.equals(anotherWeatherSatellite));
+        System.out.println("Ромашка hashCode: " + weatherSatellite.hashCode());
+        System.out.println("Подсолнух hashCode: " + anotherWeatherSatellite.hashCode());
         System.out.println("Демонстрация instanceOf->");
         instanceOfDemonstration();
     }

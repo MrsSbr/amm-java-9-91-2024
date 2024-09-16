@@ -1,5 +1,7 @@
 package ru.vsu.amm.java;
 
+import java.util.Objects;
+
 public abstract class Satellite implements ISatellite {
 
     private String name;
@@ -58,5 +60,24 @@ public abstract class Satellite implements ISatellite {
         }
 
         return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Satellite that = (Satellite) obj;
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

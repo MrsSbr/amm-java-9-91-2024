@@ -20,10 +20,6 @@ public class MilitarySatellite extends Satellite {
         System.out.println(getName() + " начинает наблюдать за врагом, бип-бип");
     }
 
-    public String getWeapon() {
-        return weapon;
-    }
-
     @Override
     public String toString() {
         return "Военный спутник\n" +
