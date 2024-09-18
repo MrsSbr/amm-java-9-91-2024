@@ -44,13 +44,12 @@ student("nelezin.oleg", G9) {
 
 student("golukovich.timofey", G9) {
     lab(0)
-}
-student("em.vera", G91) {
-    lab(0)
     lab(1)
+    lab(2)
 }
 
-student("golukovich.timofey", G9) {
+student("em.vera", G91) {
+    lab(0)
     lab(1)
 }
 
