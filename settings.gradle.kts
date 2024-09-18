@@ -100,6 +100,10 @@ student("garshin.maxim", G9) {
     lab(0)
 }
 
+
+student("gavrilov.mihail", G9){
+    lab(0)
+}
 student("serova.polina", G9) {
     lab(0)
 }
