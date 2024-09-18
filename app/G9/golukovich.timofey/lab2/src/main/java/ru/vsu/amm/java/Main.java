@@ -27,12 +27,12 @@ public class Main {
         System.out.println();
 
         if (tRex.equals(triceratops) || triceratops.equals(diplodocus) || diplodocus.equals(tRex)) {
-            System.out.println("Косяк, невозможно такое.\n");
+            System.out.println("Ошибка, невозможно такое.\n");
         } else {
             System.out.println("Никто не равен друг другу.\n");
         }
 
-        Dinosaur dino = new TRex(10, "Tyrannosaur Rex", "Earth", "RRROOOAAAAAARRRRRRR");
+        Dinosaur dino = new TRex(10, "Rex", "Earth", "RRROOOAAAAAARRRRRRR");
         System.out.println("Сравниваем нового тиранозавра со старым.");
         if (dino.equals(tRex)) {
             System.out.println("Что-то пошло не так.");
