@@ -1,11 +1,14 @@
 package ru.vsu.amm.java;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
     private static int findMountainPeakIndex(int[] mountainArray) {
-        int left = 0, right = mountainArray.length - 1, middle = 0;
+        int left = 0;
+        int right = mountainArray.length - 1;
+        int middle = 0;
         while (left < right) {
             middle = (left + right) / 2;
             if (mountainArray[middle] < mountainArray[middle + 1]) {
@@ -28,7 +31,7 @@ public class Main {
                 mountainIntArray[i] = Integer.parseInt(mountainArray[i]);
             }
             System.out.println("Index of peak is " + findMountainPeakIndex(mountainIntArray));
-        } catch (Exception e) {
+        } catch (NumberFormatException | IOException e) {
             System.out.println(e.getMessage());
         }
     }
