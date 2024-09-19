@@ -13,7 +13,7 @@ public class Main {
         Arrays.fill(dp, Integer.MAX_VALUE);
         dp[0] = 0;
         for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j <= i + nums.get(i) && j < n; j++) {
+            for (int j = i + 1; j <= i +nums.get(i) && j < n; j++) {
                 dp[j] = Math.min(dp[j], dp[i] + 1);
             }
         }
@@ -25,14 +25,14 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         List<Integer> arr = new ArrayList<>();
         System.out.println("Введите числа (для завершения введите '.'):");
-        boolean Flag = true;
-        while (Flag) {
+        boolean flag = true;
+        while (flag) {//исправил
             if (scanner.hasNextInt()) {
                 arr.add(scanner.nextInt());
             } else {
                 String input = scanner.next();
                 if (input.equalsIgnoreCase(".")) {
-                    Flag = false;
+                    flag = false;
                 } else {
                     throw new IllegalArgumentException("Неверный ввод: " + input);
                 }
@@ -44,11 +44,11 @@ public class Main {
 
 
     public static void main(String[] args) {
-        try{
+        try {
             List<Integer> nums = arrInit();
             int minJumps = jump(nums);
             System.out.println("Минимальное количество прыжков: " + minJumps);
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
         }
     }
