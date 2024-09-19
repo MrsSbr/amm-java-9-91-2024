@@ -5,27 +5,36 @@ import java.util.List;
 import java.util.Random;
 
 public class SatelliteController {
+    
     public static void main(String[] args) {
-        Satellite weatherSatellite = new WeatherSatellite(
+        SatelliteImpl weatherSatellite = new WeatherSatellite(
                 "Ромашка",
                 2.0,
                 6.2,
                 true,
-                "Инфракрасный")
+                Sensor.INFRARED)
                 ;
         weatherSatellite.perform();
         System.out.println();
 
-        Satellite anotherWeatherSatellite = new WeatherSatellite(
+        SatelliteImpl anotherWeatherSatellite = new WeatherSatellite(
                 "Подсолнух",
                 1.5,
                 3.8,
                 false,
-                "Оптический");
+                Sensor.OPTIC);
+        SatelliteImpl similarWeatherSatellite = new WeatherSatellite(
+                "Подсолнух",
+                1.5,
+                3.8,
+                false,
+                Sensor.OPTIC
+        );
+        System.out.println(anotherWeatherSatellite.equals(similarWeatherSatellite));
         anotherWeatherSatellite.on();
         System.out.println();
 
-        Satellite militarySatellite = new MilitarySatellite(
+        SatelliteImpl militarySatellite = new MilitarySatellite(
                 "Дазл",
                 4,
                 7.7,
@@ -38,30 +47,16 @@ public class SatelliteController {
         System.out.println("Ромашка hashCode: " + weatherSatellite.hashCode());
         System.out.println("Подсолнух hashCode: " + anotherWeatherSatellite.hashCode());
         System.out.println("Демонстрация instanceOf->");
-        instanceOfDemonstration();
+        defineClass(militarySatellite);
+        defineClass(weatherSatellite);
     }
 
-    static void instanceOfDemonstration() {
-        List<Satellite> satellites = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            int randomInt = new Random().nextInt(2);
-            if (randomInt == 0) {
-                satellites.add(new WeatherSatellite());
-            } else {
-                satellites.add(new MilitarySatellite());
-            }
-        }
+    static void defineClass(SatelliteImpl satellite) {
+        if (satellite instanceof WeatherSatellite) {
+            System.out.println(satellite.getName() + " метеорологический спутник");
+        } else if (satellite instanceof MilitarySatellite) {
+            System.out.println(satellite.getName() + " военный спутник");
 
-        if (satellites.get(0) instanceof WeatherSatellite) {
-            System.out.println("Первый спутник в списке - метеорологический");
-        } else {
-            System.out.println("Первый спутник в списке - военный");
-        }
-
-        if (satellites.get(1) instanceof WeatherSatellite) {
-            System.out.println("Второй спутник в списке - метеорологический");
-        } else {
-            System.out.println("Второй спутник в списке - военный");
         }
     }
 }

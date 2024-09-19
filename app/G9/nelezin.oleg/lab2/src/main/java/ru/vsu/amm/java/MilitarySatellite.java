@@ -1,6 +1,8 @@
 package ru.vsu.amm.java;
 
-public class MilitarySatellite extends Satellite {
+import java.util.Objects;
+
+public class MilitarySatellite extends SatelliteImpl {
 
     private String weapon;
 
@@ -25,5 +27,16 @@ public class MilitarySatellite extends Satellite {
         return "Военный спутник\n" +
                 super.toString() +
                 "\nОружие: " + weapon;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        MilitarySatellite that = (MilitarySatellite) obj;
+        return weapon.equals(that.weapon) && super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getWidth(), getLength(), weapon);
     }
 }
