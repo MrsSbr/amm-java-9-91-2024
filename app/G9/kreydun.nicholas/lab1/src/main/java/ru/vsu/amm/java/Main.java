@@ -45,9 +45,9 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            List<Integer> nums = arrInit();
-            int minJumps = jump(nums);
-            System.out.println("Минимальное количество прыжков: " + minJumps);
+            List<Integer> numbers = arrInit();
+            int minJumps = jump(numbers);
+            System.out.println("Minimum number of jumps: " + minJumps);//исправил
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
         }
