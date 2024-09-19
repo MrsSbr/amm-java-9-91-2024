@@ -19,17 +19,18 @@ public final class HappyNumber {
     }
 
     public static boolean isHappy(int number) {
-        Set<Integer> previousNumbers = new HashSet<>();
-        Boolean isHappy = null;
+        Set<Integer> previousNumbers = new HashSet<>();// с - n
+        Boolean isHappy = null;//1
+        int tmpNumber = number;
 
         do {
-            if (number == 1) {
+            if (tmpNumber == 1) {
                 isHappy = true;
-            } else if (previousNumbers.contains(number)) {
+            } else if (previousNumbers.contains(tmpNumber)) {
                 isHappy = false;
             } else {
-                previousNumbers.add(number);
-                number = sumOfDigitsSquares(number);
+                previousNumbers.add(tmpNumber);
+                tmpNumber = sumOfDigitsSquares(tmpNumber);
             }
         } while (isHappy == null);
 
@@ -37,7 +38,7 @@ public final class HappyNumber {
     }
 
     public static void main(String[] args) {
-        int someNumber = 2147483647;
+        int someNumber = 7;
         System.out.println(isHappy(someNumber));
     }
 }
