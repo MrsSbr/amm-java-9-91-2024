@@ -19,7 +19,6 @@ student("sbrodova.daria", G91) {
     lab(0)
 }
 
-
 student("kurkina.tanya", G91) {
     lab(0)
 }
@@ -59,7 +58,6 @@ student("nelezin.oleg", G9) {
 student("golukovich.timofey", G9) {
     lab(0)
 }
-
 
 student("korneeva.svetlana", G91) {
     lab(0)
