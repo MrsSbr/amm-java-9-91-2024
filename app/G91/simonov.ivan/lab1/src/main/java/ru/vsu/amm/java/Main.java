@@ -9,6 +9,7 @@ public class Main {
     final static int LENGTH = 9;
     final static int BLOCK = 3;
 
+    // проверка наличия цифры в строке
     public static boolean checkRow(String[][] board, int i, String val) {
         for (int k = 0; k < LENGTH; k++) {
             if (board[i][k].equals(val)) {
@@ -18,6 +19,7 @@ public class Main {
         return true;
     }
 
+    // проверка наличия цифры в столбце
     public static boolean checkColumn(String[][] board, int j, String val) {
         for (int k = 0; k < LENGTH; k++) {
             if (board[k][j].equals(val)) {
@@ -27,7 +29,8 @@ public class Main {
         return true;
     }
 
-    public static boolean checkBlocks(String[][] board, int row, int col, String val) {
+    // проверка наличия цифры в блоке
+    public static boolean checkBlock(String[][] board, int row, int col, String val) {
         int start_row = row - row % BLOCK;
         int start_col = col - col % BLOCK;
         for (int i = 0; i < BLOCK; i++) {
@@ -40,16 +43,20 @@ public class Main {
         return true;
     }
 
+    // основной алгоритм решения Судоку
     public static boolean sudokuSolver(String[][] board) {
         String digit;
+        // перебор всех элементов матрицы Судоку
         for (int i = 0; i < LENGTH; i++) {
             for (int j = 0; j < LENGTH; j++) {
                 if (board[i][j].equals(".")) {
+                    // перебор всех возможных цифр
                     for (int k = 0; k < LENGTH; k++) {
                         digit = String.valueOf(k + 1);
+                        // проверка наличия цифры в строке, столбце или блоке
                         if (checkRow(board, i, digit)
                                 && checkColumn(board, j, digit)
-                                && checkBlocks(board, i, j, digit)) {
+                                && checkBlock(board, i, j, digit)) {
                             board[i][j] = digit;
                             if (sudokuSolver(board)) {
                                 return true;
@@ -64,16 +71,7 @@ public class Main {
         return true;
     }
 
-    public static void printSudokuSolvation(String[][] board, int length) {
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < length; j++) {
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.print("\n");
-        }
-        System.out.print("\n");
-    }
-
+    // Исключение для некорректных данных при вводе
     public static class InvalidInputException extends Exception {
         public InvalidInputException(String message) {
             super(message);
@@ -96,6 +94,7 @@ public class Main {
             String source;
             for (int i = 0; i < LENGTH; i++) {
                 source = scanner.nextLine();
+                // проверка вводимой строки на соответствие шаблону строки Судоку
                 if (source.matches("((\\d|\\.) ){8}(\\d|\\.)")) {
                     board[i] = source.split(" ");
                 } else {
@@ -105,6 +104,7 @@ public class Main {
             System.out.println("Source:\n");
             System.out.print(Arrays.deepToString(board).replace("], ", "]\n"));
             System.out.print("\n\n");
+
             if (sudokuSolver(board)) {
                 System.out.println("Solvation:\n");
                 System.out.print(Arrays.deepToString(board).replace("], ", "]\n"));
