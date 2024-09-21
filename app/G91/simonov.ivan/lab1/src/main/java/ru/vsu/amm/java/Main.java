@@ -7,62 +7,59 @@ public class Main {
     final static int BLOCK = 3;
 
     public static boolean checkRow(char [][] board, int length, int i, char val) {
-        boolean isFound = false;
         for (int k = 0; k < length; k++) {
             if (board[i][k] == val) {
-                isFound = true;
-                break;
+                return false;
             }
         }
-        return !isFound;
+        return true;
     }
 
     public static boolean checkColumn(char [][] board, int length, int j, char val) {
-        boolean isFound = false;
         for (int k = 0; k < length; k++) {
             if (board[k][j] == val) {
-                isFound = true;
-                break;
+                return false;
             }
         }
-        return !isFound;
+        return true;
     }
 
-    public static boolean checkBlocks(char [][] board, int length, int block, int row, int col, char val) {
-        boolean isFound = false;
-        for (int i = row - block + 1; i < (row + block); i++) {
-            for (int j = col - block + 1; j < (col + block); j++) {
-                if (i >= 0 && i < length && j >= 0 && j < length && board[i][j] == val) {
-                    isFound = true;
-                    break;
+    public static boolean checkBlocks(char [][] board, int block, int row, int col, char val) {
+        row -= row % block;
+        col -= col % block;
+        for (int i = 0; i < block; i++)
+        {
+            for (int j = 0; j < block; j++) {
+                if (board[row + i][col + j] == val) {
+                    return false;
                 }
             }
         }
-        return !isFound;
+        return true;
     }
 
     public static boolean sudokuSolver(char [][] board, int length, int block) {
-        boolean isPossible = true;
         char digit;
-        for (int i = 0; i < length && isPossible; i++) {
-            for (int j = 0; j < length && isPossible; j++) {
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length; j++) {
                 if (board[i][j] == '.') {
-                    isPossible = false;
                     for (int k = 0; k < length; k++) {
                         digit = Character.forDigit(k + 1, 10);
                         if (checkRow(board, length, i, digit)
                         && checkColumn(board, length, j, digit)
-                        && checkBlocks(board, block, length, i, j, digit)) {
-                            isPossible = true;
+                        && checkBlocks(board, block, i, j, digit)) {
                             board[i][j] = digit;
-                            break;
+                            if (sudokuSolver(board, length, block)) {
+                                return true;
+                            }
+                            board[i][j] = '.';
                         }
                     }
+                    return false;
                 }
-                printSudokuSolvation(board, length);
             }
         }
-        return isPossible;
+        return true;
     }
 
     public static void printSudokuSolvation(char [][] board, int length) {
