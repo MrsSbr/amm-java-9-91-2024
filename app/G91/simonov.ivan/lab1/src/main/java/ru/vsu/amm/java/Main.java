@@ -102,18 +102,18 @@ public class Main {
                     throw new InvalidInputException("Incorrect line");
                 }
             }
-        } catch (InvalidInputException e) {
-            System.out.println(e.getMessage());
-        }
-        System.out.println("Source:\n");
-        System.out.print(Arrays.deepToString(board).replace("], ", "]\n"));
-        System.out.print("\n\n");
-        if (sudokuSolver(board)) {
-            System.out.println("Solvation:\n");
+            System.out.println("Source:\n");
             System.out.print(Arrays.deepToString(board).replace("], ", "]\n"));
             System.out.print("\n\n");
-        } else {
-            System.out.println("No solvation!");
+            if (sudokuSolver(board)) {
+                System.out.println("Solvation:\n");
+                System.out.print(Arrays.deepToString(board).replace("], ", "]\n"));
+                System.out.print("\n\n");
+            } else {
+                System.out.println("No solvation!");
+            }
+        } catch (InvalidInputException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
