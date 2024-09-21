@@ -97,7 +97,7 @@ public class Main {
             for (int i = 0; i < LENGTH; i++) {
                 source = scanner.nextLine();
                 if (source.matches("((\\d|\\.) ){8}(\\d|\\.)")) {
-                    board[i] = scanner.nextLine().split(" ");
+                    board[i] = source.split(" ");
                 } else {
                     throw new InvalidInputException("Incorrect line");
                 }
@@ -105,9 +105,13 @@ public class Main {
         } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("Source:\n");
+        System.out.print(Arrays.deepToString(board).replace("], ", "]\n"));
+        System.out.print("\n\n");
         if (sudokuSolver(board)) {
-            System.out.println("Solvation:");
+            System.out.println("Solvation:\n");
             System.out.print(Arrays.deepToString(board).replace("], ", "]\n"));
+            System.out.print("\n\n");
         } else {
             System.out.println("No solvation!");
         }
