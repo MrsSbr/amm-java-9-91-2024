@@ -11,7 +11,8 @@ public class Solve {
             for (int j = 0; j < board.length; ++j) {
                 current = board[i][j];
                 if (current != ".") {
-                    if (!result.add("row" + i + current) || !result.add("column" + j + current) || !result.add("square" + i / 3 + j / 3 + current)) {
+                    if (!result.add("row" + i + current) || !result.add("column" + j + current)
+                        || !result.add("square" + i / 3 + j / 3 + current)) {
                         return false;
                     }
                 }
