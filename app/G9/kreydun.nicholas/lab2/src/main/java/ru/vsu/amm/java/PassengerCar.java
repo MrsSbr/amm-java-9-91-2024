@@ -2,7 +2,7 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public class PassengerCar extends Car{
+public class PassengerCar extends Car {
     private final int speed;
     private final int year;
     public PassengerCar(String model, String color, int year, int speed) {
@@ -36,7 +36,7 @@ public class PassengerCar extends Car{
             result = false;
         else if (!super.equals(o))
             result = false;
-        else{
+        else {
             PassengerCar sportCar = (PassengerCar) o;
             result = speed == sportCar.speed && year == sportCar.year;
         }

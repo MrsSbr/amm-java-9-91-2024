@@ -2,7 +2,7 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public class SportCar extends PassengerCar{
+public class SportCar extends PassengerCar {
     private final int capacityGasoline;
     private final String description;
     public SportCar(String model, String color, int year, int speed, int capacityGasoline, String description) {

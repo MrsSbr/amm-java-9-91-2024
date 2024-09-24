@@ -46,7 +46,5 @@ public class Main {
         System.out.println(electricFirst.compareWith(sportFirst));
         System.out.println(electricFirst.compareWith(passengerFirst));
         System.out.println(electricFirst.compareWith(electricSecond));
-
-
     }
 }
