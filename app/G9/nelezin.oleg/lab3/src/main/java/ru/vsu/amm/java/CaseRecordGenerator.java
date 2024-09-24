@@ -41,10 +41,12 @@ public class CaseRecordGenerator {
         Article article = articles[random.nextInt(articles.length)];
         boolean isConvicted = random.nextBoolean();
 
-        return new CaseRecord(
-                respondent,
-                plaintiff,
-                date, article,
-                isConvicted);
+        return CaseRecord.builder()
+                .respondent(respondent)
+                .plaintiff(plaintiff)
+                .article(article)
+                .date(date)
+                .isConvicted(isConvicted)
+                .build();
     }
 }

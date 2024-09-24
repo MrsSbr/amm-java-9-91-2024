@@ -1,7 +1,16 @@
 package ru.vsu.amm.java;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
 public class CaseRecord {
 
     private String respondent;
@@ -14,57 +23,5 @@ public class CaseRecord {
 
     private boolean isConvicted;
 
-    public CaseRecord(String respondent,
-                      String plaintiff,
-                      LocalDate date,
-                      Article article,
-                      boolean isConvicted) {
-        this.respondent = respondent;
-        this.plaintiff = plaintiff;
-        this.date = date;
-        this.article = article;
-        this.isConvicted = isConvicted;
-    }
-
     public CaseRecord() {}
-
-    public String getPlaintiff() {
-        return plaintiff;
-    }
-
-    public void setPlaintiff(String plaintiff) {
-        this.plaintiff = plaintiff;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
-    }
-
-    public boolean isConvicted() {
-        return isConvicted;
-    }
-
-    public void setConvicted(boolean convicted) {
-        isConvicted = convicted;
-    }
-
-    public String getRespondent() {
-        return respondent;
-    }
-
-    public void setRespondent(String respondent) {
-        this.respondent = respondent;
-    }
 }
