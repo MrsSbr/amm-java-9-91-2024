@@ -153,6 +153,10 @@ student("globuchik.dmitry", G9) {
     lab(0)
 }
 
+student("barkov.pavel", G9) {
+    lab(2)
+}
+
 // DSL для подпроектов [Не трогать]
 includeProject("template-lab0", file("template/lab0"))
 
