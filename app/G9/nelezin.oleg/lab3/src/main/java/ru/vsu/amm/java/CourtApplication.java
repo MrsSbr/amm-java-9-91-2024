@@ -1,5 +1,9 @@
 package ru.vsu.amm.java;
 
+import ru.vsu.amm.java.entity.CaseRecord;
+import ru.vsu.amm.java.service.CaseRecordService;
+import ru.vsu.amm.java.util.CaseRecordFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,7 +17,7 @@ public class CourtApplication {
         int n = scanner.nextInt();
         List<CaseRecord> records = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            records.add(CaseRecordGenerator.generateRecord());
+            records.add(CaseRecordFactory.generateRecord());
         }
 
         CaseRecordService caseRecordService = new CaseRecordService();

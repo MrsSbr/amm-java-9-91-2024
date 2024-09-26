@@ -1,8 +1,8 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.vsu.amm.java.Article;
-import ru.vsu.amm.java.CaseRecord;
-import ru.vsu.amm.java.CaseRecordService;
+import ru.vsu.amm.java.enums.Article;
+import ru.vsu.amm.java.entity.CaseRecord;
+import ru.vsu.amm.java.service.CaseRecordService;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -18,14 +18,16 @@ public class CaseRecordServiceTest {
 
     private CaseRecordService caseRecordService;
 
+    private List<CaseRecord> records;
+
     @BeforeEach
     public void setup() {
         caseRecordService = new CaseRecordService();
+        records = getSomeRecords();
     }
 
     @Test
     public void testGetNotConvictedPeople() {
-        List<CaseRecord> records = getSomeRecords();
         Set<String> notConvicted = caseRecordService.getNotConvictedPeople(records);
 
         assertNotNull(notConvicted);
@@ -36,7 +38,6 @@ public class CaseRecordServiceTest {
 
     @Test
     public void testGetPeopleMultipleArticles() {
-        List<CaseRecord> records = getSomeRecords();
         Set<String> multipleArticles = caseRecordService.getPeopleMultipleArticles(records);
 
         assertNotNull(multipleArticles);
@@ -46,7 +47,6 @@ public class CaseRecordServiceTest {
 
     @Test
     public void testGetFrequentPlaintiffs() {
-        List<CaseRecord> records = getSomeRecords();
         Set<String> frequentPlaintiffs = caseRecordService.getFrequentPlaintiffs(records);
 
         assertNotNull(frequentPlaintiffs);

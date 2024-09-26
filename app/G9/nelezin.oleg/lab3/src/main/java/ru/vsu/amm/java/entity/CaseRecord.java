@@ -1,9 +1,10 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import ru.vsu.amm.java.enums.Article;
 
 import java.time.LocalDate;
 

@@ -1,7 +1,10 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.service;
+
+import ru.vsu.amm.java.entity.CaseRecord;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,7 +25,7 @@ public class CaseRecordService {
                         Collectors.mapping(CaseRecord::getArticle, Collectors.toSet())))
                 .entrySet().stream()
                 .filter(entry -> entry.getValue().size() > 1)
-                .map(entry -> entry.getKey())
+                .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
     }
 
@@ -33,7 +36,7 @@ public class CaseRecordService {
                 .collect(Collectors.groupingBy(CaseRecord::getPlaintiff, Collectors.counting()))
                 .entrySet().stream()
                 .filter(entry -> entry.getValue() > 1)
-                .map(entry -> entry.getKey())
+                .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
     }
 }
