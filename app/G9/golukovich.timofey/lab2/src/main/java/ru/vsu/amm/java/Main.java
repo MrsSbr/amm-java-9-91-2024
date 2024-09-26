@@ -7,7 +7,7 @@ import ru.vsu.amm.java.Classes.Triceratops;
 
 public class Main {
     public static void main(String[] args) {
-        Dinosaur tRex = new TRex(13, "Tyrannosaur Rex", "Earth", "RRROOOAAAAAARRRRRRR");
+        TRex tRex = new TRex(13, "Tyrannosaur Rex", "Earth", "RRROOOAAAAAARRRRRRR");
         var triceratops = new Triceratops(20, "Triceratops Trip", "Earth", 40);
         Dinosaur diplodocus = new Diplodocus(18, "Diplodocus Dip", "Earth", 30);
 
@@ -32,7 +32,7 @@ public class Main {
             System.out.println("Никто не равен друг другу.\n");
         }
 
-        Dinosaur dino = new TRex(10, "Rex", "Earth", "RRROOOAAAAAARRRRRRR");
+        Dinosaur dino = new TRex(10, "Tyrannosaur Rex", "Earth", "RRROOOAAAAAARRRRRRR");
         System.out.println("Сравниваем нового тиранозавра со старым.");
         if (dino.equals(tRex)) {
             System.out.println("Что-то пошло не так.");
@@ -47,5 +47,6 @@ public class Main {
         } else {
             System.out.println("Что-то пошло не так.\n");
         }
+        tRex.roar();
     }
 }

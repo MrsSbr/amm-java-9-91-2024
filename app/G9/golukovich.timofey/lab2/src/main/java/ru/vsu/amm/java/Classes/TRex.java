@@ -1,6 +1,8 @@
 package ru.vsu.amm.java.Classes;
 
-public class TRex extends Dinosaur {
+import ru.vsu.amm.java.Interfaces.Roarable;
+
+public class TRex extends Dinosaur implements Roarable {
     protected String roar;
 
     public TRex(int age, String name, String habitat, String roar) {
@@ -57,5 +59,10 @@ public class TRex extends Dinosaur {
             result += c % 33;
         }
         return result;
+    }
+
+    @Override
+    public void roar() {
+        System.out.println(roar);
     }
 }

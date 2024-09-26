@@ -1,10 +1,6 @@
 package ru.vsu.amm.java.Classes;
 
-import ru.vsu.amm.java.Interfaces.Dino;
-
-import java.util.Objects;
-
-public abstract class Dinosaur implements Dino {
+public abstract class Dinosaur {
     protected int age;
     protected String name;
     protected String habitat;
@@ -31,12 +27,41 @@ public abstract class Dinosaur implements Dino {
         age += 1;
     }
 
-    @Override
     public void eat() {
         System.out.println(name + " поел!");
+    }
+    public void saySomething() {
+        System.out.println(this);
     }
 
     public String toString() {
         return "I'm a dinosaur!!!";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Dinosaur)) {
+            return false;
+        }
+        Dinosaur dino = (Dinosaur) o;
+        boolean isNamesEquals = (name == null && dino.name == null
+                || name != null && name.equals(dino.name));
+        boolean isHabitatsEquals = (habitat == null && dino.habitat == null
+                || habitat != null && habitat.equals(dino.habitat));
+        return age == dino.age && isNamesEquals && isHabitatsEquals;
+    }
+    @Override
+    public final int hashCode() {
+        int result = age;
+        for (var c : name.toCharArray()) {
+            result += c % 24;
+        }
+        for (var c : habitat.toCharArray()) {
+            result += c % 42;
+        }
+        return result;
     }
 }
