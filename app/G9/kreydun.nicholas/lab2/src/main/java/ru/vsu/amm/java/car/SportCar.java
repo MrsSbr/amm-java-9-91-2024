@@ -1,4 +1,4 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.car;
 
 import java.util.Objects;
 
@@ -18,31 +18,25 @@ public class SportCar extends PassengerCar {
     }
     @Override
     public String toString() {
-       return super.toString() + "\ncapacity пasoline: " + capacityGasoline
-               + "\ndescription: " + description;
+       return super.toString() + "\ncapacity пasoline: " + capacityGasoline + "\ndescription: " + description;
     }
-
     @Override
     public boolean equals(Object o) {
-        boolean result = false;
         if (this == o)
-            result = true;
+            return true;
         else if (o == null || getClass() != o.getClass())
-            result = false;
+            return false;
         else if (!super.equals(o))
-            result = false;
+            return false;
         else {
             SportCar sportCar = (SportCar) o;
-            result = capacityGasoline == sportCar.capacityGasoline && Objects.equals(description, sportCar.description);
+            return capacityGasoline == sportCar.capacityGasoline && Objects.equals(description, sportCar.description);
         }
-        return result;
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), capacityGasoline, description);
     }
-
     @Override
     public void beep() {
         System.out.println("Виу виу виу виу!!!!!!");

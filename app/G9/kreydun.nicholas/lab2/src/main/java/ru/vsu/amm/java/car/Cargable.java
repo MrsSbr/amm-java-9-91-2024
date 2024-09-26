@@ -1,4 +1,4 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.car;
 
 public interface Cargable {
     double getVolume(); // Получение объема груза

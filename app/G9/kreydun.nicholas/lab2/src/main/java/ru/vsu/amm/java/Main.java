@@ -1,5 +1,7 @@
 package ru.vsu.amm.java;
 
+import ru.vsu.amm.java.car.*;
+
 import java.util.ArrayList;
 import java.util.List;
 

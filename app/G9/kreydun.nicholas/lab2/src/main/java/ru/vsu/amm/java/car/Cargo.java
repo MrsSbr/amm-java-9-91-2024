@@ -1,4 +1,4 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.car;
 
 import java.util.Objects;
 
@@ -20,28 +20,21 @@ public class Cargo {
     public int getCargoWeight() {
         return cargoWeight;
     }
-
     @Override
     public String toString() {
-        return "cargoName'" + cargoName +
-                "\ncargoPrice " + cargoPrice +
-                "\ncargoWeight " + cargoWeight;
+        return "cargoName'" + cargoName + "\ncargoPrice " + cargoPrice + "\ncargoWeight " + cargoWeight;
     }
-
     @Override
     public boolean equals(Object o) {
-        boolean result = false;
         if (this == o)
-            result = true;
+            return true;
         else if (!(o instanceof Cargo))
-            result = false;
+            return false;
         else{
             Cargo cargo = (Cargo) o;
-            result = cargoPrice == cargo.cargoPrice && cargoWeight == cargo.cargoWeight && Objects.equals(cargoName, cargo.cargoName);
+            return cargoPrice == cargo.cargoPrice && cargoWeight == cargo.cargoWeight && Objects.equals(cargoName, cargo.cargoName);
         }
-        return result;
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(cargoName, cargoPrice, cargoWeight);
