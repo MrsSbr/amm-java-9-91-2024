@@ -15,21 +15,52 @@ student("kireev.dmitrii", G91) {
     lab(0)
 }
 
+student("kireev.dmitrii", G91) {
+    lab(1)
+}
+
 student("sbrodova.daria", G91) {
     lab(0)
 }
 
+student("bogdanov.nikita", G9) {
+    lab(0)
+}
+
+student("kurkina.tanya", G91) {
+    lab(0)
+}
+
+student("sergacheva.victoria", G91) {
+    lab(0)
+}
 
 student("belozerov.alexei", G91) {
     lab(0)
+    lab(1)
 }
 
 student("gonnykh.alexander", G91) {
     lab(0)
+    lab(1)
+}
+
+student("simonov.ivan", G91) {
+    lab(0)
+}
+
+student("ulyanov.leonid", G91) {
+    lab(0)
+}
+
+student("ulyanov.leonid", G91) {
+    lab(1)
 }
 
 student("nelezin.oleg", G9) {
     lab(0)
+    lab(1)
+    lab(2)
 }
 
 student("golukovich.timofey", G9) {
@@ -38,6 +69,91 @@ student("golukovich.timofey", G9) {
 
 student("bogatyirev.kirill", G9) {
     lab(1)
+}
+
+student("zayseva.anastasiya", G9) {
+  lab(0)
+}
+
+student("korneeva.svetlana", G91) {
+    lab(0)
+}
+
+student("barbashina.irina", G9) {
+    lab(0)
+}
+
+student("em.vera", G91) {
+    lab(0)
+    lab(1)
+}
+
+student("golukovich.timofey", G9) {
+    lab(1)
+}
+
+student("dolzhenkov.dmitrii", G91) {
+    lab(0)
+    lab(1)
+}
+
+student("popova.anastasia", G91) {
+    lab(0)
+}
+
+student("gadzhiev.maksym", G9) {
+    lab(0)
+}
+
+student("barkov.pavel", G9) {
+    lab(0)
+}
+
+student("anikandrov.andrey", G9) {
+    lab(0)
+}
+
+student("kanatnikov.maxim", G9) {
+    lab(0)
+    lab(1)
+}
+
+student("barkov.pavel", G9) {
+    lab(1)
+}
+
+student("garshin.maxim", G9) {
+    lab(0)
+}
+
+student("jasser.daniel", G9) {
+    lab(0)
+}
+
+student("gavrilov.mihail", G9){
+    lab(0)
+}
+student("serova.polina", G9) {
+    lab(0)
+    lab(1)
+}
+
+student("shipilova.viktoria", G9) {
+    lab(0)
+    lab(1)
+}
+student("kreydun.nicholas", G9) {
+    lab(0)
+    lab(1)
+}
+
+student("enokyan.gera", G91) {
+    lab(0)
+    lab(1)
+}
+
+student("globuchik.dmitry", G9) {
+    lab(0)
 }
 
 // DSL для подпроектов [Не трогать]
