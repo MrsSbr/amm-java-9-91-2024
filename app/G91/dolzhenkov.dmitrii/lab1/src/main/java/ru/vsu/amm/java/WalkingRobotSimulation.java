@@ -1,6 +1,7 @@
 package ru.vsu.amm.java;
 
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class WalkingRobotSimulation {
