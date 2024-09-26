@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class ConcreteMixer extends ConstructionMachineImpl {
 
-    private final int VOLUME;
+    public  final int VOLUME;
 
     public ConcreteMixer(String brand, int weight, int VOLUME) {
         super(brand, weight);
@@ -13,7 +13,7 @@ public class ConcreteMixer extends ConstructionMachineImpl {
 
     @Override
     public String toString() {
-        return "ConcreteMixer " + "\u001B[31m" + brand + "\u001B[0m" + " is working! " + " Volume: " + "\u001B[31m" + VOLUME + "\u001B[0m" + " cubic meters";
+        return "ConcreteMixer " + "\u001B[31m" + BRAND + "\u001B[0m" + " is working! " + " Volume: " + "\u001B[31m" + VOLUME + "\u001B[0m" + " cubic meters";
     }
 
     @Override
@@ -33,6 +33,6 @@ public class ConcreteMixer extends ConstructionMachineImpl {
 
     @Override
     public void working() {
-        System.out.println("\u001B[31m" + brand + "\u001B[0m" + " is mixing ");
+        System.out.println("\u001B[31m" + BRAND + "\u001B[0m" + " is mixing ");
     }
 }

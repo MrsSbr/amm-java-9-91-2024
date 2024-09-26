@@ -4,16 +4,16 @@ import java.util.Objects;
 
 public class Digger extends ConstructionMachineImpl {
 
-    private final int power;
+    public final int POWER;
 
-    public Digger(String brand, int weight, int power) {
+    public Digger(String brand, int weight, int POWER) {
         super(brand, weight);
-        this.power = power;
+        this.POWER = POWER;
     }
 
     @Override
     public String toString() {
-        return "Digger " + "\u001B[31m" + brand + "\u001B[0m" + " is working!" + " Power: " + "\u001B[31m" + power + "\u001B[0m" + " watt";
+        return "Digger " + "\u001B[31m" + BRAND + "\u001B[0m" + " is working!" + " Power: " + "\u001B[31m" + POWER + "\u001B[0m" + " watt";
     }
 
     @Override
@@ -23,16 +23,16 @@ public class Digger extends ConstructionMachineImpl {
         if (!super.equals(obj) || getClass() != obj.getClass())
             return false;
         Digger other = (Digger) obj;
-        return power == other.power;
+        return POWER == other.POWER;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), power);
+        return Objects.hash(super.hashCode(), POWER);
     }
 
     @Override
     public void working() {
-        System.out.println("Digger " + "\u001B[31m" + brand + "\u001B[0m" + " is digging");
+        System.out.println("Digger " + "\u001B[31m" + BRAND + "\u001B[0m" + " is digging");
     }
 }
