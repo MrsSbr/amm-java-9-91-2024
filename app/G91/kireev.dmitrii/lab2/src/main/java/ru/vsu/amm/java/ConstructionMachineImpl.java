@@ -2,24 +2,19 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public abstract class HeavyMachine implements ConstructionMachine {
+public abstract class ConstructionMachineImpl implements ConstructionMachine {
 
-    public final int weight;
+    public final int WEIGHT;
     public final String brand;
 
-    public HeavyMachine(String brand, int weight) {
+    public ConstructionMachineImpl(String brand, int weight) {
         this.brand = brand;
-        this.weight = weight;
+        this.WEIGHT = weight;
     }
 
     @Override
     public void startEngine() {
         System.out.println("brrrr, " + "\u001B[31m" + brand + "\u001B[0m" + " started his engine!");
-    }
-
-    @Override
-    public void working() {
-        System.out.println("Abstract machine " + "\u001B[31m" + brand + "\u001B[0m" + " is working");
     }
 
     @Override
@@ -29,7 +24,7 @@ public abstract class HeavyMachine implements ConstructionMachine {
 
     @Override
     public String toString() {
-        return "Abstract machine, brand: " + "\u001B[31m" + brand + "\u001B[0m" + " weight: " + "\u001B[31m" + weight + "\u001B[0m";
+        return "Abstract machine, brand: " + "\u001B[31m" + brand + "\u001B[0m" + " weight: " + "\u001B[31m" + WEIGHT + "\u001B[0m";
     }
 
     @Override
@@ -38,12 +33,12 @@ public abstract class HeavyMachine implements ConstructionMachine {
             return true;
         if (obj == null || getClass() != obj.getClass())
             return false;
-        HeavyMachine other = (HeavyMachine) obj;
-        return brand.equals(other.brand) && weight == other.weight;
+        ConstructionMachineImpl other = (ConstructionMachineImpl) obj;
+        return brand.equals(other.brand) && WEIGHT == other.WEIGHT;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(brand, weight);
+        return Objects.hash(brand, WEIGHT);
     }
 }

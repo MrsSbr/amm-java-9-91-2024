@@ -8,7 +8,7 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
 
-        List<HeavyMachine> machines = Arrays.asList(
+        List<ConstructionMachineImpl> machines = Arrays.asList(
                 new Digger("Digger1", 10, 10000),
                 new ConcreteMixer("ConcreteMixer1", 20, 400),
                 new Digger("Digger2", 20, 12000),
@@ -23,12 +23,12 @@ public class Main {
             machine.startEngine();
             machine.working();
             machine.stopEngine();
-
+            System.out.println( machine.hashCode());
             System.out.println();
         }
 
         Random random = new Random();
-        HeavyMachine machine = machines.get(random.nextInt(4));
+        ConstructionMachineImpl machine = machines.get(random.nextInt(4));
 
         if (machine instanceof Digger) {
             System.out.println("\nITS DIGGER\n");

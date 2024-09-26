@@ -2,18 +2,18 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public class ConcreteMixer extends HeavyMachine {
+public class ConcreteMixer extends ConstructionMachineImpl {
 
-    private final int volume;
+    private final int VOLUME;
 
-    public ConcreteMixer(String brand, int weight, int volume) {
+    public ConcreteMixer(String brand, int weight, int VOLUME) {
         super(brand, weight);
-        this.volume = volume;
+        this.VOLUME = VOLUME;
     }
 
     @Override
     public String toString() {
-        return "ConcreteMixer " + "\u001B[31m" + brand + "\u001B[0m" + " is working! " + " Volume: " + "\u001B[31m" + volume + "\u001B[0m" + " cubic meters";
+        return "ConcreteMixer " + "\u001B[31m" + brand + "\u001B[0m" + " is working! " + " Volume: " + "\u001B[31m" + VOLUME + "\u001B[0m" + " cubic meters";
     }
 
     @Override
@@ -23,12 +23,12 @@ public class ConcreteMixer extends HeavyMachine {
         if (!super.equals(obj) || getClass() != obj.getClass())
             return false;
         ConcreteMixer other = (ConcreteMixer) obj;
-        return volume == other.volume;
+        return VOLUME == other.VOLUME;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), volume);
+        return Objects.hash(super.hashCode(), VOLUME);
     }
 
     @Override

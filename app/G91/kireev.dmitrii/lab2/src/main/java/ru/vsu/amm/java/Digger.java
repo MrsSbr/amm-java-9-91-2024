@@ -2,7 +2,7 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public class Digger extends HeavyMachine {
+public class Digger extends ConstructionMachineImpl {
 
     private final int power;
 
