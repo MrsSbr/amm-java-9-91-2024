@@ -9,6 +9,9 @@ public class Antiviral extends Medicine implements Medicinal {
         this.contraindication = contraindication;
     }
 
+    public  String getContraindication(){
+        return contraindication;
+    }
     public void heal() {
         System.out.println("От вирусных заболеваний");
     }

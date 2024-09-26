@@ -8,6 +8,10 @@ public class Antibiotic extends Medicine implements Medicinal{
         super(name,volume);
         this.indication = indication;
     }
+
+    public  String getIndication(){
+        return indication;
+    }
     public void heal()
     {
         System.out.println("От бактериальных заболеваний");

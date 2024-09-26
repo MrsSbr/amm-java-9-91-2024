@@ -8,6 +8,10 @@ public class Homeopathy extends Medicine {
         this.obscurantism = obscurantism;
     }
 
+    public  String getObscurantism(){
+        return obscurantism;
+    }
+
     public String toString() {
         return super.toString() + "\nОбоснование теории:" + obscurantism;
     }
