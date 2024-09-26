@@ -19,24 +19,12 @@ public class Client {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public String getDriverLicense() {
         return driverLicense;
-    }
-
-    public void setDriverLicense(String driverLicense) {
-        this.driverLicense = driverLicense;
     }
 
     public void addRentalOrder(RentalOrder rentalOrder) {
@@ -45,9 +33,5 @@ public class Client {
 
     public List<RentalOrder> getRentalOrderList() {
         return rentalOrderList;
-    }
-
-    public void setRentalOrderList(List<RentalOrder> rentalOrderList) {
-        this.rentalOrderList = rentalOrderList;
     }
 }

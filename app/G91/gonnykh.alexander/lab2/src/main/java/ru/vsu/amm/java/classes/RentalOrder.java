@@ -23,26 +23,6 @@ public class RentalOrder {
         return car;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public void setTotalPrice(float totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
     public Client getClient() {
         return client;
     }

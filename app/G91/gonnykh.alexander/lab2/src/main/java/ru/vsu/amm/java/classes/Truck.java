@@ -35,7 +35,14 @@ public class Truck extends Car {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Truck && this.hashCode() == obj.hashCode();
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj) || getClass() != obj.getClass()) {
+            return false;
+        }
+        Truck objCast = (Truck) obj;
+        return fourWheelDrive == objCast.getFourWheelDrive();
     }
 
     public boolean getFourWheelDrive() {

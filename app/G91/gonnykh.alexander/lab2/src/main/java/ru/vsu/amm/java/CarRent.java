@@ -2,8 +2,8 @@ package ru.vsu.amm.java;
 
 import ru.vsu.amm.java.abstractClasses.Car;
 import ru.vsu.amm.java.classes.Client;
-import ru.vsu.amm.java.classes.Rent;
 import ru.vsu.amm.java.classes.PassengerCar;
+import ru.vsu.amm.java.classes.Rent;
 import ru.vsu.amm.java.classes.Truck;
 
 import java.text.ParseException;

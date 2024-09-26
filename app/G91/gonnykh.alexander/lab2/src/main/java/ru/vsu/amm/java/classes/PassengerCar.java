@@ -35,15 +35,18 @@ public class PassengerCar extends Car {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof PassengerCar && this.hashCode() == obj.hashCode();
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj) || getClass() != obj.getClass()) {
+            return false;
+        }
+        PassengerCar objCast = (PassengerCar) obj;
+        return comfortLevel == objCast.comfortLevel;
     }
 
     public int getComfortLevel() {
         return comfortLevel;
-    }
-
-    public void setComfortLevel(int comfortLevel) {
-        this.comfortLevel = comfortLevel;
     }
 
     @Override

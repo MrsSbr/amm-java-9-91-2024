@@ -44,5 +44,19 @@ public abstract class Car implements Vehicle {
         return plate;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Car objCast = (Car) obj;
+        return make.equals(objCast.make) && model.equals(objCast.model) && year == objCast.year
+                && engine.equals(objCast.engine) && startPrice == objCast.startPrice
+                && plate.equals(objCast.plate);
+    }
+
     public abstract float calculatePrice();
 }
