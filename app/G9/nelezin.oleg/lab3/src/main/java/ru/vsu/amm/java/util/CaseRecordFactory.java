@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class CaseRecordFactory {
 
-    private static final int days = 7300;
+    private static final int DAYS = 7300;
 
     private static final String[] NAMES = {
             "Bill Gates",
@@ -40,7 +40,7 @@ public class CaseRecordFactory {
         } while (respondentIndex == plaintiffIndex);
         String plaintiff = NAMES[plaintiffIndex];
 
-        LocalDate date = LocalDate.now().minusDays(random.nextInt(days));
+        LocalDate date = LocalDate.now().minusDays(random.nextInt(DAYS));
         Article article = ARTICLES[random.nextInt(ARTICLES.length)];
         boolean isConvicted = random.nextBoolean();
 
