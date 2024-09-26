@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -47,12 +48,9 @@ public class Main {
         int countSeries = 0;
         String input;
 
-        InputStream inputStream = System.in;
-        Reader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
         System.out.println("Enter count of intervals in initial array:");
-        try {
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
             input = bufferedReader.readLine();
             countSeries = Integer.parseInt(input);
             if (countSeries > 10000 || countSeries < 0) {
@@ -69,7 +67,7 @@ public class Main {
             try {
                 input = bufferedReader.readLine();
                 String[] tmpStr = input.split("\\s+");
-                ArrayList<Integer> tmpResult = new ArrayList<Integer>();
+                List<Integer> tmpResult = new ArrayList<>();
                 tmpResult.add(Integer.parseInt(tmpStr[0]));
                 tmpResult.add(Integer.parseInt(tmpStr[1]));
                 result.add(tmpResult);
