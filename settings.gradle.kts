@@ -123,6 +123,7 @@ student("garshin.maxim", G9) {
     lab(0)
 }
 
+
 student("jasser.daniel", G9) {
     lab(0)
 }
@@ -150,6 +151,10 @@ student("enokyan.gera", G91) {
 }
 
 student("globuchik.dmitry", G9) {
+    lab(0)
+}
+
+student("kavunov.victor", G9) {
     lab(0)
 }
 
