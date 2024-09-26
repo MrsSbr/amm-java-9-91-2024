@@ -36,25 +36,14 @@ public class TRex extends Dinosaur implements Roarable {
             return false;
         }
         TRex tRex = (TRex) o;
-        boolean isNamesEquals = (name == null && tRex.name == null
-                || name != null && name.equals(tRex.name));
-        boolean isHabitatsEquals = (habitat == null && tRex.habitat == null
-                || habitat != null && habitat.equals(tRex.habitat));
         boolean isRoarsEquals = (roar == null && tRex.roar == null
                 || roar != null && roar.equals(tRex.roar));
-        return age == tRex.age && isNamesEquals && isHabitatsEquals
-                && isRoarsEquals;
+        return super.equals(o) && isRoarsEquals;
     }
 
     @Override
-    public final int hashCode() {
-        int result = age;
-        for (var c : name.toCharArray()) {
-            result += c % 24;
-        }
-        for (var c : habitat.toCharArray()) {
-            result += c % 42;
-        }
+    public int hashCode() {
+        int result = super.hashCode();
         for (var c : roar.toCharArray()) {
             result += c % 33;
         }

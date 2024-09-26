@@ -34,24 +34,11 @@ public class Diplodocus extends Dinosaur {
             return false;
         }
         Diplodocus diplodocus = (Diplodocus) o;
-        boolean isNumbersEquals = age == diplodocus.age
-                && height == diplodocus.height;
-        boolean isNamesEquals = (name == null && diplodocus.name == null
-                || name != null && name.equals(diplodocus.name));
-        boolean isHabitatsEquals = (habitat == null && diplodocus.habitat == null
-                || habitat != null && habitat.equals(diplodocus.habitat));
-        return isNumbersEquals && isNamesEquals && isHabitatsEquals;
+        return super.equals(o) && height == diplodocus.height;
     }
 
     @Override
-    public final int hashCode() {
-        int result = age + height;
-        for (var c : name.toCharArray()) {
-            result += c % 24;
-        }
-        for (var c : habitat.toCharArray()) {
-            result += c % 42;
-        }
-        return result;
+    public int hashCode() {
+        return super.hashCode() + height;
     }
 }

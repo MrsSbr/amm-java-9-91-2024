@@ -34,24 +34,11 @@ public class Triceratops extends Dinosaur {
             return false;
         }
         Triceratops triceratops = (Triceratops) o;
-        boolean isNumbersEquals = age == triceratops.age
-                && hornsLength == triceratops.hornsLength;
-        boolean isNamesEquals = (name == null && triceratops.name == null
-                || name != null && name.equals(triceratops.name));
-        boolean isHabitatsEquals = (habitat == null && triceratops.habitat == null
-                || habitat != null && habitat.equals(triceratops.habitat));
-        return isNumbersEquals && isNamesEquals && isHabitatsEquals;
+        return super.equals(o) && hornsLength == triceratops.hornsLength;
     }
 
     @Override
     public final int hashCode() {
-        int result = age + hornsLength;
-        for (var c : name.toCharArray()) {
-            result += c % 24;
-        }
-        for (var c : habitat.toCharArray()) {
-            result += c % 42;
-        }
-        return result;
+        return super.hashCode() + hornsLength;
     }
 }
