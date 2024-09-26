@@ -1,6 +1,6 @@
 package src.main.java.ru.vsu.amm.java;
 
-public abstract class Medicine implements Medicinal {
+public abstract class Medicine {
     private String name;
 
     private int volume;

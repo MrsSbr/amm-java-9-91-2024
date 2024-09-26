@@ -1,6 +1,6 @@
 package src.main.java.ru.vsu.amm.java;
 
-public class Antibiotic extends Medicine{
+public class Antibiotic extends Medicine implements Medicinal{
 
     private String indication;
 
