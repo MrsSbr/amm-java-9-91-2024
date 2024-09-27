@@ -5,31 +5,38 @@ import java.util.Objects;
 public class ElectricCar extends Car {
     private final int batteryCapacity; // Емкость батареи в кВтч
     private int range; // Запас хода в километрах
+
     public ElectricCar(String model, String color, int batteryCapacity, int range) {
         super(model, color);
         this.batteryCapacity = batteryCapacity;
         this.range = range;
     }
+
     public int getBatteryCapacity() {
         return batteryCapacity;
     }
+
     public int getRange() {
         return range;
     }
+
     @Override
     public void beep() {
         System.out.println("Бззззз! Я электромобиль!");
     }
+
     // Новый метод: Проверка возможности добраться до точки
     public boolean canReachDestination(int distance) {
         return distance <= range;
     }
+
     public void charge(int chargingTime) {
         // Предположим, что 1 час зарядки дает 50 км запаса хода
         int additionalRange = chargingTime * 50;
         range += additionalRange;
         System.out.println("Электромобиль заряжен! Добавлен запас хода: " + additionalRange + " км.");
     }
+
     // Метод для сравнения электромобиля с другим автомобилем (используем instanceof)
     public String compareWith(Car otherCar) {
         if (otherCar instanceof ElectricCar) {
@@ -49,10 +56,12 @@ public class ElectricCar extends Car {
             return "Я электромобиль, а это что-то другое...";
         }
     }
+
     @Override
     public String toString() {
         return "Электромобиль модели " + super.getModel() + " (" + getColor() + "), с батареей на " + batteryCapacity + " кВтч";
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -66,6 +75,7 @@ public class ElectricCar extends Car {
             return batteryCapacity == that.batteryCapacity && range == that.range;
         }
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), batteryCapacity, range);
