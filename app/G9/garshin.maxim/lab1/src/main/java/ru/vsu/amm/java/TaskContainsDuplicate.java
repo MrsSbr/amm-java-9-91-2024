@@ -1,12 +1,16 @@
 package ru.vsu.amm.java;
-import ru.vsu.amm.java.Checks.ArrayLimitations;
 
-import java.util.*;
+import ru.vsu.amm.java.checks.ArrayLimitations;
+
+import java.util.HashSet;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+import java.util.Set;
 
 public class TaskContainsDuplicate {
     public static boolean hasDuplicateElements(int[] numbers) {
         Set<Integer> uniqueElements = new HashSet<>();
-        for (int number : numbers) {
+        for (int number : numbers) {//o(n)
             if (!uniqueElements.contains(number)) {
                 uniqueElements.add(number);
             } else {
