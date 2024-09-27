@@ -1,0 +1,27 @@
+Remove One Element to Make the Array Strictly Increasing
+
+Дан целочисленный массив nums,
+вернуть true, если его можно сделать строго возрастающим после удаления ровно одного элемента,
+или false в противном случае. Если массив уже строго возрастающий, вернуть true.
+
+Массив nums строго возрастает, если nums[i - 1] < nums[i] для каждого индекса (1 <= i < nums.length).
+
+Пример 1:
+
+Input: nums = [1,2,10,5,7]
+Output: true
+
+Пример 2:
+
+Input: nums = [2,3,1,2]
+Output: false
+
+Пример 3:
+
+Input: nums = [1,1,1]
+Output: false
+
+Ограничения:
+
+2 <= nums.length <= 1000
+1 <= nums[i] <= 1000
