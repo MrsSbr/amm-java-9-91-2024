@@ -1,6 +1,6 @@
-package ru.vsu.amm.java.Classes;
+package ru.vsu.amm.java.classes;
 
-import ru.vsu.amm.java.Interfaces.Roarable;
+import ru.vsu.amm.java.interfaces.Roarable;
 
 public class TRex extends Dinosaur implements Roarable {
     protected String roar;

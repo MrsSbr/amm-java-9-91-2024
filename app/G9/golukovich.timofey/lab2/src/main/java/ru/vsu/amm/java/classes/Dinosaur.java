@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.Classes;
+package ru.vsu.amm.java.classes;
 
 public abstract class Dinosaur {
     protected int age;

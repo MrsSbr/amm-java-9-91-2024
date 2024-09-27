@@ -1,9 +1,9 @@
 package ru.vsu.amm.java;
 
-import ru.vsu.amm.java.Classes.Dinosaur;
-import ru.vsu.amm.java.Classes.Diplodocus;
-import ru.vsu.amm.java.Classes.TRex;
-import ru.vsu.amm.java.Classes.Triceratops;
+import ru.vsu.amm.java.classes.Dinosaur;
+import ru.vsu.amm.java.classes.Diplodocus;
+import ru.vsu.amm.java.classes.TRex;
+import ru.vsu.amm.java.classes.Triceratops;
 
 public class Main {
     public static void main(String[] args) {

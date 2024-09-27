@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.Classes;
+package ru.vsu.amm.java.classes;
 
 public class Diplodocus extends Dinosaur {
     protected int height;
@@ -30,10 +30,9 @@ public class Diplodocus extends Dinosaur {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Diplodocus)) {
+        if (!(o instanceof Diplodocus diplodocus)) {
             return false;
         }
-        Diplodocus diplodocus = (Diplodocus) o;
         return super.equals(o) && height == diplodocus.height;
     }
 

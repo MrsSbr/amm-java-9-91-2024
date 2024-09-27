@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.Classes;
+package ru.vsu.amm.java.classes;
 
 public class Triceratops extends Dinosaur {
     protected int hornsLength;
@@ -30,10 +30,9 @@ public class Triceratops extends Dinosaur {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Triceratops)) {
+        if (!(o instanceof Triceratops triceratops)) {
             return false;
         }
-        Triceratops triceratops = (Triceratops) o;
         return super.equals(o) && hornsLength == triceratops.hornsLength;
     }
 
