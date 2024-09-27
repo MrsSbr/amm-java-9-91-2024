@@ -44,7 +44,6 @@ public class RomanToInteger {
                 e.printStackTrace();
             }
         }
-
         return total;
     }
 }
