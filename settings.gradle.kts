@@ -122,6 +122,7 @@ student("barkov.pavel", G9) {
 
 student("garshin.maxim", G9) {
     lab(0)
+    lab(1)
 }
 
 
