@@ -8,7 +8,7 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
 
-        List<ConstructionMachineImpl> machines = Arrays.asList(
+        List<ConstructionMachine> machines = Arrays.asList(
                 new Digger("Digger1", 10, 10000),
                 new ConcreteMixer("ConcreteMixer1", 20, 400),
                 new Digger("Digger2", 20, 12000),
@@ -28,7 +28,7 @@ public class Main {
         }
 
         Random random = new Random();
-        ConstructionMachineImpl machine = machines.get(random.nextInt(4));
+        ConstructionMachine machine = machines.get(random.nextInt(4));
 
         if (machine instanceof Digger) {
             System.out.println("\nITS DIGGER\n");
