@@ -7,7 +7,7 @@ public abstract class ConstructionMachine implements Workable {
     public final int weight;
     public final String brand;
 
-    public ConstructionMachineImpl(String brand, int weight) {
+    public ConstructionMachine(String brand, int weight) {
         this.brand = brand;
         this.weight = weight;
     }
