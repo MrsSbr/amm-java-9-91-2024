@@ -6,6 +6,17 @@ import java.util.Scanner;
 
 public class RomanToInteger {
 
+    public static final Map<Character, Integer> ROMAN_VALUES = new HashMap<>();
+    static {
+        ROMAN_VALUES.put('I', 1);
+        ROMAN_VALUES.put('V', 5);
+        ROMAN_VALUES.put('X', 10);
+        ROMAN_VALUES.put('L', 50);
+        ROMAN_VALUES.put('C', 100);
+        ROMAN_VALUES.put('D', 500);
+        ROMAN_VALUES.put('M', 1000);
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String romanInput = scanner.nextLine();
@@ -13,14 +24,6 @@ public class RomanToInteger {
     }
 
     public static int romanToInteger(String s) {
-        Map<Character, Integer> romanValues = new HashMap<>();
-        romanValues.put('I', 1);
-        romanValues.put('V', 5);
-        romanValues.put('X', 10);
-        romanValues.put('L', 50);
-        romanValues.put('C', 100);
-        romanValues.put('D', 500);
-        romanValues.put('M', 1000);
 
         int total = 0;
         int prevValue = 0;
@@ -28,7 +31,7 @@ public class RomanToInteger {
         for (int i = s.length() - 1; i >= 0; i--) {
             char currentChar = s.charAt(i);
             try {
-                int currentValue = romanValues.get(currentChar);
+                int currentValue = ROMAN_VALUES.get(currentChar);
 
                 if (currentValue < prevValue) {
                     total -= currentValue;
