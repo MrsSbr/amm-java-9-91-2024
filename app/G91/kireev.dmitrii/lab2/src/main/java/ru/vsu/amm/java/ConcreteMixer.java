@@ -2,18 +2,23 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public class ConcreteMixer extends ConstructionMachineImpl {
+public class ConcreteMixer extends ConstructionMachine {
 
-    public  final int VOLUME;
+    public final int volume;
 
-    public ConcreteMixer(String brand, int weight, int VOLUME) {
+    public ConcreteMixer(String brand, int weight, int volume) {
         super(brand, weight);
-        this.VOLUME = VOLUME;
+        this.volume = volume;
     }
 
+ @Override
+    public void working() {
+        System.out.println("\u001B[31m" + brand + "\u001B[0m" + " is mixing ");
+    }
+    
     @Override
     public String toString() {
-        return "ConcreteMixer " + "\u001B[31m" + BRAND + "\u001B[0m" + " is working! " + " Volume: " + "\u001B[31m" + VOLUME + "\u001B[0m" + " cubic meters";
+        return "ConcreteMixer " + "\u001B[31m" + BRAND + "\u001B[0m" + " is working! " + " volume: " + "\u001B[31m" + volume + "\u001B[0m" + " cubic meters";
     }
 
     @Override
@@ -23,16 +28,11 @@ public class ConcreteMixer extends ConstructionMachineImpl {
         if (!super.equals(obj) || getClass() != obj.getClass())
             return false;
         ConcreteMixer other = (ConcreteMixer) obj;
-        return VOLUME == other.VOLUME;
+        return volume == other.volume;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), VOLUME);
-    }
-
-    @Override
-    public void working() {
-        System.out.println("\u001B[31m" + BRAND + "\u001B[0m" + " is mixing ");
+        return Objects.hash(super.hashCode(), volume);
     }
 }
