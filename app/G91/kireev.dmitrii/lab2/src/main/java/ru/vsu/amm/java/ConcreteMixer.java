@@ -18,7 +18,7 @@ public class ConcreteMixer extends ConstructionMachine {
     
     @Override
     public String toString() {
-        return "ConcreteMixer " + "\u001B[31m" + BRAND + "\u001B[0m" + " is working! " + " volume: " + "\u001B[31m" + volume + "\u001B[0m" + " cubic meters";
+        return "ConcreteMixer " + "\u001B[31m" + brand + "\u001B[0m" + " is working! " + " volume: " + "\u001B[31m" + volume + "\u001B[0m" + " cubic meters";
     }
 
     @Override
