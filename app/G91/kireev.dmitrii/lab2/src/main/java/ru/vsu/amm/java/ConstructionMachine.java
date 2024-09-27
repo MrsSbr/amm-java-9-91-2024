@@ -1,6 +1,6 @@
 package ru.vsu.amm.java;
 
-public interface ConstructionMachine {
+public interface Workable {
 
     void startEngine();
 
