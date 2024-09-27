@@ -2,29 +2,29 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public abstract class ConstructionMachineImpl implements ConstructionMachine {
+public abstract class ConstructionMachine implements Workable {
 
-    public final int WEIGHT;
-    public final String BRAND;
+    public final int weight;
+    public final String brand;
 
-    public ConstructionMachineImpl(String BRAND, int WEIGHT) {
-        this.BRAND = BRAND;
-        this.WEIGHT = WEIGHT;
+    public ConstructionMachineImpl(String brand, int weight) {
+        this.brand = brand;
+        this.weight = weight;
     }
 
     @Override
     public void startEngine() {
-        System.out.println("brrrr, " + "\u001B[31m" + BRAND + "\u001B[0m" + " started his engine!");
+        System.out.println("brrrr, " + "\u001B[31m" + brand + "\u001B[0m" + " started his engine!");
     }
 
     @Override
     public void stopEngine() {
-        System.out.println("stopped engine of " + "\u001B[31m" + BRAND + "\u001B[0m");
+        System.out.println("stopped engine of " + "\u001B[31m" + brand + "\u001B[0m");
     }
 
     @Override
     public String toString() {
-        return "Abstract machine, brand: " + "\u001B[31m" + BRAND + "\u001B[0m" + " weight: " + "\u001B[31m" + WEIGHT + "\u001B[0m";
+        return "Abstract machine, brand: " + "\u001B[31m" + brand + "\u001B[0m" + " weight: " + "\u001B[31m" + weight + "\u001B[0m";
     }
 
     @Override
@@ -34,11 +34,11 @@ public abstract class ConstructionMachineImpl implements ConstructionMachine {
         if (obj == null || getClass() != obj.getClass())
             return false;
         ConstructionMachineImpl other = (ConstructionMachineImpl) obj;
-        return BRAND.equals(other.BRAND) && WEIGHT == other.WEIGHT;
+        return brand.equals(other.brand) && weight == other.weight;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(BRAND, WEIGHT);
+        return Objects.hash(brand, weight);
     }
 }
