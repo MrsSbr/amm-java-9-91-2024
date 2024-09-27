@@ -18,10 +18,7 @@ public abstract class Medicine {
         return volume;
     }
 
-    public Medicine() {
-    }
-
-    ;
+    public Medicine() {};
 
     @Override
     public String toString() {
