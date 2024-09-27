@@ -30,7 +30,7 @@ public class Truck extends Car {
 
     @Override
     public int hashCode() {
-        return hash(make, model, year, engine, startPrice, fourWheelDrive, plate);
+        return hash(super.hashCode(), fourWheelDrive);
     }
 
     @Override

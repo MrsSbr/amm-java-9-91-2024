@@ -30,7 +30,7 @@ public class PassengerCar extends Car {
 
     @Override
     public int hashCode() {
-        return hash(make, model, year, engine, startPrice, comfortLevel, plate);
+        return hash(super.hashCode(), comfortLevel);
     }
 
     @Override

@@ -2,6 +2,8 @@ package ru.vsu.amm.java.abstractClasses;
 
 import ru.vsu.amm.java.interfaces.Vehicle;
 
+import static java.util.Objects.hash;
+
 public abstract class Car implements Vehicle {
     protected String make;
     protected String model;
@@ -56,6 +58,11 @@ public abstract class Car implements Vehicle {
         return make.equals(objCast.make) && model.equals(objCast.model) && year == objCast.year
                 && engine.equals(objCast.engine) && startPrice == objCast.startPrice
                 && plate.equals(objCast.plate);
+    }
+
+    @Override
+    public int hashCode() {
+        return hash(make, model, year, engine, startPrice, plate);
     }
 
     public abstract float calculatePrice();
