@@ -1,6 +1,6 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
 
-class WorkerAnt extends AbstractAnt {
+public class WorkerAnt extends AbstractAnt {
 
     public WorkerAnt(String name, int age) {
         super(name, age);

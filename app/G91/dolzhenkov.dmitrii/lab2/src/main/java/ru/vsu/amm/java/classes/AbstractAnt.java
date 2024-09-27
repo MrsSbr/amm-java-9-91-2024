@@ -1,6 +1,8 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
 
-abstract class AbstractAnt implements Ant {
+import ru.vsu.amm.java.interfaces.Ant;
+
+public abstract class AbstractAnt implements Ant {
     protected String name;
     protected int age;
 
