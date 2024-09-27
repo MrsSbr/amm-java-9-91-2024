@@ -2,18 +2,23 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public class Digger extends ConstructionMachineImpl {
+public class Digger extends ConstructionMachine {
 
-    public final int POWER;
+    public final int power;
 
-    public Digger(String brand, int weight, int POWER) {
+    public Digger(String brand, int weight, int power) {
         super(brand, weight);
-        this.POWER = POWER;
+        this.power = power;
     }
 
+@Override
+    public void working() {
+        System.out.println("Digger " + "\u001B[31m" + brand + "\u001B[0m" + " is digging");
+    }
+    
     @Override
     public String toString() {
-        return "Digger " + "\u001B[31m" + BRAND + "\u001B[0m" + " is working!" + " Power: " + "\u001B[31m" + POWER + "\u001B[0m" + " watt";
+        return "Digger " + "\u001B[31m" + brand + "\u001B[0m" + " is working!" + " power: " + "\u001B[31m" + power + "\u001B[0m" + " watt";
     }
 
     @Override
@@ -23,16 +28,12 @@ public class Digger extends ConstructionMachineImpl {
         if (!super.equals(obj) || getClass() != obj.getClass())
             return false;
         Digger other = (Digger) obj;
-        return POWER == other.POWER;
+        return power == other.power;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), POWER);
+        return Objects.hash(super.hashCode(), power);
     }
 
-    @Override
-    public void working() {
-        System.out.println("Digger " + "\u001B[31m" + BRAND + "\u001B[0m" + " is digging");
-    }
 }
