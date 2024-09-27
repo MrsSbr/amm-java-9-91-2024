@@ -9,7 +9,7 @@ public class Palindrom {
         if (isPalindrome(number)) {
             System.out.println("true");
         } else {
-            System.out.println("false!");
+            System.out.println("false");
         }
     }
 
