@@ -4,8 +4,9 @@ package ru.vsu.amm.java;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Main {
+public class Sudoku {
 
+    // package-private модификатор доступа
     final static int LENGTH = 9;
     final static int BLOCK = 3;
 
@@ -45,14 +46,13 @@ public class Main {
 
     // основной алгоритм решения Судоку
     public static boolean sudokuSolver(String[][] board) {
-        String digit;
         // перебор всех элементов матрицы Судоку
         for (int i = 0; i < LENGTH; i++) {
             for (int j = 0; j < LENGTH; j++) {
                 if (board[i][j].equals(".")) {
                     // перебор всех возможных цифр
                     for (int k = 0; k < LENGTH; k++) {
-                        digit = String.valueOf(k + 1);
+                        String digit = String.valueOf(k + 1);
                         // проверка наличия цифры в строке, столбце или блоке
                         if (checkRow(board, i, digit)
                                 && checkColumn(board, j, digit)
@@ -71,13 +71,6 @@ public class Main {
         return true;
     }
 
-    // Исключение для некорректных данных при вводе
-    public static class InvalidInputException extends Exception {
-        public InvalidInputException(String message) {
-            super(message);
-        }
-    }
-
     public static void main(String[] args) {
 //        String[][] board = {{"5", "3", ".", ".", "7", ".", ".", ".", "."},
 //                {"6", ".", ".", "1", "9", "5", ".", ".", "."},
@@ -91,9 +84,8 @@ public class Main {
         String[][] board = new String[LENGTH][LENGTH];
         try {
             Scanner scanner = new Scanner(System.in);
-            String source;
             for (int i = 0; i < LENGTH; i++) {
-                source = scanner.nextLine();
+                String source = scanner.nextLine();
                 // проверка вводимой строки на соответствие шаблону строки Судоку
                 if (source.matches("((\\d|\\.) ){8}(\\d|\\.)")) {
                     board[i] = source.split(" ");
