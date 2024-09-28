@@ -27,11 +27,11 @@ public class Client {
         return driverLicense;
     }
 
-    public void addRentalOrder(RentalOrder rentalOrder) {
-        rentalOrderList.add(rentalOrder);
-    }
-
     public List<RentalOrder> getRentalOrderList() {
         return rentalOrderList;
+    }
+
+    public void addRentalOrder(RentalOrder rentalOrder) {
+        rentalOrderList.add(rentalOrder);
     }
 }

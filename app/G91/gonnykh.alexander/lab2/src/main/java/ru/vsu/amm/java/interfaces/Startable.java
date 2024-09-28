@@ -1,5 +1,5 @@
 package ru.vsu.amm.java.interfaces;
 
-public interface Vehicle {
+public interface Startable {
     void startCar();
 }

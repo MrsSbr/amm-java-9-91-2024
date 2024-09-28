@@ -2,21 +2,23 @@ package ru.vsu.amm.java.classes;
 
 import ru.vsu.amm.java.abstractClasses.Car;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
+import static java.time.temporal.ChronoUnit.SECONDS;
 
 public class RentalOrder {
     private Car car;
     private Client client;
-    private Date startDate;
-    private Date endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private float totalPrice;
 
-    public RentalOrder(Car car, Client client, Date startDate, Date endDate) {
+    public RentalOrder(Car car, Client client, LocalDateTime startDate, LocalDateTime endDate) {
         this.car = car;
         this.client = client;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.totalPrice = (endDate.getTime() - startDate.getTime()) * car.calculatePrice();
+        this.totalPrice = SECONDS.between(startDate, endDate) * car.calculatePrice();
     }
 
     public Car getCar() {
@@ -27,11 +29,11 @@ public class RentalOrder {
         return client;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 

@@ -1,20 +1,36 @@
 package ru.vsu.amm.java.classes;
 
 import ru.vsu.amm.java.abstractClasses.Car;
+import ru.vsu.amm.java.enums.ComfortLevel;
 
 import static java.util.Objects.hash;
 
 public class PassengerCar extends Car {
-    private int comfortLevel;
+    private ComfortLevel comfortLevel;
 
-    public PassengerCar(String make, String model, int year, String engine, float price, int comfortLevel, String plate) {
+    public PassengerCar(String make, String model, int year, String engine, float price, ComfortLevel comfortLevel, String plate) {
         super(make, model, year, engine, price, plate);
         this.comfortLevel = comfortLevel;
     }
 
+    public ComfortLevel getComfortLevel() {
+        return comfortLevel;
+    }
+
     @Override
     public float calculatePrice() {
-        return comfortLevel * startPrice;
+        float cost = startPrice;
+        switch (comfortLevel) {
+            case COMFORT -> cost *= 2;
+            case COMFORT_PLUS -> cost *= 3;
+            case BUSINESS -> cost *= 4;
+        }
+        return cost;
+    }
+
+    @Override
+    public void startCar() {
+        System.out.println("Вы управляете пассажирской машиной");
     }
 
     @Override
@@ -43,14 +59,5 @@ public class PassengerCar extends Car {
         }
         PassengerCar objCast = (PassengerCar) obj;
         return comfortLevel == objCast.comfortLevel;
-    }
-
-    public int getComfortLevel() {
-        return comfortLevel;
-    }
-
-    @Override
-    public void startCar() {
-        System.out.println("Вы управляете пассажирской машиной");
     }
 }

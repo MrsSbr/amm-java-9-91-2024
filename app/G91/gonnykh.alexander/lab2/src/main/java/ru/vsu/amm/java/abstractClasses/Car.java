@@ -1,10 +1,10 @@
 package ru.vsu.amm.java.abstractClasses;
 
-import ru.vsu.amm.java.interfaces.Vehicle;
+import ru.vsu.amm.java.interfaces.Startable;
 
 import static java.util.Objects.hash;
 
-public abstract class Car implements Vehicle {
+public abstract class Car implements Startable {
     protected String make;
     protected String model;
     protected int year;
@@ -46,6 +46,8 @@ public abstract class Car implements Vehicle {
         return plate;
     }
 
+    public abstract float calculatePrice();
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -64,6 +66,4 @@ public abstract class Car implements Vehicle {
     public int hashCode() {
         return hash(make, model, year, engine, startPrice, plate);
     }
-
-    public abstract float calculatePrice();
 }

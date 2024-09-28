@@ -12,9 +12,18 @@ public class Truck extends Car {
         this.fourWheelDrive = fourWheelDrive;
     }
 
+    public boolean getFourWheelDrive() {
+        return fourWheelDrive;
+    }
+
     @Override
     public float calculatePrice() {
         return (fourWheelDrive) ? 2 * startPrice : startPrice;
+    }
+
+    @Override
+    public void startCar() {
+        System.out.println("Вы управляете грузовой машиной");
     }
 
     @Override
@@ -43,14 +52,5 @@ public class Truck extends Car {
         }
         Truck objCast = (Truck) obj;
         return fourWheelDrive == objCast.getFourWheelDrive();
-    }
-
-    public boolean getFourWheelDrive() {
-        return fourWheelDrive;
-    }
-
-    @Override
-    public void startCar() {
-        System.out.println("Вы управляете грузовой машиной");
     }
 }
