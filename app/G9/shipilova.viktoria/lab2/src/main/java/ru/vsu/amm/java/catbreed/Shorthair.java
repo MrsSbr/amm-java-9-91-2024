@@ -1,10 +1,12 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.catbreed;
 
-import java.util.Objects;
-
-public class Shorthair extends CatBreedImpl {
+public class Shorthair extends CatBreed {
     public Shorthair(String breedName, String description) {
         super(breedName, description, 5.0);
+    }
+
+    public void hunt() {
+        System.out.println(getBreedName() + " is a great hunter.");
     }
 
     @Override
