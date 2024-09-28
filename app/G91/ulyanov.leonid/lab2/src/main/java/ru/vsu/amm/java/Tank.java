@@ -26,10 +26,10 @@ public class Tank extends MilitaryVehicle {
 
     @Override
     public String toString() {
-        return "[TANK]\n" +
-                super.toString() +
-                "\nCaliber: " + caliber +
-                "\nArmor: " + armor;
+        return "[TANK]\n"
+                + super.toString()
+                + "\nCaliber: " + caliber
+                + "\nArmor: " + armor;
     }
 
     @Override

@@ -72,10 +72,10 @@ public abstract class MilitaryVehicle implements Machinery {
 
     @Override
     public String toString() {
-        return "Armament:\t" + armament +
-                "\nCapacity:\t" + capacity +
-                "\nSpeed:\t" + speed +
-                "\nStatus:\t" + currentStatus;
+        return "Armament:\t" + armament
+                + "\nCapacity:\t" + capacity
+                + "\nSpeed:\t" + speed
+                + "\nStatus:\t" + currentStatus;
     }
 
     @Override

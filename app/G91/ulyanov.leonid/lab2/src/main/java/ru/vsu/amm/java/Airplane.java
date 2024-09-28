@@ -19,9 +19,9 @@ public class Airplane extends MilitaryVehicle {
 
     @Override
     public String toString() {
-        return "[AIRPLANE]\n" +
-                super.toString() +
-                "\nMax Height:\t" + maxHeight;
+        return "[AIRPLANE]\n"
+                + super.toString()
+                + "\nMax Height:\t" + maxHeight;
     }
 
     @Override
