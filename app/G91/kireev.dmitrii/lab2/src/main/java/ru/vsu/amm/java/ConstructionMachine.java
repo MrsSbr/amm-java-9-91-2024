@@ -33,7 +33,7 @@ public abstract class ConstructionMachine implements Workable {
             return true;
         if (obj == null || getClass() != obj.getClass())
             return false;
-        ConstructionMachineImpl other = (ConstructionMachineImpl) obj;
+        ConstructionMachine other = (ConstructionMachine) obj;
         return brand.equals(other.brand) && weight == other.weight;
     }
 
