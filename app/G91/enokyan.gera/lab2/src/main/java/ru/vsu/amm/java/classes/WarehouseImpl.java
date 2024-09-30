@@ -1,4 +1,6 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
+
+import ru.vsu.amm.java.interfaces.Warehouse;
 
 import java.util.Objects;
 

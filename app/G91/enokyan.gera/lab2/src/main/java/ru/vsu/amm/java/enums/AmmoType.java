@@ -1,4 +1,4 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.enums;
 
 public enum AmmoType {
     NATO_5_56,

@@ -1,4 +1,6 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
+
+import ru.vsu.amm.java.enums.BombType;
 
 import java.util.Objects;
 
