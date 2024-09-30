@@ -13,12 +13,15 @@ public class Main {
         System.out.println(passengerFirst);
         passengerFirst.beep();
         passengerFirst.beep();
-        if (passengerFirst.equals(passengerSecond))
+        if (passengerFirst.equals(passengerSecond)) {
             System.out.println("passengerCar == pSecond");
-        else
+        }
+        else {
             System.out.println("passengerCar != pSecond");
+        }
         System.out.println(passengerFirst.hashCode());
         System.out.println(passengerSecond.hashCode());
+
         System.out.println("\nSport Car");
         SportCar sportFirst = new SportCar("Ford Mustang", "black",2024, 200,100, "something");
         System.out.println(sportFirst);
@@ -27,6 +30,7 @@ public class Main {
         System.out.println(sportFirst instanceof Car);
         System.out.println("Is sportFirst == Passanger car?") ;
         System.out.println(sportFirst instanceof PassengerCar);
+
         System.out.println("\nTruck Car");
         List<Cargo> cargos = new ArrayList<>();
         cargos.add(new Cargo("milk", 100, 150));
@@ -37,6 +41,7 @@ public class Main {
         System.out.println(truckFirt.getDescription());
         System.out.println("Вмешается ли груз?\n" + truckFirt.isFragile());
         System.out.println("Стоимость доставки\n" + truckFirt.calculateShippingCost(10.05));
+
         System.out.println("\nElectric Car");
         ElectricCar electricFirst = new ElectricCar("Tesla","yellow",500,1000);
         ElectricCar electricSecond = new ElectricCar("BMW","black",300,700);
@@ -44,6 +49,7 @@ public class Main {
         electricFirst.charge(100);
         System.out.println("Can reach distination 1500? " + electricFirst.canReachDestination(1500));
         electricFirst.beep();
+
         System.out.println(electricFirst.compareWith(truckFirt));
         System.out.println(electricFirst.compareWith(sportFirst));
         System.out.println(electricFirst.compareWith(passengerFirst));
