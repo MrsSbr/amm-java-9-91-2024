@@ -1,10 +1,10 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.car;
 
 import java.util.Objects;
 
 public class ElectricCar extends Car {
     private final int batteryCapacity; // Емкость батареи в кВтч
-    private  int range; // Запас хода в километрах
+    private int range; // Запас хода в километрах
 
     public ElectricCar(String model, String color, int batteryCapacity, int range) {
         super(model, color);
@@ -25,17 +25,11 @@ public class ElectricCar extends Car {
         System.out.println("Бззззз! Я электромобиль!");
     }
 
-    @Override
-    public String toString() {
-        return "Электромобиль модели " + super.getModel() + " (" + getColor() + "), с батареей на " + batteryCapacity + " кВтч";
-    }
-
     // Новый метод: Проверка возможности добраться до точки
     public boolean canReachDestination(int distance) {
         return distance <= range;
     }
 
-    // Новый метод: Зарядка
     public void charge(int chargingTime) {
         // Предположим, что 1 час зарядки дает 50 км запаса хода
         int additionalRange = chargingTime * 50;
@@ -64,19 +58,22 @@ public class ElectricCar extends Car {
     }
 
     @Override
+    public String toString() {
+        return "Электромобиль модели " + super.getModel() + " (" + getColor() + "), с батареей на " + batteryCapacity + " кВтч";
+    }
+
+    @Override
     public boolean equals(Object o) {
-        boolean flag = false;
         if (this == o)
-            flag = true;
+            return true;
         else if (o == null || getClass() != o.getClass())
-            flag =  false;
+            return false;
         else if (!super.equals(o))
-            flag = false;
+            return false;
         else {
             ElectricCar that = (ElectricCar) o;
-            flag =  batteryCapacity == that.batteryCapacity && range == that.range;
+            return batteryCapacity == that.batteryCapacity && range == that.range;
         }
-        return flag;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.car;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,38 +24,6 @@ public class Truck extends Car implements Cargable {
     }
 
     @Override
-    public void beep() {
-        System.out.println("Бип-бип! Я грузовик!");
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() +
-                "load capacity: " + loadCapacity + " tons" +
-                "\nnumber of wheels: " + numberOfWheels +
-                "\ncargo: " + cargos;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        boolean result = false;
-        if (this == o)
-            result = true;
-        else if (o == null || getClass() != o.getClass())
-            result = false;
-        else {
-            Truck truck = (Truck) o;
-            result = loadCapacity == truck.loadCapacity && numberOfWheels == truck.numberOfWheels && super.equals(o);
-        }
-        return result;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), loadCapacity, numberOfWheels);
-    }
-
-    @Override
     public double getVolume() {
         return loadCapacity * 3.5; // Примерный объем в кубических метрах (возьмем средний коэффициент)
     }
@@ -63,6 +31,11 @@ public class Truck extends Car implements Cargable {
     @Override
     public String getDescription() {
         return "Грузовик модели " + super.getModel() + " (" + getColor() + "), предназначенный для перевозки грузов";
+    }
+
+    @Override
+    public void beep() {
+        System.out.println("Бип-бип! Я грузовик!");
     }
 
     @Override
@@ -79,4 +52,25 @@ public class Truck extends Car implements Cargable {
         return getVolume() * ratePerUnit; // Рассчитываем стоимость доставки исходя из объема и ставки
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "load capacity: " + loadCapacity + " tons" + "\nnumber of wheels: " + numberOfWheels + "\ncargo: " + cargos;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        else if (o == null || getClass() != o.getClass())
+            return false;
+        else {
+            Truck truck = (Truck) o;
+            return loadCapacity == truck.loadCapacity && numberOfWheels == truck.numberOfWheels && super.equals(o);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), loadCapacity, numberOfWheels);
+    }
 }
