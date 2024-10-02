@@ -1,19 +1,20 @@
 package ru.vsu.amm.java;
 
-import java.util.Date;
+
+import java.time.LocalDate;
 
 public class AncientRecord {
-    private Date date;
+    private LocalDate date;
     private int mammothWeight;
     private HunterName hunterName;
 
-    public AncientRecord(Date date, int mammothWeight, HunterName hunterName) {
+    public AncientRecord(LocalDate date, int mammothWeight, HunterName hunterName) {
         this.date = date;
         this.mammothWeight = mammothWeight;
         this.hunterName = hunterName;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
