@@ -27,16 +27,16 @@ public int searchInsert(int[] nums, int target) {
         int[] nums1 = {1, 3, 5, 6};
         int target1 = 5;
         int result1 = solution.searchInsert(nums1, target1);
-        System.out.println("Пример 1: " + result1); // Output: 2
+        System.out.println("Пример 1: " + result1);
 
         int[] nums2 = {1, 3, 5, 6};
         int target2 = 2;
         int result2 = solution.searchInsert(nums2, target2);
-        System.out.println("Пример 2: " + result2); // Output: 1
+        System.out.println("Пример 2: " + result2);
 
         int[] nums3 = {1, 3, 5, 6};
         int target3 = 7;
         int result3 = solution.searchInsert(nums3, target3);
-        System.out.println("Пример 3: " + result3); // Output: 4
+        System.out.println("Пример 3: " + result3);
     }
 }
