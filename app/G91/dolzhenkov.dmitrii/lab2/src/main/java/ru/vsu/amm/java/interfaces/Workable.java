@@ -1,5 +1,5 @@
 package ru.vsu.amm.java.interfaces;
 
-public interface Ant {
+public interface Workable {
     void work();
 }

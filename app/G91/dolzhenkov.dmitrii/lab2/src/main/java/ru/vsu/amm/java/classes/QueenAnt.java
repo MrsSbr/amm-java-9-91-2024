@@ -1,6 +1,6 @@
 package ru.vsu.amm.java.classes;
 
-public class QueenAnt extends AbstractAnt {
+public class QueenAnt extends Ant {
 
     private int countLarvaes = 0;
 

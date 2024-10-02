@@ -1,12 +1,12 @@
 package ru.vsu.amm.java.classes;
 
-import ru.vsu.amm.java.interfaces.Ant;
+import ru.vsu.amm.java.interfaces.Workable;
 
-public abstract class AbstractAnt implements Ant {
+public abstract class Ant implements Workable {
     protected String name;
     protected int age;
 
-    public AbstractAnt(String name, int age) {
+    public Ant(String name, int age) {
         this.name = name;
         this.age = age;
     }
@@ -25,7 +25,7 @@ public abstract class AbstractAnt implements Ant {
     public boolean equals(Object obj) {
         if (obj == null || getClass() != obj.getClass()) return false;
         if (this == obj) return true;
-        AbstractAnt that = (AbstractAnt) obj;
+        Ant that = (Ant) obj;
         return age == that.age && name.equals(that.name);
     }
 

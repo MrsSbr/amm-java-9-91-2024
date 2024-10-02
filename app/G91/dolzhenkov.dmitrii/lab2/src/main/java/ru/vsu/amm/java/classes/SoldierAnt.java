@@ -1,6 +1,6 @@
 package ru.vsu.amm.java.classes;
 
-public class SoldierAnt extends AbstractAnt {
+public class SoldierAnt extends Ant {
 
     public SoldierAnt(String name, int age) {
         super(name, age);
