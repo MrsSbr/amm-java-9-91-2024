@@ -13,8 +13,8 @@ public class RandomWinnerGenerator {
     private static final String[] departments = {
             "HR", "IT", "Finance", "Marketing", "Sales", "R&D", "Support", "Management"
     };
-    private static final int START_YEAR = 1973; // 50 лет назад от 2023
-    private static final int END_YEAR = 2023;
+    private static final int START_YEAR = 1974;
+    private static final int END_YEAR = 2024;
 
     public static Winner generateRandomWinner() {
         int year = random.nextInt(END_YEAR - START_YEAR + 1) + START_YEAR;

@@ -29,7 +29,7 @@ public class Winner {
         this.year = year;
     }
 
-    public void setNamee(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
