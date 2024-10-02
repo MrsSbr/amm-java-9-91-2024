@@ -10,37 +10,34 @@ public class Main {
     private static final char[] ENGLISH_ALPHABET = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
-    private static Map<Character, String> morseCodeMap = new HashMap<>() {
-        {
-            put('a', ".-");
-            put('b', "-...");
-            put('c', "-.-.");
-            put('d', "-..");
-            put('e', ".");
-            put('f', "..-.");
-            put('g', "--.");
-            put('h', "....");
-            put('i', "..");
-            put('j', ".---");
-            put('k', "-.-");
-            put('l', ".-..");
-            put('m', "--");
-            put('n', "-.");
-            put('o', "---");
-            put('p', ".--.");
-            put('q', "--.-");
-            put('r', ".-.");
-            put('s', "...");
-            put('t', "-");
-            put('u', "..-");
-            put('v', "...-");
-            put('w', ".--");
-            put('x', "-..-");
-            put('y', "-.--");
-            put('z', "--..");
-        }
-    };
-
+    private static Map<Character, String> MORSECODEMAP = new HashMap<>() {{
+        put('a', ".-");
+        put('b', "-...");
+        put('c', "-.-.");
+        put('d', "-..");
+        put('e', ".");
+        put('f', "..-.");
+        put('g', "--.");
+        put('h', "....");
+        put('i', "..");
+        put('j', ".---");
+        put('k', "-.-");
+        put('l', ".-..");
+        put('m', "--");
+        put('n', "-.");
+        put('o', "---");
+        put('p', ".--.");
+        put('q', "--.-");
+        put('r', ".-.");
+        put('s', "...");
+        put('t', "-");
+        put('u', "..-");
+        put('v', "...-");
+        put('w', ".--");
+        put('x', "-..-");
+        put('y', "-.--");
+        put('z', "--..");
+    }};
 
     public static String[] inputWords() {
         System.out.println("Enter the number of words: ");
