@@ -11,7 +11,6 @@ import ru.vsu.amm.java.winners.Winner;
 import java.util.List;
 
 public class StorageWinnersTest {
-
     private StorageWinners<Winner> storage;
 
     @BeforeEach

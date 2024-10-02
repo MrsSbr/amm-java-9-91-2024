@@ -55,5 +55,6 @@ public class Winner {
     @Override
     public int hashCode() {
         return Objects.hash(year, name, departmentName);
+
     }
 }
