@@ -56,7 +56,7 @@ public class Main {
         StringBuilder result = new StringBuilder(" ");
         for (int i = 0; i < input.length(); i++) {
             char ch = input.charAt(i);
-            result.append(morseCodeMap.get(ch));
+            result.append(MORSECODEMAP.get(ch));
         }
         return result.toString();
     }
