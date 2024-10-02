@@ -4,8 +4,7 @@ import java.time.LocalDate;
 
 public class PatientConfig {
 
-    public static final int COUNT = 150;
-
+    public static final int COUNT = 1964;
 
     public static final int NAMELENGTH = 5;
 
@@ -13,10 +12,11 @@ public class PatientConfig {
 
     public static final int PATRONYMICLENGTH = 5;
 
-    public static final int ILLNESSLENGTH = 20;
+    public static final int ILLNESSLENGTH = 100;
 
 
     public static final LocalDate NOW = LocalDate.now();
+
     public static final LocalDate FIRSTDATE = LocalDate.now().minusYears(10);
 
     public static final LocalDate HEALTHYPERIOD = LocalDate.now().minusYears(1);

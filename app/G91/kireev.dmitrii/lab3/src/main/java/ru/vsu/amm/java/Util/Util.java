@@ -8,13 +8,14 @@ import java.util.Random;
 public class Util {
 
     private static final Random RANDOM = new Random();
+    private static final int LETTERSCOUNT = 26;
 
     public static String getRandomString(int stringLength) {
 
         StringBuilder result = new StringBuilder();
 
         for (int i = 0; i < stringLength; i++) {
-            result.append((char) (RANDOM.nextInt(26) + 'a'));
+            result.append((char) (RANDOM.nextInt(LETTERSCOUNT) + 'a'));
         }
 
         return result.toString();
