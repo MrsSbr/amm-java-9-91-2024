@@ -11,6 +11,10 @@ public abstract class Ant implements Workable {
         this.age = age;
     }
 
+    public void say() {
+        System.out.println("Я муравей");
+    }
+
     @Override
     public void work() {
         System.out.println(name + " выполняет работу.");

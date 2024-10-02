@@ -1,5 +1,7 @@
 package ru.vsu.amm.java.classes;
 
+import static java.util.Objects.hash;
+
 public class QueenAnt extends Ant {
 
     private int countLarvaes = 0;
@@ -10,6 +12,11 @@ public class QueenAnt extends Ant {
     }
 
     @Override
+    public void say() {
+        System.out.println("Я королева муравьев");
+    }
+
+    @Override
     public void work() {
         System.out.println(name + " царствует в муравейнике.");
     }
@@ -17,6 +24,16 @@ public class QueenAnt extends Ant {
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj) && countLarvaes == ((QueenAnt) obj).countLarvaes;
+    }
+
+    @Override
+    public int hashCode() {
+        return hash(super.hashCode(), countLarvaes);
+    }
+
+    @Override
+    public String toString() {
+        return "QueenAnt{name='" + name + "', age=" + age + ", countLarvaes=" + countLarvaes + "}";
     }
 
     public void makeLarvae() {

@@ -1,14 +1,14 @@
 package ru.vsu.amm.java;
 
 import ru.vsu.amm.java.classes.Ant;
-import ru.vsu.amm.java.classes.SoldierAnt;
 import ru.vsu.amm.java.classes.QueenAnt;
+import ru.vsu.amm.java.classes.SoldierAnt;
 import ru.vsu.amm.java.classes.WorkerAnt;
 
 public class AntWorkingMain {
     public static void main(String[] args) {
-        Ant worker = new WorkerAnt("Муравей 1", 5);
-        Ant cook = new SoldierAnt("Муравей 2", 3);
+        Ant worker = new WorkerAnt("Муравей 1", 2);
+        Ant cook = new SoldierAnt("Муравей 2", 3, 1);
         Ant queen = new QueenAnt("Королева", 5, 4);
 
         worker.work();

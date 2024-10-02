@@ -7,7 +7,17 @@ public class WorkerAnt extends Ant {
     }
 
     @Override
+    public void say() {
+        System.out.println("Я рабочий муравей");
+    }
+
+    @Override
     public void work() {
         System.out.println(name + " собирает еду.");
+    }
+
+    @Override
+    public String toString() {
+        return "WorkerAnt{name='" + name + "', age=" + age + "}";
     }
 }
