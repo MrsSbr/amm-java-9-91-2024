@@ -9,7 +9,7 @@ public abstract class Car implements Startable {
     protected String model;
     protected int year;
     protected String engine;
-    protected float startPrice;
+    protected double startPrice;
     protected String plate;
 
     public Car(String make, String model, int year, String engine, float price, String plate) {
@@ -38,7 +38,7 @@ public abstract class Car implements Startable {
         return engine;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return startPrice;
     }
 
@@ -46,7 +46,7 @@ public abstract class Car implements Startable {
         return plate;
     }
 
-    public abstract float calculatePrice();
+    public abstract double calculatePrice();
 
     @Override
     public boolean equals(Object obj) {

@@ -25,6 +25,7 @@ public class CarRent {
         System.out.println(truck.calculatePrice());
         rent.addCar(passengerCar);
         rent.addCar(truck);
+
         Client firstClient = new Client("Алексей", 20, "12343");
         Client secondClient = new Client("Александр", 19, "15554");
         rent.addCustomer(firstClient);
@@ -35,7 +36,6 @@ public class CarRent {
         equalsCheck(truck, truck);
         typeCheck(truck);
         arendCheck(rent, passengerCar, firstClient, secondClient);
-
     }
 
     public static void hashCheck(String message, Car car) {
@@ -67,9 +67,12 @@ public class CarRent {
     public static void arendCheck(Rent rent, Car passengerCar, Client firstClient, Client secondClient) {
         String firstClientName = firstClient.getName();
         String secondClientName = secondClient.getName();
-        rent.addOrder(passengerCar, firstClient, inputDate(firstClientName), inputDate(firstClientName));
-        if (!rent.addOrder(passengerCar, secondClient, inputDate(secondClientName),
-                inputDate(secondClientName))) {
+        LocalDateTime firstClientDataBegin = inputDate(firstClientName);
+        LocalDateTime firstClientDataEnd = inputDate(firstClientName);
+        LocalDateTime secondClientDataBegin = inputDate(secondClientName);
+        LocalDateTime secondClientDataEnd = inputDate(secondClientName);
+        rent.addOrder(passengerCar, firstClient, firstClientDataBegin, firstClientDataEnd);
+        if (!rent.addOrder(passengerCar, secondClient, secondClientDataBegin, secondClientDataEnd)) {
             System.out.println("Не удалось арендовать транспорт, в данным момент он недоступен!");
         } else {
             System.out.println("Успешно!");

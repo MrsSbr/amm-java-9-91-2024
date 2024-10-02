@@ -11,7 +11,7 @@ public class RentalOrder {
     private Client client;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private float totalPrice;
+    private double totalPrice;
 
     public RentalOrder(Car car, Client client, LocalDateTime startDate, LocalDateTime endDate) {
         this.car = car;
@@ -37,7 +37,7 @@ public class RentalOrder {
         return endDate;
     }
 
-    public float getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 

@@ -18,8 +18,8 @@ public class PassengerCar extends Car {
     }
 
     @Override
-    public float calculatePrice() {
-        float cost = startPrice;
+    public double calculatePrice() {
+        double cost = startPrice;
         switch (comfortLevel) {
             case COMFORT -> cost *= 2;
             case COMFORT_PLUS -> cost *= 3;

@@ -17,7 +17,7 @@ public class Truck extends Car {
     }
 
     @Override
-    public float calculatePrice() {
+    public double calculatePrice() {
         return (fourWheelDrive) ? 2 * startPrice : startPrice;
     }
 
