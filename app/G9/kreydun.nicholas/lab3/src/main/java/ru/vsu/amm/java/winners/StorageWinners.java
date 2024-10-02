@@ -1,6 +1,5 @@
 package ru.vsu.amm.java.winners;
 
-
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

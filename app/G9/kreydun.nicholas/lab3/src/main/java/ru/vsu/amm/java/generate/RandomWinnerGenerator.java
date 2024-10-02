@@ -1,5 +1,4 @@
 package ru.vsu.amm.java.generate;
-
 import ru.vsu.amm.java.winners.StorageWinners;
 import ru.vsu.amm.java.winners.Winner;
 
