@@ -17,13 +17,13 @@ public class CheckArrayIncreasing {
                 nums2[i] = Integer.parseInt(parts[i]);
                 if (nums2[i] < 1 || nums2[i] > 1000) {
                     System.out.print("Неверное значение числа.");
-                    good=false;
+                    good = false;
                     //throw new IllegalArgumentException("Неверное значение числа");
                 }
             }
             if (nums2.length < 2 || nums2.length > 1000) {
                 System.out.print("Неверный размер массива.");
-                good=false;
+                good = false;
                 //throw new IllegalArgumentException("Неверный размер массива");
             }
             scanner.close();
