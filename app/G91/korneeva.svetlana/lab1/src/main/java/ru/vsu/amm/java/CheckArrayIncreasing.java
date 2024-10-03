@@ -14,11 +14,15 @@ public class CheckArrayIncreasing {
             for (int i = 0; i < parts.length; i++) {
                 nums2[i] = Integer.parseInt(parts[i]);
                 if (nums2[i] < 1 || nums2[i] > 1000) {
-                    throw new IllegalArgumentException("Неверное значение числа");
+                    System.out.print("Неверное значение числа.");
+                    return;
+                   // throw new IllegalArgumentException("Неверное значение числа");
                 }
             }
             if (nums2.length < 2 || nums2.length > 1000) {
-                throw new IllegalArgumentException("Неверный размер массива");
+                System.out.print("Неверный размер массива.");
+                return;
+                //throw new IllegalArgumentException("Неверный размер массива");
             }
             scanner.close();
 
