@@ -6,6 +6,8 @@ public class CheckArrayIncreasing {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите элементы массива через пробел: ");
+        boolean good=true;
+
         try {
             String input = scanner.nextLine();
             String[] parts = input.split(" ");
@@ -15,20 +17,23 @@ public class CheckArrayIncreasing {
                 nums2[i] = Integer.parseInt(parts[i]);
                 if (nums2[i] < 1 || nums2[i] > 1000) {
                     System.out.print("Неверное значение числа.");
-                    return;
-                   // throw new IllegalArgumentException("Неверное значение числа");
+                    good=false;
+
+                    //throw new IllegalArgumentException("Неверное значение числа");
                 }
             }
             if (nums2.length < 2 || nums2.length > 1000) {
                 System.out.print("Неверный размер массива.");
-                return;
+                good=false;
+
                 //throw new IllegalArgumentException("Неверный размер массива");
             }
             scanner.close();
+            if(good) {
+                boolean result1 = canBeIncreasing(nums2);
 
-            boolean result1 = canBeIncreasing(nums2);
-
-            System.out.println("nums2: " + result1);
+                System.out.println("nums2: " + result1);
+            }
         } catch (IllegalArgumentException e) {
             System.err.println("Ошибка: " + e.getMessage());
             e.printStackTrace();
