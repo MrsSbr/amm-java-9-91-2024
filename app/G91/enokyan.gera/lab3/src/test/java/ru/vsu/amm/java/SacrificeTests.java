@@ -1,6 +1,6 @@
 package ru.vsu.amm.java;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entity.Sacrifice;
 import ru.vsu.amm.java.enums.SacrificeType;
@@ -15,30 +15,30 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public final class SacrificeTests {
 
-    private List<Sacrifice> records;
+    private static List<Sacrifice> sacrificeList;
 
-    @BeforeEach
-    public void setup() {
-        records = getSomeSacrifices();
+    @BeforeAll
+    public static void setup() {
+        sacrificeList = getSomeSacrifices();
     }
 
     @Test
-    public void testGetNotConvictedPeople() {
-        int instantRainCount = SacrificeStats.CountInstantRainSacrifices(records);
+    public void testCountInstantRainSacrifices() {
+        int instantRainCount = SacrificeStats.CountInstantRainSacrifices(sacrificeList);
 
         assertEquals(2, instantRainCount);
     }
 
     @Test
-    public void testGetPeopleMultipleArticles() {
-        YearMonth lastMonthWithoutSacrifices = SacrificeStats.FindLastMonthWithoutSacrifices(records);
+    public void testFindLastMonthWithoutSacrifices() {
+        YearMonth lastMonthWithoutSacrifices = SacrificeStats.FindLastMonthWithoutSacrifices(sacrificeList);
 
         assertEquals(YearMonth.of(1498, 12), lastMonthWithoutSacrifices);
     }
 
     @Test
     public void testPrintSacrificeStats() {
-        String res = SacrificeStats.PrintSacrificeStats(records);
+        String res = SacrificeStats.PrintSacrificeStats(sacrificeList);
 
         assertEquals(
                 """

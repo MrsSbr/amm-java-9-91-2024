@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SacrificeDemo {
-
     public static void main(String[] args) {
         List<Sacrifice> x = new ArrayList<>(7243){};
         for (int i = 0; i < 7243; ++i) {
