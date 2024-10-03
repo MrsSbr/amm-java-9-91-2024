@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         StorageWinners<Winner> storageWinners = new StorageWinners<>();
 
-        RandomWinnerGenerator.populateStorageWinners(storageWinners, 200); // Генерация 100 победителей
+        RandomWinnerGenerator.populateStorageWinners(storageWinners, 100); // Генерация 100 победителей
         storageWinners.printWinners();
     }
 }
