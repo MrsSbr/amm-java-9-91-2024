@@ -2,7 +2,7 @@ package ru.vsu.amm.java;
 
 import java.util.Scanner;
 
-public class Solution {
+public class CheckArrayIncreasing {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите элементы массива через пробел: ");
@@ -26,6 +26,7 @@ public class Solution {
 
             System.out.println("nums2: " + result1);
         } catch (IllegalArgumentException e) {
+            System.err.println("Ошибка: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -36,9 +37,6 @@ public class Solution {
             if (nums[i - 1] >= nums[i]) {
                 removed++;
                 if (removed > 1) {
-                    return false;
-                }
-                if (i > 1 && nums[i - 2] >= nums[i]) {
                     return false;
                 }
             }
