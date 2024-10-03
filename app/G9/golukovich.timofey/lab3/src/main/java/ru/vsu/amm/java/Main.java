@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Main {
     private static final int ANCIENT_RECORDS_COUNT = 8573;
-    private static LocalDate personDate = LocalDate.of(-34567, 8, 9);
+    private static final LocalDate personDate = LocalDate.of(-34567, 8, 9);
 
     public static void main(String[] args) {
         var wall = new AncientWall(ANCIENT_RECORDS_COUNT);

@@ -3,11 +3,7 @@ package ru.vsu.amm.java;
 
 import java.time.LocalDate;
 
-public class AncientRecord {
-    private LocalDate date;
-    private int mammothWeight;
-    private HunterName hunterName;
-
+public record AncientRecord(LocalDate date, int mammothWeight, HunterName hunterName) {
     public AncientRecord(LocalDate date, int mammothWeight, HunterName hunterName) {
         this.date = date;
         this.mammothWeight = mammothWeight;

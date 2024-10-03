@@ -1,23 +1,21 @@
 package ru.vsu.amm.java;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AncientWallTest {
-    private AncientWall ancientWall;
+    private static AncientWall ancientWall;
 
-    @BeforeEach
-    public void initAncientWall() {
+    @BeforeAll
+    public static void initAncientWall() {
         ArrayList<AncientRecord> records = new ArrayList<>();
 
         records.add(new AncientRecord(
@@ -71,6 +69,13 @@ public class AncientWallTest {
         int sumRecentMammothWeight = ancientWall.sumRecentMammothWeight(date);
 
         assertEquals(200 + 230, sumRecentMammothWeight);
+    }
+
+    @Test
+    public void sumRecentMammothWeightThrowsTest() {
+        LocalDate date = LocalDate.of(-30000, 1, 1);
+
+        assertThrows(NoSuchElementException.class, () -> ancientWall.sumRecentMammothWeight(date));
     }
 
     @Test

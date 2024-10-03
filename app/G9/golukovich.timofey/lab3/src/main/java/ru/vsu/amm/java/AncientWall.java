@@ -1,18 +1,15 @@
 package ru.vsu.amm.java;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AncientWall {
-    private int MAX_HUNTING_DAY = -30000 * 365;
-    private int MIN_HUNTING_DAY = -40000 * 365;
-    private int MAX_MAMMOTH_WEIGHT = 500;
-    private int MIN_MAMMOTH_WEIGHT = 150;
-    private ArrayList<AncientRecord> records;
+    private final int MAX_HUNTING_DAY = -30000 * 365;
+    private final int MIN_HUNTING_DAY = -40000 * 365;
+    private final int MAX_MAMMOTH_WEIGHT = 500;
+    private final int MIN_MAMMOTH_WEIGHT = 150;
+    private List<AncientRecord> records;
 
     public AncientWall(int recordsCount) {
         records = new ArrayList<>();
@@ -23,8 +20,9 @@ public class AncientWall {
                     random.nextInt(MIN_HUNTING_DAY, MAX_HUNTING_DAY));
             int mammothWeight = random.nextInt(
                     MIN_MAMMOTH_WEIGHT, MAX_MAMMOTH_WEIGHT);
+            int hunterNamesCount = HunterName.values().length;
             HunterName hunterName = HunterName
-                    .values()[random.nextInt(HunterName.values().length)];
+                    .values()[random.nextInt(hunterNamesCount)];
 
             records.add(new AncientRecord(date, mammothWeight, hunterName));
         }
@@ -36,23 +34,23 @@ public class AncientWall {
 
     public List<HunterName> findHunterNames() {
         return records.stream()
-                .map(rec -> rec.getHunterName())
+                .map(AncientRecord::getHunterName)
                 .distinct()
                 .collect(Collectors.toList());
     }
 
-    public int sumRecentMammothWeight(LocalDate currentDate) {
+    public int sumRecentMammothWeight(LocalDate currentDate) throws NoSuchElementException {
         return records.stream()
                 .filter(rec -> rec.getDate().isAfter(currentDate.minusYears(3))
                         && rec.getDate().isBefore(currentDate.plusYears(3)))
-                .map(rec -> rec.getMammothWeight())
-                .reduce((sum, w) -> sum + w)
-                .get();
+                .map(AncientRecord::getMammothWeight)
+                .reduce(Integer::sum)
+                .orElseThrow();
     }
 
     public Map<HunterName, Long> countMammothsForEachHunter() {
         return records.stream()
-                .collect(Collectors.groupingBy(rec -> rec.getHunterName(),
+                .collect(Collectors.groupingBy(AncientRecord::getHunterName,
                         Collectors.counting()));
     }
 }
