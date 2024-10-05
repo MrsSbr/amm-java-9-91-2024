@@ -82,6 +82,9 @@ student("zayseva.anastasiya", G9) {
 student("korneeva.svetlana", G91) {
     lab(0)
 }
+student("abdrahmanova.evgeniya", G91) {
+    lab(0)
+}
 
 student("barbashina.irina", G9) {
     lab(0)
@@ -156,6 +159,7 @@ student("serova.polina", G9) {
 student("shipilova.viktoria", G9) {
     lab(0)
     lab(1)
+    lab(2)
 }
 student("kreydun.nicholas", G9) {
     lab(0)
