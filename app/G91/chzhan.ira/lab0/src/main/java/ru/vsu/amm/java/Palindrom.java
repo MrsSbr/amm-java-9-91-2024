@@ -1,7 +1,7 @@
 package ru.vsu.amm.java;
 import java.util.Scanner;
 
-public class Main {
+public class Palindrom {
     public static void main(String[] args) {
         System.out.println("Введите число: ");
         int result = new Scanner(System.in).nextInt();
