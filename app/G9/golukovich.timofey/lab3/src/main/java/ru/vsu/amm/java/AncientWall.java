@@ -1,7 +1,10 @@
 package ru.vsu.amm.java;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class AncientWall {
@@ -39,13 +42,11 @@ public class AncientWall {
                 .collect(Collectors.toList());
     }
 
-    public int sumRecentMammothWeight(LocalDate currentDate) throws NoSuchElementException {
+    public int sumRecentMammothWeight(LocalDate currentDate) {
         return records.stream()
                 .filter(rec -> rec.getDate().isAfter(currentDate.minusYears(3))
                         && rec.getDate().isBefore(currentDate.plusYears(3)))
-                .map(AncientRecord::getMammothWeight)
-                .reduce(Integer::sum)
-                .orElseThrow();
+                .mapToInt(AncientRecord::getMammothWeight).sum();
     }
 
     public Map<HunterName, Long> countMammothsForEachHunter() {

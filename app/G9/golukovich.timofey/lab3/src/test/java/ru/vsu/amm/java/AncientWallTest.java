@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -69,13 +68,6 @@ public class AncientWallTest {
         int sumRecentMammothWeight = ancientWall.sumRecentMammothWeight(date);
 
         assertEquals(200 + 230, sumRecentMammothWeight);
-    }
-
-    @Test
-    public void sumRecentMammothWeightThrowsTest() {
-        LocalDate date = LocalDate.of(-30000, 1, 1);
-
-        assertThrows(NoSuchElementException.class, () -> ancientWall.sumRecentMammothWeight(date));
     }
 
     @Test
