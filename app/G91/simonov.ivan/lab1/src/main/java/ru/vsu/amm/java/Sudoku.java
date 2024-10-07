@@ -6,12 +6,10 @@ import java.util.Scanner;
 
 public class Sudoku {
 
-    // package-private модификатор доступа
-    final static int LENGTH = 9;
-    final static int BLOCK = 3;
+    private final static int LENGTH = 9;
+    private final static int BLOCK = 3;
 
-    // проверка наличия цифры в строке
-    public static boolean checkRow(String[][] board, int i, String val) {
+    private static boolean checkRow(String[][] board, int i, String val) {
         for (int k = 0; k < LENGTH; k++) {
             if (board[i][k].equals(val)) {
                 return false;
@@ -20,8 +18,7 @@ public class Sudoku {
         return true;
     }
 
-    // проверка наличия цифры в столбце
-    public static boolean checkColumn(String[][] board, int j, String val) {
+    private static boolean checkColumn(String[][] board, int j, String val) {
         for (int k = 0; k < LENGTH; k++) {
             if (board[k][j].equals(val)) {
                 return false;
@@ -30,13 +27,12 @@ public class Sudoku {
         return true;
     }
 
-    // проверка наличия цифры в блоке
-    public static boolean checkBlock(String[][] board, int row, int col, String val) {
-        int start_row = row - row % BLOCK;
-        int start_col = col - col % BLOCK;
+    private static boolean checkBlock(String[][] board, int row, int col, String val) {
+        int startRow = row - row % BLOCK;
+        int startCol = col - col % BLOCK;
         for (int i = 0; i < BLOCK; i++) {
             for (int j = 0; j < BLOCK; j++) {
-                if (board[start_row + i][start_col + j].equals(val)) {
+                if (board[startRow + i][startCol + j].equals(val)) {
                     return false;
                 }
             }
@@ -44,16 +40,14 @@ public class Sudoku {
         return true;
     }
 
-    // основной алгоритм решения Судоку
-    public static boolean sudokuSolver(String[][] board) {
-        // перебор всех элементов матрицы Судоку
+    // Используется алгоритм с возвратом (backtracking)
+    // Временная и пространственная сложность алгоритма: O(1)
+    private static boolean sudokuSolver(String[][] board) {
         for (int i = 0; i < LENGTH; i++) {
             for (int j = 0; j < LENGTH; j++) {
                 if (board[i][j].equals(".")) {
-                    // перебор всех возможных цифр
                     for (int k = 0; k < LENGTH; k++) {
                         String digit = String.valueOf(k + 1);
-                        // проверка наличия цифры в строке, столбце или блоке
                         if (checkRow(board, i, digit)
                                 && checkColumn(board, j, digit)
                                 && checkBlock(board, i, j, digit)) {
@@ -86,7 +80,6 @@ public class Sudoku {
             Scanner scanner = new Scanner(System.in);
             for (int i = 0; i < LENGTH; i++) {
                 String source = scanner.nextLine();
-                // проверка вводимой строки на соответствие шаблону строки Судоку
                 if (source.matches("((\\d|\\.) ){8}(\\d|\\.)")) {
                     board[i] = source.split(" ");
                 } else {
