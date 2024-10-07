@@ -5,6 +5,7 @@ import ru.vsu.amm.java.Interfaces.Furniture;
 import java.util.Objects;
 
 public abstract class FurnitureImpl implements Furniture {
+
     protected String name;
 
     protected String material;
