@@ -17,6 +17,17 @@ public class CourierDelivery extends Delivery {
     }
 
     @Override
+    public void deliver() {
+        System.out.println("Я " +  name
+                + ", курьер, привёз вам доставку!");
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nимя: " + name;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -33,16 +44,5 @@ public class CourierDelivery extends Delivery {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), name);
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + "\nимя: " + name;
-    }
-
-    @Override
-    public void deliver() {
-        System.out.println("Я " +  name
-        + ", курьер, привёз вам доставку!");
     }
 }

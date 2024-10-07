@@ -1,17 +1,25 @@
 package ru.vsu.amm.java;
 
-import java.util.Objects;
-
 public class PostalDelivery extends Delivery {
-    public String postAddress;
 
     public PostalDelivery(String address, double cost,
                           int deliveringTimeDays, String postAddress) {
         super(address, cost, deliveringTimeDays);
-        this.postAddress = postAddress;
     }
 
-    public PostalDelivery() {}
+    public PostalDelivery() {
+    }
+
+    @Override
+    public void deliver() {
+        System.out.println("Заберите посылку на почте по адресу "
+                + address);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nадрес почты: " + address;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -24,22 +32,11 @@ public class PostalDelivery extends Delivery {
         }
 
         PostalDelivery that = (PostalDelivery) o;
-        return super.equals(o) && Objects.equals(postAddress, that.postAddress);
+        return super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), postAddress);
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + "\nадрес почты: " + postAddress;
-    }
-
-    @Override
-    public void deliver() {
-        System.out.println("Заберите посылку на почте по адресу "
-                + postAddress);
+        return super.hashCode();
     }
 }
