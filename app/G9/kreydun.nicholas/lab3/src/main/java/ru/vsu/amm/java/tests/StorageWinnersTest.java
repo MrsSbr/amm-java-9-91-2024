@@ -32,7 +32,7 @@ public class StorageWinnersTest {
         assertTrue(winners.contains("TestName"), "Winner should be added.");
     }
 
-    //test invalid invalid year
+    //test invalid year
     @Test
     void testAddInvalidYear() {
         Winner testWinner = new Winner(-2020, "TestName", "IT");
