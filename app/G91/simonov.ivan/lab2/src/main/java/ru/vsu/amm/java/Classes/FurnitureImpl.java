@@ -9,7 +9,7 @@ public abstract class FurnitureImpl implements Furniture {
 
     protected String material;
 
-    protected Double price;
+    protected double price;
 
     protected boolean isShowcaseSample;
 
@@ -62,7 +62,7 @@ public abstract class FurnitureImpl implements Furniture {
         }
 
         FurnitureImpl other = (FurnitureImpl) obj;
-        return name.equals(other.name) && material.equals(other.material) && price.equals(other.price);
+        return name.equals(other.name) && material.equals(other.material) && price == other.price;
     }
 
     @Override
