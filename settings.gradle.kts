@@ -55,10 +55,8 @@ student("simonov.ivan", G91) {
 
 student("ulyanov.leonid", G91) {
     lab(0)
-}
-
-student("ulyanov.leonid", G91) {
     lab(1)
+    lab(2)
 }
 
 student("nelezin.oleg", G9) {
@@ -144,7 +142,7 @@ student("jasser.daniel", G9) {
     lab(0)
 }
 
-student("gavrilov.mihail", G9){
+student("gavrilov.mihail", G9) {
     lab(0)
 }
 student ("safonova.nastia", G9){
