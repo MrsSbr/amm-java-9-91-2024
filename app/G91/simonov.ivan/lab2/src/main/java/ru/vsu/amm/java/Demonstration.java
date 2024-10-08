@@ -6,7 +6,7 @@ import ru.vsu.amm.java.Classes.Sofa;
 
 public class Demonstration {
 
-    public static String instanceofCheck(FurnitureImpl furnitureImpl) {
+    private static String instanceofCheck(FurnitureImpl furnitureImpl) {
         return furnitureImpl instanceof Chair ? "Chair" : "Sofa";
     }
 
