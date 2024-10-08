@@ -15,8 +15,6 @@ public class Sofa extends FurnitureImpl {
         this.places = places;
     }
 
-    public Sofa() {}
-
     @Override
     public void move() {
         System.out.println("Диван " + name + " перемещается с тяжелым глухим звуком!");

@@ -1,7 +1,6 @@
 package ru.vsu.amm.java.Classes;
 
 import ru.vsu.amm.java.Interfaces.Furniture;
-
 import java.util.Objects;
 
 public abstract class FurnitureImpl implements Furniture {
@@ -13,8 +12,6 @@ public abstract class FurnitureImpl implements Furniture {
     protected Double price;
 
     protected boolean isShowcaseSample;
-
-    public FurnitureImpl() {}
 
     public FurnitureImpl(String name,
                          String material,
@@ -50,7 +47,7 @@ public abstract class FurnitureImpl implements Furniture {
     public String toString() {
         return "Название: " + name +
                 "\nМатериал: " + material +
-                "\nЦена" + price +
+                "\nЦена: " + price +
                 "\nВитринный образец: " + (isShowcaseSample ? "Да" : "Нет");
     }
 

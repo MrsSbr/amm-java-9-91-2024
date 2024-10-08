@@ -15,8 +15,6 @@ public class Chair extends FurnitureImpl {
         this.legs = legs;
     }
 
-    public Chair() {}
-
     @Override
     public void move() {
         System.out.println("Стул " + name + " перемещается со скрежетом ножек!");
