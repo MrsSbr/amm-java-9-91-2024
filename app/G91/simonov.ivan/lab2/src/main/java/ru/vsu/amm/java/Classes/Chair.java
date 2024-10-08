@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Chair extends FurnitureImpl {
 
-    private int legs;
+    private final int legs;
 
     public Chair(String name,
           String material,

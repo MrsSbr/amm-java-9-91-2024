@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Sofa extends FurnitureImpl {
 
-    private int places;
+    private final int places;
 
     public Sofa(String name,
                  String material,
