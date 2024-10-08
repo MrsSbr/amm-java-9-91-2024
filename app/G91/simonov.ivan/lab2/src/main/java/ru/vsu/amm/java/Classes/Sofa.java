@@ -29,8 +29,16 @@ public class Sofa extends FurnitureImpl {
 
     @Override
     public boolean equals(Object obj) {
-        Sofa other = (Sofa) obj;
-        return places == other.places && super.equals(obj);
+        if (this == obj) {
+            return true;
+        }
+
+        if (super.equals(obj)) {
+            Sofa other = (Sofa) obj;
+            return places == other.places;
+        }
+
+        return false;
     }
 
     @Override

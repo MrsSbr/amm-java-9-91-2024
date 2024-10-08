@@ -50,6 +50,8 @@ public class Demonstration {
 
         System.out.println("\nchair1.equals(chair2): " + chair1.equals(chair2));
         System.out.println("chair1.equals(chair3): " + chair1.equals(chair3));
+        System.out.println("chair1.equals(sofa1): " + chair1.equals(sofa1));
+        System.out.println("sofa1.equals(null): " + sofa1.equals(null));
 
         System.out.print("\n" + sofa1 + "\n\n");
         sofa1.move();
@@ -59,6 +61,7 @@ public class Demonstration {
 
         System.out.println("chair1.hashCode(): " + chair1.hashCode());
         System.out.println("chair3.hashCode(): " + chair3.hashCode());
+        System.out.println("chair2.hashCode(): " + chair2.hashCode());
         System.out.println("sofa1.hashCode(): " + sofa1.hashCode());
 
         System.out.println("\nchair1 is instance of " + instanceofCheck(chair1));

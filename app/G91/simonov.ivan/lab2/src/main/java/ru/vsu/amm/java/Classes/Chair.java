@@ -29,8 +29,16 @@ public class Chair extends FurnitureImpl {
 
     @Override
     public boolean equals(Object obj) {
-        Chair other = (Chair) obj;
-        return legs == other.legs && super.equals(obj);
+        if (this == obj) {
+            return true;
+        }
+
+        if (super.equals(obj)) {
+            Chair other = (Chair) obj;
+            return legs == other.legs;
+        }
+
+        return false;
     }
 
     @Override
