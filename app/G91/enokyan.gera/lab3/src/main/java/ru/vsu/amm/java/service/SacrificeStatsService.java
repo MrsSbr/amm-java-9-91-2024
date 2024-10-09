@@ -4,19 +4,29 @@ import ru.vsu.amm.java.entity.Sacrifice;
 import ru.vsu.amm.java.enums.SacrificeType;
 
 import java.time.YearMonth;
-import java.util.*;
+import java.util.List;
+import java.util.HashSet;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public final class SacrificeStatsService {
     private SacrificeStatsService() {
     }
-    
-    public static int CountInstantRainSacrifices(List<Sacrifice> sacrificeList) {
+
+    public static int CountInstantRainSacrifices(List<Sacrifice> sacrificeList)
+            throws NullPointerException {
+        if (sacrificeList == null)
+            throw new NullPointerException();
+
         return sacrificeList.stream()
                 .reduce(0, (acc, s) -> acc + (s.daysUntilRain() == 1 ? 1 : 0), Integer::sum);
     }
 
-    public static YearMonth FindLastMonthWithoutSacrifices(List<Sacrifice> sacrificeList) {
+    public static YearMonth FindLastMonthWithoutSacrifices(List<Sacrifice> sacrificeList)
+            throws NullPointerException {
+        if (sacrificeList == null)
+            throw new NullPointerException();
+
         var yearMonthWithSacrifice = sacrificeList.stream()
                 .map(s -> YearMonth.from(s.date()))
                 .collect(Collectors.toCollection(HashSet::new));
@@ -28,19 +38,17 @@ public final class SacrificeStatsService {
                 .orElse(null);
     }
 
-    public static double CompareHumanAndAnimalSacrificesEfficiency(List<Sacrifice> sacrificeList) {
-        var x = sacrificeList.stream()
-                .reduce(
-                        new ArrayList<>(Collections.nCopies(4, 0)),
-                        (acc, s) -> {
-                            int t = s.sacrificeType() == SacrificeType.Human ? 0 : 2;
-                            acc.set(t, acc.get(t) + 1);
-                            acc.set(t + 1, acc.get(t + 1) + s.daysUntilRain());
-                            return acc;
-                            },
-                        (_, b) -> b
-                );
+    public static double CompareHumanAndAnimalSacrificesEfficiency(List<Sacrifice> sacrificeList)
+            throws NullPointerException, ArithmeticException {
+        if (sacrificeList == null)
+            throw new NullPointerException();
 
-        return ((double) x.get(1) / x.get(0)) / ((double) x.get(3) / x.get(2)) - 1;
+        var x = sacrificeList.stream()
+                .collect(Collectors.groupingBy(Sacrifice::sacrificeType, Collectors.averagingInt(Sacrifice::daysUntilRain)));
+
+        if (!x.containsKey(SacrificeType.Human) || !x.containsKey(SacrificeType.Animal))
+            throw new ArithmeticException();
+
+        return x.get(SacrificeType.Human) / x.get(SacrificeType.Animal) - 1;
     }
 }

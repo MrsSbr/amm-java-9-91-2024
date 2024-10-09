@@ -2,15 +2,16 @@ package ru.vsu.amm.java;
 
 import ru.vsu.amm.java.entity.Sacrifice;
 import ru.vsu.amm.java.service.SacrificeStatsService;
-import ru.vsu.amm.java.util.ArrayListOfSacrificeFactory;
+import ru.vsu.amm.java.util.SacrificeFactory;
 
 import java.util.List;
 
 public class SacrificeDemo {
     public static void main(String[] args) {
-        List<Sacrifice> x = ArrayListOfSacrificeFactory.generateSacrifices(7243);
+        List<Sacrifice> x = SacrificeFactory.generateSacrifice(7243);
 
         System.out.println("Sacrifices with instant rain: " + SacrificeStatsService.CountInstantRainSacrifices(x));
+
         System.out.println("Last month without sacrifices: " + SacrificeStatsService.FindLastMonthWithoutSacrifices(x));
 
         var diff = SacrificeStatsService.CompareHumanAndAnimalSacrificesEfficiency(x);

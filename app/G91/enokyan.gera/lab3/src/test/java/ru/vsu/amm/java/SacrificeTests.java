@@ -1,6 +1,5 @@
 package ru.vsu.amm.java;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entity.Sacrifice;
 import ru.vsu.amm.java.enums.SacrificeType;
@@ -15,26 +14,53 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public final class SacrificeTests {
 
-    private static List<Sacrifice> sacrificeList;
+    private static final List<Sacrifice> nullSacrificeList = null;
+    private static final List<Sacrifice> emptySacrificeList = new ArrayList<>();
+    private static final List<Sacrifice> fullSacrificeList = getSomeSacrifices();
 
-    @BeforeAll
-    public static void setup() {
-        sacrificeList = getSomeSacrifices();
+    @Test
+    public void testCountInstantRainSacrificesWithNull() {
+        assertThrows(NullPointerException.class, () -> SacrificeStatsService.CountInstantRainSacrifices(nullSacrificeList));
     }
 
     @Test
-    public void testCountInstantRainSacrifices() {
-        assertEquals(2, SacrificeStatsService.CountInstantRainSacrifices(sacrificeList));
+    public void testCountInstantRainSacrificesWithEmptyList() {
+        assertEquals(0, SacrificeStatsService.CountInstantRainSacrifices(emptySacrificeList));
     }
 
     @Test
-    public void testFindLastMonthWithoutSacrifices() {
-        assertEquals(YearMonth.of(1498, 12), SacrificeStatsService.FindLastMonthWithoutSacrifices(sacrificeList));
+    public void testCountInstantRainSacrificesWithFullList() {
+        assertEquals(2, SacrificeStatsService.CountInstantRainSacrifices(fullSacrificeList));
     }
 
     @Test
-    public void testCompareHumanAndAnimalSacrificesEfficiency() {
-        assertEquals(-0.4, SacrificeStatsService.CompareHumanAndAnimalSacrificesEfficiency(sacrificeList));
+    public void testFindLastMonthWithoutSacrificesWithNull() {
+        assertThrows(NullPointerException.class, () -> SacrificeStatsService.FindLastMonthWithoutSacrifices(nullSacrificeList));
+    }
+
+    @Test
+    public void testFindLastMonthWithoutSacrificesWithEmptyList() {
+        assertNull(SacrificeStatsService.FindLastMonthWithoutSacrifices(emptySacrificeList));
+    }
+
+    @Test
+    public void testFindLastMonthWithoutSacrificesWithFullList() {
+        assertEquals(YearMonth.of(1498, 12), SacrificeStatsService.FindLastMonthWithoutSacrifices(fullSacrificeList));
+    }
+
+    @Test
+    public void testCompareHumanAndAnimalSacrificesEfficiencyWithNull() {
+        assertThrows(NullPointerException.class, () -> SacrificeStatsService.CompareHumanAndAnimalSacrificesEfficiency(nullSacrificeList));
+    }
+
+    @Test
+    public void testCompareHumanAndAnimalSacrificesEfficiencyWithEmptyList() {
+        assertThrows(ArithmeticException.class, () -> SacrificeStatsService.CompareHumanAndAnimalSacrificesEfficiency(emptySacrificeList));
+    }
+
+    @Test
+    public void testCompareHumanAndAnimalSacrificesEfficiencyWithFullList() {
+        assertEquals(-0.4, SacrificeStatsService.CompareHumanAndAnimalSacrificesEfficiency(fullSacrificeList));
     }
 
     private static List<Sacrifice> getSomeSacrifices() {
