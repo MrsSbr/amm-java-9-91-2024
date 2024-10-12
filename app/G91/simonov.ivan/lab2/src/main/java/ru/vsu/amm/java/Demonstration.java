@@ -1,41 +1,42 @@
 package ru.vsu.amm.java;
 
-import ru.vsu.amm.java.Classes.FurnitureImpl;
+import ru.vsu.amm.java.Classes.Furniture;
 import ru.vsu.amm.java.Classes.Chair;
 import ru.vsu.amm.java.Classes.Sofa;
+import ru.vsu.amm.java.Enums.Material;
 
 public class Demonstration {
 
-    private static String instanceofCheck(FurnitureImpl furnitureImpl) {
+    private static String instanceofCheck(Furniture furnitureImpl) {
         return furnitureImpl instanceof Chair ? "Chair" : "Sofa";
     }
 
     public static void main(String[] args) {
 
-        FurnitureImpl chair1 = new Chair(
+        Furniture chair1 = new Chair(
                 "Венский",
-                "Кожа",
+                Material.Leather,
                 1199.99,
                 true,
                 4);
 
-        FurnitureImpl chair2 = new Chair(
+        Furniture chair2 = new Chair(
                 "Комфорт",
-                "Жаккард",
+                Material.Jacquard,
                 2520.49,
                 false,
                 3);
 
-        FurnitureImpl chair3 = new Chair(
+        Furniture chair3 = new Chair(
                 "Венский",
-                "Кожа",
+                Material.Leather,
                 1199.99,
                 false,
                 4);
 
-        FurnitureImpl sofa1 = new Sofa(
+        Furniture sofa1 = new Sofa(
                 "Романс",
-                "Синтепон",
+                Material.Sintepon,
                 17900.00,
                 false,
                 2);

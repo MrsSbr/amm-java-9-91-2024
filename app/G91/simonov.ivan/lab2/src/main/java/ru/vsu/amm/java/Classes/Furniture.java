@@ -1,22 +1,24 @@
 package ru.vsu.amm.java.Classes;
 
-import ru.vsu.amm.java.Interfaces.Furniture;
+import ru.vsu.amm.java.Enums.Material;
+import ru.vsu.amm.java.Interfaces.Salable;
+
 import java.util.Objects;
 
-public abstract class FurnitureImpl implements Furniture {
+public abstract class Furniture implements Salable {
 
     protected String name;
 
-    protected String material;
+    protected Material material;
 
     protected double price;
 
     protected boolean isShowcaseSample;
 
-    public FurnitureImpl(String name,
-                         String material,
-                         double price,
-                         boolean isShowcaseSample) {
+    public Furniture(String name,
+                     Material material,
+                     double price,
+                     boolean isShowcaseSample) {
         this.name = name;
         this.material = material;
         this.price = price;
@@ -61,7 +63,7 @@ public abstract class FurnitureImpl implements Furniture {
             return false;
         }
 
-        FurnitureImpl other = (FurnitureImpl) obj;
+        Furniture other = (Furniture) obj;
         return name.equals(other.name) && material.equals(other.material) && price == other.price;
     }
 

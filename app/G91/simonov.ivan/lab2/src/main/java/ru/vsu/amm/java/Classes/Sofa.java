@@ -1,16 +1,18 @@
 package ru.vsu.amm.java.Classes;
 
+import ru.vsu.amm.java.Enums.Material;
+
 import java.util.Objects;
 
-public class Sofa extends FurnitureImpl {
+public class Sofa extends Furniture {
 
     private final int places;
 
     public Sofa(String name,
-                 String material,
-                 double price,
-                 boolean isShowcaseSample,
-                 int places) {
+                Material material,
+                double price,
+                boolean isShowcaseSample,
+                int places) {
         super(name, material, price, isShowcaseSample);
         this.places = places;
     }

@@ -1,16 +1,18 @@
 package ru.vsu.amm.java.Classes;
 
+import ru.vsu.amm.java.Enums.Material;
+
 import java.util.Objects;
 
-public class Chair extends FurnitureImpl {
+public class Chair extends Furniture {
 
     private final int legs;
 
     public Chair(String name,
-          String material,
-          double price,
-          boolean isShowcaseSample,
-          int legs) {
+                 Material material,
+                 double price,
+                 boolean isShowcaseSample,
+                 int legs) {
         super(name, material, price, isShowcaseSample);
         this.legs = legs;
     }

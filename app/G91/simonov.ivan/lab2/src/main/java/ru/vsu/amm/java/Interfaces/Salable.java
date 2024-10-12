@@ -1,6 +1,6 @@
 package ru.vsu.amm.java.Interfaces;
 
-public interface Furniture {
+public interface Salable {
 
     void placeOnShowcase();
 
