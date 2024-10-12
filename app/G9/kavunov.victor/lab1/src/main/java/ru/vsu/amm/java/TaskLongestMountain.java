@@ -3,7 +3,9 @@ package ru.vsu.amm.java;
 public class TaskLongestMountain {
 
     public static int findLongestMountainLength(int[] arr) {
-        int i = 0, maxLength = 0, length;
+        int i = 0;
+        int maxLength = 0;
+        int length;
         if (arr.length >= 3){
             while (i < arr.length - 1) {
                 if (arr[i] < arr[i + 1]) {
