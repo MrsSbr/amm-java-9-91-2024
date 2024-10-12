@@ -1,4 +1,5 @@
 package ru.vsu.amm.java;
+
 import java.util.Scanner;
 
 public class Burgers {
@@ -20,19 +21,17 @@ public class Burgers {
 
         int[] result = checkBurgers(tomatoSlice, cheeseSlice);
 
-        if(result.length == 0)
-        {
+        if (result.length == 0) {
             System.out.print("[]");
+        } else {
+            System.out.print("[%d,%d]", result[0], result[1]);
         }
-        else
-            System.out.print("[" + result[0] + "," + result[1] + "]");
-
     }
 
-    private static int[] checkBurgers(int tomatoSlices, int cheeseSlices){
+    private static int[] checkBurgers(int tomatoSlices, int cheeseSlices) {
         int cntBigTasty = 0;
-        while(cntBigTasty <= tomatoSlices / BIGTASTY_TOMATO_SLICE &&
-                cntBigTasty <= cheeseSlices / BIGTASTY_CHEESE_SLICE){
+        while (cntBigTasty <= tomatoSlices / BIGTASTY_TOMATO_SLICE &&
+                cntBigTasty <= cheeseSlices / BIGTASTY_CHEESE_SLICE) {
 
             int restTomato = tomatoSlices - cntBigTasty * BIGTASTY_TOMATO_SLICE;
             int restCheese = cheeseSlices - cntBigTasty * BIGTASTY_CHEESE_SLICE;
