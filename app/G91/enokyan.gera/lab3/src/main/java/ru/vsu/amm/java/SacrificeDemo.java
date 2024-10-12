@@ -10,11 +10,11 @@ public class SacrificeDemo {
     public static void main(String[] args) {
         List<Sacrifice> x = SacrificeFactory.generateSacrifice(7243);
 
-        System.out.println("Sacrifices with instant rain: " + SacrificeStatsService.CountInstantRainSacrifices(x));
+        System.out.println("Sacrifices with instant rain: " + SacrificeStatsService.countInstantRainSacrifices(x));
 
-        System.out.println("Last month without sacrifices: " + SacrificeStatsService.FindLastMonthWithoutSacrifices(x));
+        System.out.println("Last month without sacrifices: " + SacrificeStatsService.findLastMonthWithoutSacrifices(x));
 
-        var diff = SacrificeStatsService.CompareHumanAndAnimalSacrificesEfficiency(x);
+        var diff = SacrificeStatsService.compareHumanAndAnimalSacrificesEfficiency(x);
         System.out.printf(
                 "Human sacrifices are on average %.2f %% %s efficient than animal ones%n",
                 Math.abs(diff * 100),

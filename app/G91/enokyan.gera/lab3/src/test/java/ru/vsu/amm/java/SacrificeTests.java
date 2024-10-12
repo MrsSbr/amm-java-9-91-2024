@@ -20,47 +20,47 @@ public final class SacrificeTests {
 
     @Test
     public void testCountInstantRainSacrificesWithNull() {
-        assertThrows(NullPointerException.class, () -> SacrificeStatsService.CountInstantRainSacrifices(nullSacrificeList));
+        assertThrows(NullPointerException.class, () -> SacrificeStatsService.countInstantRainSacrifices(nullSacrificeList));
     }
 
     @Test
     public void testCountInstantRainSacrificesWithEmptyList() {
-        assertEquals(0, SacrificeStatsService.CountInstantRainSacrifices(emptySacrificeList));
+        assertEquals(0, SacrificeStatsService.countInstantRainSacrifices(emptySacrificeList));
     }
 
     @Test
     public void testCountInstantRainSacrificesWithFullList() {
-        assertEquals(2, SacrificeStatsService.CountInstantRainSacrifices(fullSacrificeList));
+        assertEquals(2, SacrificeStatsService.countInstantRainSacrifices(fullSacrificeList));
     }
 
     @Test
     public void testFindLastMonthWithoutSacrificesWithNull() {
-        assertThrows(NullPointerException.class, () -> SacrificeStatsService.FindLastMonthWithoutSacrifices(nullSacrificeList));
+        assertThrows(NullPointerException.class, () -> SacrificeStatsService.findLastMonthWithoutSacrifices(nullSacrificeList));
     }
 
     @Test
     public void testFindLastMonthWithoutSacrificesWithEmptyList() {
-        assertNull(SacrificeStatsService.FindLastMonthWithoutSacrifices(emptySacrificeList));
+        assertThrows(NullPointerException.class, () -> SacrificeStatsService.findLastMonthWithoutSacrifices(emptySacrificeList));
     }
 
     @Test
     public void testFindLastMonthWithoutSacrificesWithFullList() {
-        assertEquals(YearMonth.of(1498, 12), SacrificeStatsService.FindLastMonthWithoutSacrifices(fullSacrificeList));
+        assertEquals(YearMonth.of(1498, 12), SacrificeStatsService.findLastMonthWithoutSacrifices(fullSacrificeList));
     }
 
     @Test
     public void testCompareHumanAndAnimalSacrificesEfficiencyWithNull() {
-        assertThrows(NullPointerException.class, () -> SacrificeStatsService.CompareHumanAndAnimalSacrificesEfficiency(nullSacrificeList));
+        assertThrows(NullPointerException.class, () -> SacrificeStatsService.compareHumanAndAnimalSacrificesEfficiency(nullSacrificeList));
     }
 
     @Test
     public void testCompareHumanAndAnimalSacrificesEfficiencyWithEmptyList() {
-        assertThrows(ArithmeticException.class, () -> SacrificeStatsService.CompareHumanAndAnimalSacrificesEfficiency(emptySacrificeList));
+        assertThrows(ArithmeticException.class, () -> SacrificeStatsService.compareHumanAndAnimalSacrificesEfficiency(emptySacrificeList));
     }
 
     @Test
     public void testCompareHumanAndAnimalSacrificesEfficiencyWithFullList() {
-        assertEquals(-0.4, SacrificeStatsService.CompareHumanAndAnimalSacrificesEfficiency(fullSacrificeList));
+        assertEquals(-0.4, SacrificeStatsService.compareHumanAndAnimalSacrificesEfficiency(fullSacrificeList));
     }
 
     private static List<Sacrifice> getSomeSacrifices() {
