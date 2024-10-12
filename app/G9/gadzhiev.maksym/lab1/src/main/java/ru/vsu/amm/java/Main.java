@@ -24,8 +24,7 @@ public class Main {
         }
         if (target == 0) {
             list.add(new ArrayList<>(tmp));
-        }
-        else {
+        } else {
             for (int i = start; i < candidates.length; i++) {
                 tmp.add(candidates[i]);
                 findingArray(candidates, target - candidates[i], i, list, tmp);
