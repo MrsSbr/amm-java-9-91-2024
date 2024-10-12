@@ -11,6 +11,10 @@ public class SoldierAnt extends Ant {
         this.countMedal = countMedal;
     }
 
+    public void protectedQueen() {
+        System.out.println(name + " спас королеву.");
+    }
+
     @Override
     public void say() {
         System.out.println("Я солдат муравей");
@@ -28,16 +32,12 @@ public class SoldierAnt extends Ant {
     }
 
     @Override
-    public int hashCode() {
-        return hash(super.hashCode(), countMedal);
-    }
-
-    @Override
     public boolean equals(Object obj) {
         return super.equals(obj) && countMedal == ((SoldierAnt) obj).countMedal;
     }
 
-    public void protectedQueen() {
-        System.out.println(name + " спас королеву.");
+    @Override
+    public int hashCode() {
+        return hash(super.hashCode(), countMedal);
     }
 }

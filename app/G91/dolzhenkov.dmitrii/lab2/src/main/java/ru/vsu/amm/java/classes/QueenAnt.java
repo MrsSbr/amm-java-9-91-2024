@@ -11,6 +11,11 @@ public class QueenAnt extends Ant {
         this.countLarvaes = countLarvaes;
     }
 
+    public void makeLarvae() {
+        countLarvaes++;
+        System.out.println(name + " снесла личинки.");
+    }
+
     @Override
     public void say() {
         System.out.println("Я королева муравьев");
@@ -22,6 +27,11 @@ public class QueenAnt extends Ant {
     }
 
     @Override
+    public String toString() {
+        return "QueenAnt{name='" + name + "', age=" + age + ", countLarvaes=" + countLarvaes + "}";
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return super.equals(obj) && countLarvaes == ((QueenAnt) obj).countLarvaes;
     }
@@ -29,15 +39,5 @@ public class QueenAnt extends Ant {
     @Override
     public int hashCode() {
         return hash(super.hashCode(), countLarvaes);
-    }
-
-    @Override
-    public String toString() {
-        return "QueenAnt{name='" + name + "', age=" + age + ", countLarvaes=" + countLarvaes + "}";
-    }
-
-    public void makeLarvae() {
-        countLarvaes++;
-        System.out.println(name + " снесла личинки.");
     }
 }
