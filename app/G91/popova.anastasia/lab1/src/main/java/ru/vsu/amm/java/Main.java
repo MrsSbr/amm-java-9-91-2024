@@ -25,11 +25,11 @@ public class Main {
 
     private static boolean isMagic(int[][] grid, int row, int col) {
         int[] count = new int[16];
-        // Проверяем, что все числа находятся в диапазоне от 1 до 10
+        // Проверяем, что все числа находятся в диапазоне от 0 до 15
         for (int i = row; i < row + SIZE; ++i) {
             for (int j = col; j < col + SIZE; ++j) {
                 int num = grid[i][j];
-                if (num < 1 || num > 10 || count[num] != 0) {
+                if (num < 0 || num > 15 || count[num] != 0) {
                     return false;
                 }
                 count[num]++;
