@@ -23,17 +23,36 @@ package ru.vsu.amm.java;
 public class Main {
     static final int SIZE = 3;
 
-    private static boolean isMagic(int[][] grid, int row, int col) {
-        int[] count = new int[16];
-        // Проверяем, что все числа находятся в диапазоне от 0 до 15
+    // Проверяем, что все числа в исходной матрице в диапазоне от 0 до 15
+    private static boolean isInRangeInitial(int[][] grid) {
+        for (int i = 0; i < grid.length; ++i) {
+            for (int j = 0; j < grid.length; ++j) {
+                if (grid[i][j] < 0 || grid[i][j] > 15) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // Проверяем, что все числа в квадрате уникальны и находятся в диапазоне от 1 до 9
+    private static boolean isUniqueInRange(int[][] grid, int row, int col) {
+        int[] count = new int[8];
         for (int i = row; i < row + SIZE; ++i) {
             for (int j = col; j < col + SIZE; ++j) {
                 int num = grid[i][j];
-                if (num < 0 || num > 15 || count[num] != 0) {
+                if (num < 1 || num > 9 || count[num+1] != 0) {
                     return false;
                 }
-                count[num]++;
+                count[num+1]++;
             }
+        }
+        return true;
+    }
+
+    private static boolean isMagic(int[][] grid, int row, int col) {
+        if(!isUniqueInRange(grid, row, col)) {
+            return false;
         }
         // Считаем сумму строк и столбцов
         int sum = grid[row][col] + grid[row][col + 1] + grid[row][col + 2];
@@ -80,10 +99,20 @@ public class Main {
                 {9, 5, 1, 9},
                 {2, 7, 6, 2}
         };
-        System.out.println(countMagicSquares(grid1));
+        if (!isInRangeInitial(grid1)) {
+            System.out.println("oops! initial matrix contains inappropriate numbers");
+        }
+        else {
+            System.out.println(countMagicSquares(grid1));
+        }
         System.out.println("====================");
         System.out.println("test 2:");
         int[][] grid2 = {{8}};
-        System.out.println(countMagicSquares(grid2));
+        if (!isInRangeInitial(grid2)) {
+            System.out.println("oops! initial matrix contains inappropriate numbers");
+        }
+        else {
+            System.out.println(countMagicSquares(grid2));
+        }
     }
 }
