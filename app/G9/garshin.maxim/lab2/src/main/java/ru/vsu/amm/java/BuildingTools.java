@@ -1,7 +1,11 @@
 package ru.vsu.amm.java;
 
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+
 public class BuildingTools {
     public static void main(String[] args) {
+        System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
         InstrumentImpl screwdriverScrewingInstrument = new ScrewingInstrument(
                 "Отвёртка",
                 5.1,

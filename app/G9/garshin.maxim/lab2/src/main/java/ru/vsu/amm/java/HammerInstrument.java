@@ -12,6 +12,10 @@ public class HammerInstrument extends InstrumentImpl {
 
     public HammerInstrument() {}
 
+    @Override
+    public void use() {
+        System.out.println("Инструмент " + getName() + " с весом" + weight + "гр. начинает стучать...");
+    }
 
     @Override
     public String toString() {
@@ -28,10 +32,5 @@ public class HammerInstrument extends InstrumentImpl {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), weight);
-    }
-
-    @Override
-    public void use() {
-        System.out.println("Инструмент " + getName() + " с весом" + weight + "гр. начинает стучать...");
     }
 }

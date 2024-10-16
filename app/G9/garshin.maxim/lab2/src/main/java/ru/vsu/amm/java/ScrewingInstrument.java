@@ -12,6 +12,10 @@ public class ScrewingInstrument extends InstrumentImpl {
 
     public ScrewingInstrument() { }
 
+    public void use() {
+        System.out.println("Инструмент " + getName() + " с типом привода '" + driveType + "' начинает крутиться...");
+    }
+
     @Override
     public String toString() {
         return "Завинчивающий инструмент " + super.toString() +
@@ -27,9 +31,5 @@ public class ScrewingInstrument extends InstrumentImpl {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), driveType);
-    }
-
-    public void use() {
-        System.out.println("Инструмент " + getName() + " с типом привода '" + driveType + "' начинает крутиться...");
     }
 }

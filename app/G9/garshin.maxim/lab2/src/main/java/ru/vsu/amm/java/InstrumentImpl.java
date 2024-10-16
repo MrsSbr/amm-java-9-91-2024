@@ -55,7 +55,8 @@ public abstract class InstrumentImpl implements Instrument {
 
     @Override
     public String toString() {
-        return  "Название:" + name +
+        return  "\nНазвание: " +
+                "" + name +
                 "\nбренд: '" + brand + "'" +
                 "\nширина: " + width +
                 "\nдлина: " + length +
