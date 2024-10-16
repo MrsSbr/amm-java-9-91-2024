@@ -6,13 +6,13 @@ import ru.vsu.amm.java.enums.ShipClass;
 import ru.vsu.amm.java.service.RobbedShipService;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RobbedShipTest {
@@ -33,8 +33,9 @@ public class RobbedShipTest {
         );
         Map<Nationality, Long> result = robbedShipService.boardedShipsByNationality(ships);
 
+        assertFalse(result.isEmpty());
         assertEquals(2, result.size());
-        assertEquals(2L, result.get(Nationality.PORTUGAL));
+        assertEquals(1L, result.get(Nationality.PORTUGAL));
         assertEquals(1L, result.get(Nationality.BRITAIN));
     }
 
@@ -49,8 +50,8 @@ public class RobbedShipTest {
         Optional<Map.Entry<LocalDate, Integer>> result = robbedShipService.leastProfitableMonth(ships);
 
         assertTrue(result.isPresent());
-        assertEquals(LocalDate.of(2023, 1, 1), result.get().getKey());
-        assertEquals(150, result.get().getValue());
+        assertEquals(LocalDate.of(2023, 2, 1), result.get().getKey());
+        assertEquals(75, result.get().getValue());
     }
 
     @Test

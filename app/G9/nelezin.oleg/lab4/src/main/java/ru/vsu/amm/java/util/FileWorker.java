@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FileWorker {
 
@@ -35,9 +34,8 @@ public class FileWorker {
     }
 
     public List<RobbedShip> loadFromFile(String path) {
-        try {
-            List<RobbedShip> ships = new BufferedReader(new FileReader(path))
-                    .lines()
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            return reader.lines()
                     .map(line -> {
                         String[] parts = line.split(";");
                         LocalDate robbedDate = LocalDate.parse(parts[0]);
@@ -54,10 +52,8 @@ public class FileWorker {
                                 .barrelCount(barrelCount)
                                 .isBoarding(isBoarding)
                                 .build();
-                    })
-                    .collect(Collectors.toList());
-            return ships;
-        } catch (FileNotFoundException e) {
+                    }).toList();
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
