@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class StorageWinners<W extends IWinner> {
+public class StorageWinners<W extends WinnerInterface> {
     private final List<W> storage;
 
     public StorageWinners() {
