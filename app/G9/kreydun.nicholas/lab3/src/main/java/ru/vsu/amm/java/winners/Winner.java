@@ -2,7 +2,7 @@ package ru.vsu.amm.java.winners;
 
 import java.util.Objects;
 
-public class Winner {
+public class Winner implements IWinner{
     private int year;
     private String name;
     private String departmentName;
