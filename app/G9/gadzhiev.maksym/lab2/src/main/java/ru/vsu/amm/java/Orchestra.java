@@ -10,8 +10,6 @@ public class Orchestra {
                  4
         );
 
-        stringInstrument.play();
-
         InstrumentImpl windInstrumentOne = new WindInstrument(
                 "Кларнет",
                 850,
@@ -33,19 +31,18 @@ public class Orchestra {
                 60
         );
 
+        windInstrumentOne.play();
+        windInstrumentTwo.play();
+        stringInstrument.play();
         System.out.println("Кларнет equals кларнет " + windInstrumentOne.equals(windInstrumentThree));
         System.out.println("Кларнет equals саксофон " + windInstrumentOne.equals(windInstrumentTwo));
         System.out.println("Саксофон hashCode " + windInstrumentTwo.hashCode());
         System.out.println("Скрипка hashCode " + stringInstrument.hashCode());
-        recognition(stringInstrument);
-        recognition(windInstrumentThree);
-    }
 
-    static void recognition(InstrumentImpl instrument) {
-        if (instrument instanceof StringInstrument) {
-            System.out.println(instrument.getName() + " это струнный инструмент!");
-        } else if (instrument instanceof WindInstrument) {
-            System.out.println(instrument.getName() + " это духовой инструмент!");
+        if (stringInstrument instanceof StringInstrument) {
+            System.out.println(stringInstrument.getName() + " это струнный инструмент!");
+        }  else if (stringInstrument instanceof WindInstrument) {
+            System.out.println(stringInstrument.getName() + " это духовой инструмент!");
         }
     }
 }
