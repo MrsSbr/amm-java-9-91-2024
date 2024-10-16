@@ -1,9 +1,11 @@
 package ru.vsu.amm.java.winners;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -19,28 +21,32 @@ public class StorageWinners<W extends Winner> {
     }
 
     public List<String> findMostFrequentDepartment() {
-        List<String> departments = new ArrayList<>();
+        // Хранение департаментов и их частоты
+        Set<String> departments = new HashSet<>();
         List<Long> counts = new ArrayList<>();
 
+        // Считаем количество упоминаний каждого департамента
         storage.forEach(winner -> {
             String dept = winner.getDepartmentName();
-            int index = departments.indexOf(dept);
-            if (index == -1) {
+            if (departments.contains(dept)) {
+                // Если департамент уже есть, увеличиваем его счетчик
+                int index = new ArrayList<>(departments).indexOf(dept);
+                counts.set(index, counts.get(index) + 1);
+            } else {
+                // Если департамент новый, добавляем его
                 departments.add(dept);
                 counts.add(1L);
-            } else {
-                counts.set(index, counts.get(index) + 1);
             }
         });
 
+        // Находим максимальное количество
         long maxCount = counts.stream().max(Long::compareTo).orElse(0L);
-        List<String> mostFrequentDepartments = new ArrayList<>();
-        int size = counts.size();
-        IntStream.range(0, size)
-                .filter(i -> counts.get(i) == maxCount)
-                .mapToObj(departments::get)
-                .forEach(mostFrequentDepartments::add);
-        return mostFrequentDepartments;
+
+        // Ищем наиболее частые департаменты с использованием стримов
+        return IntStream.range(0, counts.size())
+                .filter(i -> counts.get(i).equals(maxCount))
+                .mapToObj(i -> new ArrayList<>(departments).get(i))
+                .collect(Collectors.toList());
     }
 
     public void printFindMostFrequentDepartment() {
@@ -63,9 +69,14 @@ public class StorageWinners<W extends Winner> {
     }
 
     public int countOneTimeWinners() {
-        return (int) storage.stream()
+        long count = storage.stream()
                 .filter(e -> Collections.frequency(storage, e) == 1)
                 .count();
+
+        if (count >= Integer.MAX_VALUE) {
+            // Обработка случая переполнения, например, возвращаем Integer.MAX_VALUE
+            return Integer.MAX_VALUE;
+        }
+        return (int) count; // Приведение к int безопасно
     }
 }
-

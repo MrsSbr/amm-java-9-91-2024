@@ -9,6 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class StorageWinnersTest {
@@ -45,7 +46,7 @@ public class StorageWinnersTest {
     void testAddInvalidName() {
         Winner testWinner = new Winner(2020, null, "IT");
         storage.add(testWinner);
-        assertTrue(testWinner.getName() == null, "Name should be not null.");
+        assertNull(testWinner.getName(), "Name should be not null.");
     }
 
     //test added invalid year and name
@@ -75,7 +76,7 @@ public class StorageWinnersTest {
     @Test
     public void testCountOneTimeWinners() {
         int count = storage.countOneTimeWinners();
-        assertTrue(count == 2, "Count of one-time winners should be non-negative.");
+        assertEquals(2, count, "Count of one-time winners should be non-negative.");
     }
 
     //test empty method countOneTimeWinners
