@@ -7,38 +7,10 @@ import java.util.List;
 import java.util.Set;
 
 
-public class Storage{
-        List<DriverSchedule> driverSchedules;
-        List<Route> routes;
-        List<Double> profits;
-        Set<Driver> drivers;
-
-        public Storage () {}
-
-        public Storage (List<DriverSchedule> driverSchedules,
-                List<Route> routes,
-                List<Double> profits,
-                Set<Driver> drivers) {
-
-            this.drivers = drivers;
-            this.driverSchedules = driverSchedules;
-            this.profits = profits;
-            this.routes = routes;
-        }
-
-        public List<DriverSchedule> driverSchedules () {
-            return driverSchedules;
-        }
-
-        public List<Route> routes () {
-            return routes;
-        }
-
-        public List<Double> profits () {
-            return profits;
-        }
-
-        public Set<Driver> drivers () {
-            return drivers;
-        }
+public record Storage(
+        List<DriverSchedule> driverSchedules,
+        List<Route> routes,
+        List<Double> profits,
+        Set<Driver> drivers
+) {
 }

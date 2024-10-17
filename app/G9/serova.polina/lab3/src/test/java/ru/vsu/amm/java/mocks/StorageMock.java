@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 
-public class StorageMock extends Storage {
+public class StorageServiceMock implements Storage {
 
     public List<DriverSchedule> stubbedDriverSchedulesResult;
     public List<Route> stubbedRoutesResult;
@@ -21,7 +21,7 @@ public class StorageMock extends Storage {
     public int invokedProfitsCount;
     public int invokedDriversCount;
 
-    public StorageMock() {
+    public StorageServiceMock() {
         this.stubbedDriverSchedulesResult = null;
         this.stubbedRoutesResult = null;
         this.stubbedProfitsResult = null;
