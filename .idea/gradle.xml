@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app/G2_2/sbrodov.andrey/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/anikandrov.andrey/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/barbashina.irina/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/barkov.pavel/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/barkov.pavel/lab1" />
+            <option value="$PROJECT_DIR$/app/G9/bogdanov.nikita/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/gadzhiev.maksym/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/garshin.maxim/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/garshin.maxim/lab1" />
+            <option value="$PROJECT_DIR$/app/G9/gavrilov.mihail/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/globuchik.dmitry/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/golukovich.timofey/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/golukovich.timofey/lab1" />
+            <option value="$PROJECT_DIR$/app/G9/golukovich.timofey/lab2" />
+            <option value="$PROJECT_DIR$/app/G9/jasser.daniel/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/kanatnikov.maxim/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/kanatnikov.maxim/lab1" />
+            <option value="$PROJECT_DIR$/app/G9/kavunov.victor/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/kreydun.nicholas/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/kreydun.nicholas/lab1" />
+            <option value="$PROJECT_DIR$/app/G9/mokshin.nikita/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/nelezin.oleg/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/nelezin.oleg/lab1" />
+            <option value="$PROJECT_DIR$/app/G9/nelezin.oleg/lab2" />
+            <option value="$PROJECT_DIR$/app/G9/nelezin.oleg/lab3" />
+            <option value="$PROJECT_DIR$/app/G9/safonova.nastia/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/serova.polina/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/serova.polina/lab1" />
+            <option value="$PROJECT_DIR$/app/G9/serova.polina/lab2" />
+            <option value="$PROJECT_DIR$/app/G9/serova.polina/lab3" />
+            <option value="$PROJECT_DIR$/app/G9/shipilova.viktoria/lab0" />
+            <option value="$PROJECT_DIR$/app/G9/shipilova.viktoria/lab1" />
+            <option value="$PROJECT_DIR$/app/G9/zayseva.anastasiya/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/belozerov.alexei/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/belozerov.alexei/lab1" />
+            <option value="$PROJECT_DIR$/app/G91/chzhan.ira/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/dolzhenkov.dmitrii/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/dolzhenkov.dmitrii/lab1" />
+            <option value="$PROJECT_DIR$/app/G91/em.vera/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/em.vera/lab1" />
+            <option value="$PROJECT_DIR$/app/G91/enokyan.gera/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/enokyan.gera/lab1" />
+            <option value="$PROJECT_DIR$/app/G91/gonnykh.alexander/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/gonnykh.alexander/lab1" />
+            <option value="$PROJECT_DIR$/app/G91/kireev.dmitrii/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/kireev.dmitrii/lab1" />
+            <option value="$PROJECT_DIR$/app/G91/korneeva.svetlana/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/kurkina.tanya/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/popova.anastasia/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/sbrodova.daria/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/sergacheva.victoria/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/sergacheva.victoria/lab1" />
+            <option value="$PROJECT_DIR$/app/G91/simonov.ivan/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/ulyanov.leonid/lab0" />
+            <option value="$PROJECT_DIR$/app/G91/ulyanov.leonid/lab1" />
+            <option value="$PROJECT_DIR$/template/lab0" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

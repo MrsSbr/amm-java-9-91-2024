@@ -7,7 +7,7 @@ import ru.vsu.amm.java.entity.Driver;
 import ru.vsu.amm.java.entity.Route;
 import ru.vsu.amm.java.mocks.MostProfitableRouteServiceMock;
 import ru.vsu.amm.java.mocks.PassengersCountServiceMock;
-import ru.vsu.amm.java.mocks.StorageServiceMock;
+import ru.vsu.amm.java.mocks.StorageMock;
 import ru.vsu.amm.java.service.StatsServiceImpl;
 import ru.vsu.amm.java.util.DriverScheduleGenerator;
 
@@ -23,13 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public final class StatsServiceImplTests {
 
     private static StatsServiceImpl statsService;
-    private static StorageServiceMock storageService;
+    private static StorageMock storageService;
     private static PassengersCountServiceMock passengersCountService;
     private static MostProfitableRouteServiceMock mostProfitableRouteService;
 
     @BeforeAll
     public static void init() {
-        storageService = new StorageServiceMock();
+        storageService = new StorageMock();
         passengersCountService = new PassengersCountServiceMock();
         mostProfitableRouteService = new MostProfitableRouteServiceMock();
         statsService = new StatsServiceImpl(

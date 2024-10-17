@@ -3,13 +3,13 @@ package ru.vsu.amm.java.mocks;
 import ru.vsu.amm.java.entity.Driver;
 import ru.vsu.amm.java.entity.DriverSchedule;
 import ru.vsu.amm.java.entity.Route;
-import ru.vsu.amm.java.service.StorageService;
+import ru.vsu.amm.java.service.Storage;
 
 import java.util.List;
 import java.util.Set;
 
 
-public class StorageServiceMock implements StorageService {
+public class StorageMock extends Storage {
 
     public List<DriverSchedule> stubbedDriverSchedulesResult;
     public List<Route> stubbedRoutesResult;
@@ -21,7 +21,7 @@ public class StorageServiceMock implements StorageService {
     public int invokedProfitsCount;
     public int invokedDriversCount;
 
-    public StorageServiceMock() {
+    public StorageMock() {
         this.stubbedDriverSchedulesResult = null;
         this.stubbedRoutesResult = null;
         this.stubbedProfitsResult = null;

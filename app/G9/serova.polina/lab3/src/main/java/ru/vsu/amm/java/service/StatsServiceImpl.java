@@ -12,10 +12,10 @@ public final class StatsServiceImpl implements StatsService {
 
     private final PassengersCountService passengersCountService;
     private final MostProfitableRouteService mostProfitableRouteService;
-    private final StorageService storageService;
+    private final Storage storageService;
 
     public StatsServiceImpl(
-            StorageService storageService,
+            Storage storageService,
             PassengersCountService passengersCountService,
             MostProfitableRouteService mostProfitableRouteService
     ) {
