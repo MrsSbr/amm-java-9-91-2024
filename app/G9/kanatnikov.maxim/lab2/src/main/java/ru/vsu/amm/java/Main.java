@@ -1,5 +1,9 @@
 package ru.vsu.amm.java;
 
+import ru.vsu.amm.java.Classes.CourierDelivery;
+import ru.vsu.amm.java.Classes.PostalDelivery;
+import ru.vsu.amm.java.abstractClasses.Delivery;
+
 public class Main {
     public static void main(String[] args) {
         Delivery courierDelivery = new CourierDelivery(

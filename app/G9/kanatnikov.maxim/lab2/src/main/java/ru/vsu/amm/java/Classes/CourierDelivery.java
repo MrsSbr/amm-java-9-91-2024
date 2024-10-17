@@ -1,4 +1,6 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.Classes;
+
+import ru.vsu.amm.java.abstractClasses.Delivery;
 
 import java.util.Objects;
 
