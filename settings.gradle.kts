@@ -78,10 +78,12 @@ student("golukovich.timofey", G9) {
     lab(2)
 }
 
+
 student("bogatyirev.kirill", G9){
     lab(0)
     lab(1)
  }
+
 
 student("zayseva.anastasiya", G9) {
   lab(0)
