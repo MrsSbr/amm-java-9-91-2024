@@ -3,14 +3,8 @@ package ru.vsu.amm.java;
 import ru.vsu.amm.java.entity.Driver;
 import ru.vsu.amm.java.entity.DriverSchedule;
 import ru.vsu.amm.java.entity.Route;
-import ru.vsu.amm.java.service.MostProfitableRouteService;
-import ru.vsu.amm.java.service.MostProfitableRouteServiceImpl;
-import ru.vsu.amm.java.service.PassengersCountService;
-import ru.vsu.amm.java.service.PassengersCountServiceImpl;
-import ru.vsu.amm.java.service.StorageService;
+import ru.vsu.amm.java.service.*;
 import ru.vsu.amm.java.service.StorageServiceImpl;
-import ru.vsu.amm.java.service.StatsService;
-import ru.vsu.amm.java.service.StatsServiceImpl;
 import ru.vsu.amm.java.util.DriverScheduleGenerator;
 
 import java.util.ArrayList;
@@ -27,9 +21,9 @@ public class Main {
         List<Double> profits = new ArrayList<>();
         Set<Driver> drivers = new HashSet<>();
         List<DriverSchedule> driverSchedules = DriverScheduleGenerator.generateScheduleList(13);
-        StorageService storageService = new StorageServiceImpl(driverSchedules, routes, profits, drivers);
+        Storage storage = new Storage(driverSchedules, routes, profits, drivers);
         StatsService statsService = new StatsServiceImpl(
-                storageService,
+                storage,
                 passengersCountService,
                 mostProfitableRouteService
         );
