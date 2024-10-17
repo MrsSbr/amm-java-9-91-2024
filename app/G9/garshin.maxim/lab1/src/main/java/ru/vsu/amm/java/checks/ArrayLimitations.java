@@ -1,4 +1,5 @@
 package ru.vsu.amm.java.Checks;
+package ru.vsu.amm.java.checks;
 
 public class ArrayLimitations {
     private final int ARRAY_MIN_LENGTH = 1;
