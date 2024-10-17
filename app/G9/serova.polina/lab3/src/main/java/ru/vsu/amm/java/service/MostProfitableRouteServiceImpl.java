@@ -11,7 +11,7 @@ public final class MostProfitableRouteServiceImpl implements MostProfitableRoute
         return routes.get(profits.indexOf(
                 profits.stream()
                         .max(Double::compareTo)
-                        .orElse(null) // .orElseThrow
+                        .orElseThrow(NullPointerException::new) // .orElseThrow
                 )
         );
     }
