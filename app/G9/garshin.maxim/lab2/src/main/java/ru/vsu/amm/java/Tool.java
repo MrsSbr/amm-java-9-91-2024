@@ -2,16 +2,17 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public abstract class InstrumentImpl implements Instrument {
+public abstract class Tool implements Usable {
     private String name;
     private String brand;
     private double width;
     private double length;
     private boolean isReadyToWork;
 
-    public InstrumentImpl() {}
+    public Tool() {
+    }
 
-    public InstrumentImpl(String name, double width, double length, String brand, boolean isReadyToWork) {
+    public Tool(String name, double width, double length, String brand, boolean isReadyToWork) {
         this.name = name;
         this.width = width;
         this.length = length;
@@ -55,8 +56,7 @@ public abstract class InstrumentImpl implements Instrument {
 
     @Override
     public String toString() {
-        return  "\nНазвание: " +
-                "" + name +
+        return "\nНазвание: " + name +
                 "\nбренд: '" + brand + "'" +
                 "\nширина: " + width +
                 "\nдлина: " + length +
@@ -71,7 +71,7 @@ public abstract class InstrumentImpl implements Instrument {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        InstrumentImpl that = (InstrumentImpl) o;
+        Tool that = (Tool) o;
         return Double.compare(width, that.width) == 0 &&
                 Double.compare(length, that.length) == 0 &&
                 Objects.equals(name, that.name) &&

@@ -2,15 +2,16 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public class HammerInstrument extends InstrumentImpl {
+public class HammerTool extends Tool {
     private double weight;
 
-    public HammerInstrument(String name, double width, double length, String brand, boolean isReadyToWork, double weight) {
+    public HammerTool(String name, double width, double length, String brand, boolean isReadyToWork, double weight) {
         super(name, width, length, brand, isReadyToWork);
         this.weight = weight;
     }
 
-    public HammerInstrument() {}
+    public HammerTool() {
+    }
 
     @Override
     public void use() {
@@ -25,7 +26,7 @@ public class HammerInstrument extends InstrumentImpl {
 
     @Override
     public boolean equals(Object o) {
-        HammerInstrument that = (HammerInstrument) o;
+        HammerTool that = (HammerTool) o;
         return Double.compare(weight, that.weight) == 0 && super.equals(o);
     }
 

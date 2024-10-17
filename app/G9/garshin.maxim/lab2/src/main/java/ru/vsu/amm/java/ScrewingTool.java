@@ -2,16 +2,23 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public class ScrewingInstrument extends InstrumentImpl {
+public class ScrewingTool extends Tool implements Screwable {
     private String driveType;
 
-    public ScrewingInstrument(String name, double width, double length, String brand, boolean isReadyToWork, String driveType) {
+    public ScrewingTool(String name, double width, double length, String brand, boolean isReadyToWork, String driveType) {
         super(name, width, length, brand, isReadyToWork);
         this.driveType = driveType;
     }
 
-    public ScrewingInstrument() { }
+    public ScrewingTool() {
+    }
 
+    @Override
+    public void screw() {
+        System.out.println("Закрутил");
+    }
+
+    @Override
     public void use() {
         System.out.println("Инструмент " + getName() + " с типом привода '" + driveType + "' начинает крутиться...");
     }
@@ -24,7 +31,7 @@ public class ScrewingInstrument extends InstrumentImpl {
 
     @Override
     public boolean equals(Object o) {
-        ScrewingInstrument that = (ScrewingInstrument) o;
+        ScrewingTool that = (ScrewingTool) o;
         return driveType.equals(that.driveType) && super.equals(o);
     }
 

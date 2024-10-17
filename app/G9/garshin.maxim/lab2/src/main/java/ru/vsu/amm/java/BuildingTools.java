@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 public class BuildingTools {
     public static void main(String[] args) {
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
-        InstrumentImpl screwdriverScrewingInstrument = new ScrewingInstrument(
+        Tool screwdriverScrewingInstrument = new ScrewingTool(
                 "Отвёртка",
                 5.1,
                 14.6,
@@ -19,7 +19,7 @@ public class BuildingTools {
         screwdriverScrewingInstrument.prepare();
         System.out.println();
 
-        InstrumentImpl anotherScrewingInstrument = new ScrewingInstrument(
+        Tool anotherScrewingInstrument = new ScrewingTool(
                 "Шуруповёрт",
                 10.5,
                 22.2,
@@ -29,7 +29,7 @@ public class BuildingTools {
         );
         anotherScrewingInstrument.prepare();
 
-        InstrumentImpl sameScrewingInstrument = new ScrewingInstrument(
+        Tool sameScrewingInstrument = new ScrewingTool(
                 "Шуруповёрт",
                 10.5,
                 22.2,
@@ -43,7 +43,7 @@ public class BuildingTools {
         System.out.println();
 
 
-        InstrumentImpl jackhammerHammerInstrument = new HammerInstrument(
+        Tool jackhammerHammerInstrument = new HammerTool(
                 "Отбойный молоток",
                 25,
                 120.5,
@@ -62,10 +62,10 @@ public class BuildingTools {
         defineClass(jackhammerHammerInstrument);
     }
 
-    static void defineClass(InstrumentImpl satellite) {
-        if (satellite instanceof ScrewingInstrument) {
+    static void defineClass(Tool satellite) {
+        if (satellite instanceof ScrewingTool) {
             System.out.println(satellite.getName() + " завинчивающий инструмент");
-        } else if (satellite instanceof HammerInstrument) {
+        } else if (satellite instanceof HammerTool) {
             System.out.println(satellite.getName() + " забивающий инструмент");
         }
     }
