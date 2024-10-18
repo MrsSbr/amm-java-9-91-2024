@@ -6,6 +6,7 @@ import ru.vsu.amm.java.enums.ShipClass;
 import ru.vsu.amm.java.service.RobbedShipService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RobbedShipTest {
@@ -37,6 +39,23 @@ public class RobbedShipTest {
         assertEquals(2, result.size());
         assertEquals(1L, result.get(Nationality.PORTUGAL));
         assertEquals(1L, result.get(Nationality.BRITAIN));
+    }
+
+    @Test
+    void testGetBoardedStatisticsWithNoShips() {
+        List<RobbedShip> ships = new ArrayList<>();
+        Map<Nationality, Long> result = robbedShipService.boardedShipsByNationality(ships);
+        assertTrue(result.isEmpty(), "Результат должен быть пустой для пустого списка кораблей");
+    }
+
+    @Test
+    void testGetBoardedStatisticsWithAllShipsNotBoarded() {
+        List<RobbedShip> ships = Arrays.asList(
+                new RobbedShip(LocalDate.of(2022, 1, 15), ShipClass.FRIGATE, Nationality.SPAIN, 1000, 10, false),
+                new RobbedShip(LocalDate.of(2022, 2, 20), ShipClass.CARAVEL, Nationality.BRITAIN, 1500, 5, false)
+        );
+        Map<Nationality, Long> result = robbedShipService.boardedShipsByNationality(ships);
+        assertTrue(result.isEmpty(), "Результат должен быть пустой, если все корабли не были взяты на абордаж");
     }
 
     @Test
