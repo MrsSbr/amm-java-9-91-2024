@@ -5,10 +5,12 @@ import ru.vsu.amm.java.entity.SongPlayback;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class MusicService {
-    public int getAmountOfRecentStreams(List<SongPlayback> playbacks, String title, String artist) {
+    public static int getAmountOfRecentStreams(List<SongPlayback> playbacks,
+                                               String title, String artist) {
         int currentYear = LocalDate.now().getYear();
         int currentMonth = LocalDate.now().getMonthValue();
         return playbacks.stream()
@@ -20,14 +22,14 @@ public class MusicService {
                 .size();
     }
 
-    public Map<String, List<String>> getUserStreamingData(List<SongPlayback> songs) {
+    public static Map<String, Set<String>> getUserStreamingData(List<SongPlayback> songs) {
         return songs.stream()
                 .collect(Collectors.groupingBy(SongPlayback::username,
                         Collectors.mapping(song -> song.title() + " by " + song.artist(),
-                                Collectors.toList())));
+                                Collectors.toSet())));
     }
 
-    public Map<String, List<String>> getUserStreamingDataLeastPopular(List<SongPlayback> songs) {
+    public static Map<String, Set<String>> getUserStreamingDataLeastPopular(List<SongPlayback> songs) {
         int currentYear = LocalDate.now().getYear();
         int currentMonth = LocalDate.now().getMonthValue();
         return songs.stream()
@@ -36,10 +38,10 @@ public class MusicService {
                         || song.listeningDate().getYear() < currentYear)
                 .collect(Collectors.groupingBy(SongPlayback::username,
                         Collectors.mapping(song -> song.title() + " by " + song.artist(),
-                                Collectors.toList())));
+                                Collectors.toSet())));
     }
 
-    public Map<String, String> getUserStreamingDataMostFavorite(List<SongPlayback> songs) {
+    public static Map<String, String> getUserStreamingDataMostFavorite(List<SongPlayback> songs) {
         Map<String, List<String>> streamingData = songs.stream()
                 .collect(Collectors.groupingBy(SongPlayback::username,
                         Collectors.mapping(song -> song.title() + " by " + song.artist(),
