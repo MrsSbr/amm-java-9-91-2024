@@ -12,8 +12,6 @@ import java.util.stream.IntStream;
 public class SongGenerator {
     private static final int DATA_AMOUNT = 5;
     private static final int START_YEAR = 2020;
-    private static final int MIN_DURATION = 100;
-    private static final int MAX_DURATION = 600;
 
     private static final String[] USERNAMES = new String[DATA_AMOUNT];
     private static final String[] TITLES = new String[DATA_AMOUNT];
@@ -67,11 +65,10 @@ public class SongGenerator {
         String title = TITLES[rand.nextInt(DATA_AMOUNT)];
         String artist = ARTISTS[rand.nextInt(DATA_AMOUNT)];
         Genre genre = GENRES[rand.nextInt(GENRES.length)];
-        int duration = randBetween(MIN_DURATION, MAX_DURATION);
         LocalDate date = generateDate();
 
         return new SongPlayback(username, title, artist,
-                genre, duration, date);
+                genre, date);
     }
 
     public List<SongPlayback> GenerateSeveralSongs(int n) {

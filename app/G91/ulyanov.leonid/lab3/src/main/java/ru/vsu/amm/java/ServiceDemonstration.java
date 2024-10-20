@@ -1,6 +1,7 @@
 package ru.vsu.amm.java;
 
 import ru.vsu.amm.java.entity.SongPlayback;
+import ru.vsu.amm.java.enums.Genre;
 import ru.vsu.amm.java.service.MusicService;
 import ru.vsu.amm.java.util.SongGenerator;
 
@@ -14,7 +15,8 @@ public class ServiceDemonstration {
         List<SongPlayback> SongsCollection = gen.GenerateSeveralSongs(100);
 
         System.out.println("Amount of times when song title2 by artist1 was listened this month: "
-                + MusicService.getAmountOfRecentStreams(SongsCollection, "title2", "artist1"));
+                + MusicService.getAmountOfRecentStreams(SongsCollection,
+                "title2", "artist1", Genre.ROCK));
         System.out.println();
 
         System.out.println("All streaming data");
