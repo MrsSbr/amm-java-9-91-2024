@@ -1,7 +1,5 @@
 package ru.vsu.amm.java;
 
-import java.util.Objects;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -30,88 +28,3 @@ public class Main {
     }
 }
 
-interface BirdBehavior {
-    void eat();
-}
-
-abstract class Bird implements BirdBehavior {
-    private String name;
-    private String color;
-
-    public Bird(String name, String color) {
-        this.name = name;
-        this.color = color;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    @Override
-    public String toString() {
-        return "Bird: " + name + ", color: " + color;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        Bird other = (Bird) obj;
-        return name.equals(other.name) && color.equals(other.color);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, color);
-    }
-}
-
-class Sparrow extends Bird {
-    public Sparrow(String name, String color) {
-        super(name, color);
-    }
-
-    @Override
-    public void eat() {
-        System.out.println(getName() + " eats seeds");
-    }
-}
-
-class Eagle extends Bird {
-    private double wingspan;
-
-    public Eagle(String name, String color, double wingspan) {
-        super(name, color);
-        this.wingspan = wingspan;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + ", wing span: " + wingspan;
-    }
-
-    @Override
-    public void eat() {
-        System.out.println(getName() + " eats fish");
-    }
-}
-
-class Penguin extends Bird {
-    public Penguin(String name, String color) {
-        super(name, color);
-    }
-
-    @Override
-    public void eat() {
-        System.out.println(getName() + " eats fish");
-    }
-
-}
