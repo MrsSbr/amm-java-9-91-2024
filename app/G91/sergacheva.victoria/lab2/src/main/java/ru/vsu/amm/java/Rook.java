@@ -1,8 +1,8 @@
 package ru.vsu.amm.java;
 
-class Penguin extends Bird {
+public class Rook extends Fowl {
 
-    public Penguin(String name, String color) {
+    public Rook(String name, String color) {
         super(name, color);
     }
 

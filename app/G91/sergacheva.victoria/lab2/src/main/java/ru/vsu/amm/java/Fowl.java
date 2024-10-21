@@ -2,13 +2,12 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-abstract class Bird implements BirdBehavior {
-
+public abstract class Fowl implements Behavior {
     private String name;
 
     private String color;
 
-    public Bird(String name, String color) {
+    public Fowl(String name, String color) {
         this.name = name;
         this.color = color;
     }
@@ -34,12 +33,11 @@ abstract class Bird implements BirdBehavior {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        Bird other = (Bird) obj;
+        Fowl other = (Fowl) obj;
         return name.equals(other.name) && color.equals(other.color);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, color);
-    }
+        return Objects.hash(name, color);    }
 }

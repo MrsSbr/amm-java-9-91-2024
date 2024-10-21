@@ -2,11 +2,11 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-class Eagle extends Bird {
+public class Bullfinch extends Fowl {
 
     private double wingspan;
 
-    public Eagle(String name, String color, double wingspan) {
+    public Bullfinch(String name, String color, double wingspan) {
         super(name, color);
         this.wingspan = wingspan;
     }
@@ -24,7 +24,7 @@ class Eagle extends Bird {
         if (obj == null || getClass() != obj.getClass()) {
             return false; // Проверка на совпадение классов
         }
-        Eagle other = (Eagle) obj;
+        Bullfinch other = (Bullfinch) obj;
         return super.equals(other) && Double.compare(wingspan, other.wingspan) == 0;
     }
 

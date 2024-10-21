@@ -1,8 +1,8 @@
 package ru.vsu.amm.java;
 
-class Sparrow extends Bird {
+public class Raven extends Fowl {
 
-    public Sparrow(String name, String color) {
+    public Raven(String name, String color) {
         super(name, color);
     }
 

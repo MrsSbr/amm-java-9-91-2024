@@ -1,5 +1,5 @@
 package ru.vsu.amm.java;
 
-interface BirdBehavior {
+public interface Behavior {
     void eat();
 }
