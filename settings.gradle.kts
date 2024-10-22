@@ -52,11 +52,8 @@ student("gonnykh.alexander", G91) {
 
 student("simonov.ivan", G91) {
     lab(0)
-simonov_lab2
-    lab(2)
-
     lab(1)
-main
+    lab(2)
 }
 
 student("ulyanov.leonid", G91) {
@@ -186,6 +183,7 @@ student("enokyan.gera", G91) {
     lab(1)
     lab(2)
     lab(3)
+    lab(4)
 }
 
 student("globuchik.dmitry", G9) {
