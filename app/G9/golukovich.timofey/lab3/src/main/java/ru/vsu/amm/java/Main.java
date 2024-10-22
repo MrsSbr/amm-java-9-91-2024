@@ -8,13 +8,14 @@ public class Main {
 
     public static void main(String[] args) {
         var wall = new AncientWall(ANCIENT_RECORDS_COUNT);
+        var ancientService = new AncientWallService(wall);
 
-        wall.findHunterNames().forEach(name -> System.out.print(name.toString() + " "));
+        ancientService.findHunterNames().forEach(name -> System.out.print(name.toString() + " "));
         System.out.println();
 
-        System.out.println(wall.sumRecentMammothWeight(PERSON_DATE));
+        System.out.println(ancientService.sumRecentMammothWeight(PERSON_DATE));
         System.out.println();
 
-        wall.countMammothsForEachHunter().forEach((k, v) -> System.out.println(k + ": " + v));
+        ancientService.countMammothsForEachHunter().forEach((k, v) -> System.out.println(k + ": " + v));
     }
 }

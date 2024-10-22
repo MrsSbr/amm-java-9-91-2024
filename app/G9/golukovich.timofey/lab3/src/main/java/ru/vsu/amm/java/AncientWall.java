@@ -3,9 +3,7 @@ package ru.vsu.amm.java;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class AncientWall {
     private final int MAX_HUNTING_DAY = -30000 * 365;
@@ -35,23 +33,23 @@ public class AncientWall {
         this.records = records;
     }
 
-    public List<HunterName> findHunterNames() {
-        return records.stream()
-                .map(AncientRecord::getHunterName)
-                .distinct()
-                .collect(Collectors.toList());
+    public void addRecord(AncientRecord record) {
+        records.add(record);
     }
 
-    public int sumRecentMammothWeight(LocalDate currentDate) {
-        return records.stream()
-                .filter(rec -> rec.getDate().isAfter(currentDate.minusYears(3))
-                        && rec.getDate().isBefore(currentDate.plusYears(3)))
-                .mapToInt(AncientRecord::getMammothWeight).sum();
+    public boolean removeRecord(AncientRecord record) {
+        return records.remove(record);
     }
 
-    public Map<HunterName, Long> countMammothsForEachHunter() {
-        return records.stream()
-                .collect(Collectors.groupingBy(AncientRecord::getHunterName,
-                        Collectors.counting()));
+    public void removeRecord(int index) {
+        records.remove(index);
+    }
+
+    public boolean containsRecord(AncientRecord record) {
+        return records.contains(record);
+    }
+
+    public List<AncientRecord> getRecords() {
+        return new ArrayList<>(records);
     }
 }
