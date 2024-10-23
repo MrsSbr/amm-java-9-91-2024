@@ -1,13 +1,9 @@
 package ru.vsu.amm.java.winners;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class StorageWinners<W extends WinnerInterface> {
     private final List<W> storage;
@@ -22,7 +18,7 @@ public class StorageWinners<W extends WinnerInterface> {
 
     public List<String> findMostFrequentDepartment() {
         // Хранение департаментов и их частоты
-        Set<String> departments = new HashSet<>();
+        List<String> departments = new ArrayList<>();
         List<Long> counts = new ArrayList<>();
 
         // Считаем количество упоминаний каждого департамента
@@ -30,7 +26,7 @@ public class StorageWinners<W extends WinnerInterface> {
             String dept = winner.getDepartmentName();
             if (departments.contains(dept)) {
                 // Если департамент уже есть, увеличиваем его счетчик
-                int index = new ArrayList<>(departments).indexOf(dept);
+                int index = (departments).indexOf(dept);
                 counts.set(index, counts.get(index) + 1);
             } else {
                 // Если департамент новый, добавляем его
@@ -43,10 +39,10 @@ public class StorageWinners<W extends WinnerInterface> {
         long maxCount = counts.stream().max(Long::compareTo).orElse(0L);
 
         // Ищем наиболее частые департаменты с использованием стримов
-        return IntStream.range(0, counts.size())
-                .filter(i -> counts.get(i).equals(maxCount))
-                .mapToObj(i -> new ArrayList<>(departments).get(i))
-                .collect(Collectors.toList());
+        return counts.stream()
+                .filter(count -> count == maxCount)
+                .map(c -> departments.get(counts.indexOf(c)))
+                .toList();
     }
 
     public void printFindMostFrequentDepartment() {
@@ -57,7 +53,7 @@ public class StorageWinners<W extends WinnerInterface> {
         return storage.stream()
                 .map(W::getName)
                 .distinct()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public void printWinners() {
