@@ -2,7 +2,7 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public class WindInstrument extends InstrumentImpl {
+public class WindInstrument extends InstrumentImpl implements Playable {
 
     private int lengthWindСhannel;
 
@@ -15,6 +15,7 @@ public class WindInstrument extends InstrumentImpl {
 
     @Override
     public void play() {
+
         System.out.println(getName() + ": (мелодия на духовом инструменте)");
     }
 

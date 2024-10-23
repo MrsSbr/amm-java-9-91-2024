@@ -1,5 +1,5 @@
 package ru.vsu.amm.java;
 
-public interface MusicalInstrument {
+public interface Playable {
     void play();
 }

@@ -2,7 +2,7 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public class StringInstrument extends InstrumentImpl {
+public class StringInstrument extends InstrumentImpl implements Stringable {
 
     private int numberStrings;
 
@@ -11,11 +11,13 @@ public class StringInstrument extends InstrumentImpl {
         this.numberStrings = numberStrings;
     }
 
+
+
     public StringInstrument() {}
 
     @Override
-    public void play() {
-        System.out.println(getName() + ": (мелодия на струнах)");
+    public void brokenString() {
+        System.out.println("Струна порвалась! Нужно заменить");
     }
 
     @Override
@@ -33,6 +35,13 @@ public class StringInstrument extends InstrumentImpl {
 
     @Override
     public int hashCode() {
+
         return Objects.hash(getName(), getWeight(), getMaterial(), numberStrings);
+    }
+
+    @Override
+    public void play() {
+        System.out.println(getName() + ": (мелодия на струнах)");
+        brokenString();
     }
 }

@@ -2,7 +2,7 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public abstract class InstrumentImpl implements MusicalInstrument {
+public abstract class InstrumentImpl implements Playable{
 
     private String name;
     private double weight;
@@ -17,17 +17,23 @@ public abstract class InstrumentImpl implements MusicalInstrument {
     public InstrumentImpl() {}
 
     public String getName() {
+
         return name;
     }
 
     public double getWeight() {
+
         return weight;
     }
 
     public String getMaterial() {
+
         return material;
     }
 
+    public void tune() {
+        System.out.println(name + " настраивается");
+    }
     @Override
     public String toString(){
         String result = "Название инструмента: " + name +
@@ -52,6 +58,7 @@ public abstract class InstrumentImpl implements MusicalInstrument {
 
     @Override
     public int hashCode(){
+
         return Objects.hash(name, weight, material);
     }
 }

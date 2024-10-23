@@ -10,6 +10,9 @@ public class Orchestra {
                  4
         );
 
+        stringInstrument.play();
+        stringInstrument.tune();
+
         InstrumentImpl windInstrumentOne = new WindInstrument(
                 "Кларнет",
                 850,
@@ -30,10 +33,11 @@ public class Orchestra {
                 "Дерево",
                 60
         );
-
+        windInstrumentOne.tune();
         windInstrumentOne.play();
         windInstrumentTwo.play();
-        stringInstrument.play();
+
+        System.out.println();
         System.out.println("Кларнет equals кларнет " + windInstrumentOne.equals(windInstrumentThree));
         System.out.println("Кларнет equals саксофон " + windInstrumentOne.equals(windInstrumentTwo));
         System.out.println("Саксофон hashCode " + windInstrumentTwo.hashCode());
