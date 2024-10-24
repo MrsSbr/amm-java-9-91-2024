@@ -1,10 +1,10 @@
 package ru.vsu.amm.java.classes;
 
 public class Square extends Figure{
-    protected int sideSize;
+    private int sideSize;
 
-    public Square(String name, String color/*, double diagonal*/, int sideSize){
-        super(name, color/*, diagonal*/);
+    public Square(String name, String color, int sideSize){
+        super(name, color);
         this.sideSize = sideSize;
     }
 
@@ -13,24 +13,23 @@ public class Square extends Figure{
     }
 
     public void draw(){
-        System.out.println("Имя фигуры: " + name);
-        System.out.println("Цвет фигуры: " + color);
-        // System.out.println("Размер диагонали фигуры: "/* + diagonal*/);
+        System.out.println("Имя фигуры: " + getName());
+        System.out.println("Цвет фигуры: " + getColor());
 
         System.out.println("Размер стороны: " + sideSize);
         System.out.println("--------------");
-
     }
 
     @Override
     public boolean equals(Object obj){
-        if(this == obj)
+        if (this == obj) {
             return true;
+        }
 
         if (!(obj instanceof Square square)) {
             return false;
         }
+
         return super.equals(obj) && sideSize == square.sideSize;
     }
-
 }

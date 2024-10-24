@@ -1,6 +1,5 @@
 package ru.vsu.amm.java;
 
-import ru.vsu.amm.java.classes.Figure;
 import ru.vsu.amm.java.classes.Square;
 import ru.vsu.amm.java.classes.Circle;
 import ru.vsu.amm.java.classes.Triangle;
@@ -13,7 +12,7 @@ public class Main {
         square1.draw();
         square2.draw();
 
-        if(square1.equals(square2)){
+        if (square1.equals(square2)){
             System.out.println("Квадраты равны");
         } else {
             System.out.println("Квадраты не равны");
@@ -43,7 +42,6 @@ public class Main {
         System.out.println("\n---------Следующая фигура-----------\n");
 
 
-
         Triangle triangle1 = new Triangle("Треугольник 1", "Желтый", 1, 2, 1);
         triangle1.draw();
 
@@ -56,7 +54,7 @@ public class Main {
         Triangle triangle2 = new Triangle("Треугольник 2", "Желтый", 1, 2, 1);
         triangle2.draw();
 
-        if(triangle1.equals(triangle2)){
+        if (triangle1.equals(triangle2)){
             System.out.println("Треугольники равны");
         } else {
             System.out.println("Треугольники не равны");

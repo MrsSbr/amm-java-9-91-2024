@@ -1,8 +1,8 @@
 package ru.vsu.amm.java.classes;
 
 public abstract class Figure{
-    protected String name;
-    protected String color;
+    private String name;
+    private String color;
 
     public Figure(String name, String color){
         this.name = name;
@@ -16,7 +16,6 @@ public abstract class Figure{
     public String getColor(){
         return color;
     }
-
 
     abstract public double findPerimeter();
 
@@ -32,14 +31,13 @@ public abstract class Figure{
 
     @Override
     public boolean equals(Object obj) {
-        if(this == obj)
+        if(this == obj) {
             return true;
-
+        }
 
         Figure f = (Figure) obj;
 
         boolean checkColor = color != null && f.color != null && color.equals(f.color);
-
 
         return checkColor;
     }

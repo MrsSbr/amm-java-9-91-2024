@@ -1,9 +1,9 @@
 package ru.vsu.amm.java.classes;
 
 public class Triangle extends Figure{
-    protected double firstSideSize;
-    protected double secondSideSize;
-    protected double thirdSideSize;
+    private double firstSideSize;
+    private double secondSideSize;
+    private double thirdSideSize;
 
     public Triangle(String name, String color, double firstSideSize, double secondSideSize, double thirdSideSize) {
         super(name, color);
@@ -30,9 +30,8 @@ public class Triangle extends Figure{
     }
 
     public void draw(){
-        System.out.println("Имя фигуры: " + name);
-        System.out.println("Цвет фигуры: " + color);
-        // System.out.println("Размер диагонали фигуры: "/* + diagonal*/);
+        System.out.println("Имя фигуры: " + getName());
+        System.out.println("Цвет фигуры: " + getColor());
 
         System.out.println("Размер сторон треугольника: ");
         System.out.println(firstSideSize);
@@ -44,12 +43,14 @@ public class Triangle extends Figure{
 
     @Override
     public boolean equals(Object obj){
-        if(this == obj)
+        if (this == obj) {
             return true;
+        }
 
         if (!(obj instanceof Triangle triangle)) {
             return false;
         }
+
         return super.equals(obj) &&
                 firstSideSize == triangle.firstSideSize &&
                 secondSideSize == triangle.secondSideSize &&
