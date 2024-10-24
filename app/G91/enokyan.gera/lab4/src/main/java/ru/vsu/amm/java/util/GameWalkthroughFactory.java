@@ -19,8 +19,8 @@ public final class GameWalkthroughFactory {
 
     public static GameWalkthrough generateGameWalkthrough() {
         var name = IntStream.range(0, 3)
-                .mapToObj(_ -> (char)(rnd.nextInt(26) + 'a'))
-                .reduce("", (str, ch) -> str + ch, (_, y) -> y);
+                .mapToObj(x -> (char)(rnd.nextInt(26) + 'a'))
+                .reduce("", (str, ch) -> str + ch, (x, y) -> y);
 
         var genreTypes = Genre.values();
         int genreIndex = rnd.nextInt(genreTypes.length);
@@ -41,7 +41,7 @@ public final class GameWalkthroughFactory {
 
     public static List<GameWalkthrough> generateGameWalkthrough(int n) {
         return IntStream.range(0, n)
-                .mapToObj(_ -> generateGameWalkthrough())
+                .mapToObj(x -> generateGameWalkthrough())
                 .collect(Collectors.toList());
     }
 }
