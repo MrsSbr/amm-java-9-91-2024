@@ -4,13 +4,13 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Campaign {
-    private String type;
+    private CampaignType type;
     private LocalDate startDate;
     private LocalDate endDate;
     private int reach;
     private double budget;
 
-    public Campaign(String type, LocalDate startDate, LocalDate endDate, int reach, double budget) {
+    public Campaign(CampaignType type, LocalDate startDate, LocalDate endDate, int reach, double budget) {
         this.type = type;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -18,7 +18,7 @@ public class Campaign {
         this.budget = budget;
     }
 
-    public String getType() {
+    public CampaignType getType() {
         return type;
     }
 
@@ -38,7 +38,7 @@ public class Campaign {
         return budget;
     }
 
-    public void setType(String type) {
+    public void setType(CampaignType type) {
         this.type = type;
     }
 

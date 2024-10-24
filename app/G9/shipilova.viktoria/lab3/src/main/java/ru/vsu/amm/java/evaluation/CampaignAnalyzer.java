@@ -14,7 +14,7 @@ public class CampaignAnalyzer {
                 .orElse(0);
     }
 
-    public static Set<String> getCampaignTypesLastYear(List<Campaign> campaigns) {
+    public static Set<CampaignType> getCampaignTypesLastYear(List<Campaign> campaigns) {
         LocalDate oneYearAgo = LocalDate.now().minusYears(1);
         return campaigns.stream()
                 .filter(c -> c.getStartDate().isAfter(oneYearAgo))

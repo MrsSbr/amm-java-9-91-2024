@@ -13,7 +13,7 @@ public class TaskLab3 {
         System.out.println("Средняя длительность кампании: " + averageDuration + " дней");
 
         // Типы кампаний за последний год
-        Set<String> campaignTypesLastYear = CampaignAnalyzer.getCampaignTypesLastYear(campaigns);
+        Set<CampaignType> campaignTypesLastYear = CampaignAnalyzer.getCampaignTypesLastYear(campaigns);
         System.out.println("Типы кампаний за последний год: " + campaignTypesLastYear);
 
         // Лучшая кампания по соотношению бюджет/охват
