@@ -13,6 +13,7 @@ student("sbrodova.daria", G9) {
 
 student("chzhan.ira", G91) {
     lab(0)
+    lab(1)
 }
 
 student("kireev.dmitrii", G91) {
@@ -52,8 +53,11 @@ student("gonnykh.alexander", G91) {
 
 student("simonov.ivan", G91) {
     lab(0)
-    lab(1)
+simonov_lab2
     lab(2)
+
+    lab(1)
+main
 }
 
 student("ulyanov.leonid", G91) {
@@ -67,6 +71,7 @@ student("nelezin.oleg", G9) {
     lab(1)
     lab(2)
     lab(3)
+    lab(4)
 }
 
 student("golukovich.timofey", G9) {
