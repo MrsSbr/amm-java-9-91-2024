@@ -3,17 +3,17 @@ package ru.vsu.amm.java;
 public class Main {
 
     public static void main(String[] args) {
-        Fish goldie = new GoldFish("Goldie");
-        Fish dory = new BlueTangFish("Dory");
+        Fish blowy = new BlowFish("Blowy", 15);
+        Fish betty = new BettaFish("Betty", 9);
 
-        speakAndSwim(goldie);
+        speakAndSwim(blowy);
         System.out.println();
-        speakAndSwim(dory);
+        speakAndSwim(betty);
 
         System.out.println();
-        areFishesEqual(goldie, dory);
-        checkFishType(dory);
-        checkFishType(goldie);
+        areFishesEqual(blowy, betty);
+        checkFishType(betty);
+        checkFishType(blowy);
     }
 
     public static void speakAndSwim(Fish fish) {
@@ -31,7 +31,7 @@ public class Main {
                 System.out.println(", but they are not equal!");
             }
         } else {
-            System.out.println("They are not equal!");
+            System.out.println("They are not equal!!!");
         }
 
     }
@@ -41,10 +41,10 @@ public class Main {
             System.out.println("It's not a fish!");
         else {
             System.out.print("Fish " + ((Fish) obj).getName());
-            if (obj instanceof GoldFish)
-                System.out.println(" is a kind of gold fish!");
-            else if (obj instanceof BlueTangFish)
-                System.out.println(" is a kind of blue tang fish!");
+            if (obj instanceof BlowFish)
+                System.out.println(" is a prickly fish!");
+            else if (obj instanceof BettaFish)
+                System.out.println(" is an aggressive fish!");
 
         }
     }

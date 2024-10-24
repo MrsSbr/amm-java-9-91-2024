@@ -2,13 +2,29 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public abstract class Fish implements AquariumAnimal {
+public abstract class Fish implements WaterFowlable {
     private String name;
     private String color;
 
     public Fish(String name, String color) {
         this.name = name;
         this.color = color;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public abstract void speak();
+
+    @Override
+    public void swim() {
+
+        System.out.println(name + " is swimming!");
     }
 
     @Override
@@ -28,16 +44,5 @@ public abstract class Fish implements AquariumAnimal {
     public int hashCode() {
         return Objects.hash(name, color);
     }
-
-    @Override
-    public void swim() {
-        System.out.println(name + " is swimming!");
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public abstract void speak();
 }
 
