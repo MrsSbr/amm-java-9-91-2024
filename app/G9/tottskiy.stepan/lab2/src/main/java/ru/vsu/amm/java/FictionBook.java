@@ -8,7 +8,7 @@ public class FictionBook extends Book {
 
     public FictionBook(String title, String author, double price, int countOfPages) {
         super(title, author, price);
-        this.countOfPages = this.countOfPages;
+        this.countOfPages = countOfPages;
     }
 
     @Override
@@ -16,7 +16,6 @@ public class FictionBook extends Book {
         return "Fiction";
     }
 
-    // Переопределение метода getDescription
     @Override
     public String getDescription() {
         return super.getDescription() + " (Genre: " + getGenre() + ")";

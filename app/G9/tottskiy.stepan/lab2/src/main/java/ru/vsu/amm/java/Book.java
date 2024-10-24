@@ -14,6 +14,8 @@ public abstract class Book implements Item {
         this.price = price;
     }
 
+    public Book() {}
+
     public String getTitle() {return title;}
     public String getAuthor() {return author;}
     public double getPrice() {return price;}
