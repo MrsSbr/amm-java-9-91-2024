@@ -2,11 +2,12 @@ package ru.vsu.amm.java.Repository;
 
 import ru.vsu.amm.java.Config.PatientConfig;
 import ru.vsu.amm.java.Model.PatientDTO;
-import ru.vsu.amm.java.Util.Util;
 
 import java.time.LocalDate;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
+
+import static ru.vsu.amm.java.Util.Util.getRandomPatient;
 
 public class PatientRepo {
 
@@ -19,19 +20,12 @@ public class PatientRepo {
 
     public PatientRepo() {
 
-        this.patients = new LinkedList<>();
+        this.patients = new ArrayList<>();
 
         for (int i = 0; i < PatientConfig.COUNT; i++) {
 
-            patients.add(
-                    new PatientDTO(
-                            Util.getRandomString(PatientConfig.NAMELENGTH),
-                            Util.getRandomString(PatientConfig.SURNAMELENGTH),
-                            Util.getRandomString(PatientConfig.PATRONYMICLENGTH),
-                            Util.getRandomBoolean(),
-                            Util.getRandomString(PatientConfig.ILLNESSLENGTH),
-                            Util.getRandomDate())
-            );
+            patients.add(getRandomPatient());
+
         }
     }
 
@@ -40,7 +34,7 @@ public class PatientRepo {
         return patients;
     }
 
-    public List<PatientDTO> findByIsHealthyAfterDate(LocalDate healthyPeriod) {
+    public List<PatientDTO> findByIsHealthy(LocalDate healthyPeriod) {
 
         return patients.stream()
                 .sorted((p1, p2) -> p2.date().compareTo(p1.date()))
@@ -48,12 +42,15 @@ public class PatientRepo {
                 .filter(p -> p.isHealthy() && p.date().isAfter(healthyPeriod)).toList();
     }
 
-    public List<PatientDTO> findByIsHealthy() {
+    public List<PatientDTO> findByMightBeHealthy(LocalDate healthyPeriod) {
 
+        var rofl = patients.stream()
+                .sorted((p1, p2) -> p2.date().compareTo(p1.date()))
+                .distinct().toList();
         return patients.stream()
                 .sorted((p1, p2) -> p2.date().compareTo(p1.date()))
                 .distinct()
-                .filter(PatientDTO::isHealthy).toList();
+                .filter(p -> p.isHealthy() && p.date().isBefore(healthyPeriod)).toList();
     }
 
     public List<PatientDTO> findByDateAfter(LocalDate date) {

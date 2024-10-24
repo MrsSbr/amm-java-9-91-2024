@@ -11,11 +11,12 @@ public record PatientDTO(String name, String surname, String patronymic, Boolean
         if (o == null || getClass() != o.getClass()) return false;
         PatientDTO that = (PatientDTO) o;
         return Objects.equals(name, that.name) &&
-                Objects.equals(surname, that.surname);
+                Objects.equals(surname, that.surname) &&
+                Objects.equals(patronymic, that.patronymic);
     }
 
-        @Override
-        public int hashCode() {
-            return Objects.hash(surname, name);
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(surname, name, patronymic);
+    }
 }

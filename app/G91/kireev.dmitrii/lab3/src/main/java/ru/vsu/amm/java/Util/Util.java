@@ -1,37 +1,39 @@
 package ru.vsu.amm.java.Util;
 
 import ru.vsu.amm.java.Config.PatientConfig;
+import ru.vsu.amm.java.Model.PatientDTO;
 
 import java.time.LocalDate;
 import java.util.Random;
 
+import static ru.vsu.amm.java.Config.PatientConfig.patronymics;
+
 public class Util {
 
-    private static final Random RANDOM = new Random();
-    private static final int LETTERSCOUNT = 26;
 
-    public static String getRandomString(int stringLength) {
+    public static PatientDTO getRandomPatient() {
 
-        StringBuilder result = new StringBuilder();
+        Random random = new Random();
 
-        for (int i = 0; i < stringLength; i++) {
-            result.append((char) (RANDOM.nextInt(LETTERSCOUNT) + 'a'));
-        }
+        String name = PatientConfig.names.get(random.nextInt(PatientConfig.names.size()));
+        String surname = PatientConfig.surnames.get(random.nextInt(PatientConfig.surnames.size()));
+        String patronymic = patronymics.get(random.nextInt(patronymics.size()));
+        boolean isHealthy = random.nextBoolean();
+        String illness = !isHealthy ? PatientConfig.illnesses.get(random.nextInt(PatientConfig.illnesses.size())) : "Healthy";
 
-        return result.toString();
-    }
+        return new PatientDTO(name, surname, patronymic, isHealthy, illness, getRandomDate());
 
-    public static Boolean getRandomBoolean() {
 
-        return RANDOM.nextBoolean();
     }
 
     public static LocalDate getRandomDate() {
 
-        int year = PatientConfig.FIRSTDATE.getYear() + RANDOM.nextInt(PatientConfig.NOW.getYear() - PatientConfig.FIRSTDATE.getYear()+ 1);
-        int month = 1 + RANDOM.nextInt(12);
-        int day = 1 + RANDOM.nextInt(LocalDate.of(year, month, 1).lengthOfMonth());
+        Random random = new Random();
 
-        return LocalDate.of(year, month,day);
+        int year = PatientConfig.FIRST_DATE.getYear() + random.nextInt(PatientConfig.NOW.getYear() - PatientConfig.FIRST_DATE.getYear() + 1);
+        int month = 1 + random.nextInt(PatientConfig.NOW.getMonthValue());
+        int day = 1 + random.nextInt(LocalDate.of(year, month, 1).lengthOfMonth());
+
+        return LocalDate.of(year, month, day);
     }
 }

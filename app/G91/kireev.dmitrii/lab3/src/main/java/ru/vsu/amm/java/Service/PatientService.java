@@ -10,32 +10,32 @@ public class PatientService {
 
     private final PatientRepo patientRepo;
 
-    public PatientService(){
+    public PatientService() {
         patientRepo = new PatientRepo();
     }
 
-    public PatientService(PatientRepo patientRepo){
+    public PatientService(PatientRepo patientRepo) {
         this.patientRepo = patientRepo;
     }
 
-    public List<PatientDTO> getAll() {
+    public List<PatientDTO> findAll() {
         return patientRepo.getAll();
     }
 
-    public List<PatientDTO> findByIsHealthyAfterDate() {
-        return patientRepo.findByIsHealthyAfterDate(PatientConfig.HEALTHYPERIOD);
+    public List<PatientDTO> findByIsHealthy() {
+        return patientRepo.findByIsHealthy(PatientConfig.HEALTHY_PERIOD);
     }
 
-    public List<PatientDTO> findByIsHealthy() {
-        return patientRepo.findByIsHealthy();
+    public List<PatientDTO> findByMightBeHealthy() {
+        return patientRepo.findByMightBeHealthy(PatientConfig.HEALTHY_PERIOD);
     }
 
     public List<PatientDTO> findByDateAfter() {
-        return patientRepo.findByDateAfter(PatientConfig.TASK2PERIOD);
+        return patientRepo.findByDateAfter(PatientConfig.TASK2_PERIOD);
     }
 
     public List<PatientDTO> findByDateBetween() {
-        return patientRepo.findByDateBetween(PatientConfig.TASK3AFTER, PatientConfig.TASK3BEFORE);
+        return patientRepo.findByDateBetween(PatientConfig.TASK3_AFTER, PatientConfig.TASK3_BEFORE);
     }
 
 }

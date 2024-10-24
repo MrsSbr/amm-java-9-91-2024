@@ -1,41 +1,45 @@
 package ru.vsu.amm.java;
 
 import ru.vsu.amm.java.Model.PatientDTO;
-import ru.vsu.amm.java.Repository.PatientRepo;
 import ru.vsu.amm.java.Service.PatientService;
 
-import java.time.LocalDate;
-import java.util.Arrays;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Comparator;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
 
         PatientService service = new PatientService();
 
-        List<PatientDTO> mightBeHealthy = service.findByIsHealthy();
+        List<PatientDTO> mightBeHealthy = service.findByMightBeHealthy();
 
-        List<PatientDTO> healthy = service.findByIsHealthyAfterDate();
+        List<PatientDTO> healthy = service.findByIsHealthy();
 
-        List<PatientDTO> test = Arrays.asList(
-                new PatientDTO("ab", "cd", "ef", true, "rofler", LocalDate.now().minusMonths(3)),
-                new PatientDTO("ab", "cd", "ef", true, "rofler", LocalDate.now().minusYears(3)));
+        List<PatientDTO> all = service.findAll();
 
-        System.out.println("-----------------------------TASK1------------------------------------------");
+        System.out.println("-----------------------------все------------------------------------------");
 
-        for (var x : mightBeHealthy) {
+        for (var x : all) {
             System.out.println(x);
         }
 
-        System.out.println("-----------------------------MIGHT BE------------------------------------------");
+        System.out.println("------здоровые------");
 
         for (var x : healthy) {
             System.out.println(x);
         }
 
+        System.out.println("------возможно здоровые------");
 
-        System.out.println("-----------------------------TASK2------------------------------------------");
+        for (var x : mightBeHealthy) {
+            System.out.println(x);
+        }
+
+
+        System.out.println("----- список людей, которые проходили обследование за последние 3 года------");
 
         List<PatientDTO> task2 = service.findByDateAfter().stream().sorted(Comparator.comparing(PatientDTO::name)).toList();
 
@@ -43,10 +47,9 @@ public class Main {
             System.out.println(x);
         }
 
-        System.out.println("-----------------------------TASK3------------------------------------------");
+        System.out.println("------список людей, которые проходили обследование последние 5 лет, но не проходили последние 2 года--------");
 
-        PatientService service2 = new PatientService(new PatientRepo(test));
-        List<PatientDTO> task3 = service2.findByDateBetween();
+        List<PatientDTO> task3 = service.findByDateBetween();
 
         for (var x : task3) {
             System.out.println(x);
