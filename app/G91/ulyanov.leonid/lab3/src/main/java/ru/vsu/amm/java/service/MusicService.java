@@ -4,9 +4,12 @@ import ru.vsu.amm.java.entity.SongPlayback;
 import ru.vsu.amm.java.enums.Genre;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class MusicService {
@@ -36,6 +39,7 @@ public class MusicService {
     public static Map<String, Set<String>> getUserStreamingDataLeastPopular(List<SongPlayback> songs) {
         int currentYear = LocalDate.now().getYear();
         int currentMonth = LocalDate.now().getMonthValue();
+        // нужно убрать дубликаты песен, которые могли слушаться недавно и раньше 3 месяцев
         return songs.stream()
                 .filter(song -> (song.listeningDate().getYear() == currentYear
                         && song.listeningDate().getMonthValue() <= currentMonth - 3)
@@ -48,12 +52,12 @@ public class MusicService {
     }
 
     public static Map<String, String> getUserStreamingDataMostFavorite(List<SongPlayback> songs) {
-        Map<String, Set<String>> streamingData = songs.stream()
+        Map<String, List<String>> streamingData = songs.stream()
                 .collect(Collectors.groupingBy(SongPlayback::username,
                         Collectors.mapping(song -> song.title()
                                         + " by " + song.artist()
                                         + ", " + song.genre(),
-                                Collectors.toSet())));
+                                Collectors.toList())));
         return streamingData.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
                         entry -> entry.getValue().stream()
