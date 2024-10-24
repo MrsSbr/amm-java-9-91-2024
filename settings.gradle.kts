@@ -82,6 +82,7 @@ student("golukovich.timofey", G9) {
 student("bogatyirev.kirill", G9){
     lab(0)
     lab(1)
+    lab(2)
  }
 
 
