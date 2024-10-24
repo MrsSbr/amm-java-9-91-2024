@@ -26,7 +26,7 @@ public class StorageWinners<W extends WinnerInterface> {
             String dept = winner.getDepartmentName();
             if (departments.contains(dept)) {
                 // Если департамент уже есть, увеличиваем его счетчик
-                int index = (departments).indexOf(dept);
+                int index = departments.indexOf(dept);
                 counts.set(index, counts.get(index) + 1);
             } else {
                 // Если департамент новый, добавляем его
