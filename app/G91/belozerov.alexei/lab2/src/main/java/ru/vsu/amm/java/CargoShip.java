@@ -10,6 +10,7 @@ public class CargoShip extends VesselImpl {
         this.cargoType = cargoType;
     }
 
+
     @Override
     public String getVesselType() {
         return "Грузовое судно";
