@@ -24,50 +24,65 @@ public class FanVotesServiceTest {
 
     @Test
     public void testFindMostPopularPlayersBasedOnFilledCollection() {
-        Assertions.assertEquals(Set.of(2, 3), FanVotesService.findMostPopularPlayers(FAN_VOTES));
+        Assertions.assertEquals(Set.of(2, 3),
+                FanVotesService.findMostPopularPlayers(FAN_VOTES));
     }
 
     @Test
     public void testFindPlayersWithoutVotesBasedOnFilledCollection() {
         Set<Integer> expectedCollection = new HashSet<>(Set.of(4, 7, 9));
-        expectedCollection.addAll(IntStream.rangeClosed(11, MAX_VOTE).boxed().toList());
-        Assertions.assertEquals(expectedCollection, FanVotesService.findPlayersWithoutVotes(FAN_VOTES));
+        expectedCollection.addAll(IntStream.rangeClosed(11, MAX_VOTE)
+                .boxed()
+                .toList());
+        Assertions.assertEquals(expectedCollection,
+                FanVotesService.findPlayersWithoutVotes(FAN_VOTES));
     }
 
     @Test
     public void testFindVotedPlayersBasedOnFilledCollection() {
-        Assertions.assertEquals(Set.of(1, 2, 3, 5, 6, 8, 10), FanVotesService.findVotedPlayers(FAN_VOTES));
+        Assertions.assertEquals(Set.of(1, 2, 3, 5, 6, 8, 10),
+                FanVotesService.findVotedPlayers(FAN_VOTES));
     }
 
     @Test
     public void testFindMostPopularPlayersBasedOnNull() {
-        Assertions.assertThrows(NullPointerException.class, () -> FanVotesService.findMostPopularPlayers(null));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> FanVotesService.findMostPopularPlayers(null));
     }
 
     @Test
     public void testFindPlayersWithoutVotesBasedOnNull() {
-        Assertions.assertThrows(NullPointerException.class, () -> FanVotesService.findPlayersWithoutVotes(null));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> FanVotesService.findPlayersWithoutVotes(null));
     }
 
     @Test
     public void testFindVotedPlayersBasedOnNull() {
-        Assertions.assertThrows(NullPointerException.class, () -> FanVotesService.findVotedPlayers(null));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> FanVotesService.findVotedPlayers(null));
     }
 
     @Test
     public void testFindMostPopularPlayersBasedOnEmptyCollection() {
-        Set<Integer> expectedCollection = new HashSet<>(IntStream.rangeClosed(MIN_VOTE, MAX_VOTE).boxed().toList());
-        Assertions.assertEquals(expectedCollection, FanVotesService.findMostPopularPlayers(new ArrayList<>()));
+        Set<Integer> expectedCollection = new HashSet<>(IntStream.rangeClosed(MIN_VOTE, MAX_VOTE)
+                .boxed()
+                .toList());
+        Assertions.assertEquals(expectedCollection,
+                FanVotesService.findMostPopularPlayers(new ArrayList<>()));
     }
 
     @Test
     public void testFindPlayersWithoutVotesBasedOnEmptyCollection() {
-        Set<Integer> expectedCollection = new HashSet<>(IntStream.rangeClosed(MIN_VOTE, MAX_VOTE).boxed().toList());
-        Assertions.assertEquals(expectedCollection, FanVotesService.findPlayersWithoutVotes(new ArrayList<>()));
+        Set<Integer> expectedCollection = new HashSet<>(IntStream.rangeClosed(MIN_VOTE, MAX_VOTE)
+                .boxed()
+                .toList());
+        Assertions.assertEquals(expectedCollection,
+                FanVotesService.findPlayersWithoutVotes(new ArrayList<>()));
     }
 
     @Test
     public void testFindVotedPlayersBasedOnEmptyCollection() {
-        Assertions.assertEquals(Set.of(), FanVotesService.findVotedPlayers(new ArrayList<>()));
+        Assertions.assertEquals(Set.of(),
+                FanVotesService.findVotedPlayers(new ArrayList<>()));
     }
 }
