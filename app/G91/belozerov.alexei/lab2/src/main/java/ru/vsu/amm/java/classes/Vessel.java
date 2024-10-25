@@ -1,12 +1,14 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
+
+import ru.vsu.amm.java.interfaces.Shippable;
 
 import java.util.Objects;
 
-public abstract class VesselImpl implements Vessel {
+public abstract class Vessel implements Shippable {
     private final String name;
     private final int capacity;
 
-    public VesselImpl(String name, int capacity) {
+    public Vessel(String name, int capacity) {
         this.name = name;
         this.capacity = capacity;
     }
@@ -45,7 +47,7 @@ public abstract class VesselImpl implements Vessel {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        VesselImpl vessel = (VesselImpl) o;
+        Vessel vessel = (Vessel) o;
         return capacity == vessel.capacity && name.equals(vessel.name);
     }
 

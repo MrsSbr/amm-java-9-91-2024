@@ -1,4 +1,4 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.enums;
 
 public enum CargoType {
     CONTAINER("Контейнер"), OIL("Нефть"), GAS("Газ");

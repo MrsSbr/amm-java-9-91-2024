@@ -1,8 +1,14 @@
 package ru.vsu.amm.java;
 
+import ru.vsu.amm.java.classes.CargoShip;
+import ru.vsu.amm.java.classes.FishingBoat;
+import ru.vsu.amm.java.classes.Vessel;
+import ru.vsu.amm.java.enums.CargoType;
+import ru.vsu.amm.java.enums.FishType;
+
 public class Main {
     public static void main(String[] args) {
-        VesselImpl cargoShip1 = new CargoShip(
+        Vessel cargoShip1 = new CargoShip(
                 "Грузовик-1",
                 5000,
                 CargoType.CONTAINER
@@ -20,7 +26,7 @@ public class Main {
                 CargoType.OIL
         );
         cargoShip3.sail();
-        VesselImpl fishingBoat1 = new FishingBoat(
+        Vessel fishingBoat1 = new FishingBoat(
                 "Рыбак-1",
                 300,
                 FishType.SARDINES
@@ -50,7 +56,7 @@ public class Main {
         System.out.println(cargoShip1.equals(cargoShip3));
     }
 
-    static void defineClass(VesselImpl vessel) {
+    static void defineClass(Vessel vessel) {
         if (vessel instanceof CargoShip) {
             System.out.println(vessel.getName() + " имеет тип " + vessel.getVesselType());
         } else if (vessel instanceof FishingBoat) {

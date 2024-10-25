@@ -1,8 +1,10 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
+
+import ru.vsu.amm.java.enums.FishType;
 
 import java.util.Objects;
 
-public class FishingBoat extends VesselImpl {
+public class FishingBoat extends Vessel {
     private final FishType fishType;
 
     public FishingBoat(String name, int capacity, FishType fishType) {

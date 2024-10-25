@@ -1,4 +1,4 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.enums;
 
 public enum FishType {
     COD("Треска"), SALMON("Лосось"), SARDINES("Сардина");

@@ -1,15 +1,16 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
+
+import ru.vsu.amm.java.enums.CargoType;
 
 import java.util.Objects;
 
-public class CargoShip extends VesselImpl {
+public class CargoShip extends Vessel {
     private final CargoType cargoType;
 
     public CargoShip(String name, int capacity, CargoType cargoType) {
         super(name, capacity);
         this.cargoType = cargoType;
     }
-
 
     @Override
     public String getVesselType() {
