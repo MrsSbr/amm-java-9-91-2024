@@ -52,14 +52,14 @@ public class FanVotesService {
 
         fanVotes.stream()
                 .flatMap(i -> i.getVotes().stream())
-                .forEach(i -> groupedVotes.set(i - 1, groupedVotes.get(i - 1) + 1));
+                .forEach(i -> groupedVotes.set(i - MIN_VOTE, groupedVotes.get(i - MIN_VOTE) + 1));
 
         int maxPopularity = groupedVotes.stream()
                 .max(Integer::compareTo)
                 .orElse(0);
 
         return IntStream.rangeClosed(MIN_VOTE, MAX_VOTE)
-                .filter(i -> groupedVotes.get(i - 1).equals(maxPopularity))
+                .filter(i -> groupedVotes.get(i - MIN_VOTE).equals(maxPopularity))
                 .boxed()
                 .collect(Collectors.toSet());
     }

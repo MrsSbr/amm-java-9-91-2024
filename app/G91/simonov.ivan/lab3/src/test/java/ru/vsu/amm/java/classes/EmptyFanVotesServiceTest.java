@@ -1,8 +1,7 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.vsu.amm.java.classes.FanVotesServiceTest;
 
 import java.util.ArrayList;
 import java.util.HashSet;
