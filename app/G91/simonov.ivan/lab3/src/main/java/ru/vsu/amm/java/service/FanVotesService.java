@@ -18,11 +18,11 @@ public class FanVotesService {
 
     public FanVotesService() {}
 
-    public int getMinVote() {
+    public static int getMinVote() {
         return MIN_VOTE;
     }
 
-    public int getMaxVote() {
+    public static int getMaxVote() {
         return MAX_VOTE;
     }
 
