@@ -16,5 +16,8 @@ public class FanVotesDemonstration {
 
         System.out.println("Номера игроков, за которых голосовали:");
         System.out.println(fanVotesService.findVotedPlayers());
+
+        System.out.println("Номера игроков, не получивших ни одного голоса:");
+        System.out.println(fanVotesService.findPlayersWithoutVotes());
     }
 }

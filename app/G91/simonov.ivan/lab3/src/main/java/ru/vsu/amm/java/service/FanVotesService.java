@@ -65,7 +65,11 @@ public class FanVotesService {
                 .collect(Collectors.toSet());
     }
 
-/*    public Set<Integer> findPlayersWithoutVotes() {
+    public Set<Integer> findPlayersWithoutVotes() {
 
-    }*/
+        return IntStream.rangeClosed(MIN_VOTE, MAX_VOTE)
+                .filter(i -> !findVotedPlayers().contains(i))
+                .boxed()
+                .collect(Collectors.toSet());
+    }
 }
