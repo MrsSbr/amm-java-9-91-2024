@@ -18,6 +18,14 @@ public class FanVotesService {
 
     public FanVotesService() {}
 
+    public int getMinVote() {
+        return MIN_VOTE;
+    }
+
+    public int getMaxVote() {
+        return MAX_VOTE;
+    }
+
     public void setFanVote(List<FanVote> fanVotes) {
         this.fanVotes = fanVotes;
     }

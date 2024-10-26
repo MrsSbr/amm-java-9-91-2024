@@ -5,13 +5,17 @@ import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entity.FanVote;
 import ru.vsu.amm.java.service.FanVotesService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public class FanVotesServiceTest {
-    private final FanVotesService avgFanVotesService = fillAverageFanVotes();
+    private static final FanVotesService avgFanVotesService = fillAverageFanVotes();
+    private final static int MIN_VOTE = avgFanVotesService.getMinVote();
+    private final static int MAX_VOTE = avgFanVotesService.getMaxVote();
 
-    public FanVotesService fillAverageFanVotes() {
+    public static FanVotesService fillAverageFanVotes() {
         FanVotesService avgService = new FanVotesService();
         avgService.setFanVote(List.of(
                 new FanVote(Set.of(1, 2, 3)),
@@ -31,7 +35,11 @@ public class FanVotesServiceTest {
 
     @Test
     public void testFindPlayersWithoutVotes() {
-        Assertions.assertEquals(Set.of(4, 7, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ,21, 22),
+        Set<Integer> expectedCollection = new HashSet<>(Set.of(4, 7, 9));
+        expectedCollection.addAll(IntStream.rangeClosed(11, MAX_VOTE)
+                .boxed()
+                .toList());
+        Assertions.assertEquals(expectedCollection,
                 avgFanVotesService.findPlayersWithoutVotes());
     }
 
