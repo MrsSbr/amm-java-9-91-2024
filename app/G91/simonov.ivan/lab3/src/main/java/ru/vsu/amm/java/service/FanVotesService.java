@@ -2,10 +2,9 @@ package ru.vsu.amm.java.service;
 
 import ru.vsu.amm.java.entity.FanVote;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class FanVotesService {
@@ -16,6 +15,10 @@ public class FanVotesService {
     private final static int MAX_VOTE = 22;
 
     private List<FanVote> fanVotes;
+
+    public FanVotesService() {
+
+    }
 
     public List<FanVote> getFanVote() {
         return fanVotes;
@@ -35,5 +38,23 @@ public class FanVotesService {
         fanVotes = Stream.generate(FanVotesService::generateFanVote)
                 .limit(cntVotes)
                 .toList();
+    }
+
+    public Set<Integer> findMostPopularPlayers() {
+        List<Integer> groupedVotes =
+                new ArrayList<>(Collections.nCopies(MAX_VOTE - MIN_VOTE + 1, 0));
+
+        fanVotes.stream()
+                .flatMap(i -> i.getVotes().stream())
+                .forEach(i -> groupedVotes.set(i - 1, groupedVotes.get(i - 1) + 1));
+
+        int maxPopularity = groupedVotes.stream()
+                .max(Integer::compareTo)
+                .orElse(0);
+
+        return IntStream.rangeClosed(MIN_VOTE, MAX_VOTE)
+                .filter(i -> groupedVotes.get(i - 1).equals(maxPopularity))
+                .boxed()
+                .collect(Collectors.toSet());
     }
 }
