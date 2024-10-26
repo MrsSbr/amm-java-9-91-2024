@@ -57,4 +57,15 @@ public class FanVotesService {
                 .boxed()
                 .collect(Collectors.toSet());
     }
+
+    public Set<Integer> findVotedPlayers() {
+
+        return fanVotes.stream()
+                .flatMap(i -> i.getVotes().stream())
+                .collect(Collectors.toSet());
+    }
+
+/*    public Set<Integer> findPlayersWithoutVotes() {
+
+    }*/
 }
