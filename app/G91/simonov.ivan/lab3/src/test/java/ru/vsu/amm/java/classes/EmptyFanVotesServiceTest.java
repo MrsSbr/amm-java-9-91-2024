@@ -33,7 +33,6 @@ public class EmptyFanVotesServiceTest extends FanVotesServiceTest {
                 new HashSet<>(IntStream.rangeClosed(MIN_VOTE, MAX_VOTE)
                         .boxed()
                         .toList());
-
         Assertions.assertEquals(expectedCollection,
                 fanVotesService.findPlayersWithoutVotes());
     }
