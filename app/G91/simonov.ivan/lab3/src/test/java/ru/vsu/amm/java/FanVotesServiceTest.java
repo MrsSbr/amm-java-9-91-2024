@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entity.FanVote;
 import ru.vsu.amm.java.service.FanVotesService;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +15,8 @@ public class FanVotesServiceTest {
     private static final FanVotesService avgFanVotesService = fillAverageFanVotes();
     private static final FanVotesService allPlayersMentionedFanVotesService =
             fillAllPlayersMentionedFanVotes();
+    private static final FanVotesService emptyFanVotesService =
+            makeEmptyFanVotesService();
     private final static int MIN_VOTE = avgFanVotesService.getMinVote();
     private final static int MAX_VOTE = avgFanVotesService.getMaxVote();
 
@@ -30,8 +33,8 @@ public class FanVotesServiceTest {
     }
 
     public static FanVotesService fillAllPlayersMentionedFanVotes() {
-        FanVotesService avgService = new FanVotesService();
-        avgService.setFanVote(List.of(
+        FanVotesService allPlayersMentionedService = new FanVotesService();
+        allPlayersMentionedService.setFanVote(List.of(
                 new FanVote(Set.of(1, 2, 3)),
                 new FanVote(Set.of(4, 5, 6)),
                 new FanVote(Set.of(7, 8, 9)),
@@ -41,7 +44,13 @@ public class FanVotesServiceTest {
                 new FanVote(Set.of(19, 20, 21)),
                 new FanVote(Set.of(22))
         ));
-        return avgService;
+        return allPlayersMentionedService;
+    }
+
+    public static FanVotesService makeEmptyFanVotesService() {
+        FanVotesService emptyService = new FanVotesService();
+        emptyService.setFanVote(new ArrayList<>());
+        return emptyService;
     }
 
     @Test
@@ -90,5 +99,32 @@ public class FanVotesServiceTest {
                         .toList());
         Assertions.assertEquals(expectedCollection,
                 allPlayersMentionedFanVotesService.findVotedPlayers());
+    }
+
+    @Test
+    public void testFindMostPopularPlayersBasedOnEmptyCollection() {
+        Set<Integer> expectedCollection =
+                new HashSet<>(IntStream.rangeClosed(MIN_VOTE, MAX_VOTE)
+                        .boxed()
+                        .toList());
+        Assertions.assertEquals(expectedCollection,
+               emptyFanVotesService.findMostPopularPlayers());
+    }
+
+    @Test
+    public void testFindPlayersWithoutVotesBasedOnEmptyCollection() {
+        Set<Integer> expectedCollection =
+                new HashSet<>(IntStream.rangeClosed(MIN_VOTE, MAX_VOTE)
+                        .boxed()
+                        .toList());
+
+        Assertions.assertEquals(expectedCollection,
+                emptyFanVotesService.findPlayersWithoutVotes());
+    }
+
+    @Test
+    public void testFindVotedPlayersBasedOnEmptyCollection() {
+        Assertions.assertEquals(Set.of(),
+                emptyFanVotesService.findVotedPlayers());
     }
 }
