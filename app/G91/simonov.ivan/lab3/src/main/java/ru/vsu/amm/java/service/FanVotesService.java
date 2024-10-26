@@ -16,12 +16,10 @@ public class FanVotesService {
 
     private List<FanVote> fanVotes;
 
-    public FanVotesService() {
+    public FanVotesService() {}
 
-    }
-
-    public List<FanVote> getFanVote() {
-        return fanVotes;
+    public void setFanVote(List<FanVote> fanVotes) {
+        this.fanVotes = fanVotes;
     }
 
     private static FanVote generateFanVote() {
