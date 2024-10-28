@@ -10,15 +10,6 @@ public class Fighter extends MilitaryAircraft {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        Fighter that = (Fighter) obj;
-        if (obj == null)
-            return false;
-        else
-            return (firePower == that.firePower && super.equals(obj));
-    }
-
-    @Override
     public String toString() {
         return "FighterJet{" +
                 "model='" + getModel() + '\'' +
@@ -28,12 +19,22 @@ public class Fighter extends MilitaryAircraft {
     }
 
     @Override
+    public String mission() {
+        return getModel() + " attacks!";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Fighter that = (Fighter) obj;
+        if (obj == null)
+            return false;
+        else
+            return (firePower == that.firePower && super.equals(obj));
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), firePower);
     }
 
-    @Override
-    public String mission() {
-        return getModel() + " attacks!";
-    }
 }

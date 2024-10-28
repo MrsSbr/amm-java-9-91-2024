@@ -13,6 +13,21 @@ public class Spy extends MilitaryAircraft {
     }
 
     @Override
+    public String toString() {
+        return "FighterJet{" +
+                "model='" + getModel() + '\'' +
+                ", maxSpeed=" + getMaxSpeed() +
+                ", unmanned=" + unmanned +
+                ", invisibility=" + invisibility +
+                '}';
+    }
+
+    @Override
+    public String mission() {
+        return getModel() + " reconnaissance!";
+    }
+
+    @Override
     public boolean equals(Object obj) {
         Spy that = (Spy) obj;
         if (obj == null)
@@ -24,22 +39,7 @@ public class Spy extends MilitaryAircraft {
     }
 
     @Override
-    public String toString() {
-        return "FighterJet{" +
-                "model='" + getModel() + '\'' +
-                ", maxSpeed=" + getMaxSpeed() +
-                ", unmanned=" + unmanned +
-                ", invisibility=" + invisibility +
-                '}';
-    }
-
-    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), invisibility, unmanned);
-    }
-
-    @Override
-    public String mission() {
-        return getModel() + " reconnaissance!";
     }
 }

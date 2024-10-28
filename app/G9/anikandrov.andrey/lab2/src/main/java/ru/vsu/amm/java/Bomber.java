@@ -11,15 +11,6 @@ public class Bomber extends MilitaryAircraft {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        Bomber that = (Bomber) obj;
-        if (obj == null)
-            return false;
-        else
-            return bombLaying == that.bombLaying && super.equals(obj);
-    }
-
-    @Override
     public String toString() {
         return "Bomber{" +
                 "model='" + getModel() + '\'' +
@@ -29,13 +20,22 @@ public class Bomber extends MilitaryAircraft {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), bombLaying);
+    public String mission() {
+        return getModel() + " bombards!";
     }
 
     @Override
-    public String mission() {
-        return getModel() + " bombards!";
+    public boolean equals(Object obj) {
+        Bomber that = (Bomber) obj;
+        if (obj == null)
+            return false;
+        else
+            return bombLaying == that.bombLaying && super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), bombLaying);
     }
 }
 

@@ -32,6 +32,10 @@ public abstract class MilitaryAircraft implements Aircraft{
                 '}';
     }
 
+    public String mission() {
+        return model + " carries out orders!";
+    }
+
     @Override
     public boolean equals(Object obj) {
         MilitaryAircraft that = (MilitaryAircraft) obj;
@@ -44,9 +48,5 @@ public abstract class MilitaryAircraft implements Aircraft{
     @Override
     public int hashCode() {
         return Objects.hash(maxSpeed, model);
-    }
-
-    public String mission() {
-        return model + " carries out orders!";
     }
 }
