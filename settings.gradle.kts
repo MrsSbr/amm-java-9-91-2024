@@ -141,6 +141,7 @@ student("mokshin.nikita", G9) {
 student("anikandrov.andrey", G9) {
     lab(0)
     lab(1)
+    lab(2)
 }
 
 student("kanatnikov.maxim", G9) {
