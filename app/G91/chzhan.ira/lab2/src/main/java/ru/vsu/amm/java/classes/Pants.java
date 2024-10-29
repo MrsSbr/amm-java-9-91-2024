@@ -1,12 +1,19 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
+import ru.vsu.amm.java.abstracts.Clothes;
+
 import java.util.Objects;
-public class Pants extends Wearable {
+import ru.vsu.amm.java.enums.Size;
+public class Pants extends Clothes {
 
-    private String waistSize;
+    private Size waistSize;
 
-    public Pants(String name, String description, double price, String waistSize) {
+    public Pants(String name, String description, double price, Size waistSize) {
         super(name, description, price);
         this.waistSize = waistSize;
+    }
+
+    public Size getWaistSize() {
+        return waistSize;
     }
 
     @Override
@@ -28,9 +35,5 @@ public class Pants extends Wearable {
     @Override
     public int hashCode() {
         return Objects.hash(getName(), getDescription(), getPrice(), getWaistSize());
-    }
-
-    public String getWaistSize() {
-        return waistSize;
     }
 }

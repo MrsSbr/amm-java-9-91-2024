@@ -1,6 +1,6 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.interfaces;
 
-public interface Clothing {
+public interface Wearable {
     String getName();
     String getDescription();
     double getPrice();

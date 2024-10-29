@@ -1,12 +1,15 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.abstracts;
 
-public abstract class Wearable implements Clothing {
+import ru.vsu.amm.java.interfaces.Wearable;
+
+public abstract class Clothes implements Wearable {
+
 
     protected String name;
     protected String description;
     protected double price;
 
-    public Wearable(String name, String description, double price) {
+    public Clothes(String name, String description, double price) {
         this.name = name;
         this.description = description;
         this.price = price;

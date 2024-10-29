@@ -1,12 +1,19 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
+import ru.vsu.amm.java.abstracts.Clothes;
+
 import java.util.Objects;
-public class Shirt extends Wearable {
+import ru.vsu.amm.java.enums.Size;
+public class Shirt extends Clothes {
 
-    private String size;
+    private Size size;
 
-    public Shirt(String name, String description, double price, String size) {
+    public Shirt(String name, String description, double price, Size size) {
         super(name, description, price);
         this.size = size;
+    }
+
+    public Size getSize() {
+        return size;
     }
 
     @Override
@@ -28,9 +35,5 @@ public class Shirt extends Wearable {
     @Override
     public int hashCode() {
         return Objects.hash(getName(), getDescription(), getPrice(), getSize());
-    }
-
-    public String getSize() {
-        return size;
     }
 }
