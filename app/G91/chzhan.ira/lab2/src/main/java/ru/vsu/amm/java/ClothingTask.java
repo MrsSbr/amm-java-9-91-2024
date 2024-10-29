@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ClothingTask {
     public static void main(String[] args) {
-        // Создание объектов одежды
+
         Shirt shirt = new Shirt("White T-shirt", "Basic cotton T-shirt", 10.0, Size.M);
         Pants pants = new Pants("Black Jeans", "Denim pants", 20.0, Size.L);
         Dress dress = new Dress("Red Dress", "Elegant evening dress", 50.0, Dress.DressLength.LONG);
