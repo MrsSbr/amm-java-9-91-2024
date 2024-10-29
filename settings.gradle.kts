@@ -118,6 +118,7 @@ student("gavrilov.mihail", G9){
 student ("safonova.nastia", G9){
     lab(0)
     lab(1)
+    lab(2)
 }
 student("serova.polina", G9) {
     lab(0)
