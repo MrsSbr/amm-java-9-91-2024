@@ -44,19 +44,29 @@ public class Barista {
 
     public Set<String> getMorningDrinks() {
         logger.info("Retrieving morning drinks (7:00 - 9:00)...");
-        return drinkRecords.stream().filter(record -> record.getTime().isAfter(LocalTime.of(7, 0)) && record.getTime().isBefore(LocalTime.of(9, 0))).map(DrinkRecord::getDrinkName).collect(Collectors.toCollection(HashSet::new));
+        return drinkRecords
+                .stream()
+                .filter(record -> record.getTime().isAfter(LocalTime.of(7, 0)) && record.getTime().isBefore(LocalTime.of(9, 0)))
+                .map(DrinkRecord::getDrinkName).collect(Collectors.toCollection(HashSet::new));
     }
 
     public long countCopCappuccino() {
         logger.info("The barista made cappuccino counting...");
-        return drinkRecords.stream().filter(drinkRecord -> Objects.equals(drinkRecord.getDrinkName(), "Cappuccino")).count();
+        return drinkRecords
+                .stream()
+                .filter(drinkRecord -> Objects.equals(drinkRecord.getDrinkName(), "Cappuccino"))
+                .count();
     }
 
     public Set<String> getDrinksNotOrderedLast3Months() {
         logger.info("Retrieving drinks not ordered in the last 3 months...");
         LocalDate threeMonthsAgo = LocalDate.now().minusMonths(3);
 
-        Set<String> orderedDrinks = drinkRecords.stream().filter(record -> record.getDate().isAfter(threeMonthsAgo)).map(DrinkRecord::getDrinkName).collect(Collectors.toCollection(HashSet::new));
+        Set<String> orderedDrinks = drinkRecords
+                .stream()
+                .filter(record -> record.getDate().isAfter(threeMonthsAgo))
+                .map(DrinkRecord::getDrinkName)
+                .collect(Collectors.toCollection(HashSet::new));
 
 
         HashSet<String> notOrderedList = new HashSet<>(ListDrinks.listDrinks);
