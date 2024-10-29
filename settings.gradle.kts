@@ -78,6 +78,7 @@ student("golukovich.timofey", G9) {
     lab(0)
     lab(1)
     lab(2)
+    lab(3)
 }
 
 
