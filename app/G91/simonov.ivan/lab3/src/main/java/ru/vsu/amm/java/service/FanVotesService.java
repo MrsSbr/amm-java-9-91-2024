@@ -51,7 +51,7 @@ public class FanVotesService {
                 new ArrayList<>(Collections.nCopies(MAX_VOTE - MIN_VOTE + 1, 0));
 
         fanVotes.stream()
-                .flatMap(i -> i.getVotes().stream())
+                .flatMap(i -> i.votes().stream())
                 .forEach(i -> groupedVotes.set(i - MIN_VOTE, groupedVotes.get(i - MIN_VOTE) + 1));
 
         int maxPopularity = groupedVotes.stream()
@@ -67,7 +67,7 @@ public class FanVotesService {
     public Set<Integer> findVotedPlayers() {
 
         return fanVotes.stream()
-                .flatMap(i -> i.getVotes().stream())
+                .flatMap(i -> i.votes().stream())
                 .collect(Collectors.toSet());
     }
 
