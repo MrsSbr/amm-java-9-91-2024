@@ -1,8 +1,23 @@
 package ru.vsu.amm.java;
 
-public class DroneBee extends AbstractBee {
-    public DroneBee(int age) {
-        super("Drone", age);
+import java.util.Objects;
+
+public class DroneBee extends Bee {
+    private boolean canFly;
+    private int flightDistance;
+
+    public DroneBee(int age, boolean canFly, int flightDistance) {
+        super(BeeType.DRONE, age);
+        this.canFly = canFly;
+        this.flightDistance = flightDistance;
+    }
+
+    public boolean canFly() {
+        return canFly;
+    }
+
+    public int getFlightDistance() {
+        return flightDistance;
     }
 
     @Override
@@ -22,6 +37,28 @@ public class DroneBee extends AbstractBee {
 
     @Override
     public void layEggs() {
-        System.out.println("Drone bee cannot laying eggs");
+        System.out.println("Drone bee cannot lay eggs");
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Can Fly: " + canFly + ", Flight Distance: " + flightDistance;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj) || getClass() != obj.getClass()) {
+            return false;
+        }
+        DroneBee other = (DroneBee) obj;
+        return canFly == other.canFly && flightDistance == other.flightDistance;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), canFly, flightDistance);
     }
 }
