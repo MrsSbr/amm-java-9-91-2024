@@ -30,7 +30,10 @@ class BaristaTest {
     @Test
     void testEmptyGetSet() {
         barista.setRecords(new ArrayList<>());
+
         assertTrue(barista.getRecords().isEmpty());
+
+        logger.info("test empty get set end");
     }
 
     @Test
@@ -43,6 +46,8 @@ class BaristaTest {
         assertTrue(barista.getRecords().contains(drinkRecords.getFirst()));
         assertTrue(barista.getRecords().contains(drinkRecords.getLast()));
         assertFalse(barista.getRecords().isEmpty());
+
+        logger.info("test not empty get set end");
     }
 
     @Test
@@ -57,6 +62,8 @@ class BaristaTest {
 
         assertEquals(1, morningDrinks.size());
         assertTrue(morningDrinks.contains("Cappuccino"));
+
+        logger.info("test get morning drinks end");
     }
 
     @Test
@@ -70,6 +77,8 @@ class BaristaTest {
         Set<String> morningDrinks = barista.getMorningDrinks();
 
         assertEquals(0, morningDrinks.size());
+
+        logger.info("test get morning drinks empty end");
     }
 
     @Test
@@ -84,6 +93,8 @@ class BaristaTest {
         long cappuccinoCount = barista.countCopCappuccino();
 
         assertEquals(2, cappuccinoCount);
+
+        logger.info("test count cappuccino end");
     }
 
     @Test
@@ -98,6 +109,8 @@ class BaristaTest {
         long cappuccinoCount = barista.countCopCappuccino();
 
         assertEquals(0, cappuccinoCount);
+
+        logger.info("test count cappuccino null end");
     }
 
     @Test
@@ -113,12 +126,15 @@ class BaristaTest {
 
         assertTrue(notOrderedDrinks.contains("Cappuccino"));
         assertFalse(notOrderedDrinks.contains("Latte"));
+
+        logger.info("test get drinks not ordered last 3 months end");
     }
 
     @Test
     void testGetDrinksNotOrderedLast3MonthsAllOrderedEmpty() {
         LocalDate threeMonthsAgo = LocalDate.now().minusMonths(3);
         List<DrinkRecord> drinkRecords = new ArrayList<>();
+        ListDrinks.listDrinks = new HashSet<>();
         drinkRecords.add(new DrinkRecord(DrinkName.Cappuccino, threeMonthsAgo.plusDays(1), LocalTime.of(8, 0)));
         drinkRecords.add(new DrinkRecord(DrinkName.Latte, threeMonthsAgo.plusDays(2), LocalTime.of(9, 0)));
         drinkRecords.add(new DrinkRecord(DrinkName.Espresso, LocalDate.now(), LocalTime.of(10, 0)));
@@ -129,6 +145,7 @@ class BaristaTest {
         Set<String> notOrderedDrinks = barista.getDrinksNotOrderedLast3Months();
 
         assertEquals(0, notOrderedDrinks.size() - 1);
-    }
 
+        logger.info("test get drinks not ordered last 3 months empty end");
+    }
 }

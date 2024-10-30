@@ -9,7 +9,6 @@ import java.util.List;
 
 import java.util.Random;
 
-import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 import static ru.vsu.amm.java.enums.DrinkName.Espresso;
@@ -18,10 +17,9 @@ import static ru.vsu.amm.java.enums.DrinkName.Americano;
 import static ru.vsu.amm.java.enums.DrinkName.Latte;
 import static ru.vsu.amm.java.enums.DrinkName.Matcha;
 import static ru.vsu.amm.java.enums.DrinkName.Tea;
+import static ru.vsu.amm.java.service.Logg.logger;
 
 public class BaristaGenerator {
-
-    public static final Logger log = Logger.getLogger(BaristaGenerator.class.getName());
 
     private static final int COUNT_DAYS = 365;
     private static final int HOUR_START = 8;
@@ -46,10 +44,12 @@ public class BaristaGenerator {
         int randomMinute = random.nextInt(MINUTES_IN_HOUR);
         LocalTime randomTime = LocalTime.of(randomHour, randomMinute);
 
+        logger.fine("Generate elem");
+
         return new DrinkRecord(randomDrink, randomDate, randomTime);
     }
     public static List<DrinkRecord> generateRandomDrinkRecord(int counts) {
-        log.info("Generation...");
+        logger.fine("Generation");
 
         return IntStream.range(0, counts)
                 .mapToObj(i -> generateRandomDrinkRecord())

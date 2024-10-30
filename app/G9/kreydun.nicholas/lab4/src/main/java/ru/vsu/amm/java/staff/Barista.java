@@ -11,18 +11,16 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static ru.vsu.amm.java.generators.BaristaGenerator.generateRandomDrinkRecord;
+import static ru.vsu.amm.java.service.Logg.logger;
 
 public class Barista {
 
-    private static final Logger logger = Logger.getLogger(Barista.class.getName());
-
     private List<DrinkRecord> drinkRecords;
 
-    private final int COUNTS_ORDER = 10000;
+    private final int COUNTS_ORDER = 1000;
 
     public Barista() {
         drinkRecords = new ArrayList<>();
