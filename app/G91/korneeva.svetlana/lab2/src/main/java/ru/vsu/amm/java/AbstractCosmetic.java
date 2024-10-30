@@ -3,8 +3,8 @@ package ru.vsu.amm.java;
 import java.util.Objects;
 
 public abstract class AbstractCosmetic implements Cosmetic {
-    protected String brand;
-    protected double price;
+    private String brand;
+    private double price;
 
     public AbstractCosmetic(String brand, double price) {
         this.brand=brand;

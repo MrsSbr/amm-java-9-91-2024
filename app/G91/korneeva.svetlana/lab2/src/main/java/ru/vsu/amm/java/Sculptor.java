@@ -4,14 +4,14 @@ import java.util.Objects;
 
 public class Sculptor extends AbstractCosmetic {
 
-    protected String texture;
+    private Texture texture;
 
-    public Sculptor(String brand, double price, String texture){
+    public Sculptor(String brand, double price, Texture texture){
         super(brand, price);
         this.texture=texture;
     }
 
-    public String getTexture(){
+    public Texture getTexture(){
         return texture;
     }
 
