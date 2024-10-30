@@ -18,6 +18,7 @@ public class CosmeticApplication {
     public static void main(String[] args){
         Lipstick lipstick = new Lipstick("Dior",3500.25,Color.Pink);
         Lipstick lipstick2 = new Lipstick("Dior",3500.25,Color.Pink);
+        Lipstick lipstick3 = new Lipstick("Dior",3500.25,Color.Red);
         Sculptor sculptor = new Sculptor("Channel", 6000, Texture.Liquid);
         System.out.println(lipstick);
         System.out.println("----------");
@@ -30,5 +31,7 @@ public class CosmeticApplication {
         equalsTest(lipstick,lipstick2);
         System.out.println("----------");
         equalsTest(lipstick,sculptor);
+        System.out.println("----------");
+        equalsTest(lipstick,lipstick3);
     }
 }
