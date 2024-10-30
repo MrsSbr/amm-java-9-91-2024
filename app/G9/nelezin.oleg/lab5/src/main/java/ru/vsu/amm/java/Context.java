@@ -1,7 +1,6 @@
 package ru.vsu.amm.java;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +9,7 @@ public class Context {
     private Map<Class<?>, Object> beans = new HashMap<>();
 
     public Context() {
-
+        init(Service1.class, Service2.class);
     }
 
     private void init(Class<?>... clazz) {
@@ -18,6 +17,7 @@ public class Context {
             try {
                 Object instance = cl.getDeclaredConstructor().newInstance();
                 beans.put(cl, instance);
+                initAutowiredFields(instance);
             } catch (Exception e) {
                 e.printStackTrace();
             }
