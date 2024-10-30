@@ -2,18 +2,25 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public class StringInstrument extends InstrumentImpl implements Stringable {
+public class StringInstrument extends Instrument implements Stringable {
 
     private int numberStrings;
 
-    public StringInstrument(String name, double weight, String material, int numberStrings){
+    public StringInstrument(String name, double weight, Material material, int numberStrings){
         super(name, weight, material);
         this.numberStrings = numberStrings;
     }
 
-
-
     public StringInstrument() {}
+
+    public int getNumberStrings () {
+        return numberStrings;
+    }
+    @Override
+    public void play() {
+        System.out.println(getName() + ": (мелодия на струнах)");
+        brokenString();
+    }
 
     @Override
     public void brokenString() {
@@ -24,7 +31,7 @@ public class StringInstrument extends InstrumentImpl implements Stringable {
     public String toString() {
         return "Струнный инструмент" +
                 super.toString() +
-                "Количество струн: \n" + numberStrings;
+                "Количество струн: " + getNumberStrings();
     }
 
     @Override
@@ -37,11 +44,5 @@ public class StringInstrument extends InstrumentImpl implements Stringable {
     public int hashCode() {
 
         return Objects.hash(getName(), getWeight(), getMaterial(), numberStrings);
-    }
-
-    @Override
-    public void play() {
-        System.out.println(getName() + ": (мелодия на струнах)");
-        brokenString();
     }
 }

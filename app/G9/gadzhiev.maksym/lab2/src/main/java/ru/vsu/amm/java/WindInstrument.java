@@ -2,17 +2,20 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public class WindInstrument extends InstrumentImpl implements Playable {
+public class WindInstrument extends Instrument implements Playable {
 
-    private int lengthWindСhannel;
+    private int lengthWindChannel;
 
-    public WindInstrument(String name, double weight, String material, int lengthWindСhannel) {
+    public WindInstrument(String name, double weight, Material material, int lengthWindChannel) {
         super(name, weight, material);
-        this.lengthWindСhannel = lengthWindСhannel;
+        this.lengthWindChannel = lengthWindChannel;
     }
 
     public WindInstrument() {}
 
+    public int getLengthWindChannel () {
+        return lengthWindChannel;
+    }
     @Override
     public void play() {
 
@@ -23,17 +26,18 @@ public class WindInstrument extends InstrumentImpl implements Playable {
     public String toString() {
         return "Духовой инструмент" +
                 super.toString() +
-                "Длина канала: " + lengthWindСhannel;
+                "Длина канала: " + getLengthWindChannel();
     }
 
     @Override
     public boolean equals(Object obj) {
         WindInstrument that = (WindInstrument) obj;
-        return lengthWindСhannel == that.lengthWindСhannel && super.equals(obj);
+        return lengthWindChannel == that.lengthWindChannel && super.equals(obj);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getWeight(), getMaterial(), lengthWindСhannel);
+
+        return Objects.hash(getName(), getWeight(), getMaterial(), getLengthWindChannel());
     }
 }

@@ -3,34 +3,35 @@ package ru.vsu.amm.java;
 public class Orchestra {
     public static void main(String[] args) {
 
-        InstrumentImpl stringInstrument = new StringInstrument(
+        Instrument stringInstrument = new StringInstrument(
                 "Скрипка",
                  400,
-                 "Дерево",
+                 Material.TREE,
                  4
         );
 
         stringInstrument.play();
         stringInstrument.tune();
+        System.out.println(stringInstrument.toString());
 
-        InstrumentImpl windInstrumentOne = new WindInstrument(
+        Instrument windInstrumentOne = new WindInstrument(
                 "Кларнет",
                 850,
-                "Дерево",
+                Material.TREE,
                 60
         );
 
-        InstrumentImpl windInstrumentTwo = new WindInstrument(
+        Instrument windInstrumentTwo = new WindInstrument(
                 "Саксофон",
                 3000,
-                "Металл",
+                Material.METAL,
                 70
         );
 
-        InstrumentImpl windInstrumentThree = new WindInstrument(
+        Instrument windInstrumentThree = new WindInstrument(
                 "Кларнет",
                 850,
-                "Дерево",
+                Material.TREE,
                 60
         );
         windInstrumentOne.tune();

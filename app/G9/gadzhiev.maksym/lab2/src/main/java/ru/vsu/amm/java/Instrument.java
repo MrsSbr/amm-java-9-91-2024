@@ -2,19 +2,19 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public abstract class InstrumentImpl implements Playable{
+public abstract class Instrument implements Playable{
 
     private String name;
     private double weight;
-    private String material;
+    private Material material;
 
-    public InstrumentImpl(String name, double weight, String material) {
+    public Instrument(String name, double weight, Material material) {
         this.name = name;
         this.weight = weight;
         this.material = material;
     }
 
-    public InstrumentImpl() {}
+    public Instrument() {}
 
     public String getName() {
 
@@ -26,7 +26,7 @@ public abstract class InstrumentImpl implements Playable{
         return weight;
     }
 
-    public String getMaterial() {
+    public Material getMaterial() {
 
         return material;
     }
@@ -36,9 +36,9 @@ public abstract class InstrumentImpl implements Playable{
     }
     @Override
     public String toString(){
-        String result = "Название инструмента: " + name +
+        String result = "\nНазвание инструмента: " + name +
                 "\nВес: " + weight +
-                "\nМатериал: " + material;
+                "\nМатериал: " + material + "\n";
         return result;
     }
 
@@ -52,7 +52,7 @@ public abstract class InstrumentImpl implements Playable{
             return false;
         }
 
-        InstrumentImpl that = (InstrumentImpl) obj;
+        Instrument that = (Instrument) obj;
         return name.equals(that.name) && weight == that.weight && material.equals(that.material);
     }
 
