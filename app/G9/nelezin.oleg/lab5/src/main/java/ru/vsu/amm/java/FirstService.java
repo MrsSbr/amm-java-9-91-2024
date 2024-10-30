@@ -4,5 +4,10 @@ package ru.vsu.amm.java;
 public class FirstService {
 
     @Autowired
-    private SecondService service2;
+    private SecondService secondService;
+
+    public void badMethod() {
+        secondService.goodMethod();
+        System.out.println("The method above is deceiving");
+    }
 }

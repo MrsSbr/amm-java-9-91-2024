@@ -9,7 +9,7 @@ public class Context {
     private Map<Class<?>, Object> beans = new HashMap<>();
 
     public Context() {
-        init(FirstService.class, SecondService.class);
+        init(SecondService.class, FirstService.class);
     }
 
     private void init(Class<?>... clazz) {
