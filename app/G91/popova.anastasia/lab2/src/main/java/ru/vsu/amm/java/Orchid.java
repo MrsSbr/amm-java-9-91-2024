@@ -3,15 +3,15 @@ package ru.vsu.amm.java;
 import java.util.Objects;
 
 public class Orchid extends HousePlant {
-    private final String color;
+    private final Color color;
 
-    public String getColor() { return color; }
+    public Color getColor() { return color; }
 
     public Orchid( String name,
                    int height,
                    final int maxHeight,
                    boolean hasFlowers,
-                   String color) {
+                   Color color) {
         super(name, height, maxHeight, hasFlowers);
         this.color = color;
     }

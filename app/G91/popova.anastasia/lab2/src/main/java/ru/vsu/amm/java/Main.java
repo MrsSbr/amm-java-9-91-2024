@@ -21,18 +21,18 @@ public class Main {
         System.out.println("height: \t" + hplant.getHeight());
     }
 
-        public static void polymorphismTest() {
-            HousePlant polymorph = new Orchid("test", 0, 0, true, "test");
-            System.out.println(polymorph);
-            System.out.println("===================\n");
-            polymorph = new Ficus("test", 0, 0, false, 0);
-            System.out.println(polymorph);
-        }
+    public static void polymorphismTest() {
+        HousePlant polymorph = new Orchid("test", 0, 0, true, Color.White);
+        System.out.println(polymorph);
+        System.out.println("===================\n");
+        polymorph = new Ficus("test", 0, 0, false, 0);
+        System.out.println(polymorph);
+    }
 
-        public static void instanceOfTest(HousePlant hplant) {
-            if (hplant instanceof Orchid) {
-                System.out.println("it's an orchid\n");
-            }
+    public static void instanceOfTest(HousePlant hplant) {
+        if (hplant instanceof Orchid) {
+            System.out.println("it's an orchid\n");
+        }
         else if (hplant instanceof Ficus) {
             System.out.println("it's a ficus\n");
         }
@@ -42,7 +42,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Orchid orchid = new Orchid("phalaenopsis", 10, 60, true, "red");
+        Orchid orchid = new Orchid("phalaenopsis", 10, 60, true, Color.Red);
         Ficus ficus = new Ficus("fantasy", 45, 200, false, 6);
         ficus.grow();
         orchid.bloom();

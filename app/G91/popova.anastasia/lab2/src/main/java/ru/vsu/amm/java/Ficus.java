@@ -9,9 +9,9 @@ public class Ficus extends HousePlant {
 
     public Ficus (String name,
                   int height,
-                  final int maxHeight,
+                  int maxHeight,
                   boolean hasFlowers,
-                  final int leafSize) {
+                  int leafSize) {
         super(name, height, maxHeight, hasFlowers);
         this.leafSize = leafSize;
     }
