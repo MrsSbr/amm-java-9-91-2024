@@ -6,8 +6,8 @@ import ru.vsu.amm.java.enumBees.BeeType;
 import java.util.Objects;
 
 public abstract class Bee implements ActionsBee {
-    private BeeType type;
-    private int age;
+    private final BeeType type;
+    private final int age;
 
     public Bee(BeeType type, int age) {
         this.type = type;

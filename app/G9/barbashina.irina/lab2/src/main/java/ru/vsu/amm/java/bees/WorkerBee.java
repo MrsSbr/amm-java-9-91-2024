@@ -5,8 +5,8 @@ import ru.vsu.amm.java.enumBees.BeeType;
 import java.util.Objects;
 
 public class WorkerBee extends Bee {
-    private int numberOfNectarGathered;
-    private int numberOfHoneyProduced;
+    private final int numberOfNectarGathered;
+    private final int numberOfHoneyProduced;
 
     public WorkerBee(int age, int numberOfNectarGathered, int numberOfHoneyProduced) {
         super(BeeType.WORKER, age);

@@ -5,8 +5,8 @@ import ru.vsu.amm.java.enumBees.BeeType;
 import java.util.Objects;
 
 public class QueenBee extends Bee {
-    private int numberOfEggsLaid;
-    private int numberOfDronesProduced;
+    private final int numberOfEggsLaid;
+    private final int numberOfDronesProduced;
 
     public QueenBee(int age, int numberOfEggsLaid, int numberOfDronesProduced) {
         super(BeeType.QUEEN, age);

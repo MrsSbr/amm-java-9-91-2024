@@ -5,8 +5,8 @@ import ru.vsu.amm.java.enumBees.BeeType;
 import java.util.Objects;
 
 public class DroneBee extends Bee {
-    private boolean canFly;
-    private int flightDistance;
+    private final boolean canFly;
+    private final int flightDistance;
 
     public DroneBee(int age, boolean canFly, int flightDistance) {
         super(BeeType.DRONE, age);
