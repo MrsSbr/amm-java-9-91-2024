@@ -11,6 +11,10 @@ public class Sculptor extends AbstractCosmetic {
         this.texture=texture;
     }
 
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
     public Texture getTexture(){
         return texture;
     }

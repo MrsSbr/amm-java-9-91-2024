@@ -2,11 +2,16 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 public class Lipstick extends AbstractCosmetic {
+
     private Color color;
 
     public Lipstick(String brand, double price, Color color) {
         super(brand, price);
         this.color=color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public Color getColor(){
