@@ -6,8 +6,7 @@ import service.FileWorker;
 
 import java.io.File;
 
-import java.util.List;
-
+import java.util.List
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static service.Logg.logger;

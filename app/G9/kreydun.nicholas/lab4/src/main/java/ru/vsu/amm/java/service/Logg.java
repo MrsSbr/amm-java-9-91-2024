@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class Logg {
-
     public static Logger logger;
 
     static {
