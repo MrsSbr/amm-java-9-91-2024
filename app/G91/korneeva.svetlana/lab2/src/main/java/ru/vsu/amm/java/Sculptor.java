@@ -17,7 +17,7 @@ public class Sculptor extends AbstractCosmetic {
 
     @Override
     public String toString(){
-        return super.toString() + " Texture : " + texture;
+        return super.toString() + " Texture: " + texture;
     }
 
     @Override
