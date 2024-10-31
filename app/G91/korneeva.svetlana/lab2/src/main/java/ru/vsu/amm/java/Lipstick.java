@@ -5,7 +5,7 @@ public class Lipstick extends AbstractCosmetic {
 
     private Color color;
 
-    public Lipstick(String brand, double price, Color color) {
+    public Lipstick(Brand brand, double price, Color color) {
         super(brand, price);
         this.color=color;
     }

@@ -1,6 +1,6 @@
 package ru.vsu.amm.java;
 
 public interface Cosmetic {
-    public String getBrand();
+    public Brand getBrand();
     public double getPrice();
 }

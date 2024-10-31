@@ -3,20 +3,20 @@ package ru.vsu.amm.java;
 import java.util.Objects;
 
 public abstract class AbstractCosmetic implements Cosmetic {
-    private String brand;
+    private Brand brand;
 
     private double price;
 
-    public AbstractCosmetic(String brand, double price) {
+    public AbstractCosmetic(Brand brand, double price) {
         this.brand=brand;
         this.price=price;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand;
     }
 
-    public String getBrand() {
+    public Brand getBrand() {
         return brand;
     }
 

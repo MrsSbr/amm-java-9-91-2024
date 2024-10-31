@@ -6,7 +6,7 @@ public class Sculptor extends AbstractCosmetic {
 
     private Texture texture;
 
-    public Sculptor(String brand, double price, Texture texture){
+    public Sculptor(Brand brand, double price, Texture texture){
         super(brand, price);
         this.texture=texture;
     }
