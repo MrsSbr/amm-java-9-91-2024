@@ -1,9 +1,12 @@
 package ru.vsu.amm.java;
+
 import ru.vsu.amm.java.enums.Size;
+import ru.vsu.amm.java.enums.DressLength;
 import ru.vsu.amm.java.interfaces.Wearable;
 import ru.vsu.amm.java.classes.Dress;
 import ru.vsu.amm.java.classes.Pants;
 import ru.vsu.amm.java.classes.Shirt;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +15,7 @@ public class ClothingTask {
 
         Shirt shirt = new Shirt("White T-shirt", "Basic cotton T-shirt", 10.0, Size.M);
         Pants pants = new Pants("Black Jeans", "Denim pants", 20.0, Size.L);
-        Dress dress = new Dress("Red Dress", "Elegant evening dress", 50.0, Dress.DressLength.LONG);
+        Dress dress = new Dress("Red Dress", "Elegant evening dress", 50.0, DressLength.LONG);
 
         // Создание списка одежды
         List<Wearable> clothes = new ArrayList<>();
@@ -31,8 +34,7 @@ public class ClothingTask {
         Shirt anotherShirt = new Shirt("White T-shirt", "Basic cotton T-shirt", 10.0, Size.M);
         if (shirt.equals(anotherShirt)) {
             System.out.println("The shirts are the same!");
-        }
-        else {
+        } else {
             System.out.println("The shirts are different!");
         }
     }

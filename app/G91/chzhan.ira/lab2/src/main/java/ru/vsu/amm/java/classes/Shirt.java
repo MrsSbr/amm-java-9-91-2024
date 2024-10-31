@@ -1,8 +1,11 @@
 package ru.vsu.amm.java.classes;
+
 import ru.vsu.amm.java.abstracts.Clothes;
 
 import java.util.Objects;
+
 import ru.vsu.amm.java.enums.Size;
+
 public class Shirt extends Clothes {
 
     private Size size;

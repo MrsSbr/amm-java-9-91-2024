@@ -1,14 +1,11 @@
 package ru.vsu.amm.java.classes;
+
 import ru.vsu.amm.java.abstracts.Clothes;
+import ru.vsu.amm.java.enums.DressLength;
 
 import java.util.Objects;
-public class Dress extends Clothes {
 
-    public enum DressLength {
-        MINI,
-        MIDDLE,
-        LONG
-    }
+public class Dress extends Clothes {
 
     private DressLength length;
 
