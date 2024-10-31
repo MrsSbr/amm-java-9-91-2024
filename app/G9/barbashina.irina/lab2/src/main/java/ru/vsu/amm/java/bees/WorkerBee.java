@@ -1,4 +1,6 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.bees;
+
+import ru.vsu.amm.java.enumBees.BeeType;
 
 import java.util.Objects;
 

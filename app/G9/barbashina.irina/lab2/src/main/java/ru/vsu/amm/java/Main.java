@@ -1,5 +1,10 @@
 package ru.vsu.amm.java;
 
+import ru.vsu.amm.java.beeInterface.ActionsBee;
+import ru.vsu.amm.java.bees.DroneBee;
+import ru.vsu.amm.java.bees.QueenBee;
+import ru.vsu.amm.java.bees.WorkerBee;
+
 public class Main {
     public static void main(String[] args) {
         ActionsBee bee1 = new WorkerBee(1, 500, 200);
