@@ -129,6 +129,7 @@ student("popova.anastasia", G91) {
 student("gadzhiev.maksym", G9) {
     lab(0)
     lab(1)
+    lab(2)
 }
 
 student("barkov.pavel", G9) {
