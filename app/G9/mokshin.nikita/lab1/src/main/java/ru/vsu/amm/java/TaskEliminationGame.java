@@ -1,12 +1,8 @@
 package ru.vsu.amm.java;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-import java.util.stream.IntStream;
+import java.util.*;
 
-public class Main {
+public class TaskEliminationGame {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean correctInput = false;
@@ -25,18 +21,24 @@ public class Main {
                 System.out.println("Некорректный ввод!");
             }
         }
-        int[] arr = IntStream.range(1, n+1).toArray();
-        int result = taskEliminationGame(arr);
+        List<Integer> list = new LinkedList<>();
+        for (int i = 1; i < n+1; i++) {
+            list.add(i);
+        }
+        int result = taskEliminationGame(list);
         System.out.printf("Ответ: %d", result);
     }
 
-    private static int taskEliminationGame(int[] arr) {
-        List<Integer> list = new ArrayList<>(Arrays.stream(arr).boxed().toList());
+    private static int taskEliminationGame(List<Integer> list) {
         boolean startLeft = true;
         while (list.size() > 1) {
             if (startLeft) {
-                for(int i = 0; i < list.size(); i++) {
+                int sizeList = list.size();
+                int i = 0;
+                while(i < sizeList) {
                     list.remove(i);
+                    i++;
+                    sizeList--;
                 }
                 startLeft = false;
             } else {
