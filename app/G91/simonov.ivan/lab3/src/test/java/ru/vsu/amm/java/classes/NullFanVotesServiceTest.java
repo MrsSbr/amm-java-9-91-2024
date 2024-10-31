@@ -2,6 +2,7 @@ package ru.vsu.amm.java.classes;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import ru.vsu.amm.java.service.FanVotesService;
 
 public class NullFanVotesServiceTest extends FanVotesServiceTest {
 
@@ -9,20 +10,20 @@ public class NullFanVotesServiceTest extends FanVotesServiceTest {
     @Test
     public void testFindMostPopularPlayers() {
         Assertions.assertThrows(NullPointerException.class,
-                () -> fanVotesService.findMostPopularPlayers());
+                () -> FanVotesService.findMostPopularPlayers(fanVotes));
     }
 
     @Override
     @Test
     public void testFindPlayersWithoutVotes() {
         Assertions.assertThrows(NullPointerException.class,
-                () -> fanVotesService.findPlayersWithoutVotes());
+                () -> FanVotesService.findPlayersWithoutVotes(fanVotes));
     }
 
     @Override
     @Test
     public void testFindVotedPlayers() {
         Assertions.assertThrows(NullPointerException.class,
-                () -> fanVotesService.findVotedPlayers());
+                () -> FanVotesService.findVotedPlayers(fanVotes));
     }
 }

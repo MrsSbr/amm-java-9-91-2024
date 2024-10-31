@@ -3,6 +3,7 @@ package ru.vsu.amm.java.classes;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entity.FanVote;
+import ru.vsu.amm.java.service.FanVotesService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -13,7 +14,7 @@ public class AllPlayersMentionedFanVotesServiceTest extends FanVotesServiceTest 
 
     public AllPlayersMentionedFanVotesServiceTest() {
         super();
-        fanVotesService.setFanVote(List.of(
+        fanVotes = List.of(
                 new FanVote(Set.of(1, 2, 3)),
                 new FanVote(Set.of(4, 5, 6)),
                 new FanVote(Set.of(7, 8, 9)),
@@ -22,7 +23,7 @@ public class AllPlayersMentionedFanVotesServiceTest extends FanVotesServiceTest 
                 new FanVote(Set.of(16, 17, 18)),
                 new FanVote(Set.of(19, 20, 21)),
                 new FanVote(Set.of(22))
-        ));
+        );
     }
 
     @Override
@@ -33,14 +34,14 @@ public class AllPlayersMentionedFanVotesServiceTest extends FanVotesServiceTest 
                 .boxed()
                 .toList());
         Assertions.assertEquals(expectedCollection,
-                fanVotesService.findMostPopularPlayers());
+                FanVotesService.findMostPopularPlayers(fanVotes));
     }
 
     @Override
     @Test
     public void testFindPlayersWithoutVotes() {
         Assertions.assertEquals(Set.of(),
-                fanVotesService.findPlayersWithoutVotes());
+                FanVotesService.findPlayersWithoutVotes(fanVotes));
     }
 
     @Override
@@ -51,6 +52,6 @@ public class AllPlayersMentionedFanVotesServiceTest extends FanVotesServiceTest 
                         .boxed()
                         .toList());
         Assertions.assertEquals(expectedCollection,
-                fanVotesService.findVotedPlayers());
+                FanVotesService.findVotedPlayers(fanVotes));
     }
 }

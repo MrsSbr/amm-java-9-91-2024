@@ -3,6 +3,7 @@ package ru.vsu.amm.java.classes;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entity.FanVote;
+import ru.vsu.amm.java.service.FanVotesService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -13,20 +14,20 @@ public class AverageFanVotesServiceTest extends FanVotesServiceTest {
 
     public AverageFanVotesServiceTest() {
         super();
-        fanVotesService.setFanVote(List.of(
+        fanVotes = List.of(
                 new FanVote(Set.of(1, 2, 3)),
                 new FanVote(Set.of(5, 6, 3)),
                 new FanVote(Set.of(1, 2, 3)),
                 new FanVote(Set.of(5, 2, 8)),
                 new FanVote(Set.of(10, 6, 8))
-        ));
+        );
     }
 
     @Override
     @Test
     public void testFindMostPopularPlayers() {
         Assertions.assertEquals(Set.of(2, 3),
-                fanVotesService.findMostPopularPlayers());
+                FanVotesService.findMostPopularPlayers(fanVotes));
     }
 
     @Override
@@ -37,13 +38,13 @@ public class AverageFanVotesServiceTest extends FanVotesServiceTest {
                 .boxed()
                 .toList());
         Assertions.assertEquals(expectedCollection,
-                fanVotesService.findPlayersWithoutVotes());
+                FanVotesService.findPlayersWithoutVotes(fanVotes));
     }
 
     @Override
     @Test
     public void testFindVotedPlayers() {
         Assertions.assertEquals(Set.of(1, 2, 3, 5, 6, 8, 10),
-                fanVotesService.findVotedPlayers());
+                FanVotesService.findVotedPlayers(fanVotes));
     }
 }
