@@ -6,6 +6,7 @@ import ru.vsu.amm.java.util.FileWorker;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -29,29 +30,29 @@ public class GameWalkthroughDemo {
         try {
             FileWorker.generateFile(PATH, 500);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Unable to generate file.");
+            logger.log(Level.SEVERE, "Unable to generate file.\n" + Arrays.toString(e.getStackTrace()));
             throw new RuntimeException(e);
         }
 
-        List<GameWalkthrough> walkthroughes = null;
+        List<GameWalkthrough> walkthroughes;
         try {
             walkthroughes = FileWorker.getFromFile(PATH);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Null pointer was passed to method.");
+            logger.log(Level.SEVERE, "Null pointer was passed to method.\n" + Arrays.toString(e.getStackTrace()));
             throw new RuntimeException(e);
         }
 
         try {
             System.out.println("Highest rated genre: " + GameWalkthroughStatsService.findHighestRatedGenre(walkthroughes) + '\n');
         } catch (NullPointerException e) {
-            logger.log(Level.SEVERE, "Null pointer was passed to method.");
+            logger.log(Level.SEVERE, "Null pointer was passed to method.\n" + Arrays.toString(e.getStackTrace()));
             throw new RuntimeException(e);
         }
 
         try {
             System.out.println("Month with most playtime: " + GameWalkthroughStatsService.findMonthWithMostPlaytime(walkthroughes) + '\n');
         } catch (NullPointerException e) {
-            logger.log(Level.SEVERE, "Null pointer was passed to method.");
+            logger.log(Level.SEVERE, "Null pointer was passed to method.\n" + Arrays.toString(e.getStackTrace()));
             throw new RuntimeException(e);
         }
 
@@ -59,7 +60,7 @@ public class GameWalkthroughDemo {
             System.out.println("Games with multiple walkthroughes:");
             GameWalkthroughStatsService.findAllMultipleWalkthroughGames(walkthroughes).forEach(System.out::println);
         } catch (NullPointerException e) {
-            logger.log(Level.SEVERE, "Null pointer was passed to method.");
+            logger.log(Level.SEVERE, "Null pointer was passed to method.\n" + Arrays.toString(e.getStackTrace()));
             throw new RuntimeException(e);
         }
     }
