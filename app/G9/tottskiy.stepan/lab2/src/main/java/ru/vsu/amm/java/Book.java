@@ -28,6 +28,15 @@ public abstract class Book implements Item {
     public abstract String getGenre();
 
     @Override
+    public String toString() {
+        return "Book {" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", price=" + price;
+
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -46,13 +55,6 @@ public abstract class Book implements Item {
         return Objects.hash(title, author, price);
     }
 
-    @Override
-    public String toString() {
-        return "Book {" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", price=" + price;
 
-    }
 
 }

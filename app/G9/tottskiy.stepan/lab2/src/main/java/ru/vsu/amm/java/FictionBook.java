@@ -22,6 +22,11 @@ public class FictionBook extends Book {
     }
 
     @Override
+    public String toString() {
+        return super.toString() + "\nCount=" + countOfPages + "}";
+    }
+
+    @Override
     public boolean equals(Object obj) {
         FictionBook other = (FictionBook) obj;
         return other.countOfPages == countOfPages && super.equals(obj);
@@ -30,10 +35,5 @@ public class FictionBook extends Book {
     @Override
     public int hashCode() {
         return Objects.hash(getTitle(), getPrice(), getAuthor(), countOfPages);
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + "\nCount=" + countOfPages + "}";
     }
 }
