@@ -22,6 +22,11 @@ public abstract class AbstractCosmetic implements Cosmetic {
     }
 
     @Override
+    public String toString() {
+        return "Brand: " + brand + " Price: "+ price;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if(this == obj)
             return true;
@@ -36,8 +41,5 @@ public abstract class AbstractCosmetic implements Cosmetic {
         return Objects.hash(brand, price);
     }
 
-    @Override
-    public String toString() {
-        return "Brand: " + brand + " Price: "+ price;
-    }
+
 }

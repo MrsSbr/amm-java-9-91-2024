@@ -14,6 +14,11 @@ public class Lipstick extends AbstractCosmetic {
     }
 
     @Override
+    public String toString(){
+        return super.toString() + " Color: " + color;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (!super.equals(obj)) return false;
         Lipstick that = (Lipstick) obj;
@@ -25,8 +30,5 @@ public class Lipstick extends AbstractCosmetic {
         return Objects.hash(super.hashCode(), color);
     }
 
-    @Override
-    public String toString(){
-        return super.toString() + " Color: " + color;
-    }
+
 }

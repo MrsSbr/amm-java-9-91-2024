@@ -16,6 +16,11 @@ public class Sculptor extends AbstractCosmetic {
     }
 
     @Override
+    public String toString(){
+        return super.toString() + " Texture : " + texture;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (!super.equals(obj)) return false;
         Sculptor that = (Sculptor) obj;
@@ -27,8 +32,5 @@ public class Sculptor extends AbstractCosmetic {
         return Objects.hash(super.hashCode(), texture);
     }
 
-    @Override
-    public String toString(){
-        return super.toString() + " Texture : " + texture;
-    }
+
 }
