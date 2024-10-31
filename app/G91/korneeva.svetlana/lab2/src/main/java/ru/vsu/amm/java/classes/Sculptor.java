@@ -1,4 +1,8 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
+
+import ru.vsu.amm.java.abstracts.AbstractCosmetic;
+import ru.vsu.amm.java.enums.Brand;
+import ru.vsu.amm.java.enums.Texture;
 
 import java.util.Objects;
 
@@ -26,7 +30,9 @@ public class Sculptor extends AbstractCosmetic {
 
     @Override
     public boolean equals(Object obj) {
-        if (!super.equals(obj)) return false;
+        if (!super.equals(obj)) {
+            return false;
+        }
         Sculptor that = (Sculptor) obj;
         return getTexture().equals(that.getTexture());
     }

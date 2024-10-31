@@ -1,10 +1,12 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.abstracts;
+
+import ru.vsu.amm.java.interfaces.Cosmetic;
+import ru.vsu.amm.java.enums.Brand;
 
 import java.util.Objects;
 
 public abstract class AbstractCosmetic implements Cosmetic {
     private Brand brand;
-
     private double price;
 
     public AbstractCosmetic(Brand brand, double price) {
@@ -37,10 +39,12 @@ public abstract class AbstractCosmetic implements Cosmetic {
 
     @Override
     public boolean equals(Object obj) {
-        if(this == obj)
+        if(this == obj) {
             return true;
-        if(obj == null || getClass() != obj.getClass())
+        }
+        if(obj == null || getClass() != obj.getClass()) {
             return false;
+        }
         AbstractCosmetic that = (AbstractCosmetic) obj;
         return that.getBrand().equals(this.getBrand()) && this.getPrice() == that.getPrice();
     }
