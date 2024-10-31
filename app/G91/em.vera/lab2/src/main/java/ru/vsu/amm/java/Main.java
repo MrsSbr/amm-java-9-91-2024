@@ -37,8 +37,9 @@ public class Main {
     }
 
     public static void checkFishType(Object obj) {
-        if (!(obj instanceof Fish))
+        if (!(obj instanceof Fish)) {
             System.out.println("It's not a fish!");
+        }
         else {
             System.out.print("Fish " + ((Fish) obj).getName());
             if (obj instanceof BlowFish)
