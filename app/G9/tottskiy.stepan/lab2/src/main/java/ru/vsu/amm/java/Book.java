@@ -4,6 +4,7 @@ package ru.vsu.amm.java;
 import java.util.Objects;
 
 public abstract class Book implements Item {
+
     private String title;
     private String author;
     private double price;
@@ -14,11 +15,32 @@ public abstract class Book implements Item {
         this.price = price;
     }
 
-    public Book() {}
+    public Book() {
+    }
 
-    public String getTitle() {return title;}
-    public String getAuthor() {return author;}
-    public double getPrice() {return price;}
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
     @Override
     public String getDescription() {
