@@ -11,12 +11,12 @@ public abstract class AbstractCosmetic implements Cosmetic {
         this.price=price;
     }
 
-    @Override
+
     public String getBrand() {
         return brand;
     }
 
-    @Override
+
     public double getPrice() {
         return price;
     }
