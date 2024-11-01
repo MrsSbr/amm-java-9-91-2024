@@ -13,9 +13,8 @@ public class FanVotesService {
     public final static int MIN_VOTE = 1;
     public final static int MAX_VOTE = 22;
 
-    private static FanVote generateFanVote() {
+    private static FanVote generateFanVote(Random rnd) {
 
-        Random rnd = new Random();
         Set<Integer> votes = new HashSet<>();
         while (votes.size() < PERSONAL_VOTES) {
             votes.add(rnd.nextInt(MIN_VOTE, MAX_VOTE + 1));
@@ -25,7 +24,8 @@ public class FanVotesService {
 
     public static List<FanVote> generateFanVotes(int cntVotes) {
 
-        return Stream.generate(FanVotesService::generateFanVote)
+        Random rnd = new Random();
+        return Stream.generate(() -> generateFanVote(rnd))
                 .limit(cntVotes)
                 .toList();
     }
