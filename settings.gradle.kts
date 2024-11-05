@@ -97,6 +97,7 @@ student("zayseva.anastasiya", G9) {
 student("korneeva.svetlana", G91) {
     lab(0)
     lab(1)
+    lab(2)
 }
 student("abdrahmanova.evgeniya", G91) {
     lab(0)
