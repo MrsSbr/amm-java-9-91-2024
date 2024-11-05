@@ -18,5 +18,7 @@ public class GameRecord {
         this.price = price;
     }
 
-
+    public Genre getGenre() {
+        return genre;
+    }
 }
