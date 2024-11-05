@@ -17,11 +17,11 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ServiceTests {
-    private List<SongPlayback> songPlaybacks;
+    private Map<String, List<SongPlayback>> songPlaybacks;
 
     @BeforeEach
     public void start() {
-        songPlaybacks = generateList();
+        songPlaybacks = generateStreamingData();
     }
 
     @Test
@@ -83,34 +83,34 @@ public class ServiceTests {
         }, streamingData);
     }
 
-    public static List<SongPlayback> generateList() {
-        return new ArrayList<>(List.of(
-                new SongPlayback("user1",
-                        "title1", "artist1",
-                        Genre.CLASSICAL, LocalDate.of(2020, 9, 15)),
-                new SongPlayback("user1",
-                        "title2", "artist2",
-                        Genre.POP, LocalDate.of(2024, 10, 15)),
-                new SongPlayback("user1",
-                        "title1", "artist1",
-                        Genre.CLASSICAL, LocalDate.of(2023, 9, 12)),
-                new SongPlayback("user2",
-                        "title3", "artist3",
-                        Genre.INDIE, LocalDate.of(2024, 10, 15)),
-                new SongPlayback("user3",
-                        "title5", "artist5",
-                        Genre.ROCK, LocalDate.of(2023, 10, 15)),
-                new SongPlayback("user2",
-                        "title3", "artist3",
-                        Genre.INDIE, LocalDate.of(2020, 10, 15)),
-                new SongPlayback("user3",
-                        "title5", "artist5",
-                        Genre.ROCK, LocalDate.of(2020, 10, 15)),
-                new SongPlayback("user3",
-                        "title6", "artist6",
-                        Genre.INDIE, LocalDate.of(2020, 10, 15)),
-                new SongPlayback("user2",
-                        "title4", "artist4",
-                        Genre.EXPERIMENTAL, LocalDate.of(2020, 10, 15))));
+    public static Map<String, List<SongPlayback>> generateStreamingData() {
+        return new HashMap<>() {
+            {
+                put("user1", new ArrayList<>(List.of(
+                        new SongPlayback("title1", "artist1",
+                                Genre.CLASSICAL, LocalDate.of(2020, 9, 15)),
+                        new SongPlayback("title2", "artist2",
+                                Genre.POP, LocalDate.now()),
+                        new SongPlayback("title1", "artist1",
+                                Genre.CLASSICAL, LocalDate.of(2023, 9, 12))
+                )));
+                put("user2", new ArrayList<>(List.of(
+                        new SongPlayback("title3", "artist3",
+                                Genre.INDIE, LocalDate.of(2024, 10, 15)),
+                        new SongPlayback("title3", "artist3",
+                                Genre.INDIE, LocalDate.of(2020, 10, 15)),
+                        new SongPlayback("title4", "artist4",
+                                Genre.EXPERIMENTAL, LocalDate.of(2020, 10, 15))
+                )));
+                put("user3", new ArrayList<>(List.of(
+                        new SongPlayback("title5", "artist5",
+                                Genre.ROCK, LocalDate.of(2023, 10, 15)),
+                        new SongPlayback("title5", "artist5",
+                                Genre.ROCK, LocalDate.of(2020, 10, 15)),
+                        new SongPlayback("title6", "artist6",
+                                Genre.INDIE, LocalDate.of(2020, 10, 15))
+                )));
+            }
+        };
     }
 }

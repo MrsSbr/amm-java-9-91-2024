@@ -4,6 +4,6 @@ import ru.vsu.amm.java.enums.Genre;
 
 import java.time.LocalDate;
 
-public record SongPlayback(String username, String title, String artist,
+public record SongPlayback(String title, String artist,
                            Genre genre, LocalDate listeningDate) {
 }

@@ -12,9 +12,9 @@ import java.util.Set;
 public class ServiceDemonstration {
     public static void main(String[] args) {
         SongGenerator gen = new SongGenerator();
-        List<SongPlayback> SongsCollection = gen.GenerateSeveralSongs(100);
+        Map<String, List<SongPlayback>> SongsCollection = gen.generateUserData();
 
-        System.out.println("Amount of times when song title2 by artist1 was listened this month: "
+        System.out.println("Amount of times when song 'title2 by artist1, ROCK' was listened this month: "
                 + MusicService.getAmountOfRecentStreams(SongsCollection,
                 "title2", "artist1", Genre.ROCK));
         System.out.println();
