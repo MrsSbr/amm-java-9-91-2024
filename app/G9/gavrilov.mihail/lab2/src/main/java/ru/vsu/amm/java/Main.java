@@ -34,6 +34,6 @@ public class Main {
             System.out.println("Жи есть!");
         }
 
-        fish.breathe();
+        fish.breathingWithGills();
     }
 }

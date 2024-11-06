@@ -14,6 +14,12 @@ public class Bear extends Animal {
     }
 
     @Override
+    public void animalSay() {
+        super.animalSay();
+        System.out.println( "Ревёт!\n");
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -33,11 +39,4 @@ public class Bear extends Animal {
     public String toString() {
         return super.toString() + "Цвет шерсти: " + colorWool + '\n';
     }
-
-    @Override
-    public void animalSay() {
-        super.animalSay();
-        System.out.println( "Рёвет!\n");
-    }
-
 }
