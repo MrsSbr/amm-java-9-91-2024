@@ -179,6 +179,7 @@ public class ResponsesServiceImplTests {
         Set<City> actualCities = responsesService.getCitiesWithoutPopularMoscowResponse();
 
         // then
+        assertNotNull(actualCities);
         assertTrue(actualCities.isEmpty());
         assertEquals(2, responsesStorage.getResponsesInvokedCount);
     }
@@ -192,7 +193,7 @@ public class ResponsesServiceImplTests {
         Set<City> actualCities = responsesService.getCitiesWithoutPopularMoscowResponse();
 
         // then
-        assertTrue(actualCities.isEmpty());
+        assertNull(actualCities);
         assertEquals(1, responsesStorage.getResponsesInvokedCount);
     }
 
@@ -202,7 +203,7 @@ public class ResponsesServiceImplTests {
         Set<City> actualCities = responsesService.getCitiesWithoutPopularMoscowResponse();
 
         // then
-        assertTrue(actualCities.isEmpty());
+        assertNull(actualCities);
         assertEquals(1, responsesStorage.getResponsesInvokedCount);
     }
 }

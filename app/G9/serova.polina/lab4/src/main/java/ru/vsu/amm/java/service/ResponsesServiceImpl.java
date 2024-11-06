@@ -4,7 +4,6 @@ import ru.vsu.amm.java.entity.City;
 import ru.vsu.amm.java.entity.Response;
 import ru.vsu.amm.java.storage.ResponsesStorage;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
@@ -53,13 +52,10 @@ public final class ResponsesServiceImpl implements ResponsesService {
                     .map(Map.Entry::getKey)
                     .orElse(null);
             if (result == null) {
-                System.out.println("Нет городов, название которых начинается на " + startsWith);
                 logger.log(
                         Level.WARNING,
                         "Нет городов, название которых начинается на " + startsWith);
             } else {
-                System.out.println("Наиболее наиболее популярный ответ в городах, название которых начинается на "
-                        + startsWith + ": " + result);
                 logger.log(
                         Level.INFO,
                         "Наиболее наиболее популярный ответ в городах, название которых начинается на "
@@ -67,8 +63,6 @@ public final class ResponsesServiceImpl implements ResponsesService {
             }
             return result;
         } catch (Exception e) {
-            System.out.println("Не удалось найти наиболее популярный ответ в городах, название которых начинается на "
-                    + startsWith);
             logger.log(
                     Level.SEVERE,
                     "Не удалось найти наиболее популярный ответ в городах, название которых начинается на "
@@ -88,17 +82,14 @@ public final class ResponsesServiceImpl implements ResponsesService {
                     .map(Map.Entry::getKey)
                     .orElse(null);
             if (result == null) {
-                System.out.println("Нет городов в хранилище");
                 logger.log(Level.WARNING, "Нет городов в хранилище");
             } else {
-                System.out.println("Город с наибольшим количеством разнообразных ответов: " + result);
                 logger.log(
                         Level.INFO,
                         "Город с наибольшим количеством разнообразных ответов: " + result);
             }
             return result;
         } catch (Exception e) {
-            System.out.println("Не удалось найти город с наибольшим количеством разнообразных ответов");
             logger.log(Level.SEVERE, "Не удалось найти город с наибольшим количеством разнообразных ответов", e);
             return null;
         }
@@ -116,11 +107,9 @@ public final class ResponsesServiceImpl implements ResponsesService {
                     .map(Map.Entry::getKey)
                     .orElse(null);
             if (moscowPopularResponse == null) {
-                System.out.println("Москвы нет в хранилище");
                 logger.log(Level.WARNING, "Москвы нет в хранилище");
-                return Collections.emptySet();
+                return null;
             } else {
-                System.out.println("Самый популярный ответ в Москве: " + moscowPopularResponse);
                 logger.log(Level.INFO, "Самый популярный ответ в Москве: " + moscowPopularResponse);
             }
 
@@ -129,21 +118,18 @@ public final class ResponsesServiceImpl implements ResponsesService {
                     .map(Map.Entry::getKey)
                     .collect(Collectors.toSet());
             if (result.isEmpty()) {
-                System.out.println("Нет городов, где не встречался наиболее популярный ответ Москвы");
                 logger.log(Level.INFO, "Нет городов, где не встречался наиболее популярный ответ Москвы");
             } else {
-                System.out.println("Города, где не встречался наиболее популярный ответ Москвы: " + result);
                 logger.log(Level.INFO, "Города, где не встречался наиболее популярный ответ Москвы: " + result);
             }
             return result;
         } catch (Exception e) {
-            System.out.println("Не удалось найти город, где не встречался наиболее популярный ответ Москвы");
             logger.log(
                     Level.SEVERE,
                     "Не удалось найти город, где не встречался наиболее популярный ответ Москвы",
                     e
             );
-            return Collections.emptySet();
+            return null;
         }
     }
 }

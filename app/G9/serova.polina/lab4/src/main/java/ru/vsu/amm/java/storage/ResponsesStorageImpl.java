@@ -26,8 +26,7 @@ public class ResponsesStorageImpl implements ResponsesStorage {
     @Override
     public void insertResponse(City city, Integer respondentsCount, Response response) {
         this.responses.computeIfAbsent(city, k -> new HashMap<>());
-        this.responses.get(city).computeIfPresent(response, (key, val) -> val + respondentsCount);
-        this.responses.get(city).computeIfAbsent(response, key -> respondentsCount);
+        this.responses.get(city).merge(response, respondentsCount, Integer::sum);
 
         logger.log(
                 Level.INFO,

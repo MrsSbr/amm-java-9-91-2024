@@ -42,7 +42,7 @@ public class ResponsesParserServiceImplTests {
         );
 
         // when
-        responsesParserService.parseFile("test_responses.txt");
+        responsesParserService.parseFile("/test_responses.txt");
 
         // then
         assertEquals(responsesService.readResponseInvokedParameters, expectedReadResponseInvokedParameters);
@@ -55,7 +55,7 @@ public class ResponsesParserServiceImplTests {
     @Test
     void testParseFileWhenEmpty() {
         // when
-        responsesParserService.parseFile("emptyFile.txt");
+        responsesParserService.parseFile("/emptyFile.txt");
 
         // then
         assertEquals(0, responsesService.readResponseInvokedCount);
@@ -91,7 +91,7 @@ public class ResponsesParserServiceImplTests {
     @Test
     void testParseFileWhenIncorrectData() {
         // when
-        responsesParserService.parseFile("incorrect_responses.txt");
+        responsesParserService.parseFile("/incorrect_responses.txt");
 
         // then
         assertEquals(2, responsesService.readResponseInvokedCount);
