@@ -23,16 +23,16 @@ public class FileWorker {
             for (int i = 0; i < n; i++) {
                 DrinkRecord drinkRecord = generateRandomDrinkRecord();
                 writer.write(String.format("%s;%s;%s%n",
-                        drinkRecord.getDrinkName(),
-                        drinkRecord.getDate(),
-                        drinkRecord.getTime()
-                    )
+                                drinkRecord.getDrinkName(),
+                                drinkRecord.getDate(),
+                                drinkRecord.getTime()
+                        )
                 );
             };
 
             logger.fine("Saving file");
         } catch (IOException e) {
-            logger.throwing(FileWorker.class.getName(),"saveToFile",e);
+            logger.throwing(FileWorker.class.getName(), "saveToFile", e);
 
             throw new RuntimeException(e);
         }
@@ -42,16 +42,20 @@ public class FileWorker {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             logger.fine("loading file");
 
+            final int FIRST_PART = 0;
+            final int SECOND_PART = 1;
+            final int THIRD_PART = 2;
+
             return reader.lines()
                     .map(line -> {
                         String[] parts = line.split(";");
-                        String drinkName = parts[0];
-                        LocalDate date = LocalDate.parse(parts[1]);
-                        LocalTime time = LocalTime.parse(parts[2]);
+                        String drinkName = parts[FIRST_PART];
+                        LocalDate date = LocalDate.parse(parts[SECOND_PART]);
+                        LocalTime time = LocalTime.parse(parts[THIRD_PART]);
                         return new DrinkRecord(DrinkName.valueOf(drinkName), date, time);
                     }).toList();
         } catch (IOException e) {
-            logger.throwing(FileWorker.class.getName(),"loadFromFile",e);
+            logger.throwing(FileWorker.class.getName(), "loadFromFile", e);
 
             throw new RuntimeException(e);
         }

@@ -49,6 +49,7 @@ public class BaristaGenerator {
 
         return new DrinkRecord(randomDrink, randomDate, randomTime);
     }
+
     public static List<DrinkRecord> generateRandomDrinkRecord(int counts) {
         logger.fine("Generation");
 

@@ -16,8 +16,6 @@ public class DrinkRecord {
         this.drinkName = drinkName;
         this.date = date;
         this.time = time;
-        ListDrinks.listDrinks.add(drinkName.name());
-        ListDrinks.listDrinks.add("Something");
 
         logger.fine("created drink: " + drinkName);
     }
