@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entity.City;
 import ru.vsu.amm.java.entity.Response;
 import ru.vsu.amm.java.service.ResponsesParserServiceImpl;
-import ru.vsu.amm.java.service.ResponsesServiceMock;
+import ru.vsu.amm.java.storage.ResponsesStorageMock;
 
 import java.util.List;
 
@@ -15,88 +15,78 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ResponsesParserServiceImplTests {
 
     private static ResponsesParserServiceImpl responsesParserService;
-    private static ResponsesServiceMock responsesService;
+    private static ResponsesStorageMock responsesStorage;
 
     @BeforeAll
     public static void init() {
-        responsesService = new ResponsesServiceMock();
-        responsesParserService = new ResponsesParserServiceImpl(responsesService);
+        responsesStorage = new ResponsesStorageMock();
+        responsesParserService = new ResponsesParserServiceImpl();
     }
 
     @AfterEach
     public void resetMocks() {
-        responsesService.reset();
+        responsesStorage.reset();
     }
 
     @Test
     void testParseFile() {
         // given
-        List<ResponsesServiceMock.ReadResponseParameters> expectedReadResponseInvokedParameters = List.of(
-                new ResponsesServiceMock.ReadResponseParameters(new City("Москва"), 32, new Response("мяу")),
-                new ResponsesServiceMock.ReadResponseParameters(new City("Санкт-Петербург"), 45, new Response("ква")),
-                new ResponsesServiceMock.ReadResponseParameters(new City("Новосибирск"), 28, new Response("ррр")),
-                new ResponsesServiceMock.ReadResponseParameters(new City("Екатеринбург"), 78, new Response("тяф-тяф")),
-                new ResponsesServiceMock.ReadResponseParameters(new City("Анапа"), 50, new Response("тяф-тяф")),
-                new ResponsesServiceMock.ReadResponseParameters(new City("Астрахань"), 15, new Response("ква"))
+        List<ResponsesStorageMock.InsertResponseParameters> expectedReadResponseInvokedParameters = List.of(
+                new ResponsesStorageMock.InsertResponseParameters(new City("Москва"), 32, new Response("мяу")),
+                new ResponsesStorageMock.InsertResponseParameters(new City("Санкт-Петербург"), 45, new Response("ква")),
+                new ResponsesStorageMock.InsertResponseParameters(new City("Новосибирск"), 28, new Response("ррр")),
+                new ResponsesStorageMock.InsertResponseParameters(new City("Екатеринбург"), 78, new Response("тяф-тяф")),
+                new ResponsesStorageMock.InsertResponseParameters(new City("Анапа"), 50, new Response("тяф-тяф")),
+                new ResponsesStorageMock.InsertResponseParameters(new City("Астрахань"), 15, new Response("ква"))
 
         );
 
         // when
-        responsesParserService.parseFile("/test_responses.txt");
+        responsesParserService.parseFile("/test_responses.txt", responsesStorage);
 
         // then
-        assertEquals(responsesService.readResponseInvokedParameters, expectedReadResponseInvokedParameters);
-        assertEquals(6, responsesService.readResponseInvokedCount);
-        assertEquals(0, responsesService.getMostPopularResponseForCitiesInvokedCount);
-        assertEquals(0, responsesService.getMostVariousResponseCityInvokedCount);
-        assertEquals(0, responsesService.getCitiesWithoutPopularMoscowResponseInvokedCount);
+        assertEquals(responsesStorage.insertResponseInvokedParameters, expectedReadResponseInvokedParameters);
+        assertEquals(6, responsesStorage.insertResponseInvokedCount);
+        assertEquals(0, responsesStorage.getResponsesInvokedCount);
     }
 
     @Test
     void testParseFileWhenEmpty() {
         // when
-        responsesParserService.parseFile("/emptyFile.txt");
+        responsesParserService.parseFile("/emptyFile.txt", responsesStorage);
 
         // then
-        assertEquals(0, responsesService.readResponseInvokedCount);
-        assertEquals(0, responsesService.getMostPopularResponseForCitiesInvokedCount);
-        assertEquals(0, responsesService.getMostVariousResponseCityInvokedCount);
-        assertEquals(0, responsesService.getCitiesWithoutPopularMoscowResponseInvokedCount);
+        assertEquals(0, responsesStorage.insertResponseInvokedCount);
+        assertEquals(0, responsesStorage.getResponsesInvokedCount);
     }
 
     @Test
     void testParseFileWhenNoFile() {
         // when
-        responsesParserService.parseFile("");
+        responsesParserService.parseFile("", responsesStorage);
 
         // then
-        assertEquals(0, responsesService.readResponseInvokedCount);
-        assertEquals(0, responsesService.getMostPopularResponseForCitiesInvokedCount);
-        assertEquals(0, responsesService.getMostVariousResponseCityInvokedCount);
-        assertEquals(0, responsesService.getCitiesWithoutPopularMoscowResponseInvokedCount);
+        assertEquals(0, responsesStorage.insertResponseInvokedCount);
+        assertEquals(0, responsesStorage.getResponsesInvokedCount);
     }
 
     @Test
     void testParseFileWhenRestrictedFileType() {
         // when
-        responsesParserService.parseFile("test.class");
+        responsesParserService.parseFile("test.class", responsesStorage);
 
         // then
-        assertEquals(0, responsesService.readResponseInvokedCount);
-        assertEquals(0, responsesService.getMostPopularResponseForCitiesInvokedCount);
-        assertEquals(0, responsesService.getMostVariousResponseCityInvokedCount);
-        assertEquals(0, responsesService.getCitiesWithoutPopularMoscowResponseInvokedCount);
+        assertEquals(0, responsesStorage.insertResponseInvokedCount);
+        assertEquals(0, responsesStorage.getResponsesInvokedCount);
     }
 
     @Test
     void testParseFileWhenIncorrectData() {
         // when
-        responsesParserService.parseFile("/incorrect_responses.txt");
+        responsesParserService.parseFile("/incorrect_responses.txt", responsesStorage);
 
         // then
-        assertEquals(2, responsesService.readResponseInvokedCount);
-        assertEquals(0, responsesService.getMostPopularResponseForCitiesInvokedCount);
-        assertEquals(0, responsesService.getMostVariousResponseCityInvokedCount);
-        assertEquals(0, responsesService.getCitiesWithoutPopularMoscowResponseInvokedCount);
+        assertEquals(2, responsesStorage.insertResponseInvokedCount);
+        assertEquals(0, responsesStorage.getResponsesInvokedCount);
     }
 }

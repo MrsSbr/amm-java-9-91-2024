@@ -10,11 +10,14 @@ import ru.vsu.amm.java.service.ResponsesServiceImpl;
 import ru.vsu.amm.java.storage.ResponsesStorageMock;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class ResponsesServiceImplTests {
 
@@ -24,30 +27,12 @@ public class ResponsesServiceImplTests {
     @BeforeAll
     public static void init() {
         responsesStorage = new ResponsesStorageMock();
-        responsesService = new ResponsesServiceImpl(responsesStorage);
+        responsesService = new ResponsesServiceImpl();
     }
 
     @AfterEach
     public void resetMocks() {
         responsesStorage.reset();
-    }
-
-    @Test
-    public void testReadResponse() {
-        // given
-        City expectedCity = new City("test");
-        int expectedRespondersCount = 5;
-        Response expectedResponse = new Response("ttt");
-
-        // when
-        responsesService.readResponse(expectedCity, expectedRespondersCount, expectedResponse);
-
-        // then
-
-        assertEquals(
-                responsesStorage.insertResponseInvokedParameters,
-                List.of(new ResponsesStorageMock.InsertResponseParameters(expectedCity, expectedRespondersCount, expectedResponse))
-        );
     }
 
     @Test
@@ -63,7 +48,7 @@ public class ResponsesServiceImplTests {
         Response expectedResponse = new Response("гав");
 
         // when
-        Response actualResponse = responsesService.getMostPopularResponseForCities("А");
+        Response actualResponse = responsesService.getMostPopularResponseForCities("А", responsesStorage);
 
         // then
         assertEquals(expectedResponse, actualResponse);
@@ -76,7 +61,7 @@ public class ResponsesServiceImplTests {
         responsesStorage.getResponsesStubbedResult = Map.of();
 
         // when
-        Response actualResponse = responsesService.getMostPopularResponseForCities("А");
+        Response actualResponse = responsesService.getMostPopularResponseForCities("А", responsesStorage);
 
         // then
         assertNull(actualResponse);
@@ -86,7 +71,7 @@ public class ResponsesServiceImplTests {
     @Test
     public void testGetMostPopularResponseForCitiesWhenStorageNotInitialized() {
         // when
-        Response actualResponse = responsesService.getMostPopularResponseForCities("А");
+        Response actualResponse = responsesService.getMostPopularResponseForCities("А", responsesStorage);
 
         // then
         assertNull(actualResponse);
@@ -116,7 +101,7 @@ public class ResponsesServiceImplTests {
         City expectedResponse = new City("Анапа");
 
         // when
-        City actualCity = responsesService.getMostVariousResponseCity();
+        City actualCity = responsesService.getMostVariousResponseCity(responsesStorage);
 
         // then
         assertEquals(expectedResponse, actualCity);
@@ -129,7 +114,7 @@ public class ResponsesServiceImplTests {
         responsesStorage.getResponsesStubbedResult = Map.of();
 
         // when
-        City actualCity = responsesService.getMostVariousResponseCity();
+        City actualCity = responsesService.getMostVariousResponseCity(responsesStorage);
 
         // then
         assertNull(actualCity);
@@ -139,7 +124,7 @@ public class ResponsesServiceImplTests {
     @Test
     public void testGetMostVariousResponseCityWhenStorageNotInitialized() {
         // when
-        City actualCity = responsesService.getMostVariousResponseCity();
+        City actualCity = responsesService.getMostVariousResponseCity(responsesStorage);
 
         // then
         assertNull(actualCity);
@@ -158,7 +143,7 @@ public class ResponsesServiceImplTests {
         Set<City> expectedCities = Set.of(new City("Анапа"));
 
         // when
-        Set<City> actualCities = responsesService.getCitiesWithoutPopularMoscowResponse();
+        Set<City> actualCities = responsesService.getCitiesWithoutPopularMoscowResponse(responsesStorage);
 
         // then
         assertEquals(expectedCities, actualCities);
@@ -176,7 +161,7 @@ public class ResponsesServiceImplTests {
         );
 
         // when
-        Set<City> actualCities = responsesService.getCitiesWithoutPopularMoscowResponse();
+        Set<City> actualCities = responsesService.getCitiesWithoutPopularMoscowResponse(responsesStorage);
 
         // then
         assertNotNull(actualCities);
@@ -190,7 +175,7 @@ public class ResponsesServiceImplTests {
         responsesStorage.getResponsesStubbedResult = Map.of();
 
         // when
-        Set<City> actualCities = responsesService.getCitiesWithoutPopularMoscowResponse();
+        Set<City> actualCities = responsesService.getCitiesWithoutPopularMoscowResponse(responsesStorage);
 
         // then
         assertNull(actualCities);
@@ -200,7 +185,7 @@ public class ResponsesServiceImplTests {
     @Test
     public void testGetCitiesWithoutPopularMoscowResponseWhenStorageNotInitialized() {
         // when
-        Set<City> actualCities = responsesService.getCitiesWithoutPopularMoscowResponse();
+        Set<City> actualCities = responsesService.getCitiesWithoutPopularMoscowResponse(responsesStorage);
 
         // then
         assertNull(actualCities);

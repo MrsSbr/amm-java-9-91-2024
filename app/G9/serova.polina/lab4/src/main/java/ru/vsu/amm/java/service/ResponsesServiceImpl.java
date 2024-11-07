@@ -15,29 +15,17 @@ import java.util.stream.Collectors;
 public final class ResponsesServiceImpl implements ResponsesService {
 
     private final static Logger logger;
-    private final ResponsesStorage responsesStorage;
 
     static {
         logger = Logger.getLogger(ResponsesParserServiceImpl.class.getName());
     }
 
-    public ResponsesServiceImpl(ResponsesStorage responsesStorage) {
-        this.responsesStorage = responsesStorage;
+    public ResponsesServiceImpl() {
         logger.log(Level.INFO, "Проинициализировали сервис обработки ответов");
     }
 
     @Override
-    public void readResponse(City city, int respondentsCount, Response response) {
-        responsesStorage.insertResponse(city, respondentsCount, response);
-        logger.log(
-                Level.INFO,
-                "Обработали ответ: Город: " + city + ", кол-во респондентов: " + respondentsCount
-                        + ", Ответ: " + response
-        );
-    }
-
-    @Override
-    public Response getMostPopularResponseForCities(String startsWith) {
+    public Response getMostPopularResponseForCities(String startsWith, ResponsesStorage responsesStorage) {
         logger.log(
                 Level.INFO,"Поиск наиболее популярного ответа в городах, название которых начинается на "
                         + startsWith
@@ -74,7 +62,7 @@ public final class ResponsesServiceImpl implements ResponsesService {
     }
 
     @Override
-    public City getMostVariousResponseCity() {
+    public City getMostVariousResponseCity(ResponsesStorage responsesStorage) {
         logger.log(Level.INFO, "Поиск города с наибольшим количеством разнообразных ответов");
         try {
             City result = responsesStorage.getResponses().entrySet().stream()
@@ -96,7 +84,7 @@ public final class ResponsesServiceImpl implements ResponsesService {
     }
 
     @Override
-    public Set<City> getCitiesWithoutPopularMoscowResponse() {
+    public Set<City> getCitiesWithoutPopularMoscowResponse(ResponsesStorage responsesStorage) {
         logger.log(Level.INFO, "Поиск городов, где не встречался наиболее популярный ответ Москвы");
 
         try {

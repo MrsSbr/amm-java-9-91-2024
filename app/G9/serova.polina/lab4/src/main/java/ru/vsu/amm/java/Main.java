@@ -14,10 +14,10 @@ import java.util.Set;
 public class Main {
     public static void main(String[] args) {
         ResponsesStorage responsesStorage = new ResponsesStorageImpl();
-        ResponsesService responsesService = new ResponsesServiceImpl(responsesStorage);
-        ResponsesParserService responsesParserService = new ResponsesParserServiceImpl(responsesService);
-        responsesParserService.parseFile("/responses.txt");
-        Set<City> citiesWithoutPopularMoscowResponse = responsesService.getCitiesWithoutPopularMoscowResponse();
+        ResponsesParserService responsesParserService = new ResponsesParserServiceImpl();
+        ResponsesService responsesService = new ResponsesServiceImpl();
+        responsesParserService.parseFile("/responses.txt", responsesStorage);
+        Set<City> citiesWithoutPopularMoscowResponse = responsesService.getCitiesWithoutPopularMoscowResponse(responsesStorage);
         if (citiesWithoutPopularMoscowResponse == null) {
             System.out.println("Не удалось найти город, где не встречался наиболее популярный ответ Москвы");
         } else if (citiesWithoutPopularMoscowResponse.isEmpty()) {
@@ -25,13 +25,13 @@ public class Main {
         } else {
             System.out.println("Города, где не встречался наиболее популярный ответ Москвы: " + citiesWithoutPopularMoscowResponse);
         }
-        City mostVariousResponseCity = responsesService.getMostVariousResponseCity();
+        City mostVariousResponseCity = responsesService.getMostVariousResponseCity(responsesStorage);
         if (mostVariousResponseCity == null) {
             System.out.println("Не удалось найти город с наибольшим количеством разнообразных ответов");
         } else {
             System.out.println("Город с наибольшим количеством разнообразных ответов: " + mostVariousResponseCity);
         }
-        Response mostPopularResponseForCities = responsesService.getMostPopularResponseForCities("А");
+        Response mostPopularResponseForCities = responsesService.getMostPopularResponseForCities("А", responsesStorage);
         if (mostPopularResponseForCities == null) {
             System.out.println("Не удалось найти наиболее популярный ответ в городах, название которых начинается на "
                     + "А");
