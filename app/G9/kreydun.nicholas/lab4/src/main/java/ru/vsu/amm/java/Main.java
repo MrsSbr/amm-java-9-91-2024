@@ -1,10 +1,10 @@
 package ru.vsu.amm.java;
 
-import ru.vsu.amm.java.staff.Barista;
+import ru.vsu.amm.java.staff.BaristaStorage;
 
 public class Main {
     public static void main(String[] args) {
-        Barista barista = new Barista();
+        BaristaStorage barista = new BaristaStorage();
         barista.generateRandomDrinkRecords();
         System.out.println(barista.getDrinksNotOrderedLast3Months());
     }

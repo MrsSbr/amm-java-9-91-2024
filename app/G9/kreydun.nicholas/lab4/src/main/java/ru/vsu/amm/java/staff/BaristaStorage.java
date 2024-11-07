@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 import static ru.vsu.amm.java.generators.BaristaGenerator.generateRandomDrinkRecord;
 import static ru.vsu.amm.java.service.Logg.logger;
 
-public class Barista {
+public class BaristaStorage {
 
     private List<DrinkRecord> drinkRecords;
 
     private final int COUNTS_ORDER = 1000;
 
-    public Barista() {
+    public BaristaStorage() {
         drinkRecords = new ArrayList<>();
         logger.info("Created Barista");
     }

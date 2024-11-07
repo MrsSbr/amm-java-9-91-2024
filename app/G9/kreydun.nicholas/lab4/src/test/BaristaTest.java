@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import ru.vsu.amm.java.enums.DrinkName;
 import ru.vsu.amm.java.records.DrinkRecord;
-import ru.vsu.amm.java.staff.Barista;
+import ru.vsu.amm.java.staff.BaristaStorage;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BaristaTest {
 
-    private Barista barista;
+    private BaristaStorage barista;
 
     @BeforeEach
     void setUp() {
