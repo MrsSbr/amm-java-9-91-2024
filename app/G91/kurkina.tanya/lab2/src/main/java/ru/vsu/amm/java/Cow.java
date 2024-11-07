@@ -22,7 +22,9 @@ public class Cow extends FarmAnimal {
 
     @Override
     public boolean equals(Object obj) {
-        if(!super.equals(obj)) return false;
+        if (!super.equals(obj)) {
+            return false;
+        }
         Cow other = (Cow) obj;
         return Double.compare(milkProduction, other.milkProduction) == 0;
     }

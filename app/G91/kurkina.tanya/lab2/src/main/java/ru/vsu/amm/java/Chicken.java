@@ -22,7 +22,9 @@ public class Chicken extends FarmAnimal {
 
     @Override
     public boolean equals(Object obj) {
-        if(!super.equals(obj)) return false;
+        if (!super.equals(obj)) {
+            return false;
+        }
         Chicken other = (Chicken) obj;
         return eggProduction == other.eggProduction;
     }

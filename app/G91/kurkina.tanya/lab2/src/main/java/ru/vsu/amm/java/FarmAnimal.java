@@ -25,8 +25,12 @@ public abstract class FarmAnimal implements Animal {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof FarmAnimal)) return false; //является ли obj экземпляром farmanimal
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof FarmAnimal)) {
+            return false; //является ли obj экземпляром farmanimal
+        }
         FarmAnimal other = (FarmAnimal) obj; //приведение obj к типу farmaniaml
         return name.equals(other.name) && type.equals(other.type);
     }
