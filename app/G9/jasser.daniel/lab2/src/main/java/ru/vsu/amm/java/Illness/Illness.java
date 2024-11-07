@@ -2,16 +2,16 @@ package ru.vsu.amm.java.Illness;
 
 import ru.vsu.amm.java.Person;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Illness {
 
     protected String name;
     protected int usualDamage;
-    protected ArrayList<String> symptoms;
+    protected List<String> symptoms;
 
-    public Illness(String name, int usualDamage, ArrayList<String> syptoms) {
+    public Illness(String name, int usualDamage, List<String> syptoms) {
         this.name = name;
         this.usualDamage = usualDamage;
         this.symptoms = syptoms;
@@ -19,7 +19,7 @@ public abstract class Illness {
 
     abstract public void infect(Person p);
 
-    public ArrayList<String> getSyptoms() {
+    public List<String> getSyptoms() {
         return symptoms;
     }
 

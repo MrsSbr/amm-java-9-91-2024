@@ -12,7 +12,7 @@ public class Flu extends Illness implements Vaccinable {
 
     @Override
     public void infect(Person p) {
-        p.setDisease("Flu");
+        p.setDisease(this.name);
         if (p.getImmunity() != -1) {
             if (p.getImmunity() < 30 || p.getAge() > 80) {
                 p.conditionGettingWorse(usualDamage);

@@ -12,7 +12,7 @@ public class Cancer extends Illness {
 
     @Override
     public void infect(Person p) {
-        p.setDisease("Cancer");
+        p.setDisease(this.name);
         if (p.getImmunity() != -1) {
             if (p.getAge() < 18 || p.getImmunity() < 99) {
                 p.conditionGettingWorse(usualDamage);
