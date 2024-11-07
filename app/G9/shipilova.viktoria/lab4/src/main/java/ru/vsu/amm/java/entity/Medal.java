@@ -1,4 +1,7 @@
-package ru.vsu.amm.java.sports.medals;
+package ru.vsu.amm.java.entity;
+
+import ru.vsu.amm.java.enums.Country;
+import ru.vsu.amm.java.enums.KindOfSport;
 
 public class Medal {
     private Country country;

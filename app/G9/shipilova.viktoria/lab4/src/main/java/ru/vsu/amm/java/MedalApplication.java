@@ -1,4 +1,8 @@
-package ru.vsu.amm.java.sports.medals;
+package ru.vsu.amm.java;
+
+import ru.vsu.amm.java.analyzer.MedalAnalyzer;
+import ru.vsu.amm.java.entity.Medal;
+import ru.vsu.amm.java.util.DataHandler;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,6 +36,10 @@ public class MedalApplication {
         DataHandler dataHandler = new DataHandler();
         dataHandler.saveToFile(PATH);
         List<Medal> medals = dataHandler.loadFromFile(PATH);
+        if (medals.isEmpty()) {
+            logger.log(Level.SEVERE, "No medals were loaded.");
+            return;
+        }
         MedalAnalyzer medalAnalyzer = new MedalAnalyzer();
 
         logger.log(Level.INFO, "Analyzing medals...");
@@ -43,8 +51,10 @@ public class MedalApplication {
         List<String> topAthletes = medalAnalyzer.athleteWithTheMostMedals(medals);
         if (topAthletes.size() == 1) {
             System.out.println(topAthletes.get(0));
-        } else {
+        } else if (!topAthletes.isEmpty()){
             System.out.println("There is no outstanding athlete. Several athletes have the same number of medals.\n");
+        } else {
+            System.out.println("Nobody has medals.\n");
         }
         logger.log(Level.INFO, "Application finished.");
     }

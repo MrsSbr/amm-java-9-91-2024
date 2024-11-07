@@ -1,10 +1,16 @@
-package ru.vsu.amm.java.sports.medals;
+package ru.vsu.amm.java.util;
+
+import ru.vsu.amm.java.entity.Medal;
+import ru.vsu.amm.java.enums.Country;
+import ru.vsu.amm.java.enums.KindOfSport;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
 
 public class MedalFactory {
+    public static final int COUNT_MEDALS = 15;
+
     private static final String[] begNames = {"Nat", "Ben", "Nick", "Ro", "Ad", "And", "Gabri", "Ann", "Veron"};
     private static final String[] endNames = {"sa", "", "an", "el", "ett", "ia", "fer", "ra", "er", "son"};
     private static final String[] begSurname = {"Wil", "Rob", "Tayl", "Ev"};

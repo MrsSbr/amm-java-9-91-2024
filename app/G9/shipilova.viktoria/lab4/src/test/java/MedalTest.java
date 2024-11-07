@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -5,14 +6,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import ru.vsu.amm.java.sports.medals.KindOfSport;
-import ru.vsu.amm.java.sports.medals.MedalFactory;
-import ru.vsu.amm.java.sports.medals.Country;
-import ru.vsu.amm.java.sports.medals.Medal;
-import ru.vsu.amm.java.sports.medals.MedalAnalyzer;
+import ru.vsu.amm.java.enums.KindOfSport;
+import ru.vsu.amm.java.util.MedalFactory;
+import ru.vsu.amm.java.enums.Country;
+import ru.vsu.amm.java.entity.Medal;
+import ru.vsu.amm.java.analyzer.MedalAnalyzer;
 
 public class MedalTest {
-    private static final String TEST_PATH = "app/G9/shipilova.viktoria/lab4/test_medals.txt";
     private MedalAnalyzer medalAnalyzer;
     private List<Medal> medals;
     private List<Medal> medalsGenerate;
@@ -34,7 +34,7 @@ public class MedalTest {
     public void testGenerateMedal() {
         List<Medal> medals = MedalFactory.generateMedal();
         assertNotNull(medals);
-        assertEquals(15, medals.size());
+        assertEquals(MedalFactory.COUNT_MEDALS, medals.size());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class MedalTest {
     }
 
     @Test
-    public void testAthltestAthletesWhoTookPlaces() {
+    public void testAthletesWhoTookPlaces() {
         Map<KindOfSport, List<String>> athletesBySport = medalAnalyzer.athletesWhoTookPlaces(medals);
         assertEquals(5, athletesBySport.size());
 
@@ -81,6 +81,14 @@ public class MedalTest {
         assertEquals(List.of("Lory Smith"), athletesBySport.get(KindOfSport.CYCLING));
         assertEquals(List.of("Mike Brown"), athletesBySport.get(KindOfSport.FENCING));
     }
+
+    @Test
+    public void testAthleteWithTheMostMedalsEmpty(){
+        medals = Collections.emptyList();
+        List<Country> topAthletes = medalAnalyzer.topThreeInMedals(medals);
+        assertTrue(topAthletes.isEmpty());
+    }
+
 
     @Test
     public void testAthleteWithTheMostMedalsGenerate(){
@@ -97,10 +105,9 @@ public class MedalTest {
     }
 
     @Test
-    public void testAthltestAthletesWhoTookPlacesGenerate() {
+    public void testAthletesWhoTookPlacesGenerate() {
         Map<KindOfSport, List<String>> athletesBySport = medalAnalyzer.athletesWhoTookPlaces(medalsGenerate);
         assertEquals(5, athletesBySport.size());
         athletesBySport.values().forEach(list -> assertEquals(3, list.size()));
     }
-
 }

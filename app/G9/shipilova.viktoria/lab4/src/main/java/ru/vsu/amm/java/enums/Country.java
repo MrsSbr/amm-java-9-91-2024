@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.sports.medals;
+package ru.vsu.amm.java.enums;
 
 public enum Country {
     USA,

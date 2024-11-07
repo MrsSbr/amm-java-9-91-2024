@@ -1,4 +1,8 @@
-package ru.vsu.amm.java.sports.medals;
+package ru.vsu.amm.java.util;
+
+import ru.vsu.amm.java.entity.Medal;
+import ru.vsu.amm.java.enums.Country;
+import ru.vsu.amm.java.enums.KindOfSport;
 
 import java.io.*;
 import java.util.List;
@@ -9,6 +13,10 @@ import java.util.logging.SimpleFormatter;
 
 public class DataHandler {
     private static final Logger logger = Logger.getLogger(DataHandler.class.getName());
+    private static final int CountryIndex = 0;
+    private static final int KindOfSportIndex = 1;
+    private static final int AthleteIndex = 2;
+    private static final int PlaceIndex = 3;
 
     static {
         try {
@@ -30,27 +38,26 @@ public class DataHandler {
             logger.log(Level.INFO, "Saving completed successfully.");
         } catch (IOException ex) {
             logger.log(Level.SEVERE, "Error saving medals.", ex);
-            throw new RuntimeException(ex);
         }
     }
 
     public List<Medal> loadFromFile(String path) {
         logger.log(Level.INFO, "Loading medals from " + path);
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))){
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             List<Medal> medals = reader.lines()
                     .map(line -> {
                         String[] parts = line.split(";");
-                        Country country = Country.valueOf(parts[0]);
-                        KindOfSport kindOfSport = KindOfSport.valueOf(parts[1]);
-                        String athlete = parts[2];
-                        int place = Integer.parseInt(parts[3]);
+                        Country country = Country.valueOf(parts[CountryIndex]);
+                        KindOfSport kindOfSport = KindOfSport.valueOf(parts[KindOfSportIndex]);
+                        String athlete = parts[AthleteIndex];
+                        int place = Integer.parseInt(parts[PlaceIndex]);
                         return new Medal(country, kindOfSport, athlete, place);
                     }).toList();
             logger.log(Level.INFO, "Saving completed successfully.");
             return medals;
-        } catch (IOException ex){
+        } catch (IOException ex) {
             logger.log(Level.SEVERE, "Error loading medals.", ex);
-            throw new RuntimeException(ex);
+            return List.of();
         }
     }
 }
