@@ -27,7 +27,7 @@ public class BalmerPeakService {
     }
 
     public static double getAverageAmountForPeak(List<BalmerPeakRecord> records) {
-        if (records == null) {
+        if (records == null || records.isEmpty()) {
             return 0;
         }
         int totalAmount = records.stream()
@@ -39,7 +39,7 @@ public class BalmerPeakService {
     }
 
     public static List<AlcoholType> getUniqueAlcoholType(List<BalmerPeakRecord> records) {
-        if (records == null) {
+        if (records == null || records.isEmpty()) {
             return new ArrayList<>();
         }
         return records.stream()
@@ -49,7 +49,7 @@ public class BalmerPeakService {
     }
 
     public static int getTotalAlcoholAmount(List<BalmerPeakRecord> records) {
-        if (records == null) {
+        if (records == null || records.isEmpty()) {
             return 0;
         }
         return records.stream()
