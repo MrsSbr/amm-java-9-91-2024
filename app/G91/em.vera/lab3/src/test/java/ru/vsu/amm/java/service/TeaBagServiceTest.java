@@ -12,8 +12,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class TeaBagServiceTest {
     private static final List<TeaBag> teaBags = getTeaBags();
 
+
     @Test
     void getBestYearsOfType() {
+        int[] emptyBestYearsOfType = TeaBagService.getBestYearsOfType(new ArrayList<>());
+        assertEquals(0, emptyBestYearsOfType.length);
+
         int[] bestYearsOfType = TeaBagService.getBestYearsOfType(teaBags);
         assertEquals(TeaType.values().length, bestYearsOfType.length);
         assertEquals(2018, bestYearsOfType[0]);
@@ -24,12 +28,18 @@ class TeaBagServiceTest {
 
     @Test
     void getTeaTypesInYear() {
+        List<TeaType> emptyTeaTypes = TeaBagService.getTeaTypesInYear(new ArrayList<>(), 2018);
+        assertEquals(new ArrayList<TeaType>(), emptyTeaTypes);
+
         List<TeaType> teaTypes = TeaBagService.getTeaTypesInYear(teaBags, 2018);
         assertEquals(List.of(TeaType.GREEN, TeaType.WHITE), teaTypes);
     }
 
     @Test
     void getHaviestTeaBag() {
+        int[] emptyHaviestTeaBags = TeaBagService.getHaviestTeaBag(new ArrayList<>());
+        assertEquals(0, emptyHaviestTeaBags.length);
+
         int[] haviestTeaBags = TeaBagService.getHaviestTeaBag(teaBags);
         assertEquals(TeaType.values().length, haviestTeaBags.length);
         assertEquals(22, haviestTeaBags[0]);
