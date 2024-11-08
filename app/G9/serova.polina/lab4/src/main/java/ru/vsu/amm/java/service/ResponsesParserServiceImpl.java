@@ -65,12 +65,11 @@ public final class ResponsesParserServiceImpl implements ResponsesParserService 
 
             return new ResponseData(city, respondentsCount, response);
 
-        } catch (Exception e) {
-            if (e.getClass() == NumberFormatException.class) {
-                logger.log(Level.WARNING, "Ошибка преобразования количества респондентов в целое число: " + line, e);
-            } else {
-                logger.log(Level.WARNING, "Ошибка при чтении строки: " + line, e);
-            }
+        } catch (NumberFormatException e) {
+            logger.log(Level.WARNING, "Ошибка преобразования количества респондентов в целое число: " + line, e);
+            return null;
+        } catch (IllegalArgumentException e) {
+            logger.log(Level.WARNING, "Ошибка при чтении строки: " + line, e);
             return null;
         }
     }
