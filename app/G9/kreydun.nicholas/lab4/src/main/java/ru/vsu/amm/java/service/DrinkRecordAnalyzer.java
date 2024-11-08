@@ -49,7 +49,6 @@ public class DrinkRecordAnalyzer {
                 .filter(record -> record.getDate().isAfter(threeMonthsAgo))
                 .map(DrinkRecord::getDrinkName)
                 .collect(Collectors.toSet());
-
         Set<String> notOrderedList = new HashSet<>(ListDrinks.LIST_DRINKS);
         notOrderedList.removeAll(orderedDrinks);
 
