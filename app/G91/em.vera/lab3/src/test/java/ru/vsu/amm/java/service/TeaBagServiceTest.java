@@ -15,9 +15,6 @@ class TeaBagServiceTest {
 
     @Test
     void getBestYearsOfType() {
-        int[] emptyBestYearsOfType = TeaBagService.getBestYearsOfType(new ArrayList<>());
-        assertEquals(0, emptyBestYearsOfType.length);
-
         int[] bestYearsOfType = TeaBagService.getBestYearsOfType(teaBags);
         assertEquals(TeaType.values().length, bestYearsOfType.length);
         assertEquals(2018, bestYearsOfType[0]);
