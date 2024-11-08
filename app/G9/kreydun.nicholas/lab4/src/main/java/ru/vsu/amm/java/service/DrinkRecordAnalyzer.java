@@ -50,7 +50,6 @@ public class DrinkRecordAnalyzer {
                 .map(DrinkRecord::getDrinkName)
                 .collect(Collectors.toSet());
 
-
         Set<String> notOrderedList = new HashSet<>(ListDrinks.LIST_DRINKS);
         notOrderedList.removeAll(orderedDrinks);
 
