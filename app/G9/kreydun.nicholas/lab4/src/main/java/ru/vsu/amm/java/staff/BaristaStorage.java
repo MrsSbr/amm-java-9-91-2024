@@ -21,7 +21,7 @@ public class BaristaStorage {
 
     private List<DrinkRecord> drinkRecords;
 
-    private final int COUNTS_ORDER = 1000;
+    static private final int COUNTS_ORDER = 1000;
 
     public BaristaStorage() {
         drinkRecords = new ArrayList<>();
