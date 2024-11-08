@@ -40,6 +40,18 @@ class TextAnalyzerTest {
     }
 
     @Test
+    @DisplayName("Тест на самые длинные слова с количеством их в тексте, вариантов ответа больше 1")
+    public void testLongestWordsWithFrequencyMoreOneWord() {
+        TextAnalyzer analyzer = new TextAnalyzer("apple banana orange banana orange ");
+        List<String[]> expected = new ArrayList<>();
+        expected.add(new String[]{"banana", "2"});
+        expected.add(new String[]{"orange", "2"});
+        List<String[]> result = analyzer.getLongestWordsWithFrequency();
+        assertEquals(expected.size(), result.size());
+        assertArrayEquals(expected.toArray(), result.toArray());
+    }
+
+    @Test
     @DisplayName("Тест на количество слов содержащих заданное")
     public void testCountWordsContaining() {
         TextAnalyzer analyzer = new TextAnalyzer("apple banana apple orange  app");
