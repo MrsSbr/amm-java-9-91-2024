@@ -1,8 +1,8 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
 
 import java.util.Objects;
 
-class DramaMovie extends AbstractMovie{
+public class DramaMovie extends AbstractMovie {
 
     private boolean basedOnTrueStory;
 
@@ -12,8 +12,13 @@ class DramaMovie extends AbstractMovie{
     }
 
     @Override
-    public String getGenre() {
-        return "Drama";
+    public Ganre getGenre() {
+        return Ganre.Drama;
+    }
+
+    @Override
+    public String getDescription() {
+        return "This is an drama movie!";
     }
 
     @Override

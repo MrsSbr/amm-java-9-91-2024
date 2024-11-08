@@ -1,8 +1,8 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
 
 import java.util.Objects;
 
-class ActionMovie extends AbstractMovie {
+public class ActionMovie extends AbstractMovie {
 
     private int explosionsCount;
 
@@ -17,8 +17,8 @@ class ActionMovie extends AbstractMovie {
     }
 
     @Override
-    public String getGenre() {
-        return "Action";
+    public Ganre getGenre() {
+        return Ganre.Action;
     }
 
     @Override

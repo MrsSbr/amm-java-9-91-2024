@@ -1,5 +1,10 @@
 package ru.vsu.amm.java;
 
+import ru.vsu.amm.java.classes.ActionMovie;
+import ru.vsu.amm.java.classes.ComedyMovie;
+import ru.vsu.amm.java.classes.DramaMovie;
+import ru.vsu.amm.java.interfaces.Movie;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -12,6 +17,8 @@ public class Main {
         System.out.println(dramaMovie);
 
         System.out.println(((ActionMovie) actionMovie).getDescription());
+        System.out.println(((ComedyMovie) comedyMovie).getDescription());
+        System.out.println(((DramaMovie) dramaMovie).getDescription());
 
         Movie anotherActionMovie = new ActionMovie("Die Hard", 130, 2);
         System.out.println("Movies are equal: " + actionMovie.equals(anotherActionMovie));

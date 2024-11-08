@@ -1,8 +1,8 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
 
 import java.util.Objects;
 
-class ComedyMovie extends AbstractMovie{
+public class ComedyMovie extends AbstractMovie {
 
     private String mainComedian;
 
@@ -16,8 +16,13 @@ class ComedyMovie extends AbstractMovie{
     }
 
     @Override
-    public String getGenre() {
-        return "Comedy";
+    public Ganre getGenre() {
+        return Ganre.Comedy;
+    }
+
+    @Override
+    public String getDescription() {
+        return "This is an comedy movie!";
     }
 
     @Override
