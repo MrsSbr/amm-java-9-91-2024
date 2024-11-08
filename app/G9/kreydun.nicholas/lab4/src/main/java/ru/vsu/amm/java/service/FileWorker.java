@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 
 import static ru.vsu.amm.java.generators.BaristaGenerator.generateRandomDrinkRecord;
@@ -34,7 +35,7 @@ public class FileWorker {
         } catch (IOException e) {
             logger.throwing(FileWorker.class.getName(), "saveToFile", e);
 
-            throw new RuntimeException(e);
+            System.out.println("Sorry, file hasn't saved:(");
         }
     }
 
@@ -57,7 +58,8 @@ public class FileWorker {
         } catch (IOException e) {
             logger.throwing(FileWorker.class.getName(), "loadFromFile", e);
 
-            throw new RuntimeException(e);
+            System.out.println("Sorry, file hasn't opened:(");
+            return Collections.emptyList();
         }
     }
 }

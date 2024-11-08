@@ -8,8 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ListDrinks {
-
-    public static Set<String> listDrinks = new HashSet<>(
+    public static Set<String> LIST_DRINKS = new HashSet<>(
             EnumSet.allOf(DrinkName.class)
                     .stream()
                     .map(Enum::name)
