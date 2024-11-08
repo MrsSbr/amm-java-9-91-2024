@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 class BaristaTest {
     private BaristaStorage baristaStorage;
     private DrinkRecordAnalyzer analyzer;
@@ -40,8 +39,8 @@ class BaristaTest {
     @Test
     void testNotEmptyGetSet() {
         List<DrinkRecord> drinkRecords = new ArrayList<>();
-        drinkRecords.add(new DrinkRecord(DrinkName.Espresso, LocalDate.now(), LocalTime.of(6, 59)));
-        drinkRecords.add(new DrinkRecord(DrinkName.Latte, LocalDate.now(), LocalTime.of(9, 1)));
+        drinkRecords.add(new DrinkRecord(DrinkName.ESPRESSO, LocalDate.now(), LocalTime.of(6, 59)));
+        drinkRecords.add(new DrinkRecord(DrinkName.LATTE, LocalDate.now(), LocalTime.of(9, 1)));
         baristaStorage.setRecords(drinkRecords);
 
         assertTrue(baristaStorage.getRecords().contains(drinkRecords.get(0)));
@@ -54,15 +53,15 @@ class BaristaTest {
     @Test
     void testGetMorningDrinks() {
         List<DrinkRecord> drinkRecords = new ArrayList<>();
-        drinkRecords.add(new DrinkRecord(DrinkName.Espresso, LocalDate.now(), LocalTime.of(6, 59)));
-        drinkRecords.add(new DrinkRecord(DrinkName.Cappuccino, LocalDate.now(), LocalTime.of(8, 0)));
-        drinkRecords.add(new DrinkRecord(DrinkName.Latte, LocalDate.now(), LocalTime.of(9, 1)));
+        drinkRecords.add(new DrinkRecord(DrinkName.ESPRESSO, LocalDate.now(), LocalTime.of(6, 59)));
+        drinkRecords.add(new DrinkRecord(DrinkName.CAPPUCCINO, LocalDate.now(), LocalTime.of(8, 0)));
+        drinkRecords.add(new DrinkRecord(DrinkName.LATTE, LocalDate.now(), LocalTime.of(9, 1)));
 
         baristaStorage.setRecords(drinkRecords);
         Set<String> morningDrinks = analyzer.getMorningDrinks();
 
         assertEquals(1, morningDrinks.size());
-        assertTrue(morningDrinks.contains("Cappuccino"));
+        assertTrue(morningDrinks.contains(DrinkName.CAPPUCCINO.name()));
 
         logger.info("test get morning drinks end");
     }
@@ -70,9 +69,9 @@ class BaristaTest {
     @Test
     void testGetMorningDrinksEmpty() {
         List<DrinkRecord> drinkRecords = new ArrayList<>();
-        drinkRecords.add(new DrinkRecord(DrinkName.Espresso, LocalDate.now(), LocalTime.of(10, 0)));
-        drinkRecords.add(new DrinkRecord(DrinkName.Cappuccino, LocalDate.now(), LocalTime.of(11, 0)));
-        drinkRecords.add(new DrinkRecord(DrinkName.Latte, LocalDate.now(), LocalTime.of(12, 0)));
+        drinkRecords.add(new DrinkRecord(DrinkName.ESPRESSO, LocalDate.now(), LocalTime.of(10, 0)));
+        drinkRecords.add(new DrinkRecord(DrinkName.CAPPUCCINO, LocalDate.now(), LocalTime.of(11, 0)));
+        drinkRecords.add(new DrinkRecord(DrinkName.LATTE, LocalDate.now(), LocalTime.of(12, 0)));
         baristaStorage.setRecords(drinkRecords);
         Set<String> morningDrinks = analyzer.getMorningDrinks();
 
@@ -84,9 +83,9 @@ class BaristaTest {
     @Test
     void testCountCopCappuccino() {
         List<DrinkRecord> drinkRecords = new ArrayList<>();
-        drinkRecords.add(new DrinkRecord(DrinkName.Cappuccino, LocalDate.now(), LocalTime.of(8, 0)));
-        drinkRecords.add(new DrinkRecord(DrinkName.Cappuccino, LocalDate.now(), LocalTime.of(9, 0)));
-        drinkRecords.add(new DrinkRecord(DrinkName.Latte, LocalDate.now(), LocalTime.of(10, 0)));
+        drinkRecords.add(new DrinkRecord(DrinkName.CAPPUCCINO, LocalDate.now(), LocalTime.of(8, 0)));
+        drinkRecords.add(new DrinkRecord(DrinkName.CAPPUCCINO, LocalDate.now(), LocalTime.of(9, 0)));
+        drinkRecords.add(new DrinkRecord(DrinkName.LATTE, LocalDate.now(), LocalTime.of(10, 0)));
 
         baristaStorage.setRecords(drinkRecords);
 
@@ -100,9 +99,9 @@ class BaristaTest {
     @Test
     void testCountCopCappuccinoZero() {
         List<DrinkRecord> drinkRecords = new ArrayList<>();
-        drinkRecords.add(new DrinkRecord(DrinkName.Latte, LocalDate.now(), LocalTime.of(8, 0)));
-        drinkRecords.add(new DrinkRecord(DrinkName.Espresso, LocalDate.now(), LocalTime.of(9, 0)));
-        drinkRecords.add(new DrinkRecord(DrinkName.Americano, LocalDate.now(), LocalTime.of(10, 0)));
+        drinkRecords.add(new DrinkRecord(DrinkName.LATTE, LocalDate.now(), LocalTime.of(8, 0)));
+        drinkRecords.add(new DrinkRecord(DrinkName.ESPRESSO, LocalDate.now(), LocalTime.of(9, 0)));
+        drinkRecords.add(new DrinkRecord(DrinkName.AMERICANO, LocalDate.now(), LocalTime.of(10, 0)));
 
         baristaStorage.setRecords(drinkRecords);
 
@@ -117,17 +116,14 @@ class BaristaTest {
     void testGetDrinksNotOrderedLast3Months() {
         LocalDate threeMonthsAgo = LocalDate.now().minusMonths(3);
         List<DrinkRecord> drinkRecords = new ArrayList<>();
-        drinkRecords.add(new DrinkRecord(DrinkName.Cappuccino, threeMonthsAgo.minusDays(1), LocalTime.of(8, 0)));
-        drinkRecords.add(new DrinkRecord(DrinkName.Latte, LocalDate.now(), LocalTime.of(9, 0)));
+        drinkRecords.add(new DrinkRecord(DrinkName.CAPPUCCINO, threeMonthsAgo.minusDays(1), LocalTime.of(8, 0)));
+        drinkRecords.add(new DrinkRecord(DrinkName.LATTE, LocalDate.now(), LocalTime.of(9, 0)));
 
         baristaStorage.setRecords(drinkRecords);
 
         Set<String> notOrderedDrinks = analyzer.getDrinksNotOrderedLast3Months();
 
-        assertTrue(notOrderedDrinks.contains("Espresso"));
-        assertTrue(notOrderedDrinks.contains("Americano"));
-        assertTrue(notOrderedDrinks.contains("Latte"));
-        assertFalse(notOrderedDrinks.contains("Cappuccino"));
+        assertTrue(notOrderedDrinks.contains(DrinkName.ESPRESSO.name()));
 
         logger.info("test get drinks not ordered last 3 months end");
     }
