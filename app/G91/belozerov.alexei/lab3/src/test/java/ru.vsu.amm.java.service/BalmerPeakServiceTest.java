@@ -24,9 +24,18 @@ public class BalmerPeakServiceTest {
         double averageAmountForPeek = BalmerPeakService.getAverageAmountForPeak(records);
         double ans = (400 + 400 + 700) / 3.;
         assertEquals(ans, averageAmountForPeek);
+    }
 
+    @Test
+    void getAverageAmountForPeakEqualsZero() {
         double averageAmountEqualsZero = BalmerPeakService.getAverageAmountForPeak(new ArrayList<>());
         assertEquals(0, averageAmountEqualsZero);
+    }
+
+    @Test
+    void nullAverageAmountForPeak() {
+        double averageAmountForPeak = BalmerPeakService.getAverageAmountForPeak(null);
+        assertEquals(0, averageAmountForPeak);
     }
 
     @Test
@@ -34,9 +43,18 @@ public class BalmerPeakServiceTest {
         List<AlcoholType> types = BalmerPeakService.getUniqueAlcoholType(records);
         assertEquals(5, types.size());
         assertEquals(1, types.stream().filter((AlcoholType x) -> x == AlcoholType.Beer).count());
+    }
 
+    @Test
+    void getZeroUniqueAlcoholType() {
         List<AlcoholType> zeroTypes = BalmerPeakService.getUniqueAlcoholType(new ArrayList<>());
         assertEquals(0, zeroTypes.size());
+    }
+
+    @Test
+    void nullUniqueAlcoholType() {
+        List<AlcoholType> emptyTypes = BalmerPeakService.getUniqueAlcoholType(null);
+        assertEquals(0, emptyTypes.size());
     }
 
     @Test
@@ -44,8 +62,17 @@ public class BalmerPeakServiceTest {
         int totalAmount = BalmerPeakService.getTotalAlcoholAmount(records);
         int ans = 4500;
         assertEquals(ans, totalAmount);
+    }
 
+    @Test
+    void getTotalAlcoholAmountEqualsZero() {
         int totalAmountEqualsZero = BalmerPeakService.getTotalAlcoholAmount(new ArrayList<>());
+        assertEquals(0, totalAmountEqualsZero);
+    }
+
+    @Test
+    void nullTotalAlcoholAmount() {
+        int totalAmountEqualsZero = BalmerPeakService.getTotalAlcoholAmount(null);
         assertEquals(0, totalAmountEqualsZero);
     }
 

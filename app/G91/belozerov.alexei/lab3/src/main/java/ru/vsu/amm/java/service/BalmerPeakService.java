@@ -6,7 +6,6 @@ import ru.vsu.amm.java.enums.AlcoholType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class BalmerPeakService {
     private static final int TOTAL_RECORDS = 2312;
@@ -28,23 +27,31 @@ public class BalmerPeakService {
     }
 
     public static double getAverageAmountForPeak(List<BalmerPeakRecord> records) {
+        if (records == null) {
+            return 0;
+        }
         int totalAmount = records.stream()
                 .filter(BalmerPeakRecord::hasBalmerPeak)
                 .mapToInt(BalmerPeakRecord::amount)
                 .sum();
-        int countPeaks = (int) records.stream().filter(BalmerPeakRecord::hasBalmerPeak).count();
+        long countPeaks = records.stream().filter(BalmerPeakRecord::hasBalmerPeak).count();
         return countPeaks > 0 ? (double) totalAmount / countPeaks : 0;
     }
 
     public static List<AlcoholType> getUniqueAlcoholType(List<BalmerPeakRecord> records) {
+        if (records == null) {
+            return new ArrayList<>();
+        }
         return records.stream()
                 .map(BalmerPeakRecord::type)
-                .collect(Collectors.toSet())
-                .stream()
+                .distinct()
                 .toList();
     }
 
     public static int getTotalAlcoholAmount(List<BalmerPeakRecord> records) {
+        if (records == null) {
+            return 0;
+        }
         return records.stream()
                 .mapToInt(BalmerPeakRecord::amount)
                 .sum();
