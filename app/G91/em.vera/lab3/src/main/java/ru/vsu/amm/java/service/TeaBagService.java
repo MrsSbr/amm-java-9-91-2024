@@ -3,6 +3,7 @@ package ru.vsu.amm.java.service;
 import ru.vsu.amm.java.entity.TeaBag;
 import ru.vsu.amm.java.enums.TeaType;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,9 @@ public class TeaBagService {
     }
 
     public static List<TeaType> getTeaTypesInYear(List<TeaBag> teaBags, int year) {
+        if (teaBags == null || teaBags.isEmpty()) {
+            return new ArrayList<>();
+        }
         return teaBags.stream()
                 .filter(teaBag -> teaBag.year() == year)
                 .map(TeaBag::name)
