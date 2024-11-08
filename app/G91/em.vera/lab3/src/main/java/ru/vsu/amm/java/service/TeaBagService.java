@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 public class TeaBagService {
 
     public static int[] getBestYearsOfType(List<TeaBag> teaBags) {
+        if (teaBags == null || teaBags.isEmpty()) {
+            return new int[]{};
+        }
         TeaType[] types = TeaType.values();
         return Arrays.stream(types)
                 .map(teaType -> teaBags.stream()
@@ -38,6 +41,9 @@ public class TeaBagService {
     }
 
     public static int[] getHaviestTeaBag(List<TeaBag> teaBags) {
+        if (teaBags == null || teaBags.isEmpty()) {
+            return new int[]{};
+        }
         TeaType[] types = TeaType.values();
         return Arrays.stream(types)
                 .map(teaType -> teaBags.stream()
