@@ -34,6 +34,9 @@ public class BalmerPeakServiceTest {
         List<AlcoholType> types = BalmerPeakService.getUniqueAlcoholType(records);
         assertEquals(5, types.size());
         assertEquals(1, types.stream().filter((AlcoholType x) -> x == AlcoholType.Beer).count());
+
+        List<AlcoholType> zeroTypes = BalmerPeakService.getUniqueAlcoholType(new ArrayList<>());
+        assertEquals(0, zeroTypes.size());
     }
 
     @Test
