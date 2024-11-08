@@ -27,19 +27,36 @@ class TeaBagServiceTest {
     }
 
     @Test
-    void getTeaTypesInYear() {
-        List<TeaType> emptyTeaTypes = TeaBagService.getTeaTypesInYear(new ArrayList<>(), 2018);
-        assertEquals(new ArrayList<TeaType>(), emptyTeaTypes);
+    void emtpyBestYearsOfType() {
+        int[] emptyBestYearsOfType = TeaBagService.getBestYearsOfType(new ArrayList<>());
+        assertEquals(0, emptyBestYearsOfType.length);
+    }
 
+    @Test
+    void nullBestYearsOfType() {
+        int[] emptyBestYearsOfType = TeaBagService.getBestYearsOfType(null);
+        assertEquals(0, emptyBestYearsOfType.length);
+    }
+    @Test
+    void getTeaTypesInYear() {
         List<TeaType> teaTypes = TeaBagService.getTeaTypesInYear(teaBags, 2018);
         assertEquals(List.of(TeaType.GREEN, TeaType.WHITE), teaTypes);
     }
 
     @Test
-    void getHaviestTeaBag() {
-        int[] emptyHaviestTeaBags = TeaBagService.getHaviestTeaBag(new ArrayList<>());
-        assertEquals(0, emptyHaviestTeaBags.length);
+    void emtpyTeaTypesInYear() {
+        List<TeaType> emptyTeaTypes = TeaBagService.getTeaTypesInYear(new ArrayList<>(), 2018);
+        assertEquals(new ArrayList<TeaType>(), emptyTeaTypes);
+    }
 
+    @Test
+    void nullTeaTypesInYear() {
+        List<TeaType> emptyTeaTypes = TeaBagService.getTeaTypesInYear(null, 2018);
+        assertEquals(new ArrayList<TeaType>(), emptyTeaTypes);
+    }
+
+    @Test
+    void getHaviestTeaBag() {
         int[] haviestTeaBags = TeaBagService.getHaviestTeaBag(teaBags);
         assertEquals(TeaType.values().length, haviestTeaBags.length);
         assertEquals(22, haviestTeaBags[0]);
@@ -47,6 +64,20 @@ class TeaBagServiceTest {
         assertEquals(23, haviestTeaBags[2]);
         assertEquals(70, haviestTeaBags[3]);
     }
+
+    @Test
+    void emtpyHaviestTeaBag() {
+        int[] emptyHaviestTeaBags = TeaBagService.getHaviestTeaBag(new ArrayList<>());
+        assertEquals(0, emptyHaviestTeaBags.length);
+    }
+
+    @Test
+    void nullHaviestTeaBag() {
+        int[] emptyHaviestTeaBags = TeaBagService.getHaviestTeaBag(null);
+        assertEquals(0, emptyHaviestTeaBags.length);
+    }
+
+
 
     private static List<TeaBag> getTeaBags() {
         List<TeaBag> teaBags = new ArrayList<>();
