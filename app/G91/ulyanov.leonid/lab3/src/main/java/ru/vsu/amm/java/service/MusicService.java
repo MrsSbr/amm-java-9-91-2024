@@ -8,23 +8,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class MusicService {
     public static int getAmountOfRecentStreams(Map<String, List<SongPlayback>> songs,
                                                String title, String artist, Genre genre) {
-        int currentYear = LocalDate.now().getYear();
-        int currentMonth = LocalDate.now().getMonthValue();
-        var songCountMap = songs.entrySet().stream()
+        var firstDayOfMonth = LocalDate.now().withDayOfMonth(1);
+        return songs.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
                         entry -> entry.getValue().stream()
-                                .filter(song -> song.listeningDate().getYear() == currentYear
-                                        && song.listeningDate().getMonthValue() == currentMonth
+                                .filter(song -> (song.listeningDate().isAfter(firstDayOfMonth)
+                                        || song.listeningDate().isEqual(firstDayOfMonth))
                                         && song.title().equals(title)
                                         && song.artist().equals(artist)
                                         && song.genre().equals(genre))
-                                .collect(Collectors.toSet())
-                                .size()));
-        return songCountMap.values().stream().reduce(0, Integer::sum);
+                                .distinct()
+                ))
+                .entrySet().stream()
+                .flatMapToInt(x -> IntStream.of((int) x.getValue().count())).sum();
     }
 
     public static Map<String, Set<String>> getUserStreamingData(Map<String, List<SongPlayback>> songs) {
@@ -38,13 +39,12 @@ public class MusicService {
     }
 
     public static Map<String, Set<String>> getUserStreamingDataLeastPopular(Map<String, List<SongPlayback>> songs) {
-        int currentYear = LocalDate.now().getYear();
-        int currentMonth = LocalDate.now().getMonthValue();
+        var date = LocalDate.now().withMonth(LocalDate.now().getMonthValue() - 2);
         var recentSongsMap = songs.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
                         entry -> entry.getValue().stream()
-                                .filter(song -> song.listeningDate().getYear() == currentYear
-                                        && song.listeningDate().getMonthValue() >= currentMonth - 2)
+                                .filter(song -> song.listeningDate().isAfter(date)
+                                        || song.listeningDate().isEqual(date))
                                 .map(song -> song.title()
                                         + " by " + song.artist()
                                         + ", " + song.genre())
