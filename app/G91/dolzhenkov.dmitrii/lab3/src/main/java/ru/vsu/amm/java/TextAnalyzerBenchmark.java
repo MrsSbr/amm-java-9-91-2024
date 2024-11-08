@@ -24,7 +24,7 @@ public class TextAnalyzerBenchmark {
 
         // уникальные слова
         startTime = System.nanoTime();
-        Set<String> uniqueWords = analyzer.getUniqueWords();
+        List<String> uniqueWords = analyzer.getUniqueWords();
         endTime = System.nanoTime();
         System.out.println("Time to get unique words: " + (endTime - startTime) + " ns");
 

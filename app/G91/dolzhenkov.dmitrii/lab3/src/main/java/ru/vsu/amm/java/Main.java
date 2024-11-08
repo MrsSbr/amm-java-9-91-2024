@@ -19,6 +19,7 @@ public class Main {
 
         System.out.println("\nEnter a word to find the count of words containing it: ");
         String searchWord = in.nextLine();
-        System.out.println("Number of words contining \"" + searchWord + "\": " + ta.countWordsContaining(searchWord));
+        System.out.println("Number of words contining \"" + searchWord
+                + "\": " + ta.countWordsContaining(searchWord));
     }
 }
