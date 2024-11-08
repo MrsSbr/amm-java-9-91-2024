@@ -6,10 +6,10 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Flight {
-    private final int FLIGHT_MIN = 1;
-    private final int FLIGHT_MAX = 11;
-    private final int FAMILY_MIN = 1;
-    private final int FAMILY_MAX = 9;
+    private static final int FLIGHT_MIN = 1;
+    private static final int FLIGHT_MAX = 11;
+    private static final int FAMILY_MIN = 1;
+    private static final int FAMILY_MAX = 9;
     private List<FamilyRecord> records;
 
     public Flight(int recNum) {
