@@ -24,8 +24,6 @@ public class Main {
     public static void main(String[] args) {
 
         Flight flightData = new Flight(RECORDS_COUNT);
-        flightData.countPeopleByFlight();
-
-
+        FlightProcessing.countPeopleByFlight(flightData.getRecords());
     }
 }

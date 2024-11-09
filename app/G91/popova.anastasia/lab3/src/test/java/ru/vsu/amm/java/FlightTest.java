@@ -1,11 +1,69 @@
 package ru.vsu.amm.java;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class FlightTest {
+
+    private final PrintStream standardOut = System.out;
+    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+    @BeforeEach
+    public void setUp() {
+        System.setOut(new PrintStream(outputStream));
+    }
+
+    @AfterEach
+    public void tearDown() {
+        System.setOut(standardOut);
+    }
+
+    @Test
+    public void countPeopleByFlightTest() {
+        var testRecords = new ArrayList<FamilyRecord>();
+
+        testRecords.add(new FamilyRecord(1, 3));
+        testRecords.add(new FamilyRecord(1, 4));
+        testRecords.add(new FamilyRecord(2, 5));
+        testRecords.add(new FamilyRecord(2, 2));
+        testRecords.add(new FamilyRecord(3, 3));
+
+        FlightProcessing.countPeopleByFlight(testRecords);
+
+        assertEquals("flight 1: 7 passengers" + System.lineSeparator() +
+                "flight 2: 7 passengers" + System.lineSeparator() +
+                "flight 3: 3 passengers",
+                outputStream.toString().trim() );
+    }
+
+    @Test
+    public void countEmptyTest() {
+        var testRecords = new ArrayList<FamilyRecord>();
+
+        FlightProcessing.countPeopleByFlight(testRecords);
+
+        assertEquals("", outputStream.toString().trim() );
+    }
+
+    @Test
+    public void countEmptyFamilyTest() {
+        var testRecords = new ArrayList<FamilyRecord>();
+
+        testRecords.add(new FamilyRecord(1, 0));
+
+        var flight = new Flight(testRecords);
+
+        FlightProcessing.countPeopleByFlight(testRecords);
+
+        assertEquals("flight 1: 0 passengers" + System.lineSeparator(),
+                outputStream.toString().trim() );
+    }
 
     @Test
     public void getFlightRecordsTest() {
@@ -70,5 +128,6 @@ public class FlightTest {
         record = new FamilyRecord(7, 7);
         assertFalse(flight.containsRecord(record));
     }
+
 
 }
