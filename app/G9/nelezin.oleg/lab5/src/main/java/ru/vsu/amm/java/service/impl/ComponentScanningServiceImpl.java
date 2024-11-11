@@ -1,8 +1,8 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.service.impl;
 
 import org.reflections.Reflections;
 import ru.vsu.amm.java.annotation.Component;
-import ru.vsu.amm.java.annotation.service.ComponentScanningService;
+import ru.vsu.amm.java.service.ComponentScanningService;
 
 import java.util.Set;
 

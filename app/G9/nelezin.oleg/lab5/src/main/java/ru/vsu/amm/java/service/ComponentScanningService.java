@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.annotation.service;
+package ru.vsu.amm.java.service;
 
 import java.util.Set;
 

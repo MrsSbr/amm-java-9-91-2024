@@ -1,7 +1,8 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.configuration;
 
 import ru.vsu.amm.java.annotation.Autowired;
-import ru.vsu.amm.java.annotation.service.impl.FirstServiceImpl;
+import ru.vsu.amm.java.service.impl.ComponentScanningServiceImpl;
+import ru.vsu.amm.java.service.impl.FirstServiceImpl;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

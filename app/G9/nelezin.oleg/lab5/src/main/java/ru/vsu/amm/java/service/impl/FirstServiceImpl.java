@@ -1,26 +1,27 @@
-package ru.vsu.amm.java.annotation.service.impl;
+package ru.vsu.amm.java.service.impl;
 
 import ru.vsu.amm.java.annotation.Autowired;
 import ru.vsu.amm.java.annotation.Component;
-import ru.vsu.amm.java.annotation.service.SecondService;
+import ru.vsu.amm.java.service.FirstService;
 
 import java.util.logging.Logger;
 
 @Component
-public class SecondServiceImpl implements SecondService {
+public class FirstServiceImpl implements FirstService {
 
     private static final Logger log;
 
     static {
-        log = Logger.getLogger(SecondServiceImpl.class.getName());
+        log = Logger.getLogger(FirstServiceImpl.class.getName());
     }
 
     @Autowired
-    private FirstServiceImpl firstService;
+    private SecondServiceImpl secondService;
 
     public void badMethod() {
         log.info("Call badMethod() from FirstService");
-        firstService.goodMethod();
+        secondService.goodMethod();
         System.out.println("The method above is deceiving");
     }
+
 }
