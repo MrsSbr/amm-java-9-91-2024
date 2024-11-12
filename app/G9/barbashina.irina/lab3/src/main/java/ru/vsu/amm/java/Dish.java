@@ -10,6 +10,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Dish {
-    private Dish nameDish;
+    private TypeDish dish;
     private ArrayList<Ingredients> ingredients;
+    private int price;
 }

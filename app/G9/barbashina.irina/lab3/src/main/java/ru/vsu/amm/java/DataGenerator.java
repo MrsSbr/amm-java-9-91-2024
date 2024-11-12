@@ -3,12 +3,14 @@ package ru.vsu.amm.java;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import ru.vsu.amm.java.Order;
+import lombok.*;
 
 public class DataGenerator {
 
     private static final int ORDERS = 2341;
 
-    private static final Random random = new Random();
+    public static Random random = new Random();
 
     private static final TypeDish[] DISHES = {
             TypeDish.BORCH,
@@ -19,29 +21,29 @@ public class DataGenerator {
     };
 
     private static final Ingredients[] INGREDIENTS = {
-         Ingredients.APPLE,
-         Ingredients.BEET,
-         Ingredients.CABBAGE,
-         Ingredients.BUTTER,
-         Ingredients.CARROT,
-         Ingredients.CHEESE,
-         Ingredients.CINNAMON,
-         Ingredients.CREAM,
-         Ingredients.CROUTONS,
-         Ingredients.EGG,
-         Ingredients.EGGPLANT,
-         Ingredients.FLOUR,
-         Ingredients.GARLIC,
-         Ingredients.MEET,
-         Ingredients.ONION,
-         Ingredients.PASTA,
-         Ingredients.POTATO,
-         Ingredients.SALAD,
-         Ingredients.SAUCE,
-         Ingredients.SPICES,
-         Ingredients.SUGAR,
-         Ingredients.TOMATO,
-         Ingredients.ZUCCHINI
+            Ingredients.APPLE,
+            Ingredients.BEET,
+            Ingredients.CABBAGE,
+            Ingredients.BUTTER,
+            Ingredients.CARROT,
+            Ingredients.CHEESE,
+            Ingredients.CINNAMON,
+            Ingredients.CREAM,
+            Ingredients.CROUTONS,
+            Ingredients.EGG,
+            Ingredients.EGGPLANT,
+            Ingredients.FLOUR,
+            Ingredients.GARLIC,
+            Ingredients.MEET,
+            Ingredients.ONION,
+            Ingredients.PASTA,
+            Ingredients.POTATO,
+            Ingredients.SALAD,
+            Ingredients.SAUCE,
+            Ingredients.SPICES,
+            Ingredients.SUGAR,
+            Ingredients.TOMATO,
+            Ingredients.ZUCCHINI
     };
 
     private static ArrayList<Ingredients> generateRandomIngredients(TypeDish dish) {
@@ -79,9 +81,26 @@ public class DataGenerator {
         return ingredients;
     }
 
-    public static Dish() {
+    public static Dish generateRandomDish() {
         TypeDish typeDish = DISHES[random.nextInt(DISHES.length)];
-        return;
-        //int price = 100 + (random.nextInt() * 1000);
+        ArrayList<Ingredients> ingredients = generateRandomIngredients(typeDish);
+        int price = 100 + (random.nextInt() * 1000);
+        return Dish.builder()
+                .dish(typeDish)
+                .ingredients(ingredients)
+                .price(price)
+                .build();
+    }
+
+    public static Order generateRandomOrder() {
+
+        ArrayList<Dish> dishes = new ArrayList<>();
+        int dishCount = random.nextInt(5) + 1;
+        for (int i = 0; i < dishCount; i++) {
+            dishes.add(generateRandomDish());
+        }
+        return Order.builder()
+                .dishes(dishes)
+                .build();
     }
 }
