@@ -6,6 +6,7 @@ import ru.vsu.amm.java.storage.ResponsesStorage;
 
 import java.util.Comparator;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,25 +32,26 @@ public final class ResponsesServiceImpl implements ResponsesService {
                         + startsWith
         );
         try {
-            Response result = responsesStorage.getResponses().entrySet().stream()
+            Optional<Response> result = responsesStorage.getResponses().entrySet().stream()
                     .filter(entry -> entry.getKey().name().startsWith(startsWith))
                     .flatMap(entry -> entry.getValue().entrySet().stream())
                     .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)))
                     .entrySet().stream()
                     .max(Map.Entry.comparingByValue())
-                    .map(Map.Entry::getKey)
-                    .orElse(null);
-            if (result == null) {
-                logger.log(
-                        Level.WARNING,
-                        "Нет городов, название которых начинается на " + startsWith);
-            } else {
-                logger.log(
-                        Level.INFO,
-                        "Наиболее наиболее популярный ответ в городах, название которых начинается на "
-                                + startsWith + ": " + result);
-            }
-            return result;
+                    .map(Map.Entry::getKey);
+
+            result.ifPresentOrElse(
+                    r -> logger.log(
+                            Level.INFO,
+                            "Наиболее популярный ответ в городах, название которых начинается на " + startsWith + ": " + r
+                    ),
+                    () -> logger.log(
+                            Level.WARNING,
+                            "Нет городов, название которых начинается на " + startsWith
+                    )
+            );
+
+            return result.orElse(null);
         } catch (Exception e) {
             logger.log(
                     Level.SEVERE,
@@ -65,18 +67,19 @@ public final class ResponsesServiceImpl implements ResponsesService {
     public City getMostVariousResponseCity(ResponsesStorage responsesStorage) {
         logger.log(Level.INFO, "Поиск города с наибольшим количеством разнообразных ответов");
         try {
-            City result = responsesStorage.getResponses().entrySet().stream()
+            Optional<City> result = responsesStorage.getResponses().entrySet().stream()
                     .max(Comparator.comparingInt(entry -> entry.getValue().size()))
-                    .map(Map.Entry::getKey)
-                    .orElse(null);
-            if (result == null) {
-                logger.log(Level.WARNING, "Нет городов в хранилище");
-            } else {
-                logger.log(
-                        Level.INFO,
-                        "Город с наибольшим количеством разнообразных ответов: " + result);
-            }
-            return result;
+                    .map(Map.Entry::getKey);
+
+            result.ifPresentOrElse(
+                    r -> logger.log(
+                            Level.INFO,
+                            "Город с наибольшим количеством разнообразных ответов: " + result
+                    ),
+                    () -> logger.log(Level.WARNING, "Нет городов в хранилище")
+            );
+
+            return result.orElse(null);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Не удалось найти город с наибольшим количеством разнообразных ответов", e);
             return null;
@@ -88,21 +91,25 @@ public final class ResponsesServiceImpl implements ResponsesService {
         logger.log(Level.INFO, "Поиск городов, где не встречался наиболее популярный ответ Москвы");
 
         try {
-            Response moscowPopularResponse = responsesStorage.getResponses().entrySet().stream()
+            Optional<Response> moscowPopularResponse = responsesStorage.getResponses().entrySet().stream()
                     .filter(entry -> entry.getKey().name().equals("Москва"))
                     .flatMap(entry -> entry.getValue().entrySet().stream())
                     .max(Map.Entry.comparingByValue())
-                    .map(Map.Entry::getKey)
-                    .orElse(null);
-            if (moscowPopularResponse == null) {
-                logger.log(Level.WARNING, "Москвы нет в хранилище");
+                    .map(Map.Entry::getKey);
+
+            moscowPopularResponse.ifPresentOrElse(
+                            r -> logger.log(
+                                        Level.INFO,
+                                        "Самый популярный ответ в Москве: " + r
+                            ),
+                            () -> logger.log(Level.WARNING, "Москвы нет в хранилище")
+                    );
+            if (moscowPopularResponse.isEmpty()) {
                 return null;
-            } else {
-                logger.log(Level.INFO, "Самый популярный ответ в Москве: " + moscowPopularResponse);
             }
 
             Set<City> result = responsesStorage.getResponses().entrySet().stream()
-                    .filter(entry -> entry.getValue().keySet().stream().noneMatch(response -> response.equals(moscowPopularResponse)))
+                    .filter(entry -> entry.getValue().keySet().stream().noneMatch(response -> response.equals(moscowPopularResponse.get())))
                     .map(Map.Entry::getKey)
                     .collect(Collectors.toSet());
             if (result.isEmpty()) {
