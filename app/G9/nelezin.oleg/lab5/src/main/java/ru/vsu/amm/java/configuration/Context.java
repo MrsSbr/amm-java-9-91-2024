@@ -17,7 +17,7 @@ public class Context {
     private static final Logger log;
 
     static {
-        log = Logger.getLogger(FirstServiceImpl.class.getName());
+        log = Logger.getLogger(Context.class.getName());
     }
 
     public Context() {
