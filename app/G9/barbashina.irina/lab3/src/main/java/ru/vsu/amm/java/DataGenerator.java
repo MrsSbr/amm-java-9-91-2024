@@ -84,7 +84,7 @@ public class DataGenerator {
     public static Dish generateRandomDish() {
         TypeDish typeDish = DISHES[random.nextInt(DISHES.length)];
         ArrayList<Ingredients> ingredients = generateRandomIngredients(typeDish);
-        int price = 100 + (random.nextInt() * 1000);
+        int price = 100 + random.nextInt(901);
         return Dish.builder()
                 .dish(typeDish)
                 .ingredients(ingredients)
