@@ -3,8 +3,11 @@ package ru.vsu.amm.java.main;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.*;
-
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Statistic {
@@ -16,71 +19,63 @@ public class Statistic {
         return list;
     }
 
-    public static List<String> bestSellingGenreGames(ArrayList<GameRecord> listOfSell) {
-        Set<Genre> genres = listOfSell.stream().
-                map(game -> game.getGenre()).
-                collect(Collectors.toSet());
-        int max = genres.stream()
-                .map(gen -> listOfSell.stream()
-                        .filter(game -> game.getGenre().equals(gen))
+    public static List<String> bestSellingGenreGames(List<GameRecord> listOfSell) {
+        Set<Genre> genres = listOfSell.stream()
+                .map(game -> game.getGenre())
+                .collect(Collectors.toSet());
+        Long max = genres.stream()
+                .map(genre -> listOfSell.stream()
+                        .filter(game -> game.getGenre().equals(genre))
                         .count())
                 .max(Comparator.comparingLong(Long::longValue))
-                .get()
-                .intValue();
-        Genre genre = genres.stream()
-                .filter(gen -> listOfSell.stream()
-                        .filter(game -> game.getGenre().equals(gen))
+                .orElse(null);
+        Genre popularGenre = genres.stream()
+                .filter(genre -> listOfSell.stream()
+                        .filter(game -> game.getGenre().equals(genre))
                         .count() == max)
-                .findFirst().get();
+                .findFirst()
+                .orElse(null);
         List<String> result = listOfSell.stream()
-                .filter(game -> game.getGenre().equals(genre))
+                .filter(game -> game.getGenre().equals(popularGenre))
                 .map(game -> game.getName())
                 .distinct()
                 .collect(Collectors.toList());
         return result;
     }
 
-    public static int mostSuccessMonth(ArrayList<GameRecord> listOfSell) {
-        ArrayList<Integer> months = new ArrayList<Integer>(Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
-        List<Integer> sales = months.stream()
-                .map(mon -> listOfSell.stream()
-                        .filter(game -> game.getDate().getMonthValue() == mon)
-                        .mapToInt(x -> x.getPrice())
+    public static List<Month> mostSuccessMonth(List<GameRecord> listOfSell) {
+        List<Month> months = List.of(Month.values());
+        List<Long> sales = months.stream()
+                .map(month -> listOfSell.stream()
+                        .filter(game -> game.getDate().getMonth() == month)
+                        .mapToLong(x -> x.getPrice())
                         .sum())
-                .collect(Collectors.toList());
-        int max = sales.stream().max(Comparator.comparingInt(Integer::intValue)).get();
-        int month = months.stream()
-                .filter(mon -> sales.get(mon) == max)
-                .findFirst().get();
-        return month;
+                .toList();
+        Long max = sales.stream().max(Comparator.comparingLong(Long::longValue)).get();
+        List<Month> successMonth = months.stream()
+                .filter(month -> (sales.get(month.getValue() - 1) == max && max != 0))
+                .toList();
+        return successMonth;
     }
 
-    public static boolean recentlyDate(LocalDate x, LocalDate y) {
-        return x.getYear() == y.getYear() &&
-                (x.getMonthValue() - y.getMonthValue() < 3 || x.getMonthValue() - y.getMonthValue() == 3
-                        && x.getDayOfMonth() >= y.getDayOfMonth());
-    }
-
-    public static String nameGame(ArrayList<GameRecord> listOfSell) {
+    public static List<String> nameGame(List<GameRecord> listOfSell) {
         Set<String> names = listOfSell.stream()
                 .map(game -> game.getName())
                 .collect(Collectors.toSet());
-        LocalDate today = java.time.LocalDate.now();
-        String name = names.stream()
+        LocalDate date = LocalDate.now().minusMonths(3);
+        var namesGame = names.stream()
                 .filter(n -> listOfSell.stream()
-                        .filter(game -> game.getName() == n && recentlyDate(today, game.getDate()))
+                        .filter(game -> game.getName() == n && game.getDate().isAfter(date))
                         .count() == 0)
-                .findFirst()
-                .orElse("none");
-        return name;
+                .toList();
+        return namesGame;
     }
 
     public static void main(String[] args) {
-        int size = 7283;
-        ArrayList<GameRecord> list = createList(size);
+        final int size = 7283;
+        List<GameRecord> list = createList(size);
         bestSellingGenreGames(list).stream().forEach(game -> System.out.println(game));
-        LocalDate date = LocalDate.of(1, mostSuccessMonth(list), 1);
-        System.out.println(date.getMonth());
-        System.out.println(nameGame(list));
+        mostSuccessMonth(list).stream().forEach(month -> System.out.println(month));
+        nameGame(list).stream().forEach(game -> System.out.println(game));
     }
 }

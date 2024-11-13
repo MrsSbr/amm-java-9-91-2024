@@ -9,9 +9,10 @@ public class GameRecord {
     private LocalDate dateOfSell;
     private String name;
     private Genre genre;
-    private int price;
+    private Integer price;
 
-    public GameRecord() {};
+    public GameRecord() {
+    };
 
     public GameRecord(LocalDate data, String name, Genre genre, int price) {
         dateOfSell = data;
