@@ -2,10 +2,10 @@ package ru.vsu.amm.java;
 import java.util.Objects;
 public class Fruit extends  Plant implements Edible{
 
-    private String sweetness;
+    private int sweetness;
     private int cntFruit;
 
-    public Fruit(String name, String sweetness, int cntFruit){
+    public Fruit(String name, int sweetness, int cntFruit){
         super(name);
         this.sweetness = sweetness;
         this.cntFruit = cntFruit;

@@ -4,9 +4,11 @@ import java.util.Objects;
 
 public class Plant {
     private String name;
+
     public Plant(String name){
         this.name=name;
     }
+
     public String getName(){
         return name;
     }
@@ -21,7 +23,8 @@ public class Plant {
         if (obj == null)
             return false;
         else
-            return name == that.name;
+            return name.equals(that.name) && super.equals(obj);
+           // return name == that.name && super.equals(obj);
     }
 
     @Override
