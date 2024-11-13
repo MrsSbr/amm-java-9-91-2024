@@ -9,12 +9,6 @@ public class MilitaryHelicopter extends MilitaryAircraftImpl {
         this.numOfBullets = numOfBullets;
     }
     @Override
-    public String toString() {
-        return "Военный вертолёт\nНазвание " + name + "\nМаксимальная скорость: " + maxSpeed +
-                " м/c\nОбъём бака: " + fuelCapacity + " л\nКол-во пулемётов: " + numOfGuns +
-                "\nЗапас патронов: " + numOfBullets + '\n';
-    }
-    @Override
     public void attack(){
         if(numOfBullets < 100) {
             System.out.println("!!! Атака вертолёта невозможна. Недостаточно патронов !!!");
@@ -23,5 +17,11 @@ public class MilitaryHelicopter extends MilitaryAircraftImpl {
             numOfBullets -= 100;
             System.out.println("Атака вертолёта выполнена успешно. Запас патронов - " + numOfBullets);
         }
+    }
+    @Override
+    public String toString() {
+        return "Военный вертолёт\nНазвание " + name + "\nМаксимальная скорость: " + maxSpeed +
+                " м/c\nОбъём бака: " + fuelCapacity + " л\nКол-во пулемётов: " + numOfGuns +
+                "\nЗапас патронов: " + numOfBullets + '\n';
     }
 }

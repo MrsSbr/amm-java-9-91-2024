@@ -1,6 +1,9 @@
 package ru.vsu.amm.java;
 
 public class TaskAircraftController {
+    static boolean isPlane(MilitaryAircraftImpl m) {
+        return m instanceof MilitaryPlane;
+    }
     public static void main(String[] args) {
         MilitaryPlane p1 = new MilitaryPlane(
                 "Сухой Су-24 М",
@@ -64,8 +67,4 @@ public class TaskAircraftController {
         System.out.println("p1 plane? " + isPlane(p1));
         System.out.println("h1 plane? " + isPlane(h1));
     }
-    static boolean isPlane(MilitaryAircraftImpl m){
-        return m instanceof MilitaryPlane;
-    }
-
 }

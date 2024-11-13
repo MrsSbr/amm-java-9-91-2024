@@ -12,6 +12,7 @@ public abstract class MilitaryAircraftImpl implements MilitaryAircraft {
         this.maxSpeed = maxSpeed;
         this.fuelCapacity = fuelCapacity;
     }
+    public abstract void attack();
     @Override
     public void makeFlight(){
         int time = (new Random().nextInt(25)) + 5;
@@ -23,8 +24,12 @@ public abstract class MilitaryAircraftImpl implements MilitaryAircraft {
     }
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         MilitaryAircraftImpl that = (MilitaryAircraftImpl) o;
         return name.equals(that.name) &&  maxSpeed == that.maxSpeed &&  fuelCapacity == that.fuelCapacity;
     }
@@ -32,5 +37,4 @@ public abstract class MilitaryAircraftImpl implements MilitaryAircraft {
     public int hashCode() {
         return Objects.hash(name, maxSpeed, fuelCapacity);
     }
-    public abstract void attack();
 }
