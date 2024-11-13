@@ -1,24 +1,14 @@
 package ru.vsu.amm.java.main;
 
-import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Statistic {
-    public static ArrayList<GameRecord> createList(int size) {
-        ArrayList<GameRecord> list = new ArrayList<>(7283);
-        for (int i = 0; i < size; ++i) {
-            list.add(RandomGameGenerator.Generate());
-        }
-        return list;
-    }
-
     public static List<String> bestSellingGenreGames(List<GameRecord> listOfSell) {
         Set<Genre> genres = listOfSell.stream()
                 .map(game -> game.getGenre())
@@ -51,7 +41,7 @@ public class Statistic {
                         .mapToLong(x -> x.getPrice())
                         .sum())
                 .toList();
-        Long max = sales.stream().max(Comparator.comparingLong(Long::longValue)).get();
+        Long max = sales.stream().max(Comparator.comparingLong(Long::longValue)).orElse(0L);
         List<Month> successMonth = months.stream()
                 .filter(month -> (sales.get(month.getValue() - 1) == max && max != 0))
                 .toList();
@@ -69,13 +59,5 @@ public class Statistic {
                         .count() == 0)
                 .toList();
         return namesGame;
-    }
-
-    public static void main(String[] args) {
-        final int size = 7283;
-        List<GameRecord> list = createList(size);
-        bestSellingGenreGames(list).stream().forEach(game -> System.out.println(game));
-        mostSuccessMonth(list).stream().forEach(month -> System.out.println(month));
-        nameGame(list).stream().forEach(game -> System.out.println(game));
     }
 }
