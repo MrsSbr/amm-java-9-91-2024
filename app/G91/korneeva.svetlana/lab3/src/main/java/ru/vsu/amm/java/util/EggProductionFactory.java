@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 
-public final class EggProductionFactory {
+public class EggProductionFactory {
     private final static Random rnd = new Random();
 
     EggProductionFactory() {
