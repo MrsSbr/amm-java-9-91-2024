@@ -1,4 +1,7 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.service;
+
+import ru.vsu.amm.java.entity.Dish;
+import ru.vsu.amm.java.entity.Order;
 
 import java.util.*;
 import java.util.stream.Collectors;

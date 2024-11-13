@@ -1,5 +1,9 @@
 package ru.vsu.amm.java;
 
+import ru.vsu.amm.java.entity.Order;
+import ru.vsu.amm.java.service.RestaurantService;
+import ru.vsu.amm.java.util.DataGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

@@ -1,6 +1,10 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.vsu.amm.java.*;
+import ru.vsu.amm.java.entity.Dish;
+import ru.vsu.amm.java.entity.Order;
+import ru.vsu.amm.java.enums.Ingredients;
+import ru.vsu.amm.java.enums.TypeDish;
+import ru.vsu.amm.java.service.RestaurantService;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,6 +1,8 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.entity;
 
 import lombok.*;
+import ru.vsu.amm.java.enums.Ingredients;
+import ru.vsu.amm.java.enums.TypeDish;
 
 import java.util.ArrayList;
 

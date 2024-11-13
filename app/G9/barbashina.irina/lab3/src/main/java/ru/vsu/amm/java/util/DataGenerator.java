@@ -1,10 +1,13 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-import ru.vsu.amm.java.Order;
-import lombok.*;
+
+import ru.vsu.amm.java.entity.Dish;
+import ru.vsu.amm.java.entity.Order;
+import ru.vsu.amm.java.enums.Ingredients;
+import ru.vsu.amm.java.enums.TypeDish;
 
 public class DataGenerator {
 
