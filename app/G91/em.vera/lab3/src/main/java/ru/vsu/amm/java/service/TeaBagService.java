@@ -14,6 +14,7 @@ public class TeaBagService {
         if (teaBags == null || teaBags.isEmpty()) {
             return Collections.emptyList();
         }
+
         return teaBags.stream()
                 .collect(Collectors.groupingBy(TeaBag::name))
                 .entrySet().stream()
@@ -21,9 +22,8 @@ public class TeaBagService {
                     TeaType teaType = entry.getKey();
                     return entry.getValue().stream()
                             .collect(Collectors.groupingBy(TeaBag::year,
-                                            Collectors.summingInt(TeaBag::weight)
-                                    )
-                            )
+                                    Collectors.summingInt(TeaBag::weight)
+                            ))
                             .entrySet().stream()
                             .max(Map.Entry.comparingByValue())
                             .map(maxEntry -> new BestTeaYear(maxEntry.getKey(), teaType));
@@ -37,6 +37,7 @@ public class TeaBagService {
         if (teaBags == null || teaBags.isEmpty()) {
             return new ArrayList<>();
         }
+
         return teaBags.stream()
                 .filter(teaBag -> teaBag.year() == year)
                 .map(TeaBag::name)
@@ -48,12 +49,11 @@ public class TeaBagService {
         if (teaBags == null || teaBags.isEmpty()) {
             return Collections.emptyList();
         }
+
         return teaBags.stream()
                 .collect(Collectors.groupingBy(TeaBag::name,
-                                Collectors.maxBy(Comparator.comparingInt(TeaBag::weight)
-                                )
-                        )
-                )
+                        Collectors.maxBy(Comparator.comparingInt(TeaBag::weight))
+                ))
                 .entrySet().stream()
                 .filter(entry -> entry.getValue().isPresent())
                 .map(entry -> new HaviestTeaBag(entry.getValue().get().weight(), entry.getKey()))

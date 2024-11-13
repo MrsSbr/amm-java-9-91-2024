@@ -30,26 +30,26 @@ public class Main {
         TeaBagService.getTeaTypesInYear(teaBags, 2018).forEach(System.out::println);
 
         System.out.println();
-        System.out.println("The haviest tea bag for each type:");
-        List<HaviestTeaBag> haviestTeaBags = TeaBagService.getHaviestTeaBag(teaBags);
-        for (HaviestTeaBag haviestTeaBag : haviestTeaBags) {
-            System.out.println(haviestTeaBag.teaType() + ": " + haviestTeaBag.weight());
+        System.out.println("The heaviest tea bag for each type:");
+        List<HaviestTeaBag> heaviestTeaBags = TeaBagService.getHaviestTeaBag(teaBags);
+        for (HaviestTeaBag heaviestTeaBag : heaviestTeaBags) {
+            System.out.println(heaviestTeaBag.teaType() + ": " + heaviestTeaBag.weight());
         }
     }
 
     private static List<TeaBag> generateTeaBags(int count) {
-        List<TeaBag> teaBags = new ArrayList<TeaBag>();
+        List<TeaBag> teaBags = new ArrayList<>();
         TeaType[] types = TeaType.values();
+        Random rand = new Random();
 
         for (int i = 0; i < count; i++) {
-            Random rand = new Random();
             int year = rand.nextInt(MAX_YEAR - MIN_YEAR) + MIN_YEAR;
             int weight = MIN_WEIGHT + rand.nextInt(MAX_WEIGHT - MIN_WEIGHT);
             int typeIndex = rand.nextInt(types.length);
 
             teaBags.add(new TeaBag(types[typeIndex], year, weight));
         }
-        return teaBags;
 
+        return teaBags;
     }
 }

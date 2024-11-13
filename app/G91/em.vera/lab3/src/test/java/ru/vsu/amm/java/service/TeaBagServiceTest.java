@@ -13,18 +13,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TeaBagServiceTest {
-    private static final List<TeaBag> teaBags = getTeaBags();
 
+    private static final List<TeaBag> teaBags = getTeaBags();
 
     @Test
     void getBestTeaYears() {
         List<BestTeaYear> bestTeaYears = TeaBagService.getBestTeaYears(teaBags);
         assertEquals(TeaType.values().length, bestTeaYears.size());
 
-        assertTrue(bestTeaYears.stream().anyMatch(BestTeaYear -> BestTeaYear.teaType() == TeaType.GREEN && BestTeaYear.year() == 2018));
-        assertTrue(bestTeaYears.stream().anyMatch(BestTeaYear -> BestTeaYear.teaType() == TeaType.BLACK && BestTeaYear.year() == 2010));
-        assertTrue(bestTeaYears.stream().anyMatch(BestTeaYear -> BestTeaYear.teaType() == TeaType.WHITE && BestTeaYear.year() == 2015));
-        assertTrue(bestTeaYears.stream().anyMatch(BestTeaYear -> BestTeaYear.teaType() == TeaType.OOLONG && BestTeaYear.year() == 2023));
+        assertTrue(bestTeaYears.stream().anyMatch(bestTeaYear ->
+                bestTeaYear.teaType() == TeaType.GREEN && bestTeaYear.year() == 2018));
+        assertTrue(bestTeaYears.stream().anyMatch(bestTeaYear ->
+                bestTeaYear.teaType() == TeaType.BLACK && bestTeaYear.year() == 2010));
+        assertTrue(bestTeaYears.stream().anyMatch(bestTeaYear ->
+                bestTeaYear.teaType() == TeaType.WHITE && bestTeaYear.year() == 2015));
+        assertTrue(bestTeaYears.stream().anyMatch(bestTeaYear ->
+                bestTeaYear.teaType() == TeaType.OOLONG && bestTeaYear.year() == 2023));
     }
 
     @Test
@@ -62,10 +66,14 @@ class TeaBagServiceTest {
         List<HaviestTeaBag> haviestTeaBags = TeaBagService.getHaviestTeaBag(teaBags);
 
         assertEquals(TeaType.values().length, haviestTeaBags.size());
-        assertTrue(haviestTeaBags.stream().anyMatch(HaviestTeaBag -> HaviestTeaBag.teaType() == TeaType.GREEN && HaviestTeaBag.weight() == 22));
-        assertTrue(haviestTeaBags.stream().anyMatch(HaviestTeaBag -> HaviestTeaBag.teaType() == TeaType.BLACK && HaviestTeaBag.weight() == 21));
-        assertTrue(haviestTeaBags.stream().anyMatch(HaviestTeaBag -> HaviestTeaBag.teaType() == TeaType.WHITE && HaviestTeaBag.weight() == 70));
-        assertTrue(haviestTeaBags.stream().anyMatch(HaviestTeaBag -> HaviestTeaBag.teaType() == TeaType.OOLONG && HaviestTeaBag.weight() == 23));
+        assertTrue(haviestTeaBags.stream().anyMatch(haviestTeaBag ->
+                haviestTeaBag.teaType() == TeaType.GREEN && haviestTeaBag.weight() == 22));
+        assertTrue(haviestTeaBags.stream().anyMatch(haviestTeaBag ->
+                haviestTeaBag.teaType() == TeaType.BLACK && haviestTeaBag.weight() == 21));
+        assertTrue(haviestTeaBags.stream().anyMatch(haviestTeaBag ->
+                haviestTeaBag.teaType() == TeaType.WHITE && haviestTeaBag.weight() == 70));
+        assertTrue(haviestTeaBags.stream().anyMatch(haviestTeaBag ->
+                haviestTeaBag.teaType() == TeaType.OOLONG && haviestTeaBag.weight() == 23));
     }
 
     @Test
@@ -80,7 +88,6 @@ class TeaBagServiceTest {
         assertEquals(0, emptyHaviestTeaBags.size());
     }
 
-
     private static List<TeaBag> getTeaBags() {
         List<TeaBag> teaBags = new ArrayList<>();
         teaBags.add(new TeaBag(TeaType.GREEN, 2018, 22));
@@ -92,5 +99,4 @@ class TeaBagServiceTest {
         teaBags.add(new TeaBag(TeaType.WHITE, 2015, 70));
         return teaBags;
     }
-
 }
