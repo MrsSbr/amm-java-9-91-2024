@@ -1,8 +1,8 @@
-package ru.vsu.amm.java.Factories;
+package ru.vsu.amm.java.factories;
 
-import ru.vsu.amm.java.Enums.HttpResponseCode;
-import ru.vsu.amm.java.Entities.Log;
-import ru.vsu.amm.java.Enums.Resource;
+import ru.vsu.amm.java.entities.Log;
+import ru.vsu.amm.java.enums.HttpResponseCode;
+import ru.vsu.amm.java.enums.Resource;
 
 import java.time.LocalDate;
 import java.time.Month;
