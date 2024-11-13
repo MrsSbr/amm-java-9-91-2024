@@ -1,36 +1,36 @@
 package ru.vsu.amm.java.service;
 
+import ru.vsu.amm.java.entity.BestTeaYear;
+import ru.vsu.amm.java.entity.HaviestTeaBag;
 import ru.vsu.amm.java.entity.TeaBag;
 import ru.vsu.amm.java.enums.TeaType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TeaBagService {
 
-    public static int[] getBestYearsOfType(List<TeaBag> teaBags) {
+    public static List<BestTeaYear> getBestTeaYears(List<TeaBag> teaBags) {
         if (teaBags == null || teaBags.isEmpty()) {
-            return new int[]{};
+            return Collections.emptyList();
         }
-        TeaType[] types = TeaType.values();
-        return Arrays.stream(types)
-                .map(teaType -> teaBags.stream()
-                        .filter(TeaBag -> TeaBag.name().equals(teaType))
-                        .collect(Collectors.groupingBy(TeaBag::year,
-                                        Collectors.summingInt(TeaBag::weight)
-                                )
-                        )
-                        .entrySet().stream()
-                        .max(Map.Entry.comparingByValue())
-                        .get()
-                        .getKey()
-                )
-                .mapToInt(Integer::intValue)
-                .toArray();
-
+        return teaBags.stream()
+                .collect(Collectors.groupingBy(TeaBag::name))
+                .entrySet().stream()
+                .map(entry -> {
+                    TeaType teaType = entry.getKey();
+                    return entry.getValue().stream()
+                            .collect(Collectors.groupingBy(TeaBag::year,
+                                            Collectors.summingInt(TeaBag::weight)
+                                    )
+                            )
+                            .entrySet().stream()
+                            .max(Map.Entry.comparingByValue())
+                            .map(maxEntry -> new BestTeaYear(maxEntry.getKey(), teaType));
+                })
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
     }
 
     public static List<TeaType> getTeaTypesInYear(List<TeaBag> teaBags, int year) {
@@ -44,20 +44,20 @@ public class TeaBagService {
                 .toList();
     }
 
-    public static int[] getHaviestTeaBag(List<TeaBag> teaBags) {
+    public static List<HaviestTeaBag> getHaviestTeaBag(List<TeaBag> teaBags) {
         if (teaBags == null || teaBags.isEmpty()) {
-            return new int[]{};
+            return Collections.emptyList();
         }
-        TeaType[] types = TeaType.values();
-        return Arrays.stream(types)
-                .map(teaType -> teaBags.stream()
-                        .filter(TeaBag -> TeaBag.name().equals(teaType))
-                        .map(TeaBag::weight)
-                        .max(Integer::compareTo)
-                        .get()
+        return teaBags.stream()
+                .collect(Collectors.groupingBy(TeaBag::name,
+                                Collectors.maxBy(Comparator.comparingInt(TeaBag::weight)
+                                )
+                        )
                 )
-                .mapToInt(Integer::intValue)
-                .toArray();
+                .entrySet().stream()
+                .filter(entry -> entry.getValue().isPresent())
+                .map(entry -> new HaviestTeaBag(entry.getValue().get().weight(), entry.getKey()))
+                .toList();
     }
 
 }

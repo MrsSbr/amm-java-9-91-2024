@@ -1,6 +1,8 @@
 package ru.vsu.amm.java.service;
 
 import org.junit.jupiter.api.Test;
+import ru.vsu.amm.java.entity.BestTeaYear;
+import ru.vsu.amm.java.entity.HaviestTeaBag;
 import ru.vsu.amm.java.entity.TeaBag;
 import ru.vsu.amm.java.enums.TeaType;
 
@@ -8,32 +10,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TeaBagServiceTest {
     private static final List<TeaBag> teaBags = getTeaBags();
 
 
     @Test
-    void getBestYearsOfType() {
-        int[] bestYearsOfType = TeaBagService.getBestYearsOfType(teaBags);
-        assertEquals(TeaType.values().length, bestYearsOfType.length);
-        assertEquals(2018, bestYearsOfType[0]);
-        assertEquals(2010, bestYearsOfType[1]);
-        assertEquals(2023, bestYearsOfType[2]);
-        assertEquals(2015, bestYearsOfType[3]);
+    void getBestTeaYears() {
+        List<BestTeaYear> bestTeaYears = TeaBagService.getBestTeaYears(teaBags);
+        assertEquals(TeaType.values().length, bestTeaYears.size());
+
+        assertTrue(bestTeaYears.stream().anyMatch(BestTeaYear -> BestTeaYear.teaType() == TeaType.GREEN && BestTeaYear.year() == 2018));
+        assertTrue(bestTeaYears.stream().anyMatch(BestTeaYear -> BestTeaYear.teaType() == TeaType.BLACK && BestTeaYear.year() == 2010));
+        assertTrue(bestTeaYears.stream().anyMatch(BestTeaYear -> BestTeaYear.teaType() == TeaType.WHITE && BestTeaYear.year() == 2015));
+        assertTrue(bestTeaYears.stream().anyMatch(BestTeaYear -> BestTeaYear.teaType() == TeaType.OOLONG && BestTeaYear.year() == 2023));
     }
 
     @Test
-    void emtpyBestYearsOfType() {
-        int[] emptyBestYearsOfType = TeaBagService.getBestYearsOfType(new ArrayList<>());
-        assertEquals(0, emptyBestYearsOfType.length);
+    void emptyBestTeaYears() {
+        List<BestTeaYear> emptyBestTeaYears = TeaBagService.getBestTeaYears(new ArrayList<>());
+        assertEquals(0, emptyBestTeaYears.size());
     }
 
     @Test
-    void nullBestYearsOfType() {
-        int[] emptyBestYearsOfType = TeaBagService.getBestYearsOfType(null);
-        assertEquals(0, emptyBestYearsOfType.length);
+    void nullBestTeaYears() {
+        List<BestTeaYear> emptyBestTeaYears = TeaBagService.getBestTeaYears(null);
+        assertEquals(0, emptyBestTeaYears.size());
     }
+
     @Test
     void getTeaTypesInYear() {
         List<TeaType> teaTypes = TeaBagService.getTeaTypesInYear(teaBags, 2018);
@@ -41,7 +46,7 @@ class TeaBagServiceTest {
     }
 
     @Test
-    void emtpyTeaTypesInYear() {
+    void emptyTeaTypesInYear() {
         List<TeaType> emptyTeaTypes = TeaBagService.getTeaTypesInYear(new ArrayList<>(), 2018);
         assertEquals(new ArrayList<TeaType>(), emptyTeaTypes);
     }
@@ -54,26 +59,26 @@ class TeaBagServiceTest {
 
     @Test
     void getHaviestTeaBag() {
-        int[] haviestTeaBags = TeaBagService.getHaviestTeaBag(teaBags);
-        assertEquals(TeaType.values().length, haviestTeaBags.length);
-        assertEquals(22, haviestTeaBags[0]);
-        assertEquals(21, haviestTeaBags[1]);
-        assertEquals(23, haviestTeaBags[2]);
-        assertEquals(70, haviestTeaBags[3]);
+        List<HaviestTeaBag> haviestTeaBags = TeaBagService.getHaviestTeaBag(teaBags);
+
+        assertEquals(TeaType.values().length, haviestTeaBags.size());
+        assertTrue(haviestTeaBags.stream().anyMatch(HaviestTeaBag -> HaviestTeaBag.teaType() == TeaType.GREEN && HaviestTeaBag.weight() == 22));
+        assertTrue(haviestTeaBags.stream().anyMatch(HaviestTeaBag -> HaviestTeaBag.teaType() == TeaType.BLACK && HaviestTeaBag.weight() == 21));
+        assertTrue(haviestTeaBags.stream().anyMatch(HaviestTeaBag -> HaviestTeaBag.teaType() == TeaType.WHITE && HaviestTeaBag.weight() == 70));
+        assertTrue(haviestTeaBags.stream().anyMatch(HaviestTeaBag -> HaviestTeaBag.teaType() == TeaType.OOLONG && HaviestTeaBag.weight() == 23));
     }
 
     @Test
-    void emtpyHaviestTeaBag() {
-        int[] emptyHaviestTeaBags = TeaBagService.getHaviestTeaBag(new ArrayList<>());
-        assertEquals(0, emptyHaviestTeaBags.length);
+    void emptyHaviestTeaBag() {
+        List<HaviestTeaBag> emptyHaviestTeaBags = TeaBagService.getHaviestTeaBag(new ArrayList<>());
+        assertEquals(0, emptyHaviestTeaBags.size());
     }
 
     @Test
     void nullHaviestTeaBag() {
-        int[] emptyHaviestTeaBags = TeaBagService.getHaviestTeaBag(null);
-        assertEquals(0, emptyHaviestTeaBags.length);
+        List<HaviestTeaBag> emptyHaviestTeaBags = TeaBagService.getHaviestTeaBag(null);
+        assertEquals(0, emptyHaviestTeaBags.size());
     }
-
 
 
     private static List<TeaBag> getTeaBags() {

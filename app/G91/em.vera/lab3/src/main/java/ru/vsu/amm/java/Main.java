@@ -1,5 +1,7 @@
 package ru.vsu.amm.java;
 
+import ru.vsu.amm.java.entity.BestTeaYear;
+import ru.vsu.amm.java.entity.HaviestTeaBag;
 import ru.vsu.amm.java.entity.TeaBag;
 import ru.vsu.amm.java.enums.TeaType;
 import ru.vsu.amm.java.service.TeaBagService;
@@ -15,23 +17,23 @@ public class Main {
     private static final int MAX_WEIGHT = 500;
 
     public static void main(String[] args) {
-        List<TeaBag> TeaBags = generateTeaBags(10000);
+        List<TeaBag> teaBags = generateTeaBags(10000);
 
         System.out.println("The most productive year for each type:");
-        int[] bestYearsOfType = TeaBagService.getBestYearsOfType(TeaBags);
-        for (int i = 0; i < bestYearsOfType.length; i++) {
-            System.out.println(TeaType.values()[i] + ": " + bestYearsOfType[i]);
+        List<BestTeaYear> bestTeaYears = TeaBagService.getBestTeaYears(teaBags);
+        for (BestTeaYear bestTeaYear : bestTeaYears) {
+            System.out.println(bestTeaYear.teaType() + ": " + bestTeaYear.year());
         }
 
         System.out.println();
-        System.out.println("Tea types which were harvested in 2018:"); // строку можно и внутри функции написать
-        TeaBagService.getTeaTypesInYear(TeaBags, 2018).forEach(System.out::println);
+        System.out.println("Tea types which were harvested in 2018:");
+        TeaBagService.getTeaTypesInYear(teaBags, 2018).forEach(System.out::println);
 
         System.out.println();
         System.out.println("The haviest tea bag for each type:");
-        int[] haviestTeaBags = TeaBagService.getHaviestTeaBag(TeaBags);
-        for (int i = 0; i < haviestTeaBags.length; i++) {
-            System.out.println(TeaType.values()[i] + ": " + haviestTeaBags[i]);
+        List<HaviestTeaBag> haviestTeaBags = TeaBagService.getHaviestTeaBag(teaBags);
+        for (HaviestTeaBag haviestTeaBag : haviestTeaBags) {
+            System.out.println(haviestTeaBag.teaType() + ": " + haviestTeaBag.weight());
         }
     }
 
@@ -39,15 +41,11 @@ public class Main {
         List<TeaBag> teaBags = new ArrayList<TeaBag>();
         TeaType[] types = TeaType.values();
 
-        int year;
-        int weight;
-        int typeIndex;
-
         for (int i = 0; i < count; i++) {
             Random rand = new Random();
-            year = rand.nextInt(MAX_YEAR - MIN_YEAR) + MIN_YEAR;
-            weight = MIN_WEIGHT + rand.nextInt(MAX_WEIGHT - MIN_WEIGHT);
-            typeIndex = rand.nextInt(types.length);
+            int year = rand.nextInt(MAX_YEAR - MIN_YEAR) + MIN_YEAR;
+            int weight = MIN_WEIGHT + rand.nextInt(MAX_WEIGHT - MIN_WEIGHT);
+            int typeIndex = rand.nextInt(types.length);
 
             teaBags.add(new TeaBag(types[typeIndex], year, weight));
         }
