@@ -8,9 +8,11 @@ import java.util.Set;
 
 public class ComponentScanningServiceImpl implements ComponentScanningService {
 
+    private static final String packagePath = "ru.vsu.amm.java";
+
     @Override
     public Set<Class<?>> scanProject() {
-        Reflections reflections = new Reflections("ru.vsu.amm.java");
+        Reflections reflections = new Reflections(packagePath);
         Set<Class<?>> componentClasses = reflections.getTypesAnnotatedWith(Component.class);
         return componentClasses;
     }

@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.service.impl;
 
+import lombok.Getter;
 import ru.vsu.amm.java.annotation.Autowired;
 import ru.vsu.amm.java.annotation.Component;
 import ru.vsu.amm.java.service.FirstService;
@@ -15,6 +16,7 @@ public class FirstServiceImpl implements FirstService {
         log = Logger.getLogger(FirstServiceImpl.class.getName());
     }
 
+    @Getter
     @Autowired
     private SecondServiceImpl secondService;
 
