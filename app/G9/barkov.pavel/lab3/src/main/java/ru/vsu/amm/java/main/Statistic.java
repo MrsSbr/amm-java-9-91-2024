@@ -43,7 +43,7 @@ public class Statistic {
                 .toList();
         Long max = sales.stream().max(Comparator.comparingLong(Long::longValue)).orElse(0L);
         List<Month> successMonth = months.stream()
-                .filter(month -> (sales.get(month.getValue() - 1) == max && max != 0))
+                .filter(month -> (sales.get(month.getValue() - 1).equals(max) && max != 0))
                 .toList();
         return successMonth;
     }
