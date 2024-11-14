@@ -36,10 +36,10 @@ public class FlightTest {
 
         FlightProcessing.countPeopleByFlight(testRecords);
 
-        assertEquals("flight 1: 7 passengers" + System.lineSeparator() +
-                "flight 2: 7 passengers" + System.lineSeparator() +
-                "flight 3: 3 passengers",
-                outputStream.toString().trim() );
+        assertEquals("flight 1: 7 passengers" + System.lineSeparator()
+                        + "flight 2: 7 passengers" + System.lineSeparator()
+                        + "flight 3: 3 passengers",
+                        outputStream.toString().trim() );
     }
 
     @Test
@@ -62,7 +62,7 @@ public class FlightTest {
         FlightProcessing.countPeopleByFlight(testRecords);
 
         assertEquals("flight 1: 0 passengers" + System.lineSeparator(),
-                outputStream.toString().trim() );
+                        outputStream.toString().trim() );
     }
 
     @Test
@@ -112,7 +112,7 @@ public class FlightTest {
         flight.removeRecordByIndex(0);
         assertTrue(flight.getRecords().isEmpty());
 
-        assertThrows(IndexOutOfBoundsException.class, ()->flight.removeRecordByIndex(25));
+        assertThrows(IndexOutOfBoundsException.class, () -> flight.removeRecordByIndex(25));
     }
 
     @Test
