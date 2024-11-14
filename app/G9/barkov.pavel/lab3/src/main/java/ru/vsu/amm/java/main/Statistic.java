@@ -54,8 +54,8 @@ public class Statistic {
                 .collect(Collectors.toSet());
         LocalDate date = LocalDate.now().minusMonths(3);
         var namesGame = names.stream()
-                .filter(n -> listOfSell.stream()
-                        .filter(game -> game.getName() == n && game.getDate().isAfter(date))
+                .filter(name -> listOfSell.stream()
+                        .filter(game -> game.getName() == name && game.getDate().isAfter(date))
                         .count() == 0)
                 .toList();
         return namesGame;
