@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Flight {
-    private List<FamilyRecord> records;
+    private final List<FamilyRecord> records;
 
     public Flight(int recNum) {
         records = new ArrayList<>();
