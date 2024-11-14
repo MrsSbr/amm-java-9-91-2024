@@ -67,7 +67,7 @@ public class TheatreTest {
     void testFindMostPopularPerfomanceNull() {
         TheatreService theatreService = new TheatreService();
         List<Integer> mostPopularPerfomances = theatreService.getMostPopularPerfomance(null);
-        assertTrue(mostPopularPerfomances.isEmpty());
+        assertNull(mostPopularPerfomances);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class TheatreTest {
     void testGetPurchasedPerfomancesNull() {
         TheatreService theatreService = new TheatreService();
         List<Integer> purchasedPerfomances = theatreService.getPurchasedPerfomances(null);
-        assertTrue(purchasedPerfomances.isEmpty());
+        assertNull(purchasedPerfomances);
     }
 
     @Test

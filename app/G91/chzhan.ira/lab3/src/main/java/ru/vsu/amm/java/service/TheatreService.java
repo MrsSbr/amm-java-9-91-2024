@@ -25,6 +25,9 @@ public class TheatreService {
     }
 
     public List<Integer> getMostPopularPerfomance(List<Integer> ticketCounts) {
+        if (ticketCounts == null) {
+            return null;
+        }
         Optional<Integer> maxTickets = ticketCounts.stream().max(Integer::compareTo);
         if (maxTickets.isPresent()) {
             return ticketCounts.stream().filter(count -> count == maxTickets.get()).map(count -> ticketCounts.indexOf(count) + 1).toList();
@@ -34,6 +37,9 @@ public class TheatreService {
     }
 
     public List<Integer> getPurchasedPerfomances(List<Student> students) {
+        if (students == null) {
+            return null;
+        }
         return students.stream().map(Student::getPerfomanceChoices).flatMap(List::stream)
                 .map(Perfomance::getNumber).distinct().sorted().collect(Collectors.toList());
     }
