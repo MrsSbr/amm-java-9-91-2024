@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EggProductionTest {
+public final class EggProductionTest {
 
     @Test
     public void testFindBirdTypesWithHighProduction() {
