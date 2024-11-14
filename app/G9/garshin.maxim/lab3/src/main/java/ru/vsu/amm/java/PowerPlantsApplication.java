@@ -20,7 +20,6 @@ public class PowerPlantsApplication {
 
 
         System.out.println("\nAverage power for each type of power plant in the last 3 months");
-        PowerPlantService.getAveragePowerByTypeLastThreeMonthsVoid(records);
         PowerPlantService.getAveragePowerByTypeLastThreeMonths(records)
                 .forEach((type, power) -> System.out.println(type + " " + power));
 

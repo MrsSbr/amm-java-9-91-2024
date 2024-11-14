@@ -18,7 +18,7 @@ public class PowerPlantTest {
         List<PowerPlant> powerPlants = List.of(
                 new PowerPlant(LocalDate.now().minusDays(10), Type.SOLAR, 60),
                 new PowerPlant(LocalDate.now().minusDays(5), Type.WIND, 70),
-                new PowerPlant(LocalDate.now().minusDays(40), Type.SOLAR, 30)
+                new PowerPlant(LocalDate.now().minusDays(40), Type.NUCLEAR, 30)
         );
 
         Set<Type> result = PowerPlantService.getTypesWithPowerOver50LastMonth(powerPlants);
