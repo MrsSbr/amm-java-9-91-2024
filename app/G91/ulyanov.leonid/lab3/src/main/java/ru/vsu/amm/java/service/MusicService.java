@@ -13,6 +13,9 @@ import java.util.stream.IntStream;
 public class MusicService {
     public static int getAmountOfRecentStreams(Map<String, List<SongPlayback>> songs,
                                                String title, String artist, Genre genre) {
+        if (songs == null) {
+            return 0;
+        }
         var firstDayOfMonth = LocalDate.now().withDayOfMonth(1);
         return songs.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
@@ -29,6 +32,9 @@ public class MusicService {
     }
 
     public static Map<String, Set<String>> getUserStreamingData(Map<String, List<SongPlayback>> songs) {
+        if (songs == null) {
+            return null;
+        }
         return songs.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
                         entry -> entry.getValue().stream()
@@ -39,6 +45,9 @@ public class MusicService {
     }
 
     public static Map<String, Set<String>> getUserStreamingDataLeastPopular(Map<String, List<SongPlayback>> songs) {
+        if (songs == null) {
+            return null;
+        }
         var date = LocalDate.now().withMonth(LocalDate.now().getMonthValue() - 2);
         var recentSongsMap = songs.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
@@ -62,6 +71,9 @@ public class MusicService {
     }
 
     public static Map<String, String> getUserStreamingDataMostFavorite(Map<String, List<SongPlayback>> songs) {
+        if (songs == null) {
+            return null;
+        }
         return songs.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
                         entry -> entry.getValue().stream()

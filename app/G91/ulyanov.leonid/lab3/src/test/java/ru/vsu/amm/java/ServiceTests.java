@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ServiceTests {
     private Map<String, List<SongPlayback>> songPlaybacks;
@@ -32,9 +33,24 @@ public class ServiceTests {
     }
 
     @Test
+    public void amountOfRecentStreamsTestNull() {
+        int amount = MusicService.getAmountOfRecentStreams(null,
+                "title2", "artist2", Genre.POP);
+        assertEquals(0, amount);
+    }
+
+    @Test
+    public void amountOfRecentStreamsTestEmpty() {
+        int amount = MusicService.getAmountOfRecentStreams(new HashMap<>(),
+                "title2", "artist2", Genre.POP);
+        assertEquals(0, amount);
+    }
+
+    @Test
     public void userStreamingDataTest() {
         Map<String, Set<String>> streamingData = MusicService.getUserStreamingData(songPlaybacks);
-        assertEquals(new HashMap<String, Set<String>>() {{
+        assertEquals(new HashMap<String, Set<String>>() {
+            {
                 put("user1", new HashSet<>() {{
                     add("title1 by artist1, CLASSICAL");
                     add("title2 by artist2, POP");
@@ -52,9 +68,20 @@ public class ServiceTests {
     }
 
     @Test
+    public void userStreamingDataTestNull() {
+        assertNull(MusicService.getUserStreamingData(null));
+    }
+
+    @Test
+    public void userStreamingDataTestEmpty() {
+        assertEquals(new HashMap<>(), MusicService.getUserStreamingData(new HashMap<>()));
+    }
+
+    @Test
     public void userStreamingDataLeastPopularTest() {
         Map<String, Set<String>> streamingData = MusicService.getUserStreamingDataLeastPopular(songPlaybacks);
-        assertEquals(new HashMap<String, Set<String>>() {{
+        assertEquals(new HashMap<String, Set<String>>() {
+            {
                 put("user1", new HashSet<>() {{
                     add("title1 by artist1, CLASSICAL");
                 }});
@@ -70,9 +97,20 @@ public class ServiceTests {
     }
 
     @Test
+    public void userStreamingDataLeastPopularTestNull() {
+        assertNull(MusicService.getUserStreamingDataLeastPopular(null));
+    }
+
+    @Test
+    public void userStreamingDataLeastPopularTestEmpty() {
+        assertEquals(new HashMap<>(), MusicService.getUserStreamingDataLeastPopular(new HashMap<>()));
+    }
+
+    @Test
     public void userStreamingDataMostFavoriteTest() {
         Map<String, String> streamingData = MusicService.getUserStreamingDataMostFavorite(songPlaybacks);
-        assertEquals(new HashMap<String, String>() {{
+        assertEquals(new HashMap<String, String>() {
+            {
                 put("user1", "title1 by artist1, CLASSICAL");
                 put("user2", "title3 by artist3, INDIE");
                 put("user3", "title5 by artist5, ROCK");
@@ -80,8 +118,19 @@ public class ServiceTests {
         }, streamingData);
     }
 
+    @Test
+    public void userStreamingDataMostFavoriteTestNull() {
+        assertNull(MusicService.getUserStreamingDataMostFavorite(null));
+    }
+
+    @Test
+    public void userStreamingDataMostFavoriteTestEmpty() {
+        assertEquals(new HashMap<>(), MusicService.getUserStreamingDataMostFavorite(new HashMap<>()));
+    }
+
     public static Map<String, List<SongPlayback>> generateStreamingData() {
-        return new HashMap<>() {{
+        return new HashMap<>() {
+            {
                 put("user1", new ArrayList<>(List.of(
                         new SongPlayback("title1", "artist1",
                                 Genre.CLASSICAL, LocalDate.of(2020, 9, 15)),
