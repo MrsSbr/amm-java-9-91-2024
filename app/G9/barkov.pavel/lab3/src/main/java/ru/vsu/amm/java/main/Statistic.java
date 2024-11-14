@@ -55,7 +55,7 @@ public class Statistic {
         LocalDate date = LocalDate.now().minusMonths(3);
         var namesGame = names.stream()
                 .filter(name -> listOfSell.stream()
-                        .filter(game -> game.getName() == name && game.getDate().isAfter(date))
+                        .filter(game -> game.getName().equals(name) && game.getDate().isAfter(date))
                         .count() == 0)
                 .toList();
         return namesGame;
