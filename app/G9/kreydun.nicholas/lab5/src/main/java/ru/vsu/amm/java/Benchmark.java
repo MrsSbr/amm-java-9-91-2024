@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Benchmark {
 
-    private static final Map<Object, Stat> stats = new HashMap<>();
+    public static final Map<Object, Stat> stats = new HashMap<>();
 
     public static <T> T track(T target) {
         return (T) Proxy.newProxyInstance(
@@ -45,3 +45,4 @@ public class Benchmark {
             return new Stat(methodTimes);
         }
     }
+}
