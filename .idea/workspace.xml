@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f4028a6d-ed3c-47f5-96f0-d6b59fbf8f95" name="Changes" comment="Safonova lab2">
+      <change beforePath="$PROJECT_DIR$/app/G9/safonova.nastia/lab2/src/main/java/ru/vsu/amm/java/Edible.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/G9/safonova.nastia/lab2/src/main/java/ru/vsu/amm/java/Edible.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/G9/safonova.nastia/lab2/src/main/java/ru/vsu/amm/java/Flower.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/G9/safonova.nastia/lab2/src/main/java/ru/vsu/amm/java/Flower.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/G9/safonova.nastia/lab2/src/main/java/ru/vsu/amm/java/Fruit.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/G9/safonova.nastia/lab2/src/main/java/ru/vsu/amm/java/Fruit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/G9/safonova.nastia/lab2/src/main/java/ru/vsu/amm/java/Garden.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/G9/safonova.nastia/lab2/src/main/java/ru/vsu/amm/java/Garden.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="-amm-java-9-91-2024" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="safonova_nastia_lab2" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Amalteyia&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/MrsSbr/amm-java-9-91-2024.git&quot;,
+    &quot;accountId&quot;: &quot;3d5f043f-6de4-4a09-bd14-cbac2b69ee7a&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2mLEkFEohJWEwepFuTgEcmSV3rL" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Debug",
+    "Gradle.amm-java-9-91-2024:app:G9:safonova.nastia:lab0 [:safonova.nastia-lab0:ru.vsu.amm.java.Main.main()].executor": "Run",
+    "Gradle.amm-java-9-91-2024:app:G9:safonova.nastia:lab1 [:safonova.nastia-lab1:ru.vsu.amm.java.Main.main()].executor": "Run",
+    "Gradle.amm-java-9-91-2024:app:G9:safonova.nastia:lab2 [:safonova.nastia-lab2:ru.vsu.amm.java.Garden.main()].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "safonova__nastia__lab2__2",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Tesla/Desktop/amm-java-9-91-2024/app/G9/safonova.nastia",
+    "run.code.analysis.last.selected.profile": "pProject Default"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Tesla\Desktop\amm-java-9-91-2024\app\G9\safonova.nastia" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f4028a6d-ed3c-47f5-96f0-d6b59fbf8f95" name="Changes" comment="" />
+      <created>1726847596727</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1726847596727</updated>
+    </task>
+    <task id="LOCAL-00001" summary="lab0 final version">
+      <option name="closed" value="true" />
+      <created>1726848109973</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1726848109973</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Сафонова Настя, переделала 0 лабу">
+      <option name="closed" value="true" />
+      <created>1727252409779</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1727252409779</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Сафонова Настя, cделала 1 лабу">
+      <option name="closed" value="true" />
+      <created>1727638719466</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1727638719467</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Сафонова Настя, исправила 1 лабу">
+      <option name="closed" value="true" />
+      <created>1728328356617</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1728328356617</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Сафонова Настя, исправила  1 лабу">
+      <option name="closed" value="true" />
+      <created>1728330415510</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1728330415510</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Safonova lab2">
+      <option name="closed" value="true" />
+      <created>1730241458668</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1730241458668</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Safonova lab2">
+      <option name="closed" value="true" />
+      <created>1730241631417</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1730241631417</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Safonova lab2">
+      <option name="closed" value="true" />
+      <created>1731508834209</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1731508834209</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="safonova_nastia_lab2" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="lab0 final version" />
+    <MESSAGE value="Сафонова Настя, переделала 0 лабу" />
+    <MESSAGE value="Сафонова Настя, cделала 1 лабу" />
+    <MESSAGE value="Сафонова Настя, исправила 1 лабу" />
+    <MESSAGE value="Сафонова Настя, исправила  1 лабу" />
+    <MESSAGE value="Safonova lab2_1" />
+    <MESSAGE value="Safonova lab2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Safonova lab2" />
+  </component>
+</project>

@@ -36,5 +36,4 @@ public class Fruit extends  Plant implements Edible{
     public int hashCode() {
         return Objects.hash(super.hashCode(), sweetness, cntFruit);
     }
-
 }

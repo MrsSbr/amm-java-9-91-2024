@@ -21,7 +21,5 @@ public class Garden {
 
         Rose.grow();
         Apple.grow();
-
-
     }
 }

@@ -32,5 +32,4 @@ public class Flower extends  Plant implements Edible{
     public int hashCode() {
         return Objects.hash(super.hashCode(), petalCount);
     }
-
 }

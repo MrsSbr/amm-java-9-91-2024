@@ -1,0 +1,18 @@
+Index: app/G9/safonova.nastia/lab0/src/main/java/ru/vsu/amm/java/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.vsu.amm.java;\r\nimport java.time.LocalDate;\r\n\r\npublic class Main {\r\n  public static void main(String[] args) {\r\n    System.out.println(\"What a wonderful day: \" + LocalDate.now() + \" !\");\r\n  }\r\n}
+===================================================================
+diff --git a/app/G9/safonova.nastia/lab0/src/main/java/ru/vsu/amm/java/Main.java b/app/G9/safonova.nastia/lab0/src/main/java/ru/vsu/amm/java/Main.java
+--- a/app/G9/safonova.nastia/lab0/src/main/java/ru/vsu/amm/java/Main.java	(revision 9a9da3b29677c3bdb9dcb82973f2fea1e0f784d1)
++++ b/app/G9/safonova.nastia/lab0/src/main/java/ru/vsu/amm/java/Main.java	(date 1726848334180)
+@@ -1,7 +1,8 @@
+ package ru.vsu.amm.java;
+ import java.time.LocalDate;
+ 
+-public class Main {
++public class Main
++{
+   public static void main(String[] args) {
+     System.out.println("What a wonderful day: " + LocalDate.now() + " !");
+   }
