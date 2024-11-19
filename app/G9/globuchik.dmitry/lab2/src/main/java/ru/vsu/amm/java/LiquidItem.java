@@ -1,3 +1,5 @@
+package ru.vsu.amm.java;
+
 import java.util.Objects;
 
 public class LiquidItem extends ItemImplementation {

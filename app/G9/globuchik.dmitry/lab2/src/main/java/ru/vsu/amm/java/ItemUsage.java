@@ -1,3 +1,5 @@
+package ru.vsu.amm.java;
+
 public class ItemUsage {
     public static void main(String[] args) {
 
