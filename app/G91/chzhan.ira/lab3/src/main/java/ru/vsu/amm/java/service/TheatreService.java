@@ -32,7 +32,7 @@ public class TheatreService {
         if (maxTickets.isPresent()) {
             return ticketCounts.stream().filter(count -> count == maxTickets.get()).map(count -> ticketCounts.indexOf(count) + 1).toList();
         } else {
-            return new ArrayList<>();
+            return null;
         }
     }
 
@@ -41,6 +41,6 @@ public class TheatreService {
             return null;
         }
         return students.stream().map(Student::getPerfomanceChoices).flatMap(List::stream)
-                .map(Perfomance::getNumber).distinct().sorted().collect(Collectors.toList());
+                .map(Perfomance::getNumber).distinct().sorted().toList();
     }
 }
