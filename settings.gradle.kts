@@ -58,8 +58,8 @@ student("gonnykh.alexander", G91) {
 
 student("simonov.ivan", G91) {
     lab(0)
-    lab(1)
     lab(2)
+    lab(1)
     lab(3)
 }
 
@@ -213,6 +213,7 @@ student("kreydun.nicholas", G9) {
     lab(4)
 }
 
+
 student("enokyan.gera", G91) {
     lab(0)
     lab(1)
@@ -221,14 +222,30 @@ student("enokyan.gera", G91) {
     lab(4)
 }
 
+student("kavunov.victor", G9) {
+    lab(0)
+}
+
+student("tupikova.viktoria", G9) {
+    lab(0)
+}
+student("tottskiy.stepan", G9) {
+    lab(0)
+    lab(1)
+}
 student("globuchik.dmitry", G9) {
     lab(0)
 }
 
-
 student("nikitina.elizaveta", G9) {
     lab(0)
 }
+
+student("globuchik.dmitry", G9) {
+    lab(0)
+    lab(1)
+}
+
 // DSL для подпроектов [Не трогать]
 includeProject("template-lab0", file("template/lab0"))
 
