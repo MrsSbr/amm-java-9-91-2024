@@ -13,6 +13,7 @@ public abstract class ItemImplementation implements Item {
         this.quantity = quantity;
     }
 
+
     public ItemImplementation() {}
 
     public String getName() {

@@ -23,6 +23,7 @@ public class ItemUsage {
         Table.perform();
         System.out.print(Table);
 
+
         ItemImplementation Sofa = new Furniture(
                 "Кресло босс",
                 65600,

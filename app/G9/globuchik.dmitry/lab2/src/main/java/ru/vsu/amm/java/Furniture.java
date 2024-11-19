@@ -7,6 +7,7 @@ public class Furniture extends ItemImplementation {
     private String color;
     private String type;
 
+
     public Furniture(String name,
                      int price,
                      int quantity,
