@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 public class GladiatorsStatsService {
 
     public static List<Animal> getDeadliestAnimal(List<BattleRecord> battleRecords) {
+        if (battleRecords == null || battleRecords.isEmpty()) {
+            return List.of();
+        }
 
         Map<Animal, Long> animalWins = battleRecords.stream()
                 .filter(elem -> !elem.gladiatorWon() && !elem.gladiatorPardoned())
@@ -20,18 +23,25 @@ public class GladiatorsStatsService {
                 .max(Long::compareTo)
                 .orElse(0L);
 
+        if (maxWins.equals(0L)) {
+            return List.of();
+        }
+
         return animalWins.entrySet().stream()
                 .filter(entry -> entry.getValue().equals(maxWins))
                 .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<String> getGladiatorsNotFromLudus(List<BattleRecord> battleRecords) {
+        if (battleRecords == null || battleRecords.isEmpty()) {
+            return List.of();
+        }
+
         return battleRecords.stream().filter(elem -> elem.ludus() == null || elem.ludus().isBlank())
                 .sorted(Comparator.comparing(BattleRecord::date))
                 .collect(Collectors.groupingBy(BattleRecord::name))
-                .entrySet().stream().filter(entry ->
-                {
+                .entrySet().stream().filter(entry -> {
                     long survivalCount = entry.getValue().stream()
                             .filter(battle -> battle.gladiatorWon()
                                     || battle.gladiatorPardoned()).count();
@@ -42,11 +52,15 @@ public class GladiatorsStatsService {
                             && !lastRecord.gladiatorPardoned())
                             && survivalCount >= 3;
 
-                }).map(Map.Entry::getKey).collect(Collectors.toList());
+                }).map(Map.Entry::getKey).toList();
 
     }
 
     public static List<String> getBestLudus(List<BattleRecord> battleRecords) {
+        if (battleRecords == null || battleRecords.isEmpty()) {
+            return List.of();
+        }
+
         Map<String, Long> records = battleRecords.stream()
                 .filter(elem -> elem.ludus() != null && !elem.ludus().isBlank())
                 .filter(BattleRecord::gladiatorWon)
@@ -56,9 +70,13 @@ public class GladiatorsStatsService {
                 .max(Long::compareTo)
                 .orElse(0L);
 
+        if (maxWins.equals(0L)) {
+            return List.of();
+        }
+
         return records.entrySet().stream()
                 .filter(entry -> entry.getValue().equals(maxWins))
                 .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

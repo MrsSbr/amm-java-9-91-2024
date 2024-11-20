@@ -13,6 +13,33 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GladiatorsStatsServiceTest {
+    private static final BattleRecord BATTLE_ALEX_BULL_WIN =
+            new BattleRecord(LocalDate.of(123, 12, 2), "Alex", "Zxc", Animal.Bull, true, true);
+
+    private static final BattleRecord BATTLE_ALEX_LION_WIN =
+            new BattleRecord(LocalDate.of(123, 12, 2), "Alex", "Zxc", Animal.Lion, true, true);
+
+    private static final BattleRecord BATTLE_ALEX_WOLF_LOSE =
+            new BattleRecord(LocalDate.of(123, 12, 1), "Alex", "Zxc", Animal.Wolf, false, false);
+
+    private static final BattleRecord BATTLE_ALEX_WOLF_WIN_NOT_LUDUS =
+            new BattleRecord(LocalDate.of(123, 12, 1), "Alex", null, Animal.Wolf, true, false);
+
+    private static final BattleRecord BATTLE_ALEX_BULL_LOSE = new BattleRecord(
+            LocalDate.of(123, 12, 2), "Alex", "Zxc", Animal.Bull, false, false);
+
+    private static final BattleRecord BATTLE_ALEX_LION_LOSE_NO_LUDUS = new BattleRecord(
+            LocalDate.of(123, 12, 6), "Alex", null, Animal.Lion, false, false);
+
+    private static final BattleRecord BATTLE_ANTON_LION_LOSE_NO_LUDUS = new BattleRecord(
+            LocalDate.of(123, 12, 2), "Anton", null, Animal.Lion, false, false);
+
+    private static final BattleRecord BATTLE_ANTON_LION_WIN_NO_LUDUS = new BattleRecord(
+            LocalDate.of(123, 12, 2), "Anton", null, Animal.Lion, true, false);
+
+    private static final BattleRecord BATTLE_ANTON_LION_WIN = new BattleRecord(
+            LocalDate.of(123, 12, 2), "Anton", "Aboba", Animal.Lion, true, false);
+
     private List<BattleRecord> battleRecords;
 
     @BeforeEach
@@ -23,11 +50,8 @@ class GladiatorsStatsServiceTest {
     @Test
     @DisplayName("get deadliest animal (empty)")
     void getDeadliestAnimalEmpty() {
-        battleRecords.add(new BattleRecord(LocalDate.of(123, 12, 2),
-                "Alex", "Zxc", Animal.Bull, true, true));
-
-        battleRecords.add(new BattleRecord(LocalDate.of(123, 12, 2),
-                "Alex", "Zxc", Animal.Lion, true, true));
+        battleRecords.add(BATTLE_ALEX_BULL_WIN);
+        battleRecords.add(BATTLE_ALEX_LION_WIN);
 
         List<Animal> expected = List.of();
         List<Animal> received = GladiatorsStatsService.getDeadliestAnimal(battleRecords);
@@ -37,16 +61,8 @@ class GladiatorsStatsServiceTest {
     @Test
     @DisplayName("get deadliest animal (one)")
     void getDeadliestAnimalOne() {
-        for (int i = 0; i < 4; ++i) {
-            battleRecords.add(new BattleRecord(LocalDate.of(123, 12, i + 1),
-                    "Alex", "Zxc", Animal.Wolf, false, false));
-        }
-
-        battleRecords.add(new BattleRecord(LocalDate.of(123, 12, 2),
-                "Alex", "Zxc", Animal.Bull, false, false));
-
-        battleRecords.add(new BattleRecord(LocalDate.of(123, 12, 2),
-                "Alex", "Zxc", Animal.Lion, true, false));
+        battleRecords.add(BATTLE_ALEX_WOLF_LOSE);
+        battleRecords.add(BATTLE_ANTON_LION_WIN);
 
         List<Animal> expected = List.of(Animal.Wolf);
         List<Animal> received = GladiatorsStatsService.getDeadliestAnimal(battleRecords);
@@ -56,18 +72,11 @@ class GladiatorsStatsServiceTest {
     @Test
     @DisplayName("get deadliest animal (many)")
     void getDeadliestAnimalMany() {
-        for (int i = 0; i < 4; ++i) {
-            battleRecords.add(new BattleRecord(LocalDate.of(123, 12, i + 1),
-                    "Alex", "Zxc", Animal.Wolf, false, false));
+        battleRecords.add(BATTLE_ALEX_WOLF_LOSE);
+        battleRecords.add(BATTLE_ALEX_BULL_LOSE);
+        battleRecords.add(BATTLE_ALEX_LION_WIN);
 
-            battleRecords.add(new BattleRecord(LocalDate.of(123, 12, i + 1),
-                    "Alex", "Zxc", Animal.Bull, false, false));
-        }
-
-        battleRecords.add(new BattleRecord(LocalDate.of(123, 12, 2),
-                "Alex", "Zxc", Animal.Lion, true, false));
-
-        List<Animal> expected = List.of(Animal.Bull, Animal.Wolf);
+        List<Animal> expected = List.of(Animal.Wolf, Animal.Bull);
         List<Animal> received = GladiatorsStatsService.getDeadliestAnimal(battleRecords);
         assertEquals(expected, received);
     }
@@ -75,13 +84,8 @@ class GladiatorsStatsServiceTest {
     @Test
     @DisplayName("get gladiators not from ludus (empty)")
     void getGladiatorsNotFromLudusEmpty() {
-        for (int i = 0; i < 5; ++i) {
-            battleRecords.add(new BattleRecord(LocalDate.of(123, 12, i + 1),
-                    "Alex", null, Animal.Wolf, true, false));
-        }
-
-        battleRecords.add(new BattleRecord(LocalDate.of(123, 12, 2),
-                "Anton", "Zxc", Animal.Lion, false, false));
+        battleRecords.add(BATTLE_ALEX_WOLF_WIN_NOT_LUDUS);
+        battleRecords.add(BATTLE_ALEX_BULL_WIN);
 
         List<String> expected = new ArrayList<>();
         List<String> received = GladiatorsStatsService.getGladiatorsNotFromLudus(battleRecords);
@@ -91,16 +95,12 @@ class GladiatorsStatsServiceTest {
     @Test
     @DisplayName("get gladiators not from ludus (one)")
     void getGladiatorsNotFromLudus() {
-
-        for (int i = 0; i < 4; ++i) {
-            battleRecords.add(new BattleRecord(LocalDate.of(123, 12, i + 1),
-                    "Alex", null, Animal.Wolf, true, false));
+        for (int i = 0; i < 3; ++i) {
+            battleRecords.add(BATTLE_ALEX_WOLF_WIN_NOT_LUDUS);
         }
 
-        battleRecords.add(new BattleRecord(LocalDate.of(123, 12, 6),
-                "Alex", null, Animal.Lion, false, false));
-        battleRecords.add(new BattleRecord(LocalDate.of(123, 12, 2),
-                "Anton", "Zxc", Animal.Lion, false, false));
+        battleRecords.add(BATTLE_ALEX_LION_LOSE_NO_LUDUS);
+        battleRecords.add(BATTLE_ANTON_LION_LOSE_NO_LUDUS);
 
         List<String> expected = List.of("Alex");
         List<String> received = GladiatorsStatsService.getGladiatorsNotFromLudus(battleRecords);
@@ -110,20 +110,13 @@ class GladiatorsStatsServiceTest {
     @Test
     @DisplayName("get gladiators not from ludus (many)")
     void getGladiatorsNotFromLudusMany() {
-        for (int i = 0; i < 4; ++i) {
-            battleRecords.add(new BattleRecord(LocalDate.of(123, 12, i + 1),
-                    "Alex", null, Animal.Wolf, true, false));
-
-            battleRecords.add(new BattleRecord(LocalDate.of(123, 12, i + 1),
-                    "Anton", null, Animal.Tiger, true, false));
+        for (int i = 0; i < 3; ++i) {
+            battleRecords.add(BATTLE_ALEX_WOLF_WIN_NOT_LUDUS);
+            battleRecords.add(BATTLE_ANTON_LION_WIN_NO_LUDUS);
         }
 
-        battleRecords.add(new BattleRecord(LocalDate.of(123, 12, 12),
-                "Alex", null, Animal.Wolf, false, false));
-
-        battleRecords.add(new BattleRecord(LocalDate.of(123, 12, 12),
-                "Anton", null, Animal.Tiger, false, false));
-
+        battleRecords.add(BATTLE_ALEX_LION_LOSE_NO_LUDUS);
+        battleRecords.add(BATTLE_ANTON_LION_LOSE_NO_LUDUS);
         List<String> expected = List.of("Anton", "Alex");
         List<String> received = GladiatorsStatsService.getGladiatorsNotFromLudus(battleRecords);
         assertEquals(expected, received);
@@ -132,16 +125,8 @@ class GladiatorsStatsServiceTest {
     @Test
     @DisplayName("get best ludus (empty)")
     void getBestLudusEmpty() {
-        for (int i = 0; i < 4; ++i) {
-            battleRecords.add(new BattleRecord(LocalDate.of(123, 12, i + 1),
-                    "Alex", "Zxc", Animal.Wolf, false, false));
-
-            battleRecords.add(new BattleRecord(LocalDate.of(123, 12, i + 1),
-                    "Anton", null, Animal.Tiger, false, false));
-        }
-
-        battleRecords.add(new BattleRecord(LocalDate.of(123, 12, 12),
-                "Alex", "Aboba", Animal.Wolf, false, false));
+        battleRecords.add(BATTLE_ALEX_WOLF_WIN_NOT_LUDUS);
+        battleRecords.add(BATTLE_ANTON_LION_WIN_NO_LUDUS);
 
         List<String> expected = new ArrayList<>();
         List<String> received = GladiatorsStatsService.getBestLudus(battleRecords);
@@ -151,16 +136,9 @@ class GladiatorsStatsServiceTest {
     @Test
     @DisplayName("get best ludus (one)")
     void getBestLudusOne() {
-        for (int i = 0; i < 4; ++i) {
-            battleRecords.add(new BattleRecord(LocalDate.of(123, 12, i + 1),
-                    "Alex", "Zxc", Animal.Wolf, true, false));
-
-            battleRecords.add(new BattleRecord(LocalDate.of(123, 12, i + 1),
-                    "Anton", null, Animal.Tiger, true, false));
-        }
-
-        battleRecords.add(new BattleRecord(LocalDate.of(123, 12, 12),
-                "Alex", "Aboba", Animal.Wolf, true, false));
+        battleRecords.add(BATTLE_ALEX_BULL_WIN);
+        battleRecords.add(BATTLE_ANTON_LION_WIN);
+        battleRecords.add(BATTLE_ALEX_LION_WIN);
 
         List<String> expected = List.of("Zxc");
         List<String> received = GladiatorsStatsService.getBestLudus(battleRecords);
@@ -170,16 +148,8 @@ class GladiatorsStatsServiceTest {
     @Test
     @DisplayName("get best ludus (many)")
     void getBestLudusMany() {
-        for (int i = 0; i < 4; ++i) {
-            battleRecords.add(new BattleRecord(LocalDate.of(123, 12, i + 1),
-                    "Alex", "Zxc", Animal.Wolf, true, false));
-
-            battleRecords.add(new BattleRecord(LocalDate.of(123, 12, i + 1),
-                    "Anton", "Aboba", Animal.Tiger, true, false));
-        }
-
-        battleRecords.add(new BattleRecord(LocalDate.of(123, 12, 12),
-                "Alex", "Qwerty", Animal.Wolf, true, false));
+        battleRecords.add(BATTLE_ALEX_BULL_WIN);
+        battleRecords.add(BATTLE_ANTON_LION_WIN);
 
         List<String> expected = List.of("Zxc", "Aboba");
         List<String> received = GladiatorsStatsService.getBestLudus(battleRecords);
