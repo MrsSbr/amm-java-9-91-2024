@@ -7,6 +7,7 @@ import ru.vsu.amm.java.enums.Resource;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class LogService {
@@ -25,10 +26,12 @@ public class LogService {
     }
 
     public static Resource getMostUnstableResource(List<Log> logs) {
-        return Collections.max(logs.stream()
-                        .filter(x -> x.httpResponseCode() == HttpResponseCode.ServerError)
-                        .collect(Collectors.groupingBy(Log::resource, Collectors.counting()))
-                        .entrySet(), Map.Entry.comparingByValue())
+        return Collections.max(
+                         logs.stream()
+                            .filter(x -> x.httpResponseCode() == HttpResponseCode.ServerError)
+                            .collect(Collectors.groupingBy(Log::resource, Collectors.counting()))
+                            .entrySet(),
+                        Map.Entry.comparingByValue())
                 .getKey();
     }
 
@@ -36,7 +39,7 @@ public class LogService {
         return logs.stream()
                 .collect(Collectors.groupingBy(
                         Log::resource,
-                        Collectors.averagingDouble(log -> (double) logs.stream()
+                        Collectors.averagingLong(log -> logs.stream()
                                 .filter(l -> l.resource().equals(log.resource()) &&
                                         l.httpResponseCode().equals(HttpResponseCode.Success)).count()
                                 / logs.stream()
@@ -44,6 +47,6 @@ public class LogService {
                 .entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
-                .orElse(null);
+                .orElseThrow(() -> new NoSuchElementException("Передан пустой список")); // todo add text
     }
 }

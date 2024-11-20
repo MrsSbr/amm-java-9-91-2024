@@ -1,7 +1,10 @@
 package ru.vsu.amm.java;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import ru.vsu.amm.java.services.LogFileService;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main {
@@ -10,12 +13,20 @@ public class Main {
 
     public static void main(String[] args) {
         Logger logger = Logger.getLogger(Main.class.getName());
-        var service = new LogFileService(logger);
-        service.createLogFile(LOG_FILE_PATH, LOGS_TO_CREATE_COUNT);
+        try
+        {
+            var service = new LogFileService(logger);
+            service.createLogFile(LOG_FILE_PATH, LOGS_TO_CREATE_COUNT);
 
-        var logs = service.getLogsFromFile(LOG_FILE_PATH);
-        for (var log : logs) {
-            System.out.println(log);
+            var logs = service.getLogsFromFile(LOG_FILE_PATH);
+
+            var mapper = new ObjectMapper()
+                    .registerModule(new JavaTimeModule());// todo падает при проблемах с файлом
+            for (var log : logs) {
+                System.out.println(mapper.writeValueAsString(log));
+            }
+        } catch (Exception ex) {
+            logger.log(Level.WARNING, ex.getMessage(), ex);
         }
     }
 }

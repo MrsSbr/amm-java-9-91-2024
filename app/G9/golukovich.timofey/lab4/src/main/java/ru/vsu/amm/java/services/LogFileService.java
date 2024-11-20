@@ -1,39 +1,60 @@
 package ru.vsu.amm.java.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import ru.vsu.amm.java.entities.Log;
 import ru.vsu.amm.java.factories.LogCreator;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LogFileService {
-    private static Logger LOGGER;
+    private static Logger logger;
 
     public LogFileService(Logger logger) {
-        LOGGER = logger;
+        LogFileService.logger = logger;
     }
 
     public void createLogFile(String logFilePath, int logsCount) {
+        var mapper = new ObjectMapper()
+                .registerModule(new JavaTimeModule());
+
         var creator = new LogCreator();
         var logs = creator.create(logsCount);
-        try (ObjectOutputStream ous = new ObjectOutputStream(new FileOutputStream(logFilePath))) {
-            ous.writeObject(logs);
+
+        try (var writer = new FileWriter(logFilePath)) {
+            for (var log : logs) {
+                writer.write(mapper.writeValueAsString(log) + '\n');
+            }
         } catch (IOException e) {
-            LOGGER.log(Level.WARNING, e.getMessage());
+            logger.log(Level.WARNING, e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
     }
 
     public List<Log> getLogsFromFile(String logFilePath) {
+        var mapper = new ObjectMapper()
+                .registerModule(new JavaTimeModule());
+
         List<Log> logs;
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(logFilePath))) {
-            logs = (ArrayList<Log>) ois.readObject();
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, e.getMessage());
-            System.out.println(e.getMessage());
+        try (var reader = new BufferedReader(new FileReader(logFilePath))) {
+            logs = reader.lines()
+                    .map(line -> {
+                        try {
+                            return mapper.readValue(line, Log.class);
+                        } catch (JsonProcessingException e) {
+                            throw new RuntimeException(e.getMessage());
+                        }
+                    })
+                    .toList();
+        } catch (IOException | RuntimeException e) {
+            logger.log(Level.WARNING, e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
         return logs;
