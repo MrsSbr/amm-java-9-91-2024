@@ -1,3 +1,4 @@
+package ru.vsu.amm.java.Checks;
 package ru.vsu.amm.java.checks;
 
 public class ArrayLimitations {
