@@ -1,7 +1,5 @@
 package ru.vsu.amm.java.main;
 
-import ru.vsu.amm.java.main.Genre;
-
 import java.time.LocalDate;
 
 

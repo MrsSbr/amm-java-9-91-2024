@@ -6,7 +6,6 @@ import java.time.Month;
 import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,26 +16,22 @@ public class Statistic {
         Set<Genre> genres = listOfSell.stream()
                 .map(GameRecord::getGenre)
                 .collect(Collectors.toSet());
-        Optional<Long> max = genres.stream()
+        Long max = genres.stream()
                 .map(genre -> listOfSell.stream()
                         .filter(game -> game.getGenre().equals(genre))
                         .count())
-                .max(Comparator.comparingLong(Long::longValue));
-        if(max.isPresent()) {
-            Optional<Genre> popularGenre = genres.stream()
-                    .filter(genre -> listOfSell.stream()
-                            .filter(game -> game.getGenre().equals(genre))
-                            .count() == max.get())
-                    .findFirst();
-            if(popularGenre.isPresent()) {
-                return listOfSell.stream()
-                        .filter(game -> game.getGenre().equals(popularGenre.get()))
-                        .map(GameRecord::getName)
-                        .distinct()
-                        .toList();
-            }
-        }
-        return new ArrayList<>();
+                .max(Comparator.comparingLong(Long::longValue))
+                .orElse(0L);
+        List<Genre> popularGenre = genres.stream()
+                .filter(genre -> listOfSell.stream()
+                        .filter(game -> game.getGenre().equals(genre))
+                        .count() == max)
+                .toList();
+        return listOfSell.stream()
+                .filter(game -> popularGenre.contains(game.getGenre()))
+                .map(GameRecord::getName)
+                .distinct()
+                .toList();
     }
 
     public static List<Month> mostSuccessMonth(List<GameRecord> listOfSell) {
