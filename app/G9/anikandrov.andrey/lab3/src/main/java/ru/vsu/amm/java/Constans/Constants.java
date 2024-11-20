@@ -1,4 +1,4 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.Constans;
 
 public class Constants {
     public static final int MAX_AGE = 80;

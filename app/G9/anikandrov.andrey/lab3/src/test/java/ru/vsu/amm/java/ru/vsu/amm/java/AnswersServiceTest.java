@@ -1,6 +1,11 @@
 package ru.vsu.amm.java;
 
 import org.junit.jupiter.api.Test;
+import ru.vsu.amm.java.Entity.Answers;
+import ru.vsu.amm.java.Entity.Reply;
+import ru.vsu.amm.java.Constans.Constants;
+import ru.vsu.amm.java.Enums.CarBrand;
+import ru.vsu.amm.java.Service.AnswersService;
 
 import java.util.List;
 
@@ -42,11 +47,11 @@ class AnswersServiceTest {
         Answers answersContainer = new Answers(replyList);
         answerService = new AnswersService(answersContainer);
 
-        CarBrand[] result = answerService.brandByAge();
+        List<CarBrand> result = answerService.brandByAge();
 
-        assertEquals(CarBrand.BMW, result[20 - Constants.MIN_AGE]);
-        assertEquals(CarBrand.TOYOTA, result[30 - Constants.MIN_AGE]);
-        assertEquals(CarBrand.HONDA, result[40 - Constants.MIN_AGE]);
+        assertEquals(CarBrand.BMW, result.get(20 - Constants.MIN_AGE));
+        assertEquals(CarBrand.TOYOTA, result.get(30 - Constants.MIN_AGE));
+        assertEquals(CarBrand.HONDA, result.get(40 - Constants.MIN_AGE));
     }
 
     @Test

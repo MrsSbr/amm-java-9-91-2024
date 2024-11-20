@@ -1,4 +1,6 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.Entity;
+
+import ru.vsu.amm.java.Constans.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ public class Answers {
     private void generateAnswers(int AnswerCount) {
         Random random = new Random();
         for (int i = 0; i < AnswerCount; i++) {
-            int age = random.nextInt(18, 80);
+            int age = random.nextInt(Constants.MIN_AGE, Constants.MAX_AGE);
             answers.add(new Reply(age));
         }
     }

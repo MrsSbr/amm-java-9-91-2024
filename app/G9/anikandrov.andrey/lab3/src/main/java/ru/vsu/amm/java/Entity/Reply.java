@@ -1,4 +1,6 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.Entity;
+
+import ru.vsu.amm.java.Enums.CarBrand;
 
 import java.util.Random;
 

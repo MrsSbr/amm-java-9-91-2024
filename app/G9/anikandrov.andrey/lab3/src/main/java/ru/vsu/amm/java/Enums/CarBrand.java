@@ -1,4 +1,4 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.Enums;
 
 public enum CarBrand {
     TOYOTA,

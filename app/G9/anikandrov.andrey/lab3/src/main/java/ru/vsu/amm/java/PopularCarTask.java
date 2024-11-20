@@ -1,8 +1,9 @@
 package ru.vsu.amm.java;
 
-import java.util.Arrays;
+import ru.vsu.amm.java.Entity.Answers;
+import ru.vsu.amm.java.Service.AnswersService;
 
-public class Main {
+public class PopularCarTask {
 
     public static void main(String[] args) {
         var answers = new Answers(1500);
@@ -10,7 +11,7 @@ public class Main {
 
         System.out.println(answersService.mostPopularBrand());
         System.out.println(answersService.uniqueBrands());
-        System.out.println(Arrays.toString(answersService.brandByAge()));
+        System.out.println(answersService.brandByAge());
     }
 
 }
