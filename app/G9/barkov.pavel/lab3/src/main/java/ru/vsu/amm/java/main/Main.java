@@ -18,8 +18,8 @@ public class Main {
     public static void main(String[] args) {
         final int size = 7283;
         List<GameRecord> list = createList(size);
-        Statistic.bestSellingGenreGames(list).stream().forEach(game -> System.out.println(game));
-        Statistic.mostSuccessMonth(list).stream().forEach(month -> System.out.println(month));
-        Statistic.nameGame(list).stream().forEach(game -> System.out.println(game));
+        Statistic.bestSellingGenreGames(list).forEach(System.out::println);
+        Statistic.mostSuccessMonth(list).forEach(System.out::println);
+        Statistic.nameGame(list).forEach(System.out::println);
     }
 }

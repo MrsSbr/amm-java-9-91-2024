@@ -5,19 +5,24 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomGameGenerator {
-    public static final Random random = new Random();
-
+    public static final Random RANDOM = new Random();
+    private static final List<Genre> GENRES = List.of(Genre.warGame, Genre.logical, Genre.card, Genre.rpg, Genre.euroGame);
+    private static final int MIN_YEAR = 1900;
+    private static final int BOUND_YEAR = 124;
+    private static final int COUNT_MONTHS = 12;
+    private static final int COUNT_DAYS = 28;
+    private static final int MAX_PART = 12;
+    private static final int MAX_PRICE = 5000;
     private RandomGameGenerator() {
     }
 
     public static GameRecord Generate() {
-        final List<Genre> genres = List.of(Genre.warGame, Genre.logical, Genre.card, Genre.rpg, Genre.euroGame);
-        LocalDate data = LocalDate.of(random.nextInt(124) + 1900,
-                random.nextInt(11),
-                random.nextInt(28));
-        Integer part = random.nextInt(12);
-        Genre genre = genres.get(random.nextInt(5));
+        LocalDate data = LocalDate.of(RANDOM.nextInt(BOUND_YEAR) + MIN_YEAR,
+                RANDOM.nextInt(COUNT_MONTHS),
+                RANDOM.nextInt(COUNT_DAYS));
+        int part = RANDOM.nextInt(MAX_PART);
+        Genre genre = GENRES.get(RANDOM.nextInt());
         return new GameRecord(data, genre.name() + "Game" + part,
-                genre, random.nextInt(5000));
+                genre, RANDOM.nextInt(MAX_PRICE));
     }
 }

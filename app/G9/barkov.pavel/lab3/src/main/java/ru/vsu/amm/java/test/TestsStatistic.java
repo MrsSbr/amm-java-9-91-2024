@@ -43,7 +43,7 @@ public class TestsStatistic {
         var res = Statistic.nameGame(list);
         assertNotNull(res);
         assertTrue(res.contains("Monopoly"));
-        assertFalse(res.size()>1);
+        assertFalse(res.size() > 1);
     }
 
     @Test
@@ -58,25 +58,25 @@ public class TestsStatistic {
         var res = Statistic.mostSuccessMonth(list);
         assertNotNull(res);
         assertTrue(res.contains(Month.SEPTEMBER));
-        assertFalse(res.size()>1);
+        assertFalse(res.size() > 1);
     }
 
     @Test
     public void nullTestBestSellingGenreGames() {
         var res = Statistic.bestSellingGenreGames(new ArrayList<GameRecord>());
-        assertTrue(res.size()==0);
+        assertTrue(res.size() == 0);
     }
 
     @Test
     public void nullTestNameGame() {
         var res = Statistic.nameGame(new ArrayList<GameRecord>());
-        assertTrue(res.size()==0);
+        assertTrue(res.size() == 0);
     }
 
     @Test
     public void nullTestMostSuccessMonth() {
         var res = Statistic.mostSuccessMonth(new ArrayList<GameRecord>());
-        assertTrue(res.size()==0);
+        assertTrue(res.size() == 0);
     }
 
 
@@ -93,7 +93,7 @@ public class TestsStatistic {
         assertTrue(res.contains("Monopoly"));
         assertTrue(res.contains("D&D"));
         assertTrue(res.contains("Plane"));
-        assertFalse(res.size()>3);
+        assertFalse(res.size() > 3);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class TestsStatistic {
         var res = Statistic.mostSuccessMonth(list);
         assertTrue(res.contains(Month.APRIL));
         assertTrue(res.contains(Month.FEBRUARY));
-        assertFalse(res.size()>2);
+        assertFalse(res.size() > 2);
     }
 
 }
