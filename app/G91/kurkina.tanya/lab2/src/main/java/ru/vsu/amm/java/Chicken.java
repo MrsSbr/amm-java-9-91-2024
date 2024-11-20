@@ -6,7 +6,7 @@ public class Chicken extends FarmAnimal {
     private final int eggProduction;
 
     public Chicken(String name, int eggProduction) {
-        super(name, "Chicken");
+        super(name, AnimalType.Bird);
         this.eggProduction = eggProduction;
     }
 

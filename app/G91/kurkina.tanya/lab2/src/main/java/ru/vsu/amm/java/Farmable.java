@@ -1,5 +1,5 @@
 package ru.vsu.amm.java;
 
-public interface Animal {
+public interface Farmable {
     void eat();
 }

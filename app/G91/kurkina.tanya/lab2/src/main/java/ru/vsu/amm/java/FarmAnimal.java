@@ -1,11 +1,11 @@
 package ru.vsu.amm.java;
 import java.util.Objects;
 
-public abstract class FarmAnimal implements Animal {
+public abstract class FarmAnimal implements Farmable {
     private final String name;
-    private final String type;
+    private final AnimalType type;
 
-    public FarmAnimal(String name, String type) {
+    public FarmAnimal(String name, AnimalType type) {
         this.name = name;
         this.type = type;
     }
@@ -14,7 +14,7 @@ public abstract class FarmAnimal implements Animal {
         return name;
     }
 
-    public String getType() {
+    public AnimalType getType() {
         return type;
     }
 
