@@ -1,6 +1,7 @@
 package ru.vsu.amm.java;
 
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -8,18 +9,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AnswersServiceTest {
     private static AnswersService answerService;
-    private List<Answer> answerList;
+    private List<Reply> replyList;
     private Answers answersContainer;
 
     @Test
     public void testMostPopularBrand() {
-        List<Answer> answerList = List.of(
-            new Answer(CarBrand.BMW, 20),
-            new Answer(CarBrand.TOYOTA, 30),
-            new Answer(CarBrand.BMW, 40)
+        List<Reply> replyList = List.of(
+                new Reply(CarBrand.BMW, 20),
+                new Reply(CarBrand.TOYOTA, 30),
+                new Reply(CarBrand.BMW, 40)
         );
 
-        Answers answersContainer = new Answers(answerList);
+        Answers answersContainer = new Answers(replyList);
         answerService = new AnswersService(answersContainer);
 
         CarBrand result = answerService.mostPopularBrand();
@@ -29,16 +30,16 @@ class AnswersServiceTest {
 
     @Test
     public void testBrandByAge() {
-        List<Answer> answerList = List.of(
-                new Answer(CarBrand.BMW, 20),
-                new Answer(CarBrand.TOYOTA, 30),
-                new Answer(CarBrand.BMW, 30),
-                new Answer(CarBrand.TOYOTA, 30),
-                new Answer(CarBrand.HONDA, 40),
-                new Answer(CarBrand.VOLKSWAGEN, 40)
+        List<Reply> replyList = List.of(
+                new Reply(CarBrand.BMW, 20),
+                new Reply(CarBrand.TOYOTA, 30),
+                new Reply(CarBrand.BMW, 30),
+                new Reply(CarBrand.TOYOTA, 30),
+                new Reply(CarBrand.HONDA, 40),
+                new Reply(CarBrand.VOLKSWAGEN, 40)
         );
 
-        Answers answersContainer = new Answers(answerList);
+        Answers answersContainer = new Answers(replyList);
         answerService = new AnswersService(answersContainer);
 
         CarBrand[] result = answerService.brandByAge();
@@ -50,14 +51,14 @@ class AnswersServiceTest {
 
     @Test
     public void testUniqueBrands() {
-        List<Answer> answerList = List.of(
-                new Answer(CarBrand.BMW, 20),
-                new Answer(CarBrand.TOYOTA, 30),
-                new Answer(CarBrand.BMW, 30),
-                new Answer(CarBrand.HONDA, 40)
+        List<Reply> replyList = List.of(
+                new Reply(CarBrand.BMW, 20),
+                new Reply(CarBrand.TOYOTA, 30),
+                new Reply(CarBrand.BMW, 30),
+                new Reply(CarBrand.HONDA, 40)
         );
 
-        Answers answersContainer = new Answers(answerList);
+        Answers answersContainer = new Answers(replyList);
         answerService = new AnswersService(answersContainer);
 
         List<CarBrand> result = answerService.uniqueBrands();

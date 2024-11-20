@@ -6,43 +6,42 @@ import java.util.Random;
 
 public class Answers {
 
-    private List<Answer> answers;
+    private List<Reply> answers;
 
     public Answers(int AnswerCount) {
         answers = new ArrayList<>();
         generateAnswers(AnswerCount);
     }
 
-    public Answers(List<Answer> answerList) {
-        answers = answerList;
+    public Answers(List<Reply> replyList) {
+        answers = replyList;
     }
 
-    private void generateAnswers(int AnswerCount)
-    {
+    private void generateAnswers(int AnswerCount) {
         Random random = new Random();
         for (int i = 0; i < AnswerCount; i++) {
             int age = random.nextInt(18, 80);
-            answers.add(new Answer(age));
+            answers.add(new Reply(age));
         }
     }
 
-    public Answers(ArrayList<Answer> answers) {
+    public Answers(ArrayList<Reply> answers) {
         this.answers = answers;
     }
 
-    public void addAnswer(Answer answer) {
-        answers.add(answer);
+    public void addAnswer(Reply reply) {
+        answers.add(reply);
     }
 
-    public boolean removeAnswer(Answer answer) {
-        return answers.remove(answer);
+    public boolean removeAnswer(Reply reply) {
+        return answers.remove(reply);
     }
 
-    public boolean containsAnswer(Answer answer) {
-        return answers.contains(answer);
+    public boolean containsAnswer(Reply reply) {
+        return answers.contains(reply);
     }
 
-    public List<Answer> getAnswers() {
+    public List<Reply> getAnswers() {
         return new ArrayList<>(answers);
     }
 

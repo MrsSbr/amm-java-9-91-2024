@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 public class Main {
 
-
     public static void main(String[] args) {
         var answers = new Answers(1500);
         var answersService = new AnswersService(answers);

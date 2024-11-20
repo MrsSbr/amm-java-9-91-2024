@@ -3,9 +3,8 @@ package ru.vsu.amm.java;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnswersService
-{
-    private List<Answer> answers;
+public class AnswersService {
+    private List<Reply> answers;
 
     public AnswersService(Answers answers) {
         this.answers = answers.getAnswers();
@@ -14,8 +13,8 @@ public class AnswersService
     public CarBrand mostPopularBrand() {
         int[] brandCount = new int[CarBrand.values().length];
 
-        for (Answer answer : answers) {
-            brandCount[answer.getCarBrand().ordinal()]++;
+        for (Reply reply : answers) {
+            brandCount[reply.getCarBrand().ordinal()]++;
         }
 
         int maxIndex = 0;
@@ -29,13 +28,12 @@ public class AnswersService
     }
 
 
-
     public CarBrand[] brandByAge() {
         int[][] ageBrandCount = new int[Constants.MAX_AGE][CarBrand.values().length];
 
-        for (Answer answer : answers) {
-            int brandIndex = answer.getCarBrand().ordinal();
-            int age = answer.getAge();
+        for (Reply reply : answers) {
+            int brandIndex = reply.getCarBrand().ordinal();
+            int age = reply.getAge();
             ageBrandCount[age][brandIndex]++;
         }
 
@@ -45,11 +43,9 @@ public class AnswersService
             int maxIndex = 0;
 
             for (int j = 1; j < CarBrand.values().length; j++) {
-
                 if (ageBrandCount[age][j] > ageBrandCount[age][maxIndex]) {
                     maxIndex = j;
                 }
-
             }
             popularBrands[age - Constants.MIN_AGE] = CarBrand.values()[maxIndex];
         }
@@ -57,11 +53,12 @@ public class AnswersService
         return popularBrands;
     }
 
+
     public List<CarBrand> uniqueBrands() {
         int[] brandCount = new int[CarBrand.values().length];
 
-        for (Answer answer : answers) {
-            brandCount[answer.getCarBrand().ordinal()]++;
+        for (Reply reply : answers) {
+            brandCount[reply.getCarBrand().ordinal()]++;
         }
 
         List<CarBrand> uniqueBrands = new ArrayList<>();
@@ -74,19 +71,4 @@ public class AnswersService
 
         return uniqueBrands;
     }
-
-//    public List<CarBrand> uniqueBrands() {
-////        List<CarBrand> uniqueBrands = new ArrayList<>();
-////
-////        for (Answer answer : answers) {
-////            CarBrand brand = answer.getCarBrand();
-////            if (!uniqueBrands.contains(brand)) {
-////                uniqueBrands.add(brand);
-////            }
-////        }
-////
-////        return uniqueBrands;
-////    }
-
-
 }

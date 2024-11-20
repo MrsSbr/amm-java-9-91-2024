@@ -2,16 +2,16 @@ package ru.vsu.amm.java;
 
 import java.util.Random;
 
-public class Answer {
+public class Reply {
     private int age;
     private CarBrand carBrand;
 
-    public Answer(int age) {
+    public Reply(int age) {
         this.age = age;
         this.carBrand = getRandomCarBrand();
     }
 
-    public Answer(CarBrand car, int age) {
+    public Reply(CarBrand car, int age) {
         this.age = age;
         this.carBrand = car;
     }
@@ -32,7 +32,7 @@ public class Answer {
 
     @Override
     public String toString() {
-        return "Answer{" +
+        return "Reply{" +
                 "age=" + age +
                 ", carBrand=" + getCarBrand() +
                 "}";
