@@ -21,7 +21,7 @@ public class Logg {
     private static Logger createFileLogAndLog() throws IOException {
         Logger logger = Logger.getLogger(Logg.class.getName());
 
-        File file = new File("log.txt");
+        File file = new File("logg.txt");
 
         if (file.exists()) {
             file.delete();

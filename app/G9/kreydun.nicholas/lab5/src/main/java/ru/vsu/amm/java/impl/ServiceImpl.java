@@ -29,7 +29,7 @@ public class ServiceImpl implements Service {
 
     @Override
     public void do3() {
-        int SECONDS = 50;
+        int SECONDS = 150;
         try {
             Thread.sleep(SECONDS);
         } catch (InterruptedException e) {

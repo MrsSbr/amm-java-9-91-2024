@@ -6,6 +6,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)  // Сохраняем аннотацию во время выполнения
-@Target(ElementType.METHOD)  // Аннотация применяется к методам
+@Target(ElementType.METHOD)
 public @interface Benchmarked {
 }

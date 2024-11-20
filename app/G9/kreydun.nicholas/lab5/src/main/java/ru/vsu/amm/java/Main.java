@@ -14,7 +14,6 @@ public class Main {
         // Оборачиваем объект в прокси
         Service trackedService = Benchmark.track(service);
 
-        // Вызываем методы
         trackedService.do1();
         trackedService.do2();
         trackedService.do3();

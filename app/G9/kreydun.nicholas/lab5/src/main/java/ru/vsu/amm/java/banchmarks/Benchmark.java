@@ -62,7 +62,6 @@ public class Benchmark {
                 // Записываем время выполнения в статистику
                 methodExecutionTimes.put(method.getName(), duration);
 
-                // Логирование
                 Logg.logger.fine("Method " + method.getName() + " took " + duration + " nanoseconds");
 
                 return result;

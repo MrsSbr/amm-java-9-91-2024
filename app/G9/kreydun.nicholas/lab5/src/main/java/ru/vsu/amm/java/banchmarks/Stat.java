@@ -11,7 +11,7 @@ public class Stat {
 
     public void print(java.io.PrintStream out) {
         executionTimes.forEach((methodName, time) ->
-                out.println(methodName + " took " + time + " nanoseconds")
+                out.println(methodName + "Took " + time + " nanoseconds")
         );
     }
 }

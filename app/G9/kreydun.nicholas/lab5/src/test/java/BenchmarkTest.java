@@ -101,7 +101,6 @@ public class BenchmarkTest {
     }
 
     void printResult(Stat st) {
-        // Печатаем статистику
         System.out.println("Execution Times:");
         st.print(System.out);
     }
