@@ -2,8 +2,8 @@ package ru.vsu.amm.java.main;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import ru.vsu.amm.java.main.Statistic;
+
 
 public class Main {
 

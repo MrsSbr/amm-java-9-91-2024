@@ -63,20 +63,20 @@ public class TestsStatistic {
 
     @Test
     public void nullTestBestSellingGenreGames() {
-        var res = Statistic.bestSellingGenreGames(new ArrayList<GameRecord>());
-        assertTrue(res.size() == 0);
+        var res = Statistic.bestSellingGenreGames(new ArrayList<>());
+        assertEquals(res.size(),0);
     }
 
     @Test
     public void nullTestNameGame() {
-        var res = Statistic.nameGame(new ArrayList<GameRecord>());
-        assertTrue(res.size() == 0);
+        var res = Statistic.nameGame(new ArrayList<>());
+        assertEquals(res.size(),0);
     }
 
     @Test
     public void nullTestMostSuccessMonth() {
-        var res = Statistic.mostSuccessMonth(new ArrayList<GameRecord>());
-        assertTrue(res.size() == 0);
+        var res = Statistic.mostSuccessMonth(new ArrayList<>());
+        assertEquals(res.size(),0);
     }
 
 
