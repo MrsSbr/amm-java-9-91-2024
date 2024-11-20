@@ -21,6 +21,12 @@ public class Bomber extends MilitaryAircraft {
     }
 
     @Override
+    public String toString() {
+        return "Бомбардировщик\nНазвание " + name + "\nМаксимальная скорость: " + maxSpeed +
+                " м/c\nОбъём бака: " + fuelCapacity + " л\nЗапас боеголовок:  " + numOfBombs;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (!super.equals(o)) {
             return false;
@@ -32,11 +38,5 @@ public class Bomber extends MilitaryAircraft {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), numOfBombs);
-    }
-
-    @Override
-    public String toString() {
-        return "Бомбардировщик\nНазвание " + name + "\nМаксимальная скорость: " + maxSpeed +
-                " м/c\nОбъём бака: " + fuelCapacity + " л\nЗапас боеголовок:  " + numOfBombs;
     }
 }

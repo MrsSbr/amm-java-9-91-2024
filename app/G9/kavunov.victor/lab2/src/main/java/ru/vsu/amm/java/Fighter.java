@@ -19,10 +19,16 @@ public class Fighter extends MilitaryAircraft {
             numOfBullets -= bulletConsumption;
             System.out.println("Атака истребителя " + name + " выполнена успешно. Израсходовано " + bulletConsumption +
                     " патронов. Остаток " + numOfBullets);
-        }
-        else {
+        } else {
             System.out.println("!!! Атака истребителя " + name + " невозможна. Недостаточно патронов !!!");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Истребитель\nНазвание " + name + "\nМаксимальная скорость: " + maxSpeed +
+                " м/c\nОбъём бака: " + fuelCapacity + " л\nКол-во пулемётов: " + numOfGuns +
+                "\nЗапас патронов: " + numOfBullets + '\n';
     }
 
     @Override
@@ -37,12 +43,5 @@ public class Fighter extends MilitaryAircraft {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), numOfGuns, numOfBullets);
-    }
-
-    @Override
-    public String toString() {
-        return "Истребитель\nНазвание " + name + "\nМаксимальная скорость: " + maxSpeed +
-                " м/c\nОбъём бака: " + fuelCapacity + " л\nКол-во пулемётов: " + numOfGuns +
-                "\nЗапас патронов: " + numOfBullets + '\n';
     }
 }
