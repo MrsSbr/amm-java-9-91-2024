@@ -14,7 +14,7 @@ public class BaristaService {
 
     private static final Logger logger = Logger.getLogger(BaristaService.class.getName());
 
-    // Список напитков, которые заказывают по утрам с 7 до 9
+
     public List<DrinkName> getMorningDrinks(List<DrinkRecord> drinkRecords) {
         logger.info("Начинаем анализ напитков, заказанных утром с 7 до 9.");
         return drinkRecords.stream()
@@ -27,7 +27,7 @@ public class BaristaService {
                 .collect(Collectors.toList());
     }
 
-    // Напитки, которые не заказывали за последние 3 месяца
+
     public List<DrinkName> getDrinksNotOrderedLast3Months(List<DrinkRecord> drinkRecords) {
         logger.info("Анализ напитков, которые не заказывались за последние 3 месяца.");
         LocalDateTime threeMonthsAgo = LocalDateTime.now().minus(3, ChronoUnit.MONTHS);
@@ -42,7 +42,7 @@ public class BaristaService {
                 .collect(Collectors.toList());
     }
 
-    // Сколько раз бариста готовил капучино
+
     public long countCappuccino(List<DrinkRecord> drinkRecords) {
         logger.info("Считаем количество приготовленных капучино.");
         return drinkRecords.stream()

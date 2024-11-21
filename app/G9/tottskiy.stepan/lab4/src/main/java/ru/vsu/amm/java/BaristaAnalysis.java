@@ -16,7 +16,7 @@ public class BaristaAnalysis {
     private static final Logger logger = Logger.getLogger(BaristaAnalysis.class.getName());
 
     public static void main(String[] args) {
-        // Генерация данных
+
         Random random = new Random();
 
         List<DrinkRecord> records = new ArrayList<>();
@@ -29,13 +29,12 @@ public class BaristaAnalysis {
             records.add(new DrinkRecord(drinkName, timestamp));
         }
 
-        // Создание сервиса
+
         BaristaService baristaService = new BaristaService();
 
-        // Логируем старт анализа
+
         logger.info("Генерация данных завершена. Начинаем анализ.");
 
-        // Выполнение анализа
         System.out.println("Напитки, заказываемые по утрам (7–9): " + baristaService.getMorningDrinks(records));
         System.out.println("Напитки, не заказанные за последние 3 месяца: " + baristaService.getDrinksNotOrderedLast3Months(records));
         System.out.println("Количество приготовленных капучино: " + baristaService.countCappuccino(records));

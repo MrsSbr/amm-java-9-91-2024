@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.entity;
 
 import java.time.LocalDateTime;
+
 import ru.vsu.amm.java.enums.DrinkName;
 
 public class DrinkRecord {
