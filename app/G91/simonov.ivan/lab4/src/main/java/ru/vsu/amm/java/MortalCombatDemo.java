@@ -19,7 +19,7 @@ public class MortalCombatDemo {
                         Hero.CETRION,
                         Hero.ERMAC,
                         Hero.ERMAC,
-                        Fatality.CRISPY),
+                        null),
                 new Fight(1,
                         LocalDate.of(2020, 3, 20),
                         Hero.CETRION,
@@ -31,9 +31,12 @@ public class MortalCombatDemo {
                         Hero.SUB_ZERO,
                         Hero.SCORPION,
                         Hero.SCORPION,
-                        Fatality.SHREDDED)
+                        null)
         ));
 
+        System.out.println("Месяцы, в которые за последние 3 года было сделано наибольшее количество фаталити:\n");
+        System.out.println(MortalCombatService.findMonthsWithMostFatalitiesInLast3Years(fights));
+        System.out.print("\n");
 
         System.out.println("Количество побед в битвах каждого из участников:\n");
         System.out.println(MortalCombatService.countVictoriesOfEveryHero(fights));

@@ -3,11 +3,30 @@ package ru.vsu.amm.java.service;
 import ru.vsu.amm.java.entity.Fight;
 import ru.vsu.amm.java.enums.Hero;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MortalCombatService {
+
+    public static Set<Month> findMonthsWithMostFatalitiesInLast3Years(List<Fight> fights) {
+
+        Map<Month, Long> fatalitiesPerMonth = fights.stream()
+                .filter(i -> i.date().isAfter(LocalDate.now().minusYears(3)) && i.fatality() != null)
+                .collect(Collectors.groupingBy(i -> i.date().getMonth(), Collectors.counting()));
+
+        Long maxFatalities = fatalitiesPerMonth.values()
+                .stream()
+                .max(Long::compareTo)
+                .orElse(0L);
+
+        return Arrays.stream(Month.values())
+                .filter(i -> fatalitiesPerMonth.get(i) == null && maxFatalities == 0 ||
+                        fatalitiesPerMonth.get(i) != null && fatalitiesPerMonth.get(i).equals(maxFatalities))
+                .collect(Collectors.toSet());
+    }
 
     public static Map<Hero, Integer> countVictoriesOfEveryHero(List<Fight> fights) {
 
