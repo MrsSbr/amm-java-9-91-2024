@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public final class FileWorker {
-    private FileWorker(){
+    private FileWorker() {
     }
 
     public static void generateFile(String path, int n) throws IOException {
