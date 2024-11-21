@@ -18,6 +18,7 @@ public abstract class Book implements Item {
     public Book() {
     }
 
+
     public String getTitle() {
         return title;
     }
