@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ServiceTests {
     private Map<String, List<SongPlayback>> songPlaybacks;
@@ -34,9 +33,8 @@ public class ServiceTests {
 
     @Test
     public void amountOfRecentStreamsTestNull() {
-        int amount = MusicService.getAmountOfRecentStreams(null,
-                "title2", "artist2", Genre.POP);
-        assertEquals(0, amount);
+        assertThrows(NullPointerException.class, () -> MusicService.getAmountOfRecentStreams(null,
+                "title2", "artist2", Genre.POP));
     }
 
     @Test
@@ -69,7 +67,7 @@ public class ServiceTests {
 
     @Test
     public void userStreamingDataTestNull() {
-        assertNull(MusicService.getUserStreamingData(null));
+        assertThrows(NullPointerException.class, () -> MusicService.getUserStreamingData(null));
     }
 
     @Test
@@ -98,7 +96,7 @@ public class ServiceTests {
 
     @Test
     public void userStreamingDataLeastPopularTestNull() {
-        assertNull(MusicService.getUserStreamingDataLeastPopular(null));
+        assertThrows(NullPointerException.class, () -> MusicService.getUserStreamingDataLeastPopular(null));
     }
 
     @Test
@@ -120,7 +118,7 @@ public class ServiceTests {
 
     @Test
     public void userStreamingDataMostFavoriteTestNull() {
-        assertNull(MusicService.getUserStreamingDataMostFavorite(null));
+        assertThrows(NullPointerException.class, () -> MusicService.getUserStreamingDataMostFavorite(null));
     }
 
     @Test

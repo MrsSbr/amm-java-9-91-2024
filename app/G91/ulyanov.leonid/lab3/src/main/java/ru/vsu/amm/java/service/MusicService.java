@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class MusicService {
-    public static int getAmountOfRecentStreams(Map<String, List<SongPlayback>> songs,
-                                               String title, String artist, Genre genre) {
+    public static int getAmountOfRecentStreams(Map<String, List<SongPlayback>> songs, String title,
+                                               String artist, Genre genre) throws NullPointerException {
         if (songs == null) {
-            return 0;
+            throw new NullPointerException();
         }
         var firstDayOfMonth = LocalDate.now().withDayOfMonth(1);
         return songs.entrySet().stream()
@@ -31,9 +31,10 @@ public class MusicService {
                 .flatMapToInt(x -> IntStream.of((int) x.getValue().count())).sum();
     }
 
-    public static Map<String, Set<String>> getUserStreamingData(Map<String, List<SongPlayback>> songs) {
+    public static Map<String, Set<String>> getUserStreamingData(Map<String, List<SongPlayback>> songs)
+            throws NullPointerException {
         if (songs == null) {
-            return null;
+            throw new NullPointerException();
         }
         return songs.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
@@ -44,9 +45,10 @@ public class MusicService {
                                 .collect(Collectors.toSet())));
     }
 
-    public static Map<String, Set<String>> getUserStreamingDataLeastPopular(Map<String, List<SongPlayback>> songs) {
+    public static Map<String, Set<String>> getUserStreamingDataLeastPopular(Map<String, List<SongPlayback>> songs)
+            throws NullPointerException {
         if (songs == null) {
-            return null;
+            throw new NullPointerException();
         }
         var date = LocalDate.now().withMonth(LocalDate.now().getMonthValue() - 2);
         var recentSongsMap = songs.entrySet().stream()
@@ -70,9 +72,10 @@ public class MusicService {
                                 .collect(Collectors.toSet())));
     }
 
-    public static Map<String, String> getUserStreamingDataMostFavorite(Map<String, List<SongPlayback>> songs) {
+    public static Map<String, String> getUserStreamingDataMostFavorite(Map<String, List<SongPlayback>> songs)
+            throws NullPointerException {
         if (songs == null) {
-            return null;
+            throw new NullPointerException();
         }
         return songs.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
