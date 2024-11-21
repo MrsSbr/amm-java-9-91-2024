@@ -54,6 +54,7 @@ student("gonnykh.alexander", G91) {
     lab(0)
     lab(1)
     lab(2)
+    lab(4)
 }
 
 student("simonov.ivan", G91) {
