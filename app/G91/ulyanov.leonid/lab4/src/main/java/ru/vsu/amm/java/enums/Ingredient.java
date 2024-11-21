@@ -1,6 +1,6 @@
 package ru.vsu.amm.java.enums;
 
-public enum Ingredients {
+public enum Ingredient {
     SUGAR,
     WATER,
     YEAST,
