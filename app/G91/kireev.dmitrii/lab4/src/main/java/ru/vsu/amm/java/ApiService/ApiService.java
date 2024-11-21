@@ -4,10 +4,7 @@ import ru.vsu.amm.java.Model.FileEntity;
 import ru.vsu.amm.java.Model.TortureInstrument;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ApiService {
@@ -38,16 +35,26 @@ public class ApiService {
 
 
     public List<String> getTorturedByEveryInstrumentWithoutConfession(List<FileEntity> entities) {
-        return (entities == null || entities.isEmpty()) ? new ArrayList<>() :
-
-                entities.stream()
-                        .filter(entity -> !entity.confessionObtained())
-                        .collect(Collectors.groupingBy(
-                                FileEntity::suspectName,
-                                Collectors.mapping(FileEntity::tortureInstrument, Collectors.toSet())
-                        )).entrySet().stream().filter(entry -> entry.getValue().size() == 4).map(Map.Entry::getKey).toList();
+        if (entities == null || entities.isEmpty())  return new ArrayList<>();
 
 
+        Map<String, List<FileEntity>> groupedBySuspect = entities.stream()
+                .collect(Collectors.groupingBy(FileEntity::suspectName));
+
+        return groupedBySuspect.entrySet().stream()
+                .filter(entry -> {
+                    List<FileEntity> suspectEntities = entry.getValue();
+                    Set<TortureInstrument> instrumentsUsed = suspectEntities.stream()
+                            .filter(entity -> !entity.confessionObtained())
+                            .map(FileEntity::tortureInstrument)
+                            .collect(Collectors.toSet());
+                    boolean allInstrumentsUsed = instrumentsUsed.size() == TortureInstrument.values().length;
+                    boolean noConfession = suspectEntities.stream()
+                            .noneMatch(FileEntity::confessionObtained);
+                    return allInstrumentsUsed && noConfession;
+                })
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 
 }

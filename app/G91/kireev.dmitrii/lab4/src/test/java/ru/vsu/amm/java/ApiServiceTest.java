@@ -61,6 +61,7 @@ public class ApiServiceTest {
 
     }
 
+
     @Test
     public void testNullGetTorturedByEveryInstrumentWithoutConfession() {
         List<String> result = apiService.getTorturedByEveryInstrumentWithoutConfession(nullEntities);
