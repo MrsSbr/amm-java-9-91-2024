@@ -77,18 +77,15 @@ public class ReplyService {
 
         List<CarBrand> allCars = replyList.stream()
                 .map(Reply::getCarBrand)
-                .collect(Collectors.toList());
+                .toList();
 
         Set<CarBrand> duplicates = allCars.stream()
                 .filter(car -> Collections.frequency(allCars, car) > 1)
                 .collect(Collectors.toSet());
 
-
-        List<CarBrand> uniqueBrands = allCars.stream()
+        return allCars.stream()
                 .filter(car -> !duplicates.contains(car))
                 .distinct()
                 .collect(Collectors.toList());
-
-        return uniqueBrands;
     }
 }

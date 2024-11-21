@@ -60,6 +60,5 @@ class ReplyServiceTest {
         assertEquals(2, result.size());
         assertTrue(result.contains(CarBrand.TOYOTA));
         assertTrue(result.contains(CarBrand.HONDA));
-
     }
 }
