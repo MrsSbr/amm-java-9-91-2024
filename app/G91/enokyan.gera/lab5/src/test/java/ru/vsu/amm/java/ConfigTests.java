@@ -47,60 +47,50 @@ public final class ConfigTests {
     }
 
     @Test
-    public void testGetBadInteger()
-    {
+    public void testGetBadInteger() {
         assertThrows(NumberFormatException.class, () -> service.getBadInteger());
     }
 
     @Test
-    public void testGetBadDouble()
-    {
+    public void testGetBadDouble() {
         assertThrows(NumberFormatException.class, () -> service.getBadDouble());
     }
 
     @Test
-    public void testGetBadCarBrand()
-    {
+    public void testGetBadCarBrand() {
         assertThrows(IllegalArgumentException.class, () -> service.getBadCarBrand());
     }
 
     @Test
-    public void testGetString()
-    {
+    public void testGetString() {
         var str = service.getString();
 
         assertEquals("quack-quack", str);
     }
 
     @Test
-    public void testGetInteger()
-    {
+    public void testGetInteger() {
         var str = service.getInteger();
 
         assertEquals(420, str);
     }
 
-
-
     @Test
-    public void testGetDouble()
-    {
+    public void testGetDouble() {
         var str = service.getDouble();
 
         assertEquals(4.2, str);
     }
 
     @Test
-    public void testGetBoolean()
-    {
+    public void testGetBoolean() {
         var str = service.getBoolean();
 
         assertEquals(true, str);
     }
 
     @Test
-    public void testGetCarBrand()
-    {
+    public void testGetCarBrand() {
         var str = service.getCarBrand();
 
         assertEquals(CarBrand.BMW, str);

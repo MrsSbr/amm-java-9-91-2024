@@ -39,6 +39,4 @@ public interface TestConfig {
 
     @Property("test.car-brand")
     CarBrand getCarBrand();
-
-
 }
