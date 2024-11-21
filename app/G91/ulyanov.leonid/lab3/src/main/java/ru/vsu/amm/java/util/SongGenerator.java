@@ -62,7 +62,7 @@ public class SongGenerator {
         for (int i = 0; i < USER_AMOUNT; ++i) {
             result.put(USERNAMES[i], IntStream.range(0, DATA_AMOUNT)
                     .mapToObj(x -> generateOneSong())
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         return result;
     }
