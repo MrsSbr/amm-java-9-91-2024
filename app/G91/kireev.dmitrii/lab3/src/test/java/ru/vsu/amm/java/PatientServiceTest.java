@@ -12,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static ru.vsu.amm.java.Config.PatientConfig.*;
 
 
-public class PatientServiceSpec {
+public class PatientServiceTest {
 
-    private List<PatientDTO> patients = List.of(
+    private final List<PatientDTO> patients = List.of(
             new PatientDTO("John", "Doe", "Michael", true, "Healthy", NOW.minusYears(5)),
             new PatientDTO("Jane", "Smith", "Ann", false, "Pneumonia", NOW.minusYears(3)),
             new PatientDTO("Emily", "Williams", "Lee", false, "Asthma", NOW.minusYears(3)),

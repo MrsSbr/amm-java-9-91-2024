@@ -21,7 +21,6 @@ public class Main {
         List<PatientDTO> all = service.findAll();
 
         System.out.println("-----------------------------все------------------------------------------");
-
         for (var x : all) {
             System.out.println(x);
         }
