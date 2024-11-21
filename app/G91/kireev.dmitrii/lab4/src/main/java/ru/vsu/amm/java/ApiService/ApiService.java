@@ -4,7 +4,10 @@ import ru.vsu.amm.java.Model.FileEntity;
 import ru.vsu.amm.java.Model.TortureInstrument;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ApiService {
@@ -34,15 +37,15 @@ public class ApiService {
     }
 
 
-    public List<String> getTorturedByEveryInstrumentWithoutConfession(List<FileEntity> entities){
-       return (entities == null || entities.isEmpty()) ? new ArrayList<>() :
+    public List<String> getTorturedByEveryInstrumentWithoutConfession(List<FileEntity> entities) {
+        return (entities == null || entities.isEmpty()) ? new ArrayList<>() :
 
-             entities.stream()
-                    .filter(entity -> !entity.confessionObtained())
-                    .collect(Collectors.groupingBy(
-                            FileEntity::suspectName,
-                            Collectors.mapping(FileEntity::tortureInstrument, Collectors.toSet())
-                    )).entrySet().stream().filter(entry->entry.getValue().size()==4).map(Map.Entry::getKey).toList();
+                entities.stream()
+                        .filter(entity -> !entity.confessionObtained())
+                        .collect(Collectors.groupingBy(
+                                FileEntity::suspectName,
+                                Collectors.mapping(FileEntity::tortureInstrument, Collectors.toSet())
+                        )).entrySet().stream().filter(entry -> entry.getValue().size() == 4).map(Map.Entry::getKey).toList();
 
 
     }

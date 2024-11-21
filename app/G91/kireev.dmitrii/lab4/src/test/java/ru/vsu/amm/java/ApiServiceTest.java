@@ -1,6 +1,5 @@
 package ru.vsu.amm.java;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.ApiService.ApiService;
 import ru.vsu.amm.java.Model.FileEntity;
@@ -18,7 +17,7 @@ public class ApiServiceTest {
 
     private final ApiService apiService = new ApiService();
     private final List<FileEntity> entities = getEntities();
-    private final  List<FileEntity> nullEntities = null;
+    private final List<FileEntity> nullEntities = null;
 
 
     @Test
@@ -35,9 +34,6 @@ public class ApiServiceTest {
         assertEquals(0, result.size());
         assertEquals(result, new HashMap<>());
     }
-
-
-
 
 
     @Test
@@ -57,8 +53,6 @@ public class ApiServiceTest {
     }
 
 
-
-
     @Test
     public void testGetTorturedByEveryInstrumentWithoutConfession() {
         List<String> result = apiService.getTorturedByEveryInstrumentWithoutConfession(entities);
@@ -75,10 +69,7 @@ public class ApiServiceTest {
     }
 
 
-
-
-
-    private List<FileEntity> getEntities(){
+    private List<FileEntity> getEntities() {
         return List.of(
                 new FileEntity("Alice", TortureInstrument.WATERBOARDING, Duration.ofMinutes(30), false),
                 new FileEntity("Alice", TortureInstrument.WHIP, Duration.ofMinutes(30), false),
@@ -90,7 +81,6 @@ public class ApiServiceTest {
                 new FileEntity("Carl", TortureInstrument.ELECTRIC_SHOCK, Duration.ofMinutes(10), true),
                 new FileEntity("David", TortureInstrument.PHYSICAL_BEATING, Duration.ofMinutes(40), false));
     }
-
 
 
 }
