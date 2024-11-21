@@ -28,7 +28,8 @@ public class MortalCombatService {
                         new AbstractMap.SimpleEntry<>(i.tournamentNum(), i.participant1()),
                         new AbstractMap.SimpleEntry<>(i.tournamentNum(), i.participant2())
                 ))
-                .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.mapping(Map.Entry::getValue, Collectors.toSet())));
+                .collect(Collectors.groupingBy(Map.Entry::getKey,
+                        Collectors.mapping(Map.Entry::getValue, Collectors.toSet())));
 
 /*        fights.forEach(i -> {
 
