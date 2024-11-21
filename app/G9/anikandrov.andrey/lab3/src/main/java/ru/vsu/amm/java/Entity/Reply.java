@@ -8,21 +8,19 @@ public class Reply {
     private int age;
     private CarBrand carBrand;
 
-    public Reply(int age) {
+    public Reply() {
+    };
+
+    public Reply(CarBrand brand, int age) {
         this.age = age;
-        this.carBrand = getRandomCarBrand();
+        this.carBrand = brand;
     }
 
-    public Reply(CarBrand car, int age) {
-        this.age = age;
-        this.carBrand = car;
-    }
-
-    public CarBrand getRandomCarBrand() {
-        CarBrand[] brands = CarBrand.values();
-        Random random = new Random();
-        return brands[random.nextInt(brands.length)];
-    }
+//    public CarBrand getRandomCarBrand() {
+//        CarBrand[] brands = CarBrand.values();
+//        Random random = new Random();
+//        return brands[random.nextInt(brands.length)];
+//    }
 
     public int getAge() {
         return age;
