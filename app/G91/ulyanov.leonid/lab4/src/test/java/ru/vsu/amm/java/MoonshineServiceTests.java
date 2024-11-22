@@ -7,7 +7,11 @@ import ru.vsu.amm.java.enums.Ingredient;
 import ru.vsu.amm.java.service.MoonshineService;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
