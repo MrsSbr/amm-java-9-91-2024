@@ -5,10 +5,12 @@ import ru.vsu.amm.java.service.Service;
 
 public class ServiceImpl implements Service {
 
+    int SECONDS;
+
     @Benchmarked
     @Override
     public void do1() {
-        int SECONDS = 100;
+        SECONDS = 100;
         try {
             Thread.sleep(SECONDS);
         } catch (InterruptedException e) {
@@ -19,7 +21,7 @@ public class ServiceImpl implements Service {
     @Benchmarked
     @Override
     public void do2() {
-        int SECONDS = 200;
+        SECONDS = 200;
         try {
             Thread.sleep(SECONDS);
         } catch (InterruptedException e) {
@@ -29,7 +31,7 @@ public class ServiceImpl implements Service {
 
     @Override
     public void do3() {
-        int SECONDS = 150;
+        SECONDS = 150;
         try {
             Thread.sleep(SECONDS);
         } catch (InterruptedException e) {
