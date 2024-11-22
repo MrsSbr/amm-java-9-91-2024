@@ -16,7 +16,7 @@ public class Benchmark {
     private static final Map<String, Long> methodExecutionTimes = new HashMap<>();
 
     public static <T> T track(T service) throws Exception {
-        short NUM_METHOD = 1;
+        short NUM_METHOD = 0;
         // Создаем класс обработчика с помощью рефлексии
         Class<?> handlerClass = Class.forName(BenchmarkHandler.class.getName());
 
