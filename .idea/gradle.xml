@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -33,6 +34,7 @@
             <option value="$PROJECT_DIR$/app/G9/globuchik.dmitry/lab1" />
             <option value="$PROJECT_DIR$/app/G9/globuchik.dmitry/lab2" />
             <option value="$PROJECT_DIR$/app/G9/globuchik.dmitry/lab3" />
+            <option value="$PROJECT_DIR$/app/G9/globuchik.dmitry/lab4" />
             <option value="$PROJECT_DIR$/app/G9/golukovich.timofey/lab0" />
             <option value="$PROJECT_DIR$/app/G9/golukovich.timofey/lab1" />
             <option value="$PROJECT_DIR$/app/G9/golukovich.timofey/lab2" />
