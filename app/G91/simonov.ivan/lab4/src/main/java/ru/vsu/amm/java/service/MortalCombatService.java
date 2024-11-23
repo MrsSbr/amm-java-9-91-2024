@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.HashMap;
 import java.util.AbstractMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -38,7 +37,8 @@ public class MortalCombatService {
 
     public static Map<Hero, Integer> countVictoriesOfEveryHero(List<Fight> fights) {
 
-        Map<Hero, Integer> victories = new HashMap<>();
+        Map<Hero, Integer> victories = Arrays.stream(Hero.values())
+                .collect(Collectors.toMap(i -> i, i -> 0));
 
         Arrays.stream(Hero.values())
                 .forEach(i -> victories.put(i, 0));
