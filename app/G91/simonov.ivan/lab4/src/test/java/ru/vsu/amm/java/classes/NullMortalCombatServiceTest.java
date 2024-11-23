@@ -4,26 +4,26 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.service.MortalCombatService;
 
+import java.util.Map;
+import java.util.Set;
+
 public class NullMortalCombatServiceTest extends MortalCombatServiceTest {
 
     @Override
     @Test
     public void testFindMonthsWithMostFatalitiesInLast3Years() {
-        Assertions.assertThrows(NullPointerException.class,
-                () -> MortalCombatService.findMonthsWithMostFatalitiesInLast3Years(fights));
+        Assertions.assertEquals(Set.of(), MortalCombatService.findMonthsWithMostFatalitiesInLast3Years(fights));
     }
 
     @Override
     @Test
     public void testCountVictoriesOfEveryHero() {
-        Assertions.assertThrows(NullPointerException.class,
-                () -> MortalCombatService.countVictoriesOfEveryHero(fights));
+        Assertions.assertEquals(Map.of(), MortalCombatService.countVictoriesOfEveryHero(fights));
     }
 
     @Override
     @Test
     public void testFindParticipantsForEveryTournament() {
-        Assertions.assertThrows(NullPointerException.class,
-                () -> MortalCombatService.findParticipantsForEveryTournament(fights));
+        Assertions.assertEquals(Map.of(), MortalCombatService.findParticipantsForEveryTournament(fights));
     }
 }

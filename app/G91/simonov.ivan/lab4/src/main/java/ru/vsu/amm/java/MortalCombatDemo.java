@@ -11,8 +11,10 @@ import java.util.List;
 
 public class MortalCombatDemo {
 
-    private static final String READ_FILE_PATH = "app/G91/simonov.ivan/lab4/src/main/java/ru/vsu/amm/java/resources/read-fights.txt";
-    private static final String WRITE_FILE_PATH = "app/G91/simonov.ivan/lab4/src/main/java/ru/vsu/amm/java/resources/write-fights.txt";
+    private static final String READ_FILE_PATH = "app/G91/simonov.ivan/lab4/src/main/java"
+            + "/ru/vsu/amm/java/resources/read-fights.txt";
+    private static final String WRITE_FILE_PATH = "app/G91/simonov.ivan/lab4/src/main/java"
+            + "/ru/vsu/amm/java/resources/write-fights.txt";
 
     public static void main(String[] args) {
 

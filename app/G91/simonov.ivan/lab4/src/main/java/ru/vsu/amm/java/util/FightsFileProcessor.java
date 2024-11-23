@@ -9,17 +9,30 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileReader;
-import java.text.ParseException;
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class FightsFileProcessor {
 
     private static final Logger LOGGER = Logger.getLogger(FightsFileProcessor.class.getName());
+
+    static {
+        try {
+            FileHandler fileHandler = new FileHandler("app/G91/simonov.ivan/lab4/src/main/java"
+                    + "/ru/vsu/amm/java/logs/fights-file-processor-logs.log");
+            fileHandler.setFormatter(new SimpleFormatter());
+            LOGGER.addHandler(fileHandler);
+            LOGGER.setUseParentHandlers(false);
+        }
+        catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Creation of log file for FightsFileProcessor failed with an error: ", e);
+        }
+    }
 
     public static void writeFights(List<Fight> fights, String filePath, boolean isAppend) {
 
@@ -39,7 +52,7 @@ public class FightsFileProcessor {
             LOGGER.log(Level.INFO, String.format("Writing data to the file %s completed successfully", filePath));
         }
         catch (IOException e) {
-            LOGGER.log(Level.SEVERE, String.format("Writing data to the file %s failed with an error \"%s\"", filePath, e));
+            LOGGER.log(Level.SEVERE, String.format("Writing data to the file %s failed with an error:", filePath), e);
         }
     }
 
@@ -64,7 +77,8 @@ public class FightsFileProcessor {
             LOGGER.log(Level.INFO, String.format("Reading data from the file %s completed successfully", filePath));
         }
         catch (IOException | IllegalArgumentException e) {
-            LOGGER.log(Level.SEVERE, String.format("Reading data from the file %s failed with an error \"%s\"", filePath, e));
+            LOGGER.log(Level.SEVERE, String.format("Reading data "
+                    + "from the file %s failed with an error: ", filePath), e);
             return new ArrayList<>();
         }
         return readData;
