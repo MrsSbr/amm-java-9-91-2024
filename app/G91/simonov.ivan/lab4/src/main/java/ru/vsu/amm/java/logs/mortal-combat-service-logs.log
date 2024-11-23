@@ -1,0 +1,12 @@
+нояб. 24, 2024 1:48:55 AM ru.vsu.amm.java.service.MortalCombatService findMonthsWithMostFatalitiesInLast3Years
+INFO: Detected try to find months with most fatalities in last 3 years
+нояб. 24, 2024 1:48:55 AM ru.vsu.amm.java.service.MortalCombatService findMonthsWithMostFatalitiesInLast3Years
+INFO: Try to find months with most fatalities in last 3 years completed successfully
+нояб. 24, 2024 1:48:55 AM ru.vsu.amm.java.service.MortalCombatService countVictoriesOfEveryHero
+SEVERE: Detected try to count victories of every hero
+нояб. 24, 2024 1:48:55 AM ru.vsu.amm.java.service.MortalCombatService countVictoriesOfEveryHero
+SEVERE: Try to count victories of every hero completed successfully
+нояб. 24, 2024 1:48:55 AM ru.vsu.amm.java.service.MortalCombatService findParticipantsForEveryTournament
+INFO: Detected try to find participants for every tournament
+нояб. 24, 2024 1:48:55 AM ru.vsu.amm.java.service.MortalCombatService findParticipantsForEveryTournament
+INFO: Try to find participants for every tournament completed successfully

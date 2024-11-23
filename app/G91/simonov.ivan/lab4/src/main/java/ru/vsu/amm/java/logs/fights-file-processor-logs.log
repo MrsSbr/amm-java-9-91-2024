@@ -1,0 +1,15 @@
+нояб. 24, 2024 1:48:55 AM ru.vsu.amm.java.util.FightsFileProcessor readFights
+INFO: Detected try to read data from the file app/G91/simonov.ivan/lab4/src/main/java/ru/vsu/amm/java/resources/read-fights.txt
+нояб. 24, 2024 1:48:55 AM ru.vsu.amm.java.util.FightsFileProcessor readFights
+SEVERE: Reading data from the file app/G91/simonov.ivan/lab4/src/main/java/ru/vsu/amm/java/resources/read-fights.txt failed with an error: 
+java.lang.NumberFormatException: For input string: "2020-03-20"
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+	at java.base/java.lang.Integer.parseInt(Integer.java:588)
+	at java.base/java.lang.Integer.parseInt(Integer.java:685)
+	at ru.vsu.amm.java.util.FightsFileProcessor.readFights(FightsFileProcessor.java:69)
+	at ru.vsu.amm.java.MortalCombatDemo.main(MortalCombatDemo.java:19)
+
+нояб. 24, 2024 1:48:55 AM ru.vsu.amm.java.util.FightsFileProcessor writeFights
+INFO: Detected try to write data to the file app/G91/simonov.ivan/lab4/src/main/java/ru/vsu/amm/java/resources/write-fights.txt
+нояб. 24, 2024 1:48:55 AM ru.vsu.amm.java.util.FightsFileProcessor writeFights
+INFO: Writing data to the file app/G91/simonov.ivan/lab4/src/main/java/ru/vsu/amm/java/resources/write-fights.txt completed successfully
