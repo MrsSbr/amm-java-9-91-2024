@@ -9,6 +9,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileReader;
+import java.text.ParseException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +63,7 @@ public class FightsFileProcessor {
             }
             LOGGER.log(Level.INFO, String.format("Reading data from the file %s completed successfully", filePath));
         }
-        catch (IOException e) {
+        catch (IOException | IllegalArgumentException e) {
             LOGGER.log(Level.SEVERE, String.format("Reading data from the file %s failed with an error \"%s\"", filePath, e));
             return new ArrayList<>();
         }

@@ -51,6 +51,6 @@ public class MortalCombatDemo {
                         null)
         ));
 
-        FightsFileProcessor.writeFights(fights, WRITE_FILE_PATH, true);
+        FightsFileProcessor.writeFights(fights, WRITE_FILE_PATH, false);
     }
 }
