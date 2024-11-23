@@ -239,9 +239,6 @@ student("tottskiy.stepan", G9) {
     lab(0)
     lab(1)
 }
-student("globuchik.dmitry", G9) {
-    lab(0)
-}
 
 student("nikitina.elizaveta", G9) {
     lab(0)
@@ -250,6 +247,7 @@ student("nikitina.elizaveta", G9) {
 student("globuchik.dmitry", G9) {
     lab(0)
     lab(1)
+    lab(2)
 }
 
 // DSL для подпроектов [Не трогать]
