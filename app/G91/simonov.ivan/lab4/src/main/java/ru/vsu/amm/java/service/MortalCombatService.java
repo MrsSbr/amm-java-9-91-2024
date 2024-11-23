@@ -5,7 +5,12 @@ import ru.vsu.amm.java.enums.Hero;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashMap;
+import java.util.AbstractMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -23,8 +28,11 @@ public class MortalCombatService {
                 .orElse(0L);
 
         return Arrays.stream(Month.values())
-                .filter(i -> fatalitiesPerMonth.get(i) == null && maxFatalities == 0 ||
-                        fatalitiesPerMonth.get(i) != null && fatalitiesPerMonth.get(i).equals(maxFatalities))
+                .filter(i -> {
+                    Long monthFatalities = fatalitiesPerMonth.get(i);
+                    return monthFatalities == null && maxFatalities == 0
+                            || monthFatalities != null && monthFatalities.equals(maxFatalities);
+                })
                 .collect(Collectors.toSet());
     }
 
