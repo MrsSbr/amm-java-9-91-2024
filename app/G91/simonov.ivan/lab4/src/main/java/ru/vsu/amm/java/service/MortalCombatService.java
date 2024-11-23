@@ -79,9 +79,6 @@ public class MortalCombatService {
             Map<Hero, Integer> victories = Arrays.stream(Hero.values())
                     .collect(Collectors.toMap(i -> i, i -> 0));
 
-            Arrays.stream(Hero.values())
-                    .forEach(i -> victories.put(i, 0));
-
             fights.forEach(i -> victories.put(i.winner(), victories.get(i.winner()) + 1));
 
             LOGGER.log(Level.SEVERE, "Try to count victories of every hero completed successfully");
