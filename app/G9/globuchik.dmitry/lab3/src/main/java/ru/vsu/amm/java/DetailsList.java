@@ -41,4 +41,12 @@ public class DetailsList {
         }
         return result;
     }
+
+    public void addPart(DetailTypes detailType) {
+        parts.add(new Part(detailType));
+    }
+
+    public List<Part> getParts() {
+        return new ArrayList<>(parts);
+    }
 }
