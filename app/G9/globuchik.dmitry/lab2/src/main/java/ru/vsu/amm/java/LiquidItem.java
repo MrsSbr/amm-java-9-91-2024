@@ -24,7 +24,7 @@ public class LiquidItem extends ItemImplementation {
 
     @Override
     public void perform() {
-        System.out.println("Бутылка " + getName() + "объемом" + getVolume());
+        System.out.println("Bottle " + getName() + " volume " + getVolume() + '\n');
     }
 
     @Override
@@ -43,8 +43,8 @@ public class LiquidItem extends ItemImplementation {
 
     @Override
     public String toString() {
-        return "Бутылка: " +
-                super.toString() +
-                "Объем=" + volume + " мл.";
+        return "Bottle:\n" +
+                "Volume=" + volume + " oz.\n" +
+                super.toString() + '\n';
     }
 }

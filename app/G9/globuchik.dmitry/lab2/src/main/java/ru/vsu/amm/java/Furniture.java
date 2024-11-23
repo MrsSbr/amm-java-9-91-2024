@@ -29,10 +29,10 @@ public class Furniture extends ItemImplementation {
 
     @Override
     public void perform() {
-        if (this.type.equals("Диван") || this.type.equals("Кресло")) {
-            System.out.println("Красивый " + color +  "диван\nТак и хочется присесть");
-        } else if (this.type.equals("Стол")) {
-            System.out.println("Классный стол");
+        if (this.type.equals("Sofa") || this.type.equals("Chair")) {
+            System.out.println("Beautiful " + color +  " sofa\nI want to sit on it\n");
+        } else if (this.type.equals("Table")) {
+            System.out.println("Cool Table\n");
         }
     }
 
@@ -56,12 +56,12 @@ public class Furniture extends ItemImplementation {
 
     @Override
     public String toString() {
-        return "Мебель:" +
-                "Высота='" + height + '\'' +
-                ", Ширина='" + width + '\'' +
-                ", Длина='" + length + '\'' +
-                ", Цвет='" + color + '\'' +
-                ", Тип='" + type + '\'' +
+        return "Furniture:\n" +
+                "Height=" + height + '\n' +
+                "Width=" + width + '\n' +
+                "Length=" + length + '\n' +
+                "Color=" + color + '\n' +
+                "Type=" + type + '\n' +
                 super.toString();
     }
 }

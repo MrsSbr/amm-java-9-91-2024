@@ -31,10 +31,10 @@ public abstract class ItemImplementation implements Item {
 
     @Override
     public String toString() {
-        return "Товар:" +
-                "Название='" + name + '\'' +
-                ", Цена=" + price +
-                ", Количество=" + quantity;
+        return "Item:\n" +
+                "Name=" + name + '\n' +
+                "Price=" + price +'\n'+
+                "Count=" + quantity+'\n';
     }
 
     @Override

@@ -13,33 +13,33 @@ public class ItemUsage {
         System.out.print(Cola);
 
         ItemImplementation Table = new Furniture(
-                "Стол деревянный",
+                "Wooden Table",
                 12500,
                 5,
                 80,
                 120,
                 120,
-                "Серый",
-                "Стол");
+                "Gray",
+                "Table");
 
         Table.perform();
         System.out.print(Table);
 
 
         ItemImplementation Sofa = new Furniture(
-                "Кресло босс",
+                "Boss chair",
                 65600,
                 3,
                 120,
                 240,
                 180,
-                "коричневый",
-                "Кресло");
+                "Brown",
+                "Chair");
         Sofa.perform();
         System.out.print(Sofa);
 
-        System.out.println(Sofa.equals(Table));
-        System.out.println(Sofa.hashCode());
+        System.out.println("Sofa == Table is: " + Sofa.equals(Table));
+        System.out.println("Sofa hashcode: " + Sofa.hashCode());
 
         defineType(Sofa);
         defineType(Table);
@@ -49,9 +49,9 @@ public class ItemUsage {
 
     public static void defineType(ItemImplementation item) {
         if (item instanceof LiquidItem) {
-            System.out.println("Это какая-то жидкость");
+            System.out.println("This is Liquid\n");
         } else if (item instanceof Furniture) {
-            System.out.print("Это мебель");
+            System.out.print("This is Furniture\n");
         }
     }
 }
