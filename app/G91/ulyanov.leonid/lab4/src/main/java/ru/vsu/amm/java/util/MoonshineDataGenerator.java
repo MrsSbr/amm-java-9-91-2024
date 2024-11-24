@@ -25,9 +25,9 @@ public class MoonshineDataGenerator {
     private static final int MIN_INGREDIENTS = 3;
     private static final int MAX_INGREDIENTS = Ingredient.values().length;
 
-    private float floatRandBetween(float start, float end) {
+    private double doubleRandBetween(double start, double end) {
         Random rand = new Random();
-        return start + rand.nextFloat() * (end - start);
+        return start + rand.nextDouble() * (end - start);
     }
 
     private int intRandBetween(int start, int end) {
@@ -57,8 +57,8 @@ public class MoonshineDataGenerator {
         LocalDate date = generateDate();
         String label = LABELS[intRandBetween(0, LABELS.length - 1)].toString();
         List<Ingredient> ingredients = generateIngredientsList();
-        float volume = floatRandBetween(VOLUME_LOWER_BOUND, VOLUME_UPPER_BOUND);
-        float time = floatRandBetween(TIME_LOWER_BOUND, TIME_UPPER_BOUND);
+        double volume = doubleRandBetween(VOLUME_LOWER_BOUND, VOLUME_UPPER_BOUND);
+        double time = doubleRandBetween(TIME_LOWER_BOUND, TIME_UPPER_BOUND);
         return new MoonshineData(date, label, ingredients, volume, time);
     }
 
