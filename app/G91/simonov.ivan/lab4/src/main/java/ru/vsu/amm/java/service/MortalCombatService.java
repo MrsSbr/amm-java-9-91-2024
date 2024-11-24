@@ -43,7 +43,8 @@ public class MortalCombatService {
 
         try {
             Map<Month, Long> fatalitiesPerMonth = fights.stream()
-                    .filter(i -> i.date().isAfter(LocalDate.now().minusYears(3)) && i.fatality() != null)
+                    .filter(fight -> fight.date().isAfter(LocalDate.now().minusYears(3))
+                            && fight.fatality() != null)
                     .collect(Collectors.groupingBy(i -> i.date().getMonth(), Collectors.counting()));
 
             Long maxFatalities = fatalitiesPerMonth.values()
@@ -52,8 +53,8 @@ public class MortalCombatService {
                     .orElse(0L);
 
             Set<Month> months = Arrays.stream(Month.values())
-                    .filter(i -> {
-                        Long monthFatalities = fatalitiesPerMonth.get(i);
+                    .filter(month -> {
+                        Long monthFatalities = fatalitiesPerMonth.get(month);
                         return monthFatalities == null && maxFatalities == 0
                                 || monthFatalities != null && monthFatalities.equals(maxFatalities);
                     })
@@ -77,7 +78,7 @@ public class MortalCombatService {
 
         try {
             Map<Hero, Integer> victories = Arrays.stream(Hero.values())
-                    .collect(Collectors.toMap(i -> i, i -> 0));
+                    .collect(Collectors.toMap(hero -> hero, hero -> 0));
 
             fights.forEach(i -> victories.put(i.winner(), victories.get(i.winner()) + 1));
 
@@ -97,9 +98,9 @@ public class MortalCombatService {
 
         try {
             Map<Integer, Set<Hero>> participants = fights.stream()
-                    .flatMap(i -> Stream.of(
-                            new AbstractMap.SimpleEntry<>(i.tournamentNum(), i.participant1()),
-                            new AbstractMap.SimpleEntry<>(i.tournamentNum(), i.participant2())
+                    .flatMap(fight -> Stream.of(
+                            new AbstractMap.SimpleEntry<>(fight.tournamentNum(), fight.participant1()),
+                            new AbstractMap.SimpleEntry<>(fight.tournamentNum(), fight.participant2())
                     ))
                     .collect(Collectors.groupingBy(Map.Entry::getKey,
                             Collectors.mapping(Map.Entry::getValue, Collectors.toSet())));

@@ -20,6 +20,12 @@ import java.util.logging.SimpleFormatter;
 public class FightsFileProcessor {
 
     private static final Logger LOGGER = Logger.getLogger(FightsFileProcessor.class.getName());
+    private static final Integer TOURNAMENT_NUM_INDEX = 0;
+    private static final Integer DATE_INDEX = 1;
+    private static final Integer PARTICIPANT1_INDEX = 2;
+    private static final Integer PARTICIPANT2_INDEX = 3;
+    private static final Integer WINNER_INDEX = 4;
+    private static final Integer FATALITY_INDEX = 5;
 
     static {
         try {
@@ -66,12 +72,12 @@ public class FightsFileProcessor {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] splits = line.split(" ");
-                readData.add(new Fight(Integer.parseInt(splits[0]),
-                        LocalDate.parse(splits[1]),
-                        Hero.valueOf(splits[2]),
-                        Hero.valueOf(splits[3]),
-                        Hero.valueOf(splits[4]),
-                        Fatality.valueOf(splits[5])
+                readData.add(new Fight(Integer.parseInt(splits[TOURNAMENT_NUM_INDEX]),
+                        LocalDate.parse(splits[DATE_INDEX]),
+                        Hero.valueOf(splits[PARTICIPANT1_INDEX]),
+                        Hero.valueOf(splits[PARTICIPANT2_INDEX]),
+                        Hero.valueOf(splits[WINNER_INDEX]),
+                        Fatality.valueOf(splits[FATALITY_INDEX])
                 ));
             }
             LOGGER.log(Level.INFO, String.format("Reading data from the file %s completed successfully", filePath));
