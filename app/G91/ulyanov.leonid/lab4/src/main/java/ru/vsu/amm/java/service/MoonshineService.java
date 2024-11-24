@@ -3,16 +3,15 @@ package ru.vsu.amm.java.service;
 import ru.vsu.amm.java.entity.MoonshineData;
 import ru.vsu.amm.java.enums.Ingredient;
 
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MoonshineService {
-    public static Map<Ingredient, Double> getAverageTimeForIngredients(List<MoonshineData> drinksList)
-            throws NullPointerException {
+    public static Map<Ingredient, Double> getAverageTimeForIngredients(List<MoonshineData> drinksList) {
         if (drinksList == null) {
-            throw new NullPointerException();
+            return new HashMap<>();
         }
 
         return drinksList.stream()
@@ -22,10 +21,9 @@ public class MoonshineService {
                         Collectors.averagingDouble(Map.Entry::getValue)));
     }
 
-    public static int getMaxIngredientsMonth(List<MoonshineData> drinksList)
-            throws NullPointerException {
+    public static int getMaxIngredientsMonth(List<MoonshineData> drinksList) {
         if (drinksList == null) {
-            throw new NullPointerException();
+            return 0;
         }
 
         return drinksList.stream()
@@ -38,10 +36,9 @@ public class MoonshineService {
                 .orElse(0);
     }
 
-    public static Map<String, Double> getTotalVolumeForEachDrink(List<MoonshineData> drinksList)
-            throws NullPointerException {
+    public static Map<String, Double> getTotalVolumeForEachDrink(List<MoonshineData> drinksList) {
         if (drinksList == null) {
-            throw new NullPointerException();
+            return new HashMap<>();
         }
 
         return drinksList.stream()

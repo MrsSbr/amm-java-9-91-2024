@@ -3,7 +3,6 @@ package ru.vsu.amm.java.util;
 import ru.vsu.amm.java.entity.MoonshineData;
 import ru.vsu.amm.java.enums.Ingredient;
 
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -19,6 +18,13 @@ import java.util.logging.Logger;
 
 public class FileManager {
 
+    private static final int LABEL_INDEX = 0;
+    private static final int DATE_INDEX = 1;
+    private static final int VOLUME_INDEX = 2;
+    private static final int TIME_INDEX = 3;
+
+    private static final Logger logger = Logger.getLogger(FileManager.class.getName());
+
     private static String getIngredientsAsString(List<Ingredient> ingredients) {
         return String.join(" ",
                 ingredients.stream()
@@ -32,23 +38,20 @@ public class FileManager {
                 .toList();
     }
 
-    private static final Logger LOGGER = Logger.getLogger(FileManager.class.getName());
-
     public static void writeToFile(String dest, int size) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(dest, true))) {
             MoonshineDataGenerator gen = new MoonshineDataGenerator();
             for (int i = 0; i < size; i++) {
                 MoonshineData drink = gen.generateOneMoonshineData();
-                bw.write(String.format("%s;%s%n",
+                bw.write(String.format(Locale.US, "%s;%s;%.5f;%.5f%n",
                         drink.label(),
-                        drink.date()));
-                bw.write(getIngredientsAsString(drink.ingredients()));
-                bw.write(String.format(Locale.US, "%.5f;%.5f%n",
+                        drink.date(),
                         drink.volume(),
                         drink.makingTime()));
+                bw.write(getIngredientsAsString(drink.ingredients()));
             }
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            logger.log(Level.SEVERE, e.getMessage(), e);
             throw new RuntimeException(e);
         }
     }
@@ -57,19 +60,20 @@ public class FileManager {
         try (BufferedReader br = new BufferedReader(new FileReader(source))) {
             String[] lines = br.lines().toArray(String[]::new);
             List<MoonshineData> list = new ArrayList<>();
-            for (int i = 0; i < lines.length - 2; i += 3) {
+            for (int i = 0; i < lines.length - 1; i += 2) {
                 String[] data = lines[i].split(";");
-                String label = data[0];
-                LocalDate date = LocalDate.parse(data[1]);
+
+                String label = data[LABEL_INDEX];
+                LocalDate date = LocalDate.parse(data[DATE_INDEX]);
+                double volume = Double.parseDouble(data[VOLUME_INDEX]);
+                double makingTime = Double.parseDouble(data[TIME_INDEX]);
                 List<Ingredient> ingredients = getIngredientsFromString(lines[i + 1]);
-                data = lines[i + 2].split(";");
-                float volume = Float.parseFloat(data[0]);
-                float makingTime = Float.parseFloat(data[1]);
+
                 list.add(new MoonshineData(date, label, ingredients, volume, makingTime));
             }
             return list;
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            logger.log(Level.SEVERE, e.getMessage(), e);
             throw new RuntimeException(e);
         }
     }

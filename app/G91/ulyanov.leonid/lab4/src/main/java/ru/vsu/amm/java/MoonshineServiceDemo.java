@@ -12,21 +12,27 @@ import java.util.logging.Logger;
 
 
 public class MoonshineServiceDemo {
-    private static final Logger LOGGER = Logger.getLogger(MoonshineServiceDemo.class.getName());
+    private static final Logger logger = Logger.getLogger(MoonshineServiceDemo.class.getName());
     private static final String PATH = System.getProperty("user.dir") + "\\test.txt";
+
+    private static final int DATA_AMOUNT = 10;
+
+    private static final String NULL_POINTER_MSG = "NullPointerException has occurred.\n";
+    private static final String WRITE_FAIL_MSG = "Writing to file was unsuccessful.\n";
+    private static final String READ_FAIL_MSG = "Reading from file was unsuccessful.\n";
 
     public static void main(String[] args) {
         try {
-            FileManager.writeToFile(PATH, 10);
+            FileManager.writeToFile(PATH, DATA_AMOUNT);
         } catch (RuntimeException e) {
-            LOGGER.log(Level.SEVERE, "Writing to file was unsuccessful.\n");
+            logger.log(Level.SEVERE, WRITE_FAIL_MSG, e);
         }
 
         List<MoonshineData> drinksList = new ArrayList<>();
         try {
             drinksList = FileManager.readFromFile(PATH);
         } catch (RuntimeException e) {
-            LOGGER.log(Level.SEVERE, "Reading from file was unsuccessful.\n");
+            logger.log(Level.SEVERE, READ_FAIL_MSG, e);
         }
 
         try {
@@ -34,18 +40,16 @@ public class MoonshineServiceDemo {
             MoonshineService.getAverageTimeForIngredients(drinksList)
                     .forEach((x, y) -> System.out.println(x.toString() + ':' + y));
         } catch (NullPointerException e) {
-            LOGGER.log(Level.SEVERE, "NullPointerException has occurred.\n"
+            logger.log(Level.SEVERE, NULL_POINTER_MSG
                     + Arrays.toString(e.getStackTrace()));
-            throw new RuntimeException(e);
         }
 
         try {
             System.out.println("\nMonth with maximum ingredients: "
                     + MoonshineService.getMaxIngredientsMonth(drinksList) + '\n');
         } catch (NullPointerException e) {
-            LOGGER.log(Level.SEVERE, "NullPointerException has occurred.\n"
+            logger.log(Level.SEVERE, NULL_POINTER_MSG
                     + Arrays.toString(e.getStackTrace()));
-            throw new RuntimeException(e);
         }
 
         try {
@@ -53,9 +57,8 @@ public class MoonshineServiceDemo {
             MoonshineService.getTotalVolumeForEachDrink(drinksList)
                     .forEach((x, y) -> System.out.println(x + ':' + y));
         } catch (NullPointerException e) {
-            LOGGER.log(Level.SEVERE, "NullPointerException has occurred.\n"
+            logger.log(Level.SEVERE, NULL_POINTER_MSG
                     + Arrays.toString(e.getStackTrace()));
-            throw new RuntimeException(e);
         }
     }
 }

@@ -8,15 +8,13 @@ import ru.vsu.amm.java.service.MoonshineService;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class MoonshineServiceTests {
+public class MoonshineEqualsTests {
     private List<MoonshineData> drinks;
 
     @BeforeEach
@@ -28,17 +26,6 @@ public class MoonshineServiceTests {
     public void getMaxIngredientsMonthTest() {
         int month = MoonshineService.getMaxIngredientsMonth(drinks);
         assertEquals(7, month);
-    }
-
-    @Test
-    public void getMaxIngredientsMonthTestNull() {
-        assertThrows(NullPointerException.class, () -> MoonshineService.getMaxIngredientsMonth(null));
-    }
-
-    @Test
-    public void getMaxIngredientsMonthTestEmpty() {
-        int month = MoonshineService.getMaxIngredientsMonth(new ArrayList<>());
-        assertEquals(0, month);
     }
 
     @Test
@@ -54,16 +41,6 @@ public class MoonshineServiceTests {
     }
 
     @Test
-    public void getTotalVolumeForEachDrinkTestNull() {
-        assertThrows(NullPointerException.class, () -> MoonshineService.getTotalVolumeForEachDrink(null));
-    }
-
-    @Test
-    public void getTotalVolumeForEachDrinkTestEmpty() {
-        assertEquals(new HashMap<>(), MoonshineService.getTotalVolumeForEachDrink(new ArrayList<>()));
-    }
-
-    @Test
     public void getAverageTimeForIngredientsTest() {
         Map<Ingredient, Double> result = MoonshineService.getAverageTimeForIngredients(drinks);
         assertEquals(new HashMap<Ingredient, Double>() {{
@@ -75,16 +52,6 @@ public class MoonshineServiceTests {
                 put(Ingredient.WATER, 14.4);
             }
         }, result);
-    }
-
-    @Test
-    public void getAverageTimeForIngredientsTestNull() {
-        assertThrows(NullPointerException.class, () -> MoonshineService.getAverageTimeForIngredients(null));
-    }
-
-    @Test
-    public void getAverageTimeForIngredientsTestEmpty() {
-        assertEquals(new HashMap<>(), MoonshineService.getAverageTimeForIngredients(new ArrayList<>()));
     }
 
     public static List<MoonshineData> generateMoonshineData() {
