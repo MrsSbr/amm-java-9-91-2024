@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.util;
 
 import ru.vsu.amm.java.entity.MoonshineData;
+import ru.vsu.amm.java.enums.DrinkName;
 import ru.vsu.amm.java.enums.Ingredient;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.util.Random;
 public class MoonshineDataGenerator {
     private static final Ingredient[] INGREDIENTS = Ingredient.values();
 
-    private static final String[] LABELS = new String[]{"whiskey", "scotch", "tincture", "potion"};
+    private static final DrinkName[] LABELS = DrinkName.values();
 
     private static final int START_YEAR = 2020;
     private static final float VOLUME_LOWER_BOUND = 0.5f;
@@ -54,7 +55,7 @@ public class MoonshineDataGenerator {
 
     public MoonshineData generateOneMoonshineData() {
         LocalDate date = generateDate();
-        String label = LABELS[intRandBetween(0, LABELS.length - 1)];
+        String label = LABELS[intRandBetween(0, LABELS.length - 1)].toString();
         List<Ingredient> ingredients = generateIngredientsList();
         float volume = floatRandBetween(VOLUME_LOWER_BOUND, VOLUME_UPPER_BOUND);
         float time = floatRandBetween(TIME_LOWER_BOUND, TIME_UPPER_BOUND);
