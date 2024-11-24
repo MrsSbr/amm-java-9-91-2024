@@ -23,8 +23,8 @@ public final class EggProductionTest {
                 new EggProductionRecord(LocalDate.now().minusDays(10), BirdType.Duck, 25),
                 new EggProductionRecord(LocalDate.now().minusDays(30), BirdType.Goose, 5)
         );
-        var result = new HashSet<>(EggProductionService.getHighProductionBirdType(records)); // Преобразуем в Set
-        var expected = Set.of(BirdType.Chicken, BirdType.Duck); // Используем Set для сравнения
+        var result = new HashSet<>(EggProductionService.getHighProductionBirdType(records));
+        var expected = Set.of(BirdType.Chicken, BirdType.Duck);
         assertEquals(expected, result);
     }
 
