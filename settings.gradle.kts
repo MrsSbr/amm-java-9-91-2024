@@ -60,8 +60,8 @@ student("gonnykh.alexander", G91) {
 
 student("simonov.ivan", G91) {
     lab(0)
-    lab(2)
     lab(1)
+    lab(2)
     lab(3)
 }
 
@@ -69,6 +69,7 @@ student("ulyanov.leonid", G91) {
     lab(0)
     lab(1)
     lab(2)
+    lab(3)
 }
 
 student("nelezin.oleg", G9) {
