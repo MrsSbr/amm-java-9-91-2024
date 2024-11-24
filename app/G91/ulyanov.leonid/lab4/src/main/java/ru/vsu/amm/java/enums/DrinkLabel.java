@@ -1,5 +1,5 @@
 package ru.vsu.amm.java.enums;
 
-public enum DrinkName {
+public enum DrinkLabel {
     WHISKEY, SCOTCH, TINCTURE, POTION
 }
