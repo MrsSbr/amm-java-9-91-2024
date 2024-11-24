@@ -18,16 +18,12 @@ public class EggProductionFactory {
     }
 
     public static EggProductionRecord generateRecord(){
-        int year = rnd.nextInt(2023,2024); //последние 3 года?
+        int year = rnd.nextInt(2023,2024);
         int dayOfYear = rnd.nextInt(1, Year.isLeap(year) ? 367 : 366);
         LocalDate date = LocalDate.ofYearDay(year, dayOfYear);
-        //для теста
-        //LocalDate today = LocalDate.now();
-        //LocalDate threeWeeksAgo = today.minus(3, ChronoUnit.WEEKS);
-        //LocalDate date = threeWeeksAgo.plusDays(rnd.nextInt(21));  // Генерация случайных дат в последние три недели
         var birdTypes = BirdType.values();
         BirdType birdType = birdTypes[rnd.nextInt(birdTypes.length)];
-        int eggsCount = rnd.nextInt(20, 51); //до 50 яиц?
+        int eggsCount = rnd.nextInt(20, 51);
         return new EggProductionRecord(date, birdType, eggsCount);
     }
 
