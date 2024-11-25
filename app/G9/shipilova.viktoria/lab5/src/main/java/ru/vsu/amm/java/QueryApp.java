@@ -28,7 +28,7 @@ public class QueryApp {
             logger.log(Level.INFO, "Generate UPDATE query");
             System.out.println(queryBuilder.generateDeleteQuery("id = 1"));
             logger.log(Level.INFO, "Generate DELETE query");
-        } catch (IllegalAccessException e){
+        } catch (IllegalAccessException e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
 
