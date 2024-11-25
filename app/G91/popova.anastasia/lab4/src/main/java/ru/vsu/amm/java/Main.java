@@ -31,7 +31,7 @@ public class Main {
 
     static {
         try {
-            FileHandler fh = new FileHandler("app/G91/popova.anastasia/lab4/main.log", true);
+            final FileHandler fh = new FileHandler("app/G91/popova.anastasia/lab4/main.log", true);
             logger.addHandler(fh);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "couldn't initialize file handler for logger", e);

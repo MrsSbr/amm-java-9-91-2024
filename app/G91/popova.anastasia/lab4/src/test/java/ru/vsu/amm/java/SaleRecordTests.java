@@ -11,10 +11,19 @@ import java.util.Set;
 
 import ru.vsu.amm.java.entity.SaleRecord;
 import ru.vsu.amm.java.analyzer.SalesAnalyzer;
-import static java.time.LocalDate.*;
-import static ru.vsu.amm.java.enums.Jewelry.*;
-import static ru.vsu.amm.java.enums.Gemstone.*;
-import static ru.vsu.amm.java.enums.PreciousMetal.*;
+import static java.time.LocalDate.of;
+import static ru.vsu.amm.java.enums.Jewelry.Ring;
+import static ru.vsu.amm.java.enums.Jewelry.Earrings;
+import static ru.vsu.amm.java.enums.Jewelry.Necklace;
+import static ru.vsu.amm.java.enums.Gemstone.Amber;
+import static ru.vsu.amm.java.enums.Gemstone.Amethyst;
+import static ru.vsu.amm.java.enums.Gemstone.Diamond;
+import static ru.vsu.amm.java.enums.Gemstone.Emerald;
+import static ru.vsu.amm.java.enums.Gemstone.Ruby;
+import static ru.vsu.amm.java.enums.Gemstone.Sapphire;
+import static ru.vsu.amm.java.enums.PreciousMetal.Silver;
+import static ru.vsu.amm.java.enums.PreciousMetal.Gold;
+import static ru.vsu.amm.java.enums.PreciousMetal.White_gold;
 
 
 public class SaleRecordTests {

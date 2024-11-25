@@ -1,10 +1,16 @@
 package ru.vsu.amm.java.util;
 
 import ru.vsu.amm.java.entity.SaleRecord;
-import ru.vsu.amm.java.enums.*;
+import ru.vsu.amm.java.enums.PreciousMetal;
+import ru.vsu.amm.java.enums.Jewelry;
+import ru.vsu.amm.java.enums.Gemstone;
 import static ru.vsu.amm.java.util.SaleFactory.generateSaleRecord;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -22,6 +28,12 @@ import java.util.stream.Collectors;
 public class FileHandle {
 
     private static final Logger logger = Logger.getLogger(FileHandle.class.getName());
+
+    private static final Integer DATE_INDEX = 0;
+    private static final Integer METAL_INDEX = 1;
+    private static final Integer JEWELRY_INDEX = 2;
+    private static final Integer GEMSTONES_INDEX = 3;
+    private static final Integer PRICE_INDEX = 4;
 
     static {
         try {
@@ -42,7 +54,7 @@ public class FileHandle {
                             record.getDate(),
                             record.getPreciousMetal(),
                             record.getJewelry(),
-                           record.getGemstones().stream()
+                            record.getGemstones().stream()
                                    .map(Enum::name)
                                    .collect(Collectors.joining(",")),
                             record.getPrice()));
@@ -59,14 +71,14 @@ public class FileHandle {
         logger.log(Level.INFO, "getting sale records from " + path);
         try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
             List<SaleRecord> records = reader.lines().map(line -> {
-                String[] fragments = line.split(";");
-                LocalDate date = LocalDate.parse(fragments[0]);
-                PreciousMetal preciousMetal = PreciousMetal.valueOf(fragments[1]);
-                Jewelry jewelry = Jewelry.valueOf(fragments[2]);
-                Set<Gemstone> gemstones = Arrays.stream(fragments[3].split(","))
+                String[] recordFragments = line.split(";");
+                LocalDate date = LocalDate.parse(recordFragments[DATE_INDEX]);
+                PreciousMetal preciousMetal = PreciousMetal.valueOf(recordFragments[METAL_INDEX]);
+                Jewelry jewelry = Jewelry.valueOf(recordFragments[JEWELRY_INDEX]);
+                Set<Gemstone> gemstones = Arrays.stream(recordFragments[GEMSTONES_INDEX].split(","))
                         .map(Gemstone::valueOf)
                         .collect(Collectors.toSet());
-                int price = Integer.parseInt(fragments[4]);
+                int price = Integer.parseInt(recordFragments[PRICE_INDEX]);
                 return new SaleRecord(date, preciousMetal, jewelry, gemstones, price);
             }).toList();
             logger.log(Level.INFO, "file read successfully");

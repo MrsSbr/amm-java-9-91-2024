@@ -43,8 +43,8 @@ public class SalesAnalyzer {
     }
 
     public static Set<Gemstone> findGemsBySellingTime(List<SaleRecord> saleRecordList) {
-        LocalDate threeYearsAgoStart = LocalDate.now().minusYears(3).withDayOfYear(1);
-        LocalDate threeYearsAgoEnd = LocalDate.now().minusYears(2).withDayOfYear(1).minusDays(1);
+        LocalDate threeYearsAgoStart = LocalDate.now().minusYears(3).withDayOfMonth(1).withMonth(1);
+        LocalDate threeYearsAgoEnd = LocalDate.now().minusYears(2).withDayOfMonth(31).withMonth(12);
         LocalDate sixMonthsAgo = LocalDate.now().minusMonths(6);
 
         if (saleRecordList.isEmpty()) {
