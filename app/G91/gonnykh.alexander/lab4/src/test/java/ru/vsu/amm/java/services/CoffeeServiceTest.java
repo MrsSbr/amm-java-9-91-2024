@@ -26,9 +26,9 @@ class CoffeeServiceTest {
     @Test
     @DisplayName("calculate average preparation time (empty)")
     void calculateAveragePreparationTimeEmpty() {
-        Map<CoffeeType, Float> expected = new HashMap<>();
+        Map<CoffeeType, Double> expected = new HashMap<>();
 
-        Map<CoffeeType, Float> actual = CoffeeService.calculateAveragePreparationTime(coffeeRecords);
+        Map<CoffeeType, Double> actual = CoffeeService.calculateAveragePreparationTime(coffeeRecords);
         assertEquals(expected, actual);
     }
 
@@ -36,11 +36,11 @@ class CoffeeServiceTest {
     @DisplayName("calculate average preparation time (one value)")
     void calculateAveragePreparationTimeOneValue() {
         coffeeRecords.add(new CoffeeRecord(CoffeeType.CAPPUCCINO
-                , LocalDateTime.now(), 5, 3.0f));
+                , LocalDateTime.now(), 5, 3.0));
 
-        Map<CoffeeType, Float> expected = Map.of(CoffeeType.CAPPUCCINO, 5.0f);
+        Map<CoffeeType, Double> expected = Map.of(CoffeeType.CAPPUCCINO, 5.0);
 
-        Map<CoffeeType, Float> actual = CoffeeService.calculateAveragePreparationTime(coffeeRecords);
+        Map<CoffeeType, Double> actual = CoffeeService.calculateAveragePreparationTime(coffeeRecords);
         assertEquals(expected, actual);
     }
 
@@ -48,14 +48,14 @@ class CoffeeServiceTest {
     @DisplayName("calculate average preparation time (multiple values)")
     void calculateAveragePreparationTimeMultipleValues() {
         coffeeRecords.add(new CoffeeRecord(CoffeeType.CAPPUCCINO
-                , LocalDateTime.now(), 5, 3.0f));
+                , LocalDateTime.now(), 5, 3.0));
 
         coffeeRecords.add(new CoffeeRecord(CoffeeType.CAPPUCCINO
-                , LocalDateTime.now(), 7, 3.0f));
+                , LocalDateTime.now(), 7, 3.0));
 
-        Map<CoffeeType, Float> expected = Map.of(CoffeeType.CAPPUCCINO, 6.0f);
+        Map<CoffeeType, Double> expected = Map.of(CoffeeType.CAPPUCCINO, 6.0);
 
-        Map<CoffeeType, Float> actual = CoffeeService.calculateAveragePreparationTime(coffeeRecords);
+        Map<CoffeeType, Double> actual = CoffeeService.calculateAveragePreparationTime(coffeeRecords);
         assertEquals(expected, actual);
     }
 
@@ -72,7 +72,7 @@ class CoffeeServiceTest {
     void findBusiestHourOneValue() {
         coffeeRecords.add(new CoffeeRecord(CoffeeType.CAPPUCCINO
                 , LocalDateTime.of(2024, 11, 21, 10, 0)
-                , 5, 3.0f));
+                , 5, 3.0));
 
         Optional<Integer> expected = Optional.of(10);
 
@@ -85,11 +85,11 @@ class CoffeeServiceTest {
     void findBusiestHourMultipleValues() {
         coffeeRecords.add(new CoffeeRecord(CoffeeType.CAPPUCCINO
                 , LocalDateTime.of(2024, 11, 21, 10, 0)
-                , 5, 3.0f));
+                , 5, 3.0));
 
         coffeeRecords.add(new CoffeeRecord(CoffeeType.LATTE
                 , LocalDateTime.of(2024, 11, 21, 10, 30)
-                , 5, 3.5f));
+                , 5, 3.5));
 
         Optional<Integer> expected = Optional.of(10);
 
@@ -111,7 +111,7 @@ class CoffeeServiceTest {
     void findCoffeeOrderedFrom7To12OneValue() {
         coffeeRecords.add(new CoffeeRecord(CoffeeType.CAPPUCCINO
                 , LocalDateTime.of(2024, 11, 21, 8, 0)
-                , 5, 3.0f));
+                , 5, 3.0));
 
         List<CoffeeType> expected = List.of(CoffeeType.CAPPUCCINO);
 
@@ -124,11 +124,11 @@ class CoffeeServiceTest {
     void findCoffeeOrderedFrom7To12MultipleValues() {
         coffeeRecords.add(new CoffeeRecord(CoffeeType.CAPPUCCINO
                 , LocalDateTime.of(2024, 11, 21, 8, 0),
-                5, 3.0f));
+                5, 3.0));
 
         coffeeRecords.add(new CoffeeRecord(CoffeeType.LATTE
                 , LocalDateTime.of(2024, 11, 21, 9, 0)
-                , 5, 3.5f));
+                , 5, 3.5));
 
         List<CoffeeType> expected = List.of(CoffeeType.LATTE, CoffeeType.CAPPUCCINO);
 
@@ -148,7 +148,7 @@ class CoffeeServiceTest {
     @DisplayName("find best coffee ratio (one value)")
     void findBestCoffeeRatioOneValue() {
         coffeeRecords.add(new CoffeeRecord(CoffeeType.CAPPUCCINO
-                , LocalDateTime.now(), 5, 3.0f));
+                , LocalDateTime.now(), 5, 3.0));
 
         Optional<CoffeeType> expected = Optional.of(CoffeeType.CAPPUCCINO);
 
@@ -160,10 +160,10 @@ class CoffeeServiceTest {
     @DisplayName("find best coffee ratio (multiple values)")
     void findBestCoffeeRatioMultipleValues() {
         coffeeRecords.add(new CoffeeRecord(CoffeeType.CAPPUCCINO
-                , LocalDateTime.now(), 5, 5.0f));
+                , LocalDateTime.now(), 5, 5.0));
 
         coffeeRecords.add(new CoffeeRecord(CoffeeType.LATTE
-                , LocalDateTime.now(), 7, 3.5f));
+                , LocalDateTime.now(), 7, 3.5));
 
         Optional<CoffeeType> expected = Optional.of(CoffeeType.LATTE);
 
@@ -175,10 +175,10 @@ class CoffeeServiceTest {
     @DisplayName("find best coffee ratio (preparation time is 0)")
     void findBestCoffeeRatioMultipleValue() {
         coffeeRecords.add(new CoffeeRecord(CoffeeType.CAPPUCCINO
-                , LocalDateTime.now(), 0, 5.0f));
+                , LocalDateTime.now(), 0, 5.0));
 
         coffeeRecords.add(new CoffeeRecord(CoffeeType.LATTE
-                , LocalDateTime.now(), 7, 3.5f));
+                , LocalDateTime.now(), 7, 3.5));
 
         Optional<CoffeeType> actual = CoffeeService.findBestCoffeeRatio(coffeeRecords);
         assertTrue(actual.isEmpty());

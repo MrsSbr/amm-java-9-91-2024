@@ -33,7 +33,7 @@ public class Main {
 
         List<CoffeeRecord> coffeeRecordList = CoffeeRecordGenerator.generateCoffeeRecords(10);
 
-        FileWorker.SaveToFile(coffeeRecordList, PATH_TO_FILE);
+        FileWorker.saveToFile(coffeeRecordList, PATH_TO_FILE);
 
         coffeeRecordList = FileWorker.readInFile(PATH_TO_FILE);
 
@@ -41,16 +41,16 @@ public class Main {
             System.out.println(coffeeRecord);
         }
 
-        LOGGER.info(AVERAGE_PREPARATION_TIME
+        System.out.println(AVERAGE_PREPARATION_TIME
                 + CoffeeService.calculateAveragePreparationTime(coffeeRecordList).toString());
 
-        LOGGER.info(BEST_PRICE_TIME_RATIO_DRINK
+        System.out.println(BEST_PRICE_TIME_RATIO_DRINK
                 + CoffeeService.findBestCoffeeRatio(coffeeRecordList).toString());
 
-        LOGGER.info(BUSIEST_HOUR_WEEKDAY
+        System.out.println(BUSIEST_HOUR_WEEKDAY
                 + CoffeeService.findBusiestHour(coffeeRecordList).toString());
 
-        LOGGER.info(DRINKS_ORDERED_MOST_7AM_TO_12PM
+        System.out.println(DRINKS_ORDERED_MOST_7AM_TO_12PM
                 + CoffeeService.findCoffeeOrderedFrom7To12(coffeeRecordList).toString());
     }
 }

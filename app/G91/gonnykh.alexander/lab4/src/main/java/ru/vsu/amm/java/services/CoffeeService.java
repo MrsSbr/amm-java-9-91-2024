@@ -24,17 +24,14 @@ public class CoffeeService {
         return date.getHour() >= from && date.getHour() <= to;
     }
 
-    public static Map<CoffeeType, Float> calculateAveragePreparationTime(List<CoffeeRecord> records) {
+    public static Map<CoffeeType, Double> calculateAveragePreparationTime(List<CoffeeRecord> records) {
         if (records == null || records.isEmpty()) {
             return Map.of();
         }
 
         return records.stream()
                 .collect(Collectors.groupingBy(CoffeeRecord::name,
-                        Collectors.collectingAndThen(
-                                Collectors.averagingDouble(CoffeeRecord::preparationTime),
-                                Double::floatValue
-                        )
+                        Collectors.averagingDouble(CoffeeRecord::preparationTime)
                 ));
     }
 
@@ -74,7 +71,7 @@ public class CoffeeService {
         return drinks.entrySet().stream()
                 .filter(entry -> entry.getValue().equals(maxDrinks))
                 .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static Optional<CoffeeType> findBestCoffeeRatio(List<CoffeeRecord> records) {

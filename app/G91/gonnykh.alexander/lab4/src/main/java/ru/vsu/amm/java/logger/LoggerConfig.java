@@ -1,12 +1,11 @@
 package ru.vsu.amm.java.logger;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.FileHandler;
 
 public class LoggerConfig {
     public static final String PATH =
@@ -20,19 +19,17 @@ public class LoggerConfig {
             rootLogger.removeHandler(handler);
         }
 
-        ConsoleHandler consoleHandler = new ConsoleHandler();
-        consoleHandler.setLevel(Level.INFO);
-        consoleHandler.setFormatter(new CustomLoggerFormatter());
-
-        File logFile = new File(PATH);
-        logFile.getParentFile().mkdirs();
-        FileHandler fileHandler = new FileHandler(logFile.getPath(), true);
-
-        fileHandler.setLevel(Level.ALL);
-        fileHandler.setFormatter(new CustomLoggerFormatter());
+        Handler consoleHandler = createHandler(new ConsoleHandler(), Level.INFO);
+        Handler fileHandler = createHandler(new FileHandler(PATH, true), Level.ALL);
 
         rootLogger.addHandler(consoleHandler);
         rootLogger.addHandler(fileHandler);
+    }
+
+    private static Handler createHandler(Handler handler, Level level) {
+        handler.setLevel(level);
+        handler.setFormatter(new CustomLoggerFormatter());
+        return handler;
     }
 
 }

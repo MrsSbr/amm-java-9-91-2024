@@ -6,8 +6,8 @@ import ru.vsu.amm.java.records.CoffeeRecord;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -22,6 +22,10 @@ public class FileWorker {
     public static final String ERROR_WRITE_FILE = "Произошла ошибка при записи в файл:";
     public static final String ERROR_READ_FILE = "Ошибка при обработке строки: ";
     public static final String ERROR_IO = "Произошла ошибка потока:";
+    public static final int NAME_INDEX = 0;
+    public static final int DATE_INDEX = 1;
+    public static final int TIME_INDEX = 2;
+    public static final int PRICE_INDEX = 3;
     private static final Logger LOGGER = Logger.getLogger(FileWorker.class.getName());
 
     public static List<CoffeeRecord> readInFile(String filePath) throws IOException {
@@ -29,15 +33,15 @@ public class FileWorker {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = Arrays.stream(line.split(";"))
+                String[] fields = Arrays.stream(line.split(";"))
                         .map(String::trim)
                         .toArray(String[]::new);
 
                 try {
-                    CoffeeType name = CoffeeType.valueOf(parts[0].toUpperCase());
-                    LocalDateTime date = LocalDateTime.parse(parts[1]);
-                    long preparationTime = Long.parseLong(parts[2]);
-                    float price = Float.parseFloat(parts[3]);
+                    CoffeeType name = CoffeeType.valueOf(fields[NAME_INDEX].toUpperCase());
+                    LocalDateTime date = LocalDateTime.parse(fields[DATE_INDEX]);
+                    long preparationTime = Long.parseLong(fields[TIME_INDEX]);
+                    float price = Float.parseFloat(fields[PRICE_INDEX]);
 
                     records.add(new CoffeeRecord(name, date, preparationTime, price));
 
@@ -53,7 +57,7 @@ public class FileWorker {
         return records;
     }
 
-    public static void SaveToFile(List<CoffeeRecord> records, String filePath) throws IOException {
+    public static void saveToFile(List<CoffeeRecord> records, String filePath) throws IOException {
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
             for (CoffeeRecord record : records) {
