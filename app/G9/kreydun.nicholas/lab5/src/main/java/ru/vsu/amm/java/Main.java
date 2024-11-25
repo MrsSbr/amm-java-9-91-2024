@@ -11,14 +11,12 @@ public class Main {
         Logg.logger.info("Start program in " + Main.class.getName());
         Service service = new ServiceImpl();
 
-        // Оборачиваем объект в прокси
         Service trackedService = Benchmark.track(service);
 
         trackedService.do1();
         trackedService.do2();
         trackedService.do3();
 
-        // Получаем статистику по методу
         Stat stat = Benchmark.getStat(trackedService);
 
         System.out.println(stat);

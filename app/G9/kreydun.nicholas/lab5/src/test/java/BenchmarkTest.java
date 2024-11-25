@@ -19,18 +19,15 @@ public class BenchmarkTest {
     @Test
     public void testTrackedService() throws Exception {
         service = new ServiceImpl();
-        // Создаем прокси для сервиса с отслеживанием времени
+
         Service trackedService = Benchmark.track(service);
 
-        // Вызываем методы сервиса, чтобы проверить их выполнение
         trackedService.do1();
         trackedService.do2();
         trackedService.do3();
 
-        // Получаем статистику времени выполнения
         Stat stat = Benchmark.getStat(trackedService);
 
-        // Проверяем, что статистика не пустая (методы должны быть выполнены)
         assertNotNull(stat, "Stat should not be null");
 
         Logg.logger.fine("Testing method...");
@@ -41,16 +38,13 @@ public class BenchmarkTest {
     @Test
     public void testMethodExecutionTime() throws Exception {
         service = new ServiceImpl();
-        // Создаем прокси для сервиса с отслеживанием времени
+
         Service trackedService = Benchmark.track(service);
 
-        // Вызываем метод do1
         trackedService.do1();
 
-        // Получаем статистику
         Stat stat = Benchmark.getStat(trackedService);
 
-        // Проверяем, что время выполнения метода do1 зафиксировано
         assertNotNull(stat, "Stat should not be null");
 
         Logg.logger.fine("Testing method...");
@@ -61,17 +55,14 @@ public class BenchmarkTest {
     @Test
     public void testMultipleMethodExecution() throws Exception {
         service = new ServiceImpl();
-        // Создаем прокси для сервиса
+
         Service trackedService = Benchmark.track(service);
 
-        // Вызываем несколько методов
         trackedService.do1();
         trackedService.do2();
 
-        // Получаем статистику по времени выполнения
         Stat stat = Benchmark.getStat(trackedService);
 
-        // Проверяем, что время выполнения каждого метода зафиксировано
         assertNotNull(stat, "Stat should not be null");
 
         Logg.logger.fine("Testing method...");
@@ -82,7 +73,7 @@ public class BenchmarkTest {
     @Test
     public void testNoBenchmarkAnnotation() throws Exception {
         service = new ServiceImpl();
-        // Создаем прокси для сервиса, который не использует аннотацию @Benchmarked
+
         Service trackedService = Benchmark.track(service);
 
         boolean hasAnnotatedMethod = Arrays.stream(ServiceImpl.class.getDeclaredMethods())
@@ -90,7 +81,6 @@ public class BenchmarkTest {
 
         trackedService.do3();
 
-        // Получаем статистику
         Stat stat = Benchmark.getStat(trackedService);
 
         assertFalse(hasAnnotatedMethod, "It has not annotated method");
