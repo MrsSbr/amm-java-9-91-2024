@@ -27,18 +27,15 @@ public final class ConfigService {
             logger.log(Level.SEVERE, "Аргумент не является интерфейсом", e);
             throw e;
         }
-        logger.log(Level.INFO, "Аргумент является интерфейсом");
 
         if (!someClass.isAnnotationPresent(Config.class)) {
             var e = new IllegalArgumentException(someClass.getName() + " (Интерфейс должен быть аннотирован @Config)");
             logger.log(Level.SEVERE, "Интерфейс не аннотирован @Config", e);
             throw e;
         }
-        logger.log(Level.INFO, "Интерфейс аннотирован @Config");
 
         var config = someClass.getAnnotation(Config.class);
         var path = config.path();
-        logger.log(Level.INFO, "Получен путь к файлу со свойствами");
 
         var properties = new Properties();
         try {
@@ -58,11 +55,9 @@ public final class ConfigService {
                 logger.log(Level.INFO, "Метод не аннотирован @Property", e);
                 throw e;
             }
-            logger.log(Level.INFO, "Метод аннотирован @Property");
 
             var propertyAnnotation = method.getAnnotation(Property.class);
             var key = propertyAnnotation.value();
-            logger.log(Level.INFO, "Получен ключ");
 
             var value = properties.getProperty(key);
             if (value == null) {
@@ -73,12 +68,10 @@ public final class ConfigService {
             logger.log(Level.INFO, "Получено значение");
 
             var returnType = method.getReturnType();
-            logger.log(Level.INFO, "Получен возвращаемый тип");
 
             if (returnType == String.class) {
                 logger.log(Level.INFO, "Приведение к возвращаемому типу не требуется");
 
-                logger.log(Level.INFO, "Возврат значения");
                 return value;
             }
 
@@ -86,13 +79,8 @@ public final class ConfigService {
                 logger.log(Level.INFO, "Требуется приведение к возвращаемому типу");
 
                 var valueOf = returnType.getMethod("valueOf", String.class);
-                logger.log(Level.INFO, "Получен метод приведения");
 
-                var res = valueOf.invoke(null, value);
-                logger.log(Level.INFO, "Значение приведено к возвращаемому типу");
-
-                logger.log(Level.INFO, "Возврат значения");
-                return res;
+                return valueOf.invoke(null, value);
             } catch (NoSuchMethodException nsme) {
                 var e = new IllegalArgumentException(returnType.getName() + " (Тип не поддерживается)", nsme);
                 logger.log(Level.SEVERE, "Тип возвращаемого методом значения не поддерживается", e);
