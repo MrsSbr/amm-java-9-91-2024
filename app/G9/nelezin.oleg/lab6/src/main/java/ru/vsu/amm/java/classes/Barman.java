@@ -1,6 +1,7 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
 
 import lombok.AllArgsConstructor;
+import ru.vsu.amm.java.enums.Component;
 
 @AllArgsConstructor
 public class Barman extends Thread {

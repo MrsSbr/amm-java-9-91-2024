@@ -1,5 +1,10 @@
 package ru.vsu.amm.java;
 
+import ru.vsu.amm.java.classes.Barman;
+import ru.vsu.amm.java.classes.Smoker;
+import ru.vsu.amm.java.classes.Table;
+import ru.vsu.amm.java.enums.Component;
+
 public class SmokingApplication {
 
     public static void main(String[] args) {
