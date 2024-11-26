@@ -4,7 +4,6 @@ import ru.vsu.amm.java.table.Column;
 import ru.vsu.amm.java.table.Table;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -15,34 +14,6 @@ public class SQLQueryBuilder {
 
     public SQLQueryBuilder(Class<?> entityClass) {
         this.entityClass = entityClass;
-
-        validateAnnotations();
-    }
-
-    private void validateAnnotations() {
-        if (entityClass.isAnnotationPresent(Column.class)) {
-            String errorMessage = "@Column annotation should not be applied to class " + entityClass.getName();
-            logger.log(Level.INFO, errorMessage);
-            throw new IllegalArgumentException(errorMessage);
-        }
-
-        Field[] fields = entityClass.getDeclaredFields();
-        for (Field field : fields) {
-            if (field.isAnnotationPresent(Table.class)) {
-                String errorMessage = "@Table annotation should not be applied to field " + field.getName();
-                logger.log(Level.INFO, errorMessage);
-                throw new IllegalArgumentException(errorMessage);
-            }
-        }
-
-        Method[] methods = entityClass.getDeclaredMethods();
-        for (Method method : methods) {
-            if (method.isAnnotationPresent(Table.class)) {
-                String errorMessage = "@Table annotation should not be applied to method " + method.getName();
-                logger.log(Level.INFO, errorMessage);
-                throw new IllegalArgumentException(errorMessage);
-            }
-        }
     }
 
     private String escapeString(String str) {
