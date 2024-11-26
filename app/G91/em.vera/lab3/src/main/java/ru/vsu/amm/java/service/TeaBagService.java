@@ -5,8 +5,11 @@ import ru.vsu.amm.java.entity.HaviestTeaBag;
 import ru.vsu.amm.java.entity.TeaBag;
 import ru.vsu.amm.java.enums.TeaType;
 
-
-import java.util.*;
+import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TeaBagService {
@@ -19,7 +22,7 @@ public class TeaBagService {
         return teaBags.stream()
                 .collect(Collectors.groupingBy(TeaBag::name))
                 .entrySet().stream()
-                .map(entry -> {
+                .flatMap(entry -> {
                     TeaType teaType = entry.getKey();
                     return entry.getValue().stream()
                             .collect(Collectors.groupingBy(TeaBag::year,
@@ -27,10 +30,9 @@ public class TeaBagService {
                             ))
                             .entrySet().stream()
                             .max(Map.Entry.comparingByValue())
+                            .stream()
                             .map(maxEntry -> new BestTeaYear(maxEntry.getKey(), teaType));
                 })
-                .filter(Optional::isPresent)
-                .map(Optional::get)
                 .toList();
     }
 
