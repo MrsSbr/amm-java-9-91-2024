@@ -246,6 +246,22 @@ student("tottskiy.stepan", G9) {
 }
 student("globuchik.dmitry", G9) {
     lab(0)
+    lab(1)
+    lab(2)
+}
+
+
+student("kavunov.victor", G9) {
+    lab(0)
+}
+
+student("tupikova.viktoria", G9) {
+    lab(0)
+}
+student("tottskiy.stepan", G9) {
+    lab(0)
+    lab(1)
+    lab(2)
 }
 
 student("nikitina.elizaveta", G9) {
