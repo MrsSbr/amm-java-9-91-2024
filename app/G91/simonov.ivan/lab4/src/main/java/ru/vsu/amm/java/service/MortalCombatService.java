@@ -23,11 +23,12 @@ import java.util.stream.Stream;
 public class MortalCombatService {
 
     private static final Logger LOGGER = Logger.getLogger(MortalCombatService.class.getName());
+    private static final String PATTERN_PATH = "app/G91/simonov.ivan/lab4/src/main/java/ru"
+            + "/vsu/amm/java/logs/mortal-combat-service-logs.log";
 
     static {
         try {
-            FileHandler fileHandler = new FileHandler("app/G91/simonov.ivan/lab4/src/main/java/ru"
-                    + "/vsu/amm/java/logs/mortal-combat-service-logs.log");
+            FileHandler fileHandler = new FileHandler(PATTERN_PATH);
             fileHandler.setFormatter(new SimpleFormatter());
             LOGGER.addHandler(fileHandler);
             LOGGER.setUseParentHandlers(false);
@@ -42,8 +43,9 @@ public class MortalCombatService {
         LOGGER.log(Level.INFO, "Detected try to find months with most fatalities in last 3 years");
 
         try {
+            LocalDate minDate = LocalDate.now().minusYears(3);
             Map<Month, Long> fatalitiesPerMonth = fights.stream()
-                    .filter(fight -> fight.date().isAfter(LocalDate.now().minusYears(3))
+                    .filter(fight -> fight.date().isAfter(minDate)
                             && fight.fatality() != null)
                     .collect(Collectors.groupingBy(i -> i.date().getMonth(), Collectors.counting()));
 

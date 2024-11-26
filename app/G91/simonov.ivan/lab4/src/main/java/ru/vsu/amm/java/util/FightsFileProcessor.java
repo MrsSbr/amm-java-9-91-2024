@@ -20,6 +20,8 @@ import java.util.logging.SimpleFormatter;
 public class FightsFileProcessor {
 
     private static final Logger LOGGER = Logger.getLogger(FightsFileProcessor.class.getName());
+    private static final String PATTERN_PATH = "app/G91/simonov.ivan/lab4/src/main/java"
+            + "/ru/vsu/amm/java/logs/fights-file-processor-logs.log";
     private static final Integer TOURNAMENT_NUM_INDEX = 0;
     private static final Integer DATE_INDEX = 1;
     private static final Integer PARTICIPANT1_INDEX = 2;
@@ -29,8 +31,7 @@ public class FightsFileProcessor {
 
     static {
         try {
-            FileHandler fileHandler = new FileHandler("app/G91/simonov.ivan/lab4/src/main/java"
-                    + "/ru/vsu/amm/java/logs/fights-file-processor-logs.log");
+            FileHandler fileHandler = new FileHandler(PATTERN_PATH);
             fileHandler.setFormatter(new SimpleFormatter());
             LOGGER.addHandler(fileHandler);
             LOGGER.setUseParentHandlers(false);
@@ -71,13 +72,13 @@ public class FightsFileProcessor {
 
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                String[] splits = line.split(" ");
-                readData.add(new Fight(Integer.parseInt(splits[TOURNAMENT_NUM_INDEX]),
-                        LocalDate.parse(splits[DATE_INDEX]),
-                        Hero.valueOf(splits[PARTICIPANT1_INDEX]),
-                        Hero.valueOf(splits[PARTICIPANT2_INDEX]),
-                        Hero.valueOf(splits[WINNER_INDEX]),
-                        Fatality.valueOf(splits[FATALITY_INDEX])
+                String[] fightData = line.split(" ");
+                readData.add(new Fight(Integer.parseInt(fightData[TOURNAMENT_NUM_INDEX]),
+                        LocalDate.parse(fightData[DATE_INDEX]),
+                        Hero.valueOf(fightData[PARTICIPANT1_INDEX]),
+                        Hero.valueOf(fightData[PARTICIPANT2_INDEX]),
+                        Hero.valueOf(fightData[WINNER_INDEX]),
+                        Fatality.valueOf(fightData[FATALITY_INDEX])
                 ));
             }
             LOGGER.log(Level.INFO, String.format("Reading data from the file %s completed successfully", filePath));

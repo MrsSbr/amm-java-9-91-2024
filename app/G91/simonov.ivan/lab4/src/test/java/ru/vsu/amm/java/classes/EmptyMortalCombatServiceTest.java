@@ -38,7 +38,7 @@ public class EmptyMortalCombatServiceTest extends MortalCombatServiceTest {
     @Override
     @Test
     public void testFindParticipantsForEveryTournament() {
-        Assertions.assertEquals(Map.of(),
-                MortalCombatService.findParticipantsForEveryTournament(fights));
+        Assertions.assertEquals(0,
+                MortalCombatService.findParticipantsForEveryTournament(fights).size());
     }
 }
