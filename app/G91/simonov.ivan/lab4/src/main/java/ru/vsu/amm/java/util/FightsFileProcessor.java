@@ -19,7 +19,7 @@ import java.util.logging.SimpleFormatter;
 
 public class FightsFileProcessor {
 
-    private static final Logger LOGGER = Logger.getLogger(FightsFileProcessor.class.getName());
+    private static final Logger logger = Logger.getLogger(FightsFileProcessor.class.getName());
     private static final String PATTERN_PATH = "app/G91/simonov.ivan/lab4/src/main/java"
             + "/ru/vsu/amm/java/logs/fights-file-processor-logs.log";
     private static final Integer TOURNAMENT_NUM_INDEX = 0;
@@ -33,17 +33,17 @@ public class FightsFileProcessor {
         try {
             FileHandler fileHandler = new FileHandler(PATTERN_PATH);
             fileHandler.setFormatter(new SimpleFormatter());
-            LOGGER.addHandler(fileHandler);
-            LOGGER.setUseParentHandlers(false);
+            logger.addHandler(fileHandler);
+            logger.setUseParentHandlers(false);
         }
         catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Creation of log file for FightsFileProcessor failed with an error: ", e);
+            logger.log(Level.SEVERE, "Creation of log file for FightsFileProcessor failed with an error: ", e);
         }
     }
 
     public static void writeFights(List<Fight> fights, String filePath, boolean isAppend) {
 
-        LOGGER.log(Level.INFO, String.format("Detected try to write data to the file %s", filePath));
+        logger.log(Level.INFO, String.format("Detected try to write data to the file %s", filePath));
 
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filePath, isAppend))) {
 
@@ -54,18 +54,19 @@ public class FightsFileProcessor {
                         fight.participant1(),
                         fight.participant2(),
                         fight.winner(),
-                        fight.fatality()));
+                        fight.fatality()
+                ));
             }
-            LOGGER.log(Level.INFO, String.format("Writing data to the file %s completed successfully", filePath));
+            logger.log(Level.INFO, String.format("Writing data to the file %s completed successfully", filePath));
         }
         catch (IOException e) {
-            LOGGER.log(Level.SEVERE, String.format("Writing data to the file %s failed with an error:", filePath), e);
+            logger.log(Level.SEVERE, String.format("Writing data to the file %s failed with an error:", filePath), e);
         }
     }
 
     public static List<Fight> readFights(String filePath) {
 
-        LOGGER.log(Level.INFO, String.format("Detected try to read data from the file %s", filePath));
+        logger.log(Level.INFO, String.format("Detected try to read data from the file %s", filePath));
         List<Fight> readData = new ArrayList<>();
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
@@ -81,10 +82,10 @@ public class FightsFileProcessor {
                         Fatality.valueOf(fightData[FATALITY_INDEX])
                 ));
             }
-            LOGGER.log(Level.INFO, String.format("Reading data from the file %s completed successfully", filePath));
+            logger.log(Level.INFO, String.format("Reading data from the file %s completed successfully", filePath));
         }
         catch (IOException | IllegalArgumentException e) {
-            LOGGER.log(Level.SEVERE, String.format("Reading data "
+            logger.log(Level.SEVERE, String.format("Reading data "
                     + "from the file %s failed with an error: ", filePath), e);
             return new ArrayList<>();
         }

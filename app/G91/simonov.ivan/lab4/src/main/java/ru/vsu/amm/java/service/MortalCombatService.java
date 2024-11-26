@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 
 public class MortalCombatService {
 
-    private static final Logger LOGGER = Logger.getLogger(MortalCombatService.class.getName());
+    private static final Logger logger = Logger.getLogger(MortalCombatService.class.getName());
     private static final String PATTERN_PATH = "app/G91/simonov.ivan/lab4/src/main/java/ru"
             + "/vsu/amm/java/logs/mortal-combat-service-logs.log";
 
@@ -30,24 +30,24 @@ public class MortalCombatService {
         try {
             FileHandler fileHandler = new FileHandler(PATTERN_PATH);
             fileHandler.setFormatter(new SimpleFormatter());
-            LOGGER.addHandler(fileHandler);
-            LOGGER.setUseParentHandlers(false);
+            logger.addHandler(fileHandler);
+            logger.setUseParentHandlers(false);
         }
         catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Creation of log file for MortalCombatService failed with an error: ", e);
+            logger.log(Level.SEVERE, "Creation of log file for MortalCombatService failed with an error: ", e);
         }
     }
 
     public static Set<Month> findMonthsWithMostFatalitiesInLast3Years(List<Fight> fights) {
 
-        LOGGER.log(Level.INFO, "Detected try to find months with most fatalities in last 3 years");
+        logger.log(Level.INFO, "Detected try to find months with most fatalities in last 3 years");
 
         try {
             LocalDate minDate = LocalDate.now().minusYears(3);
             Map<Month, Long> fatalitiesPerMonth = fights.stream()
                     .filter(fight -> fight.date().isAfter(minDate)
                             && fight.fatality() != null)
-                    .collect(Collectors.groupingBy(i -> i.date().getMonth(), Collectors.counting()));
+                    .collect(Collectors.groupingBy(fight -> fight.date().getMonth(), Collectors.counting()));
 
             Long maxFatalities = fatalitiesPerMonth.values()
                     .stream()
@@ -62,13 +62,13 @@ public class MortalCombatService {
                     })
                     .collect(Collectors.toSet());
 
-            LOGGER.log(Level.INFO, "Try to find months "
+            logger.log(Level.INFO, "Try to find months "
                     + "with most fatalities in last 3 years completed successfully");
 
             return months;
         }
         catch (NullPointerException e) {
-            LOGGER.log(Level.SEVERE, "Try to find months with "
+            logger.log(Level.SEVERE, "Try to find months with "
                     + "most fatalities in last 3 years failed with an error: ", e);
             return new HashSet<>();
         }
@@ -76,27 +76,27 @@ public class MortalCombatService {
 
     public static Map<Hero, Integer> countVictoriesOfEveryHero(List<Fight> fights) {
 
-        LOGGER.log(Level.SEVERE, "Detected try to count victories of every hero");
+        logger.log(Level.SEVERE, "Detected try to count victories of every hero");
 
         try {
             Map<Hero, Integer> victories = Arrays.stream(Hero.values())
                     .collect(Collectors.toMap(hero -> hero, hero -> 0));
 
-            fights.forEach(i -> victories.put(i.winner(), victories.get(i.winner()) + 1));
+            fights.forEach(fight -> victories.put(fight.winner(), victories.get(fight.winner()) + 1));
 
-            LOGGER.log(Level.SEVERE, "Try to count victories of every hero completed successfully");
+            logger.log(Level.SEVERE, "Try to count victories of every hero completed successfully");
 
             return victories;
         }
         catch (NullPointerException e) {
-            LOGGER.log(Level.SEVERE, "Try to count victories of every hero failed with an error: ", e);
+            logger.log(Level.SEVERE, "Try to count victories of every hero failed with an error: ", e);
             return new HashMap<>();
         }
     }
 
     public static Map<Integer, Set<Hero>> findParticipantsForEveryTournament(List<Fight> fights) {
 
-        LOGGER.log(Level.INFO, "Detected try to find participants for every tournament");
+        logger.log(Level.INFO, "Detected try to find participants for every tournament");
 
         try {
             Map<Integer, Set<Hero>> participants = fights.stream()
@@ -107,12 +107,12 @@ public class MortalCombatService {
                     .collect(Collectors.groupingBy(Map.Entry::getKey,
                             Collectors.mapping(Map.Entry::getValue, Collectors.toSet())));
 
-            LOGGER.log(Level.INFO, "Try to find participants for every tournament completed successfully");
+            logger.log(Level.INFO, "Try to find participants for every tournament completed successfully");
 
             return participants;
         }
         catch (NullPointerException e) {
-            LOGGER.log(Level.SEVERE, "Try to find participants for every tournament failed with an error:", e);
+            logger.log(Level.SEVERE, "Try to find participants for every tournament failed with an error:", e);
             return new HashMap<>();
         }
     }
