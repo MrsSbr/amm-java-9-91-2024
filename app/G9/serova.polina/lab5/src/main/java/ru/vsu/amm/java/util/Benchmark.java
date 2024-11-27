@@ -58,8 +58,7 @@ public class Benchmark {
                     );
                     long stopTime = System.currentTimeMillis();
                     long elapsedTime = stopTime - startTime;
-                    stats.computeIfAbsent(object, key -> new Stat());
-                    stats.get(object).insertStat(method, elapsedTime);
+                    stats.computeIfAbsent(object, key -> new Stat()).insertStat(method, elapsedTime);
                     logger.log(
                             Level.INFO,
                             "Записали время выполнения метода \""
