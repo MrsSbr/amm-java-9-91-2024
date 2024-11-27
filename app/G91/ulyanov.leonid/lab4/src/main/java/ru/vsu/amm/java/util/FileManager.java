@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class FileManager {
 
@@ -25,6 +27,21 @@ public class FileManager {
     private static final int TIME_INDEX = 3;
 
     private static final Logger logger = Logger.getLogger(FileManager.class.getName());
+
+    private static final String WRITE_FAIL_MSG = "Writing to file was unsuccessful.\n";
+    private static final String READ_FAIL_MSG = "Reading from file was unsuccessful.\n";
+    private static final String LOG_ERROR_MSG = "Error in logger creation for file manager.\n";
+    private static final String LOG_PATH = System.getProperty("user.dir") + "\\file-manager.log";
+
+    static {
+        try {
+            FileHandler fileHandler = new FileHandler(LOG_PATH);
+            fileHandler.setFormatter(new SimpleFormatter());
+            logger.addHandler(fileHandler);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, LOG_ERROR_MSG, e);
+        }
+    }
 
     private static String getIngredientsAsString(List<Ingredient> ingredients) {
         return String.join(" ",
@@ -52,15 +69,14 @@ public class FileManager {
                 bw.write(getIngredientsAsString(drink.ingredients()));
             }
         } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE, WRITE_FAIL_MSG, e);
         }
     }
 
     public static List<MoonshineData> readFromFile(String source) {
+        List<MoonshineData> list = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(source))) {
             String[] lines = br.lines().toArray(String[]::new);
-            List<MoonshineData> list = new ArrayList<>();
             for (int i = 0; i < lines.length - 1; i += 2) {
                 String[] data = lines[i].split(";");
 
@@ -72,11 +88,10 @@ public class FileManager {
 
                 list.add(new MoonshineData(date, label, ingredients, volume, makingTime));
             }
-            return list;
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
-            throw new RuntimeException(e);
-        }
-    }
 
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, READ_FAIL_MSG, e);
+        }
+        return list;
+    }
 }
