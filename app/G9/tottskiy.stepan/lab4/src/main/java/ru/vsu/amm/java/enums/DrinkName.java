@@ -8,8 +8,9 @@ public enum DrinkName {
     MOCCHA;
 
     public static boolean isValidDrinkName(String name) {
+       if (name == null || name.isBlank()) return false;
         try {
-            DrinkName.valueOf(name.toUpperCase());
+            DrinkName.valueOf(name.trim().toUpperCase());
             return true;
         } catch (IllegalArgumentException e) {
             return false;
