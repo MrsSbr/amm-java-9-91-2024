@@ -55,7 +55,7 @@ public class MoonshineServiceDemo {
         try {
             System.out.println("Total volume for each drink:");
             MoonshineService.getTotalVolumeForEachDrink(drinksList)
-                    .forEach((x, y) -> System.out.println(x + ':' + y));
+                    .forEach((drink, volume) -> System.out.println(drink.toString() + ':' + volume));
         } catch (NullPointerException e) {
             logger.log(Level.SEVERE, NULL_POINTER_MSG
                     + Arrays.toString(e.getStackTrace()));

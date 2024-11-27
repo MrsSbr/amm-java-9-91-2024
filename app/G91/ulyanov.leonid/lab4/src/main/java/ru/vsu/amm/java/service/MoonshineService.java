@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.service;
 
 import ru.vsu.amm.java.entity.MoonshineData;
+import ru.vsu.amm.java.enums.DrinkLabel;
 import ru.vsu.amm.java.enums.Ingredient;
 
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class MoonshineService {
                 .orElse(0);
     }
 
-    public static Map<String, Double> getTotalVolumeForEachDrink(List<MoonshineData> drinksList) {
+    public static Map<DrinkLabel, Double> getTotalVolumeForEachDrink(List<MoonshineData> drinksList) {
         if (drinksList == null) {
             return new HashMap<>();
         }

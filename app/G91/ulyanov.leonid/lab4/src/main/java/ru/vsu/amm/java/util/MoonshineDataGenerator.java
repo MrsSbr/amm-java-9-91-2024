@@ -16,11 +16,11 @@ public class MoonshineDataGenerator {
     private static final DrinkLabel[] LABELS = DrinkLabel.values();
 
     private static final int START_YEAR = 2020;
-    private static final float VOLUME_LOWER_BOUND = 0.5f;
-    private static final float VOLUME_UPPER_BOUND = 20f;
+    private static final double VOLUME_LOWER_BOUND = 0.5;
+    private static final double VOLUME_UPPER_BOUND = 20.0;
 
-    private static final float TIME_LOWER_BOUND = 0.5f;
-    private static final float TIME_UPPER_BOUND = 40f;
+    private static final double TIME_LOWER_BOUND = 0.5;
+    private static final double TIME_UPPER_BOUND = 40.0;
 
     private static final int MIN_INGREDIENTS = 3;
     private static final int MAX_INGREDIENTS = Ingredient.values().length;
@@ -31,14 +31,17 @@ public class MoonshineDataGenerator {
     }
 
     private int intRandBetween(int start, int end) {
-        return start + (int) (Math.random() * (end - start));
+        Random rand = new Random();
+        return start + rand.nextInt() * (end - start);
     }
 
     private LocalDate generateDate() {
-        int year = intRandBetween(START_YEAR, LocalDate.now().getYear());
+        int currentYear = LocalDate.now().getYear();
+        int year = intRandBetween(START_YEAR, currentYear);
         int month = intRandBetween(1, 12);
         LocalDate date = LocalDate.of(year, month, 1);
-        int day = intRandBetween(1, date.getMonth().length(date.isLeapYear()));
+        int maxDayOfMonth = date.getMonth().length(date.isLeapYear());
+        int day = intRandBetween(1, maxDayOfMonth);
         return LocalDate.of(year, month, day);
     }
 
@@ -55,18 +58,10 @@ public class MoonshineDataGenerator {
 
     public MoonshineData generateOneMoonshineData() {
         LocalDate date = generateDate();
-        String label = LABELS[intRandBetween(0, LABELS.length - 1)].toString();
+        DrinkLabel label = LABELS[intRandBetween(0, LABELS.length - 1)];
         List<Ingredient> ingredients = generateIngredientsList();
         double volume = doubleRandBetween(VOLUME_LOWER_BOUND, VOLUME_UPPER_BOUND);
         double time = doubleRandBetween(TIME_LOWER_BOUND, TIME_UPPER_BOUND);
         return new MoonshineData(date, label, ingredients, volume, time);
-    }
-
-    public List<MoonshineData> generateDrinksList(int size) {
-        List<MoonshineData> drinks = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            drinks.add(generateOneMoonshineData());
-        }
-        return drinks;
     }
 }

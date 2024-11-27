@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.util;
 
 import ru.vsu.amm.java.entity.MoonshineData;
+import ru.vsu.amm.java.enums.DrinkLabel;
 import ru.vsu.amm.java.enums.Ingredient;
 
 import java.io.BufferedReader;
@@ -63,7 +64,7 @@ public class FileManager {
             for (int i = 0; i < lines.length - 1; i += 2) {
                 String[] data = lines[i].split(";");
 
-                String label = data[LABEL_INDEX];
+                DrinkLabel label = DrinkLabel.valueOf(data[LABEL_INDEX]);
                 LocalDate date = LocalDate.parse(data[DATE_INDEX]);
                 double volume = Double.parseDouble(data[VOLUME_INDEX]);
                 double makingTime = Double.parseDouble(data[TIME_INDEX]);
