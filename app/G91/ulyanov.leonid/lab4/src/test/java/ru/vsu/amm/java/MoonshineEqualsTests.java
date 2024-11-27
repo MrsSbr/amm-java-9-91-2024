@@ -31,27 +31,27 @@ public class MoonshineEqualsTests {
     @Test
     public void getTotalVolumeForEachDrinkTest() {
         Map<String, Double> result = MoonshineService.getTotalVolumeForEachDrink(drinks);
-        assertEquals(new HashMap<String, Double>() {{
-                put("yadrenaya_shtuka", 4.0);
-                put("samogon_deda", 12.0);
-                put("scotch", 20.0);
-                put("whiskey", 18.0);
-            }
-        }, result);
+        Map<String,Double> expected = new HashMap<>() {{
+            put("yadrenaya_shtuka", 4.0);
+            put("samogon_deda", 12.0);
+            put("scotch", 20.0);
+            put("whiskey", 18.0);
+        }};
+        assertEquals(result, expected);
     }
 
     @Test
     public void getAverageTimeForIngredientsTest() {
         Map<Ingredient, Double> result = MoonshineService.getAverageTimeForIngredients(drinks);
-        assertEquals(new HashMap<Ingredient, Double>() {{
-                put(Ingredient.MALT, 13.0);
-                put(Ingredient.SUGAR, 13.0);
-                put(Ingredient.FRUIT, 16.0);
-                put(Ingredient.YEAST, 14.0);
-                put(Ingredient.BERRIES, 13.285714285714286);
-                put(Ingredient.WATER, 14.4);
-            }
-        }, result);
+        Map<Ingredient,Double> expected = new HashMap<>() {{
+            put(Ingredient.MALT, 13.0);
+            put(Ingredient.SUGAR, 13.0);
+            put(Ingredient.FRUIT, 16.0);
+            put(Ingredient.YEAST, 14.0);
+            put(Ingredient.BERRIES, 13.285714285714286);
+            put(Ingredient.WATER, 14.4);
+        }};
+        assertEquals(result, expected);
     }
 
     public static List<MoonshineData> generateMoonshineData() {
