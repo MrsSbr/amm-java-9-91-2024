@@ -33,24 +33,30 @@ public class Main {
 
         List<CoffeeRecord> coffeeRecordList = CoffeeRecordGenerator.generateCoffeeRecords(10);
 
-        FileWorker.saveToFile(coffeeRecordList, PATH_TO_FILE);
+        try {
 
-        coffeeRecordList = FileWorker.readInFile(PATH_TO_FILE);
+            FileWorker.saveToFile(coffeeRecordList, PATH_TO_FILE);
 
-        for (CoffeeRecord coffeeRecord : coffeeRecordList) {
-            System.out.println(coffeeRecord);
+            coffeeRecordList = FileWorker.readInFile(PATH_TO_FILE);
+
+            for (CoffeeRecord coffeeRecord : coffeeRecordList) {
+                System.out.println(coffeeRecord);
+            }
+
+            System.out.println(AVERAGE_PREPARATION_TIME
+                    + CoffeeService.calculateAveragePreparationTime(coffeeRecordList).toString());
+
+            System.out.println(BEST_PRICE_TIME_RATIO_DRINK
+                    + CoffeeService.findBestCoffeeRatio(coffeeRecordList).toString());
+
+            System.out.println(BUSIEST_HOUR_WEEKDAY
+                    + CoffeeService.findBusiestHour(coffeeRecordList).toString());
+
+            System.out.println(DRINKS_ORDERED_MOST_7AM_TO_12PM
+                    + CoffeeService.findCoffeeOrderedFrom7To12(coffeeRecordList).toString());
+        } catch (IOException e) {
+            LOGGER.severe(e.getMessage());
         }
 
-        System.out.println(AVERAGE_PREPARATION_TIME
-                + CoffeeService.calculateAveragePreparationTime(coffeeRecordList).toString());
-
-        System.out.println(BEST_PRICE_TIME_RATIO_DRINK
-                + CoffeeService.findBestCoffeeRatio(coffeeRecordList).toString());
-
-        System.out.println(BUSIEST_HOUR_WEEKDAY
-                + CoffeeService.findBusiestHour(coffeeRecordList).toString());
-
-        System.out.println(DRINKS_ORDERED_MOST_7AM_TO_12PM
-                + CoffeeService.findCoffeeOrderedFrom7To12(coffeeRecordList).toString());
     }
 }
