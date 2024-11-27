@@ -20,7 +20,6 @@ public class BeddingData {
     public List<BeddingRecord> loadData(String filePath) {
         try (Stream<String> lines = Files.lines(Paths.get(filePath))) {
             return lines
-                    .skip(1)
                     .map(this::parseLine)
                     .filter(record -> record != null)
                     .collect(Collectors.toList());
@@ -32,7 +31,7 @@ public class BeddingData {
     }
 
     private BeddingRecord parseLine(String line) {
-        String[] parts = line.split(";");
+        String[] parts = line.split(" ");
         try {
             return new BeddingRecord(
                     LocalDate.parse(parts[0], DATE_FORMATTER),
