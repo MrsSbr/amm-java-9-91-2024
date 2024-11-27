@@ -25,8 +25,9 @@ public class MoonshineEqualsTests {
 
     @Test
     public void getMaxIngredientsMonthTest() {
-        int month = MoonshineService.getMaxIngredientsMonth(drinks);
-        assertEquals(7, month);
+        int expected = 7;
+        int result = MoonshineService.getMaxIngredientsMonth(drinks);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -38,7 +39,7 @@ public class MoonshineEqualsTests {
             put(DrinkLabel.SCOTCH, 20.0);
             put(DrinkLabel.WHISKEY, 18.0);
         }};
-        assertEquals(result, expected);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -52,7 +53,7 @@ public class MoonshineEqualsTests {
             put(Ingredient.BERRIES, 13.285714285714286);
             put(Ingredient.WATER, 14.4);
         }};
-        assertEquals(result, expected);
+        assertEquals(expected, result);
     }
 
     public static List<MoonshineData> generateMoonshineData() {
