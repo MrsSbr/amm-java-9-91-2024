@@ -5,7 +5,11 @@ import ru.vsu.amm.java.enums.Name;
 import ru.vsu.amm.java.enums.Result;
 
 import java.time.LocalDate;
-import java.util.*;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class StatisticsService {
@@ -27,25 +31,41 @@ public class StatisticsService {
                 .collect(Collectors.toSet());
     }
 
-    public static int yearWithBestPercentageOfAcquitted(List<Statistics> statistics) {
+    public static Set<Integer> yearWithBestPercentageOfAcquitted(List<Statistics> statistics) {
         if (statistics == null || statistics.isEmpty()) {
-            return 0;
+            return Set.of();
         }
 
-        return statistics.stream()
-                .collect(Collectors.groupingBy(s -> s.date().getYear()))
-                .entrySet().stream()
-                .map(e -> {
-                    int total = e.getValue().size();
-                    long acquitted = e.getValue().stream()
-                            .filter(s -> s.result() == Result.ACQUITTED)
+        List<Integer> years = statistics.stream()
+                .map(s -> s.date().getYear())
+                .distinct()
+                .toList();
+
+        double maxPercentage = years.stream()
+                .map(year -> {
+                    long total = statistics.stream()
+                            .filter(s -> s.date().getYear() == year)
                             .count();
-                    double percentage = total == 0 ? 0 : (double) acquitted / total;
-                    return new AbstractMap.SimpleEntry<>(e.getKey(), percentage);
+                    long acquitted = statistics.stream()
+                            .filter(s -> s.date().getYear() == year && s.result() == Result.ACQUITTED)
+                            .count();
+                    return total == 0 ? 0.0 : (double) acquitted / total;
                 })
-                .max(Comparator.comparingDouble(Map.Entry::getValue))
-                .map(Map.Entry::getKey)
-                .orElse(0);
+                .max(Comparator.comparingDouble(Double::doubleValue))
+                .orElse(0.0);
+
+        return years.stream()
+                .filter(year -> {
+                    long total = statistics.stream()
+                            .filter(s -> s.date().getYear() == year)
+                            .count();
+                    long acquitted = statistics.stream()
+                            .filter(s -> s.date().getYear() == year && s.result() == Result.ACQUITTED)
+                            .count();
+                    double percentage = total == 0 ? 0.0 : (double) acquitted / total;
+                    return percentage == maxPercentage;
+                })
+                .collect(Collectors.toSet());
     }
 
     public static Set<Name> getPeopleAsPlaintiffsAndDefendants(List<Statistics> statistics) {

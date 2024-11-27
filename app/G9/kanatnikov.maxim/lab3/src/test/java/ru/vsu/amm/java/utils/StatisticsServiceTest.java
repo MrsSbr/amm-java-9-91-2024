@@ -1,7 +1,6 @@
 package ru.vsu.amm.java.utils;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entity.Statistics;
 import ru.vsu.amm.java.enums.Article;
@@ -15,24 +14,18 @@ import java.util.List;
 import java.util.Set;
 
 public class StatisticsServiceTest {
-    private static List<Statistics> nullStatisticsList;
-    private static List<Statistics> emptyStatisticsList;
-
-    @BeforeAll
-    public static void setup() {
-        nullStatisticsList = null;
-        emptyStatisticsList = new ArrayList<>();
-    }
+    private final List<Statistics> NULL_STATISTICS_LIST = null;
+    private final List<Statistics> EMPTY_STATISTICS_LIST = new ArrayList<>();
 
     @Test
     public void testGetPeopleConvictedMoreThanOnceLastThreeYearsWithNull() {
-        Set<Name> result = StatisticsService.getPeopleConvictedMoreThanOnceLastThreeYears(nullStatisticsList);
+        Set<Name> result = StatisticsService.getPeopleConvictedMoreThanOnceLastThreeYears(NULL_STATISTICS_LIST);
         Assertions.assertTrue(result.isEmpty());
     }
 
     @Test
     public void testGetPeopleConvictedMoreThanOnceLastThreeYearsWithEmpty() {
-        Set<Name> result = StatisticsService.getPeopleConvictedMoreThanOnceLastThreeYears(emptyStatisticsList);
+        Set<Name> result = StatisticsService.getPeopleConvictedMoreThanOnceLastThreeYears(EMPTY_STATISTICS_LIST);
         Assertions.assertTrue(result.isEmpty());
     }
 
@@ -53,7 +46,7 @@ public class StatisticsServiceTest {
 
         Set<Name> expected = Set.of(Name.KYLE, Name.KENNY);
         Set<Name> result = StatisticsService.getPeopleConvictedMoreThanOnceLastThreeYears(statisticsList);
-        Assertions.assertEquals(expected, result);
+        Assertions.assertTrue(expected.containsAll(result) && result.containsAll(expected));
     }
 
     @Test
@@ -77,14 +70,14 @@ public class StatisticsServiceTest {
 
     @Test
     public void testYearWithBestPercentageOfAcquittedWithNull() {
-        int year = StatisticsService.yearWithBestPercentageOfAcquitted(nullStatisticsList);
-        Assertions.assertEquals(0, year);
+        Set<Integer> result = StatisticsService.yearWithBestPercentageOfAcquitted(NULL_STATISTICS_LIST);
+        Assertions.assertTrue(result.isEmpty());
     }
 
     @Test
     public void testYearWithBestPercentageOfAcquittedWithEmpty() {
-        int year = StatisticsService.yearWithBestPercentageOfAcquitted(emptyStatisticsList);
-        Assertions.assertEquals(0, year);
+        Set<Integer> result = StatisticsService.yearWithBestPercentageOfAcquitted(EMPTY_STATISTICS_LIST);
+        Assertions.assertTrue(result.isEmpty());
     }
 
     @Test
@@ -102,9 +95,9 @@ public class StatisticsServiceTest {
                         Article.KIDNAPPING, Result.CONVICTED)
         );
 
-        int expected = LocalDate.now().minusYears(2).getYear();
-        int result = StatisticsService.yearWithBestPercentageOfAcquitted(statisticsList);
-        Assertions.assertEquals(expected, result);
+        Set<Integer> expected = Set.of(LocalDate.now().minusYears(2).getYear());
+        Set<Integer> result = StatisticsService.yearWithBestPercentageOfAcquitted(statisticsList);
+        Assertions.assertTrue(expected.containsAll(result) && result.containsAll(expected));
     }
 
     @Test
@@ -122,20 +115,20 @@ public class StatisticsServiceTest {
                         Article.KIDNAPPING, Result.CONVICTED)
         );
 
-        int expected = LocalDate.now().minusYears(1).getYear();
-        int result = StatisticsService.yearWithBestPercentageOfAcquitted(statisticsList);
-        Assertions.assertEquals(expected, result);
+        Set<Integer> expected = Set.of(LocalDate.now().minusYears(1).getYear());
+        Set<Integer> result = StatisticsService.yearWithBestPercentageOfAcquitted(statisticsList);
+        Assertions.assertTrue(expected.containsAll(result) && result.containsAll(expected));
     }
 
     @Test
     public void testGetPeopleAsPlaintiffsAndDefendantsWithNull() {
-        Set<Name> result = StatisticsService.getPeopleAsPlaintiffsAndDefendants(nullStatisticsList);
+        Set<Name> result = StatisticsService.getPeopleAsPlaintiffsAndDefendants(NULL_STATISTICS_LIST);
         Assertions.assertTrue(result.isEmpty());
     }
 
     @Test
     public void testGetPeopleAsPlaintiffsAndDefendantsWithEmpty() {
-        Set<Name> result = StatisticsService.getPeopleAsPlaintiffsAndDefendants(emptyStatisticsList);
+        Set<Name> result = StatisticsService.getPeopleAsPlaintiffsAndDefendants(EMPTY_STATISTICS_LIST);
         Assertions.assertTrue(result.isEmpty());
     }
 
@@ -156,7 +149,7 @@ public class StatisticsServiceTest {
 
         Set<Name> expected = Set.of(Name.KENNY, Name.KYLE);
         Set<Name> result = StatisticsService.getPeopleAsPlaintiffsAndDefendants(statisticsList);
-        Assertions.assertEquals(expected, result);
+        Assertions.assertTrue(expected.containsAll(result) && result.containsAll(expected));
     }
 
     @Test
