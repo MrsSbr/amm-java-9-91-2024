@@ -8,11 +8,11 @@ import ru.vsu.amm.java.model.Ship;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ShipServiceTest {
     private static final List<Ship> ships = getShips();
@@ -21,22 +21,26 @@ class ShipServiceTest {
 
     @Test
     void boundingShipCountByNationality() {
-        Map<Nationality, Long> expected = new HashMap<>();
-        expected.put(Nationality.RUSSIA, 1L);
-        expected.put(Nationality.BRITAIN, 1L);
-        assertEquals(expected, ShipService.boundingShipCountByNationality(ships));
+        int expected = 2;
+        Map<Nationality, Long> result = ShipService.boundingShipCountByNationality(ships);
+
+        assertTrue(result.containsKey(Nationality.BRITAIN)
+                && result.get(Nationality.BRITAIN) == 1L);
+        assertTrue(result.containsKey(Nationality.RUSSIA)
+                && result.get(Nationality.RUSSIA) == 1L);
+        assertEquals(expected, result.size());
     }
 
     @Test
     void emptyBoundingShipCountByNationality() {
-        Map<Nationality, Long> expected = new HashMap<>();
-        assertEquals(expected, ShipService.boundingShipCountByNationality(emptyShips));
+        int expected = 0;
+        assertEquals(expected, ShipService.boundingShipCountByNationality(emptyShips).size());
     }
 
     @Test
     void nullBoundingShipCountByNationality() {
-        Map<Nationality, Long> expected = new HashMap<>();
-        assertEquals(expected, ShipService.boundingShipCountByNationality(nullShips));
+        int expected = 0;
+        assertEquals(expected, ShipService.boundingShipCountByNationality(nullShips).size());
     }
 
     @Test
@@ -59,22 +63,24 @@ class ShipServiceTest {
 
     @Test
     void mostRumsStocks() {
-        List<Ship> expected = new ArrayList<>();
-        expected.add(ships.get(2));
-        expected.add(ships.get(0));
-        assertEquals(expected, ShipService.mostRumsStocks(ships));
+        int expected = 2;
+
+        List<Ship> result = ShipService.mostRumsStocks(ships);
+        assertTrue(result.contains(ships.get(0)));
+        assertTrue(result.contains(ships.get(2)));
+        assertEquals(expected, result.size());
     }
 
     @Test
     void emptyMostRumsStocks() {
-        List<Ship> expected = new ArrayList<>();
-        assertEquals(expected, ShipService.mostRumsStocks(emptyShips));
+        int expected = 0;
+        assertEquals(expected, ShipService.mostRumsStocks(emptyShips).size());
     }
 
     @Test
     void nullMostRumsStocks() {
-        List<Ship> expected = new ArrayList<>();
-        assertEquals(expected, ShipService.mostRumsStocks(nullShips));
+        int expected = 0;
+        assertEquals(expected, ShipService.mostRumsStocks(nullShips).size());
     }
 
     private static List<Ship> getShips() {

@@ -24,13 +24,13 @@ public class Main {
             throw new RuntimeException();
         }
 
-        logger.log(Level.INFO, "Amount of ships boarded by nationality: "
+        System.out.println("Amount of ships boarded by nationality: "
                 + ShipService.boundingShipCountByNationality(ships) + '\n');
 
-        logger.log(Level.INFO, "Less profit month: "
+        System.out.println("Less profit month: "
                 + ShipService.lessProfitMonth(ships).toString() + '\n');
 
-        logger.log(Level.INFO, "Most rums stocks for last 3 years: "
+        System.out.println("Most rums stocks for last 3 years: "
                 + ShipService.mostRumsStocks(ships) + '\n');
     }
 }

@@ -13,16 +13,23 @@ import java.util.List;
 
 public class Reader {
 
+    public static final int DATE_INDEX = 0;
+    public static final int SHIP_TYPE_INDEX = 1;
+    public static final int NATIONALITY_INDEX = 2;
+    public static final int GOLD_INDEX = 3;
+    public static final int RUM_BARREL_INDEX = 4;
+    public static final int BOARDING_INDEX = 5;
+
     public List<Ship> read(String path) throws IOException {
         try(BufferedReader br = new BufferedReader(new FileReader(path))) {
             return br.lines().map(line -> {
-                        String[] elems = line.split(";");
-                        return new Ship(LocalDate.parse(elems[0]),
-                                ShipType.valueOf(elems[1]),
-                                Nationality.valueOf(elems[2]),
-                                Long.parseLong(elems[3]),
-                                Long.parseLong(elems[4]),
-                                Boolean.parseBoolean(elems[5]));
+                        String[] fields = line.split(";");
+                        return new Ship(LocalDate.parse(fields[DATE_INDEX]),
+                                ShipType.valueOf(fields[SHIP_TYPE_INDEX]),
+                                Nationality.valueOf(fields[NATIONALITY_INDEX]),
+                                Long.parseLong(fields[GOLD_INDEX]),
+                                Long.parseLong(fields[RUM_BARREL_INDEX]),
+                                Boolean.parseBoolean(fields[BOARDING_INDEX]));
             }
             ).toList();
         }
