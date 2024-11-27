@@ -7,9 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchRecordServiceTest {
 
@@ -25,15 +23,15 @@ public class MatchRecordServiceTest {
     @Test
     public void testGetMostFrequentBestPlayers() {
         Set<String> topPlayers = matchRecordService.getMostFrequentBestPlayers(records);
-        assertNotNull(topPlayers);
-        assertTrue(topPlayers.contains("KIRILL"));
+        Set<String> expected = Set.of("KIRILL");
+        assertEquals(expected, topPlayers);
     }
 
     @Test
     public void testGetBestPlayersInAwayGames() {
         Set<String> awayBestPlayers = matchRecordService.getBestPlayersInAwayGames(records);
-        assertNotNull(awayBestPlayers);
-        assertTrue(awayBestPlayers.contains("DIMA"));
+        Set<String> expected = Set.of("STEPA", "DIMA", "OLEG", "KIRILL");
+        assertEquals(expected, awayBestPlayers);
     }
 
     @Test
@@ -41,6 +39,32 @@ public class MatchRecordServiceTest {
         long singleAwardCount = matchRecordService.getSingleAwardedPlayersCount(records);
         assertEquals(4L, singleAwardCount);
     }
+
+
+    @Test
+    public void testGetSingleAwardedPlayersCountWithAllUnique() {
+        List<MatchRecord> uniqueRecords = List.of(
+                new MatchRecord("PLAYER1", "PLAYER2"),
+                new MatchRecord("PLAYER3", "PLAYER4")
+        );
+        long count = matchRecordService.getSingleAwardedPlayersCount(uniqueRecords);
+        assertEquals(4L, count);
+    }
+
+    @Test
+    public void testGetMostFrequentBestPlayersWithEmptyList() {
+     List<MatchRecord> emptyRecords =List.of();
+     Set<String> result = matchRecordService.getMostFrequentBestPlayers(emptyRecords);
+     assertTrue(result.isEmpty());
+    }
+
+    @Test
+    public void testGetBestPlayersWithNullRecords() {
+        assertThrows(NullPointerException.class, () -> {
+            matchRecordService.getMostFrequentBestPlayers(null);
+        });
+    }
+
     private List<MatchRecord> getSampleRecords() {
         return Arrays.asList(
                 new MatchRecord("KIRILL", "STEPA"),
