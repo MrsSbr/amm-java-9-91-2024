@@ -9,8 +9,8 @@ public class CarSharing {
 
         vehicles.add(new Car("Toyota", "Camry", 40, 5));
         vehicles.add(new Car("Ford", "Mustang", 70, 4));
-        vehicles.add(new Motorcycle("Harley-Davidson", "Street 750", 25));
-        vehicles.add(new Motorcycle("Kawasaki", "Ninja ZX-6R", 30));
+        vehicles.add(new Motorcycle("Harley-Davidson", "Street 750", 1, 25));
+        vehicles.add(new Motorcycle("Kawasaki", "Ninja ZX-6R", 1, 30));
 
         for (Vehicle vehicle : vehicles) {
             System.out.println(vehicle);
