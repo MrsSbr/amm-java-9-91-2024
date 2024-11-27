@@ -4,10 +4,18 @@ import ru.vsu.amm.java.entity.PlantLogEntry;
 import ru.vsu.amm.java.enums.Fertilizer;
 
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PlantDiaryService {
+    private static final double DEFAULT_WATERING_INTERVAL = 0.0;
+    private static final int MINIMAL_WATERING_NUMBER = 2;
 
     public static Map<String, Double> getAverageWateringFrequency(List<PlantLogEntry> plants) {
         if (plants == null || plants.isEmpty()) {
@@ -24,8 +32,9 @@ public class PlantDiaryService {
                                     .sorted(Comparator.comparing(PlantLogEntry::date))
                                     .toList();
 
-                            if (sortedByDateEntries.size() < 2) {
-                                return 0.0;
+
+                            if (sortedByDateEntries.size() < MINIMAL_WATERING_NUMBER) {
+                                return DEFAULT_WATERING_INTERVAL;
                             }
 
                             List<Long> intervals = new ArrayList<>();
@@ -38,7 +47,7 @@ public class PlantDiaryService {
                             return intervals.stream()
                                     .mapToLong(Long::longValue)
                                     .average()
-                                    .orElse(0.0);
+                                    .orElse(DEFAULT_WATERING_INTERVAL);
                         }
 
                 ));

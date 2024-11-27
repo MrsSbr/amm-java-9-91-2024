@@ -15,19 +15,18 @@ public class Main {
     private static final Logger logger = Logger.getLogger(Main.class.getName());
     private static final String PATH = "app/G91/em.vera/lab4/src/main/java/ru/vsu/amm/java/resources/plants";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         List<PlantLogEntry> plants;
         try {
             plants = Reader.read(PATH);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Reading failed.\n" + Arrays.toString(e.getStackTrace()));
-            throw new RuntimeException(e);
+            throw e;
         }
 
-        logger.log(Level.INFO, "Average watering frequency for each flower: " + PlantDiaryService.getAverageWateringFrequency(plants));
-        logger.log(Level.INFO, "Plants for each fertilizer: " + PlantDiaryService.findPlantsByFertilizer(plants));
-        logger.log(Level.INFO, "Most watered plant: " + PlantDiaryService.findMostWateredPlant(plants));
-
+        System.out.println("Average watering frequency for each flower: " + PlantDiaryService.getAverageWateringFrequency(plants));
+        System.out.println("Plants for each fertilizer: " + PlantDiaryService.findPlantsByFertilizer(plants));
+        System.out.println("Most watered plant: " + PlantDiaryService.findMostWateredPlant(plants));
     }
 
 }

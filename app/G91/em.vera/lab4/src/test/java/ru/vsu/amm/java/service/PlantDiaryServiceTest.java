@@ -5,7 +5,11 @@ import ru.vsu.amm.java.entity.PlantLogEntry;
 import ru.vsu.amm.java.enums.Fertilizer;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,13 +22,8 @@ class PlantDiaryServiceTest {
         Map<String, Double> entries = PlantDiaryService.getAverageWateringFrequency(plants);
         assertEquals(2, entries.size());
 
-        assertTrue(entries.entrySet().stream()
-                .anyMatch(entry ->
-                        Objects.equals(entry.getKey(), "Rose") && Objects.equals(entry.getValue(), 1.)));
-        assertTrue(entries.entrySet().stream()
-                .anyMatch(entry ->
-                        Objects.equals(entry.getKey(), "Tulip") && Objects.equals(entry.getValue(), 0.)));
-
+        assertTrue(entries.containsKey("Rose") && entries.get("Rose").equals(1.));
+        assertTrue(entries.containsKey("Tulip") && entries.get("Tulip").equals(0.));
     }
 
     @Test
