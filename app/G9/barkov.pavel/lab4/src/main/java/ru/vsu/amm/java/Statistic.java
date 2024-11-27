@@ -1,7 +1,11 @@
 package ru.vsu.amm.java;
 
 import java.time.Month;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public class Statistic {
@@ -13,7 +17,7 @@ public class Statistic {
                 .collect(Collectors.groupingBy(Deal::getManager, Collectors.summingDouble(Deal::getPrice)));
         Double max = managers.values().stream().max(Comparator.comparingDouble(Double::doubleValue)).orElse(0D);
         return managers.entrySet().stream()
-                .filter(entry -> entry.getValue().equals(max))
+                .filter(entry -> Math.abs(entry.getValue() - max) < 0.01D)
                 .map(Map.Entry::getKey)
                 .toList();
     }
@@ -33,7 +37,7 @@ public class Statistic {
                         , Collectors.summingDouble(Deal::getPrice)));
         Double max = months.values().stream().max(Comparator.comparingDouble(Double::doubleValue)).orElse(0D);
         return months.entrySet().stream()
-                .filter(entry -> entry.getValue().equals(max))
+                .filter(entry -> Math.abs(entry.getValue() - max) < 0.01D)
                 .map(Map.Entry::getKey)
                 .toList();
     }

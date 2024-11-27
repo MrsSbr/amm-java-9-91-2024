@@ -1,8 +1,12 @@
 package ru.vsu.amm.java;
 
-
-import java.io.*;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.BufferedReader;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,8 +29,8 @@ public class WorkWithFile {
                     .toList();
         } catch (IOException e) {
             logger.log(Level.WARNING, e.getMessage());
-            throw new RuntimeException(e);
         }
+        return new ArrayList<>();
     }
 
     public void SaveToFile(String path, List<Deal> deals) {
@@ -37,7 +41,6 @@ public class WorkWithFile {
             }
         } catch (IOException e) {
             logger.log(Level.WARNING, e.getMessage());
-            throw new RuntimeException(e);
         }
     }
 }
