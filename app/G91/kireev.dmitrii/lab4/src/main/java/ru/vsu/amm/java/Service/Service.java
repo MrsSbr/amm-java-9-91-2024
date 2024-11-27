@@ -1,13 +1,16 @@
-package ru.vsu.amm.java.ApiService;
+package ru.vsu.amm.java.Service;
 
 import ru.vsu.amm.java.Model.FileEntity;
 import ru.vsu.amm.java.Model.TortureInstrument;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ApiService {
+public class Service {
 
 
     public Map<TortureInstrument, Long> getConfessionCountPerInstrument(List<FileEntity> entities) {
@@ -35,26 +38,17 @@ public class ApiService {
 
 
     public List<String> getTorturedByEveryInstrumentWithoutConfession(List<FileEntity> entities) {
-        if (entities == null || entities.isEmpty())  return new ArrayList<>();
-
+        if (entities == null || entities.isEmpty()) return new ArrayList<>();
 
         Map<String, List<FileEntity>> groupedBySuspect = entities.stream()
                 .collect(Collectors.groupingBy(FileEntity::suspectName));
 
         return groupedBySuspect.entrySet().stream()
-                .filter(entry -> {
-                    List<FileEntity> suspectEntities = entry.getValue();
-                    Set<TortureInstrument> instrumentsUsed = suspectEntities.stream()
-                            .filter(entity -> !entity.confessionObtained())
-                            .map(FileEntity::tortureInstrument)
-                            .collect(Collectors.toSet());
-                    boolean allInstrumentsUsed = instrumentsUsed.size() == TortureInstrument.values().length;
-                    boolean noConfession = suspectEntities.stream()
-                            .noneMatch(FileEntity::confessionObtained);
-                    return allInstrumentsUsed && noConfession;
-                })
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
-    }
+                .filter(suspect -> suspect.getValue().stream().noneMatch(FileEntity::confessionObtained))
+                .filter(suspect -> suspect.getValue().stream().map(FileEntity::tortureInstrument)
+                        .collect(Collectors.toSet())
+                        .size() == TortureInstrument.values().length)
+                .map(Map.Entry::getKey).toList();
 
+    }
 }

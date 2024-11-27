@@ -1,7 +1,7 @@
 package ru.vsu.amm.java;
 
 import org.junit.jupiter.api.Test;
-import ru.vsu.amm.java.ApiService.ApiService;
+import ru.vsu.amm.java.Service.Service;
 import ru.vsu.amm.java.Model.FileEntity;
 import ru.vsu.amm.java.Model.TortureInstrument;
 
@@ -13,16 +13,16 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ApiServiceTest {
+public class ServiceTest {
 
-    private final ApiService apiService = new ApiService();
+    private final Service service = new Service();
     private final List<FileEntity> entities = getEntities();
     private final List<FileEntity> nullEntities = null;
 
 
     @Test
     public void testGetConfessionCountPerInstrument() {
-        Map<TortureInstrument, Long> result = apiService.getConfessionCountPerInstrument(entities);
+        Map<TortureInstrument, Long> result = service.getConfessionCountPerInstrument(entities);
         assertEquals(2, result.size());
         assertEquals(1, result.get(TortureInstrument.PHYSICAL_BEATING));
         assertEquals(2, result.get(TortureInstrument.ELECTRIC_SHOCK));
@@ -30,15 +30,14 @@ public class ApiServiceTest {
 
     @Test
     public void testNullGetConfessionCountPerInstrument() {
-        Map<TortureInstrument, Long> result = apiService.getConfessionCountPerInstrument(nullEntities);
-        assertEquals(0, result.size());
+        Map<TortureInstrument, Long> result = service.getConfessionCountPerInstrument(nullEntities);
         assertEquals(result, new HashMap<>());
     }
 
 
     @Test
     public void testGetTortureDurationPerSuspect() {
-        Map<String, Duration> result = apiService.getTortureDurationPerSuspect(entities);
+        Map<String, Duration> result = service.getTortureDurationPerSuspect(entities);
         assertEquals(6, result.size());
         assertEquals("PT40M", result.get("David").toString());
         assertEquals("PT2H", result.get("Alice").toString());
@@ -47,15 +46,14 @@ public class ApiServiceTest {
 
     @Test
     public void testNullGetTortureDurationPerSuspect() {
-        Map<String, Duration> result = apiService.getTortureDurationPerSuspect(nullEntities);
-        assertEquals(0, result.size());
+        Map<String, Duration> result = service.getTortureDurationPerSuspect(nullEntities);
         assertEquals(result, new HashMap<>());
     }
 
 
     @Test
     public void testGetTorturedByEveryInstrumentWithoutConfession() {
-        List<String> result = apiService.getTorturedByEveryInstrumentWithoutConfession(entities);
+        List<String> result = service.getTorturedByEveryInstrumentWithoutConfession(entities);
         assertEquals(1, result.size());
         assertEquals("Alice", result.getFirst());
 
@@ -64,8 +62,7 @@ public class ApiServiceTest {
 
     @Test
     public void testNullGetTorturedByEveryInstrumentWithoutConfession() {
-        List<String> result = apiService.getTorturedByEveryInstrumentWithoutConfession(nullEntities);
-        assertEquals(0, result.size());
+        List<String> result = service.getTorturedByEveryInstrumentWithoutConfession(nullEntities);
         assertEquals(result, new ArrayList<>());
     }
 

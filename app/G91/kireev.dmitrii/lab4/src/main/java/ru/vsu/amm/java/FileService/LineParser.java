@@ -17,11 +17,15 @@ public class LineParser {
 
         if (!matcher.matches()) throw new IllegalArgumentException("Invalid line format");
 
+        int suspectNameGroup = 1;
+        int tortureInstrumentGroup = 2;
+        int tortureTimeGroup = 3;
+        int confessionObtainedGroup = 4;
 
-        String suspectName = matcher.group(1);
-        TortureInstrument tortureInstrument = TortureInstrument.valueOf(matcher.group(2));
-        Duration tortureTime = Duration.parse(matcher.group(3));
-        boolean confessionObtained = Boolean.parseBoolean(matcher.group(4));
+        String suspectName = matcher.group(suspectNameGroup);
+        TortureInstrument tortureInstrument = TortureInstrument.valueOf(matcher.group(tortureInstrumentGroup));
+        Duration tortureTime = Duration.parse(matcher.group(tortureTimeGroup));
+        boolean confessionObtained = Boolean.parseBoolean(matcher.group(confessionObtainedGroup));
 
         return new FileEntity(suspectName, tortureInstrument, tortureTime, confessionObtained);
 

@@ -24,9 +24,7 @@ public class FileReader {
 
         List<FileEntity> result = new ArrayList<>();
 
-        try {
-
-            Scanner scanner = new Scanner(new File(path));
+        try (Scanner scanner = new Scanner(new File(path))) {
 
             while (scanner.hasNextLine()) {
 
@@ -42,8 +40,8 @@ public class FileReader {
             }
         } catch (FileNotFoundException e) {
 
-            logger.severe("File " + path + " not found");
-            return new ArrayList<>();
+            logger.severe(path + " --- " + e.getMessage());
+            return  new ArrayList<>();
         }
 
         return result;
