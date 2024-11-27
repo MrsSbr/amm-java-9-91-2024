@@ -10,18 +10,6 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AirportTest {
-    private final PrintStream standardOut = System.out;
-    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-    @BeforeEach
-    public void setUp() {
-        System.setOut(new PrintStream(outputStream));
-    }
-
-    @AfterEach
-    public void tearDown() {
-        System.setOut(standardOut);
-    }
 
     @Test
     public void countPassengersTest() {
@@ -33,9 +21,9 @@ public class AirportTest {
         flightData.addFamily(new Family(2, 2));
         flightData.addFamily(new Family(2, 5));
 
-        FlightDataService.printCountPassengers(flightData);
+        String result = FlightDataService.countPassengersFormatString(flightData);
 
-        assertEquals(outputStream.toString(),
+        assertEquals(result,
                 """
                         Flight №1 count passenger = 6
                         Flight №2 count passenger = 7
@@ -53,9 +41,9 @@ public class AirportTest {
     @Test
     public void countEmptyPassengersTest() {
         FlightData flightData = new FlightData();
-        FlightDataService.printCountPassengers(flightData);
+        String result = FlightDataService.countPassengersFormatString(flightData);
 
-        assertEquals(outputStream.toString(),
+        assertEquals(result,
                 """
                         Flight №1 count passenger = 0
                         Flight №2 count passenger = 0

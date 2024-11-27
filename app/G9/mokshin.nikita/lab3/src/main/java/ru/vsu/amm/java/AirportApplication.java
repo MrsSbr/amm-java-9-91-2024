@@ -9,6 +9,6 @@ public class AirportApplication {
         FlightData flightData = new FlightData();
 
         FlightDataService.fillRandomFamilies(flightData, COUNT_GENERATE_FAMILY);
-        FlightDataService.printCountPassengers(flightData);
+        System.out.println(FlightDataService.countPassengersFormatString(flightData));
     }
 }

@@ -7,20 +7,22 @@ import ru.vsu.amm.java.util.GenerateFamilyUtil;
 
 public class FlightDataService {
 
-    public static void printCountPassengers(FlightData flightData) {
+    public static String countPassengersFormatString(FlightData flightData) {
+        StringBuilder stringBuilder = new StringBuilder();
         for(int i = FlightData.MIN_NUMBER_FLIGHT; i <= FlightData.MAX_NUMBER_FLIGHT; i++) {
             int numberFlight = i;
             int sum = flightData.getFamilies()
                     .stream()
                     .filter(family -> family.numberFlight() == numberFlight)
-                    .mapToInt(Family::count)
+                    .mapToInt(Family::countPeople)
                     .sum();
-            System.out.printf("Flight №%d count passenger = %d\n", numberFlight, sum);
+            stringBuilder.append(String.format("Flight №%d count passenger = %d\n", numberFlight, sum));
         }
+        return stringBuilder.toString();
     }
 
-    public static void fillRandomFamilies(FlightData flightData, int count) {
-        for (int i = 0; i < count; i++) {
+    public static void fillRandomFamilies(FlightData flightData, int countFamily) {
+        for (int i = 0; i < countFamily; i++) {
             flightData.getFamilies().add(GenerateFamilyUtil.generateFamily());
         }
     }
