@@ -1,9 +1,9 @@
 package ru.vsu.amm.java.Service;
 
-import ru.vsu.amm.java.Config.PatientConfig;
-import ru.vsu.amm.java.Model.PatientDTO;
+import ru.vsu.amm.java.Model.Patient;
 import ru.vsu.amm.java.Repository.PatientRepo;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class PatientService {
@@ -18,24 +18,41 @@ public class PatientService {
         this.patientRepo = patientRepo;
     }
 
-    public List<PatientDTO> findAll() {
+    public List<Patient> findAll() {
         return patientRepo.getAll();
     }
 
-    public List<PatientDTO> findByIsHealthy() {
-        return patientRepo.findByIsHealthy(PatientConfig.HEALTHY_PERIOD);
+
+    public List<Patient> findByIsHealthy() {
+
+        return patientRepo.getAll().stream()
+                .sorted((p1, p2) -> p2.date().compareTo(p1.date()))
+                .distinct()
+                .filter(p -> p.isHealthy() && p.date().isAfter(LocalDate.now().minusYears(1)))
+                .toList();
     }
 
-    public List<PatientDTO> findByMightBeHealthy() {
-        return patientRepo.findByMightBeHealthy(PatientConfig.HEALTHY_PERIOD);
+    public List<Patient> findByMightBeHealthy() {
+        return patientRepo.getAll().stream()
+                .sorted((p1, p2) -> p2.date().compareTo(p1.date()))
+                .distinct()
+                .filter(p -> p.isHealthy() && p.date().isBefore(LocalDate.now().minusYears(1)))
+                .toList();
     }
 
-    public List<PatientDTO> findByDateAfter() {
-        return patientRepo.findByDateAfter(PatientConfig.TASK2_PERIOD);
+    public List<Patient> findByDateAfter() {
+
+        return patientRepo.getAll().stream().filter(x -> x.date().isAfter(LocalDate.now().minusYears(3))).distinct()
+                .toList();
     }
 
-    public List<PatientDTO> findByDateBetween() {
-        return patientRepo.findByDateBetween(PatientConfig.TASK3_AFTER, PatientConfig.TASK3_BEFORE);
+    public List<Patient> findByDateBetween() {
+        return patientRepo.getAll().stream()
+                .sorted((p1, p2) -> p2.date().compareTo(p1.date()))
+                .distinct()
+                .filter(x -> x.date().isAfter(LocalDate.now().minusYears(5)) &&
+                        x.date().isBefore(LocalDate.now().minusYears(2)))
+                .toList();
     }
 
 }

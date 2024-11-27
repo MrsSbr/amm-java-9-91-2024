@@ -1,31 +1,21 @@
 package ru.vsu.amm.java.Config;
 
-import java.time.LocalDate;
+import ru.vsu.amm.java.Enum.Illness;
 import java.util.List;
+
+import static ru.vsu.amm.java.Enum.Illness.*;
 
 public class PatientConfig {
 
-    public static final int COUNT = 1964;
+    public static final int COUNT = 100;
 
-    public static final LocalDate NOW = LocalDate.now();
+    public static final List<String> NAMES = List.of("John", "Billy", "Bob", "Jully", "Ann", "Elizabeth", "Ron", "Bred", "Pit", "Aleck", "Fred");
 
-    public static final LocalDate FIRST_DATE = NOW.minusYears(10);
+    public static final List<String> SURNAMES = List.of("Brown", "White", "Wonka", "Holms", "Madder", "Jonson", "Stethem", "Aron", "Iron");
 
-    public static final LocalDate HEALTHY_PERIOD = NOW.minusYears(1);
+    public static final List<String> PATRONYMICS = List.of("Grace", "James", "Louise", "Sue", "Lois", "Santa", "Maria");
 
-    public static final LocalDate TASK2_PERIOD = NOW.minusYears(3);
-
-    public static final LocalDate TASK3_AFTER = NOW.minusYears(5);
-
-    public static final LocalDate TASK3_BEFORE = NOW.minusYears(2);
-
-    public static final List<String> names = List.of("John", "Billy", "Bob", "Jully", "Ann", "Elizabeth", "Ron", "Bred", "Pit", "Aleck", "Fred");
-
-    public static final List<String> surnames = List.of("Brown", "White", "Wonka", "Holms", "Madder", "Jonson", "Stethem", "Aron", "Iron");
-
-    public static final List<String> patronymics = List.of("Grace", "James", "Louise", "Sue", "Lois", "Santa", "Maria");
-
-    public static final List<String> illnesses = List.of("Pneumonia", "Asthma", "Bronchitis", "Emphysema");
+    public static final List<Illness> ILLNESSES = List.of(PNEUMONIA, ASTHMA, BRONCHITIS, EMPHYSEMA);
 
 }
 

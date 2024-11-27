@@ -1,6 +1,6 @@
 package ru.vsu.amm.java;
 
-import ru.vsu.amm.java.Model.PatientDTO;
+import ru.vsu.amm.java.Model.Patient;
 import ru.vsu.amm.java.Service.PatientService;
 
 import java.io.PrintStream;
@@ -12,13 +12,14 @@ public class Main {
     public static void main(String[] args) {
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
 
+
         PatientService service = new PatientService();
 
-        List<PatientDTO> mightBeHealthy = service.findByMightBeHealthy();
+        List<Patient> mightBeHealthy = service.findByMightBeHealthy();
 
-        List<PatientDTO> healthy = service.findByIsHealthy();
+        List<Patient> healthy = service.findByIsHealthy();
 
-        List<PatientDTO> all = service.findAll();
+        List<Patient> all = service.findAll();
 
         System.out.println("-----------------------------все------------------------------------------");
         for (var x : all) {
@@ -40,7 +41,7 @@ public class Main {
 
         System.out.println("----- список людей, которые проходили обследование за последние 3 года------");
 
-        List<PatientDTO> task2 = service.findByDateAfter().stream().sorted(Comparator.comparing(PatientDTO::name)).toList();
+        List<Patient> task2 = service.findByDateAfter().stream().sorted(Comparator.comparing(Patient::name)).toList();
 
         for (var x : task2) {
             System.out.println(x);
@@ -48,7 +49,7 @@ public class Main {
 
         System.out.println("------список людей, которые проходили обследование последние 5 лет, но не проходили последние 2 года--------");
 
-        List<PatientDTO> task3 = service.findByDateBetween();
+        List<Patient> task3 = service.findByDateBetween();
 
         for (var x : task3) {
             System.out.println(x);
