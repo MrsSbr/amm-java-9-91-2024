@@ -9,32 +9,35 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.vsu.amm.java.TextAnalyzer.countWordsContaining;
+import static ru.vsu.amm.java.TextAnalyzer.getLongestWordsWithFrequency;
+import static ru.vsu.amm.java.TextAnalyzer.getUniqueWords;
 
 class TextAnalyzerTest {
 
     @Test
     @DisplayName("Тест на уникальные слова")
     public void testUniqueWords() {
-        TextAnalyzer analyzer = new TextAnalyzer("apple banana apple orange");
+        WordList wordList = new WordList("apple banana apple orange");
         List<String> expected = Arrays.asList("apple", "banana", "orange");
-        assertEquals(expected, analyzer.getUniqueWords());
+        assertEquals(expected, getUniqueWords(wordList.getWords()));
     }
 
     @Test
     @DisplayName("Тест на пустую строку из пробелов")
     public void testUniqueWordsWithEmptyString() {
-        TextAnalyzer analyzer = new TextAnalyzer("   ");
+        WordList wordList = new WordList("   ");
         List<String> expected = List.of();
-        assertEquals(expected, analyzer.getUniqueWords());
+        assertEquals(expected, getUniqueWords(wordList.getWords()));
     }
 
     @Test
     @DisplayName("Тест на самые длинные слова с количеством их в тексте")
     public void testLongestWordsWithFrequency() {
-        TextAnalyzer analyzer = new TextAnalyzer("apple banana cucumber   cucumber");
+        WordList wordList = new WordList("apple banana cucumber   cucumber");
         List<String[]> expected = new ArrayList<>();
         expected.add(new String[]{"cucumber", "2"});
-        List<String[]> result = analyzer.getLongestWordsWithFrequency();
+        List<String[]> result = getLongestWordsWithFrequency(wordList.getWords());
         assertEquals(expected.size(), result.size());
         assertArrayEquals(expected.toArray(), result.toArray());
     }
@@ -42,11 +45,11 @@ class TextAnalyzerTest {
     @Test
     @DisplayName("Тест на самые длинные слова с количеством их в тексте, вариантов ответа больше 1")
     public void testLongestWordsWithFrequencyMoreOneWord() {
-        TextAnalyzer analyzer = new TextAnalyzer("apple banana orange banana orange ");
+        WordList wordList = new WordList("apple banana orange banana orange ");
         List<String[]> expected = new ArrayList<>();
         expected.add(new String[]{"banana", "2"});
         expected.add(new String[]{"orange", "2"});
-        List<String[]> result = analyzer.getLongestWordsWithFrequency();
+        List<String[]> result = getLongestWordsWithFrequency(wordList.getWords());
         assertEquals(expected.size(), result.size());
         assertArrayEquals(expected.toArray(), result.toArray());
     }
@@ -54,7 +57,7 @@ class TextAnalyzerTest {
     @Test
     @DisplayName("Тест на количество слов содержащих заданное")
     public void testCountWordsContaining() {
-        TextAnalyzer analyzer = new TextAnalyzer("apple banana apple orange  app");
-        assertEquals(3, analyzer.countWordsContaining("app"));
+        WordList wordList = new WordList("apple banana apple orange  app");
+        assertEquals(3, countWordsContaining(wordList.getWords(), "app"));
     }
 }

@@ -1,42 +1,50 @@
 package ru.vsu.amm.java;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
-public class TextAnalyzerBenchmark {
+import static ru.vsu.amm.java.TextAnalyzer.countWordsContaining;
+import static ru.vsu.amm.java.TextAnalyzer.getLongestWordsWithFrequency;
+import static ru.vsu.amm.java.TextAnalyzer.getUniqueWords;
+
+public final class TextAnalyzerBenchmark {
 
     public static void main(String[] args) {
         String inputText = generateLargeText(10000);
 
         // ArrayList
         List<String> arrayListWords = Arrays.asList(inputText.split("\\s+"));
-        TextAnalyzer arrayListAnalyzer = new TextAnalyzer(String.valueOf(new ArrayList<>(arrayListWords)));
+        WordList arrayListAnalyzer = new WordList(String.valueOf(new ArrayList<>(arrayListWords)));
         System.out.println("Performance with ArrayList:");
         runBenchmark(arrayListAnalyzer);
 
         // LinkedList
-        TextAnalyzer linkedListAnalyzer = new TextAnalyzer(String.valueOf(new LinkedList<>(arrayListWords)));
+        WordList linkedListAnalyzer = new WordList(String.valueOf(new LinkedList<>(arrayListWords)));
         System.out.println("Performance with LinkedList:");
         runBenchmark(linkedListAnalyzer);
     }
 
-    private static void runBenchmark(TextAnalyzer analyzer) {
+    private static void runBenchmark(WordList wordList) {
         long startTime, endTime;
 
         // уникальные слова
         startTime = System.nanoTime();
-        List<String> uniqueWords = analyzer.getUniqueWords();
+        List<String> uniqueWords = getUniqueWords(wordList.getWords());
         endTime = System.nanoTime();
         System.out.println("Time to get unique words: " + (endTime - startTime) + " ns");
 
         // максимальная длина с количеством
         startTime = System.nanoTime();
-        List<String[]> longestWordsWithFrequency = analyzer.getLongestWordsWithFrequency();
+        List<String[]> longestWordsWithFrequency = getLongestWordsWithFrequency(wordList.getWords());
         endTime = System.nanoTime();
         System.out.println("Time to get longest words with frequency: " + (endTime - startTime) + " ns");
 
         // содержание слова
         startTime = System.nanoTime();
-        long countContaining = analyzer.countWordsContaining("sample");
+        long countContaining = countWordsContaining(wordList.getWords(), "sample");
         endTime = System.nanoTime();
         System.out.println("Time to count words containing substring: " + (endTime - startTime) + " ns");
         System.out.println();

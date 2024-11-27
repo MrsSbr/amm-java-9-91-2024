@@ -1,41 +1,40 @@
 package ru.vsu.amm.java;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TextAnalyzer {
-    private final List<String> words;
-
-    public TextAnalyzer(String text) {
-        words = Arrays.stream(text.split("\\s+")).collect(Collectors.toList());
-    }
-
+public final class TextAnalyzer {
     //уникальные слова
-    public List<String> getUniqueWords() {
+    public static List<String> getUniqueWords(List<String> words) {
         return words.stream()
                 .distinct()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     //самые длинные слова и их количеситво
-    public List<String[]> getLongestWordsWithFrequency() {
+    public static List<String[]> getLongestWordsWithFrequency(List<String> words) {
         int maxLength = words.stream()
                 .mapToInt(String::length)
                 .max()
                 .orElse(0);
 
-        return words.stream()
-                .filter(word -> word.length() == maxLength)
-                .distinct()
-                .map(word -> new String[]{word,
-                        String.valueOf(Collections.frequency(words, word))})
-                .collect(Collectors.toList());
+        List<String[]> result;
+        if (maxLength == 0) {
+            result = null;
+        } else {
+            result = words.stream()
+                    .filter(word -> word.length() == maxLength)
+                    .distinct()
+                    .map(word -> new String[]{word,
+                            String.valueOf(Collections.frequency(words, word))})
+                    .collect(Collectors.toList());
+        }
+        return result;
     }
 
     //количество слов которые содеражат слово пользователя
-    public long countWordsContaining(String string) {
+    public static long countWordsContaining(List<String> words, String string) {
         return words.stream()
                 .filter(word -> word.contains(string))
                 .count();
