@@ -29,7 +29,7 @@ public class RestaurantApp {
         Set<String> uniqueDishes = restaurantService.getUniqueDishes(orders);
         System.out.println("Unique dishes: " + uniqueDishes);
 
-        int totalEarnings = restaurantService.detTotalEarning(orders);
+        double totalEarnings = restaurantService.detTotalEarning(orders);
         System.out.println("The total earnings of the restaurant is: " + totalEarnings);
 
         Set<String> mostExpensiveDishes = restaurantService.getMostExpensiveDishes(orders);

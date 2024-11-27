@@ -3,6 +3,7 @@ package ru.vsu.amm.java.entity;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Builder
 @Getter
@@ -12,21 +13,19 @@ import java.util.ArrayList;
 public class Order {
     private ArrayList<Dish> dishes;
 
-    public int getTotalPrice() {
-        return dishes.stream().mapToInt(Dish::getPrice).sum();
+    public double getTotalPrice() {
+        return dishes.stream().mapToDouble(Dish::getPrice).sum();
     }
 
     @Override
     public String toString() {
-        StringBuilder orderString = new StringBuilder("Order:\n");
-        for (int i = 0; i<dishes.size(); ++i) {
-           orderString.append(dishes.get(i).toString());
-           if(i<dishes.size() - 1) {
-               orderString.append(", ");
-           }
-            orderString.append("\n");
-        }
-        orderString.append("total price: ").append(getTotalPrice()).append("\n");
-        return orderString.toString();
+        String dishesString = dishes.stream()
+                .map(Dish::toString)
+                .collect(Collectors.joining(",\n", "Order:\n", "\ntotal price: " + getTotalPrice() + "\n"));
+        return dishesString;
+    }
+
+    public boolean containsDish(String dishName) {
+        return dishes.stream().anyMatch(dish -> dish.getDish().name().equals(dishName));
     }
 }

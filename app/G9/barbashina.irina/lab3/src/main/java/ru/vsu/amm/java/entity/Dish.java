@@ -1,10 +1,15 @@
 package ru.vsu.amm.java.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
 import ru.vsu.amm.java.enums.Ingredients;
 import ru.vsu.amm.java.enums.TypeDish;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Getter
@@ -13,11 +18,12 @@ import java.util.ArrayList;
 @NoArgsConstructor
 public class Dish {
     private TypeDish dish;
-    private ArrayList<Ingredients> ingredients;
-    private int price;
+    private List<Ingredients> ingredients;
+    private double price;
 
     @Override
     public String toString() {
         return "dish: " + dish + ", ingredients: " + ingredients + ", price: " + price;
     }
+
 }

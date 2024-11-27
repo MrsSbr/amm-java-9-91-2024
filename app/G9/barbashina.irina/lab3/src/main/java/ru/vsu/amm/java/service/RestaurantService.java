@@ -3,8 +3,10 @@ package ru.vsu.amm.java.service;
 import ru.vsu.amm.java.entity.Dish;
 import ru.vsu.amm.java.entity.Order;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.NoSuchElementException;
 
 public class RestaurantService {
     public Set<String> getUniqueDishes(List<Order> orders) {
@@ -14,16 +16,16 @@ public class RestaurantService {
                 .collect(Collectors.toSet());
     }
 
-    public int detTotalEarning(List<Order> orders) {
+    public double detTotalEarning(List<Order> orders) {
         return orders.stream()
-                .mapToInt(Order::getTotalPrice)
+                .mapToDouble(Order::getTotalPrice)
                 .sum();
     }
 
     public Set<String> getMostExpensiveDishes(List<Order> orders) {
-        int maxPrice = orders.stream()
+        double maxPrice = orders.stream()
                 .flatMap(order -> order.getDishes().stream())
-                .mapToInt(Dish::getPrice)
+                .mapToDouble(Dish::getPrice)
                 .max()
                 .orElseThrow(NoSuchElementException::new);
 
