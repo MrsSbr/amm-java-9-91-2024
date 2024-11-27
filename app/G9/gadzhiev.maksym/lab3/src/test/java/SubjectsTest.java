@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.Test;
-import ru.vsu.amm.java.Fio;
 import ru.vsu.amm.java.Review;
 import ru.vsu.amm.java.Service;
 import ru.vsu.amm.java.Subjects;
@@ -14,9 +13,9 @@ public class SubjectsTest {
     @Test
     void testHowManyStudentsFoundMathematicalAnaLysisUseful() {
         List<Review> reviews = List.of(
-                new Review(5, Subjects.MATHEMATICAL_ANALYSIS, Fio.AKSENOV_MAKSIM_ALEKSANDROVICH, false),
-                new Review(4, Subjects.MATHEMATICAL_ANALYSIS, Fio.GADSHIEV_MAKSIM_DENISOVICH, true),
-                new Review(5, Subjects.MATHEMATICAL_ANALYSIS, Fio.GARSHIN_MAKSIM_SERGEEVICH, false)
+                new Review(5, Subjects.MATHEMATICAL_ANALYSIS, "Гаршин Максим Сергеевич", false),
+                new Review(4, Subjects.MATHEMATICAL_ANALYSIS, "Гаджиев Максим Денисович", true),
+                new Review(5, Subjects.MATHEMATICAL_ANALYSIS,  "Аксенов Максим Александрович", false)
         );
 
         int result = Service.numberUsefulReviews(Subjects.MATHEMATICAL_ANALYSIS, reviews);
@@ -26,9 +25,9 @@ public class SubjectsTest {
     @Test
     void testNoneOfManyStudentsFoundMathematicalAnaLysisUseful() {
         List<Review> reviews = List.of(
-                new Review(4, Subjects.MATHEMATICAL_ANALYSIS, Fio.KANATNIKOV_MAKSIM_ANDREEVICH, false),
-                new Review(4, Subjects.MATHEMATICAL_ANALYSIS, Fio.KIIKO_MAKSIM_VADIMOVICH, false),
-                new Review(4, Subjects.MATHEMATICAL_ANALYSIS, Fio.POZNDIKOV_MAKSIM_MAKSIMOVICH, false)
+                new Review(4, Subjects.MATHEMATICAL_ANALYSIS, "Кийко Максим Вадимович", false),
+                new Review(4, Subjects.MATHEMATICAL_ANALYSIS, "Канатников Максим Андреевич", false),
+                new Review(4, Subjects.MATHEMATICAL_ANALYSIS,"Поздников Максим Максимович", false)
         );
 
         int result = Service.numberUsefulReviews(Subjects.ALGEBRA, reviews);
@@ -38,9 +37,9 @@ public class SubjectsTest {
     @Test
     void testSubjectHighestScoreAlgebraAndFunctionalAnalysis() {
         List<Review> reviews = List.of(
-                new Review(5, Subjects.ALGEBRA, Fio.KIIKO_MAKSIM_VADIMOVICH, true),
-                new Review(3, Subjects.COMPUTER_SCIENCE, Fio.GADSHIEV_MAKSIM_DENISOVICH, false),
-                new Review(4, Subjects.FUNCTIONAL_ANALYSIS, Fio.AKSENOV_MAKSIM_ALEKSANDROVICH, true)
+                new Review(5, Subjects.ALGEBRA, "Поздников Максим Максимович", true),
+                new Review(3, Subjects.COMPUTER_SCIENCE, "Гаджиев Максим Денисович", false),
+                new Review(5, Subjects.FUNCTIONAL_ANALYSIS, "Кийко Максим Вадимович", true)
         );
 
         Set<Subjects> result = Service.subjectsWithMaxMark(reviews);
@@ -56,9 +55,9 @@ public class SubjectsTest {
     @Test
     void testAllStudentsNoRateNotOneSubjectPositively() {
         List<Review> reviews = List.of(
-                new Review(2, Subjects.NUMERICAL_METHODS, Fio.POZNDIKOV_MAKSIM_MAKSIMOVICH, false),
-                new Review(2, Subjects.DIFFERENTIAL_EQUATIONS, Fio.GARSHIN_MAKSIM_SERGEEVICH, false),
-                new Review(3, Subjects.PROBABILITY_THEORY, Fio.KANATNIKOV_MAKSIM_ANDREEVICH, false)
+                new Review(2, Subjects.NUMERICAL_METHODS,"Гаршин Максим Сергеевич",  false),
+                new Review(2, Subjects.DIFFERENTIAL_EQUATIONS, "Канатников Максим Андреевич", false),
+                new Review(3, Subjects.PROBABILITY_THEORY, "Аксенов Максим Александрович", false)
         );
 
         int result = Service.unusefulAllSubjects(reviews);
@@ -68,9 +67,9 @@ public class SubjectsTest {
     @Test
     void testAllStudentsRatedAllItemsPositively() {
         List<Review> reviews = List.of(
-                new Review(5, Subjects.MATHEMATICAL_ANALYSIS, Fio.AKSENOV_MAKSIM_ALEKSANDROVICH, true),
-                new Review(5, Subjects.PROBABILITY_THEORY, Fio.GADSHIEV_MAKSIM_DENISOVICH, true),
-                new Review(5, Subjects.ALGEBRA, Fio.POZNDIKOV_MAKSIM_MAKSIMOVICH, true)
+                new Review(5, Subjects.MATHEMATICAL_ANALYSIS, "Канатников Максим Андреевич", true),
+                new Review(5, Subjects.PROBABILITY_THEORY, "Кийко Максим Вадимович", true),
+                new Review(5, Subjects.ALGEBRA, "Поздников Максим Максимович", true)
         );
 
         int result = Service.unusefulAllSubjects(reviews);

@@ -14,18 +14,16 @@ public class Service {
     }
 
     public static Set<Subjects> subjectsWithMaxMark(List<Review> reviewList) {
-        Set<Subjects> subjectMaxMark = new HashSet<>();
-        int maxMark = 0;
-        for (Review review: reviewList) {
-            if (review.mark() > maxMark) {
-                maxMark = review.mark();
-                subjectMaxMark = new HashSet<>();
-                subjectMaxMark.add(review.subject());
-            } else if (review.mark() == maxMark) {
-                subjectMaxMark.add(review.subject());
-            }
+        if (reviewList.isEmpty()) {
+            return new HashSet<>();
         }
-        return subjectMaxMark;
+
+        int maxMark = reviewList.stream()
+                .mapToInt(Review::mark).max().getAsInt();
+
+        return reviewList.stream()
+                .filter(review -> review.mark() == maxMark)
+                .map(Review::subject).collect(Collectors.toSet());
 
     }
 
