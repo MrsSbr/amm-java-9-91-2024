@@ -1,13 +1,10 @@
 import ru.vsu.amm.java.enums.*;
-import ru.vsu.amm.java.BeddingRecord;
-import ru.vsu.amm.java.BeddingAnalysis;
-import ru.vsu.amm.java.BeddingData;
-import ru.vsu.amm.java.Main;
+import ru.vsu.amm.java.entity.BeddingRecord;
+import ru.vsu.amm.java.service.BeddingAnalysis;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

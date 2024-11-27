@@ -1,14 +1,12 @@
-package ru.vsu.amm.java;
-import ru.vsu.amm.java.BeddingRecord;
+package ru.vsu.amm.java.service;
+import ru.vsu.amm.java.entity.BeddingRecord;
 import ru.vsu.amm.java.enums.Colors;
 import ru.vsu.amm.java.enums.Material;
 import ru.vsu.amm.java.enums.Size;
 
-import java.time.Month;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 public class BeddingAnalysis {

@@ -1,4 +1,4 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.entity;
 
 import ru.vsu.amm.java.enums.*;
 import java.time.LocalDate;

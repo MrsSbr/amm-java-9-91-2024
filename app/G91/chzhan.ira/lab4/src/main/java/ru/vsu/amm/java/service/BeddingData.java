@@ -1,7 +1,7 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.service;
 
 import ru.vsu.amm.java.enums.*;
-import ru.vsu.amm.java.BeddingRecord;
+import ru.vsu.amm.java.entity.BeddingRecord;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
