@@ -10,8 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public final class EggProductionTest {
 
@@ -25,7 +24,7 @@ public final class EggProductionTest {
         );
         var result = new HashSet<>(EggProductionService.getHighProductionBirdType(records));
         var expected = Set.of(BirdType.Chicken, BirdType.Duck);
-        assertEquals(expected, result);
+        assertIterableEquals(expected, result);
     }
 
     @Test
