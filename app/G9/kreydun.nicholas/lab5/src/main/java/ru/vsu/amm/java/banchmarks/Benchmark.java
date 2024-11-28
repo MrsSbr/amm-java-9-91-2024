@@ -15,7 +15,7 @@ public class Benchmark {
     private static final Map<String, Long> methodExecutionTimes = new HashMap<>();
 
     public static <T> T track(T service) throws Exception {
-        short NUM_METHOD = 0;
+        short numMethod = 0;
 
         Class<?> handlerClass = Class.forName(BenchmarkHandler.class.getName());
 
@@ -23,7 +23,7 @@ public class Benchmark {
 
         Object handler = constructor.newInstance(service);
 
-        Logg.logger.fine("tracking with " + Benchmark.class.getDeclaredMethods()[NUM_METHOD].getName());
+        Logg.logger.fine("tracking with " + Benchmark.class.getDeclaredMethods()[numMethod].getName());
 
         return (T) Proxy.newProxyInstance(
                 service.getClass().getClassLoader(),
