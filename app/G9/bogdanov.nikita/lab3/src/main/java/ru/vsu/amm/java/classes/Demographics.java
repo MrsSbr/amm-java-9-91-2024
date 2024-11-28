@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.classes;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Demographics {
 
