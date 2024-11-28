@@ -2,40 +2,37 @@ package ru.vsu.amm.java;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class TextAnalyzer {
     //уникальные слова
-    public static List<String> getUniqueWords(List<String> words) {
+    public static List<String> getUniqueWords(List<WordCount> words) {
         return words.stream()
+                .map(WordCount::toString)
                 .distinct()
                 .toList();
     }
 
     //самые длинные слова и их количеситво
-    public static List<String[]> getLongestWordsWithFrequency(List<String> words) {
+    public static List<String[]> getLongestWordsWithFrequency(List<WordCount> words) {
         int maxLength = words.stream()
-                .mapToInt(String::length)
+                .mapToInt(word -> word.word().length())
                 .max()
                 .orElse(0);
 
-        List<String[]> result;
         if (maxLength == 0) {
-            result = null;
+            return Collections.emptyList();
         } else {
-            result = words.stream()
-                    .filter(word -> word.length() == maxLength)
-                    .distinct()
-                    .map(word -> new String[]{word,
-                            String.valueOf(Collections.frequency(words, word))})
-                    .collect(Collectors.toList());
+            return words.stream()
+                    .filter(word -> word.word().length() == maxLength)
+                    .map(word -> new String[]{word.word(), String.valueOf(word.count())})
+                    .toList();
         }
-        return result;
     }
 
     //количество слов которые содеражат слово пользователя
-    public static long countWordsContaining(List<String> words, String string) {
+    public static long countWordsContaining(List<WordCount> words, String string) {
         return words.stream()
+                .map(WordCount::word)
                 .filter(word -> word.contains(string))
                 .count();
     }

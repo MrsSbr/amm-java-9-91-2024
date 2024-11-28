@@ -17,12 +17,12 @@ public final class TextAnalyzerBenchmark {
 
         // ArrayList
         List<String> arrayListWords = Arrays.asList(inputText.split("\\s+"));
-        WordList arrayListAnalyzer = new WordList(String.valueOf(new ArrayList<>(arrayListWords)));
+        WordList arrayListAnalyzer = new WordList(new ArrayList<>(arrayListWords));
         System.out.println("Performance with ArrayList:");
         runBenchmark(arrayListAnalyzer);
 
         // LinkedList
-        WordList linkedListAnalyzer = new WordList(String.valueOf(new LinkedList<>(arrayListWords)));
+        WordList linkedListAnalyzer = new WordList(new LinkedList<>(arrayListWords));
         System.out.println("Performance with LinkedList:");
         runBenchmark(linkedListAnalyzer);
     }

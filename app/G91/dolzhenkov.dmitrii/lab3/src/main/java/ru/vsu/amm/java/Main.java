@@ -2,7 +2,10 @@ package ru.vsu.amm.java;
 
 import java.util.Scanner;
 
-import static ru.vsu.amm.java.TextAnalyzer.*;
+import static ru.vsu.amm.java.TextAnalyzer.getLongestWordsWithFrequency;
+import static ru.vsu.amm.java.TextAnalyzer.countWordsContaining;
+import static ru.vsu.amm.java.TextAnalyzer.getUniqueWords;
+
 
 public class Main {
     public static void main(String[] args) {

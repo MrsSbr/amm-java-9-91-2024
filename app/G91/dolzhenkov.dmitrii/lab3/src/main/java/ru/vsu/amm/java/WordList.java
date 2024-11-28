@@ -1,17 +1,43 @@
 package ru.vsu.amm.java;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class WordList {
-    private final List<String> words;
+    private final List<WordCount> words;
 
     public WordList(String text) {
-        words = Arrays.stream(text.split("\\s+")).toList();
+        Map<String, Long> wordCounts = Arrays.stream(text.split("\\s+"))
+                .map(String::toLowerCase)
+                .collect(Collectors.groupingBy(word -> word, Collectors.counting()));
+
+        words = wordCounts.entrySet().stream()
+                .map(entry -> new WordCount(entry.getKey(), entry.getValue().intValue()))
+                .toList();
+    }
+
+    public WordList(ArrayList<String> arrayListWords) {
+        Map<String, Long> wordCounts = arrayListWords.stream()
+                .map(String::toLowerCase)
+                .collect(Collectors.groupingBy(word -> word, Collectors.counting()));
+
+        words = new ArrayList<>(wordCounts.entrySet().stream()
+                .map(entry -> new WordCount(entry.getKey(), entry.getValue().intValue()))
+                .toList());
+    }
+
+    public WordList(LinkedList<String> arrayListWords) {
+        Map<String, Long> wordCounts = arrayListWords.stream()
+                .map(String::toLowerCase)
+                .collect(Collectors.groupingBy(word -> word, Collectors.counting()));
+
+        words = new LinkedList<>(wordCounts.entrySet().stream()
+                .map(entry -> new WordCount(entry.getKey(), entry.getValue().intValue()))
+                .toList());
     }
 
 
-    public List<String> getWords() {
+    public List<WordCount> getWords() {
         return words;
     }
 }
