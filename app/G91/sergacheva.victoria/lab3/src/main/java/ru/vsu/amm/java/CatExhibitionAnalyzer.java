@@ -3,6 +3,7 @@ package ru.vsu.amm.java;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CatExhibitionAnalyzer {
@@ -56,11 +57,21 @@ public class CatExhibitionAnalyzer {
                 .collect(Collectors.groupingBy(CatWinner::getBreed, Collectors.counting()));
     }
 
-    public static List<String> getUniqueFemaleWinners(List<CatWinner> winners) {
+    public static Set<String> getUniqueFemaleWinners(List<CatWinner> winners) {
+        if (winners == null) {
+            throw new NullPointerException("The list of winners can't be null");
+        }
+
+        for (CatWinner winner : winners) {
+            if (winner.getName() == null || winner.getBreed() == null || winner.getGender() == null) {
+                throw new IllegalArgumentException("Fields in CatWinner can't be null");
+            }
+        }
+
         return winners.stream()
                 .filter(cat -> cat.getGender() == Gender.FEMALE)
                 .map(CatWinner::getName)
-                .distinct()
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
+
 }

@@ -2,6 +2,7 @@ package ru.vsu.amm.java;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class TaskCatExhibition {
     public static void main(String[] args) {
@@ -14,7 +15,7 @@ public class TaskCatExhibition {
         System.out.println( "Statistics of wins by cat breeds:");
         breedStats.forEach((breed, count) -> System.out.println(breed + " " +  count));
 
-        List<String> uniqueFemaleWinners = CatExhibitionAnalyzer.getUniqueFemaleWinners(winners);
+        Set<String> uniqueFemaleWinners = CatExhibitionAnalyzer.getUniqueFemaleWinners(winners);
         System.out.println( "List of cats that have won at least once:" + uniqueFemaleWinners);
     }
 }

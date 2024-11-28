@@ -5,10 +5,7 @@ import ru.vsu.amm.java.CatExhibitionAnalyzer;
 import ru.vsu.amm.java.CatWinner;
 import ru.vsu.amm.java.Gender;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,7 +49,7 @@ public class CatExhibitionAnalyzerTest {
         Map<Breed, Long> statistics = CatExhibitionAnalyzer.calculateBreedStatistics(winners);
         assertTrue(statistics.isEmpty() , "Breed statistics should be empty for an empty list");
 
-        List<String> femaleWinners = CatExhibitionAnalyzer.getUniqueFemaleWinners(winners);
+        Set<String> femaleWinners = CatExhibitionAnalyzer.getUniqueFemaleWinners(winners);
         assertTrue(femaleWinners.isEmpty() , "The list of female winners should be empty for an empty list");
     }
 
@@ -66,7 +63,7 @@ public class CatExhibitionAnalyzerTest {
         double ratio = CatExhibitionAnalyzer.calculateGenderRatio(winners);
         assertEquals(Double.POSITIVE_INFINITY, ratio, "The gender ratio should be infinite when there aren't females");
 
-        List<String> femaleWinners = CatExhibitionAnalyzer.getUniqueFemaleWinners(winners);
+        Set<String> femaleWinners = CatExhibitionAnalyzer.getUniqueFemaleWinners(winners);
         assertTrue(femaleWinners.isEmpty(), "The list of female winners should be empty when there aren't females");
     }
 
@@ -80,7 +77,7 @@ public class CatExhibitionAnalyzerTest {
         double ratio = CatExhibitionAnalyzer.calculateGenderRatio(winners);
         assertEquals(0, ratio, "The gender ratio should be 0 when there aren't males");
 
-        List<String> femaleWinners = CatExhibitionAnalyzer.getUniqueFemaleWinners(winners);
+        Set<String> femaleWinners = CatExhibitionAnalyzer.getUniqueFemaleWinners(winners);
         assertEquals(2, femaleWinners.size(), "The list of female winners should contain all female names");
     }
 
@@ -106,7 +103,5 @@ public class CatExhibitionAnalyzerTest {
                 "Should throw NullPointerException for null list");
 
     }
-
-
 }
 
