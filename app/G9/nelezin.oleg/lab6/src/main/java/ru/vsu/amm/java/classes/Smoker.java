@@ -10,7 +10,7 @@ public class Smoker extends Thread {
     private static final Logger log;
 
     static {
-        log = Logger.getLogger(Barman.class.getName());
+        log = Logger.getLogger(Smoker.class.getName());
     }
 
     private final static int SMOKING_TIME = 1500;
@@ -24,16 +24,17 @@ public class Smoker extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        try {
+            while (!Thread.currentThread().isInterrupted()) {
                 table.takeComponents(component);
                 System.out.println("Курильщик " + name + " курит сигарету");
-                try {
-                    Thread.sleep(SMOKING_TIME);
-                } catch (InterruptedException e) {
-                    log.info("error");
-                    e.printStackTrace();
-                    Thread.currentThread().interrupt();
-                }
+
+                Thread.sleep(SMOKING_TIME);
             }
+        } catch (InterruptedException e) {
+            log.info("error");
+            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
+    }
 }

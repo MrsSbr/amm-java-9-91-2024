@@ -1,5 +1,7 @@
 package ru.vsu.amm.java.classes;
 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
 
 public class Table {
@@ -7,43 +9,36 @@ public class Table {
     private static final Logger log;
 
     static {
-        log = Logger.getLogger(Barman.class.getName());
+        log = Logger.getLogger(Table.class.getName());
     }
 
-    private String firstComponent = null;
+    private final BlockingQueue<String[]> componentQueue = new ArrayBlockingQueue<>(1);
 
-    private String secondComponent = null;
-
-    public synchronized void placeComponents(String component1, String component2) {
-        while (firstComponent != null || secondComponent != null) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                log.info("error");
-                e.printStackTrace();
-                Thread.currentThread().interrupt();
-            }
+    public void placeComponents(String component1, String component2) {
+        try {
+            componentQueue.put(new String[]{component1, component2});
+            System.out.println("Бармен положил " + component1 + ", " + component2);
+        } catch (InterruptedException e) {
+            log.info("error");
+            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
-        this.firstComponent = component1;
-        this.secondComponent = component2;
-        System.out.println("Бармен положил " + component1 + ", " + component2);
-        notifyAll();
     }
 
-    public synchronized void takeComponents(String needComponent) {
-        while (firstComponent == null || secondComponent == null
-                || firstComponent.equals(needComponent) || secondComponent.equals(needComponent)) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                log.info("error");
-                e.printStackTrace();
-                Thread.currentThread().interrupt();
+    public void takeComponents(String needComponent) {
+        try {
+            while (true) {
+                String[] components = componentQueue.take();
+                if (!components[0].equals(needComponent) && !components[1].equals(needComponent)) {
+                    System.out.println("Курильщик с " + needComponent + " забирает компоненты");
+                    return;
+                }
+                componentQueue.put(components);
             }
+        } catch (InterruptedException e) {
+            log.info("error");
+            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
-        System.out.println("Курильщик с " + needComponent + " забирает компоненты");
-        firstComponent = null;
-        secondComponent = null;
-        notifyAll();
     }
 }

@@ -5,28 +5,36 @@ import ru.vsu.amm.java.classes.Smoker;
 import ru.vsu.amm.java.classes.Table;
 import ru.vsu.amm.java.enums.Component;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 public class SmokingApplication {
 
     public static void main(String[] args) {
+        ExecutorService executorService = Executors.newFixedThreadPool(4);
         Table table = new Table();
 
-        Thread firstSmoker = new Thread(
-                new Smoker("Степан", Component.PAPER.getName(), table)
-        );
+        execute(executorService, table);
 
-        Thread secondSmoker = new Thread(
-                new Smoker("Алексей", Component.MATCHES.getName(), table)
-        );
+        executorService.shutdown();
+        try {
+            if (!executorService.awaitTermination(20, TimeUnit.SECONDS)) {
+                executorService.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executorService.shutdownNow();
+            System.out.println(e.getMessage());
+        }
+    }
 
-        Thread thirdSmoker = new Thread(
-                new Smoker("Руслан", Component.TOBACCO.getName(), table)
-        );
+    public static void execute(ExecutorService executorService, Table table) {
+        executorService.submit(new Smoker("Степан", Component.PAPER.getName(), table));
 
-        Thread barman = new Thread(new Barman(table));
+        executorService.submit(new Smoker("Алексей", Component.MATCHES.getName(), table));
 
-        firstSmoker.start();
-        secondSmoker.start();
-        thirdSmoker.start();
-        barman.start();
+        executorService.submit(new Smoker("Руслан", Component.TOBACCO.getName(), table));
+
+        executorService.submit(new Barman(table));
     }
 }

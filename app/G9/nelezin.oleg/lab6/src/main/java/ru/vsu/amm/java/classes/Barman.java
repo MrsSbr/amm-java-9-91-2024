@@ -24,7 +24,7 @@ public class Barman extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             int first = (int) (Math.random() * 3);
             int second = (int) (Math.random() * 3);
             while (first == second) {
@@ -32,7 +32,7 @@ public class Barman extends Thread {
             }
             table.placeComponents(COMPONENTS[first].getName(), COMPONENTS[second].getName());
             try {
-                Thread.sleep(500);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 log.info("error");
                 e.printStackTrace();
