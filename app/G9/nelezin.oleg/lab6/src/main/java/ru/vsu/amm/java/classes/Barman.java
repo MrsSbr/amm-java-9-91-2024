@@ -3,8 +3,16 @@ package ru.vsu.amm.java.classes;
 import lombok.AllArgsConstructor;
 import ru.vsu.amm.java.enums.Component;
 
+import java.util.logging.Logger;
+
 @AllArgsConstructor
 public class Barman extends Thread {
+
+    private static final Logger log;
+
+    static {
+        log = Logger.getLogger(Barman.class.getName());
+    }
 
     private static final Component[] COMPONENTS = {
             Component.PAPER,
@@ -26,6 +34,7 @@ public class Barman extends Thread {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
+                log.info("error");
                 e.printStackTrace();
                 Thread.currentThread().interrupt();
             }

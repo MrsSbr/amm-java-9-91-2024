@@ -2,8 +2,16 @@ package ru.vsu.amm.java.classes;
 
 import lombok.AllArgsConstructor;
 
+import java.util.logging.Logger;
+
 @AllArgsConstructor
 public class Smoker extends Thread {
+
+    private static final Logger log;
+
+    static {
+        log = Logger.getLogger(Barman.class.getName());
+    }
 
     private final static int SMOKING_TIME = 1500;
 
@@ -22,6 +30,7 @@ public class Smoker extends Thread {
                 try {
                     Thread.sleep(SMOKING_TIME);
                 } catch (InterruptedException e) {
+                    log.info("error");
                     e.printStackTrace();
                     Thread.currentThread().interrupt();
                 }

@@ -1,6 +1,14 @@
 package ru.vsu.amm.java.classes;
 
+import java.util.logging.Logger;
+
 public class Table {
+
+    private static final Logger log;
+
+    static {
+        log = Logger.getLogger(Barman.class.getName());
+    }
 
     private String firstComponent = null;
 
@@ -11,6 +19,7 @@ public class Table {
             try {
                 wait();
             } catch (InterruptedException e) {
+                log.info("error");
                 e.printStackTrace();
                 Thread.currentThread().interrupt();
             }
@@ -27,6 +36,7 @@ public class Table {
             try {
                 wait();
             } catch (InterruptedException e) {
+                log.info("error");
                 e.printStackTrace();
                 Thread.currentThread().interrupt();
             }
