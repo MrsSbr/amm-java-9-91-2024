@@ -29,6 +29,7 @@ student("bogdanov.nikita", G9) {
     lab(0)
     lab(1)
     lab(2)
+    lab(4)
 }
 
 student("kurkina.tanya", G91) {
@@ -70,6 +71,7 @@ student("nelezin.oleg", G9) {
     lab(1)
     lab(2)
     lab(3)
+    lab(4)
 }
 
 student("golukovich.timofey", G9) {
