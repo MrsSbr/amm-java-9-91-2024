@@ -16,16 +16,6 @@ public class SmokingApplication {
         Table table = new Table();
 
         execute(executorService, table);
-
-        executorService.shutdown();
-        try {
-            if (!executorService.awaitTermination(20, TimeUnit.SECONDS)) {
-                executorService.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            executorService.shutdownNow();
-            System.out.println(e.getMessage());
-        }
     }
 
     public static void execute(ExecutorService executorService, Table table) {
