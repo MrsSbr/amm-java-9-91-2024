@@ -14,14 +14,14 @@ public class Main {
     private static final Logger logger = Logger.getLogger(Main.class.getName());
     private static final String PATH = "app/G91/belozerov.alexei/lab4/src/main/java/ru/vsu/amm/java/resources/ships.txt";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         List<Ship> ships;
         try {
             Reader reader = new Reader();
             ships = reader.read(PATH);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Can't read file: " + PATH + "\n");
-            throw new RuntimeException();
+            throw e;
         }
 
         System.out.println("Amount of ships boarded by nationality: "
