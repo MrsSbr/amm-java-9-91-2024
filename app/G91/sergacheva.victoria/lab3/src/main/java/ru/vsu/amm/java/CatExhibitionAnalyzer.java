@@ -2,7 +2,6 @@ package ru.vsu.amm.java;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -42,19 +41,31 @@ public class CatExhibitionAnalyzer {
         return (double) maleCount/ femaleCount;
     }
 
-    public static Map<Breed, Long> calculateBreedStatistics(List<CatWinner> winners) {
-        if (winners == null){
+    public static List<String> calculateBreedStatistics(List<CatWinner> winners) {
+        if (winners == null) {
             throw new NullPointerException("The list of winners can't be null");
         }
 
-        for (CatWinner winner: winners){
-            if(winner.getName() == null || winner.getBreed() == null || winner.getGender() == null){
+        for (CatWinner winner : winners) {
+            if (winner.getName() == null || winner.getBreed() == null || winner.getGender() == null) {
                 throw new IllegalArgumentException("Fields in CatWinner can't be null");
             }
         }
 
-        return winners.stream()
-                .collect(Collectors.groupingBy(CatWinner::getBreed, Collectors.counting()));
+        List<String> statistics = new ArrayList<>();
+        List<Breed> breeds = winners.stream()
+                .map(CatWinner::getBreed)
+                .distinct()
+                .collect(Collectors.toList());
+
+        for (Breed breed : breeds) {
+            long count = winners.stream()
+                    .filter(cat -> cat.getBreed() == breed)
+                    .count();
+            statistics.add(breed + ": " + count);
+        }
+
+        return statistics;
     }
 
     public static Set<String> getUniqueFemaleWinners(List<CatWinner> winners) {

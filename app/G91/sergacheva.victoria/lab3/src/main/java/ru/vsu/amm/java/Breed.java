@@ -5,4 +5,5 @@ public enum Breed {
     PERSIAN,
     MAINE_COON,
     SPHYNX
+
 }

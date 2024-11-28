@@ -30,27 +30,28 @@ public class CatExhibitionAnalyzerTest {
     }
 
     @Test
-    public void testCalculateBreedStatistics(){
-        setup();
-        Map<Breed, Long> statistics = CatExhibitionAnalyzer.calculateBreedStatistics(winners);
-        assertEquals(Breed.values().length, statistics.size(), "Statistics should include all breeds");
-        assertEquals(2, statistics.get(Breed.SIAMESE), "SIAMESE count should be 2");
-        assertEquals(1, statistics.get(Breed.PERSIAN), "PERSIAN count should be 1");
-        assertEquals(1, statistics.get(Breed.MAINE_COON), "MAINE_COON count should be 1");
-        assertEquals(1, statistics.get(Breed.SPHYNX), "SPHYNX count should be 1");
+    public void testCalculateBreedStatistics() {
+        List<String> statistics = CatExhibitionAnalyzer.calculateBreedStatistics(winners);
+
+        assertEquals(4, statistics.size(), "Statistics should include all breeds");
+        assertTrue(statistics.contains("SIAMESE: 2"), "SIAMESE count should be 2");
+        assertTrue(statistics.contains("PERSIAN: 1"), "PERSIAN count should be 1");
+        assertTrue(statistics.contains("MAINE_COON: 1"), "MAINE_COON count should be 1");
+        assertTrue(statistics.contains("SPHYNX: 1"), "SPHYNX count should be 1");
     }
 
     @Test
-    public void testGetWinnerList(){
+    public void testGetWinnerList() {
         winners = Collections.emptyList();
+
         double ratio = CatExhibitionAnalyzer.calculateGenderRatio(winners);
         assertEquals(0, ratio, "The gender ratio should be 0 for an empty list");
 
-        Map<Breed, Long> statistics = CatExhibitionAnalyzer.calculateBreedStatistics(winners);
-        assertTrue(statistics.isEmpty() , "Breed statistics should be empty for an empty list");
+        List<String> statistics = CatExhibitionAnalyzer.calculateBreedStatistics(winners);
+        assertTrue(statistics.isEmpty(), "Breed statistics should be empty for an empty list");
 
         Set<String> femaleWinners = CatExhibitionAnalyzer.getUniqueFemaleWinners(winners);
-        assertTrue(femaleWinners.isEmpty() , "The list of female winners should be empty for an empty list");
+        assertTrue(femaleWinners.isEmpty(), "The list of female winners should be empty for an empty list");
     }
 
     @Test
