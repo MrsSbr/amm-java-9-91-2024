@@ -211,6 +211,7 @@ student("serova.polina", G9) {
     lab(2)
     lab(3)
     lab(4)
+    lab(5)
 }
 
 student("shipilova.viktoria", G9) {
