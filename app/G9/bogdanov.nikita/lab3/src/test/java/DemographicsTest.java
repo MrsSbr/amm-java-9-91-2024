@@ -1,10 +1,10 @@
 import org.junit.jupiter.api.Test;
 import java.util.*;
 
-import ru.vsu.amm.java.classes.Demographics;
-import ru.vsu.amm.java.classes.Gender;
-import ru.vsu.amm.java.classes.Generator;
-import ru.vsu.amm.java.classes.Student;
+import ru.vsu.amm.java.classes.service.Demographics;
+import ru.vsu.amm.java.classes.enums.Gender;
+import ru.vsu.amm.java.classes.utils.Generator;
+import ru.vsu.amm.java.classes.entity.Student;
 
 
 import static org.junit.jupiter.api.Assertions.*;

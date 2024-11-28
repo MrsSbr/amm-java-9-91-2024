@@ -1,4 +1,6 @@
-package ru.vsu.amm.java.classes;
+package ru.vsu.amm.java.classes.entity;
+
+import ru.vsu.amm.java.classes.enums.Gender;
 
 public class Student {
     private String name;

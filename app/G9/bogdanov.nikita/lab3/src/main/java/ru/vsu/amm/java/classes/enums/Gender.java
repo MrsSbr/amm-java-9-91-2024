@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.classes;
+package ru.vsu.amm.java.classes.enums;
 
 public enum Gender {
     Male,

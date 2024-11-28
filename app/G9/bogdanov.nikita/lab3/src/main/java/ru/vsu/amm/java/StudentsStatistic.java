@@ -1,13 +1,13 @@
 package ru.vsu.amm.java;
 
-import ru.vsu.amm.java.classes.Demographics;
-import ru.vsu.amm.java.classes.Generator;
-import ru.vsu.amm.java.classes.Student;
+import ru.vsu.amm.java.classes.service.Demographics;
+import ru.vsu.amm.java.classes.utils.Generator;
+import ru.vsu.amm.java.classes.entity.Student;
 import java.util.List;
 
 
 
-public class Main {
+public class StudentsStatistic {
     public static void main(String[] args) {
         List<Student> students = Generator.generateStud(1200);
         List<int[]> studBirthPerMonth = Demographics.studPerMonth(students);

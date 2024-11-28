@@ -1,4 +1,7 @@
-package ru.vsu.amm.java.classes;
+package ru.vsu.amm.java.classes.utils;
+
+import ru.vsu.amm.java.classes.entity.Student;
+import ru.vsu.amm.java.classes.enums.Gender;
 
 import java.util.ArrayList;
 import java.util.List;
