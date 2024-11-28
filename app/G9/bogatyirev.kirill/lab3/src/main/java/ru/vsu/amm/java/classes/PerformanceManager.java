@@ -19,11 +19,13 @@ public class PerformanceManager {
             int count = scanner.nextInt();
             currentCount += count;
 
-            if (currentCount > countTickets)
+            if (currentCount > countTickets) {
                 throw new Exception("Вы ввели слишком много билетов");
+            }
 
-            if (count < 0)
+            if (count < 0) {
                 throw new Exception("Неверное значение");
+            }
 
             plays.add(new Plays(perform, count));
         }

@@ -32,6 +32,8 @@ class PerformanceContainerTest {
 
         manager.fill(performances, testScanner, 45, "Введите кол-во билетов");
 
+        container = new PerformanceContainer(manager.getPlays());
+
         assertEquals(3, container.getSize());
 
         assertTrue(container.getPlays().containsAll(
