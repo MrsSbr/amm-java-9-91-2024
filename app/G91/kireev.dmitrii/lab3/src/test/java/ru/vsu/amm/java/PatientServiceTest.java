@@ -16,6 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PatientServiceTest {
 
+    private final PatientService patientService = new PatientService();
+
+
     @Test
     @DisplayName("Количество здоровых (прошедших обследование в последний год)")
     void testHealthyPeopleCount() {
@@ -30,8 +33,7 @@ public class PatientServiceTest {
         List<Patient> expected = List.of(
                 new Patient("236", "Robert", "Johnson", "David", true, Illness.HEALTHY, LocalDate.now().minusYears(1)));
 
-        PatientService patientService = new PatientService(new PatientRepo(patients));
-        List<Patient> actual = patientService.findByIsHealthy();
+        List<Patient> actual = patientService.findByIsHealthy(patients);
 
         assertEquals(expected, actual);
 
@@ -46,9 +48,7 @@ public class PatientServiceTest {
 
         List<Patient> expected = new ArrayList<>();
 
-
-        PatientService patientService = new PatientService(new PatientRepo(patients));
-        List<Patient> actual = patientService.findByIsHealthy();
+        List<Patient> actual = patientService.findByIsHealthy(patients);
 
         assertEquals(expected, actual);
 
@@ -64,9 +64,7 @@ public class PatientServiceTest {
         List<Patient> expected = List.of(
                 new Patient("123", "Smith", "Doe", "Michael", true, Illness.HEALTHY, LocalDate.now().minusMonths(6)));
 
-
-        PatientService patientService = new PatientService(new PatientRepo(patients));
-        List<Patient> actual = patientService.findByIsHealthy();
+        List<Patient> actual = patientService.findByIsHealthy(patients);
 
         assertEquals(expected, actual);
 
@@ -89,8 +87,7 @@ public class PatientServiceTest {
                 new Patient("236", "Michael", "Brown", "James", true, Illness.HEALTHY, LocalDate.now().minusMonths(3)),
                 new Patient("237", "Olivia", "Jones", "Ray", false, Illness.BRONCHITIS, LocalDate.now().minusMonths(3).plusMonths(1)));
 
-        PatientService patientService = new PatientService(new PatientRepo(patients));
-        List<Patient> actual = patientService.findByDateAfter();
+        List<Patient> actual = patientService.findByDateAfter(patients);
 
         assertEquals(expected, actual);
 
@@ -109,8 +106,7 @@ public class PatientServiceTest {
 
         List<Patient> expected = new ArrayList<>();
 
-        PatientService patientService = new PatientService(new PatientRepo(patients));
-        List<Patient> actual = patientService.findByDateAfter();
+        List<Patient> actual = patientService.findByDateAfter(patients);
 
         assertEquals(expected, actual);
 
@@ -136,9 +132,7 @@ public class PatientServiceTest {
                 new Patient("234", "Emily", "Williams", "Lee", false, Illness.ASTHMA, LocalDate.now().minusYears(4)),
                 new Patient("235", "Robert", "Johnson", "David", true, Illness.HEALTHY, LocalDate.now().minusYears(4)));
 
-
-        PatientService patientService = new PatientService(new PatientRepo(patients));
-        List<Patient> actual = patientService.findByDateBetween();
+        List<Patient> actual = patientService.findByDateBetween(patients);
         assertEquals(expected, actual);
 
     }

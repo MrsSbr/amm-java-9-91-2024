@@ -1,9 +1,10 @@
 package ru.vsu.amm.java.Config;
 
 import ru.vsu.amm.java.Enum.Illness;
-import java.util.List;
 
-import static ru.vsu.amm.java.Enum.Illness.*;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 public class PatientConfig {
 
@@ -15,7 +16,7 @@ public class PatientConfig {
 
     public static final List<String> PATRONYMICS = List.of("Grace", "James", "Louise", "Sue", "Lois", "Santa", "Maria");
 
-    public static final List<Illness> ILLNESSES = List.of(PNEUMONIA, ASTHMA, BRONCHITIS, EMPHYSEMA);
+    public static final List<Illness> ILLNESSES = Arrays.asList( Illness.values());
 
 }
 

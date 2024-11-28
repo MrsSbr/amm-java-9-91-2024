@@ -1,57 +1,46 @@
 package ru.vsu.amm.java.Service;
 
 import ru.vsu.amm.java.Model.Patient;
-import ru.vsu.amm.java.Repository.PatientRepo;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class PatientService {
 
-    private final PatientRepo patientRepo;
-
-    public PatientService() {
-        patientRepo = new PatientRepo();
-    }
-
-    public PatientService(PatientRepo patientRepo) {
-        this.patientRepo = patientRepo;
-    }
-
-    public List<Patient> findAll() {
-        return patientRepo.getAll();
-    }
-
-
-    public List<Patient> findByIsHealthy() {
-
-        return patientRepo.getAll().stream()
+    public List<Patient> findByIsHealthy(List<Patient> patients) {
+        LocalDate date = LocalDate.now().minusYears(1);
+        return patients.stream()
                 .sorted((p1, p2) -> p2.date().compareTo(p1.date()))
                 .distinct()
-                .filter(p -> p.isHealthy() && p.date().isAfter(LocalDate.now().minusYears(1)))
+                .filter(p -> p.isHealthy() && p.date().isAfter(date))
                 .toList();
     }
 
-    public List<Patient> findByMightBeHealthy() {
-        return patientRepo.getAll().stream()
+    public List<Patient> findByMightBeHealthy(List<Patient> patients) {
+        LocalDate date = LocalDate.now().minusYears(1);
+
+        return patients.stream()
                 .sorted((p1, p2) -> p2.date().compareTo(p1.date()))
                 .distinct()
-                .filter(p -> p.isHealthy() && p.date().isBefore(LocalDate.now().minusYears(1)))
+                .filter(p -> p.isHealthy() && p.date().isBefore(date))
                 .toList();
     }
 
-    public List<Patient> findByDateAfter() {
-
-        return patientRepo.getAll().stream().filter(x -> x.date().isAfter(LocalDate.now().minusYears(3))).distinct()
+    public List<Patient> findByDateAfter(List<Patient> patients) {
+        LocalDate date = LocalDate.now().minusYears(3);
+        return patients.stream().filter(x -> x.date().isAfter(date)).distinct()
                 .toList();
     }
 
-    public List<Patient> findByDateBetween() {
-        return patientRepo.getAll().stream()
+    public List<Patient> findByDateBetween(List<Patient> patients) {
+        LocalDate from = LocalDate.now().minusYears(5);
+        LocalDate to = LocalDate.now().minusYears(2);
+
+        return patients.stream()
                 .sorted((p1, p2) -> p2.date().compareTo(p1.date()))
                 .distinct()
-                .filter(x -> x.date().isAfter(LocalDate.now().minusYears(5)) &&
-                        x.date().isBefore(LocalDate.now().minusYears(2)))
+                .filter(x -> x.date().isAfter(from) &&
+                        x.date().isBefore(to))
                 .toList();
     }
 
