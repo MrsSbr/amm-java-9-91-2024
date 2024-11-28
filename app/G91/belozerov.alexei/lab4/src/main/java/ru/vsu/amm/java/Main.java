@@ -21,7 +21,7 @@ public class Main {
             ships = reader.read(PATH);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Can't read file: " + PATH + "\n");
-            throw new RuntimeException();
+            throw e;
         }
 
         System.out.println("Amount of ships boarded by nationality: "
