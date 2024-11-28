@@ -7,7 +7,7 @@ public final class TextAnalyzer {
     //уникальные слова
     public static List<String> getUniqueWords(List<WordCount> words) {
         return words.stream()
-                .map(WordCount::toString)
+                .map(WordCount::word)
                 .distinct()
                 .toList();
     }
@@ -32,8 +32,8 @@ public final class TextAnalyzer {
     //количество слов которые содеражат слово пользователя
     public static long countWordsContaining(List<WordCount> words, String string) {
         return words.stream()
-                .map(WordCount::word)
-                .filter(word -> word.contains(string))
-                .count();
+                .filter(wordCount -> wordCount.word().contains(string))
+                .mapToInt(WordCount::count)
+                .sum();
     }
 }

@@ -19,7 +19,7 @@ class TextAnalyzerTest {
     @DisplayName("Тест на уникальные слова")
     public void testUniqueWords() {
         WordList wordList = new WordList("apple banana apple orange");
-        List<String> expected = Arrays.asList("apple", "banana", "orange");
+        List<String> expected = Arrays.asList("orange", "banana", "apple");
         assertEquals(expected, getUniqueWords(wordList.getWords()));
     }
 
@@ -47,8 +47,8 @@ class TextAnalyzerTest {
     public void testLongestWordsWithFrequencyMoreOneWord() {
         WordList wordList = new WordList("apple banana orange banana orange ");
         List<String[]> expected = new ArrayList<>();
-        expected.add(new String[]{"banana", "2"});
         expected.add(new String[]{"orange", "2"});
+        expected.add(new String[]{"banana", "2"});
         List<String[]> result = getLongestWordsWithFrequency(wordList.getWords());
         assertEquals(expected.size(), result.size());
         assertArrayEquals(expected.toArray(), result.toArray());
