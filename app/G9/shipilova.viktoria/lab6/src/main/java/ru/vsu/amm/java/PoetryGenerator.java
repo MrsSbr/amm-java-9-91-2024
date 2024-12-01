@@ -12,6 +12,7 @@ public class PoetryGenerator {
     public static void main(String[] args) {
         log.info("Поэты начали писать...");
         Poem poem = new Poem();
+        String[] poetNames = {"Pushkin", "Yesenin", "Shnur", "Tsvetaeva"};
         String[] poets = {
                 "app/G9/shipilova.viktoria/lab6/src/main/java/ru/vsu/amm/java/poetry/Pushkin.txt",
                 "app/G9/shipilova.viktoria/lab6/src/main/java/ru/vsu/amm/java/poetry/Yesenin.txt",
@@ -21,8 +22,9 @@ public class PoetryGenerator {
         Thread[] threads = new Thread[poets.length];
         for (int i = 0; i < poets.length; i++) {
             threads[i] = new Thread(new Poet(poets[i], poem));
+            threads[i].setName(poetNames[i]);
             threads[i].start();
-            log.info("Запущен поток для поэта из файла: " + poets[i]);
+            log.info("Запущен поток для поэта " + threads[i].getName() + " (файл: " + poets[i] + ")");
         }
 
         for (Thread thread : threads) {
@@ -34,10 +36,10 @@ public class PoetryGenerator {
             }
         }
 
-        poem.printPoetry();
+        poem.printPoem();
 
         String outputFileName = "app/G9/shipilova.viktoria/lab6/result_poetry.txt";
-        poem.savePoetry(outputFileName);
+        poem.savePoem(outputFileName);
         log.info("Стихотворение сохранено в файл: " + outputFileName);
     }
 }

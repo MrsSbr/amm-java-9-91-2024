@@ -21,13 +21,13 @@ public class Poem {
         log.info("Строка добавлена в стихотворение: " + line);
     }
 
-    public void printPoetry() {
+    public void printPoem() {
         log.info("Печать стихотворения...");
         System.out.println("Полученное стихотворение:");
         lines.forEach(System.out::println);
     }
 
-    public void savePoetry(String fileName) {
+    public void savePoem(String fileName) {
         try {
             Files.write(Paths.get(fileName), lines);
             log.info("Стихотворение сохранено в файл: " + fileName);
