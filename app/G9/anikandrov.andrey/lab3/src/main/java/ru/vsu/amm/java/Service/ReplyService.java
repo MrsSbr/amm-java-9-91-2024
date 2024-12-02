@@ -26,13 +26,11 @@ public class ReplyService {
                 .max(Comparator.comparingLong(Long::longValue))
                 .orElse(0L);
 
-        List<CarBrand> mostPopularBrands = brands.stream()
+        return brands.stream()
                 .filter(brand -> replyList.stream()
                 .filter(reply -> reply.getCarBrand().equals(brand))
                         .count() == maxCount)
-                        .collect(Collectors.toList());
-
-        return mostPopularBrands;
+                        .toList();
     }
 
 
@@ -52,15 +50,10 @@ public class ReplyService {
                     .forEach(reply ->
                             brandCounts[reply.getCarBrand().ordinal()] ++);
 
-            int mostPopularIndex = -1;
-            long maxCount = 0;
-
-            for (int i = 0; i < brandCounts.length; i++) {
-                if (brandCounts[i] > maxCount) {
-                    maxCount = brandCounts[i];
-                    mostPopularIndex = i;
-                }
-            }
+            int mostPopularIndex = IntStream.range(0, brandCounts.length)
+                    .boxed()
+                    .max((i, j) -> Long.compare(brandCounts[i], brandCounts[j]))
+                    .orElse(-1);
 
             if (mostPopularIndex != -1) {
                 ageBrandCount.set(currentAge - Constants.MIN_AGE, CarBrand.values()[mostPopularIndex]);
@@ -86,6 +79,6 @@ public class ReplyService {
         return allCars.stream()
                 .filter(car -> !duplicates.contains(car))
                 .distinct()
-                .collect(Collectors.toList());
+                .toList();
     }
 }
