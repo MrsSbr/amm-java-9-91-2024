@@ -21,6 +21,7 @@ public class FullRaceResultTests {
         results.add(new RaceResult(3, LocalDate.now().minusYears(6), 21));
         return results;
     }
+
     public static final List<RaceResult> fullRaceResults = generateFullRaceResults();
 
     @Test
@@ -29,7 +30,8 @@ public class FullRaceResultTests {
         HashSet<Integer> expected = new HashSet<>();
         expected.add(1);
         expected.add(2);
-        Assertions.assertEquals(expected, result);
+//        Assertions.assertEquals(expected, result);
+        Assertions.assertTrue(expected.containsAll(result) && result.containsAll(expected));
     }
 
     @Test
@@ -43,6 +45,7 @@ public class FullRaceResultTests {
         Set<Integer> result = RaceResultService.getNewPrizewinnersLastParticipant(fullRaceResults);
         HashSet<Integer> expected = new HashSet<>();
         expected.add(2);
-        Assertions.assertEquals(expected, result);
+//        Assertions.assertEquals(expected, result);
+        Assertions.assertTrue(expected.containsAll(result) && result.containsAll(expected));
     }
 }
