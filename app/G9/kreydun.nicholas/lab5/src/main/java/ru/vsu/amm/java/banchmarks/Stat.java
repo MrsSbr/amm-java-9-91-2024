@@ -14,4 +14,9 @@ public class Stat {
                 out.println(methodName + "Took " + time + " nanoseconds")
         );
     }
+
+    @Override
+    public String toString() {
+        return executionTimes.toString();
+    }
 }
