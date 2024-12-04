@@ -135,6 +135,7 @@ student("em.vera", G91) {
     lab(0)
     lab(1)
     lab(2)
+    lab(4)
     lab(3)
 }
 
