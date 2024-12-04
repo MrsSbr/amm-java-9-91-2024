@@ -27,30 +27,32 @@ public class PlantDiaryService {
                 .entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        entry -> {
-                            List<PlantLogEntry> sortedByDateEntries = entry.getValue().stream()
-                                    .sorted(Comparator.comparing(PlantLogEntry::date))
-                                    .toList();
-
-
-                            if (sortedByDateEntries.size() < MINIMAL_WATERING_NUMBER) {
-                                return DEFAULT_WATERING_INTERVAL;
-                            }
-
-                            List<Long> intervals = new ArrayList<>();
-                            for (int i = 1; i < sortedByDateEntries.size(); i++) {
-                                long distance = ChronoUnit.DAYS.between(sortedByDateEntries.get(i - 1).date(),
-                                        sortedByDateEntries.get(i).date());
-                                intervals.add(distance);
-                            }
-
-                            return intervals.stream()
-                                    .mapToLong(Long::longValue)
-                                    .average()
-                                    .orElse(DEFAULT_WATERING_INTERVAL);
-                        }
-
+                        entry -> calculateAverageWateringInterval(entry.getValue())
                 ));
+    }
+
+    private static Double calculateAverageWateringInterval(List<PlantLogEntry> plantLogs) {
+        List<PlantLogEntry> sortedByDateEntries = plantLogs.stream()
+                .sorted(Comparator.comparing(PlantLogEntry::date))
+                .toList();
+
+        if (sortedByDateEntries.size() < MINIMAL_WATERING_NUMBER) {
+            return DEFAULT_WATERING_INTERVAL;
+        }
+
+        List<Long> intervals = new ArrayList<>();
+        for (int i = 1; i < sortedByDateEntries.size(); i++) {
+            long distance = ChronoUnit.DAYS.between(
+                    sortedByDateEntries.get(i - 1).date(),
+                    sortedByDateEntries.get(i).date()
+            );
+            intervals.add(distance);
+        }
+
+        return intervals.stream()
+                .mapToLong(Long::longValue)
+                .average()
+                .orElse(DEFAULT_WATERING_INTERVAL);
     }
 
     public static Map<Fertilizer, Set<String>> findPlantsByFertilizer(List<PlantLogEntry> plants) {

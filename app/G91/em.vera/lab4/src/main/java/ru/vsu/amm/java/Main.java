@@ -16,17 +16,18 @@ public class Main {
     private static final String PATH = "app/G91/em.vera/lab4/src/main/java/ru/vsu/amm/java/resources/plants";
 
     public static void main(String[] args) throws IOException {
-        List<PlantLogEntry> plants;
         try {
-            plants = Reader.read(PATH);
+            List<PlantLogEntry> plants = Reader.read(PATH);
+            System.out.println("Average watering frequency for each flower: "
+                    + PlantDiaryService.getAverageWateringFrequency(plants));
+            System.out.println("Plants for each fertilizer: "
+                    + PlantDiaryService.findPlantsByFertilizer(plants));
+            System.out.println("Most watered plant: "
+                    + PlantDiaryService.findMostWateredPlant(plants));
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Reading failed.\n" + Arrays.toString(e.getStackTrace()));
-            throw e;
+            logger.log(Level.SEVERE, Arrays.toString(e.getStackTrace()));
+            System.out.println("Reading was failed: " + PATH + "\n");
         }
-
-        System.out.println("Average watering frequency for each flower: " + PlantDiaryService.getAverageWateringFrequency(plants));
-        System.out.println("Plants for each fertilizer: " + PlantDiaryService.findPlantsByFertilizer(plants));
-        System.out.println("Most watered plant: " + PlantDiaryService.findMostWateredPlant(plants));
     }
 
 }
