@@ -25,7 +25,8 @@ public class Philosopher extends Thread {
                 eat();
             }
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            System.out.println("Философ" + id + " ушёл");
+            Thread.currentThread().interrupt();
         }
     }
 
