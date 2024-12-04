@@ -36,8 +36,8 @@ public class SaleRecordTests {
     private static List<SaleRecord> getSaleRecords() {
         return new ArrayList<>(List.of(
                 new SaleRecord(of(2024, 11, 11), Silver, Ring, Set.of(Amethyst), 12000),
-                new SaleRecord(of(2021, 1, 8), Gold, Earrings, Set.of(Amber), 98000),
-                new SaleRecord(of(2024, 5, 5),Silver, Ring, Set.of(Diamond), 150000),
+                new SaleRecord(of(2021, 12, 31), Gold, Earrings, Set.of(Amber), 98000),
+                new SaleRecord(of(2024, 5, 5), Silver, Ring, Set.of(Diamond), 150000),
                 new SaleRecord(of(2024, 5, 10), Silver, Necklace, Set.of(Ruby, Emerald), 180000),
                 new SaleRecord(of(2024, 6, 27), White_gold, Necklace, Set.of(Sapphire), 130000)
         ));

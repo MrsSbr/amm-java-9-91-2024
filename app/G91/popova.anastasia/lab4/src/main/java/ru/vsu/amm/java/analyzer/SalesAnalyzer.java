@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 public class SalesAnalyzer {
 
+
     public static Jewelry findJewelryWithMostGems(List<SaleRecord> saleRecordList) {
         return saleRecordList.stream()
                 .collect(Collectors.groupingBy(

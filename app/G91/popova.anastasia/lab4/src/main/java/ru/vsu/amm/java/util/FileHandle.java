@@ -40,6 +40,7 @@ public class FileHandle {
             FileHandler fh = new FileHandler("app/G91/popova.anastasia/lab4/salesrecord.log", true);
             fh.setFormatter(new SimpleFormatter());
             logger.addHandler(fh);
+            logger.setUseParentHandlers(false);
         } catch(IOException e) {
             logger.log(Level.SEVERE, "couldn't initialize file handler for logger", e);
         }
