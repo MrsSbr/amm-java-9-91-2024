@@ -43,25 +43,28 @@ public class ReplyService {
         IntStream.range(0, Constants.AGE_DIFF).forEach(i -> ageBrandCount.add(null));
 
         IntStream.range(Constants.MIN_AGE, Constants.MAX_AGE + 1).forEach(currentAge -> {
-            long[] brandCounts = new long[CarBrand.values().length];
+            Integer[] brandCounts = new Integer[CarBrand.values().length];
 
             replyList.stream()
                     .filter(reply -> reply.getAge() == currentAge)
-                    .forEach(reply ->
-                            brandCounts[reply.getCarBrand().ordinal()] ++);
+                    .collect(Collectors.toMap(
+                            Reply::getCarBrand,
+                            reply -> 1,
+                            Integer::sum
+                    ));
 
             int mostPopularIndex = IntStream.range(0, brandCounts.length)
+                    .filter(i -> brandCounts[i] != null)
                     .boxed()
                     .max((i, j) -> Long.compare(brandCounts[i], brandCounts[j]))
                     .orElse(-1);
 
-            if (mostPopularIndex != -1 && currentAge > Constants.MIN_AGE && currentAge < Constants.MAX_AGE) {
+            if (mostPopularIndex != -1 && currentAge >= Constants.MIN_AGE && currentAge <= Constants.MAX_AGE) {
                 ageBrandCount.set(currentAge - Constants.MIN_AGE, CarBrand.values()[mostPopularIndex]);
             }
-
         });
 
-        System.out.println(ageBrandCount);
+        //System.out.println(ageBrandCount);
 
 
         return ageBrandCount;
