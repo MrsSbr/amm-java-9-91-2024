@@ -4,13 +4,14 @@ import ru.vsu.amm.java.Entity.Reply;
 import ru.vsu.amm.java.Service.ReplyService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PopularCarTask {
 
     public static void main(String[] args) {
 
         int replyCount = 1500;
-        ArrayList<Reply> replyList = new ArrayList<>(replyCount);
+        List replyList = new ArrayList<>(replyCount);
 
         for (int i = 0; i < replyCount; ++i) {
             replyList.add(ReplyGenerator.Generator());
