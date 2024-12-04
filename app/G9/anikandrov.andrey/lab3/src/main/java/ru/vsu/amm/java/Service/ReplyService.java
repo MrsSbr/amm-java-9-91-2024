@@ -24,7 +24,7 @@ public class ReplyService {
                 .filter(reply -> reply.getCarBrand().equals(carBrand))
                 .count())
                 .max(Comparator.comparingLong(Long::longValue))
-                .orElse(0L);
+                .orElse(null);
 
         return brands.stream()
                 .filter(brand -> replyList.stream()
@@ -55,10 +55,14 @@ public class ReplyService {
                     .max((i, j) -> Long.compare(brandCounts[i], brandCounts[j]))
                     .orElse(-1);
 
-            if (mostPopularIndex != -1) {
+            if (mostPopularIndex != -1 && currentAge > Constants.MIN_AGE && currentAge < Constants.MAX_AGE) {
                 ageBrandCount.set(currentAge - Constants.MIN_AGE, CarBrand.values()[mostPopularIndex]);
             }
+
         });
+
+        System.out.println(ageBrandCount);
+
 
         return ageBrandCount;
     }

@@ -101,6 +101,27 @@ public class ReplyServiceTest {
     }
 
     @Test
+    public void testMostPopularBrandTwoMostPopular() {
+        List<Reply> replyList = List.of(
+                new Reply(CarBrand.HONDA, 20),
+                new Reply(CarBrand.BMW, 20),
+                new Reply(CarBrand.BMW, 20),
+                new Reply(CarBrand.TOYOTA, 20),
+                new Reply(CarBrand.TOYOTA, 30)
+        );
+
+        List<CarBrand> result = ReplyService.mostPopularBrand(replyList);
+
+        assertNotNull(result);
+
+        assertEquals(2, result.size());
+
+        assertThat(result, hasItem(CarBrand.TOYOTA));
+        assertThat(result, hasItem(CarBrand.BMW));
+        assertThat(result, not(hasItem(CarBrand.HONDA)));
+    }
+
+    @Test
     public void testUniqueBrandsEmpty() {
         List<Reply> replyList = List.of(
                 new Reply(CarBrand.BMW, 20),
@@ -132,4 +153,6 @@ public class ReplyServiceTest {
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
+
+
 }
