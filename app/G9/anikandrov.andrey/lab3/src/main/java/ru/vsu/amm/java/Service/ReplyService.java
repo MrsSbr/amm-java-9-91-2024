@@ -24,7 +24,7 @@ public class ReplyService {
                 .filter(reply -> reply.getCarBrand().equals(carBrand))
                 .count())
                 .max(Comparator.comparingLong(Long::longValue))
-                .orElse(null);
+                .orElse(0L);
 
         return brands.stream()
                 .filter(brand -> replyList.stream()
