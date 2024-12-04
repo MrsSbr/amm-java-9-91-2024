@@ -38,13 +38,13 @@ public class OlympiadStatsService {
                         record -> record.subject().name(),
                         Collectors.mapping(
                                 record -> record.winners(),
-                                Collectors.flatMapping(List::stream, Collectors.toSet()) // Убираем дубликаты
+                                Collectors.flatMapping(List::stream, Collectors.toSet())
                         )
                 ))
                 .entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        entry -> List.copyOf(entry.getValue()) // Преобразуем Set обратно в List
+                        entry -> List.copyOf(entry.getValue())
                 ));
     }
 

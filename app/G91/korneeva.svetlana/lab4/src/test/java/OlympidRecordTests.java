@@ -15,6 +15,7 @@ public class OlympidRecordTests {
     private static final List<OlympiadRecord> sampleRecords = List.of(
             new OlympiadRecord(Year.of(2020), Subjects.Math, 10, List.of("Student1", "Student2")),
             new OlympiadRecord(Year.of(2021), Subjects.Math, 10, List.of("Student1")),
+            new OlympiadRecord(Year.of(2022), Subjects.History, 10, List.of("Student3")),
             new OlympiadRecord(Year.of(2021), Subjects.Chemistry, 11, List.of("Student3")),
             new OlympiadRecord(Year.of(2022), Subjects.Math, 9, List.of("Student1", "Student4"))
     );
@@ -70,6 +71,26 @@ public class OlympidRecordTests {
 
     }
 
+    @Test
+    public void testFindStudentWithMostSubjectsWithNull() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> OlympiadStatsService.findStudentWithMostSubjects(nullList)
+        );
+    }
 
+    @Test
+    public void testFindStudentWithMostSubjectsWithEmptyList() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> OlympiadStatsService.findStudentWithMostSubjects(emptyList)
+        );
+    }
+
+    @Test
+    public void testFindStudentWithMostSubjectsWithSampleRecords() {
+        String topStudent = OlympiadStatsService.findStudentWithMostSubjects(sampleRecords);
+        assertEquals("Student3", topStudent);
+    }
 
 }

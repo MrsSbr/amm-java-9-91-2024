@@ -27,15 +27,13 @@ public class OlympiadApplication {
     }
 
     public static void main(String[] args) {
-        // Генерация файла с данными
         try {
-            FileHelper.generateFile(PATH, 100); // Генерация 100 записей
+            FileHelper.generateFile(PATH, 100);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Unable to generate file.", e);
             throw new RuntimeException(e);
         }
 
-        // Чтение данных из файла
         List<OlympiadRecord> records;
         try {
             records = FileHelper.getFromFile(PATH);
@@ -44,7 +42,6 @@ public class OlympiadApplication {
             throw new RuntimeException(e);
         }
 
-        // Поиск студентов, побеждающих каждый год
         try {
             List<String> consistentWinners = OlympiadStatsService.findStudentsWinningEveryYear(records);
             System.out.println("Students winning every year: " + consistentWinners + '\n');
@@ -53,7 +50,6 @@ public class OlympiadApplication {
             throw new RuntimeException(e);
         }
 
-        // Победители за последние 10 лет по предметам
         try {
             var winnersBySubject = OlympiadStatsService.findWinnersBySubjectLast10Years(records, Year.now());
             System.out.println("Winners by subject in the last 10 years:");
@@ -65,7 +61,6 @@ public class OlympiadApplication {
             throw new RuntimeException(e);
         }
 
-        // Поиск ученика, который побеждал в наибольшем количестве предметов
         try {
             String topStudent = OlympiadStatsService.findStudentWithMostSubjects(records);
             System.out.println("Student with the most subjects: " + topStudent);
