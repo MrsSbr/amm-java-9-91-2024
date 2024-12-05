@@ -1,14 +1,19 @@
 package ru.vsu.amm.java;
 
-import ru.vsu.amm.java.context.Context;
-import ru.vsu.amm.java.services.Service2;
+import ru.vsu.amm.java.scanner.ClassScanner;
+import ru.vsu.amm.java.name.analyzer.NameAnalyzer;
+
+import java.util.List;
 
 public class Main {
-    public static final String packagePath = "ru.vsu.amm.java";
+
+    private static final String PACKAGE = "ru.vsu.amm.java";
+    private static final String PATH = "app/G91/belozerov.alexei/lab5/src/main/java";
 
     public static void main(String[] args) {
-        Context context = new Context(packagePath);
-        Service2 s2 = context.get(Service2.class);
-        System.out.println(s2.getMessage());
+        ClassScanner classScanner = new ClassScanner(PATH);
+        List<Class<?>> classes = classScanner.scan(PACKAGE);
+        NameAnalyzer nameAnalyzer = new NameAnalyzer();
+        System.out.println(nameAnalyzer.analyze(classes));
     }
 }
