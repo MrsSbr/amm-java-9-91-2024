@@ -22,7 +22,7 @@ public class BeddingData {
             return lines
                     .map(this::parseLine)
                     .filter(record -> record != null)
-                    .collect(Collectors.toList());
+                    .toList();
 
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Error loading data", e.getMessage());

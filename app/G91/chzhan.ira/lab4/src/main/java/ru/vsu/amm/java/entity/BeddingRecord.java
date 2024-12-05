@@ -1,7 +1,11 @@
 package ru.vsu.amm.java.entity;
 
-import ru.vsu.amm.java.enums.*;
+import ru.vsu.amm.java.enums.Colors;
+import ru.vsu.amm.java.enums.Size;
+import ru.vsu.amm.java.enums.Material;
 import java.time.LocalDate;
+import java.util.Objects;
+
 public class BeddingRecord {
     public LocalDate date;
     public String name;
@@ -27,4 +31,18 @@ public class BeddingRecord {
     public String toString() {
         return date + ";" + name + ";" + size + ";" + material + ";" + color;
     }
+
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof BeddingRecord)) return false;
+        BeddingRecord other = (BeddingRecord) obj;
+        return getDate().equals(other.getDate()) &&
+                getName().equals(other.getName()) &&
+                getSize().equals(other.getSize()) &&
+                getMaterial().equals(other.getMaterial()) &&
+                getColor().equals(other.getColor());
+    }
+
+    @Override
+    public int hashCode() {return Objects.hash(getDate(), getName(), getSize(), getMaterial(), getColor());}
 }
