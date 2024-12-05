@@ -18,7 +18,7 @@ public class SubjectsTest {
                 new Review(5, Subjects.MATHEMATICAL_ANALYSIS,  "Аксенов Максим Александрович", false)
         );
 
-        int result = Service.numberUsefulReviews(Subjects.MATHEMATICAL_ANALYSIS, reviews);
+        Long result = Service.numberUsefulReviews(Subjects.MATHEMATICAL_ANALYSIS, reviews);
         assertEquals(1, result);
     }
 
@@ -30,7 +30,7 @@ public class SubjectsTest {
                 new Review(4, Subjects.MATHEMATICAL_ANALYSIS,"Поздников Максим Максимович", false)
         );
 
-        int result = Service.numberUsefulReviews(Subjects.ALGEBRA, reviews);
+        Long result = Service.numberUsefulReviews(Subjects.ALGEBRA, reviews);
         assertEquals(0, result);
     }
 
@@ -60,7 +60,7 @@ public class SubjectsTest {
                 new Review(3, Subjects.PROBABILITY_THEORY, "Аксенов Максим Александрович", false)
         );
 
-        int result = Service.unusefulAllSubjects(reviews);
+        Long result = Service.unusefulAllSubjects(reviews);
         assertEquals(3, result);
     }
 
@@ -72,7 +72,7 @@ public class SubjectsTest {
                 new Review(5, Subjects.ALGEBRA, "Поздников Максим Максимович", true)
         );
 
-        int result = Service.unusefulAllSubjects(reviews);
+        Long result = Service.unusefulAllSubjects(reviews);
         assertEquals(0, result);
     }
 }

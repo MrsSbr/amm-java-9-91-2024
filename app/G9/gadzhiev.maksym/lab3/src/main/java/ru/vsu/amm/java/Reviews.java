@@ -21,9 +21,9 @@ public class Reviews {
         for (int i = 0; i < count; ++i) {
             int mark = random.nextInt(1, 6);
             Subjects subject = getRandomSubject();
-            String FIO = getRandomFio();
+            String fio = getRandomFio();
             boolean isUseful = random.nextBoolean();
-            listReview.add(new Review(mark, subject, FIO, isUseful));
+            listReview.add(new Review(mark, subject, fio, isUseful));
         }
     }
 

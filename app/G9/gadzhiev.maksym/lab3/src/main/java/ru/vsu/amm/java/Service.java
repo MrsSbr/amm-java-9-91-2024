@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 public class Service {
 
-    public static int numberUsefulReviews(Subjects subject, List<Review> reviewList) {
-        return (int) reviewList.stream()
+    public static Long numberUsefulReviews(Subjects subject, List<Review> reviewList) {
+        return reviewList.stream()
                 .filter(review -> review.isUseful() && review.subject() == subject).count();
     }
 
@@ -27,8 +27,8 @@ public class Service {
 
     }
 
-    public static int unusefulAllSubjects(List<Review> reviewList) {
-        return (int) reviewList.stream()
+    public static Long unusefulAllSubjects(List<Review> reviewList) {
+        return reviewList.stream()
                 .filter(review -> !review.isUseful())
                 .count();
     }
