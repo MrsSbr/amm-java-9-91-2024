@@ -31,7 +31,9 @@ public class BarbershopTests {
         Customer customer = new Customer();
         customer.selectBarbershop(barbershop);
 
-        assertTrue(barbershop.enterWaitingRoom(customer));
+        synchronized (barber) {
+            assertTrue(barbershop.enterWaitingRoom(customer));
+        }
     }
 
     @Test
@@ -39,7 +41,9 @@ public class BarbershopTests {
         for (int i = 0; i < 1; i++) {
             Customer customer = new Customer();
             customer.selectBarbershop(barbershop);
-            barbershop.enterWaitingRoom(customer);
+            synchronized (barber) {
+                barbershop.enterWaitingRoom(customer);
+            }
         }
 
         Customer customer = new Customer();
@@ -52,7 +56,9 @@ public class BarbershopTests {
         for (int i = 0; i < 5; i++) {
             Customer customer = new Customer();
             customer.selectBarbershop(barbershop);
+            synchronized (barber) {
             barbershop.enterWaitingRoom(customer);
+            }
         }
 
         Customer customer = new Customer();

@@ -24,7 +24,9 @@ public class Barber implements Runnable {
     @Override
     public void run() {
         while (!hasToFinish) {
-            barbershop.serveCustomer();
+            try {
+                barbershop.serveCustomer();
+            } catch (InterruptedException ignored) {}
         }
         System.out.println("Барбер ушел домой");
     }

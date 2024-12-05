@@ -6,11 +6,10 @@ import ru.vsu.amm.java.service.Customer;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Barbershop barbershop = new Barbershop();
         Barber barber = new Barber();
         barbershop.hireBarber(barber);
@@ -22,32 +21,11 @@ public class Main {
                     Customer customer = new Customer();
                     customer.selectBarbershop(barbershop);
                     executorService.submit(customer);
-                    try {
-                        Thread.sleep(1200);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-                }
-                executorService.shutdown();
-                try {
-                    if (!executorService.awaitTermination(clientsCount, TimeUnit.SECONDS)) {
-                        executorService.shutdownNow();
-                    }
-                } catch (InterruptedException e) {
-                    executorService.shutdownNow();
-                    Thread.currentThread().interrupt();
+                    Thread.sleep(1200);
                 }
             }
+            Thread.sleep(15000);
             barber.goHome();
-            barberExecutor.shutdown();
-            try {
-                if (!barberExecutor.awaitTermination(1, TimeUnit.SECONDS)) {
-                    barberExecutor.shutdownNow();
-                }
-            } catch (InterruptedException e) {
-                barberExecutor.shutdownNow();
-                Thread.currentThread().interrupt();
-            }
         }
     }
 }

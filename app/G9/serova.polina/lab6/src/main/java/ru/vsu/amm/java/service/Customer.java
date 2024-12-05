@@ -28,9 +28,7 @@ public class Customer implements Runnable {
         if (barbershop.enterWaitingRoom(this)) {
             try {
                 Thread.sleep(500);
-            } catch(InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+            } catch(InterruptedException ignored) {}
         }
     }
 }
