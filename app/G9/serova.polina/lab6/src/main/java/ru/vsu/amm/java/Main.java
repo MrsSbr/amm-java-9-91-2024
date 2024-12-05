@@ -14,29 +14,40 @@ public class Main {
         Barbershop barbershop = new Barbershop();
         Barber barber = new Barber();
         barbershop.hireBarber(barber);
-        new Thread(barber).start();
-        int clientsCount = 10;
-        try(ExecutorService executorService = Executors.newFixedThreadPool(clientsCount)) {
-            for (int i = 0; i < 10; i++) {
-                Customer customer = new Customer();
-                customer.selectBarbershop(barbershop);
-                executorService.submit(customer);
+        try (ExecutorService barberExecutor = Executors.newSingleThreadExecutor()) {
+            barberExecutor.submit(barber);
+            int clientsCount = 10;
+            try (ExecutorService executorService = Executors.newFixedThreadPool(clientsCount)) {
+                for (int i = 0; i < clientsCount; i++) {
+                    Customer customer = new Customer();
+                    customer.selectBarbershop(barbershop);
+                    executorService.submit(customer);
+                    try {
+                        Thread.sleep(1200);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                executorService.shutdown();
                 try {
-                    Thread.sleep(1000);
+                    if (!executorService.awaitTermination(clientsCount, TimeUnit.SECONDS)) {
+                        executorService.shutdownNow();
+                    }
                 } catch (InterruptedException e) {
+                    executorService.shutdownNow();
                     Thread.currentThread().interrupt();
                 }
             }
-            executorService.shutdown();
+            barber.goHome();
+            barberExecutor.shutdown();
             try {
-                if (!executorService.awaitTermination(clientsCount, TimeUnit.SECONDS)) {
-                    executorService.shutdownNow();
+                if (!barberExecutor.awaitTermination(1, TimeUnit.SECONDS)) {
+                    barberExecutor.shutdownNow();
                 }
             } catch (InterruptedException e) {
-                executorService.shutdownNow();
+                barberExecutor.shutdownNow();
                 Thread.currentThread().interrupt();
             }
         }
-        barbershop.close();
     }
 }

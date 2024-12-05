@@ -35,6 +35,19 @@ public class BarbershopTests {
     }
 
     @Test
+    void testCustomerEntersNotEmptyRoom() {
+        for (int i = 0; i < 1; i++) {
+            Customer customer = new Customer();
+            customer.selectBarbershop(barbershop);
+            barbershop.enterWaitingRoom(customer);
+        }
+
+        Customer customer = new Customer();
+        barber.isWorking = true;
+        assertTrue(barbershop.enterWaitingRoom(customer));
+    }
+
+    @Test
     void testCustomerEntersFullRoom() {
         for (int i = 0; i < 5; i++) {
             Customer customer = new Customer();
@@ -71,9 +84,7 @@ public class BarbershopTests {
         executorService.submit(customer);
 
         Thread.sleep(1000);
-        barbershop.close();
-
-        assertTrue(barbershop.isClosed());
+        barber.goHome();
 
         executorService.shutdown();
         executorService.awaitTermination(5, TimeUnit.SECONDS);
