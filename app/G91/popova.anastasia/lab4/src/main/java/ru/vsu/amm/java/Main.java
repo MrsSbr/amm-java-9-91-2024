@@ -66,14 +66,14 @@ public class Main {
         try {
             System.out.println(analyzer.findJewelryWithMostGems(records));
         } catch(NoSuchElementException e) {
-            System.out.println("oops! no such jewelry type found!");
+            System.out.println(e.getMessage());
             logger.log(Level.SEVERE, "couldn't find any elements after calling findJewelryWithMostGems", e);
         }
         System.out.print("\nmonth with least silver sales: ");
         try {
             System.out.println(analyzer.findMonthWithLeastSilverSales(records));
         } catch (NoSuchElementException e) {
-            System.out.println("oops! no silver jewelry sales found at all!");
+            System.out.println(e.getMessage());
             logger.log(Level.SEVERE, "couldn't find any elements after calling findMonthWithLeastSilverSales", e);
         }
         System.out.print("\ngems sold 3 years ago but not in the last 6 months: ");
@@ -83,7 +83,7 @@ public class Main {
                     .map(Enum::name)
                     .collect(Collectors.joining(", ")));
         } catch (NullPointerException | NoSuchElementException e) {
-            System.out.println("oops! no such gemstones found!");
+            System.out.println(e.getMessage());
             logger.log(Level.SEVERE, "couldn't find any elements after calling findGemsBySellingTime", e);
         }
 
