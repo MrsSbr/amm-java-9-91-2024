@@ -32,7 +32,7 @@ public class Barman extends Thread {
             }
             table.placeComponents(COMPONENTS[first].getName(), COMPONENTS[second].getName());
             try {
-                Thread.sleep(1500);
+                Thread.sleep(1700);
             } catch (InterruptedException e) {
                 log.info("error");
                 e.printStackTrace();

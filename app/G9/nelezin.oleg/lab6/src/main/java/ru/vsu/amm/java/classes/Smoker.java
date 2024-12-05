@@ -21,14 +21,12 @@ public class Smoker extends Thread {
 
     private Table table;
 
-
     @Override
     public void run() {
         try {
             while (!Thread.currentThread().isInterrupted()) {
                 table.takeComponents(component);
                 System.out.println("Курильщик " + name + " курит сигарету");
-
                 Thread.sleep(SMOKING_TIME);
             }
         } catch (InterruptedException e) {
