@@ -1,10 +1,8 @@
 package ru.vsu.amm.java;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.List;
 import java.time.LocalDate;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 public class RaceResultFactory {
@@ -27,8 +25,6 @@ public class RaceResultFactory {
     }
 
     public static List<RaceResult> generateRandomList(int numOfRecords) {
-        return IntStream.range(0, numOfRecords)
-                .mapToObj(_ -> generateRandomRaceResult())
-                .collect(Collectors.toList());
+        return IntStream.range(0, numOfRecords).mapToObj(_ -> generateRandomRaceResult()).toList();
     }
 }
