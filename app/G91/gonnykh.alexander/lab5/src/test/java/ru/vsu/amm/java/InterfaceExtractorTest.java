@@ -36,7 +36,7 @@ class InterfaceExtractorTest {
     }
 
     @Test
-    void testGetInterfacesWithAnnotatedClasses() {
+    void testGetInterfacesWithAnnotatedClasses(){
         Map<Class<?>, List<Class<?>>> result = InterfaceExtractor.getInterfaces(PATH_TO_DIRECTORY);
         assertTrue(result.containsKey(TestClassWithInterface.class));
         assertTrue(result.containsKey(TestClassWithoutInterface.class));
@@ -49,10 +49,8 @@ class InterfaceExtractorTest {
     }
 
     @Test
-    void testGetInterfacesWithoutAnnotatedClasses() {
+    void testGetInterfacesWithoutAnnotatedClasses(){
         Map<Class<?>, List<Class<?>>> result = InterfaceExtractor.getInterfaces(PATH_TO_NOT_EXIST_DIRECTORY);
         assertTrue(result.isEmpty());
     }
-
-
 }

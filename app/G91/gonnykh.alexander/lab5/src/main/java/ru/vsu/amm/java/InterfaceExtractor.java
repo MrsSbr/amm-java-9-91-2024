@@ -1,8 +1,5 @@
 package ru.vsu.amm.java;
 
-import org.reflections.Reflections;
-import org.reflections.scanners.Scanners;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,8 +18,8 @@ public class InterfaceExtractor {
 
     public static Map<Class<?>, List<Class<?>>> getInterfaces(String packageName) {
         Map<Class<?>, List<Class<?>>> interfaces = new HashMap<>();
-        Reflections reflections = new Reflections(packageName, Scanners.TypesAnnotated);
-        Set<Class<?>> classes = reflections.getTypesAnnotatedWith(ExtractInterface.class);
+        Set<Class<?>> classes = AnnotationScanner.getClasses(packageName);
+
         for (Class<?> aClass : classes) {
             interfaces.put(aClass, extractInterfaces(aClass));
         }
