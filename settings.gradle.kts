@@ -15,6 +15,8 @@ student("chzhan.ira", G91) {
     lab(0)
     lab(2)
     lab(1)
+    lab(3)
+    lab(4)
 }
 
 student("kireev.dmitrii", G91) {
