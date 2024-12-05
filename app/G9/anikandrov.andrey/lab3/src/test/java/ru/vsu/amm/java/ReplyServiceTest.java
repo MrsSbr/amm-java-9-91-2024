@@ -137,8 +137,8 @@ public class ReplyServiceTest {
         assertNotNull(result);
 
         assertEquals(3, result.stream()
-                                    .filter(item -> item != null)
-                                    .count());
+                    .filter(item -> item != null)
+                    .count());
 
         //assertTrue(result.contains(CarBrand.BMW));
         //assertTrue(result.contains(CarBrand.TOYOTA));
@@ -158,8 +158,8 @@ public class ReplyServiceTest {
         List<CarBrand> result = ReplyService.brandByAge(replyList);
 
         assertEquals(0, result.stream()
-                .filter(item -> item != null)
-                .count());
+                    .filter(item -> item != null)
+                    .count());
 
 
         assertTrue(result.stream().allMatch(Objects::isNull));
