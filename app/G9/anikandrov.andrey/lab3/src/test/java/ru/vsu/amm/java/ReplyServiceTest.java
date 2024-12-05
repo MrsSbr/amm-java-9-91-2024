@@ -31,6 +31,8 @@ public class ReplyServiceTest {
 
         assertNotNull(result);
 
+        assertEquals(1, result.size());
+
         //assertTrue(result.contains(CarBrand.BMW));
         assertThat(result, hasItem(CarBrand.BMW));
 
@@ -62,6 +64,7 @@ public class ReplyServiceTest {
     @Test
     public void testMostPopularBrandEmpty() {
         List<Reply> replyList = List.of();
+        assertEquals(0, replyList.size());
         assertTrue(replyList.isEmpty());
     }
 
@@ -81,38 +84,6 @@ public class ReplyServiceTest {
 
         //assertTrue(result.contains(CarBrand.BMW));
         assertThat(result, hasItem(CarBrand.BMW));
-    }
-
-    @Test
-    public void testBrandByAge() {
-        List<Reply> replyList = List.of(
-                new Reply(CarBrand.BMW, 20),
-                new Reply(CarBrand.TOYOTA, 30),
-                new Reply(CarBrand.VOLKSWAGEN, 40)
-        );
-
-        List<CarBrand> result = ReplyService.brandByAge(replyList);
-
-        assertNotNull(result);
-
-        //assertTrue(result.contains(CarBrand.BMW));
-        //assertTrue(result.contains(CarBrand.TOYOTA));
-        assertThat(result, hasItem(CarBrand.BMW));
-        assertThat(result, hasItem(CarBrand.TOYOTA));
-
-        assertFalse(result.contains(CarBrand.HONDA));
-    }
-
-    @Test
-    public void testBrandByAgeWrongAge() {
-        List<Reply> replyList = List.of(
-                new Reply(CarBrand.BMW, -10),
-                new Reply(CarBrand.VOLKSWAGEN, -5)
-        );
-
-        List<CarBrand> result = ReplyService.brandByAge(replyList);
-
-        assertTrue(result.stream().allMatch(Objects::isNull));
     }
 
     @Test
@@ -148,7 +119,50 @@ public class ReplyServiceTest {
 
         List<CarBrand> result = ReplyService.uniqueBrands(replyList);
 
+        assertEquals(0, result.size());
+
         assertTrue(result.isEmpty());
+    }
+
+    @Test
+    public void testBrandByAge() {
+        List<Reply> replyList = List.of(
+                new Reply(CarBrand.BMW, 20),
+                new Reply(CarBrand.TOYOTA, 30),
+                new Reply(CarBrand.VOLKSWAGEN, 40)
+        );
+
+        List<CarBrand> result = ReplyService.brandByAge(replyList);
+
+        assertNotNull(result);
+
+        assertEquals(3, result.stream()
+                                    .filter(item -> item != null)
+                                    .count());
+
+        //assertTrue(result.contains(CarBrand.BMW));
+        //assertTrue(result.contains(CarBrand.TOYOTA));
+        assertThat(result, hasItem(CarBrand.BMW));
+        assertThat(result, hasItem(CarBrand.TOYOTA));
+
+        assertFalse(result.contains(CarBrand.HONDA));
+    }
+
+    @Test
+    public void testBrandByAgeWrongAge() {
+        List<Reply> replyList = List.of(
+                new Reply(CarBrand.BMW, -10),
+                new Reply(CarBrand.VOLKSWAGEN, -5)
+        );
+
+        List<CarBrand> result = ReplyService.brandByAge(replyList);
+
+        assertEquals(0, result.stream()
+                .filter(item -> item != null)
+                .count());
+
+
+        assertTrue(result.stream().allMatch(Objects::isNull));
     }
 
 }

@@ -24,7 +24,9 @@ public class ReplyService {
                 .filter(reply -> reply.getCarBrand().equals(carBrand))
                 .count())
                 .max(Comparator.comparingLong(Long::longValue))
-                .orElse(0L);
+                .orElseGet(()-> {
+                    return 0L;
+                });
 
         return brands.stream()
                 .filter(brand -> replyList.stream()
@@ -47,11 +49,13 @@ public class ReplyService {
 
             replyList.stream()
                     .filter(reply -> reply.getAge() == currentAge)
-                    .collect(Collectors.toMap(
-                            Reply::getCarBrand,
-                            reply -> 1,
-                            Integer::sum
-                    ));
+                    .forEach(reply -> {
+                        if (brandCounts[reply.getCarBrand().ordinal()] == null) {
+                            brandCounts[reply.getCarBrand().ordinal()] = 1;
+                        } else {
+                            brandCounts[reply.getCarBrand().ordinal()]++;
+                        }
+                    });
 
             int mostPopularIndex = IntStream.range(0, brandCounts.length)
                     .filter(i -> brandCounts[i] != null)
@@ -63,9 +67,6 @@ public class ReplyService {
                 ageBrandCount.set(currentAge - Constants.MIN_AGE, CarBrand.values()[mostPopularIndex]);
             }
         });
-
-        //System.out.println(ageBrandCount);
-
 
         return ageBrandCount;
     }
