@@ -30,15 +30,21 @@ public class BeddingData {
         }
     }
 
+    private static final int DATE_COLUMN = 0;
+    private static final int NAME_COLUMN = 1;
+    private static final int SIZE_COLUMN = 2;
+    private static final int COLORS_COLUMN = 3;
+    private static final int MATERIAL_COLUMN = 4;
+
     private BeddingRecord parseLine(String line) {
         String[] parts = line.split(" ");
         try {
             return new BeddingRecord(
-                    LocalDate.parse(parts[0], DATE_FORMATTER),
-                    parts[1],
-                    Size.valueOf(parts[2]),
-                    Colors.valueOf(parts[3]),
-                    Material.valueOf(parts[4])
+                    LocalDate.parse(parts[DATE_COLUMN], DATE_FORMATTER),
+                    parts[NAME_COLUMN],
+                    Size.valueOf(parts[SIZE_COLUMN]),
+                    Colors.valueOf(parts[COLORS_COLUMN]),
+                    Material.valueOf(parts[MATERIAL_COLUMN])
             );
         } catch (DateTimeParseException | IllegalArgumentException e) {
             logger.log(Level.WARNING, "Error parsing line: {0}. Skipping.", line);
