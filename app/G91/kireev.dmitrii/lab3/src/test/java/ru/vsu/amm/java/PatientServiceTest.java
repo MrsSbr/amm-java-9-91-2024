@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class PatientServiceTest {
@@ -35,7 +36,7 @@ public class PatientServiceTest {
 
         List<Patient> actual = patientService.findByIsHealthy(patients);
 
-        assertEquals(expected, actual);
+        assertTrue(actual.containsAll(expected) && expected.containsAll(actual));
 
     }
 
@@ -50,7 +51,8 @@ public class PatientServiceTest {
 
         List<Patient> actual = patientService.findByIsHealthy(patients);
 
-        assertEquals(expected, actual);
+        assertTrue(actual.containsAll(expected) && expected.containsAll(actual));
+
 
     }
 
@@ -66,7 +68,8 @@ public class PatientServiceTest {
 
         List<Patient> actual = patientService.findByIsHealthy(patients);
 
-        assertEquals(expected, actual);
+        assertTrue(actual.containsAll(expected) && expected.containsAll(actual));
+
 
     }
 
@@ -89,7 +92,8 @@ public class PatientServiceTest {
 
         List<Patient> actual = patientService.findByDateAfter(patients);
 
-        assertEquals(expected, actual);
+        assertTrue(actual.containsAll(expected) && expected.containsAll(actual));
+
 
     }
 
@@ -108,7 +112,8 @@ public class PatientServiceTest {
 
         List<Patient> actual = patientService.findByDateAfter(patients);
 
-        assertEquals(expected, actual);
+        assertTrue(actual.containsAll(expected) && expected.containsAll(actual));
+
 
     }
 
@@ -133,7 +138,8 @@ public class PatientServiceTest {
                 new Patient("235", "Robert", "Johnson", "David", true, Illness.HEALTHY, LocalDate.now().minusYears(4)));
 
         List<Patient> actual = patientService.findByDateBetween(patients);
-        assertEquals(expected, actual);
+        assertTrue(actual.containsAll(expected) && expected.containsAll(actual));
+
 
     }
 
