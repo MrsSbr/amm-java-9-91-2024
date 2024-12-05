@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-
 public class Poem {
     private static final Logger log = Logger.getLogger(Poem.class.getName());
     private ConcurrentLinkedQueue<String> lines;

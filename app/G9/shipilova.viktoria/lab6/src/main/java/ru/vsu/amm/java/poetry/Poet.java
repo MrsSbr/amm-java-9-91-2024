@@ -38,7 +38,7 @@ public class Poet implements Runnable {
             try {
                 Thread.sleep(ThreadLocalRandom.current().nextInt(50, 200));
                 poem.addLine(line);
-                log.info(Thread.currentThread().getName() + " написал(а) строку: " + line);
+                log.info("Поэт написал строку: " + line);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 log.log(Level.WARNING, "Поток " + Thread.currentThread().getName() + " был прерван.", e);
