@@ -6,7 +6,7 @@ import ru.vsu.amm.java.scanner.ClassScanner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class NameAnalyzerTest {
 
@@ -27,7 +27,7 @@ class NameAnalyzerTest {
         ClassScanner scanner = new ClassScanner("src/test/java");
         NameAnalyzer analyzer = new NameAnalyzer();
         List<Class<?>> classes = scanner.scan("ru.vsu.amm.java.name.analyzer.right.name");
-        assertEquals("Names are called by the Java convention", analyzer.analyze(classes));
+        assertEquals("", analyzer.analyze(classes));
     }
 
     @Test
@@ -35,10 +35,12 @@ class NameAnalyzerTest {
         ClassScanner scanner = new ClassScanner("src/test/java");
         NameAnalyzer analyzer = new NameAnalyzer();
         List<Class<?>> classes = scanner.scan("ru.vsu.amm.java.name.analyzer.bad.name");
-        String expected = "Class ru.vsu.amm.java.name.analyzer.bad.name.BadNamedClass123 is not named by the Java convention\n"
-                + "Const field pi is not named by the Java convention\n"
-                + "Field Name is not named by the Java convention\n"
-                + "Method GetName is not named by the Java convention\n";
+        String expected = """
+                Class ru.vsu.amm.java.name.analyzer.bad.name.BadNamedClass123 is not named by the Java convention
+                Const field pi is not named by the Java convention
+                Field Name is not named by the Java convention
+                Method GetName is not named by the Java convention
+                """;
         assertEquals(expected, analyzer.analyze(classes));
     }
 }

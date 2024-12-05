@@ -14,6 +14,12 @@ public class Main {
         ClassScanner classScanner = new ClassScanner(PATH);
         List<Class<?>> classes = classScanner.scan(PACKAGE);
         NameAnalyzer nameAnalyzer = new NameAnalyzer();
-        System.out.println(nameAnalyzer.analyze(classes));
+        String analyzingResult = nameAnalyzer.analyze(classes);
+        if (analyzingResult.isEmpty()) {
+            System.out.println("Names are called by the Java convention");
+        }
+        else {
+            System.out.println(analyzingResult);
+        }
     }
 }

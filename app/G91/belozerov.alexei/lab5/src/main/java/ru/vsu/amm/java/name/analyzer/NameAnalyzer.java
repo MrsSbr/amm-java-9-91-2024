@@ -20,13 +20,10 @@ public class NameAnalyzer {
         }
         StringBuilder sb = new StringBuilder();
         for (Class<?> clazz : classes) {
-            sb.append(analyzePackage(clazz));
-            sb.append(analyzeClass(clazz));
-            sb.append(analyzeFields(clazz));
-            sb.append(analyzeMethods(clazz));
-        }
-        if (sb.isEmpty()) {
-            sb.append("Names are called by the Java convention");
+            sb.append(analyzePackage(clazz))
+                .append(analyzeClass(clazz))
+                .append(analyzeFields(clazz))
+                .append(analyzeMethods(clazz));
         }
         return sb.toString();
     }

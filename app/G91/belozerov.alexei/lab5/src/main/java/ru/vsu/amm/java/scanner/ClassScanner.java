@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public class ClassScanner {
 
-    private static final Logger LOGGER = Logger.getLogger(ClassScanner.class.getName());
+    private static final Logger logger = Logger.getLogger(ClassScanner.class.getName());
     private final String path;
 
     public ClassScanner(String path) {
@@ -32,7 +32,7 @@ public class ClassScanner {
                             classes.add(Class.forName(className));
                         } catch (ClassNotFoundException e) {
                             System.out.println("Not found class by name: " + className);
-                            LOGGER.log(Level.SEVERE, Arrays.toString(e.getStackTrace()));
+                            logger.log(Level.SEVERE, Arrays.toString(e.getStackTrace()));
                         }
                     }
                 }
