@@ -27,18 +27,18 @@ public class SaleFactory {
         LocalDate date = LocalDate.of(year, month, day);
 
         var metalTypes = PreciousMetal.values();
-        int metalIndex = random.nextInt(metalTypes.length + 1);
+        int metalIndex = random.nextInt(metalTypes.length);
         PreciousMetal preciousMetal = metalTypes[metalIndex];
 
         var jewelryTypes = Jewelry.values();
-        int jewelryIndex = random.nextInt(jewelryTypes.length + 1);
+        int jewelryIndex = random.nextInt(jewelryTypes.length);
         Jewelry jewelry = jewelryTypes[jewelryIndex];
 
         var gemstoneTypes = Gemstone.values();
-        int gemstoneAmount = random.nextInt(1, gemstoneTypes.length + 1);
+        int gemstoneAmount = random.nextInt(1, gemstoneTypes.length);
         Set<Gemstone> gemstones = EnumSet.noneOf(Gemstone.class);
         while (gemstones.size() < gemstoneAmount) {
-            Gemstone randomGemstone = gemstoneTypes[random.nextInt(gemstoneTypes.length + 1)];
+            Gemstone randomGemstone = gemstoneTypes[random.nextInt(gemstoneTypes.length)];
             gemstones.add(randomGemstone);
         }
 
