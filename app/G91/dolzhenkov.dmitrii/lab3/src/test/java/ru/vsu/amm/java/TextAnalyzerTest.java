@@ -35,9 +35,9 @@ class TextAnalyzerTest {
     @DisplayName("Тест на самые длинные слова с количеством их в тексте")
     public void testLongestWordsWithFrequency() {
         WordList wordList = new WordList("apple banana cucumber   cucumber");
-        List<String[]> expected = new ArrayList<>();
-        expected.add(new String[]{"cucumber", "2"});
-        List<String[]> result = getLongestWordsWithFrequency(wordList.getWords());
+        List<WordCount> expected = new ArrayList<>();
+        expected.add(new WordCount("cucumber", 2));
+        List<WordCount> result = getLongestWordsWithFrequency(wordList.getWords());
         assertEquals(expected.size(), result.size());
         assertArrayEquals(expected.toArray(), result.toArray());
     }
@@ -46,10 +46,10 @@ class TextAnalyzerTest {
     @DisplayName("Тест на самые длинные слова с количеством их в тексте, вариантов ответа больше 1")
     public void testLongestWordsWithFrequencyMoreOneWord() {
         WordList wordList = new WordList("apple banana orange banana orange ");
-        List<String[]> expected = new ArrayList<>();
-        expected.add(new String[]{"orange", "2"});
-        expected.add(new String[]{"banana", "2"});
-        List<String[]> result = getLongestWordsWithFrequency(wordList.getWords());
+        List<WordCount> expected = new ArrayList<>();
+        expected.add(new WordCount("orange", 2));
+        expected.add(new WordCount("banana", 2));
+        List<WordCount> result = getLongestWordsWithFrequency(wordList.getWords());
         assertEquals(expected.size(), result.size());
         assertArrayEquals(expected.toArray(), result.toArray());
     }

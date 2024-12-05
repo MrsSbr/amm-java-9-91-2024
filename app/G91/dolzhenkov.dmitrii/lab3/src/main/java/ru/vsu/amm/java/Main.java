@@ -20,7 +20,7 @@ public class Main {
 
         System.out.println("\nLongest words and their frequency: ");
         getLongestWordsWithFrequency(wordList.getWords())
-                .forEach(x -> System.out.println("Word: " + x[0] + " Frequency: " + x[1]));
+                .forEach(x -> System.out.println("Word: " + x.word() + " Frequency: " + x.count()));
 
         System.out.println("\nEnter a word to find the count of words containing it: ");
         String searchWord = in.nextLine();

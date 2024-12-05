@@ -1,6 +1,11 @@
 package ru.vsu.amm.java;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class WordList {

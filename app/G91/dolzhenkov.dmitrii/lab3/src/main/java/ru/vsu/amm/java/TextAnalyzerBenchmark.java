@@ -38,7 +38,7 @@ public final class TextAnalyzerBenchmark {
 
         // максимальная длина с количеством
         startTime = System.nanoTime();
-        List<String[]> longestWordsWithFrequency = getLongestWordsWithFrequency(wordList.getWords());
+        List<WordCount> longestWordsWithFrequency = getLongestWordsWithFrequency(wordList.getWords());
         endTime = System.nanoTime();
         System.out.println("Time to get longest words with frequency: " + (endTime - startTime) + " ns");
 

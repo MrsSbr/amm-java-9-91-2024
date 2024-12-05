@@ -13,7 +13,7 @@ public final class TextAnalyzer {
     }
 
     //самые длинные слова и их количеситво
-    public static List<String[]> getLongestWordsWithFrequency(List<WordCount> words) {
+    public static List<WordCount> getLongestWordsWithFrequency(List<WordCount> words) {
         int maxLength = words.stream()
                 .mapToInt(word -> word.word().length())
                 .max()
@@ -24,7 +24,7 @@ public final class TextAnalyzer {
         } else {
             return words.stream()
                     .filter(word -> word.word().length() == maxLength)
-                    .map(word -> new String[]{word.word(), String.valueOf(word.count())})
+                    .map(word -> new WordCount(word.word(), word.count()))
                     .toList();
         }
     }
