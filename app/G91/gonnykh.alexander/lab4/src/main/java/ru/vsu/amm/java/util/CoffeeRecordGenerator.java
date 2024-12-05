@@ -12,9 +12,9 @@ import java.util.Random;
 
 public class CoffeeRecordGenerator {
 
-    private static final Random random = new Random();
 
     public static List<CoffeeRecord> generateCoffeeRecords(int count) {
+        final Random random = new Random();
         List<CoffeeRecord> records = new ArrayList<CoffeeRecord>();
 
         for (int i = 0; i < count; i++) {
@@ -31,6 +31,7 @@ public class CoffeeRecordGenerator {
     }
 
     private static LocalDateTime getRandomDateTime() {
+        final Random random = new Random();
         int day = random.nextInt(28) + 1;
         int month = random.nextInt(12) + 1;
         int year = random.nextInt(100) + 1900;

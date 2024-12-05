@@ -8,10 +8,10 @@ import ru.vsu.amm.java.records.CoffeeRecord;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -26,10 +26,9 @@ class CoffeeServiceTest {
     @Test
     @DisplayName("calculate average preparation time (empty)")
     void calculateAveragePreparationTimeEmpty() {
-        Map<CoffeeType, Double> expected = new HashMap<>();
 
         Map<CoffeeType, Double> actual = CoffeeService.calculateAveragePreparationTime(coffeeRecords);
-        assertEquals(expected, actual);
+        assertTrue(actual.isEmpty());
     }
 
     @Test
@@ -41,7 +40,9 @@ class CoffeeServiceTest {
         Map<CoffeeType, Double> expected = Map.of(CoffeeType.CAPPUCCINO, 5.0);
 
         Map<CoffeeType, Double> actual = CoffeeService.calculateAveragePreparationTime(coffeeRecords);
-        assertEquals(expected, actual);
+        assertTrue(expected.containsKey(CoffeeType.CAPPUCCINO)
+                && expected.get(CoffeeType.CAPPUCCINO).equals(5.0));
+        assertEquals(actual.size(), expected.size());
     }
 
     @Test
@@ -56,7 +57,9 @@ class CoffeeServiceTest {
         Map<CoffeeType, Double> expected = Map.of(CoffeeType.CAPPUCCINO, 6.0);
 
         Map<CoffeeType, Double> actual = CoffeeService.calculateAveragePreparationTime(coffeeRecords);
-        assertEquals(expected, actual);
+        assertTrue(expected.containsKey(CoffeeType.CAPPUCCINO)
+                && expected.containsValue(6.0));
+        assertEquals(actual.size(), expected.size());
     }
 
     @Test

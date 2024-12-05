@@ -26,7 +26,7 @@ public class Main {
     public static final String PATH_TO_FILE =
             "app/G91/gonnykh.alexander/lab4/src/main/java/ru/vsu/amm/java/file/file.txt";
 
-    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
 
     public static void main(String[] args) throws IOException {
         LoggerConfig.configure();
@@ -55,7 +55,7 @@ public class Main {
             System.out.println(DRINKS_ORDERED_MOST_7AM_TO_12PM
                     + CoffeeService.findCoffeeOrderedFrom7To12(coffeeRecordList).toString());
         } catch (IOException e) {
-            LOGGER.severe(e.getMessage());
+            logger.severe(e.getMessage());
         }
 
     }
