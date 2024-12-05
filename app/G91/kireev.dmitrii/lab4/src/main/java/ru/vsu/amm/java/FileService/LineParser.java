@@ -15,7 +15,9 @@ public class LineParser {
 
         Matcher matcher = PATTERN.matcher(line);
 
-        if (!matcher.matches()) throw new IllegalArgumentException("Invalid line format");
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException("Invalid line format");
+        }
 
         int suspectNameGroup = 1;
         int tortureInstrumentGroup = 2;
