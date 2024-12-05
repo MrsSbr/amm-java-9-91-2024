@@ -22,7 +22,6 @@ public class OlympiadApplication {
             LogManager.getLogManager().readConfiguration(new FileInputStream("app/G91/korneeva.svetlana/lab4/src/main/java/ru/vsu/amm/java/resources/log.config"));
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to load logger config", e);
-            throw new RuntimeException(e);
         }
     }
 
@@ -31,15 +30,13 @@ public class OlympiadApplication {
             FileHelper.generateFile(PATH, 100);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Unable to generate file.", e);
-            throw new RuntimeException(e);
         }
 
-        List<OlympiadRecord> records;
+        List<OlympiadRecord> records = null;
         try {
             records = FileHelper.getFromFile(PATH);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to read from file.", e);
-            throw new RuntimeException(e);
         }
 
         try {
@@ -47,7 +44,6 @@ public class OlympiadApplication {
             System.out.println("Students winning every year: " + consistentWinners + '\n');
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error while finding students winning every year.", e);
-            throw new RuntimeException(e);
         }
 
         try {
@@ -58,7 +54,6 @@ public class OlympiadApplication {
             System.out.println();
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error while finding winners by subject.", e);
-            throw new RuntimeException(e);
         }
 
         try {
@@ -66,7 +61,6 @@ public class OlympiadApplication {
             System.out.println("Student with the most subjects: " + topStudent);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error while finding student with the most subjects.", e);
-            throw new RuntimeException(e);
         }
     }
 }

@@ -7,6 +7,7 @@ import ru.vsu.amm.java.util.OlympiadRecordFactory;
 import java.time.Year;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class OlympidRecordTests {
@@ -65,7 +66,7 @@ public class OlympidRecordTests {
         assertTrue(winnersBySubject.containsKey("Math"));
 
         List<String> sortedMathWinners = winnersBySubject.get("Math").stream().sorted().toList();
-        List<String> expectedMathWinners = List.of("Student1", "Student2", "Student4").stream().sorted().toList();
+        List<String> expectedMathWinners = Stream.of("Student1", "Student2", "Student4").sorted().toList();
 
         assertEquals(expectedMathWinners, sortedMathWinners);
 

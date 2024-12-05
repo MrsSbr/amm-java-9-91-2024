@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OlympiadStatsService {
-    private OlympiadStatsService(){
-    }
 
     public static List<String> findStudentsWinningEveryYear(List<OlympiadRecord> records){
         if (records == null || records.isEmpty()) {

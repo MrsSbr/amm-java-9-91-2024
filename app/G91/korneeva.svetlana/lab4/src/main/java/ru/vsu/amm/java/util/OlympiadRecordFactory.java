@@ -10,16 +10,13 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class OlympiadRecordFactory {
-    private final static Random rnd = new Random();
-
-    private OlympiadRecordFactory() {
-    }
+    private final static Random RND = new Random();
 
     public static OlympiadRecord generateOlymiadRecord() {
-        Year year = Year.of(rnd.nextInt(2000, Year.now().getValue()));
+        Year year = Year.of(RND.nextInt(2000, Year.now().getValue()));
         Subjects[] subjects = Subjects.values();
-        Subjects subject = subjects[rnd.nextInt(subjects.length)];
-        int schoolClass = rnd.nextInt(1, 12);
+        Subjects subject = subjects[RND.nextInt(subjects.length)];
+        int schoolClass = RND.nextInt(1, 12);
         List<String> winners = generateWinners();
 
         return new OlympiadRecord(year, subject, schoolClass, winners);
@@ -33,7 +30,7 @@ public class OlympiadRecordFactory {
 
     private static List<String> generateWinners() {
         return IntStream.range(0, 3)
-                .mapToObj(i -> "Student" + rnd.nextInt(1, 100))
+                .mapToObj(i -> "Student" + RND.nextInt(1, 100))
                 .collect(Collectors.toList());
     }
 }
