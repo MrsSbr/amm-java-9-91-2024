@@ -7,7 +7,8 @@ import java.time.Month;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class DealsAnalyzerTest {
     @Test
@@ -20,6 +21,14 @@ class DealsAnalyzerTest {
 
         String result = DealsAnalyzer.findMostEffectiveManagerLastMonth(deals);
         assertEquals("Bob", result);
+    }
+
+    @Test
+    void testMostEffectiveManageNull() {
+        List<Deal> deals = List.of();
+
+        String result = DealsAnalyzer.findMostEffectiveManagerLastMonth(deals);
+        assertEquals("No data", result);
     }
 
     @Test
@@ -36,6 +45,14 @@ class DealsAnalyzerTest {
     }
 
     @Test
+    void testIncomeByClientsNull() {
+        List<Deal> deals = List.of();
+
+        Map<String, Double> result = DealsAnalyzer.collectIncomeByClients(deals);
+        assertEquals(0, result.size());
+    }
+
+    @Test
     void testMostProfitableMonth() {
         List<Deal> deals = List.of(
                 new Deal("Alice", "Client1", 500.0, LocalDate.of(2024, 10, 1)),
@@ -45,5 +62,13 @@ class DealsAnalyzerTest {
 
         Month result = DealsAnalyzer.findMostProfitableMonth(deals);
         assertEquals(Month.OCTOBER, result);
+    }
+
+    @Test
+    void testMostProfitableMonthNull() {
+        List<Deal> deals = List.of();
+
+        Month result = DealsAnalyzer.findMostProfitableMonth(deals);
+        assertNull(result);
     }
 }

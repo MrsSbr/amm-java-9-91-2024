@@ -29,8 +29,12 @@ public class Main {
             incomeByClients.forEach((k, v) -> clients.append(k).append(": ").append(v).append(", "));
             System.out.println("Income by clients:" + clients);
 
-            Month mostProfitableMonth = findMostProfitableMonth(deals.getDeals());
-            System.out.println("Most profitable month in last year: " + mostProfitableMonth);
+            Month mostProfitableMonth = findMostProfitableMonth(deals.getDeals()); // NPE
+            if (mostProfitableMonth == null) {
+                System.out.println("Most profitable month in last year not found");
+            } else {
+                System.out.println("Most profitable month in last year: " + mostProfitableMonth);
+            }
         } catch (Exception e) {
             logger.info(e.getMessage());
             System.out.println("Error, check application.log");
