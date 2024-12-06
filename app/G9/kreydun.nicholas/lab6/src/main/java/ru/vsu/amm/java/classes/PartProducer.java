@@ -10,6 +10,7 @@ public class PartProducer extends Thread {
     private final BlockingQueue<Part> queue;
     private final Part partType;
     private static final Logger logger = Logger.getLogger(PartProducer.class.getName());
+    private static final int milliseconds = 1000;
 
     public PartProducer(BlockingQueue<Part> queue, Part partType) {
         this.queue = queue;
@@ -20,7 +21,7 @@ public class PartProducer extends Thread {
     public void run() {
         try {
             while (!isInterrupted()) {
-                Thread.sleep(partType.getProductionTime() * 1000); // Simulate production time
+                Thread.sleep(partType.getProductionTime() * milliseconds);
                 queue.put(partType);
                 logger.log(Level.INFO, "Произведена деталь: {0}", partType);
             }

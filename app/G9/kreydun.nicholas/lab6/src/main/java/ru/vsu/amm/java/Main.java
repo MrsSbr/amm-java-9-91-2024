@@ -10,6 +10,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
+        final int milliseconds = 15000;
+
         BlockingQueue<Part> partsQueue = new LinkedBlockingQueue<>();
         BlockingQueue<Part> modulesQueue = new LinkedBlockingQueue<>();
 
@@ -25,7 +27,7 @@ public class Main {
         assembler.start();
         screwAssembler.start();
 
-        Thread.sleep(15000); // Run for 15 seconds
+        Thread.sleep(milliseconds);
 
         producer1.interrupt();
         producer2.interrupt();
@@ -33,5 +35,4 @@ public class Main {
         assembler.interrupt();
         screwAssembler.interrupt();
     }
-
 }
