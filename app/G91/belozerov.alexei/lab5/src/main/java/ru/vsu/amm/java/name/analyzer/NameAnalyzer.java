@@ -1,8 +1,12 @@
 package ru.vsu.amm.java.name.analyzer;
 
+import ru.vsu.amm.java.collector.StatisticCollector;
+import ru.vsu.amm.java.collector.StatisticCollectorBuilder;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,67 +18,67 @@ public class NameAnalyzer {
     private static final Pattern PASCALCASE_PATTERN = Pattern.compile("^([A-Z]([a-z]+)?)+$");
     private static final Pattern LOWERCASE_PATTERN = Pattern.compile("^[a-z.]+$");
 
-    public String analyze(List<Class<?>> classes) {
+    public StatisticCollector analyze(List<Class<?>> classes) {
         if (classes == null || classes.isEmpty()) {
-            return "Not found classes";
+            return new StatisticCollectorBuilder().build();
         }
-        StringBuilder sb = new StringBuilder();
+        StatisticCollectorBuilder builder = new StatisticCollectorBuilder();
         for (Class<?> clazz : classes) {
-            sb.append(analyzePackage(clazz))
-                .append(analyzeClass(clazz))
-                .append(analyzeFields(clazz))
-                .append(analyzeMethods(clazz));
+            builder.addPackageStatistic(analyzePackage(clazz))
+                .addClassStatistic(analyzeClass(clazz))
+                .addFieldStatistic(analyzeFields(clazz))
+                .addMethodStatistic(analyzeMethods(clazz));
         }
-        return sb.toString();
+        return builder.build();
     }
 
-    private StringBuilder analyzeClass(Class<?> clazz) {
-        StringBuilder sb = new StringBuilder();
+    private List<String> analyzeClass(Class<?> clazz) {
+        List<String> classes = new ArrayList<>();
         Matcher matcher = PASCALCASE_PATTERN.matcher(clazz.getSimpleName());
         if (!matcher.matches()) {
-            sb.append("Class ").append(clazz.getName()).append(" is not named by the Java convention\n");
+            classes.add("Class " + clazz.getName() + " is not named by the Java convention\n");
         }
-        return sb;
+        return classes;
     }
 
-    private StringBuilder analyzeFields(Class<?> clazz) {
-        StringBuilder sb = new StringBuilder();
+    private List<String> analyzeFields(Class<?> clazz) {
+        List<String> fieldsList = new ArrayList<>();
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
             if (Modifier.isFinal(field.getModifiers()) && Modifier.isStatic(field.getModifiers())) {
                 Matcher constMatcher = UPPERCASE_PATTERN.matcher(field.getName());
                 if (!constMatcher.matches()) {
-                    sb.append("Const field ").append(field.getName()).append(" is not named by the Java convention\n");
+                    fieldsList.add("Const field " + field.getName() + " is not named by the Java convention\n");
                 }
             } else {
                 Matcher matcher = CAMELCASE_PATTERN.matcher(field.getName());
                 if (!matcher.matches()) {
-                    sb.append("Field ").append(field.getName()).append(" is not named by the Java convention\n");
+                    fieldsList.add("Field " + field.getName() + " is not named by the Java convention\n");
                 }
             }
         }
-        return sb;
+        return fieldsList;
     }
 
-    private StringBuilder analyzeMethods(Class<?> clazz) {
-        StringBuilder sb = new StringBuilder();
+    private List<String> analyzeMethods(Class<?> clazz) {
+        List<String> methodsList = new ArrayList<>();
         Method[] methods = clazz.getDeclaredMethods();
         for (Method method : methods) {
             Matcher matcher = CAMELCASE_PATTERN.matcher(method.getName());
             if (!matcher.matches()) {
-                sb.append("Method ").append(method.getName()).append(" is not named by the Java convention\n");
+                methodsList.add("Method " + method.getName() + " is not named by the Java convention\n");
             }
         }
-        return sb;
+        return methodsList;
     }
 
-    private StringBuilder analyzePackage(Class<?> clazz) {
-        StringBuilder sb = new StringBuilder();
+    private List<String> analyzePackage(Class<?> clazz) {
+        List<String> packages = new ArrayList<>();
         Matcher matcher = LOWERCASE_PATTERN.matcher(clazz.getPackageName());
         if (!matcher.matches()) {
-            sb.append("Package ").append(clazz.getPackageName()).append(" is not named by the Java convention\n");
+            packages.add("Package " + clazz.getPackageName() + " is not named by the Java convention\n");
         }
-        return sb;
+        return packages;
     }
 }
 
