@@ -1,8 +1,11 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
+
+import ru.vsu.amm.java.abstracts.Person;
+import ru.vsu.amm.java.enums.Type;
 
 import java.util.Objects;
 
-public class SystemAdministrator extends  Person {
+public class SystemAdministrator extends Person {
     private int building;
 
     public SystemAdministrator(String surname, String name, int building) {

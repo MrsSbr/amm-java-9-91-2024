@@ -1,4 +1,7 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.abstracts;
+
+import ru.vsu.amm.java.interfaces.Universityable;
+import ru.vsu.amm.java.enums.Type;
 
 import java.util.Objects;
 

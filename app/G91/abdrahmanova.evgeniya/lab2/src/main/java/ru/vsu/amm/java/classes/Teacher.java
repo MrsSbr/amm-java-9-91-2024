@@ -1,16 +1,20 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
+
+import ru.vsu.amm.java.abstracts.Person;
+import ru.vsu.amm.java.enums.Type;
+import ru.vsu.amm.java.enums.Subjects;
 
 import java.util.Objects;
 
 public class Teacher extends Person {
-    private String subject;
+    private Subjects subject;//todo enum
 
-    public Teacher(String surname, String name, String subject) {
+    public Teacher(String surname, String name, Subjects subject) {
         super(surname, name, Type.Worker);
         this.subject = subject;
     }
 
-    public String getSubject() { return subject; }
+    public Subjects getSubject() { return subject; }
 
     @Override
     public void duty() { System.out.println(getSurname() + " " + getName() + "is instruct");}

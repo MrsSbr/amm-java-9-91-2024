@@ -1,9 +1,16 @@
 package ru.vsu.amm.java;
 
+import ru.vsu.amm.java.abstracts.Person;
+import ru.vsu.amm.java.classes.Student;
+import ru.vsu.amm.java.classes.SystemAdministrator;
+import ru.vsu.amm.java.classes.Teacher;
+import ru.vsu.amm.java.enums.Subjects;
+
 public class Main {
+    // todo разложить по пакетам
     public static void main(String[] args) {
         Person student = new Student("Petrov", "Ivan", 2);
-        Person teacher = new Teacher("Ivanov", "Ivan", "Physic");
+        Person teacher = new Teacher("Ivanov", "Ivan", Subjects.Programming_lecture);
         Person admin = new SystemAdministrator("Sidorov", "Igor", 3);
 
         //System.out.println();

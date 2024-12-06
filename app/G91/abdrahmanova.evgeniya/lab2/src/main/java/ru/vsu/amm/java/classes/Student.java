@@ -1,4 +1,7 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
+
+import ru.vsu.amm.java.abstracts.Person;
+import ru.vsu.amm.java.enums.Type;
 
 import java.util.Objects;
 
