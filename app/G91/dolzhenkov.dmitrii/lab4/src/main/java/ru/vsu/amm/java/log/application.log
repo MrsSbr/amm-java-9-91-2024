@@ -1,0 +1,8 @@
+2024-11-28 00:36:24 ru.vsu.amm.java.services.Deals
+SEVERE: Error parsing deal line: Charlie;Client1400.0;2024-07-12
+java.lang.NumberFormatException: For input string: "2024-07-12"
+2024-11-28 00:40:13 ru.vsu.amm.java.services.Deals
+SEVERE: Error parsing deal line: Charlie;Client300.0;2024-09-10
+java.lang.NumberFormatException: For input string: "2024-09-10"
+2024-11-28 00:40:13 ru.vsu.amm.java.Main
+INFO: For input string: "2024-09-10"

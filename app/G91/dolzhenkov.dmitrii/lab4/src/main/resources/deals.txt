@@ -1,0 +1,8 @@
+Alice;Client1;500.0;2024-10-15
+Bob;Client2;1000.0;2024-10-20
+Alice;Client1;200.0;2024-11-01
+Charlie;Client3;800.0;2024-09-10
+Bob;Client4;600.0;2024-11-05
+Alice;Client2;300.0;2024-11-10
+Charlie;Client1;400.0;2024-07-12
+Bob;Client3;1200.0;2023-12-15
