@@ -9,24 +9,18 @@ class SqlGeneratorTest {
 
     @Test
     void selectCorrectColumnTest() {
-        assertEquals("SELECT id FROM TeaBag;", SqlGenerator.select("id"));
+        assertEquals("SELECT name, year FROM TeaBag;", SqlGenerator.select());
     }
-
-    @Test
-    void selectIncorrectColumnTest() {
-        assertEquals("", SqlGenerator.select("id1"));
-    }
-
     @Test
     void updateEntityTest() {
         TeaBag teaBag = new TeaBag(1, "green", 2024, 100);
-        assertEquals("Update TeaBag SET name = green, year = 2024, weight = 100 WHERE id = 1;", SqlGenerator.update(teaBag));
+        assertEquals("Update TeaBag SET name = 'green', year = 2024, weight = 100 WHERE id = 1;", SqlGenerator.update(teaBag));
     }
 
     @Test
     void updateEntityNullIdTest() {
         TeaBag teaBag = new TeaBag(null, "green", 2024, 100);
-        assertEquals("Update TeaBag SET name = green, year = 2024, weight = 100;", SqlGenerator.update(teaBag));
+        assertEquals("Update TeaBag SET name = 'green', year = 2024, weight = 100;", SqlGenerator.update(teaBag));
     }
 
     @Test

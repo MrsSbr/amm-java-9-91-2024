@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.generator;
 
+import ru.vsu.amm.java.annotation.SelectTo;
 import ru.vsu.amm.java.annotation.Table;
 import ru.vsu.amm.java.entity.TeaBag;
 
@@ -12,6 +13,12 @@ import java.util.stream.Collectors;
 public class SqlGenerator {
 
     private static final Logger logger = Logger.getLogger(SqlGenerator.class.getName());
+
+    private static String escapeSql(String str) {
+        return str.replace("\"", "\\\"")
+                .replace("'", "''")
+                .replace("\\", "\\\\");
+    }
 
     public static String update(TeaBag teaBag) {
         String tableName = TeaBag.class.getAnnotation(Table.class).name();
@@ -29,7 +36,15 @@ public class SqlGenerator {
                 })
                 .map(field -> {
                     try {
-                        return field.getName() + " = " + field.get(teaBag);
+                        Object value = field.get(teaBag);
+
+                        String escapedValue;
+                        if (value instanceof String) {
+                            escapedValue = "'" + escapeSql(value.toString()) + "'";
+                        } else {
+                            escapedValue = value.toString();
+                        }
+                        return field.getName() + " = " + escapedValue;
                     } catch (IllegalAccessException e) {
                         logger.log(Level.SEVERE, Arrays.toString(e.getStackTrace()));
                         System.out.println("Could not get access to field: " + field.getName() + "\n");
@@ -46,16 +61,17 @@ public class SqlGenerator {
         }
     }
 
-    public static String select(String column) {
+    public static String select() {
         String tableName = TeaBag.class.getAnnotation(Table.class).name();
-        try {
-            Field field = TeaBag.class.getDeclaredField(column);
-            return "SELECT " + field.getName() + " FROM " + tableName + ";";
-        } catch (NoSuchFieldException e) {
-            logger.log(Level.SEVERE, Arrays.toString(e.getStackTrace()));
-            System.out.println("Could not find field with such name\n");
 
+        Field[] fields = TeaBag.class.getDeclaredFields();
+        String selectedFields = Arrays.stream(fields)
+                .filter(field -> field.isAnnotationPresent(SelectTo.class))
+                .map(Field::getName)
+                .collect(Collectors.joining(", "));
+        if (selectedFields.isEmpty()) {
+            return "";
         }
-        return "";
+        return "SELECT " + selectedFields + " FROM " + tableName + ";";
     }
 }
