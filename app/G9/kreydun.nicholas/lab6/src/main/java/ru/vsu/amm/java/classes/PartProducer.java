@@ -3,13 +3,10 @@ package ru.vsu.amm.java.classes;
 import ru.vsu.amm.java.enums.Part;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class PartProducer extends Thread {
     private final BlockingQueue<Part> queue;
     private final Part partType;
-    private static final Logger logger = Logger.getLogger(PartProducer.class.getName());
     private static final int milliseconds = 1000;
 
     public PartProducer(BlockingQueue<Part> queue, Part partType) {
@@ -23,10 +20,10 @@ public class PartProducer extends Thread {
             while (!isInterrupted()) {
                 Thread.sleep(partType.getProductionTime() * milliseconds);
                 queue.put(partType);
-                logger.log(Level.INFO, "Произведена деталь: {0}", partType);
+                System.out.println("Произведена деталь: " + partType.name());// todo вывод в консоль
             }
         } catch (InterruptedException e) {
-            logger.log(Level.SEVERE, "Производитель деталей прерван", e);
+            System.out.println("Производитель деталей прерван");
         }
     }
 }

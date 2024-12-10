@@ -3,13 +3,10 @@ package ru.vsu.amm.java.classes;
 import ru.vsu.amm.java.enums.Part;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ModuleAssembler extends Thread {
     private final BlockingQueue<Part> inputQueue;
     private final BlockingQueue<Part> outputQueue;
-    private static final Logger logger = Logger.getLogger(ModuleAssembler.class.getName());
     private static final int milliseconds = 1000;
 
     public ModuleAssembler(BlockingQueue<Part> inputQueue, BlockingQueue<Part> outputQueue) {
@@ -39,11 +36,11 @@ public class ModuleAssembler extends Thread {
                 if (assembleModule) {
                     Thread.sleep(milliseconds);
                     outputQueue.put(Part.MODULE);
-                    logger.log(Level.INFO, "Собран модуль");
+                    System.out.println("Собран модуль");
                 }
             }
         } catch (InterruptedException e) {
-            logger.log(Level.SEVERE, "Сборка модулей прервана", e);
+            System.out.println("Сборка модулей прервана");
         }
     }
 }

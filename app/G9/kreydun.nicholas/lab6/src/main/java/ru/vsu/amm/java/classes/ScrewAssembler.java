@@ -3,7 +3,6 @@ package ru.vsu.amm.java.classes;
 import ru.vsu.amm.java.enums.Part;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ScrewAssembler extends Thread {
@@ -38,11 +37,11 @@ public class ScrewAssembler extends Thread {
 
                 if (assembleScrew) {
                     Thread.sleep(milliseconds);
-                    logger.log(Level.INFO, "Собран винт");
+                    System.out.println("Собран винт");
                 }
             }
         } catch (InterruptedException e) {
-            logger.log(Level.SEVERE, "Сборка винтов прервана", e);
+            System.out.println("Сборка винтов прервана");
         }
     }
 }
