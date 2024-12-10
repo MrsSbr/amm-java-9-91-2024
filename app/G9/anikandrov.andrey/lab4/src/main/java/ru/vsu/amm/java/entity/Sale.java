@@ -8,7 +8,6 @@ import java.time.LocalDate;
 
 import static ru.vsu.amm.java.service.SalesLogger.logger;
 
-
 public class Sale {
     private LocalDate dateOfSale;
     private Showroom dealCenter;
@@ -72,10 +71,10 @@ public class Sale {
     @Override
     public String toString() {
         return "Sale{" +
-                "dateOfSale=" + dateOfSale +
-                ", dealCenterName='" + dealCenter + '\'' +
-                ", carName='" + car + '\'' +
-                ", equipment=" + equipment +
+                dateOfSale +
+                ", " + dealCenter + '\'' +
+                ", " + car + '\'' +
+                ", " + equipment +
                 '}';
     }
 }

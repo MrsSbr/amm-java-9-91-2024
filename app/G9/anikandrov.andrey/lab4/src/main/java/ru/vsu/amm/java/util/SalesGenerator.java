@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.util;
 
+import ru.vsu.amm.java.constants.Constants;
 import ru.vsu.amm.java.entity.Sale;
 import ru.vsu.amm.java.enums.Car;
 import ru.vsu.amm.java.enums.Equipment;
@@ -18,10 +19,9 @@ public class SalesGenerator {
     }
 
     public static Sale generateSale() {
-
-        int randomYear = random.nextInt(2000, LocalDate.now().getYear());
-        int randomMonth = random.nextInt(1, 12);
-        int randomDay = random.nextInt(1, 30);
+        int randomYear = random.nextInt(Constants.MIN_YEAR, LocalDate.now().getYear());
+        int randomMonth = random.nextInt(1, Constants.MONTH_COUNT);
+        int randomDay = random.nextInt(1, Constants.DAY_COUNT);
         LocalDate dateOfSale = LocalDate.of(randomYear, randomMonth, randomDay);
 
         var showrooms = Showroom.values();
@@ -36,7 +36,7 @@ public class SalesGenerator {
         int equipmentIndex = random.nextInt(equipments.length);
         Equipment equipment = equipments[equipmentIndex];
 
-        int markup = random.nextInt(10000, 1000000);
+        int markup = random.nextInt(Constants.MIN_MARKUP, Constants.MAX_MARKUP);
 
         return new Sale(dateOfSale, showroom, car, equipment, markup);
     }

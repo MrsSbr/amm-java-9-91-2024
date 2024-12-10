@@ -1,5 +1,7 @@
 package ru.vsu.amm.java.service;
 
+import ru.vsu.amm.java.constants.Constants;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.FileHandler;
@@ -21,7 +23,7 @@ public class SalesLogger {
     private static Logger createLogFile() throws IOException {
         Logger logger = Logger.getLogger(SalesLogger.class.getName());
 
-        File file = new File("log.txt");
+        File file = new File(Constants.FILE_PATH);
 
         if (file.exists()) {
             file.delete();

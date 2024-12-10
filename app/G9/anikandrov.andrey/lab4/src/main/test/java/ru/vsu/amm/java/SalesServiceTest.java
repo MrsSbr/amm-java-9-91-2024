@@ -1,10 +1,11 @@
-package ru.vsu.amm.java.service;
+package ru.vsu.amm.java;
 
-import org.junit.Test;
+import org.testng.annotations.Test;
 import ru.vsu.amm.java.entity.Sale;
 import ru.vsu.amm.java.enums.Car;
 import ru.vsu.amm.java.enums.Equipment;
 import ru.vsu.amm.java.enums.Showroom;
+import ru.vsu.amm.java.service.SalesService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,7 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+
+import static org.testng.AssertJUnit.assertEquals;
 import static ru.vsu.amm.java.service.SalesLogger.logger;
 
 public class SalesServiceTest {
