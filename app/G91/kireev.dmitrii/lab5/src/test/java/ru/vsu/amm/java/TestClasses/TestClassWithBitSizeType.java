@@ -5,7 +5,7 @@ import ru.vsu.amm.java.SizeType.SizeType;
 
 @SizeUnit(sizeType = SizeType.BIT)
 public  class TestClassWithBitSizeType {
-    int a;
-    boolean b;
-    char c;
+    private int a;
+    private boolean b;
+    private char c;
 }

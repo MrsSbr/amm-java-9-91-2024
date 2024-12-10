@@ -15,7 +15,6 @@ public class ClassSizeAnalyzer {
         Field[] fields = clazz.getDeclaredFields();
 
         for (Field field : fields) {
-
             if (!Modifier.isStatic(field.getModifiers())) {
                 size += getFieldSize(field.getType());
             }
