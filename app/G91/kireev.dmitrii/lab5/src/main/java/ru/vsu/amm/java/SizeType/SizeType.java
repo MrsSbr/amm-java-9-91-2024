@@ -6,13 +6,13 @@ public enum SizeType {
     KILOBYTE(8 * 1024),
     MEGABYTE(8 * 1024 * 1024);
 
-    private final int sizeInBits;
+    private final double sizeInBits;
 
-    SizeType(int sizeInBits) {
+    SizeType(double sizeInBits) {
         this.sizeInBits = sizeInBits;
     }
 
-    public int getSizeInBits() {
+    public double getSizeInBits() {
         return sizeInBits;
     }
 }

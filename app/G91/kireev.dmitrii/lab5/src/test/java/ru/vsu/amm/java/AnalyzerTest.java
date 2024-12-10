@@ -21,14 +21,14 @@ public class AnalyzerTest {
 
     @Test
     public void testAnalyzeClassSizeWithByteSizeType() {
-        double expectedSize = (Integer.SIZE + Byte.SIZE + Character.SIZE) / (1.0*SizeType.BYTE.getSizeInBits());
+        double expectedSize = (Integer.SIZE + Byte.SIZE + Character.SIZE) / SizeType.BYTE.getSizeInBits();
         double actualSize = ClassSizeAnalyzer.analyzeClassSize(TestClassWithByteSizeType.class);
         assertEquals(expectedSize, actualSize, 0.001);
     }
 
     @Test
     public void testAnalyzeClassSizeWithKilobyteSizeType() {
-        double expectedSize = (Integer.SIZE + Byte.SIZE + Character.SIZE) / (1.0*SizeType.KILOBYTE.getSizeInBits());
+        double expectedSize = (Integer.SIZE + Byte.SIZE + Character.SIZE) / SizeType.KILOBYTE.getSizeInBits();
         double actualSize = ClassSizeAnalyzer.analyzeClassSize(TestClassWithKilobyteSizeType.class);
         assertEquals(expectedSize, actualSize, 0.001);
     }
