@@ -13,7 +13,7 @@ public class SqlGenerator {
 
     private static final Logger logger = Logger.getLogger(SqlGenerator.class.getName());
 
-    public String update(TeaBag teaBag) {
+    public static String update(TeaBag teaBag) {
         String tableName = TeaBag.class.getAnnotation(Table.class).name();
         Field[] fields = TeaBag.class.getDeclaredFields();
         String updatingColumns = Arrays.stream(fields)
@@ -46,7 +46,7 @@ public class SqlGenerator {
         }
     }
 
-    public String select(String column) {
+    public static String select(String column) {
         String tableName = TeaBag.class.getAnnotation(Table.class).name();
         try {
             Field field = TeaBag.class.getDeclaredField(column);

@@ -9,8 +9,7 @@ import ru.vsu.amm.java.generator.SqlGenerator;
 public class Main {
     public static void main(String[] args) {
         TeaBag teaBag = new TeaBag(1, "green", 2024, 100);
-        SqlGenerator sqlGenerator = new SqlGenerator();
-        System.out.println(sqlGenerator.update(teaBag));
-        System.out.println(sqlGenerator.select("year"));
+        System.out.println(SqlGenerator.update(teaBag));
+        System.out.println(SqlGenerator.select("year"));
     }
 }
