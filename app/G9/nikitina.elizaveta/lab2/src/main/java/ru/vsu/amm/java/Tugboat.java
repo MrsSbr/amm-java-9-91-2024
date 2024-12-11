@@ -1,29 +1,44 @@
 package ru.vsu.amm.java;
 
-class Tugboat extends WaterVessel implements Navigable {
+import java.util.Objects;
+
+class Tugboat extends WaterVesselImpl {
     private int horsePower;
-    public Tugboat(String vesselName, double vesselLength, int horsePower) {
-        super(vesselName, "Tugboat", vesselLength);
+
+    public Tugboat(String name, double length, int horsePower) {
+        super(name, VesselType.TUGBOAT, length);
         this.horsePower = horsePower;
     }
 
     @Override
-    public String toString(){
-        return super.toString() + "\nHorsePower: " + horsePower;
+    public String toString() {
+        return super.toString() + "\nHorsepower: " + horsePower;
+    }
+
+    @Override
+    public int getCrewSize() { return 5; }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        if (!super.equals(obj)) return false;
+        Tugboat tugboat = (Tugboat) obj;
+        return horsePower == tugboat.horsePower;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), horsePower);
     }
 
     @Override
     public void navigateTo(String coordinates) {
-        System.out.println("Tugboat navigates to " + coordinates);
+        System.out.println(getName() + " is navigating to " + coordinates);
     }
 
     @Override
     public double getSpeed() {
-        return 10;
-    }
-
-    @Override
-    public int getCrewSize() {
-        return 5;
+        return 10.0;
     }
 }
