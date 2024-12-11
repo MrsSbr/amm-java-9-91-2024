@@ -5,15 +5,20 @@ import ru.vsu.amm.java.CatExhibitionAnalyzer;
 import ru.vsu.amm.java.CatWinner;
 import ru.vsu.amm.java.Gender;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CatExhibitionAnalyzerTest {
     private List<CatWinner> winners;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         winners = Arrays.asList(
                 new CatWinner("Kitty", Breed.SIAMESE, Gender.FEMALE),
                 new CatWinner("Tom", Breed.PERSIAN, Gender.MALE),
@@ -22,8 +27,9 @@ public class CatExhibitionAnalyzerTest {
                 new CatWinner("Oliver", Breed.SPHYNX, Gender.MALE)
         );
     }
+
     @Test
-    public void testCalculateGenderRatio(){
+    public void testCalculateGenderRatio() {
         setup();
         double ratio = CatExhibitionAnalyzer.calculateGenderRatio(winners);
         assertEquals(3.0 / 2.0, ratio, 0.01, "The gender ratio should be correctly calculated");
@@ -55,10 +61,10 @@ public class CatExhibitionAnalyzerTest {
     }
 
     @Test
-    public void testAllMales(){
+    public void testAllMales() {
         winners = Arrays.asList(
-               new CatWinner("Tom", Breed.SIAMESE, Gender.MALE),
-               new CatWinner("Milo", Breed.PERSIAN, Gender.MALE)
+                new CatWinner("Tom", Breed.SIAMESE, Gender.MALE),
+                new CatWinner("Milo", Breed.PERSIAN, Gender.MALE)
         );
 
         double ratio = CatExhibitionAnalyzer.calculateGenderRatio(winners);
@@ -69,7 +75,7 @@ public class CatExhibitionAnalyzerTest {
     }
 
     @Test
-    public void testAllFemales(){
+    public void testAllFemales() {
         winners = Arrays.asList(
                 new CatWinner("Kitty", Breed.SIAMESE, Gender.FEMALE),
                 new CatWinner("Luna", Breed.MAINE_COON, Gender.FEMALE)
@@ -83,10 +89,10 @@ public class CatExhibitionAnalyzerTest {
     }
 
     @Test
-    public void testInvalidData(){
+    public void testInvalidData() {
         winners = Arrays.asList(
                 new CatWinner(null, Breed.SIAMESE, Gender.FEMALE),
-                new CatWinner("Tom", null , Gender.MALE),
+                new CatWinner("Tom", null, Gender.MALE),
                 new CatWinner("Milo", Breed.SIAMESE, null)
         );
 
@@ -98,9 +104,9 @@ public class CatExhibitionAnalyzerTest {
     }
 
     @Test
-    public void testNullList(){
+    public void testNullList() {
 
-        assertThrows(NullPointerException.class, () -> CatExhibitionAnalyzer.calculateGenderRatio(null),
+        assertThrows(IllegalArgumentException.class, () -> CatExhibitionAnalyzer.calculateGenderRatio(null),
                 "Should throw NullPointerException for null list");
 
     }
