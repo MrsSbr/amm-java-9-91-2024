@@ -1,7 +1,9 @@
-import org.example.DayStatistic;
-import org.example.FarmService;
+import ru.vsu.amm.java.DayStatistic;
+import ru.vsu.amm.java.FarmService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -9,12 +11,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class FarmApplicationTest {
 
-    private List<DayStatistic> test Statstics;
+    private List<DayStatistic> testStatistics;
 
     @BeforeEach
     void setup(){
