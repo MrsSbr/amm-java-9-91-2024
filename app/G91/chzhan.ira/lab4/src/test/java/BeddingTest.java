@@ -29,14 +29,15 @@ public class BeddingTest {
         Map<Material, Set<Size>> result = analysis.findMaterialSizes(records);
         assertEquals(3, records.size());
         assertTrue(result.get(Material.COTTON).containsAll(Set.of(Size.DOUBLE, Size.KING)));
-        assertTrue(result.get(Material.LINEN).contains(Size.KING));;
+        assertTrue(result.get(Material.LINEN).contains(Size.KING));
+        ;
     }
 
     @Test
     void testFindFullColorSetNoMatches() {
         List<BeddingRecord> records = Arrays.asList(
-                new BeddingRecord(LocalDate.now(),"A",  Size.DOUBLE,  Colors.BLUE, Material.COTTON),
-                new BeddingRecord(LocalDate.now(),"B", Size.KING, Colors.RED, Material.LINEN)
+                new BeddingRecord(LocalDate.now(), "A", Size.DOUBLE, Colors.BLUE, Material.COTTON),
+                new BeddingRecord(LocalDate.now(), "B", Size.KING, Colors.RED, Material.LINEN)
         );
         BeddingAnalysis analysis = new BeddingAnalysis();
         Set<Colors> allColors = Set.of(Colors.BLUE, Colors.RED, Colors.WHITE);
@@ -47,8 +48,8 @@ public class BeddingTest {
     @Test
     void testFindFullColorSetHappyPath() {
         List<BeddingRecord> records = Arrays.asList(
-                new BeddingRecord(LocalDate.now(),"A",  Size.DOUBLE,  Colors.BLUE, Material.COTTON),
-                new BeddingRecord(LocalDate.now(),"A", Size.KING, Colors.RED, Material.LINEN)
+                new BeddingRecord(LocalDate.now(), "A", Size.DOUBLE, Colors.BLUE, Material.COTTON),
+                new BeddingRecord(LocalDate.now(), "A", Size.KING, Colors.RED, Material.LINEN)
         );
         BeddingAnalysis analysis = new BeddingAnalysis();
         Set<Colors> allColors = Set.of(Colors.BLUE, Colors.RED);
@@ -59,10 +60,10 @@ public class BeddingTest {
     @Test
     void testCountRecordsByQuarter() {
         List<BeddingRecord> records = Arrays.asList(
-                new BeddingRecord(LocalDate.of(2024, 1, 15),"A",  Size.DOUBLE,  Colors.BLUE, Material.COTTON),
-                new BeddingRecord(LocalDate.of(2024, 4, 20),"B", Size.KING, Colors.RED, Material.LINEN),
-                new BeddingRecord(LocalDate.of(2024, 7, 10),"C",  Size.KING,  Colors.BLUE, Material.COTTON),
-                new BeddingRecord(LocalDate.of(2024, 10, 25),"D", Size.DOUBLE, Colors.WHITE, Material.SILK)
+                new BeddingRecord(LocalDate.of(2024, 1, 15), "A", Size.DOUBLE, Colors.BLUE, Material.COTTON),
+                new BeddingRecord(LocalDate.of(2024, 4, 20), "B", Size.KING, Colors.RED, Material.LINEN),
+                new BeddingRecord(LocalDate.of(2024, 7, 10), "C", Size.KING, Colors.BLUE, Material.COTTON),
+                new BeddingRecord(LocalDate.of(2024, 10, 25), "D", Size.DOUBLE, Colors.WHITE, Material.SILK)
         );
         BeddingAnalysis analysis = new BeddingAnalysis();
         Map<Integer, Long> result = analysis.countSalesQuarter(records);

@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class BeddingMain {
     private static final String filePath = "app\\G91\\chzhan.ira\\lab4\\bedding.txt";
     private static final Logger logger = Logger.getLogger(BeddingMain.class.getName());
+
     public static void main(String[] args) {
         BeddingData dataLoader = new BeddingData();
         List<BeddingRecord> records = dataLoader.loadData(filePath);
@@ -29,6 +30,6 @@ public class BeddingMain {
         System.out.println(analysis.findMaterialSizes(records));
         Set<Colors> allColors = records.stream().map(BeddingRecord::getColor).collect(Collectors.toSet());
         System.out.println(analysis.findfullColorSets(records, allColors));
-        System.out.println( analysis.countSalesQuarter(records));
+        System.out.println(analysis.countSalesQuarter(records));
     }
 }
