@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 
 public class BeddingAnalysis {
 
+    private static final int MONTHS_IN_QUARTER = 3;
+
     private static final Logger logger = Logger.getLogger(BeddingAnalysis.class.getName());
 
     public Map<Material, Set<Size>> findMaterialSizes(List<BeddingRecord> records) {
@@ -33,7 +35,6 @@ public class BeddingAnalysis {
 
 
     public Map<Integer, Long> countSalesQuarter(List<BeddingRecord> records) {
-        final int MONTHS_IN_QUARTER = 3;
 
         return records.stream()
                 .collect(Collectors.groupingBy(record -> (record.getDate().getMonthValue() - 1) / MONTHS_IN_QUARTER + 1,

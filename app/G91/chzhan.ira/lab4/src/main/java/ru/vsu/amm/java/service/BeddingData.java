@@ -19,6 +19,11 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 public class BeddingData {
+    private static final int DATE_COLUMN = 0;
+    private static final int NAME_COLUMN = 1;
+    private static final int SIZE_COLUMN = 2;
+    private static final int COLORS_COLUMN = 3;
+    private static final int MATERIAL_COLUMN = 4;
     private static final Logger logger = Logger.getLogger(BeddingData.class.getName());
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -34,12 +39,6 @@ public class BeddingData {
             return List.of();
         }
     }
-
-    private static final int DATE_COLUMN = 0;
-    private static final int NAME_COLUMN = 1;
-    private static final int SIZE_COLUMN = 2;
-    private static final int COLORS_COLUMN = 3;
-    private static final int MATERIAL_COLUMN = 4;
 
     private BeddingRecord parseLine(String line) {
         String[] parts = line.split(" ");
