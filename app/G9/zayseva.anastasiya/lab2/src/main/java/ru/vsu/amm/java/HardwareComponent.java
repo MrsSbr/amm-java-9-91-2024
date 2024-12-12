@@ -2,7 +2,7 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public abstract class HardwareComponent implements ComputerComponent {
+public abstract class HardwareComponent {
     private final String manufacturer;
     private final String model;
     private final double price;
@@ -13,23 +13,23 @@ public abstract class HardwareComponent implements ComputerComponent {
         this.price = price;
     }
 
-    @Override
     public String getName() {
         return manufacturer + " " + model;
     }
 
-    @Override
     public abstract String getDescription();
 
-    @Override
     public double getPrice() {
         return price;
     }
 
+    public String getManufacturer (){ return manufacturer; }
+
+    public String getModel (){ return model; }
+
     @Override
     public String toString() {
-        return "Manufacturer: " + manufacturer + ", Model: " + model + ", Price: $" + price;
-    }
+        return "Manufacturer: " + manufacturer + ", Model: " + model + ", Price: $" + price;}
 
     @Override
     public boolean equals(Object obj) {
