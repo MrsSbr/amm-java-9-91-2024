@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Random;
 
 public class MatchesStatsGenerator {
-    private static final Random RANDOM = new Random();
-    private static final String[] HOME_SURNAMES = {"Feshenko", "Lobanov", "Garshin", "Kavunov"};
-    private static final String[] OWNER_SURNAMES = {"Nakamura", "Gavrilov", "Shipilov", "Anikandrov", "Gadziev"};
+    private final static String[] HOME_SURNAMES = {"Feshenko", "Lobanov", "Garshin", "Kavunov"};
+    private final static String[] OWNER_SURNAMES = {"Nakamura", "Gavrilov", "Shipilov", "Anikandrov", "Gadziev"};
 
 
     public static List<Match> generateMatchRecords(int count) {
@@ -21,8 +20,9 @@ public class MatchesStatsGenerator {
     }
 
     private static Match generateMatch() {
-        String homeSurname = HOME_SURNAMES[RANDOM.nextInt(HOME_SURNAMES.length)];
-        String ownerSurname = OWNER_SURNAMES[RANDOM.nextInt(OWNER_SURNAMES.length)];
+        final Random R = new Random();
+        String homeSurname = HOME_SURNAMES[R.nextInt(HOME_SURNAMES.length)];
+        String ownerSurname = OWNER_SURNAMES[R.nextInt(OWNER_SURNAMES.length)];
         return new Match(homeSurname, ownerSurname);
     }
 }

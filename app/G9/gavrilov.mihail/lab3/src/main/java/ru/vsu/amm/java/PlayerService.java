@@ -1,4 +1,6 @@
 package ru.vsu.amm.java;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -16,11 +18,14 @@ public class PlayerService {
                 .mapToInt(player -> Collections.frequency(allBestPlayers, player))
                 .max()
                 .orElse(0);
-
-        return allBestPlayers.stream()
-                .filter(player -> Collections.frequency(allBestPlayers, player) == maxFrequency)
-                .distinct()
-                .collect(Collectors.toList());
+        if (maxFrequency != 0) {
+            return allBestPlayers.stream()
+                    .filter(player -> Collections.frequency(allBestPlayers, player) == maxFrequency)
+                    .distinct()
+                    .toList();
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     public static Set<String> findAwayBestPlayers(List<Match> matches) {

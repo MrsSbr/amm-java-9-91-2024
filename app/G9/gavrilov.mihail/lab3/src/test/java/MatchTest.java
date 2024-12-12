@@ -13,10 +13,10 @@ public class MatchTest {
 
     @Test
     @DisplayName("Лучшие игроки по частоте, если список пуст")
-    void testMostFrequentPlayersEmpty(){
+    void testMostFrequentPlayersEmpty() {
         List<Match> matches = List.of();
 
-        List<String> expected =  List.of();
+        List<String> expected = List.of();
 
         List<String> actual = PlayerService.findMostFrequentPlayers(matches);
 
@@ -25,14 +25,14 @@ public class MatchTest {
 
     @Test
     @DisplayName("Лучшие игроки по частоте, если такой один")
-    void testMostFrequentPlayersOnlyOne(){
+    void testMostFrequentPlayersOnlyOne() {
         List<Match> matches = List.of(
                 new Match("Filatov", "Feshenko"),
                 new Match("Filatov", "Anikandrov"),
                 new Match("Anikandrov", "Tupikov"),
                 new Match("Feshenko", "Filatov"));
 
-        List<String> expected =  List.of("Filatov");
+        List<String> expected = List.of("Filatov");
 
         List<String> actual = PlayerService.findMostFrequentPlayers(matches);
 
@@ -41,7 +41,7 @@ public class MatchTest {
 
     @Test
     @DisplayName("Лучшие игроки по частоте, если таких много")
-    void testMostFrequentPlayersMany(){
+    void testMostFrequentPlayersMany() {
         List<Match> matches = List.of(
                 new Match("Filatov", "Feshenko"),
                 new Match("Filatov", "Anikandrov"),
@@ -49,7 +49,7 @@ public class MatchTest {
                 new Match("Feshenko", "Kostrikin"),
                 new Match("Tupikov", "Arhipov"));
 
-        List<String> expected =  List.of("Filatov", "Feshenko", "Tupikov", "Anikandrov");
+        List<String> expected = List.of("Filatov", "Feshenko", "Tupikov", "Anikandrov");
 
         List<String> actual = PlayerService.findMostFrequentPlayers(matches);
 
@@ -58,18 +58,19 @@ public class MatchTest {
 
     @Test
     @DisplayName("Лучшие игроки выездных матчей, если список пуст")
-    void testAwayBestPlayersEmpty(){
+    void testAwayBestPlayersEmpty() {
         List<Match> matches = List.of();
 
-        Set<String> expected =  Set.of();
+        Set<String> expected = Set.of();
 
         Set<String> actual = PlayerService.findAwayBestPlayers(matches);
 
         assertTrue(expected.containsAll(actual) && actual.containsAll(expected));
     }
+
     @Test
     @DisplayName("Лучшие игроки выездных матчей, если такой один")
-    void testAwayBestPlayersOnlyOne(){
+    void testAwayBestPlayersOnlyOne() {
         List<Match> matches = List.of(
                 new Match("Filatov", "Kostrikin"),
                 new Match("Filatov", "Kostrikin"),
@@ -77,7 +78,7 @@ public class MatchTest {
                 new Match("Feshenko", "Kostrikin"),
                 new Match("Tupikov", "Kostrikin"));
 
-        Set<String> expected =  Set.of("Kostrikin");
+        Set<String> expected = Set.of("Kostrikin");
 
         Set<String> actual = PlayerService.findAwayBestPlayers(matches);
 
@@ -86,7 +87,7 @@ public class MatchTest {
 
     @Test
     @DisplayName("Лучшие игроки выездных матчей, если таких несколько")
-    void testAwayBestPlayersOnlyMany(){
+    void testAwayBestPlayersOnlyMany() {
         List<Match> matches = List.of(
                 new Match("Filatov", "Anikandrov"),
                 new Match("Filatov", "Kostrikin"),
@@ -94,7 +95,7 @@ public class MatchTest {
                 new Match("Feshenko", "Kostrikin"),
                 new Match("Tupikov", "Kostrikin"));
 
-        Set<String> expected =  Set.of("Kostrikin", "Anikandrov", "Tupikov");
+        Set<String> expected = Set.of("Kostrikin", "Anikandrov", "Tupikov");
 
         Set<String> actual = PlayerService.findAwayBestPlayers(matches);
 
@@ -104,7 +105,7 @@ public class MatchTest {
     @Test
     @DisplayName("Количество игроков, которые становились лучшими всего один раз, " +
             "если нет ни одного, кто становился всего раз")
-    void testPlayersBestOnceEmpty(){
+    void testPlayersBestOnceEmpty() {
         List<Match> matches = List.of();
 
         long expected = 0;
@@ -117,7 +118,7 @@ public class MatchTest {
     @Test
     @DisplayName("Количество игроков, которые становились лучшими всего один раз, " +
             "если нет ни одного, кто становился всего раз")
-    void testPlayersBestOnceNull(){
+    void testPlayersBestOnceNull() {
         List<Match> matches = List.of(
                 new Match("Filatov", "Anikandrov"),
                 new Match("Filatov", "Kostrikin"),
@@ -135,7 +136,7 @@ public class MatchTest {
     @Test
     @DisplayName("Количество игроков, которые становились лучшими всего один раз, " +
             "если таких несколько")
-    void testPlayersBestOnceMany(){
+    void testPlayersBestOnceMany() {
         List<Match> matches = List.of(
                 new Match("Filatov", "Anikandrov"),
                 new Match("Filatov", "Kostrikin"),
