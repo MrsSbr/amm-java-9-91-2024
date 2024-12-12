@@ -26,7 +26,7 @@ public class Generator {
                 int randIndex = rand.nextInt(NAMESFORFEMALE.length);
                 name = NAMESFORMALE[randIndex];
             }
-            Month month = Month.of(rand.nextInt() + 1);
+            Month month = Month.of(rand.nextInt(12) + 1);
             students.add(new Student(name, gender, month));
         }
         return students;
