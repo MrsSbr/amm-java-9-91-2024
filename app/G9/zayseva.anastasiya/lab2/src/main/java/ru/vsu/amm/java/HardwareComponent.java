@@ -23,13 +23,18 @@ public abstract class HardwareComponent {
         return price;
     }
 
-    public String getManufacturer (){ return manufacturer; }
+    public String getManufacturer() {
+        return manufacturer;
+    }
 
-    public String getModel (){ return model; }
+    public String getModel() {
+        return model;
+    }
 
     @Override
     public String toString() {
-        return "Manufacturer: " + manufacturer + ", Model: " + model + ", Price: $" + price;}
+        return "Manufacturer: " + manufacturer + ", Model: " + model + ", Price: $" + price;
+    }
 
     @Override
     public boolean equals(Object obj) {

@@ -1,27 +1,31 @@
 package ru.vsu.amm.java;
+
 import java.util.Objects;
 
 public class CPU extends HardwareComponent {
-    private  int cores;
+    private int cores;
     private double clockSpeed;
 
     public CPU(String manufacturer, String model, double price, int cores, double clockSpeed) {
         super(manufacturer, model, price);
-        this.cores=cores;
-        this.clockSpeed=clockSpeed;
+        this.cores = cores;
+        this.clockSpeed = clockSpeed;
     }
 
-    public String getDescription()
-    {
-        return "CPU with "+cores+" cores, "+clockSpeed+" GHz";
+    public String getDescription() {
+        return "CPU with " + cores + " cores, " + clockSpeed + " GHz";
     }
 
-    public int getCores() {return cores;}
+    public int getCores() {
+        return cores;
+    }
 
-    public double getClockSpeed() {return clockSpeed;}
+    public double getClockSpeed() {
+        return clockSpeed;
+    }
 
     @Override
-    public boolean equals (Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
@@ -30,7 +34,7 @@ public class CPU extends HardwareComponent {
     }
 
     @Override
-    public int hashCode () {
+    public int hashCode() {
         return Objects.hash(super.hashCode(), cores, clockSpeed);
     }
 }
