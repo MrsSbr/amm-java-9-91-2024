@@ -2,7 +2,9 @@ package ru.vsu.amm.java.service;
 
 import ru.vsu.amm.java.entity.MatchRecord;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class MatchRecordService {
@@ -16,7 +18,7 @@ public class MatchRecordService {
         int maxFrequency = allPlayers.stream()
                 .mapToInt(player -> Collections.frequency(allPlayers, player))
                 .max()
-                .orElse(0);
+                .orElseThrow(() -> new IllegalArgumentException("Player list is empty!"));
 
         return allPlayers.stream()
                 .filter(player -> Collections.frequency(allPlayers, player) == maxFrequency)
