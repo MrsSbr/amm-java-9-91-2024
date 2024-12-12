@@ -1,11 +1,13 @@
 import org.junit.jupiter.api.Test;
-import java.util.*;
 
+import ru.vsu.amm.java.classes.entity.DataPerMonth;
 import ru.vsu.amm.java.classes.service.Demographics;
 import ru.vsu.amm.java.classes.enums.Gender;
 import ru.vsu.amm.java.classes.utils.Generator;
 import ru.vsu.amm.java.classes.entity.Student;
 
+import java.util.List;
+import java.time.Month;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,91 +17,90 @@ public class DemographicsTest {
     public void testGenerate() {
         List<Student> students = Generator.generateStud(100);
         assertEquals(100, students.size());
-        assertTrue(students.stream().allMatch(s -> s.getMonthOfBirth() > 0 && s.getMonthOfBirth() < 13));
     }
 
     @Test
     public void testStudPerMonth() {
         List<Student> students = List.of(
-                new Student("Ivan", Gender.Male, 1),
-                new Student("Anna", Gender.Female, 1),
-                new Student("Oleg", Gender.Male, 2),
-                new Student("Sveta", Gender.Female, 2),
-                new Student("Dima", Gender.Male, 3)
+                new Student("Ivan", Gender.Male, Month.JANUARY),
+                new Student("Anna", Gender.Female, Month.JANUARY),
+                new Student("Oleg", Gender.Male, Month.FEBRUARY),
+                new Student("Sveta", Gender.Female, Month.JANUARY),
+                new Student("Dima", Gender.Male, Month.MARCH)
         );
 
-        List<int[]> result = Demographics.studPerMonth(students);
+        List<DataPerMonth> result = Demographics.studPerMonth(students);
 
         assertEquals(12, result.size());
 
-        int[] january = result.get(0);
-        int[] february = result.get(1);
-        int[] march = result.get(2);
+        DataPerMonth january = result.get(0);
+        DataPerMonth february = result.get(1);
+        DataPerMonth march = result.get(2);
 
-        assertEquals(1, january[1]);
-        assertEquals(1, january[2]);
+        assertEquals(1, january.getMele());
+        assertEquals(1, january.getFemale());
 
-        assertEquals(1, february[1]);
-        assertEquals(1, february[2]);
+        assertEquals(1, february.getMele());
+        assertEquals(1, february.getFemale());
 
-        assertEquals(1, march[1]);
-        assertEquals(0, march[2]);
+        assertEquals(1, march.getMele());
+        assertEquals(0, march.getFemale());
     }
 
     @Test
     public void testStudPerMonthFalse() {
         List<Student> students = List.of(
-                new Student("Ivan", Gender.Male, 1),
-                new Student("Anna", Gender.Female, 1),
-                new Student("Oleg", Gender.Male, 2),
-                new Student("Sveta", Gender.Female, 2),
-                new Student("Dima", Gender.Male, 3)
+                new Student("Ivan", Gender.Male, Month.JANUARY),
+                new Student("Anna", Gender.Female, Month.JANUARY),
+                new Student("Oleg", Gender.Male, Month.FEBRUARY),
+                new Student("Sveta", Gender.Female, Month.JANUARY),
+                new Student("Dima", Gender.Male, Month.MARCH)
         );
 
-        List<int[]> result = Demographics.studPerMonth(students);
+        List<DataPerMonth> result = Demographics.studPerMonth(students);
 
         assertEquals(12, result.size());
 
-        int[] january = result.get(0);
-        int[] february = result.get(1);
-        int[] march = result.get(2);
+        DataPerMonth january = result.get(0);
+        DataPerMonth february = result.get(1);
+        DataPerMonth march = result.get(2);
 
-        assertEquals(0, january[1]);
-        assertEquals(0, january[2]);
+        assertEquals(0, january.getMele());
+        assertEquals(0, january.getFemale());
 
-        assertEquals(1, february[1]);
-        assertEquals(0, february[2]);
+        assertEquals(0, february.getMele());
+        assertEquals(1, february.getFemale());
 
-        assertEquals(0, march[1]);
-        assertEquals(1, march[2]);
+        assertEquals(0, march.getMele());
+        assertEquals(1, march.getFemale());
     }
 
     @Test
     public void testFemaleMoreThenMale() {
         List<Student> students = List.of(
-                new Student("Ivan", Gender.Male, 1),
-                new Student("Anna", Gender.Female, 1),
-                new Student("Oleg", Gender.Male, 2),
-                new Student("Sveta", Gender.Female, 2),
-                new Student("Ira", Gender.Female, 2)
+                new Student("Ivan", Gender.Male, Month.JANUARY),
+                new Student("Anna", Gender.Female, Month.JANUARY),
+                new Student("Oleg", Gender.Male, Month.FEBRUARY),
+                new Student("Sveta", Gender.Female, Month.FEBRUARY),
+                new Student("Ira", Gender.Female, Month.FEBRUARY)
         );
-        List<Integer> result = Demographics.femaleMoreThenMale(students);
+        List<Month> result = Demographics.femaleMoreThenMale(students);
 
-        assertFalse(result.contains(1));
-        assertTrue(result.contains(2));
+        assertFalse(result.contains(Month.of(1)));
+        assertTrue(result.contains(Month.of(2)));
     }
 
     @Test
     public void testFemaleMoreThenMaleFalse() {
         List<Student> students = List.of(
-                new Student("Ivan", Gender.Male, 1),
-                new Student("Anna", Gender.Female, 1),
-                new Student("Oleg", Gender.Male, 2),
-                new Student("Sveta", Gender.Female, 2),
-                new Student("Ira", Gender.Female, 2)
+                new Student("Ivan", Gender.Male, Month.JANUARY),
+                new Student("Anna", Gender.Female, Month.JANUARY),
+                new Student("Oleg", Gender.Male, Month.FEBRUARY),
+                new Student("Sveta", Gender.Female, Month.FEBRUARY),
+                new Student("Ira", Gender.Female, Month.FEBRUARY)
         );
-        List<Integer> result = Demographics.femaleMoreThenMale(students);
+        List<Month> result = Demographics.femaleMoreThenMale(students);
 
-        assertTrue(result.contains(1));
+        assertTrue(result.contains(Month.of(1)));
     }
 }

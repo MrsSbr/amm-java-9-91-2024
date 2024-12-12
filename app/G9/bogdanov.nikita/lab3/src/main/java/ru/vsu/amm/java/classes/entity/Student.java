@@ -2,12 +2,14 @@ package ru.vsu.amm.java.classes.entity;
 
 import ru.vsu.amm.java.classes.enums.Gender;
 
+import java.time.Month;
+
 public class Student {
     private String name;
     private Gender gender;
-    private int monthOfBirth;
+    private Month monthOfBirth;
 
-    public Student(String name, Gender gender, int monthOfBirth) {
+    public Student(String name, Gender gender, Month monthOfBirth) {
         this.name = name;
         this.gender = gender;
         this.monthOfBirth = monthOfBirth;
@@ -21,7 +23,7 @@ public class Student {
         return gender;
     }
 
-    public int getMonthOfBirth() {
+    public Month getMonthOfBirth() {
         return monthOfBirth;
     }
 }
