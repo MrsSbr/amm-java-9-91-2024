@@ -2,7 +2,7 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-class CargoShip extends WaterVesselImpl {
+class CargoShip extends AbstractWaterVessel {
     private double cargoCapacity;
 
     public CargoShip(String vesselName, double vesselLength, double cargoCapacity) {
@@ -11,13 +11,23 @@ class CargoShip extends WaterVesselImpl {
     }
 
     @Override
-    public String toString() {
-        return super.toString() + "\nCargo Capacity: " + cargoCapacity + " tons";
+    public int getCrewSize() {
+        return 20;
     }
 
     @Override
-    public int getCrewSize() {
-        return 20;
+    public void navigateTo(String coordinates) {
+        System.out.println("Cargo ship " + getName() + " is navigating to: " + coordinates);
+    }
+
+    @Override
+    public double getSpeed() {
+        return 12.0;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nCargo Capacity: " + cargoCapacity + " tons";
     }
 
     @Override
@@ -34,13 +44,4 @@ class CargoShip extends WaterVesselImpl {
         return Objects.hash(super.hashCode(), cargoCapacity);
     }
 
-    @Override
-    public void navigateTo(String coordinates) {
-        System.out.println("Cargo ship " + getName() + " is navigating to: " + coordinates);
-    }
-
-    @Override
-    public double getSpeed() {
-        return 12.0; //Example speed
-    }
 }

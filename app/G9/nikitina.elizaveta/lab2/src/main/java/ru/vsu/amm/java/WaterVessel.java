@@ -11,11 +11,12 @@ interface WaterVessel extends Navigable {
 
     int getCrewSize();
 
+    void displayInfo();
+
     String toString();
 
     boolean equals(Object o);
 
     int hashCode();
 
-    void displayInfo();
 }

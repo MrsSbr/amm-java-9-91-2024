@@ -2,7 +2,7 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-class Tugboat extends WaterVesselImpl {
+class Tugboat extends AbstractWaterVessel {
     private int horsePower;
 
     public Tugboat(String name, double length, int horsePower) {
@@ -10,14 +10,25 @@ class Tugboat extends WaterVesselImpl {
         this.horsePower = horsePower;
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + "\nHorsepower: " + horsePower;
-    }
 
     @Override
     public int getCrewSize() {
         return 5;
+    }
+
+    @Override
+    public void navigateTo(String coordinates) {
+        System.out.println(getName() + " is navigating to " + coordinates);
+    }
+
+    @Override
+    public double getSpeed() {
+        return 10.0;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nHorsepower: " + horsePower;
     }
 
     @Override
@@ -34,13 +45,4 @@ class Tugboat extends WaterVesselImpl {
         return Objects.hash(super.hashCode(), horsePower);
     }
 
-    @Override
-    public void navigateTo(String coordinates) {
-        System.out.println(getName() + " is navigating to " + coordinates);
-    }
-
-    @Override
-    public double getSpeed() {
-        return 10.0;
-    }
 }
