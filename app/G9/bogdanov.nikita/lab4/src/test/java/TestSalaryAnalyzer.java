@@ -21,6 +21,19 @@ public class TestSalaryAnalyzer {
     }
 
     @Test
+    public void testMaxAverageSalaryFalse() {
+        SalaryAnalyzer sa = new SalaryAnalyzer();
+        List<Employee> employees = List.of(
+                new Employee(1, "Sergey", 50000),
+                new Employee(2, "Oleg", 1000),
+                new Employee(1, "Vika", 75000),
+                new Employee(2, "Kirill", 80000)
+        );
+
+        assertEquals(2, sa.findMaxAverageSalary(employees));
+    }
+
+    @Test
     public void testMaxSalary() {
         SalaryAnalyzer sa = new SalaryAnalyzer();
         List<Employee> employees = List.of(
@@ -28,6 +41,21 @@ public class TestSalaryAnalyzer {
                 new Employee(2, "Oleg", 10000),
                 new Employee(1, "Vika", 110000),
                 new Employee(2, "Kirill", 80000),
+                new Employee(1, "Ira", 75000),
+                new Employee(1, "Sveta", 50000)
+        );
+
+        assertEquals(1, sa.findMaxSalary(employees));
+    }
+
+    @Test
+    public void testMaxSalaryFalse() {
+        SalaryAnalyzer sa = new SalaryAnalyzer();
+        List<Employee> employees = List.of(
+                new Employee(1, "Sergey", 70000),
+                new Employee(2, "Oleg", 10000),
+                new Employee(1, "Vika", 110000),
+                new Employee(2, "Kirill", 800000),
                 new Employee(1, "Ira", 75000),
                 new Employee(1, "Sveta", 50000)
         );
