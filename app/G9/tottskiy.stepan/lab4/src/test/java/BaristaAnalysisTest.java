@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.Test;
-import ru.vsu.amm.java.BaristaAnalysis;
 import ru.vsu.amm.java.entity.DrinkRecord;
 import ru.vsu.amm.java.enums.DrinkName;
 import ru.vsu.amm.java.service.BaristaService;
@@ -8,9 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class BaristaAnalysisTest {
@@ -26,7 +23,7 @@ class BaristaAnalysisTest {
         BaristaService service = new BaristaService();
         List<DrinkName> result = service.getMorningDrinks(records);
 
-        assertEquals(Arrays.asList(DrinkName.ESPRESSO, DrinkName.LATTE), result);
+        assertIterableEquals(Arrays.asList(DrinkName.ESPRESSO, DrinkName.LATTE), result);
     }
 
     @Test
