@@ -15,7 +15,7 @@ public class MarketingCampaignApplication {
     private static final String AVERAGE_DURABILITY_MESSAGE = "Average campaign durability: ";
     private static final String LAST_YEAR_CAMPAIGNS_TYPES_MESSAGE = "Last year campaigns types";
     private static final String BEST_MARKETING_CAMPAIGN_MESSAGE = "Best marketing campaign";
-    private static final Logger LOGGER = Logger.getLogger(MarketingCampaignApplication.class.getName());
+    private static final Logger logger = Logger.getLogger(MarketingCampaignApplication.class.getName());
     private static final String FILE_PATH =
             "app/G9/kanatnikov.maxim/lab4/src/main/java/ru/vsu/amm/java/resources/marketingCampaigns.txt";
     public static void main(String[] args) {
@@ -36,7 +36,7 @@ public class MarketingCampaignApplication {
             MarketingCampaignService.findBestMarketingCampaign(marketingCampaigns)
                     .forEach(System.out::println);
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, e.toString());
+            logger.log(Level.SEVERE, e.toString());
             System.out.println(e.toString());
         }
     }

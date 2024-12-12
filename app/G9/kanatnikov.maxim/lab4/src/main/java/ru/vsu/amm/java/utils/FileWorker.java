@@ -11,9 +11,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +23,7 @@ public class FileWorker {
     public static final int TYPE_INDEX = 2;
     public static final int COVERAGE_INDEX = 3;
     public static final int BUDGET_INDEX = 4;
-    private static final Logger LOGGER = Logger.getLogger(FileWorker.class.getName());
+    private static final Logger logger = Logger.getLogger(FileWorker.class.getName());
     private FileWorker() {
     }
 
@@ -42,7 +40,7 @@ public class FileWorker {
                 bw.newLine();
             }
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, e.toString());
+            logger.log(Level.SEVERE, e.toString());
             throw e;
         }
     }
@@ -61,11 +59,11 @@ public class FileWorker {
                             Integer.parseInt(data[COVERAGE_INDEX]),
                             Integer.parseInt(data[BUDGET_INDEX])));
                 } catch (IllegalArgumentException | DateTimeParseException e) {
-                    LOGGER.log(Level.SEVERE, ERROR_READING_FILE);
+                    logger.log(Level.SEVERE, ERROR_READING_FILE);
                 }
             }
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, e.toString());
+            logger.log(Level.SEVERE, e.toString());
             throw e;
         }
 
