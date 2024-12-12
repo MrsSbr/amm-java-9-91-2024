@@ -14,10 +14,10 @@ public class Main {
         System.out.println("Tanker Crew Size: " + tanker.getCrewSize());
         System.out.println("Tugboat Crew Size: " + tugboat.getCrewSize());
 
-        if(tanker instanceof Navigable){
+        if (tanker instanceof Navigable) {
             System.out.println("Tanker is navigable");
             ((Navigable)
-            tanker).navigateTo("34.56N, 123.45W");
+                    tanker).navigateTo("34.56N, 123.45W");
         }
     }
 }

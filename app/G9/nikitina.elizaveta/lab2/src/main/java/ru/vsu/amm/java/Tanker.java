@@ -16,7 +16,9 @@ class Tanker extends WaterVesselImpl {
     }
 
     @Override
-    public int getCrewSize() { return 30; }
+    public int getCrewSize() {
+        return 30;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -41,6 +43,4 @@ class Tanker extends WaterVesselImpl {
     public double getSpeed() {
         return 10.0;
     }
-
-
 }

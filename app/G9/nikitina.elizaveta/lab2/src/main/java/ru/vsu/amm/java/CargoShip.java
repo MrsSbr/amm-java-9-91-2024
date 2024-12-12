@@ -5,7 +5,7 @@ import java.util.Objects;
 class CargoShip extends WaterVesselImpl {
     private double cargoCapacity;
 
-    public CargoShip(String vesselName, double vesselLength,  double cargoCapacity) {
+    public CargoShip(String vesselName, double vesselLength, double cargoCapacity) {
         super(vesselName, VesselType.CARGO_SHIP, vesselLength);
         this.cargoCapacity = cargoCapacity;
     }
@@ -22,9 +22,9 @@ class CargoShip extends WaterVesselImpl {
 
     @Override
     public boolean equals(Object obj) {
-        if(this == obj) return true;
-        if(obj == null || getClass() != obj.getClass()) return false;
-        if(!super.equals(obj)) return false;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        if (!super.equals(obj)) return false;
         CargoShip cargoShip = (CargoShip) obj;
         return Double.compare(cargoShip.cargoCapacity, cargoCapacity) == 0;
     }
@@ -40,7 +40,7 @@ class CargoShip extends WaterVesselImpl {
     }
 
     @Override
-    public double getSpeed(){
+    public double getSpeed() {
         return 12.0; //Example speed
     }
 }

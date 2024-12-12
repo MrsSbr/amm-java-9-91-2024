@@ -14,11 +14,19 @@ abstract class WaterVesselImpl implements WaterVessel {
     }
 
     @Override
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
+
     @Override
-    public VesselType getType() { return type; }
+    public VesselType getType() {
+        return type;
+    }
+
     @Override
-    public double getLength() { return length; }
+    public double getLength() {
+        return length;
+    }
 
     @Override
     public String toString() {
@@ -28,7 +36,7 @@ abstract class WaterVesselImpl implements WaterVessel {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if(obj == null || getClass() != obj.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()) return false;
         WaterVesselImpl that = (WaterVesselImpl) obj;
         return Double.compare(that.length, length) == 0 && type == that.type && name.equals(that.name);
     }
@@ -39,7 +47,7 @@ abstract class WaterVesselImpl implements WaterVessel {
     }
 
     @Override
-    public void displayInfo(){
+    public void displayInfo() {
         System.out.println(this);
     }
 

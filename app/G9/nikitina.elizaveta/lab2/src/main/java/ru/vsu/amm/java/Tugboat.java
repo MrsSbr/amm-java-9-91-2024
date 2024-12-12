@@ -16,7 +16,9 @@ class Tugboat extends WaterVesselImpl {
     }
 
     @Override
-    public int getCrewSize() { return 5; }
+    public int getCrewSize() {
+        return 5;
+    }
 
     @Override
     public boolean equals(Object obj) {
