@@ -46,6 +46,14 @@ public class UsersSQLQueriesGeneratorTests {
     }
 
     @Test
+    public void updateUserSQLInjectionSecuredTest() {
+        var updateUserEntity = new UpdateUserEntity("SELECT * FROM table;", null, null);
+        var updateSQLQuery = String.format("UPDATE users_table SET userName = '%s' WHERE id = %s;",
+                updateUserEntity.userName(), USER_ID);
+        Assertions.assertEquals(updateSQLQuery, UsersSQLQueriesGenerator.updateUser(USER_ID, updateUserEntity));
+    }
+
+    @Test
     public void deleteUsersTest() {
         var deleteSQLQuery = "DELETE FROM users_table;";
         Assertions.assertEquals(deleteSQLQuery, UsersSQLQueriesGenerator.deleteUsers());
