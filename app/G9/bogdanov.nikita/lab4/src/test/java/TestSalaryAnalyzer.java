@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.classes.entity.Employee;
+import ru.vsu.amm.java.classes.enums.Department;
 import ru.vsu.amm.java.classes.service.SalaryAnalyzer;
 
 import java.util.List;
@@ -11,10 +12,10 @@ public class TestSalaryAnalyzer {
     public void testMaxAverageSalary() {
         SalaryAnalyzer sa = new SalaryAnalyzer();
         List<Employee> employees = List.of(
-                new Employee(1, "Sergey", 50000),
-                new Employee(2, "Oleg", 100000),
-                new Employee(1, "Vika", 75000),
-                new Employee(2, "Kirill", 80000)
+                new Employee(Department.HR, "Sergey", 50000),
+                new Employee(Department.IT, "Oleg", 100000),
+                new Employee(Department.HR, "Vika", 75000),
+                new Employee(Department.IT, "Kirill", 80000)
         );
 
         assertEquals(2, sa.findMaxAverageSalary(employees));
@@ -24,10 +25,10 @@ public class TestSalaryAnalyzer {
     public void testMaxAverageSalaryFalse() {
         SalaryAnalyzer sa = new SalaryAnalyzer();
         List<Employee> employees = List.of(
-                new Employee(1, "Sergey", 50000),
-                new Employee(2, "Oleg", 1000),
-                new Employee(1, "Vika", 75000),
-                new Employee(2, "Kirill", 80000)
+                new Employee(Department.HR, "Sergey", 50000),
+                new Employee(Department.IT, "Oleg", 1000),
+                new Employee(Department.HR, "Vika", 75000),
+                new Employee(Department.IT, "Kirill", 80000)
         );
 
         assertEquals(2, sa.findMaxAverageSalary(employees));
@@ -37,12 +38,12 @@ public class TestSalaryAnalyzer {
     public void testMaxSalary() {
         SalaryAnalyzer sa = new SalaryAnalyzer();
         List<Employee> employees = List.of(
-                new Employee(1, "Sergey", 70000),
-                new Employee(2, "Oleg", 10000),
-                new Employee(1, "Vika", 110000),
-                new Employee(2, "Kirill", 80000),
-                new Employee(1, "Ira", 75000),
-                new Employee(1, "Sveta", 50000)
+                new Employee(Department.HR, "Sergey", 70000),
+                new Employee(Department.IT, "Oleg", 10000),
+                new Employee(Department.HR, "Vika", 110000),
+                new Employee(Department.IT, "Kirill", 80000),
+                new Employee(Department.HR, "Ira", 75000),
+                new Employee(Department.HR, "Sveta", 50000)
         );
 
         assertEquals(1, sa.findMaxSalary(employees));
@@ -52,12 +53,12 @@ public class TestSalaryAnalyzer {
     public void testMaxSalaryFalse() {
         SalaryAnalyzer sa = new SalaryAnalyzer();
         List<Employee> employees = List.of(
-                new Employee(1, "Sergey", 70000),
-                new Employee(2, "Oleg", 10000),
-                new Employee(1, "Vika", 110000),
-                new Employee(2, "Kirill", 800000),
-                new Employee(1, "Ira", 75000),
-                new Employee(1, "Sveta", 50000)
+                new Employee(Department.HR, "Sergey", 70000),
+                new Employee(Department.IT, "Oleg", 10000),
+                new Employee(Department.HR, "Vika", 110000),
+                new Employee(Department.IT, "Kirill", 800000),
+                new Employee(Department.HR, "Ira", 75000),
+                new Employee(Department.HR, "Sveta", 50000)
         );
 
         assertEquals(1, sa.findMaxSalary(employees));

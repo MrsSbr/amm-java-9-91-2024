@@ -1,18 +1,19 @@
 package ru.vsu.amm.java.classes.entity;
 
+import ru.vsu.amm.java.classes.enums.Department;
 
 public class Employee {
-    private final int idDepartment;
+    private final Department idDepartment;
     private final String name;
     private final double salary;
 
-    public Employee(int idDepartment, String name, double salary) {
+    public Employee(Department idDepartment, String name, double salary) {
         this.idDepartment = idDepartment;
         this.name = name;
         this.salary = salary;
     }
 
-    public int getIdDepartment() {
+    public Department getIdDepartment() {
         return idDepartment;
     }
 

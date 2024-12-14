@@ -1,12 +1,17 @@
 package ru.vsu.amm.java;
 
 import ru.vsu.amm.java.classes.entity.Employee;
+import ru.vsu.amm.java.classes.enums.Department;
 import ru.vsu.amm.java.classes.utils.ReadingFile;
 import ru.vsu.amm.java.classes.service.SalaryAnalyzer;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
+
+import static ru.vsu.amm.java.classes.service.SalaryAnalyzer.personByDepartment;
+import static ru.vsu.amm.java.classes.service.SalaryAnalyzer.printByDepartment;
 
 public class SalaryAnalyzing {
     private static final Logger logger = Logger.getLogger(SalaryAnalyzing.class.getName());
@@ -19,11 +24,13 @@ public class SalaryAnalyzing {
 
             SalaryAnalyzer salaryAnalyzer = new SalaryAnalyzer();
 
-            int maxAverageSalary = salaryAnalyzer.findMaxAverageSalary(employees);
+            Department maxAverageSalary = salaryAnalyzer.findMaxAverageSalary(employees);
 
-            int maxSalary = salaryAnalyzer.findMaxSalary(employees);
+            Department maxSalary = salaryAnalyzer.findMaxSalary(employees);
 
-            salaryAnalyzer.printByDepartment(employees);
+            Map<Department, List<Employee>> map = personByDepartment(employees);
+
+            printByDepartment(map);
 
             System.out.println("Department with max average salary : " + maxAverageSalary);
             System.out.println("Department with max sum salary: " + maxSalary);
