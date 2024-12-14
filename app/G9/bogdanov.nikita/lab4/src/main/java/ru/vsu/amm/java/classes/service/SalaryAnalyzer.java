@@ -5,6 +5,7 @@ import ru.vsu.amm.java.classes.enums.Department;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class SalaryAnalyzer {
@@ -27,7 +28,7 @@ public class SalaryAnalyzer {
                 .entrySet()
                 .stream()
                 .max(Map.Entry.comparingByValue())
-                .orElseThrow(() -> new RuntimeException("No department!"))
+                .orElseThrow(() -> new NoSuchElementException("No department!"))
                 .getKey();
     }
 
@@ -37,7 +38,7 @@ public class SalaryAnalyzer {
                 .entrySet()
                 .stream()
                 .max(Map.Entry.comparingByValue())
-                .orElseThrow(() -> new RuntimeException("No department!"))
+                .orElseThrow(() -> new NoSuchElementException("No department!"))
                 .getKey();
     }
 }
