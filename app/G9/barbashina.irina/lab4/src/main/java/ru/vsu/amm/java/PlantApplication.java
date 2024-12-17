@@ -7,9 +7,10 @@ import ru.vsu.amm.java.util.PlantDiaryProcessor;
 import java.util.List;
 
 public class PlantApplication {
+    private static final String FILE_PATH = "app/G9/barbashina.irina/lab4/plant_diary.txt";
+
     public static void main(String[] args) {
-        String filePath = "app/G9/barbashina.irina/lab4/plant_diary.txt";
-        List<PlantRecord> records = PlantDiaryProcessor.readPlantRecords(filePath);
+        List<PlantRecord> records = PlantDiaryProcessor.readPlantRecords(FILE_PATH);
         for (PlantRecord record : records) {
             System.out.println(record);
         }

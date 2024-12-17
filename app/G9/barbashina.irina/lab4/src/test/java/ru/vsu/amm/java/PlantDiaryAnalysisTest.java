@@ -8,12 +8,16 @@ import ru.vsu.amm.java.enums.FertilizerBrand;
 import ru.vsu.amm.java.enums.Plant;
 import ru.vsu.amm.java.service.PlantDiaryAnalysis;
 
-import static org.junit.jupiter.api.Assertions.*;
+
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static ru.vsu.amm.java.fortests.GetSomePlantRecords.getSomePlantRecords;
 
 public class PlantDiaryAnalysisTest {
@@ -37,10 +41,15 @@ public class PlantDiaryAnalysisTest {
     }
 
     @Test
-    public void testFindFertilizedPlants() {
+    public void testFindFertilizedPlants_ContainsBrands() {
         Map<FertilizerBrand, List<Plant>> fertilizedPlants = PlantDiaryAnalysis.findFertilizedPlants(records);
         assertTrue(fertilizedPlants.containsKey(FertilizerBrand.ATAMI));
         assertFalse(fertilizedPlants.containsKey(FertilizerBrand.PLAGRON));
+    }
+
+    @Test
+    public void testFindFertilizedPlants_AtamiCount() {
+        Map<FertilizerBrand, List<Plant>> fertilizedPlants = PlantDiaryAnalysis.findFertilizedPlants(records);
         assertEquals(1, fertilizedPlants.get(FertilizerBrand.ATAMI).size());
         assertNotEquals(null, fertilizedPlants.get(FertilizerBrand.HESI));
     }
@@ -48,7 +57,6 @@ public class PlantDiaryAnalysisTest {
     @Test
     public void testFindPlantWithMostWater() {
         Optional<Plant> plantWithMostWater = PlantDiaryAnalysis.findPlantWithMostWater(records);
-
         assertTrue(plantWithMostWater.isPresent());
         assertEquals(Plant.ROSEMARY, plantWithMostWater.get());
     }

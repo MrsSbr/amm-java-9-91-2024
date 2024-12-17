@@ -35,13 +35,15 @@ public class PlantRecord {
 
     @Override
     public boolean equals(Object o) {
-        if(this == o) return true;
+        if(this == o) {
+            return true;
+        }
         if(o == null || getClass()!=o.getClass()) return false;
         PlantRecord that = (PlantRecord) o;
-        return waterAmount == that.waterAmount &&
-                Objects.equals(date, that.date) &&
-                Objects.equals(plantName, that.plantName) &&
-                Objects.equals(fertilizerBrand, that.fertilizerBrand);
+        return waterAmount == that.waterAmount
+                && Objects.equals(date, that.date)
+                && Objects.equals(plantName, that.plantName)
+                && Objects.equals(fertilizerBrand, that.fertilizerBrand);
     }
 
     @Override
