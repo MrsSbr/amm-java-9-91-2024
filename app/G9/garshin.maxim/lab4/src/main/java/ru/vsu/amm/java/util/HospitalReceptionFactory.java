@@ -19,7 +19,7 @@ public final class HospitalReceptionFactory {
         int day = random.nextInt(1, Year.isLeap(year) ? 367 : 366);
         LocalDate localDate = LocalDate.ofYearDay(year, day);
 
-        var doctorFullname = IntStream.range(0, 3)
+        var doctorFullName = IntStream.range(0, 3)
                 .mapToObj(x -> (char)(random.nextInt(26) + 'a'))
                 .reduce("", (str, ch) -> str + ch, (x, y) -> y);
 
@@ -27,12 +27,12 @@ public final class HospitalReceptionFactory {
         int specializationIndex = random.nextInt(SPECIALIZATIONS.length);
         Specialization specialization = SPECIALIZATIONS[specializationIndex];
 
-        var patientFullname = IntStream.range(0, 3)
+        var patientFullName = IntStream.range(0, 3)
                 .mapToObj(x -> (char)(random.nextInt(26) + 'a'))
                 .reduce("", (str, ch) -> str + ch, (x, y) -> y);
 
         int cost = random.nextInt(2500);
 
-        return new HospitalReception(localDate, doctorFullname, specialization, patientFullname, cost);
+        return new HospitalReception(localDate, doctorFullName, specialization, patientFullName, cost);
     }
 }

@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HospitalTest {
 
@@ -38,6 +41,8 @@ public class HospitalTest {
         Map<Specialization, Integer> result = HospitalReceptionsStatsService.sumIncomeBySpecializationByLastYear(receptions);
 
         assertEquals(770, result.get(Specialization.ORTHOPEDIST));
+        assertEquals(1122, result.get(Specialization.DERMATOLOGIST));
+        assertFalse(result.containsKey(Specialization.PEDIATRICIAN));
     }
 
     @Test
@@ -49,8 +54,7 @@ public class HospitalTest {
         );
         Set<String> result = HospitalReceptionsStatsService.findPatientsVisitedAllDoctors(receptions);
 
-        assertTrue(result.contains("Sharikov"));
-        assertFalse(result.contains("Pupkin"));
+        assertEquals(Set.of("Sharikov"), result);
     }
 
     @Test
@@ -62,7 +66,7 @@ public class HospitalTest {
         );
         Map<String, Set<String>> result = HospitalReceptionsStatsService.findPatientsVisitedDoctorsLastYearAndNotThisYear(receptions);
 
-        assertTrue(result.get("Dr. House").contains("Barboskin"));
-        assertFalse(result.get("Dr. Dre").contains("Sharikov"));
+        assertEquals(Set.of("Barboskin"), result.get("Dr. House"));
+        assertTrue(result.get("Dr. Dre").isEmpty());
     }
 }

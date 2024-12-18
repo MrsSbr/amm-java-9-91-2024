@@ -12,6 +12,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 public final class FileWorker {
+    private static final int DATE_INDEX = 0;
+    private static final int DOCTOR_FULL_NAME_INDEX = 1;
+    private static final int SPECIALIZATION_INDEX = 2;
+    private static final int PATIENT_FULL_NAME_INDEX = 3;
+    private static final int COST_INDEX = 4;
+
     public FileWorker() {
     }
 
@@ -24,9 +30,9 @@ public final class FileWorker {
                 bufferedReader.write(String.format(
                         "%s;%s;%s;%s;%d%n",
                         formattedDate,
-                        hospitalReception.doctorFullname(),
+                        hospitalReception.doctorFullName(),
                         hospitalReception.specialization(),
-                        hospitalReception.patientFullname(),
+                        hospitalReception.patientFullName(),
                         hospitalReception.cost()
                 ));
             }
@@ -36,14 +42,14 @@ public final class FileWorker {
     public static List<HospitalReception> getFromFile(String path) throws IOException {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
             return bufferedReader.lines().map(line -> {
-               String[] parts = line.split(";");
-                LocalDate date = LocalDate.parse(parts[0]);
-                String doctorFullname = parts[1];
-                Specialization specialization = Specialization.valueOf(parts[2]);
-                String patientFullname = parts[3];
-                int cost = Integer.parseInt(parts[4]);
+               String[] partsOFLine = line.split(";");
+                LocalDate date = LocalDate.parse(partsOFLine[DATE_INDEX]);
+                String doctorFullName = partsOFLine[DOCTOR_FULL_NAME_INDEX];
+                Specialization specialization = Specialization.valueOf(partsOFLine[SPECIALIZATION_INDEX]);
+                String patientFullName = partsOFLine[PATIENT_FULL_NAME_INDEX];
+                int cost = Integer.parseInt(partsOFLine[COST_INDEX]);
 
-                return new HospitalReception(date, doctorFullname, specialization, patientFullname, cost);
+                return new HospitalReception(date, doctorFullName, specialization, patientFullName, cost);
             }).toList();
         }
     }
