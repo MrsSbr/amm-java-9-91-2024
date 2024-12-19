@@ -43,6 +43,7 @@ public class LRUCache<V> {
             if (!cache.containsKey(value.hashCode())) {
                 return Optional.empty();
             }
+            //при попытке доступа к элементу linkedHashMap он сдвигается в конец её списка, поэтому не удалится при put
             cache.replace(value.hashCode(),new CacheEntity<>(value,timestamp));
             return Optional.of(cache.get(value.hashCode()).value());
         } finally {
