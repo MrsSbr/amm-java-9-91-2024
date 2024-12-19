@@ -39,9 +39,11 @@ public class LRUCache<V> {
     public Optional<V> get(V value) {
         lock.lock();
         try {
+            Long timestamp = System.nanoTime();
             if (!cache.containsKey(value.hashCode())) {
                 return Optional.empty();
             }
+            cache.replace(value.hashCode(),new CacheEntity<>(value,timestamp));
             return Optional.of(cache.get(value.hashCode()).value());
         } finally {
             lock.unlock();

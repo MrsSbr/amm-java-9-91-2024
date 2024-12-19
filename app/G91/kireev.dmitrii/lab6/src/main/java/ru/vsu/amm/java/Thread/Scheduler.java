@@ -12,7 +12,7 @@ public class Scheduler {
 
     private final List<CacheWriter> writers;
     private final LRUCache<String> cache;
-
+    private final int WORD_SIZE = 2;
 
     public Scheduler(int numThreads, int capacity) {
         this.writers = new ArrayList<>();
@@ -21,14 +21,16 @@ public class Scheduler {
 
         Runnable taskProcessor = () -> {
 
-            String value = Util.getRandomString(capacity);
+            String value = Util.getRandomString(WORD_SIZE);
             Optional<String> cacheValue = cache.get(value);
 
             if (cacheValue.isEmpty()) {
                 cache.put(value);
+                System.out.println("putting elem with value: " + value + "   cache size: " + cache.size());
+            } else {
+                System.out.println("getting elem with value: " + value + "   cache size: " + cache.size());
             }
 
-            System.out.println("processing elem with value: " + value + "   cache size: " + cache.size());
         };
 
         for (int i = 0; i < numThreads; i++) {

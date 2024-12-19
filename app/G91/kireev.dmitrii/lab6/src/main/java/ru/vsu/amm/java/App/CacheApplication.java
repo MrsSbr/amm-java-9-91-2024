@@ -5,7 +5,7 @@ import ru.vsu.amm.java.Thread.Scheduler;
 public class CacheApplication {
 
     public static void main(String[] args) {
-        int threadsCount = 3;
+        int threadsCount = 6;
         int capacity = 100;
 
         Scheduler scheduler = new Scheduler(threadsCount, capacity);
