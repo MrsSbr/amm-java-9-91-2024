@@ -22,17 +22,13 @@ public class Scheduler {
         Runnable taskProcessor = () -> {
 
             String value = Util.getRandomString(capacity);
-            Integer id = value.hashCode();
-
-            Optional<String> cacheValue = cache.get(id);
+            Optional<String> cacheValue = cache.get(value);
 
             if (cacheValue.isEmpty()) {
-                cache.put(id, value);
+                cache.put(value);
             }
 
-            System.out.println("processing elem with id  " + id + " value: " + value + "   cache size: " + cache.size());
-            cache.put(id, value);
-
+            System.out.println("processing elem with value: " + value + "   cache size: " + cache.size());
         };
 
         for (int i = 0; i < numThreads; i++) {

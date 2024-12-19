@@ -20,7 +20,7 @@ public class LRUCache<V> {
         this.lock = new ReentrantLock();
     }
 
-    public void put(Integer key, V value) {
+    public void put( V value) {
 
         lock.lock();
         try {
@@ -30,19 +30,19 @@ public class LRUCache<V> {
                 iterator.next();
                 iterator.remove();
             }
-            cache.put(key, new CacheEntity<>(value, timestamp));
+            cache.put(value.hashCode(), new CacheEntity<>(value, timestamp));
         } finally {
             lock.unlock();
         }
     }
 
-    public Optional<V> get(Integer key) {
+    public Optional<V> get(V value) {
         lock.lock();
         try {
-            if (!cache.containsKey(key)) {
+            if (!cache.containsKey(value.hashCode())) {
                 return Optional.empty();
             }
-            return Optional.of(cache.get(key).value());
+            return Optional.of(cache.get(value.hashCode()).value());
         } finally {
             lock.unlock();
         }
