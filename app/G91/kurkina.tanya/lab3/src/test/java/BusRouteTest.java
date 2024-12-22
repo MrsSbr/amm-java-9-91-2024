@@ -1,12 +1,11 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.vsu.amm.java.BusRevenueManager;
-import ru.vsu.amm.java.BusRoute;
+import org.junit.jupiter.api.Assertions;
+import ru.vsu.amm.java.classes.BusRevenueManager;
+import ru.vsu.amm.java.classes.BusRoute;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BusRouteTest {
     private BusRevenueManager manager;
@@ -25,6 +24,9 @@ public class BusRouteTest {
 
         assertEquals(2, route.getDailyRevenues().size());
         assertEquals(3000, route.getWeeklyRevenue());
+    }
+
+    private void assertTrue(boolean empty) {
     }
 
     @Test

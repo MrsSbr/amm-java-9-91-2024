@@ -110,6 +110,7 @@ student("barbashina.irina", G9) {
 student("em.vera", G91) {
     lab(0)
     lab(1)
+    lab(4)
 }
 
 student("em.vera", G91) {
