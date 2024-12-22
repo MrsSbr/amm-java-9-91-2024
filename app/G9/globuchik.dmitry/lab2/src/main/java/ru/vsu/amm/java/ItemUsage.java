@@ -2,17 +2,17 @@ package ru.vsu.amm.java;
 
 public class ItemUsage {
     public static void main(String[] args) {
-
-
-        ItemImplementation Cola = new LiquidItem(
+        LiquidItem Cola = new LiquidItem(
                 "Cola",
                 150,
                 26,
                 500);
         Cola.perform();
         System.out.print(Cola);
+        Cola.pour(100);
+        System.out.print(Cola);
 
-        ItemImplementation Table = new Furniture(
+        Item Table = new Furniture(
                 "Wooden Table",
                 12500,
                 5,
@@ -25,8 +25,7 @@ public class ItemUsage {
         Table.perform();
         System.out.print(Table);
 
-
-        ItemImplementation Sofa = new Furniture(
+        Furniture Sofa = new Furniture(
                 "Boss chair",
                 65600,
                 3,
@@ -35,8 +34,16 @@ public class ItemUsage {
                 180,
                 "Brown",
                 "Chair");
+        System.out.print("----------\n");
         Sofa.perform();
         System.out.print(Sofa);
+        System.out.print("----------\n");
+        Sofa.build();
+        System.out.print(Sofa);
+        System.out.print("----------\n");
+        Sofa.disassemble();
+        System.out.print(Sofa);
+        System.out.print("----------\n");
 
         System.out.println("Sofa == Table is: " + Sofa.equals(Table));
         System.out.println("Sofa hashcode: " + Sofa.hashCode());
@@ -47,7 +54,7 @@ public class ItemUsage {
     }
 
 
-    public static void defineType(ItemImplementation item) {
+    public static void defineType(Item item) {
         if (item instanceof LiquidItem) {
             System.out.println("This is Liquid\n");
         } else if (item instanceof Furniture) {

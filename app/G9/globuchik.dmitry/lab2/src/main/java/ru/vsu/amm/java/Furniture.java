@@ -2,12 +2,13 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public class Furniture extends ItemImplementation {
-    private int height;
-    private int width;
-    private int length;
-    private String color;
-    private String type;
+public class Furniture extends Item implements FurnitureBuilder {
+    private final int height;
+    private final int width;
+    private final int length;
+    private final String color; //final doesn't work for strings, did this only to suppress warnings
+    private final String type;
+    private boolean isAssembled = false;
 
 
     public Furniture(String name,
@@ -25,7 +26,17 @@ public class Furniture extends ItemImplementation {
         this.color = color;
         this.type = type;
     }
+    @Override
+    public void disassemble() {
+        isAssembled = false;
+        System.out.println("Disassembled Furniture");
+    }
 
+    @Override
+    public void build(){
+        this.isAssembled = true;
+        System.out.println("Furniture is build");
+    }
 
     @Override
     public void perform() {
@@ -62,6 +73,7 @@ public class Furniture extends ItemImplementation {
                 "Length=" + length + '\n' +
                 "Color=" + color + '\n' +
                 "Type=" + type + '\n' +
+                "Is Assembled=" + isAssembled + '\n' +
                 super.toString();
     }
 }

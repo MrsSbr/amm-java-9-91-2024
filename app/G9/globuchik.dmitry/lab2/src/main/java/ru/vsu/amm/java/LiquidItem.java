@@ -2,8 +2,9 @@ package ru.vsu.amm.java;
 
 import java.util.Objects;
 
-public class LiquidItem extends ItemImplementation {
+public class LiquidItem extends Item implements Liquid {
     private int volume;
+    private int currVolume;
 
     public LiquidItem(String name,
                       int price,
@@ -11,6 +12,7 @@ public class LiquidItem extends ItemImplementation {
                       int volume) {
         super(name, price, quantity);
         this.volume = volume;
+        this.currVolume = volume;
     }
 
     public int getVolume() {
@@ -21,6 +23,17 @@ public class LiquidItem extends ItemImplementation {
         this.volume = volume;
     }
 
+    @Override
+    public void pour(int amount) {
+        if (amount <= 0) {
+            System.out.println("You can't pour negative amount");
+        } else if (amount > currVolume) {
+            System.out.println("You can't pour more than curr volume");
+        } else {
+            currVolume -= amount;
+            System.out.println("You pour " + amount + " oz. of " + getName());
+        }
+    }
 
     @Override
     public void perform() {
@@ -44,7 +57,8 @@ public class LiquidItem extends ItemImplementation {
     @Override
     public String toString() {
         return "Bottle:\n" +
-                "Volume=" + volume + " oz.\n" +
+                "Max volume is " + volume + " oz.\n" +
+                "Curr volume is " + currVolume + " oz.\n" +
                 super.toString() + '\n';
     }
 }
