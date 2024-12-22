@@ -21,14 +21,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        List<Message> messagess = Arrays.asList(
-                new Message(LocalDate.now().minusDays(3), "Gadzhiev", "Hello! Maksim"),
-                new Message(LocalDate.now().minusDays(3), "Aksenov", "Hello! How are you, Maksim?"),
-                new Message(LocalDate.now().minusDays(2), "Gadzhiev", "Bye! Maksim")
-        );
-
-        Set<DayOfWeek> result = MessageService.dayWithMostWord(messagess, "Maksim");
-        System.out.println(result);
         try {
             FileWorker.generateFile(PATH, 10);
         }
