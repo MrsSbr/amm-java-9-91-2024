@@ -2,7 +2,7 @@ package ru.vsu.amm.java;
 
 import ru.vsu.amm.java.Enums.Positions;
 import ru.vsu.amm.java.Enums.RestaurantNames;
-import ru.vsu.amm.java.Exceptions.InvalidMaxOrderSize;
+import ru.vsu.amm.java.Exceptions.InvalidOrderSize;
 import ru.vsu.amm.java.Exceptions.InvalidRestarauntName;
 
 import java.time.LocalDateTime;
@@ -25,9 +25,12 @@ public class Order {
         restarauntName = builder.restaurantName;
     }
 
-    public static Set<Positions> generatePositions(int maxPositions) throws InvalidMaxOrderSize {
+    public static Set<Positions> generatePositions(int maxPositions) throws InvalidOrderSize {
         if (maxPositions > Positions.values().length) {
-            throw new InvalidMaxOrderSize("Positions count must be less than " + Positions.values().length);
+            throw new InvalidOrderSize("Positions count must be less than " + Positions.values().length);
+        }
+        if (maxPositions < 1) {
+            throw new InvalidOrderSize("Positions count cant be less than 1");
         }
         Random random = new Random();
         Set<Positions> positions = new HashSet<>();
@@ -38,9 +41,14 @@ public class Order {
         return positions;
     }
 
+    public static RestaurantNames generateRestaurantNames() throws InvalidRestarauntName {
+        Random random = new Random();
+        return RestaurantNames.values()[random.nextInt(RestaurantNames.values().length)];
+    }
+
     public static class OrderBuilder { //нужно ли выносить билдер в отдельный класс, Блох пишет, что можно вложенным
         private final Courier courier;
-        private final RestaurantNames restaurantName;
+        private RestaurantNames restaurantName;
         private LocalDateTime deliveryTime;
 
         private LocalDateTime orderDate = LocalDateTime.now();
@@ -51,6 +59,15 @@ public class Order {
             this.restaurantName = RestaurantNames.valueOf(restaurantName);
         }
 
+        public OrderBuilder(Courier courier) {
+            this.courier = courier;
+        }
+
+        public OrderBuilder restarauntName() throws InvalidRestarauntName {
+            this.restaurantName = generateRestaurantNames();
+            return this;
+        }
+
         public OrderBuilder orderDate(LocalDateTime orderDate) {
             this.orderDate = orderDate;
             return this;
@@ -58,6 +75,15 @@ public class Order {
 
         public OrderBuilder deliveryTime(LocalDateTime deliveryTime) {
             this.deliveryTime = deliveryTime;
+            return this;
+        }
+
+        public OrderBuilder orderDate(int remMinutes, int remHours, int remDays, int remMonths) {
+            this.deliveryTime = orderDate;
+            orderDate = orderDate.minusMinutes(remMinutes);
+            orderDate = orderDate.minusHours(remHours);
+            orderDate = orderDate.minusDays(remDays);
+            orderDate = orderDate.minusMonths(remMonths);
             return this;
         }
 
@@ -73,7 +99,7 @@ public class Order {
             return this;
         }
 
-        public OrderBuilder positions(int maxPositions) throws InvalidMaxOrderSize {
+        public OrderBuilder positions(int maxPositions) throws InvalidOrderSize {
             this.positions = generatePositions(maxPositions);
             return this;
         }

@@ -1,7 +1,7 @@
 package ru.vsu.amm.java;
 
 import ru.vsu.amm.java.Enums.Positions;
-import ru.vsu.amm.java.Exceptions.InvalidMaxOrderSize;
+import ru.vsu.amm.java.Exceptions.InvalidOrderSize;
 import ru.vsu.amm.java.Exceptions.InvalidRestarauntName;
 
 import javax.print.attribute.standard.OrientationRequested;
@@ -27,6 +27,7 @@ public class OrderFileService {
                 bufferedWriter.write(order.toString());
             }
             bufferedWriter.flush();
+            bufferedWriter.write("\n");
         }
         catch (IOException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -49,15 +50,16 @@ public class OrderFileService {
                 }
 
                 orders.add(parseOrder(String.valueOf(orderBuilder)));
+                line = bufferedReader.readLine();
             }
-        } catch (IOException | InvalidRestarauntName |InvalidMaxOrderSize | ParseException e) {
+        } catch (IOException | InvalidRestarauntName | InvalidOrderSize | ParseException e) {
             logger.log(Level.WARNING, e.getMessage());
         }
 
         return orders;
     }
 
-    private static Order parseOrder(String line) throws ParseException, InvalidRestarauntName, InvalidMaxOrderSize {
+    private static Order parseOrder(String line) throws ParseException, InvalidRestarauntName, InvalidOrderSize {
         String[] words = line.split("\n" );
         String firstName = words[1].split("=")[1].trim();
         String lastName = words[2].split("=")[1].trim();

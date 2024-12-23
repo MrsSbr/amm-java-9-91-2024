@@ -10,5 +10,5 @@ public enum RestaurantNames {
     BAKERY,
     PUB,
     LOUNGE,
-    STEAKHOUSE
+    STEAKHOUSE;
 }
