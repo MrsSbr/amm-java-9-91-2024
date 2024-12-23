@@ -1,13 +1,11 @@
 package ru.vsu.amm.java;
 
 import ru.vsu.amm.java.Enums.Positions;
-import ru.vsu.amm.java.Enums.RestaurantNames;
 import ru.vsu.amm.java.Exceptions.InvalidOrderSize;
 import ru.vsu.amm.java.Exceptions.InvalidRestarauntName;
 
-import javax.crypto.Cipher;
-
 import static ru.vsu.amm.java.OrderFileService.*;
+import static ru.vsu.amm.java.OrderService.*;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -20,21 +18,6 @@ import java.util.logging.Logger;
 public class MainService {
 
     private final static Logger logger = Logger.getLogger(MainService.class.getName());
-
-    public static List<Order> generateOrders(List<Courier> couriers, int count) throws InvalidRestarauntName, InvalidOrderSize {
-        List<Order> orders = new ArrayList<>();
-        Random rand = new Random();
-        for(int i = 0; i < count; i++) {
-            orders.add(new Order.OrderBuilder(couriers.get(rand.nextInt(couriers.size())))
-                    .deliveryTime(rand.nextInt(50), rand.nextInt(5))
-                    .positions(rand.nextInt(Positions.values().length) + 1)
-                    .orderDate(rand.nextInt(50), rand.nextInt(5), rand.nextInt(30), rand.nextInt(5))
-                    .restarauntName()
-                    .build());
-        }
-
-        return orders;
-    }
 
     public static void main(String[] args) throws InvalidRestarauntName, InvalidOrderSize, FileNotFoundException {
         List<Courier> couriers = new ArrayList<>();
@@ -54,10 +37,11 @@ public class MainService {
         orders = generateOrders(couriers, 1000);
 
         saveToFile(orders);
-        orders = loadFromFile();
+        //orders = loadFromFile();
 
-        for(Order order : orders) {
-            System.out.println(order.toString());
-        }
+
+        System.out.println(findMostPopular(orders));
+        System.out.println(findLaziestMonth(orders));
+        System.out.println(findCourier(orders));
     }
 }

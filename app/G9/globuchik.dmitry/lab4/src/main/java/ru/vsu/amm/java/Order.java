@@ -17,6 +17,22 @@ public class Order {
     private final Set<Positions> positions;
     private final RestaurantNames restarauntName;
 
+    public Courier getCourier() {
+        return courier;
+    }
+
+    public RestaurantNames getRestarauntName() {
+        return restarauntName;
+    }
+
+    public LocalDateTime getDeliveryTime() {
+        return deliveryTime;
+    }
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
     private Order(OrderBuilder builder) {
         courier = builder.courier;
         orderDate = builder.orderDate;
