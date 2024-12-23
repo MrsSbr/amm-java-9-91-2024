@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 
 
 public class MainService {
-
     private final static Logger logger = Logger.getLogger(MainService.class.getName());
 
     public static void main(String[] args) throws InvalidRestarauntName, InvalidOrderSize, FileNotFoundException {

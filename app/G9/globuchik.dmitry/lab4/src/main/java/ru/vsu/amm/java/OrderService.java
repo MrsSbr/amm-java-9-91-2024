@@ -63,7 +63,7 @@ public class OrderService {
         int maxCount = -1;
 
         for (var entry : namesList.entrySet()) {
-            if (entry.getValue() > maxCount) {
+            if (entry.getValue() > maxCount && entry.getValue() != 0) {
                 mostPopular = entry.getKey();
                 maxCount = entry.getValue();
             }

@@ -6,6 +6,7 @@ import ru.vsu.amm.java.Exceptions.InvalidOrderSize;
 import ru.vsu.amm.java.Exceptions.InvalidRestarauntName;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -81,6 +82,11 @@ public class Order {
 
         public OrderBuilder restarauntName() throws InvalidRestarauntName {
             this.restaurantName = generateRestaurantNames();
+            return this;
+        }
+
+        public OrderBuilder restarauntName(int id) throws InvalidRestarauntName {
+            this.restaurantName = RestaurantNames.fromId(id);
             return this;
         }
 
