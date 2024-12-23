@@ -1,5 +1,7 @@
 package ru.vsu.amm.java;
 
+import ru.vsu.amm.java.Enums.Positions;
+import ru.vsu.amm.java.Enums.RestaurantNames;
 import ru.vsu.amm.java.Exceptions.InvalidMaxOrderSize;
 import ru.vsu.amm.java.Exceptions.InvalidRestarauntName;
 
@@ -15,7 +17,7 @@ public class Order {
     private final Set<Positions> positions;
     private final RestaurantNames restarauntName;
 
-    private Order(Builder builder) {
+    private Order(OrderBuilder builder) {
         courier = builder.courier;
         orderDate = builder.orderDate;
         deliveryTime = builder.deliveryTime;
@@ -23,7 +25,20 @@ public class Order {
         restarauntName = builder.restaurantName;
     }
 
-    public static class Builder {
+    public static Set<Positions> generatePositions(int maxPositions) throws InvalidMaxOrderSize {
+        if (maxPositions > Positions.values().length) {
+            throw new InvalidMaxOrderSize("Positions count must be less than " + Positions.values().length);
+        }
+        Random random = new Random();
+        Set<Positions> positions = new HashSet<>();
+
+        while (positions.size() < maxPositions) {
+            positions.add(Positions.values()[random.nextInt(Positions.values().length)]);
+        }
+        return positions;
+    }
+
+    public static class OrderBuilder { //нужно ли выносить билдер в отдельный класс, Блох пишет, что можно вложенным
         private final Courier courier;
         private final RestaurantNames restaurantName;
         private LocalDateTime deliveryTime;
@@ -31,35 +46,35 @@ public class Order {
         private LocalDateTime orderDate = LocalDateTime.now();
         private Set<Positions> positions = new HashSet<>();
 
-        public Builder(Courier courier, String restaurantName) throws InvalidRestarauntName {
+        public OrderBuilder(Courier courier, String restaurantName) throws InvalidRestarauntName {
             this.courier = courier;
             this.restaurantName = RestaurantNames.valueOf(restaurantName);
         }
 
-        public Builder orderDate(LocalDateTime orderDate) {
+        public OrderBuilder orderDate(LocalDateTime orderDate) {
             this.orderDate = orderDate;
             return this;
         }
 
-        public Builder deliveryTime(LocalDateTime deliveryTime) {
+        public OrderBuilder deliveryTime(LocalDateTime deliveryTime) {
             this.deliveryTime = deliveryTime;
             return this;
         }
 
-        public Builder deliveryTime(int addMinutes, int addHours) {
+        public OrderBuilder deliveryTime(int addMinutes, int addHours) {
             this.deliveryTime = orderDate;
             deliveryTime = deliveryTime.plusMinutes(addMinutes);
             deliveryTime = deliveryTime.plusHours(addHours);
             return this;
         }
 
-        public Builder positions(Set<Positions> positions) {
+        public OrderBuilder positions(Set<Positions> positions) {
             this.positions = positions;
             return this;
         }
 
-        public Builder positions(int maxPositions) throws InvalidMaxOrderSize {
-            generatePositions(maxPositions);
+        public OrderBuilder positions(int maxPositions) throws InvalidMaxOrderSize {
+            this.positions = generatePositions(maxPositions);
             return this;
         }
 
@@ -68,17 +83,15 @@ public class Order {
         }
     }
 
-    public static void generatePositions(int maxPositions) throws InvalidMaxOrderSize {
-        if (maxPositions > 15) {
-            throw new InvalidMaxOrderSize("maxPositions must be less than 15");
-        }
-        Random random = new Random();
-        Set<Positions> positions = new HashSet<>();
-        int size = random.nextInt(maxPositions);
-
-        while (positions.size() < size) {
-            positions.add(Positions.values()[random.nextInt(Positions.values().length)]);
-        }
+    @Override
+    public String toString() {
+        return "Order{" +
+                "courier:\n" + courier +
+                "\norderDate=" + orderDate +
+                "\ndeliveryTime=" + deliveryTime +
+                "\npositions=" + positions +
+                "\nrestarauntName=" + restarauntName +
+                "\n}\n";
     }
 }
 

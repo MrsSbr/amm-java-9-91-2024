@@ -10,4 +10,11 @@ public class Courier {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
+    @Override
+    public String toString() {
+        return "firstName=" + firstName + '\n' +
+                "lastName=" + lastName + '\n' +
+                "id=" + id;
+    }
 }
