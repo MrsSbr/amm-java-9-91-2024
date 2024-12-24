@@ -20,8 +20,7 @@ public class HospitalReceptionsStatsService {
             throw new NullPointerException();
         }
 
-
-        if(receptions.isEmpty()) {
+        if (receptions.isEmpty()) {
             return Map.of();
         }
 
