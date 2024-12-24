@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class BeautyBoxApplication {
 
-    private static final String PATH = "C:app/G91/sergacheva.victoria/lab4/src/main/java/ru/vsu/amm/java/data";
+    private static final String PATH = "app/G91/sergacheva.victoria/lab4/src/main/java/ru/vsu/amm/java/data";
 
     public static void main(String[] args) {
         FileService fileService = new FileService();
