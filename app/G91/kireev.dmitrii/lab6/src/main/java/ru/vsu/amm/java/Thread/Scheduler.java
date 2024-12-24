@@ -13,6 +13,8 @@ public class Scheduler {
     private final List<CacheWriter> writers;
     private final LRUCache<String> cache;
     private final int WORD_SIZE = 2;
+    private final String PUTTING = "putting elem with value: ";
+    private final String CACHE_SIZE ="   cache size: ";
 
     public Scheduler(int numThreads, int capacity) {
         this.writers = new ArrayList<>();
@@ -26,9 +28,9 @@ public class Scheduler {
 
             if (cacheValue.isEmpty()) {
                 cache.put(value);
-                System.out.println("putting elem with value: " + value + "   cache size: " + cache.size());
+                System.out.println(PUTTING + value + CACHE_SIZE + cache.size());
             } else {
-                System.out.println("getting elem with value: " + value + "   cache size: " + cache.size());
+                System.out.println(PUTTING + value + CACHE_SIZE + cache.size());
             }
 
         };
