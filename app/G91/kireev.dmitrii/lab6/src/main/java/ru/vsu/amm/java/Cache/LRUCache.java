@@ -1,7 +1,5 @@
 package ru.vsu.amm.java.Cache;
 
-import ru.vsu.amm.java.Model.CacheEntity;
-
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
