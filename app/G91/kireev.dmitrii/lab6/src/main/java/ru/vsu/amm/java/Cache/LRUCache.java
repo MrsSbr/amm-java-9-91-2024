@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class LRUCache<V> {
 
     private final int capacity;
-    private final Map<Integer, CacheEntity<V>> cache;
+    private final Map<Integer, V> cache;
     private final ReentrantLock lock;
 
     public LRUCache(int capacity) {
@@ -24,13 +24,12 @@ public class LRUCache<V> {
 
         lock.lock();
         try {
-            Long timestamp = System.nanoTime();
             if (cache.size() >= capacity) {
-                Iterator<Map.Entry<Integer, CacheEntity<V>>> iterator = cache.entrySet().iterator();
+                Iterator<Map.Entry<Integer, V>> iterator = cache.entrySet().iterator();
                 iterator.next();
                 iterator.remove();
             }
-            cache.put(value.hashCode(), new CacheEntity<>(value, timestamp));
+            cache.put(value.hashCode(), value);
         } finally {
             lock.unlock();
         }
@@ -39,13 +38,11 @@ public class LRUCache<V> {
     public Optional<V> get(V value) {
         lock.lock();
         try {
-            Long timestamp = System.nanoTime();
             if (!cache.containsKey(value.hashCode())) {
                 return Optional.empty();
             }
-            //при попытке доступа к элементу linkedHashMap он сдвигается в конец её списка, поэтому не удалится при put
-            cache.replace(value.hashCode(),new CacheEntity<>(value,timestamp));
-            return Optional.of(cache.get(value.hashCode()).value());
+            //при попытке доступа к элементу linkedHashMap он сдвигается в конец её списка поэтому самый давно не исп будет в начале
+            return Optional.of(cache.get(value.hashCode()));
         } finally {
             lock.unlock();
         }
