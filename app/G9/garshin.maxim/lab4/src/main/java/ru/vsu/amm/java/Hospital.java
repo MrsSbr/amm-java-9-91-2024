@@ -13,7 +13,6 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class Hospital {
-
     private final static Logger logger = Logger.getLogger(Hospital.class.getName());
 
     private final static String RESOURCES_PATH = "app/G9/garshin.maxim/lab4/src/main/java/ru/vsu/amm/java/resources/Receptions.txt";
