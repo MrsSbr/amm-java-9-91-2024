@@ -24,6 +24,7 @@ student("kireev.dmitrii", G91) {
     lab(2)
     lab(3)
     lab(4)
+    lab(5)
 }
 
 student("sbrodova.daria", G91) {
@@ -46,6 +47,8 @@ student("sergacheva.victoria", G91) {
     lab(0)
     lab(1)
     lab(2)
+    lab(3)
+    lab(4)
 }
 
 student("belozerov.alexei", G91) {
@@ -64,6 +67,7 @@ student("gonnykh.alexander", G91) {
     lab(3)
     lab(4)
     lab(5)
+    lab(6)
 }
 
 student("simonov.ivan", G91) {
@@ -106,13 +110,13 @@ student("bogatyirev.kirill", G9){
     lab(1)
     lab(2)
     lab(3)
-}
+ }
 
 
 student("zayseva.anastasiya", G9) {
     lab(0)
     lab(1)
-    lab(2)
+    lab(4)
 }
 
 
@@ -141,6 +145,7 @@ student("em.vera", G91) {
     lab(2)
     lab(3)
     lab(4)
+    lab(5)
 }
 
 student("em.vera", G91) {
@@ -156,6 +161,7 @@ student("dolzhenkov.dmitrii", G91) {
     lab(1)
     lab(2)
     lab(3)
+    lab(4)
 }
 
 student("popova.anastasia", G91) {
@@ -198,6 +204,7 @@ student("kanatnikov.maxim", G9) {
     lab(0)
     lab(1)
     lab(2)
+    lab(3)
 }
 
 
@@ -226,7 +233,9 @@ student("gavrilov.mihail", G9) {
 student ("safonova.nastia", G9){
     lab(0)
     lab(1)
+    lab(2) 
 }
+
 student("serova.polina", G9) {
     lab(0)
     lab(1)
@@ -243,6 +252,7 @@ student("shipilova.viktoria", G9) {
     lab(3)
     lab(4)
     lab(5)
+    lab(6)
 }
 student("kreydun.nicholas", G9) {
     lab(0)
@@ -300,6 +310,7 @@ student("tottskiy.stepan", G9) {
 student("nikitina.elizaveta", G9) {
     lab(0)
     lab(1)
+    lab(2)
 }
 
 student("globuchik.dmitry", G9) {
