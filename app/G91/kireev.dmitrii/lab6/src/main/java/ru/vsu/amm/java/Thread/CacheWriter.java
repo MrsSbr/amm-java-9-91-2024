@@ -6,7 +6,7 @@ public class CacheWriter {
 
     private final Thread writerThread;
     private final Runnable taskProcessor;
-    private final int sleepTime = 500;
+    private final int SLEEP_TIME = 500;
     private boolean running;
     public CacheWriter(Runnable taskProcessor) {
         this.writerThread = new Thread(this::processTask);
@@ -18,7 +18,7 @@ public class CacheWriter {
         Random random = new Random();
         while (running) {
             try {
-                Thread.sleep(random.nextInt(sleepTime));
+                Thread.sleep(random.nextInt(SLEEP_TIME));
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
