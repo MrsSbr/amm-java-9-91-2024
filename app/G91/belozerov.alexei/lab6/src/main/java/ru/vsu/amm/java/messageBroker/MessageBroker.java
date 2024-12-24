@@ -54,7 +54,7 @@ public class MessageBroker {
         if (isMessageLost()) {
             return null;
         }
-        List<Message> messages = new ArrayList<>(consumerIds.get(id));
+        List<Message> messages = new CopyOnWriteArrayList<>(consumerIds.get(id));
         unsubscribe(id);
         return messages;
     }
