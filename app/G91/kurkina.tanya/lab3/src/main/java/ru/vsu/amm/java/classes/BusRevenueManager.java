@@ -3,6 +3,7 @@ package ru.vsu.amm.java.classes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class BusRevenueManager {
@@ -15,23 +16,31 @@ public class BusRevenueManager {
         }
     }
 
-    public void collectWeeklyData() {
+    //возвращает список, содержащий списки доходов за каждый день недели для каждого маршрута
+    public List<List<Integer>> collectWeeklyData() {
         Random random = new Random();
-        routes.forEach(route ->
-                IntStream.range(0, 7)
-                        .forEach(day -> route.addDailyRevenue(random.nextInt(5001)))
-        );
+
+        return routes.stream()
+                .map(route -> IntStream.range(0, 7)
+                        .mapToObj(day -> {
+                            int dailyRevenue = random.nextInt(5001);
+                            route.addDailyRevenue(dailyRevenue);
+                            return dailyRevenue;
+                        })
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());
     }
 
-    // Итоговый отчет
-    public void printWeeklyReport() {
-        System.out.println("Total weekly revenue report:");
-        routes.stream()
-                .forEach(route -> {
-                    System.out.println("ROUTE " + route.getRouteNumber() + ":");
-                    System.out.println(" Daily revenue: " + route.getDailyRevenues());
-                    System.out.println(" Total for the week: " + route.getTotalWeeklyRevenue() + " rub");
-                });
+    //возвращает список строк, где каждая строка представляет текстовый отчёт для одного маршрута
+    public List<String> printWeeklyReport() {
+        return routes.stream()
+                .map(route -> {
+                    String report = "ROUTE " + route.getRouteNumber() + ":\n" +
+                            " Daily revenue: " + route.getDailyRevenues() + "\n" +
+                            " Total for the week: " + route.getTotalWeeklyRevenue() + " rub";
+                    return report;
+                })
+                .collect(Collectors.toList());
     }
 
     public List<BusRoute> getRoutes() {
