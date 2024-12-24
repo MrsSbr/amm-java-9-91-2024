@@ -1,6 +1,6 @@
 package ru.vsu.amm.java;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entity.Sale;
 import ru.vsu.amm.java.enums.Car;
 import ru.vsu.amm.java.enums.Equipment;
@@ -13,8 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-import static org.testng.AssertJUnit.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.vsu.amm.java.service.SalesLogger.logger;
 
 public class SalesServiceTest {
@@ -68,25 +67,39 @@ public class SalesServiceTest {
                 50000
         ));
         sales.add(new Sale(
+                LocalDate.of(2022, 10, 1),
+                Showroom.FRESH,
+                Car.LADA_GRANTA,
+                Equipment.COMFORT,
+                55000
+        ));
+        sales.add(new Sale(
+                LocalDate.of(2022, 10, 1),
+                Showroom.FRESH,
+                Car.HONDA_CIVIC,
+                Equipment.BASIC,
+                60000
+        ));
+        sales.add(new Sale(
                 LocalDate.of(2023, 10, 5),
                 Showroom.RINGAUTO,
                 Car.HONDA_CIVIC,
                 Equipment.STANDARD,
+                65000
+        ));
+        sales.add(new Sale(
+                LocalDate.of(2023, 10, 5),
+                Showroom.RINGAUTO,
+                Car.HONDA_CIVIC,
+                Equipment.BASIC,
                 70000
         ));
         sales.add(new Sale(
                 LocalDate.of(2023, 10, 10),
                 Showroom.MOTORLAND,
-                Car.HONDA_CIVIC,
+                Car.FORD_FOCUS,
                 Equipment.COMFORT,
-                80000
-        ));
-        sales.add(new Sale(
-                LocalDate.of(2023, 10, 5),
-                Showroom.RINGAUTO,
-                Car.HONDA_CIVIC,
-                Equipment.STANDARD,
-                70000
+                75000
         ));
         sales.add(new Sale(
                 LocalDate.of(2012, 10, 10),
@@ -96,7 +109,7 @@ public class SalesServiceTest {
                 80000
         ));
 
-        assertEquals(SalesService.findBestShowroom(sales), Showroom.RINGAUTO);
+        assertEquals(SalesService.findBestShowroom(sales), Showroom.FRESH);
 
         logger.info("testFindBestShowroom end");
     }
@@ -144,7 +157,7 @@ public class SalesServiceTest {
         Map<Showroom, Integer> result = new HashMap<>();
         result.put(Showroom.MOTORLAND, 150000);
         result.put(Showroom.RINGAUTO, 140000);
-        result.put(Showroom.FRESH, 140000);
+        result.put(Showroom.FRESH, 50000);
 
         assertEquals(SalesService.findTotalMarkup(sales), result);
         assertEquals(SalesService.findTotalMarkup(sales).size(), 3);

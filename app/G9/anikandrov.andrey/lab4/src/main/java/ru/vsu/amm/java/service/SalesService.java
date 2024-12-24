@@ -39,7 +39,8 @@ public class SalesService {
                         .filter(sale -> sale.getDateOfSale().isAfter(threeYearsAgo))
                         .collect(Collectors.groupingBy(
                                 Sale::getDealCenter,
-                                Collectors.mapping(sale -> sale.getCar().toString() + '_' + sale.getEquipment(), Collectors.toSet())
+                                Collectors.mapping(sale -> sale.getCar().toString() + '_' + sale.getEquipment(),
+                                        Collectors.toSet())
                         ));
 
         return UniquePairs.entrySet().stream()

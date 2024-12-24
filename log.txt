@@ -498,3 +498,447 @@ FINE: sale of TOYOTA_COROLLA in MOTORLAND
 FINE: sale of TOYOTA_COROLLA in MOTORLAND
 дек. 10, 2024 10:07:19 PM ru.vsu.amm.java.entity.Sale <init>
 FINE: sale of HONDA_CIVIC in FRESH
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in RINGAUTO
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in RINGAUTO
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in FRESH
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in MOTORLAND
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in FRESH
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in MOTORLAND
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of HONDA_CIVIC in AUTOWORLD
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in AUTOWORLD
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in RINGAUTO
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in AUTOWORLD
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in AUTOWORLD
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in RINGAUTO
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of HONDA_CIVIC in AUTOWORLD
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of HONDA_CIVIC in FRESH
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in FRESH
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in AUTOWORLD
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in FRESH
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in AUTOWORLD
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in RINGAUTO
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in FRESH
+дек. 24, 2024 12:45:59 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of HONDA_CIVIC in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of HONDA_CIVIC in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of HONDA_CIVIC in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of HONDA_CIVIC in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in RINGAUTO
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in FRESH
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in AUTOWORLD
+дек. 24, 2024 12:47:35 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of HONDA_CIVIC in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of HONDA_CIVIC in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of HONDA_CIVIC in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of HONDA_CIVIC in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of FORD_FOCUS in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of HONDA_CIVIC in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of TOYOTA_COROLLA in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of NISSAN_SENTRA in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of LADA_GRANTA in RINGAUTO
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of KIA_RIO in FRESH
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in AUTOWORLD
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of VOLKSWAGEN_GOLF in MOTORLAND
+дек. 24, 2024 8:07:34 PM ru.vsu.amm.java.entity.Sale <init>
+FINE: sale of HONDA_CIVIC in FRESH
