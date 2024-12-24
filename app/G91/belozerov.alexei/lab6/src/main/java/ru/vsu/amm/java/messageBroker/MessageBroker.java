@@ -1,6 +1,5 @@
 package ru.vsu.amm.java.messageBroker;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,7 +29,7 @@ public class MessageBroker {
             resMessage = new Message(messageIdGenerator.incrementAndGet(), message);
             messageQueue.add(resMessage);
         }
-        if ((resMessage == null || isMessageLost())) {
+        if (resMessage == null || isMessageLost()) {
             if (resMessage != null) {
                 messageIdGenerator.decrementAndGet();
             }
