@@ -21,7 +21,7 @@ public class TaskFootballController {
             System.out.println(GamesResultsService.getTeamsWithDefeatedTeams(gamesResults));
 
             GamesResultsFileController.writeToFile(FILE_PATH, gamesResults);
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException | NullPointerException e) {
             logger.log(Level.SEVERE, e.toString());
             System.out.println(e.getMessage());
         }
