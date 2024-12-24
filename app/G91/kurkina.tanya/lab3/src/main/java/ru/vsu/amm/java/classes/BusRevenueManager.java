@@ -3,6 +3,7 @@ package ru.vsu.amm.java.classes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 public class BusRevenueManager {
     private final List<BusRoute> routes;
@@ -16,21 +17,21 @@ public class BusRevenueManager {
 
     public void collectWeeklyData() {
         Random random = new Random();
-        for (BusRoute route : routes) {
-            for (int day = 0; day < 7; day++) {
-                route.addDailyRevenue(random.nextInt(5001));
-            }
-        }
+        routes.forEach(route ->
+                IntStream.range(0, 7)
+                        .forEach(day -> route.addDailyRevenue(random.nextInt(5001)))
+        );
     }
 
     // Итоговый отчет
     public void printWeeklyReport() {
         System.out.println("Total weekly revenue report:");
-        for (BusRoute route : routes) {
-            System.out.println("ROUTE " + route.getRouteNumber() + ":");
-            System.out.println(" Daily revenue: " + route.getDailyRevenues());
-            System.out.println(" Total for the week: " + route.getTotalWeeklyRevenue() + " rub");
-        }
+        routes.stream()
+                .forEach(route -> {
+                    System.out.println("ROUTE " + route.getRouteNumber() + ":");
+                    System.out.println(" Daily revenue: " + route.getDailyRevenues());
+                    System.out.println(" Total for the week: " + route.getTotalWeeklyRevenue() + " rub");
+                });
     }
 
     public List<BusRoute> getRoutes() {
