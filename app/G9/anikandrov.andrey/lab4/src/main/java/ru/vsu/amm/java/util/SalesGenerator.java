@@ -13,15 +13,17 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class SalesGenerator {
-    private final static Random random = new Random();
 
     private SalesGenerator() {
     }
 
     public static Sale generateSale() {
+        Random random = new Random();
+
         int randomYear = random.nextInt(Constants.MIN_YEAR, LocalDate.now().getYear());
         int randomMonth = random.nextInt(1, Constants.MONTH_COUNT);
         int randomDay = random.nextInt(1, Constants.DAY_COUNT);
+
         LocalDate dateOfSale = LocalDate.of(randomYear, randomMonth, randomDay);
 
         var showrooms = Showroom.values();
