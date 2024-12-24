@@ -7,12 +7,12 @@ public class CacheApplication {
     public static void main(String[] args) {
         int threadsCount = 6;
         int capacity = 100;
-
+        int sleepTime = 10000;
         Scheduler scheduler = new Scheduler(threadsCount, capacity);
         scheduler.start();
 
         try {
-            Thread.sleep(10000);
+            Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
