@@ -23,6 +23,10 @@ public class FileService {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
+    private static final int DATE_INDEX = 0;
+    private static final int SOLD_COUNT_INDEX = 1;
+    private static final int CONTENTS_INDEX = 2;
+
     public List<BeautyBox> readBeautyBoxData(String filePath) {
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
             return reader.lines()
@@ -36,9 +40,9 @@ public class FileService {
 
     public BeautyBox parseLine(String line) {
         String[] parts = line.split(";");
-        LocalDate date = LocalDate.parse(parts[0], FORMATTER);
-        int soldCount = Integer.parseInt(parts[1]);
-        List<String> contents = Arrays.asList(parts[2].split(","));
+        LocalDate date = LocalDate.parse(parts[DATE_INDEX], FORMATTER);
+        int soldCount = Integer.parseInt(parts[SOLD_COUNT_INDEX]);
+        List<String> contents = Arrays.asList(parts[CONTENTS_INDEX].split(","));
         return new BeautyBox(date, soldCount, contents);
     }
 

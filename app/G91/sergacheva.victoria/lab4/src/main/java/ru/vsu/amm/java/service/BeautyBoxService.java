@@ -17,6 +17,7 @@ public class BeautyBoxService {
         log = Logger.getLogger(BeautyBoxService.class.getName());
     }
 
+    // Метод для подсчета частоты встречаемости продуктов в коробках
     public Map<String, Long> calculateProductFrequency(List<BeautyBox> beautyBoxes) {
         log.info("Calculate product frequency");
         return beautyBoxes.stream()
