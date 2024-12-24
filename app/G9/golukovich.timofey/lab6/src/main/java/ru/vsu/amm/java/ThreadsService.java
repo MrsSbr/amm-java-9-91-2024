@@ -3,22 +3,25 @@ package ru.vsu.amm.java;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.LongAccumulator;
+import java.util.concurrent.atomic.LongAdder;
 
 public class ThreadsService {
-    private final AtomicInteger controlSum;
+    private final LongAccumulator controlSum;
     private final List<Thread> threads;
-    private final int[] threadSums;
-    private final Object locker;
+    private final long[] threadSums;
+    private final Semaphore semaphore;
     private boolean isStopped;
     private final Scanner console;
 
     public ThreadsService(int threadsCount) {
-        controlSum = new AtomicInteger();
-        controlSum.set(0);
+        controlSum = new LongAccumulator(Long::sum, 0);
         threads = new ArrayList<>();
-        threadSums = new int[threadsCount];
-        locker = new Object();
+        threadSums = new long[threadsCount];
+        semaphore = new Semaphore(1);
         isStopped = false;
         console = new Scanner(System.in);
 
@@ -31,18 +34,23 @@ public class ThreadsService {
     private Thread getThread(int id) {
         return new Thread(() -> {
             while (!isStopped) {
-                int value = 0;
-                synchronized (locker) {
-                    System.out.print("> ");
-                    String line = console.nextLine();
-                    try {
-                        value = Integer.parseInt(line);
-                    } catch (NumberFormatException e) {
-                        System.out.println(e.getMessage());
+                try {
+                    if (semaphore.tryAcquire(1, 0, TimeUnit.MILLISECONDS)) {
+                        try {
+                            long value = 0;
+                            System.out.print(id + " > ");
+                            String line = console.nextLine();
+                            value = Long.parseLong(line);
+                            semaphore.release();
+                            controlSum.accumulate(value);
+                            threadSums[id] += value;
+                        } catch (NumberFormatException e) {
+                            System.out.println(e.getMessage());
+                        }
                     }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
-                controlSum.addAndGet(value);
-                threadSums[id] += value;
             }
         });
     }
@@ -61,11 +69,11 @@ public class ThreadsService {
         console.close();
     }
 
-    public int getControlSum() {
+    public long getControlSum() {
         return controlSum.get();
     }
 
-    public int[] getThreadSums() {
+    public long[] getThreadSums() {
         return threadSums;
     }
 }
