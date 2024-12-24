@@ -15,7 +15,7 @@ public final class HospitalReceptionFactory {
     }
 
     public static HospitalReception generateHospitalReception() {
-        int year = random.nextInt(2020, LocalDate.now().getYear()+1);
+        int year = random.nextInt(2020, LocalDate.now().getYear() + 1);
         int day = random.nextInt(1, Year.isLeap(year) ? 367 : 366);
         LocalDate localDate = LocalDate.ofYearDay(year, day);
 
