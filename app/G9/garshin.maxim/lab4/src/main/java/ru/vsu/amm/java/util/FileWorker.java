@@ -42,7 +42,7 @@ public final class FileWorker {
     public static List<HospitalReception> getFromFile(String path) throws IOException {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
             return bufferedReader.lines().map(line -> {
-               String[] partsOFLine = line.split(";");
+                String[] partsOFLine = line.split(";");
                 LocalDate date = LocalDate.parse(partsOFLine[DATE_INDEX]);
                 String doctorFullName = partsOFLine[DOCTOR_FULL_NAME_INDEX];
                 Specialization specialization = Specialization.valueOf(partsOFLine[SPECIALIZATION_INDEX]);
