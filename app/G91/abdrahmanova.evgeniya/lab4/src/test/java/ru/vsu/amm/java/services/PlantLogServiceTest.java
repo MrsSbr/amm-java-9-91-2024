@@ -1,3 +1,5 @@
+package ru.vsu.amm.java.services;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entites.PlantLog;
@@ -14,7 +16,6 @@ class PlantLogServiceTest {
 
     private PlantLogService plantLogService;
     private List<PlantLog> testPlantLogs;
-
 
     // создание списков и экземпляров
     @BeforeEach
@@ -91,7 +92,7 @@ class PlantLogServiceTest {
 
         Map<String, Set<Integer>> potSizes = plantLogService.findPotSizesPerPlant();
         assertEquals(1, potSizes.size());
-        assertEquals(Set.of(15,10,12), potSizes.get("Rose"));
+        assertEquals(Set.of(15, 10, 12), potSizes.get("Rose"));
     }
 
 }

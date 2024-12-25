@@ -14,7 +14,8 @@ public class Main {
     public static void main(String[] args) {
 
         String filePath = "app/G91/abdrahmanova.evgeniya/lab4/src/main/java/ru/vsu/amm/java/files/plants";
-        try { List<PlantLog> logs = PlantLogReader.readPlantLogsFromFile(filePath);
+        try {
+            List<PlantLog> logs = PlantLogReader.readPlantLogsFromFile(filePath);
             logs.forEach(System.out::println);
 
             PlantLogService plantLogService = new PlantLogService(logs);
