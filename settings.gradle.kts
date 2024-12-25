@@ -167,6 +167,7 @@ student("dolzhenkov.dmitrii", G91) {
     lab(3)
     lab(4)
     lab(5)
+    lab(6)
 }
 
 student("popova.anastasia", G91) {
