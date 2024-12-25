@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CoffeeApplicationTest {
     @Test
-    public void testGetSortsByProcessingType(){
+    public void testGetSortsByProcessingType() {
         List<Producer> producerList = List.of(
                 new Producer(Sort.ARABICA, "Brazil", "Farm 1", ProcessingType.WASHED, 1200),
                 new Producer(Sort.ARABICA, "Colombia", "Farm 2", ProcessingType.WASHED, 1800),
@@ -24,7 +24,7 @@ public class CoffeeApplicationTest {
                 new Producer(Sort.ARABICA, "Brazil", "Farm 1", ProcessingType.WASHED, 1200),
                 new Producer(Sort.LIBERICA, "Kenya", "Farm 4", ProcessingType.HONEY, 2000),
                 new Producer(Sort.EXCELSA, "Ethiopia", "Farm 5", ProcessingType.NATURAL, 1500));
-        Map<ProcessingType,  List<Sort>> result =
+        Map<ProcessingType,  Set<Sort>> result =
                 CoffeeService.getSortsByProcessingType(producerList);
 
         assertEquals(3,result.size());
@@ -41,18 +41,18 @@ public class CoffeeApplicationTest {
     }
 
     @Test
-    public void testGetSortsByProcesingTypeNull(){
+    public void testGetSortsByProcesingTypeNull() {
         List<Producer> producersWithNullSorts = List.of(
                 new Producer(null, "Brazil", "Farm 1", ProcessingType.WASHED, 1200),
                 new Producer(Sort.ROBUSTA, "Vietnam", "Farm 3", ProcessingType.NATURAL, 1600));
 
-        Map<ProcessingType, List<Sort>> result = CoffeeService.getSortsByProcessingType(producersWithNullSorts);
+        Map<ProcessingType, Set<Sort>> result = CoffeeService.getSortsByProcessingType(producersWithNullSorts);
 
         assertTrue(result.containsKey(ProcessingType.NATURAL));
-        assertEquals(List.of(Sort.ROBUSTA), result.get(ProcessingType.NATURAL));
+        assertEquals(Set.of(Sort.ROBUSTA), result.get(ProcessingType.NATURAL));
 
         assertFalse(result.containsKey(ProcessingType.WASHED));
-        assertTrue(result.getOrDefault(ProcessingType.HONEY, List.of()).isEmpty());
+        assertTrue(result.getOrDefault(ProcessingType.HONEY, Set.of()).isEmpty());
     }
 
     @Test
@@ -88,5 +88,32 @@ public class CoffeeApplicationTest {
         Set<String> result = CoffeeService.getCountriesWithHighAltitude(producers);
 
         assertEquals(Set.of("Vietnam", "Kenya"), result);
+    }
+
+    @Test
+    public void testGetCountriesWithHighAltitudeEmpty() {
+        List<Producer> producers = List.of(
+                new Producer(Sort.ARABICA, "Brazil", "Farm 1", ProcessingType.WASHED, 1200),
+                new Producer(Sort.ROBUSTA, "Vietnam", "Farm 3", ProcessingType.NATURAL, 1400)
+        );
+        Set<String> result = CoffeeService.getCountriesWithHighAltitude(producers);
+
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    public void testGetSortsByProcessingTypeEmpty() {
+        List<Producer> emptyList = List.of();
+        Map<ProcessingType, Set<Sort>> result = CoffeeService.getSortsByProcessingType(emptyList);
+
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    public void testGetCoffeeCountByFarmEmpty() {
+        List<Producer> emptyList = List.of();
+        Map<String, Long> result = CoffeeService.getCoffeeCountByFarm(emptyList);
+
+        assertTrue(result.isEmpty());
     }
 }

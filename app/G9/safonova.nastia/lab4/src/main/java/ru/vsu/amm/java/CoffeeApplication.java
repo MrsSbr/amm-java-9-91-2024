@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CoffeeApplication {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         List<Producer> producers = CoffeeGenerator.generateProducerList(100);
 
         System.out.println("Sorts by farm:");
