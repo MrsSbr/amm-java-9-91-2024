@@ -9,10 +9,10 @@ public record Publication(
         LocalDate endDate
 ) {
     // Метод для проверки, входит ли месяц в период подписки
-    public boolean isInMonth(int month) {
+    public boolean isInMonth(Month month) {
         int startMonth = startDate.getMonthValue();
         int endMonth = endDate.getMonthValue();
 
-        return (startMonth <= month && month <= endMonth);
+        return (startMonth <= month.getNumber() && month.getNumber() <= endMonth);
     }
 }

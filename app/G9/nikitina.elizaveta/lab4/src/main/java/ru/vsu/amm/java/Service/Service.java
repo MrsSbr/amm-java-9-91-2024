@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.Service;
 
+import ru.vsu.amm.java.Model.Month;
 import ru.vsu.amm.java.Model.Publication;
 import ru.vsu.amm.java.Model.Subscriber;
 
@@ -19,7 +20,7 @@ public class Service {
                 .collect(Collectors.toList());
     }
 
-    public Optional<String> getAreaWithMostSubscriptions(List<Subscriber> subs, String title, int month) {
+    public Optional<String> getAreaWithMostSubscriptions(List<Subscriber> subs, String title, Month month) {
         return subs.stream()
                 .collect(Collectors.groupingBy(
                         Subscriber::deliveryArea, // Группируем по имени области
@@ -36,7 +37,7 @@ public class Service {
 
     }
 
-    public long getSubscriptionCountByMonthAndTitle(List<Subscriber> subs, String title, int month) {
+    public long getSubscriptionCountByMonthAndTitle(List<Subscriber> subs, String title, Month month) {
         return subs.stream()
                 .flatMap(sub -> sub.publications().stream())
                 .filter(pub -> pub.title().equals(title) && pub.isInMonth(month))

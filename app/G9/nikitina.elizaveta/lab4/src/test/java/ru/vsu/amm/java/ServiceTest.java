@@ -2,6 +2,7 @@ package ru.vsu.amm.java;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.vsu.amm.java.Model.Month;
 import ru.vsu.amm.java.Model.Publication;
 import ru.vsu.amm.java.Model.PublicationType;
 import ru.vsu.amm.java.Model.Subscriber;
@@ -28,10 +29,10 @@ public class ServiceTest {
     // Тест 1: Проверка количества экземпляров по месяцу и названию
     @Test
     public void testGetSubscriptionCountByMonthAndTitle() {
-        long count = service.getSubscriptionCountByMonthAndTitle(subscribers, "Library Journal", 7);
+        long count = service.getSubscriptionCountByMonthAndTitle(subscribers, "Library Journal", Month.JULY);
         assertEquals(1, count);
 
-        count = service.getSubscriptionCountByMonthAndTitle(subscribers, "Daily News", 7);
+        count = service.getSubscriptionCountByMonthAndTitle(subscribers, "Daily News", Month.JULY);
         assertEquals(4, count);
     }
 
@@ -59,13 +60,13 @@ public class ServiceTest {
     // Тест 3: Определение участка с наибольшим количеством подписок по названию и месяцу
     @Test
     public void testGetAreaWithMostSubscriptions() {
-        String area = service.getAreaWithMostSubscriptions(subscribers, "Fashion Weekly", 7).orElse("");
+        String area = service.getAreaWithMostSubscriptions(subscribers, "Fashion Weekly", Month.JULY).orElse("");
         assertEquals("East", area);
 
-        area = service.getAreaWithMostSubscriptions(subscribers, "Health Journal", 7).orElse("");
+        area = service.getAreaWithMostSubscriptions(subscribers, "Health Journal", Month.JULY).orElse("");
         assertEquals("South", area);
 
-        Optional<String> nullArea = service.getAreaWithMostSubscriptions(subscribers, "null", 7);
+        Optional<String> nullArea = service.getAreaWithMostSubscriptions(subscribers, "null", Month.JULY);
         assertTrue(nullArea.isEmpty());
     }
 

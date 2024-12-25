@@ -41,7 +41,7 @@ public class FileReader {
         } catch (FileNotFoundException e) {
 
             logger.severe(path + " --- " + e.getMessage());
-            return  new ArrayList<>();
+            return new ArrayList<>();
         }
 
         return result;
