@@ -19,13 +19,13 @@ public class FarmApplicationTest {
     private List<DayStatistic> testStatistics;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         testStatistics = getTestStatistics();
     }
 
     @Test
-    public void testFindBestMonth(){
-        Month bestMonth = FarmService.findBestMonth(testStatistics);
+    public void testFindBestMonth() {
+        Month bestMonth = FarmService.findBestMonthOrNull(testStatistics);
         assertEquals(Month.MARCH, bestMonth);
     }
 
@@ -44,12 +44,12 @@ public class FarmApplicationTest {
     @Test
     public void testFindBestMonthEmptyList() {
         List<DayStatistic> emptyRecords = Collections.emptyList();
-        Month bestMonth = FarmService.findBestMonth(emptyRecords);
+        Month bestMonth = FarmService.findBestMonthOrNull(emptyRecords);
         assertNull(bestMonth, "Best month should be null for an empty list.");
     }
 
     @Test
-    public void testAverageMilkPerWeekEmptyList(){
+    public void testAverageMilkPerWeekEmptyList() {
         List<DayStatistic> emptyRecords = Collections.emptyList();
         double averageMilk = FarmService.averageMilkPerWeek(emptyRecords);
         assertEquals(0.0, averageMilk, 0.1);

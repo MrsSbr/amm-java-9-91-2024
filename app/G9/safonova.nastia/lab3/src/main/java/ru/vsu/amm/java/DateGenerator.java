@@ -11,10 +11,10 @@ public class DateGenerator {
         Random random = new Random();
         LocalDate startDate = LocalDate.of(2018,1,1);
 
-        for(int i = 0; i < count; i++){
+        for (int i = 0; i < count; i++) {
             LocalDate date = startDate.plusDays(i);
             double feedConsumed = 5 + random.nextDouble() * 20;
-            double milkProduced = 3 +random.nextDouble() * 10;
+            double milkProduced = 3 + random.nextDouble() * 10;
             statistics.add(new DayStatistic(date, feedConsumed, milkProduced));
         }
         return statistics;

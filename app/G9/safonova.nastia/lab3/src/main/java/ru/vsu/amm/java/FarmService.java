@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 
 public class FarmService {
 
-    public static  Month findBestMonth(List<DayStatistic> records){
+    private static final int ID_WEEK = 100;
+
+    public static Month findBestMonthOrNull(List<DayStatistic> records) {
         return records.stream()
                 .collect(Collectors.groupingBy(
                         day -> day.date().getMonth(),
@@ -21,10 +23,10 @@ public class FarmService {
                 .orElse(null);
     }
 
-    public static double averageMilkPerWeek(List<DayStatistic> records){
+    public static double averageMilkPerWeek(List<DayStatistic> records) {
         return records.stream()
                 .collect(Collectors.groupingBy(
-                        day -> day.date().getYear() * 100 + day.date().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR),
+                        day -> day.date().getYear() * ID_WEEK + day.date().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR),
                         Collectors.summingDouble(DayStatistic::milkProduced)
                 ))
                 .values().stream()
