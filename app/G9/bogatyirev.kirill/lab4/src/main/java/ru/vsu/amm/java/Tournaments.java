@@ -11,6 +11,14 @@ import java.util.List;
 
 public class Tournaments {
     private List<Fight> fights;
+    public static final int TOURNAMENT_NUMBER_INDEX = 0;
+    public static final int FIRST_FIGHTER_NAME_INDEX = 1;
+    public static final int SECOND_FIGHTER_NAME_INDEX = 2;
+    public static final int WINNER_NAME_INDEX = 3;
+    public static final int FATALITY_INDEX = 4;
+    public static final int DATE_INDEX = 5;
+
+
 
     public Tournaments(List<Fight> fights) {
         this.fights = fights;
@@ -42,13 +50,13 @@ public class Tournaments {
     }
 
     private static Fight getFight(String[] words, DateTimeFormatter dateFormat) throws IOException {
-        int tournamentNumber = Integer.parseInt(words[0]);
-        String firstFighter = words[1];
-        String secondFighter = words[2];
-        String winner = words[3];
-        boolean fatality = Boolean.parseBoolean(words[4]);
+        int tournamentNumber = Integer.parseInt(words[TOURNAMENT_NUMBER_INDEX]);
+        String firstFighter = words[FIRST_FIGHTER_NAME_INDEX];
+        String secondFighter = words[SECOND_FIGHTER_NAME_INDEX];
+        String winner = words[WINNER_NAME_INDEX];
+        boolean fatality = Boolean.parseBoolean(words[FATALITY_INDEX]);
 
-        String fightDate = words[5];
+        String fightDate = words[DATE_INDEX];
         LocalDate date;
         try {
             date = LocalDate.parse(fightDate, dateFormat);
@@ -56,8 +64,7 @@ public class Tournaments {
             throw new IOException("Невозможно преобразовать дату: " + fightDate, e);
         }
 
-        Fight fight = new Fight(tournamentNumber, firstFighter, secondFighter, winner, fatality, date);
-        return fight;
+        return new Fight(tournamentNumber, firstFighter, secondFighter, winner, fatality, date);
     }
 
     public void add(Fight fight) {

@@ -1,35 +1,34 @@
 package ru.vsu.amm.java;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 public class Main {
+    public static final String FILE_PATH = "app/G9/bogatyirev.kirill/lab4/src/res";
+
     public static void main(String[] args) throws IOException {
 
-        String filePath = "app/G9/bogatyirev.kirill/lab4/src/main/java/ru/vsu/amm/java/res";
 
-        Tournaments tournaments = new Tournaments(filePath);
-        for(Fight fight : tournaments.getFights()) {
+        Tournaments tournaments = new Tournaments(FILE_PATH);
+        for (Fight fight : tournaments.getFights()) {
             System.out.println(fight);
         }
 
-        TournamentsManager tournamentsManager = new TournamentsManager(tournaments);
+        TournamentsManager tournamentsManager = new TournamentsManager();
 
-        printAllFighters(tournamentsManager);
+        printAllFighters(tournamentsManager, tournaments);
 
-        System.out.println(tournamentsManager.countOfWins());
+        System.out.println(tournamentsManager.countOfWins(tournaments));
 
-        System.out.println(tournamentsManager.monthWithMostFatality());
+        System.out.println(tournamentsManager.monthWithMostFatality(tournaments));
 
 
     }
 
-    public static void printAllFighters(TournamentsManager tournamentsManager) {
-        int n = tournamentsManager.getFights().getLast().getTournamentNumber();
-        for(int i = 1; i < n; ++i) {
+    public static void printAllFighters(TournamentsManager tournamentsManager, Tournaments tournaments) {
+        int n = tournaments.getFights().getLast().getTournamentNumber();
+        for (int i = 1; i < n; ++i) {
             System.out.println("Турнир номер " + i);
-            System.out.println(tournamentsManager.allFightersInTournament(i));
+            System.out.println(tournamentsManager.allFightersInTournament(i, tournaments));
         }
     }
 
