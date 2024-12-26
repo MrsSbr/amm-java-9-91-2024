@@ -7,6 +7,8 @@ import ru.vsu.amm.java.Service.PrizeService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,11 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PrizeServiceTest {
     private final PrizeService service = new PrizeService();
-    private List<PrizeRecipient> data;
+    private Set<PrizeRecipient> data;
 
     @BeforeEach
     public void setUp() {
-        data = new ArrayList<>();
+        data = new HashSet<>();
         data.add(new PrizeRecipient(2020, "John Doe", "IT"));
         data.add(new PrizeRecipient(2021, "Jane Smith", "Marketing"));
         data.add(new PrizeRecipient(2020, "John Doe", "IT"));
@@ -30,25 +32,25 @@ public class PrizeServiceTest {
     @Test
     public void testAddAndListWinners() {
         data.add(new PrizeRecipient(2020, "TestName", "IT"));
-        List<String> expected = List.of("John Doe", "Jane Smith", "Peter Jones", "TestName");
-        List<String> winners = service.countUniqueRecipients(data);
+        Set<String> expected = Set.of("John Doe", "Jane Smith", "Peter Jones", "TestName");
+        Set<String> winners = service.countUniqueRecipients(data);
         assertTrue(winners.containsAll(expected) && expected.containsAll(winners));
     }
 
 
     @Test
     public void testFindMostFrequentDepartment() {
-        List<String> mostFrequentDepartments = service.findMostRecurringGroup(data);
-        List<String> expected = List.of("IT");
+        Set<String> mostFrequentDepartments = service.findMostRecurringGroup(data);
+        Set<String> expected = Set.of("IT");
         assertTrue(mostFrequentDepartments.containsAll(expected) && expected.containsAll(mostFrequentDepartments));
     }
 
 
     @Test
     void testFindMostFrequentDepartmentEmpty() {
-        data = new ArrayList<>();
-        List<String> mostFrequentDepartments = service.findMostRecurringGroup(data);
-        List<String> expected = new ArrayList<>();
+        data = new HashSet<>();
+        Set<String> mostFrequentDepartments = service.findMostRecurringGroup(data);
+        Set<String> expected = new HashSet<>();
         assertTrue(mostFrequentDepartments.containsAll(expected) && expected.containsAll(mostFrequentDepartments));
     }
 
@@ -63,7 +65,7 @@ public class PrizeServiceTest {
 
     @Test
     void testCountOneTimeWinnersEmpty() {
-        data = new ArrayList<>();
+        data = new HashSet<>();
         Long count = service.countRecipientsWithOneWin(data).get();
         Long expected = 0L;
         assertEquals(expected, count, "Count of one-time winners should be 0 for empty storage.");

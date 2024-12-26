@@ -3,13 +3,19 @@ package ru.vsu.amm.java.Service;
 import ru.vsu.amm.java.Model.PrizeRecipient;
 
 import javax.xml.crypto.dsig.keyinfo.KeyValue;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.AbstractMap;
 import java.util.stream.Collectors;
 
 public class PrizeService {
 
-    public List<String> findMostRecurringGroup(List<PrizeRecipient> data) {
-        if (data == null || data.isEmpty()) return new ArrayList<>();
+    public Set<String> findMostRecurringGroup(List<PrizeRecipient> data) {
+        if (data == null || data.isEmpty()) return new HashSet<>();
 
         Map<String, Long> teamWins = data.stream()
                 .collect(Collectors.groupingBy(PrizeRecipient::teamName, Collectors.counting()));
@@ -19,14 +25,14 @@ public class PrizeService {
         return teamWins.entrySet().stream()
                 .filter(entry -> entry.getValue() == maxWins)
                 .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
     }
 
-    public List<String> countUniqueRecipients(List<PrizeRecipient> data) {
-        if (data == null || data.isEmpty()) return new ArrayList<>();
+    public Set<String> countUniqueRecipients(List<PrizeRecipient> data) {
+        if (data == null || data.isEmpty()) return new HashSet<>();
 
-        return data.stream().map(PrizeRecipient::name).distinct().toList();
+        return data.stream().map(PrizeRecipient::name).collect(Collectors.toSet());
     }
 
 
