@@ -22,7 +22,7 @@ public class MainService {
         couriers.add(courier3);
 
         List<Order> orders = new ArrayList<Order>();
-        orders.add(new Order.OrderBuilder(courier1)
+        orders.add(new OrderBuilder(courier1)
                 .deliveryTime(10, 1)
                 .positions(5)
                 .build());

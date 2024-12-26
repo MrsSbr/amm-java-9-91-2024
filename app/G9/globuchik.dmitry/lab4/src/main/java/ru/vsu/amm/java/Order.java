@@ -34,7 +34,7 @@ public class Order {
         return orderDate;
     }
 
-    private Order(OrderBuilder builder) {
+    Order(OrderBuilder builder) {
         courier = builder.courier;
         orderDate = builder.orderDate;
         deliveryTime = builder.deliveryTime;
@@ -63,7 +63,7 @@ public class Order {
         return RestaurantNames.values()[random.nextInt(RestaurantNames.values().length)];
     }
 
-    public static class OrderBuilder { //нужно ли выносить билдер в отдельный класс, Блох пишет, что можно вложенным
+    /*public static class OrderBuilder { //нужно ли выносить билдер в отдельный класс, Блох пишет, что можно вложенным
         private final Courier courier;
 
         private LocalDateTime deliveryTime = LocalDateTime.now();
@@ -124,7 +124,7 @@ public class Order {
         public Order build() {
             return new Order(this);
         }
-    }
+    }*/
 
     @Override
     public String toString() {

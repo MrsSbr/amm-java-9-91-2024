@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -31,7 +32,7 @@ class OrderServiceTest {
         courierSet.add(courier);
         List<Order> orders = new ArrayList<>();
         for (int i = 0; i < RestaurantNames.values().length - 1; i++) {
-            orders.add(new Order.OrderBuilder(courier)
+            orders.add(new OrderBuilder(courier)
                     .build());
         }
         courierSet = findCourier(orders);
@@ -45,7 +46,7 @@ class OrderServiceTest {
         courierSet.add(courier);
         List<Order> orders = new ArrayList<>();
         for (int i = 0; i < RestaurantNames.values().length; i++) {
-            orders.add(new Order.OrderBuilder(courier)
+            orders.add(new OrderBuilder(courier)
                     .restarauntName(i)
                     .build());
         }
@@ -62,7 +63,7 @@ class OrderServiceTest {
         RestaurantNames name = findMostPopular(orders);
         assertNull(name);
 
-        orders.add(new Order.OrderBuilder(new Courier("Alexei", "Smirnov", 1))
+        orders.add(new OrderBuilder(new Courier("Alexei", "Smirnov", 1))
                 .restarauntName("BISTRO")
                 .build());
         name = findMostPopular(orders);
@@ -75,7 +76,7 @@ class OrderServiceTest {
         List<Order> orders = new ArrayList<>();
         Month month = findLaziestMonth(orders);
         assertNull(month);
-        orders.add(new Order.OrderBuilder(new Courier("Alexei", "Smirnov", 1))
+        orders.add(new OrderBuilder(new Courier("Alexei", "Smirnov", 1))
                 .deliveryTime(1, 1)
                 .build());
         month = findLaziestMonth(orders);

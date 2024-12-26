@@ -24,7 +24,7 @@ public class OrderService {
         List<Order> orders = new ArrayList<>();
         Random rand = new Random();
         for (int i = 0; i < count; i++) {
-            orders.add(new Order.OrderBuilder(couriers.get(rand.nextInt(couriers.size())))
+            orders.add(new OrderBuilder(couriers.get(rand.nextInt(couriers.size())))
                     .deliveryTime(rand.nextInt(50), rand.nextInt(5))
                     .positions(rand.nextInt(Positions.values().length) + 1)
                     .orderDate(rand.nextInt(50), rand.nextInt(5), rand.nextInt(30), rand.nextInt(5))
