@@ -21,6 +21,10 @@ import java.util.stream.Stream;
 
 public class HorseRacingService {
     private static final Logger logger = Logger.getLogger(HorseRacingService.class.getName());
+    private static final int INDEX_DATE = 0;
+    private static final int INDEX_FIRST_PLACE = 1;
+    private static final int  INDEX_SECOND_PLACE = 2;
+    private static final int INDEX_THIRD_PLACE = 3;
 
     public static List<HorseRacing> loadFromFile(String path) {
         logger.log(Level.INFO, "Loading data from file: {0}", path);
@@ -28,10 +32,10 @@ public class HorseRacingService {
             List<HorseRacing> races = reader.lines()
                     .map(line -> {
                         String[] parts = line.split(";");
-                        LocalDate raceDate = LocalDate.parse(parts[0]);
-                        String firstPlaceNameHorse = parts[1];
-                        String secondPlaceNameHorse = parts[2];
-                        String thirdPlaceNameHorse = parts[3];
+                        LocalDate raceDate = LocalDate.parse(parts[INDEX_DATE]);
+                        String firstPlaceNameHorse = parts[INDEX_FIRST_PLACE];
+                        String secondPlaceNameHorse = parts[INDEX_SECOND_PLACE];
+                        String thirdPlaceNameHorse = parts[INDEX_THIRD_PLACE];
                         return new HorseRacing(
                                 raceDate,
                                 firstPlaceNameHorse,
