@@ -79,7 +79,8 @@ public class OrderFileService {
         }
         String restarauntName = words[7].split("=")[1].trim();
 
-        return new Order.OrderBuilder(courier, restarauntName)
+        return new Order.OrderBuilder(courier)
+                .restarauntName(restarauntName)
                 .deliveryTime(deliveryTime)
                 .orderDate(orderDate)
                 .positions(positionsSet)

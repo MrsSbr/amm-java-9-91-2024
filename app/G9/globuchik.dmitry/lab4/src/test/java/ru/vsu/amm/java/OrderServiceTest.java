@@ -57,7 +57,9 @@ class OrderServiceTest {
         RestaurantNames name = findMostPopular(orders);
         assertNull(name);
 
-        orders.add(new Order.OrderBuilder(new Courier("Alexei", "Smirnov", 1), "BISTRO").build());
+        orders.add(new Order.OrderBuilder(new Courier("Alexei", "Smirnov", 1))
+                .restarauntName("BISTRO")
+                .build());
         name = findMostPopular(orders);
         assertNotNull(name);
         assertEquals("BISTRO", name.toString());

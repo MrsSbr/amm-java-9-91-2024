@@ -71,10 +71,6 @@ public class Order {
         private LocalDateTime orderDate = LocalDateTime.now();
         private Set<Positions> positions = new HashSet<>();
 
-        public OrderBuilder(Courier courier, String restaurantName) throws InvalidRestarauntName {
-            this.courier = courier;
-            this.restaurantName = RestaurantNames.valueOf(restaurantName);
-        }
 
         public OrderBuilder(Courier courier) {
             this.courier = courier;
@@ -82,6 +78,11 @@ public class Order {
 
         public OrderBuilder restarauntName() throws InvalidRestarauntName {
             this.restaurantName = generateRestaurantNames();
+            return this;
+        }
+
+        public OrderBuilder restarauntName(String restaurantName) throws InvalidRestarauntName {
+            this.restaurantName = RestaurantNames.valueOf(restaurantName);
             return this;
         }
 
