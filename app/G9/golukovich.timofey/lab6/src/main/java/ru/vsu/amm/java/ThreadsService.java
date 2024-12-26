@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.LongAccumulator;
-import java.util.concurrent.atomic.LongAdder;
 
 public class ThreadsService {
     private final LongAccumulator controlSum;
