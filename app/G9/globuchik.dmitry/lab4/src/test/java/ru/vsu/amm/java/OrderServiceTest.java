@@ -76,7 +76,10 @@ class OrderServiceTest {
         List<Order> orders = new ArrayList<>();
         Month month = findLaziestMonth(orders);
         assertNull(month);
-        orders.add(new Order.OrderBuilder(new Courier("Alexei", "Smirnov", 1)).restarauntName().deliveryTime(1, 1).build());
+        orders.add(new Order.OrderBuilder(new Courier("Alexei", "Smirnov", 1))
+                .restarauntName()
+                .deliveryTime(1, 1)
+                .build());
         month = findLaziestMonth(orders);
         System.out.println(month);
         assertNotNull(month);

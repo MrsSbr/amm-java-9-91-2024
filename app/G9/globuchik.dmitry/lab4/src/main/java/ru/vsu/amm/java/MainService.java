@@ -27,13 +27,16 @@ public class MainService {
         couriers.add(courier3);
 
         List<Order> orders = new ArrayList<Order>();
-        orders.add(new Order.OrderBuilder(courier1).restarauntName().deliveryTime(10, 1).positions(5).build());
+        orders.add(new Order.OrderBuilder(courier1)
+                .restarauntName()
+                .deliveryTime(10, 1)
+                .positions(5)
+                .build());
 
         orders = generateOrders(couriers, 1000);
 
         saveToFile(orders);
         //orders = loadFromFile();
-
 
         System.out.println(findMostPopular(orders));
         System.out.println(findLaziestMonth(orders));
