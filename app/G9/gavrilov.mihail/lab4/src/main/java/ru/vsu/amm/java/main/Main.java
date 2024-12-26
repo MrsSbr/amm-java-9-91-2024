@@ -7,8 +7,8 @@ import ru.vsu.amm.java.main.Service.OlympicStatsService;
 import java.util.List;
 
 public class Main {
-    private static final String PATH = "C:/Users/777/IdeaProjects/amm-java-9-91-2024" +
-            "/app/G9/gavrilov.mihail/lab4/src/main/java/ru/vsu/amm/java/main/Task.txt";
+    private static final String PATH = "app/G9/gavrilov.mihail/lab4/src/main/java/ru" +
+            "/vsu/amm/java/main/Task.txt";
 
     private static final String COUNTRY_WITH_MEDALS_3 = "Страны с лучшим медальным зачетом ";
     private static final String ATHLETES_WITH_SPORTS = "Атлеты с видом спортом и медалью ";

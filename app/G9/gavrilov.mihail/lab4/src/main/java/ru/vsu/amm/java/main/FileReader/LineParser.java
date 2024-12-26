@@ -19,10 +19,10 @@ public class LineParser {
             throw new IllegalArgumentException("Invalid line format");
         }
 
-        int countryGroup = 1;
-        int sportGroup = 2;
-        int athleteNameGroup = 3;
-        int placeGroup = 4;
+        final int countryGroup = 1;
+        final int sportGroup = 2;
+        final int athleteNameGroup = 3;
+        final int placeGroup = 4;
 
         String countryName = matcher.group(countryGroup);
         KindOfSport sport = KindOfSport.valueOf(matcher.group(sportGroup));
