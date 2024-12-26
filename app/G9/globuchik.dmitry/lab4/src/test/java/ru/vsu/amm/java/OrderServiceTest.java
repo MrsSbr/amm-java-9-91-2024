@@ -32,7 +32,6 @@ class OrderServiceTest {
         List<Order> orders = new ArrayList<>();
         for (int i = 0; i < RestaurantNames.values().length - 1; i++) {
             orders.add(new Order.OrderBuilder(courier)
-                    .restarauntName()
                     .build());
         }
         courierSet = findCourier(orders);
@@ -77,7 +76,6 @@ class OrderServiceTest {
         Month month = findLaziestMonth(orders);
         assertNull(month);
         orders.add(new Order.OrderBuilder(new Courier("Alexei", "Smirnov", 1))
-                .restarauntName()
                 .deliveryTime(1, 1)
                 .build());
         month = findLaziestMonth(orders);

@@ -28,7 +28,6 @@ public class MainService {
 
         List<Order> orders = new ArrayList<Order>();
         orders.add(new Order.OrderBuilder(courier1)
-                .restarauntName()
                 .deliveryTime(10, 1)
                 .positions(5)
                 .build());

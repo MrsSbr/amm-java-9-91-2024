@@ -26,7 +26,6 @@ public class OrderService {
                     .deliveryTime(rand.nextInt(50), rand.nextInt(5))
                     .positions(rand.nextInt(Positions.values().length) + 1)
                     .orderDate(rand.nextInt(50), rand.nextInt(5), rand.nextInt(30), rand.nextInt(5))
-                    .restarauntName()
                     .build());
         }
         return orders;

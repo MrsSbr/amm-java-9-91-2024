@@ -65,20 +65,14 @@ public class Order {
 
     public static class OrderBuilder { //нужно ли выносить билдер в отдельный класс, Блох пишет, что можно вложенным
         private final Courier courier;
-        private RestaurantNames restaurantName;
-        private LocalDateTime deliveryTime;
 
+        private LocalDateTime deliveryTime = LocalDateTime.now();
         private LocalDateTime orderDate = LocalDateTime.now();
         private Set<Positions> positions = new HashSet<>();
+        private RestaurantNames restaurantName = generateRestaurantNames();
 
-
-        public OrderBuilder(Courier courier) {
+        public OrderBuilder(Courier courier) throws InvalidRestarauntName {
             this.courier = courier;
-        }
-
-        public OrderBuilder restarauntName() throws InvalidRestarauntName {
-            this.restaurantName = generateRestaurantNames();
-            return this;
         }
 
         public OrderBuilder restarauntName(String restaurantName) throws InvalidRestarauntName {
