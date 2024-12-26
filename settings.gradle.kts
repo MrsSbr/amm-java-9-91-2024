@@ -34,9 +34,7 @@ student("bogdanov.nikita", G9) {
 student("kurkina.tanya", G91) {
     lab(0)
     lab(1)
-    lab(2)
     lab(3)
-    lab(4)
 }
 
 student("sergacheva.victoria", G91) {
@@ -111,7 +109,6 @@ student("barbashina.irina", G9) {
 student("em.vera", G91) {
     lab(0)
     lab(1)
-    lab(4)
 }
 
 student("em.vera", G91) {
