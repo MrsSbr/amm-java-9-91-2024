@@ -6,46 +6,45 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.vsu.amm.java.DetailTypes.*;
+import static ru.vsu.amm.java.DetailsService.*;
 
 class DetailsListTest {
 
-    private DetailsList detailsList;
+    private final List<Part> detailsList = new LinkedList<>();
 
     @BeforeEach
     void setup() {
 
-        detailsList = new DetailsList(0);
         Random rand = new Random();
         int count = rand.nextInt(1000) + 1;
-
         for (int i = 0; i < count; ++i) {
-            detailsList.addPart(DetailTypes.getRandomType());
+            addPart(DetailTypes.getRandomType(), detailsList);
         }
 
     }
 
     @org.junit.jupiter.api.Test
     void getPartsTest() {
-        assertNotNull(detailsList.getParts());
-        assertFalse(detailsList.getParts().isEmpty());
+        assertNotNull(detailsList);
+        assertFalse(detailsList.isEmpty());
     }
 
     @org.junit.jupiter.api.Test
     void addPartTest() {
-        detailsList.addPart(DetailTypes.BOLT);
-
-        List<Part> parts = detailsList.getParts();
-        assertTrue(parts.contains(new Part(DetailTypes.BOLT)));
+        addPart(DetailTypes.BOLT, detailsList);
+        assertTrue(detailsList.contains(new Part(DetailTypes.BOLT)));
     }
 
     @Test
     void getUniqueDetailsTest() {
-        List<DetailTypes> uniqueTypes = detailsList.getUniqueDetailTypes();
+        Set<DetailTypes> uniqueTypes = getUniqueDetailTypes(detailsList);
 
         assertNotNull(uniqueTypes);
         assertFalse(uniqueTypes.isEmpty());
@@ -58,7 +57,7 @@ class DetailsListTest {
 
     @Test
     void countDetailsTest() {
-        List<String> counts = detailsList.countDetails();
+        List<String> counts = countDetails(detailsList);
 
         assertNotNull(counts);
         assertFalse(counts.isEmpty());
