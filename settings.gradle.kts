@@ -16,6 +16,7 @@ student("chzhan.ira", G91) {
     lab(2)
     lab(1)
     lab(3)
+    lab(4)
 }
 
 student("kireev.dmitrii", G91) {
@@ -24,6 +25,7 @@ student("kireev.dmitrii", G91) {
     lab(2)
     lab(3)
     lab(4)
+    lab(5)
 }
 
 student("sbrodova.daria", G91) {
@@ -34,6 +36,11 @@ student("bogdanov.nikita", G9) {
     lab(0)
     lab(1)
     lab(2)
+
+
+
+    lab(3) 
+    lab(4)
 }
 
 student("kurkina.tanya", G91) {
@@ -57,6 +64,7 @@ student("belozerov.alexei", G91) {
     lab(3)
     lab(4)
     lab(5)
+    lab(6)
 }
 
 student("gonnykh.alexander", G91) {
@@ -115,6 +123,7 @@ student("bogatyirev.kirill", G9){
 student("zayseva.anastasiya", G9) {
     lab(0)
     lab(1)
+    lab(2)
 }
 
 
@@ -135,6 +144,7 @@ student("barbashina.irina", G9) {
     lab(1)
     lab(2)
     lab(3)
+    lab(4)
 }
 
 student("em.vera", G91) {
@@ -160,6 +170,7 @@ student("dolzhenkov.dmitrii", G91) {
     lab(2)
     lab(3)
     lab(4)
+    lab(5)
 }
 
 student("popova.anastasia", G91) {
@@ -189,6 +200,7 @@ student("mokshin.nikita", G9) {
     lab(0)
     lab(1)
     lab(2)
+    lab(3)
 }
 
 student("anikandrov.andrey", G9) {
@@ -196,6 +208,7 @@ student("anikandrov.andrey", G9) {
     lab(1)
     lab(2)
     lab(3)
+    lab(4)
 }
 
 student("kanatnikov.maxim", G9) {
@@ -203,6 +216,7 @@ student("kanatnikov.maxim", G9) {
     lab(1)
     lab(2)
     lab(3)
+    lab(4)
 }
 
 
@@ -211,6 +225,7 @@ student("garshin.maxim", G9) {
     lab(1)
     lab(2)
     lab(3)
+    lab(4)
 }
 
 student("jasser.daniel", G9) {
@@ -232,6 +247,7 @@ student ("safonova.nastia", G9){
     lab(0)
     lab(1)
     lab(4)
+    lab(3)
     lab(2) 
 }
 
@@ -242,6 +258,7 @@ student("serova.polina", G9) {
     lab(3)
     lab(4)
     lab(5)
+    lab(6)
 }
 
 student("shipilova.viktoria", G9) {
@@ -260,6 +277,7 @@ student("kreydun.nicholas", G9) {
     lab(3)
     lab(4)
     lab(5)
+    lab(6)
 }
 
 
@@ -270,6 +288,7 @@ student("enokyan.gera", G91) {
     lab(3)
     lab(4)
     lab(5)
+    lab(6)
 }
 
 student("kavunov.victor", G9) {
@@ -277,25 +296,20 @@ student("kavunov.victor", G9) {
     lab(1)
     lab(2)
     lab(3)
+    lab(4)
 }
 
 student("tupikova.viktoria", G9) {
     lab(0)
 }
+
+
 student("tottskiy.stepan", G9) {
-    lab(0)
-    lab(1)
-}
-student("globuchik.dmitry", G9) {
     lab(0)
     lab(1)
     lab(2)
 }
 
-
-student("kavunov.victor", G9) {
-    lab(0)
-}
 
 student("tupikova.viktoria", G9) {
     lab(0)
@@ -304,8 +318,9 @@ student("tottskiy.stepan", G9) {
     lab(0)
     lab(1)
     lab(2)
-}
-
+    lab(3)
+    }
+    
 student("nikitina.elizaveta", G9) {
     lab(0)
     lab(1)
@@ -315,8 +330,15 @@ student("nikitina.elizaveta", G9) {
 student("globuchik.dmitry", G9) {
     lab(0)
     lab(1)
+    lab(2)
+    lab(3)
+    lab(4)
 }
 
+
+student("nikitina.elizaveta", G9) {
+    lab(0)
+}
 // DSL для подпроектов [Не трогать]
 includeProject("template-lab0", file("template/lab0"))
 
