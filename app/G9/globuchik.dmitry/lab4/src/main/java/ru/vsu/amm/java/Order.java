@@ -7,6 +7,7 @@ import ru.vsu.amm.java.Exceptions.InvalidRestarauntName;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
@@ -140,6 +141,22 @@ public class Order {
                 "\npositions=" + positions +
                 "\nrestarauntName=" + restarauntName +
                 "\n}\n";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Order order)) return false;
+        return Objects.equals(courier, order.courier) &&
+                Objects.equals(orderDate, order.orderDate) &&
+                Objects.equals(deliveryTime, order.deliveryTime) &&
+                Objects.equals(positions, order.positions) &&
+                restarauntName == order.restarauntName;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(courier, orderDate, deliveryTime, positions, restarauntName);
     }
 }
 
