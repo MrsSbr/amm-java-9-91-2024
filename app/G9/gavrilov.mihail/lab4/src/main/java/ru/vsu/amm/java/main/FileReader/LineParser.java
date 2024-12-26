@@ -7,6 +7,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LineParser {
+    final static int countryGroup = 1;
+    final static int sportGroup = 2;
+    final static int athleteNameGroup = 3;
+    final static int placeGroup = 4;
 
     private final Pattern PATTERN = Pattern.compile("^([A-Za-z]+)," +
             "(SWIMMING|BOXING|RUNNING|HIGH_JUMP),([A-Za-z]+),(\\d)");
@@ -18,11 +22,6 @@ public class LineParser {
         if (!matcher.matches()) {
             throw new IllegalArgumentException("Invalid line format");
         }
-
-        final int countryGroup = 1;
-        final int sportGroup = 2;
-        final int athleteNameGroup = 3;
-        final int placeGroup = 4;
 
         String countryName = matcher.group(countryGroup);
         KindOfSport sport = KindOfSport.valueOf(matcher.group(sportGroup));
