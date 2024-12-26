@@ -140,11 +140,8 @@ student("barbashina.irina", G9) {
     lab(1)
     lab(2)
     lab(3)
-<<<<<<< Updated upstream
-=======
     lab(4)
     lab(5)
->>>>>>> Stashed changes
 }
 
 student("em.vera", G91) {
