@@ -107,22 +107,19 @@ student("golukovich.timofey", G9) {
     lab(4)
 }
 
-
-student("bogatyirev.kirill", G9){
-    lab(0)
-    lab(1)
-    lab(2)
-    lab(3)
- }
-
-
-student("zayseva.anastasiya", G9) {
+student("bogatyirev.kirill", G9) {
     lab(0)
     lab(1)
     lab(2)
     lab(3)
 }
 
+student("zayseva.anastasiya", G9) {
+    lab(0)
+    lab(1)
+    lab(2)
+    lab(4)
+}
 
 student("korneeva.svetlana", G91) {
     lab(0)
@@ -239,10 +236,10 @@ student("gavrilov.mihail", G9) {
     lab(1)
     lab(2)
 }
-student ("safonova.nastia", G9){
+student("safonova.nastia", G9) {
     lab(0)
     lab(1)
-    lab(2) 
+    lab(2)
 }
 
 student("serova.polina", G9) {

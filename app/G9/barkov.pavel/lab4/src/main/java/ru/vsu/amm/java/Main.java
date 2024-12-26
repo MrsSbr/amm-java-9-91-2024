@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main {
-    private final static String PATH = "data\\test.txt";
+    private final static String PATH = "";
 
     public static void main(String[] args) {
         Logger logger = Logger.getLogger(Main.class.getName());
