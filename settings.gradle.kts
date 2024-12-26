@@ -153,6 +153,7 @@ student("barkov.pavel", G9) {
 student("mokshin.nikita", G9) {
     lab(0)
     lab(1)
+    lab(4)
 }
 
 student("anikandrov.andrey", G9) {
