@@ -14,13 +14,16 @@ import static ru.vsu.amm.java.classes.service.SalaryAnalyzer.personByDepartment;
 import static ru.vsu.amm.java.classes.service.SalaryAnalyzer.printByDepartment;
 
 public class SalaryAnalyzing {
+
+    private static final String FILENAME = "salary.txt";
+
     private static final Logger logger = Logger.getLogger(SalaryAnalyzing.class.getName());
 
     public static void main(String[] args) {
         try {
-            String fileName = "salary.txt";
+            ;
             ReadingFile reader = new ReadingFile();
-            List<Employee> employees = reader.readEmployeeFromFile(fileName);
+            List<Employee> employees = reader.readEmployeeFromFile(FILENAME);
 
             SalaryAnalyzer salaryAnalyzer = new SalaryAnalyzer();
 

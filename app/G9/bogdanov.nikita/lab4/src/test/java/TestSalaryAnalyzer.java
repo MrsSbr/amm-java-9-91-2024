@@ -4,10 +4,13 @@ import ru.vsu.amm.java.classes.enums.Department;
 import ru.vsu.amm.java.classes.service.SalaryAnalyzer;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestSalaryAnalyzer {
+
     @Test
     public void testMaxAverageSalary() {
         SalaryAnalyzer sa = new SalaryAnalyzer();
@@ -18,7 +21,7 @@ public class TestSalaryAnalyzer {
                 new Employee(Department.IT, "Kirill", 80000)
         );
 
-        assertEquals(2, sa.findMaxAverageSalary(employees));
+        assertEquals(Department.IT, sa.findMaxAverageSalary(employees));
     }
 
     @Test
@@ -31,7 +34,7 @@ public class TestSalaryAnalyzer {
                 new Employee(Department.IT, "Kirill", 80000)
         );
 
-        assertEquals(2, sa.findMaxAverageSalary(employees));
+        assertEquals(Department.IT, sa.findMaxAverageSalary(employees));
     }
 
     @Test
@@ -46,7 +49,7 @@ public class TestSalaryAnalyzer {
                 new Employee(Department.HR, "Sveta", 50000)
         );
 
-        assertEquals(1, sa.findMaxSalary(employees));
+        assertEquals(Department.HR, sa.findMaxSalary(employees));
     }
 
     @Test
@@ -61,6 +64,38 @@ public class TestSalaryAnalyzer {
                 new Employee(Department.HR, "Sveta", 50000)
         );
 
-        assertEquals(1, sa.findMaxSalary(employees));
+        assertEquals(Department.IT, sa.findMaxSalary(employees));
+    }
+
+    @Test
+    public void testEmptyEmployeeList() {
+        SalaryAnalyzer sa = new SalaryAnalyzer();
+        List<Employee> employees = List.of();
+
+        assertThrows(NoSuchElementException.class, () -> sa.findMaxAverageSalary(employees));
+        assertThrows(NoSuchElementException.class, () -> sa.findMaxSalary(employees));
+    }
+
+    @Test
+    public void testSingleEmployee() {
+        SalaryAnalyzer sa = new SalaryAnalyzer();
+        List<Employee> employees = List.of(
+                new Employee(Department.HR, "Anna", 50000)
+        );
+
+        assertEquals(Department.HR, sa.findMaxAverageSalary(employees));
+        assertEquals(Department.HR, sa.findMaxSalary(employees));
+    }
+
+    @Test
+    public void testEqualSalariesAcrossDepartments() {
+        SalaryAnalyzer sa = new SalaryAnalyzer();
+        List<Employee> employees = List.of(
+                new Employee(Department.HR, "Alex", 70000),
+                new Employee(Department.IT, "Oleg", 70000)
+        );
+
+        assertEquals(Department.IT, sa.findMaxAverageSalary(employees));
+        assertEquals(Department.IT, sa.findMaxSalary(employees));
     }
 }
