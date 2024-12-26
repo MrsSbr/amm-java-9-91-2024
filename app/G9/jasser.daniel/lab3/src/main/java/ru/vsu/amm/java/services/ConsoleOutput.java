@@ -2,17 +2,13 @@ package ru.vsu.amm.java.services;
 
 import ru.vsu.amm.java.entities.Driver;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ConsoleOutput implements OutputInterface {
-    public void outputExpensesInCertainDay(Calendar currentDay, List<Driver> drivers) {
-        System.out.println("\nExpenses in" + currentDay.getTime().toString());
-        double totalPerDay = drivers.stream()
-                .collect(Collectors.summarizingDouble(Driver::getExpenses))
-                .getSum();
-        System.out.println("Day " + currentDay.getTime().toString() + " expenses " + totalPerDay + '\n');
+    public void outputExpensesInCertainDay(LocalDate currentDay, double totalPerDay) {
+        System.out.println("\nExpenses in " + currentDay);
+        System.out.println("Day " + currentDay + " expenses " + totalPerDay + '\n');
     }
 
     public void outputCurrentForDriver(Driver driver) {
@@ -24,6 +20,6 @@ public class ConsoleOutput implements OutputInterface {
             System.out.println("Total expenses for driver : ");
             System.out.println(driver.getName() + ": " + driver.getTotalExpenses());
         }
-        System.out.println("Total expenses: " + total);
+        System.out.println("Total expenses: " + ' ' + total);
     }
 }

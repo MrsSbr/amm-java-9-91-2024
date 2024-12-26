@@ -1,34 +1,34 @@
 package ru.vsu.amm.java.entities;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class DateRange {
-    private Calendar startDate;
-    private Calendar endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     public DateRange() {
-        startDate = Calendar.getInstance();
-        endDate = Calendar.getInstance();
+        startDate = LocalDate.now();
+        endDate = LocalDate.now();
     }
 
-    public DateRange(Calendar startDate, Calendar endDate) {
+    public DateRange(LocalDate startDate, LocalDate endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public Calendar getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public Calendar getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Calendar endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public void setStartDate(Calendar startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 }

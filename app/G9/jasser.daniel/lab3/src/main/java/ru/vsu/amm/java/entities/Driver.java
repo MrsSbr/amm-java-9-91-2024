@@ -5,9 +5,15 @@ public class Driver {
     private double expensesPerDay;
     private double totalExpenses;
 
-    public Driver(String name, double expencesPerDay) {
+    public Driver(String name) {
         this.name = name;
-        this.expensesPerDay = expencesPerDay;
+        this.expensesPerDay = 0.0;
+        totalExpenses = 0.0;
+    }
+
+    public Driver(String name, double expensesPerDay) {
+        this.name = name;
+        this.expensesPerDay = expensesPerDay;
         totalExpenses = 0.0;
     }
 
