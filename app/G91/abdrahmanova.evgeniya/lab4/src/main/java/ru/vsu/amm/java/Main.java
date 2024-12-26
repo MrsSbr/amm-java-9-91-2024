@@ -9,13 +9,18 @@ import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
-public class Main {
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+
+public class Main {
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
 
         String filePath = "app/G91/abdrahmanova.evgeniya/lab4/src/main/java/ru/vsu/amm/java/files/plants";
         try {
-            List<PlantLog> logs = PlantLogReader.readPlantLogsFromFile(filePath);
+            PlantLogReader reader = new PlantLogReader(logger);
+            List<PlantLog> logs = reader.readPlantLogsFromFile(filePath);
             logs.forEach(System.out::println);
 
             PlantLogService plantLogService = new PlantLogService(logs);
@@ -28,7 +33,7 @@ public class Main {
             System.out.println("Plants with lowest earnings: " + plantLogService.findPlantsWithLowestEarnings());
 
         } catch (IOException e) {
-            System.err.println("failed: " + e.getMessage());
+            logger.log(Level.SEVERE, "failed: " , e);
         }
     }
 }

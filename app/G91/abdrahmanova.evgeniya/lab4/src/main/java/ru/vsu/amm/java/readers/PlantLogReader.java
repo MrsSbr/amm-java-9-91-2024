@@ -3,8 +3,6 @@ package ru.vsu.amm.java.readers;
 import ru.vsu.amm.java.entites.PlantLog;
 import ru.vsu.amm.java.enums.PlantType;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,15 +11,23 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class PlantLogReader {
 
-    public static List<PlantLog> readPlantLogsFromFile(String filePath) throws IOException {
+    private  Logger logger;
+
+
+    public PlantLogReader(Logger logger) {
+        this.logger = logger;
+    }
+    public  List<PlantLog> readPlantLogsFromFile(String filePath) throws IOException {
         List<PlantLog> plantLogs = new ArrayList<>();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        System.out.println("File path: " + filePath);
+        logger.log(Level.INFO, "File path: " + filePath);
         Path path = Paths.get(filePath);
 
         try {
@@ -38,18 +44,17 @@ public class PlantLogReader {
                             return new PlantLog(name, type, sizePot, price, date);
 
                         } catch (IllegalArgumentException | NullPointerException e) {
-                            System.err.println("Skipping malformed line: " + String.join(",", parts));
+                            logger.log(Level.WARNING, "Skipping malformed line: " + String.join(",", parts), e);
                             return null;
                         }
                     })
                     .filter(plantLog -> plantLog != null)
                     .collect(Collectors.toList());
         } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error reading file: " , e);
             throw e;
         }
 
         return plantLogs;
     }
 }
-
