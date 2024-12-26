@@ -51,7 +51,7 @@ public class ServiceTest {
     @Test
     public void NullAthleteWithMaxMedals() {
 
-        List<String> result = service.AthleteWithMaxMedals(nullEntities);
+        Set<String> result = service.AthleteWithMaxMedals(nullEntities);
         assertEquals(result, new ArrayList<>());
     }
 
@@ -61,7 +61,7 @@ public class ServiceTest {
                 new OlympicMedalsRecord("Russia", SWIMMING, "Kurpatov", 2),
                 new OlympicMedalsRecord("Russia", SWIMMING, "Kurpatov", 3),
                 new OlympicMedalsRecord("Russia", SWIMMING, "Feshenko", 1));
-        List<String> result = service.AthleteWithMaxMedals(data);
+        Set<String> result = service.AthleteWithMaxMedals(data);
         List<String> trueList = List.of("Kurpatov");
         assertEquals(result, trueList);
     }
@@ -74,7 +74,7 @@ public class ServiceTest {
                 new OlympicMedalsRecord("Russia", RUNNING, "Gavrilov", 1),
                 new OlympicMedalsRecord("Russia", HIGH_JUMP, "Gavrilov", 2),
                 new OlympicMedalsRecord("Italy", SWIMMING, "Arnes", 3));
-        List<String> result = service.AthleteWithMaxMedals(data);
+        Set<String> result = service.AthleteWithMaxMedals(data);
         List<String> trueList = List.of("Kurpatov", "Gavrilov");
         assertEquals(result, trueList);
     }

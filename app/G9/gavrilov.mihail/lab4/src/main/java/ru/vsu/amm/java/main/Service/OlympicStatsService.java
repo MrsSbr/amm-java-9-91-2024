@@ -46,9 +46,9 @@ public class OlympicStatsService {
         }
     }
 
-    public static List<String> AthleteWithMaxMedals(List<OlympicMedalsRecord> data) {
+    public static Set<String> AthleteWithMaxMedals(List<OlympicMedalsRecord> data) {
         if (data == null || data.isEmpty()) {
-            return new ArrayList<>();
+            return new HashSet<>();
         } else {
             List<String> allBestAthletes = data.stream()
                     .map(OlympicMedalsRecord::athlete).toList();
@@ -59,7 +59,7 @@ public class OlympicStatsService {
 
             return allBestAthletes.stream().filter((athlete) -> {
                 return Collections.frequency(allBestAthletes, athlete) == maxFrequency;
-            }).distinct().toList();
+            }).collect(Collectors.toSet());
         }
     }
 }
