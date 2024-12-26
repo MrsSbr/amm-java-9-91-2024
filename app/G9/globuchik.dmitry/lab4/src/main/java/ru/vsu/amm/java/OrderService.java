@@ -5,6 +5,7 @@ import ru.vsu.amm.java.Enums.RestaurantNames;
 import ru.vsu.amm.java.Exceptions.InvalidOrderSize;
 import ru.vsu.amm.java.Exceptions.InvalidRestarauntName;
 
+import java.time.Duration;
 import java.time.Month;
 import java.util.List;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public class OrderService {
     private OrderService() {
@@ -32,69 +34,34 @@ public class OrderService {
     }
 
     public static Set<Courier> findCourier(List<Order> orders) {
-        Set<Courier> couriers = new HashSet<>();
         Set<RestaurantNames> allRestaraunts = new HashSet<>();
         for (RestaurantNames restaurantName : RestaurantNames.values()) {
             allRestaraunts.add(RestaurantNames.valueOf(restaurantName.name()));
         }
 
-        Map<Courier, Set<RestaurantNames>> couriersMap = new HashMap<>();
-        for (Order order : orders) {
-            Courier courier = order.getCourier();
-            couriersMap.putIfAbsent(courier, new HashSet<>());
-            couriersMap.get(courier).add(order.getRestarauntName());
-        }
-
-        for (var entry : couriersMap.entrySet()) {
-            if (entry.getValue().containsAll(allRestaraunts)) {
-                couriers.add(entry.getKey());
-            }
-        }
-
-        return couriers;
+        return orders.stream().collect(Collectors.groupingBy(Order::getCourier, Collectors.mapping(Order::getRestarauntName, Collectors.toSet())))
+                .entrySet().stream()
+                .filter(entry -> entry.getValue().containsAll(allRestaraunts))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet());
     }
 
     public static RestaurantNames findMostPopular(List<Order> orders) {
-        HashMap<RestaurantNames, Integer> namesList = new HashMap<>();
-        RestaurantNames mostPopular = null;
-
-        for (RestaurantNames name : RestaurantNames.values()) {
-            namesList.put(name, 0);
-        }
-
-        for (Order order : orders) {
-            namesList.put(order.getRestarauntName(), namesList.get(order.getRestarauntName()) + 1);
-        }
-
-        int maxCount = -1;
-
-        for (var entry : namesList.entrySet()) {
-            if (entry.getValue() > maxCount && entry.getValue() != 0) {
-                mostPopular = entry.getKey();
-                maxCount = entry.getValue();
-            }
-        }
-        return mostPopular;
+        return orders.stream()
+                .collect(Collectors.groupingBy(Order::getRestarauntName, Collectors.counting()))
+                .entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 
-    public static Month findLaziestMonth(List<Order> Orders) {
-        HashMap<Month, Long> deliveryTimeByMonth = new HashMap<>();
-
-        for (Order order : Orders) {
-            long deliveryDuration = java.time.Duration.between(order.getOrderDate(), order.getDeliveryTime()).toMillis();
-            Month month = order.getOrderDate().getMonth();
-            deliveryTimeByMonth.put(month, deliveryTimeByMonth.getOrDefault(month, 0L) + deliveryDuration);
-        }
-        Month maxMonth = null;
-        long maxTime = 0;
-
-        for (Map.Entry<Month, Long> entry : deliveryTimeByMonth.entrySet()) {
-            if (entry.getValue() > maxTime) {
-                maxMonth = entry.getKey();
-                maxTime = entry.getValue();
-            }
-        }
-
-        return maxMonth;
+    public static Month findLaziestMonth(List<Order> orders) {
+        return orders.stream()
+                .collect(Collectors.groupingBy(order -> order.getOrderDate().getMonth(),
+                        Collectors.summingLong(order -> Duration.between(order.getOrderDate(), order.getDeliveryTime()).toMillis())))
+                .entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 }

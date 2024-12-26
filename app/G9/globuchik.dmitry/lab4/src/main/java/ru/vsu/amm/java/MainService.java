@@ -6,13 +6,8 @@ import ru.vsu.amm.java.Exceptions.InvalidRestarauntName;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static ru.vsu.amm.java.OrderFileService.saveToFile;
-import static ru.vsu.amm.java.OrderService.generateOrders;
-import static ru.vsu.amm.java.OrderService.findCourier;
-import static ru.vsu.amm.java.OrderService.findMostPopular;
-import static ru.vsu.amm.java.OrderService.findLaziestMonth;
 
 public class MainService {
     private final static Logger logger = Logger.getLogger(MainService.class.getName());
@@ -32,13 +27,17 @@ public class MainService {
                 .positions(5)
                 .build());
 
-        orders = generateOrders(couriers, 1000);
+        orders = OrderService.generateOrders(couriers, 1000);
 
-        saveToFile(orders);
-        //orders = loadFromFile();
+        OrderFileService.saveToFile(orders);
+        try {
+            orders = OrderFileService.loadFromFile();
+        } catch (FileNotFoundException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        }
 
-        System.out.println(findMostPopular(orders));
-        System.out.println(findLaziestMonth(orders));
-        System.out.println(findCourier(orders));
+        System.out.println(OrderService.findMostPopular(orders));
+        System.out.println(OrderService.findLaziestMonth(orders));
+        System.out.println(OrderService.findCourier(orders));
     }
 }

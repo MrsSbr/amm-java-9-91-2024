@@ -23,7 +23,8 @@ public class OrderFileService {
     private final static Logger logger = Logger.getLogger(OrderFileService.class.getName());
     private final static String PATH = "app/G9/globuchik.dmitry/lab4/orders.txt";
 
-    private OrderFileService() {};
+    private OrderFileService() {
+    }
 
     public static void saveToFile(List<Order> orders) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(PATH))) {
@@ -32,16 +33,14 @@ public class OrderFileService {
             }
             bufferedWriter.flush();
             bufferedWriter.write("\n");
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             logger.log(Level.WARNING, e.getMessage());
         }
     }
 
     public static List<Order> loadFromFile() throws FileNotFoundException {
         List<Order> orders = new ArrayList<Order>();
-
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(PATH))){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(PATH))) {
             StringBuilder stringBuilder = new StringBuilder();
             String line;
             line = bufferedReader.readLine();
@@ -64,7 +63,7 @@ public class OrderFileService {
     }
 
     private static Order parseOrder(String line) throws ParseException, InvalidRestarauntName, InvalidOrderSize {
-        String[] words = line.split("\n" );
+        String[] words = line.split("\n");
         String firstName = words[1].split("=")[1].trim();
         String lastName = words[2].split("=")[1].trim();
         int id = Integer.parseInt(words[3].split("=")[1].trim());
