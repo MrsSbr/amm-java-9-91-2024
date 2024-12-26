@@ -13,8 +13,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static ru.vsu.amm.java.OrderService.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static ru.vsu.amm.java.OrderService.findCourier;
+import static ru.vsu.amm.java.OrderService.findMostPopular;
+import static ru.vsu.amm.java.OrderService.findLaziestMonth;
 
 class OrderServiceTest {
 
@@ -24,7 +30,7 @@ class OrderServiceTest {
         Courier courier = new Courier("Alexei", "Smirnov", 1);
         courierSet.add(courier);
         List<Order> orders = new ArrayList<>();
-        for(int i = 0; i < RestaurantNames.values().length - 1; i++) {
+        for (int i = 0; i < RestaurantNames.values().length - 1; i++) {
             orders.add(new Order.OrderBuilder(courier)
                     .restarauntName()
                     .build());
@@ -39,7 +45,7 @@ class OrderServiceTest {
         Courier courier = new Courier("Alexei", "Smirnov", 1);
         courierSet.add(courier);
         List<Order> orders = new ArrayList<>();
-        for(int i = 0; i < RestaurantNames.values().length; i++) {
+        for (int i = 0; i < RestaurantNames.values().length; i++) {
             orders.add(new Order.OrderBuilder(courier)
                     .restarauntName(i)
                     .build());
@@ -70,7 +76,7 @@ class OrderServiceTest {
         List<Order> orders = new ArrayList<>();
         Month month = findLaziestMonth(orders);
         assertNull(month);
-        orders.add(new Order.OrderBuilder(new Courier("Alexei", "Smirnov", 1)).restarauntName().deliveryTime(1,1).build());
+        orders.add(new Order.OrderBuilder(new Courier("Alexei", "Smirnov", 1)).restarauntName().deliveryTime(1, 1).build());
         month = findLaziestMonth(orders);
         System.out.println(month);
         assertNotNull(month);

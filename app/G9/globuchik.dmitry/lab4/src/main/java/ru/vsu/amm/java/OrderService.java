@@ -6,10 +6,17 @@ import ru.vsu.amm.java.Exceptions.InvalidOrderSize;
 import ru.vsu.amm.java.Exceptions.InvalidRestarauntName;
 
 import java.time.Month;
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
 
 public class OrderService {
-    private OrderService(){};
+    private OrderService() {
+    }
 
     public static List<Order> generateOrders(List<Courier> couriers, int count) throws InvalidRestarauntName, InvalidOrderSize {
         List<Order> orders = new ArrayList<>();
@@ -52,7 +59,7 @@ public class OrderService {
         HashMap<RestaurantNames, Integer> namesList = new HashMap<>();
         RestaurantNames mostPopular = null;
 
-        for (RestaurantNames name: RestaurantNames.values()) {
+        for (RestaurantNames name : RestaurantNames.values()) {
             namesList.put(name, 0);
         }
 
@@ -71,10 +78,10 @@ public class OrderService {
         return mostPopular;
     }
 
-    public static Month findLaziestMonth(List<Order> Orders){
+    public static Month findLaziestMonth(List<Order> Orders) {
         HashMap<Month, Long> deliveryTimeByMonth = new HashMap<>();
 
-        for(Order order : Orders){
+        for (Order order : Orders) {
             long deliveryDuration = java.time.Duration.between(order.getOrderDate(), order.getDeliveryTime()).toMillis();
             Month month = order.getOrderDate().getMonth();
             deliveryTimeByMonth.put(month, deliveryTimeByMonth.getOrDefault(month, 0L) + deliveryDuration);

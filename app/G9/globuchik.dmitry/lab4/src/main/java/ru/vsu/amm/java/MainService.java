@@ -1,19 +1,18 @@
 package ru.vsu.amm.java;
 
-import ru.vsu.amm.java.Enums.Positions;
 import ru.vsu.amm.java.Exceptions.InvalidOrderSize;
 import ru.vsu.amm.java.Exceptions.InvalidRestarauntName;
-
-import static ru.vsu.amm.java.OrderFileService.*;
-import static ru.vsu.amm.java.OrderService.*;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static ru.vsu.amm.java.OrderFileService.saveToFile;
+import static ru.vsu.amm.java.OrderService.generateOrders;
+import static ru.vsu.amm.java.OrderService.findCourier;
+import static ru.vsu.amm.java.OrderService.findMostPopular;
+import static ru.vsu.amm.java.OrderService.findLaziestMonth;
 
 public class MainService {
     private final static Logger logger = Logger.getLogger(MainService.class.getName());
@@ -28,11 +27,7 @@ public class MainService {
         couriers.add(courier3);
 
         List<Order> orders = new ArrayList<Order>();
-        orders.add(new Order.OrderBuilder(courier1)
-                        .restarauntName()
-                        .deliveryTime(10, 1)
-                        .positions(5)
-                        .build());
+        orders.add(new Order.OrderBuilder(courier1).restarauntName().deliveryTime(10, 1).positions(5).build());
 
         orders = generateOrders(couriers, 1000);
 
