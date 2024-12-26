@@ -245,6 +245,7 @@ student("gavrilov.mihail", G9) {
 student ("safonova.nastia", G9){
     lab(0)
     lab(1)
+    lab(3)
     lab(2) 
 }
 
