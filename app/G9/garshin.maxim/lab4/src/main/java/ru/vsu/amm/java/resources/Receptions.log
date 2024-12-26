@@ -1,0 +1,3 @@
+Nov 21, 2024 11:02:03 PM ru.vsu.amm.java.Hospital main
+SEVERE: Null pointer was passed to method.
+[ru.vsu.amm.java.service.HospitalReceptionsStatsService.findPatientsVisitedDoctorsLastYearAndNotThisYear(HospitalReceptionsStatsService.java:49), ru.vsu.amm.java.Hospital.main(Hospital.java:68)]
