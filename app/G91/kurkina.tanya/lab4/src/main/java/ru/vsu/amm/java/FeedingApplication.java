@@ -1,9 +1,13 @@
 package ru.vsu.amm.java;
 
+import ru.vsu.amm.java.classes.FeedingRecord;
+import ru.vsu.amm.java.services.FeedingFileHandler;
+import ru.vsu.amm.java.services.FeedingService;
+
 import java.util.List;
 
 public class FeedingApplication {
-    private static final String PATH = "C:\\Users\\Tanya\\Desktop\\JavaLab2\\app\\G91\\kurkina.tanya\\lab4\\src\\main\\java\\ru\\vsu\\amm\\java\\data\\data";
+    private static final String PATH = "app/G91/kurkina.tanya/lab4/src/main/java/ru/vsu/amm/java/data/data";
     public static void main(String[] args) {
         List<FeedingRecord> records = FeedingFileHandler.readFeedingRecords(PATH);
 

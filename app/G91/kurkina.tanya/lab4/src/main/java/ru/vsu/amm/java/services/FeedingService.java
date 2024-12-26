@@ -1,4 +1,6 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.services;
+
+import ru.vsu.amm.java.classes.FeedingRecord;
 
 import java.time.LocalDate;
 import java.util.Comparator;

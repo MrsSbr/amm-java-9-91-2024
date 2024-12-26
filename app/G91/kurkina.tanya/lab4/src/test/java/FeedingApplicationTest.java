@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.vsu.amm.java.FeedingRecord;
-import ru.vsu.amm.java.FeedingService;
+import ru.vsu.amm.java.classes.FeedingRecord;
+import ru.vsu.amm.java.services.FeedingService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

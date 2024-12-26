@@ -1,4 +1,4 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.classes;
 
 import java.time.LocalDate;
 import java.util.List;
