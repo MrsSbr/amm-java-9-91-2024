@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -42,7 +42,7 @@ public class HorseRacingService {
             return races;
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to load data from file: {0}", path);
-            throw new RuntimeException(e);
+            return new ArrayList<>();
         }
     }
 

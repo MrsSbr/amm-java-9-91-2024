@@ -11,7 +11,12 @@ public class HorseRacingApplication {
     private static final String PATH = "app/G9/mokshin.nikita/lab4/horseRacing.txt";
 
     public static void main(String[] args) {
-        HorseRacingService.generateToFile(PATH, 30);
+        try {
+            HorseRacingService.generateToFile(PATH, 30);
+        } catch (RuntimeException e) {
+            System.out.println("Failed to generate to file");
+            return;
+        }
 
         List<HorseRacing> horseRacings = HorseRacingService.loadFromFile(PATH);
 
