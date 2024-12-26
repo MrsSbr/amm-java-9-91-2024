@@ -1,0 +1,146 @@
+Index: app/G91/simonov.ivan/TaskFootballPlayers.txt
+===================================================================
+diff --git a/app/G91/simonov.ivan/TaskFootballPlayers.txt b/app/G91/simonov.ivan/TaskFootballPlayers.txt
+deleted file mode 100644
+--- a/app/G91/simonov.ivan/TaskFootballPlayers.txt	(revision 6093626f5370c781ee1c9bfde8a9761758df4041)
++++ /dev/null	(revision 6093626f5370c781ee1c9bfde8a9761758df4041)
+@@ -1,14 +0,0 @@
+-Для определения популярности футболистов руководство команды попросило каждого из 3000 тысяч посетителей матча указать
+-номера трех наиболее популярных игроков команды (номера игроков с 1 по 22).
+-
+-Напишите класс, который принимает с клавиатуры ответы болельщиков (подумайте, как можно смоделировать ввод с помощью
+-случайных чисел) и затем выводит на экран следующую информацию:
+-
+-• номер самого популярного игрока (если есть несколько таких игроков - все их номера);
+-• номер игрока, не получившего ни одного голоса (если есть несколько таких игроков - все их номера)
+-• список игроков, за которых голосовали
+-В задаче должны использоваться коллекции (за исключением Map),
+-необходимо выбрать наиболее подходящую (подходящие) коллекцию для этой задачи, аргументировать свой выбор
+-
+-В задаче должны использоваться элементы функционального программирования
+-Задача должна быть покрыта тестами с помощью JUnit
+\ No newline at end of file
+Index: app/G91/simonov.ivan/TaskFurniture.txt
+===================================================================
+diff --git a/app/G91/simonov.ivan/TaskFurniture.txt b/app/G91/simonov.ivan/TaskFurniture.txt
+deleted file mode 100644
+--- a/app/G91/simonov.ivan/TaskFurniture.txt	(revision 6093626f5370c781ee1c9bfde8a9761758df4041)
++++ /dev/null	(revision 6093626f5370c781ee1c9bfde8a9761758df4041)
+@@ -1,12 +0,0 @@
+-Описать иерархию классов для мебели, которая должна содержать:
+-
+-- интерфейс
+-- абстрактный класс
+-- несколько наследников одного класса (или реализаций интерфейса)
+-- переопределение метода toString
+-- переопределение методов equals и hashCode
+-- переопределение публичного метода класса-предка
+-- использование конструктора с параметрами класса-предка
+-- использование метода instanceOf
+-
+-В коде программы продемонстрировать использование принципов ООП на основе созданной иерархии классов.
+Index: app/G91/simonov.ivan/TaskSudokuSolver.txt
+===================================================================
+diff --git a/app/G91/simonov.ivan/TaskSudokuSolver.txt b/app/G91/simonov.ivan/TaskSudokuSolver.txt
+deleted file mode 100644
+--- a/app/G91/simonov.ivan/TaskSudokuSolver.txt	(revision 6093626f5370c781ee1c9bfde8a9761758df4041)
++++ /dev/null	(revision 6093626f5370c781ee1c9bfde8a9761758df4041)
+@@ -1,39 +0,0 @@
+-Sudoku Solver
+-
+-Напишите программу, которая решает головоломку судоку, заполняя пустые ячейки.
+-
+-Решение судоку должно удовлетворять всем следующим правилам:
+-
+-Каждая из цифр от 1 до 9 должна встречаться ровно один раз в каждой строке.
+-Каждая из цифр от 1 до 9 должна встречаться ровно один раз в каждом столбце.
+-Каждая из цифр от 1 до 9 должна встречаться ровно один раз в каждом из 9 подблоков 3x3 сетки.
+-
+-'.' символ указывает на пустые ячейки.
+-
+-Пример:
+-
+-Input: board = [["5","3",".",".","7",".",".",".","."],
+-                ["6",".",".","1","9","5",".",".","."],
+-                [".","9","8",".",".",".",".","6","."],
+-                ["8",".",".",".","6",".",".",".","3"],
+-                ["4",".",".","8",".","3",".",".","1"],
+-                ["7",".",".",".","2",".",".",".","6"],
+-                [".","6",".",".",".",".","2","8","."],
+-                [".",".",".","4","1","9",".",".","5"],
+-                [".",".",".",".","8",".",".","7","9"]]
+-
+-Output: [["5","3","4","6","7","8","9","1","2"],
+-        ["6","7","2","1","9","5","3","4","8"],
+-        ["1","9","8","3","4","2","5","6","7"],
+-        ["8","5","9","7","6","1","4","2","3"],
+-        ["4","2","6","8","5","3","7","9","1"],
+-        ["7","1","3","9","2","4","8","5","6"],
+-        ["9","6","1","5","3","7","2","8","4"],
+-        ["2","8","7","4","1","9","6","3","5"],
+-        ["3","4","5","2","8","6","1","7","9"]]
+-
+-Ограничения:
+-
+-board.length == 9
+-board[i].length == 9
+-board[i][j] это цифра или '.'.
+\ No newline at end of file
+Index: settings.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import Settings_gradle.Group.*\r\n\r\nrootProject.name = \"-amm-java-9-91-2024\"\r\n\r\n\r\nstudent(\"sbrodov.andrey\", G2_2) {\r\n    lab(0)\r\n}\r\n\r\nstudent(\"sbrodova.daria\", G9) {\r\n    lab(0)\r\n}\r\n\r\nstudent(\"chzhan.ira\", G91) {\r\n    lab(0)\r\n    lab(2)\r\n    lab(1)\r\n}\r\n\r\nstudent(\"kireev.dmitrii\", G91) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n}\r\n\r\nstudent(\"sbrodova.daria\", G91) {\r\n    lab(0)\r\n}\r\n\r\nstudent(\"bogdanov.nikita\", G9) {\r\n    lab(0)\r\n    lab(1)\r\n}\r\n\r\nstudent(\"kurkina.tanya\", G91) {\r\n    lab(0)\r\n    lab(1)\r\n}\r\n\r\nstudent(\"sergacheva.victoria\", G91) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n}\r\n\r\nstudent(\"belozerov.alexei\", G91) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n}\r\n\r\nstudent(\"gonnykh.alexander\", G91) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n}\r\n\r\nstudent(\"simonov.ivan\", G91) {\r\n    lab(0)\r\n    lab(2)\r\n    lab(1)\r\n}\r\n\r\nstudent(\"ulyanov.leonid\", G91) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n}\r\n\r\nstudent(\"nelezin.oleg\", G9) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n    lab(3)\r\n    lab(4)\r\n}\r\n\r\nstudent(\"golukovich.timofey\", G9) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n    lab(3)\r\n}\r\n\r\n\r\nstudent(\"bogatyirev.kirill\", G9){\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n }\r\n\r\n\r\nstudent(\"zayseva.anastasiya\", G9) {\r\n  lab(0)\r\n}\r\n\r\nstudent(\"korneeva.svetlana\", G91) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n}\r\nstudent(\"abdrahmanova.evgeniya\", G91) {\r\n    lab(0)\r\n}\r\n\r\nstudent(\"barbashina.irina\", G9) {\r\n    lab(0)\r\n}\r\n\r\nstudent(\"em.vera\", G91) {\r\n    lab(0)\r\n    lab(1)\r\n}\r\n\r\nstudent(\"em.vera\", G91) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n}\r\n\r\nstudent(\"dolzhenkov.dmitrii\", G91) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n}\r\n\r\nstudent(\"popova.anastasia\", G91) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n}\r\n\r\nstudent(\"gadzhiev.maksym\", G9) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n}\r\n\r\nstudent(\"barkov.pavel\", G9) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n}\r\n\r\nstudent(\"mokshin.nikita\", G9) {\r\n    lab(0)\r\n}\r\n\r\nstudent(\"anikandrov.andrey\", G9) {\r\n    lab(0)\r\n    lab(1)\r\n}\r\n\r\nstudent(\"kanatnikov.maxim\", G9) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n}\r\n\r\n\r\nstudent(\"garshin.maxim\", G9) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n}\r\n\r\nstudent(\"jasser.daniel\", G9) {\r\n    lab(0)\r\n}\r\nstudent(\"jasser.daniel\", G9) {\r\n    lab(1)\r\n}\r\n\r\nstudent(\"gavrilov.mihail\", G9) {\r\n    lab(0)\r\n}\r\nstudent (\"safonova.nastia\", G9){\r\n    lab(0)\r\n    lab(1)\r\n}\r\nstudent(\"serova.polina\", G9) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n    lab(3)\r\n}\r\n\r\nstudent(\"shipilova.viktoria\", G9) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n    lab(3)\r\n}\r\nstudent(\"kreydun.nicholas\", G9) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n    lab(3)\r\n}\r\n\r\nstudent(\"enokyan.gera\", G91) {\r\n    lab(0)\r\n    lab(1)\r\n    lab(2)\r\n    lab(3)\r\n    lab(4)\r\n}\r\n\r\nstudent(\"globuchik.dmitry\", G9) {\r\n    lab(0)\r\n}\r\n\r\n\r\nstudent(\"nikitina.elizaveta\", G9) {\r\n    lab(0)\r\n}\r\n// DSL для подпроектов [Не трогать]\r\nincludeProject(\"template-lab0\", file(\"template/lab0\"))\r\n\r\nenum class Group { G9, G91, G2_2 }\r\n\r\nfun student(name: String, group: Group, block: LabsAppender.() -> Unit = {}) {\r\n    LabsAppender(name, group).apply(block)\r\n}\r\n\r\nclass LabsAppender(private val student: String, private val group: Group) {\r\n    fun lab(labNum: Int) {\r\n        val path = file(\"app/$group/$student/lab$labNum\")\r\n        val title = \"$student-lab$labNum\"\r\n        path.mkdirs()\r\n        includeProject(\r\n            title = title,\r\n            path = path\r\n        )\r\n    }\r\n}\r\n\r\nfun includeProject(title: String, path: File) {\r\n    include(title)\r\n    project(\":$title\").apply {\r\n        this.projectDir = file(path)\r\n        name = title\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/settings.gradle.kts b/settings.gradle.kts
+--- a/settings.gradle.kts	(revision 6093626f5370c781ee1c9bfde8a9761758df4041)
++++ b/settings.gradle.kts	(date 1731524108469)
+@@ -57,8 +57,9 @@
+ 
+ student("simonov.ivan", G91) {
+     lab(0)
+-    lab(2)
+     lab(1)
++    lab(2)
++    lab(3)
+ }
+ 
+ student("ulyanov.leonid", G91) {
+@@ -105,6 +106,9 @@
+ 
+ student("barbashina.irina", G9) {
+     lab(0)
++    lab(1)
++    lab(2)
++    lab(3)
+ }
+ 
+ student("em.vera", G91) {
+@@ -190,6 +194,7 @@
+     lab(1)
+     lab(2)
+     lab(3)
++    lab(4)
+ }
+ student("kreydun.nicholas", G9) {
+     lab(0)
+Index: app/G9/barbashina.irina/TaskJapaneseRestaurant.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>Ресторан японской кухни хранит историю заказов, каждый раз записывая название блюда, список ингредиентов, цену.\r\nВсего известно о 2341 записях (подумайте, как можно смоделировать\r\nввод с помощью случайных чисел)\r\nНеобходимо вывести следующую информацию:\r\n  Все уникальные блюда, которые готовят в этом ресторане\r\n  Суммарный заработок ресторана\r\n  Название самого дорогого(дорогих) блюда\r\nВ задаче должны использоваться коллекции (за исключением Map),\r\nнеобходимо выбрать наиболее подходящую (подходящие) коллекцию для этой задачи, аргументировать свой выбор\r\n\r\nВ задаче должны использоваться элементы функционального программирования
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/G9/barbashina.irina/TaskJapaneseRestaurant.txt b/app/G9/barbashina.irina/TaskJapaneseRestaurant.txt
+--- a/app/G9/barbashina.irina/TaskJapaneseRestaurant.txt	(revision 6093626f5370c781ee1c9bfde8a9761758df4041)
++++ b/app/G9/barbashina.irina/TaskJapaneseRestaurant.txt	(date 1731366681829)
+@@ -8,4 +8,5 @@
+ В задаче должны использоваться коллекции (за исключением Map),
+ необходимо выбрать наиболее подходящую (подходящие) коллекцию для этой задачи, аргументировать свой выбор
+ 
+-В задаче должны использоваться элементы функционального программирования
+\ No newline at end of file
++В задаче должны использоваться элементы функционального программирования
++Задача должна быть покрыта тестами с помощью JUnit
+\ No newline at end of file
