@@ -22,18 +22,18 @@ public class OlympicStatsService {
                     .stream()
                     .sorted(Map.Entry.<String, Long>comparingByValue(Comparator.reverseOrder()))
                     .collect(Collectors.groupingBy(Map.Entry::getValue,
-                            Collectors.mapping(Map.Entry::getKey, Collectors.toList()))) // Группируем страны по кол-ву медалей
+                            Collectors.mapping(Map.Entry::getKey, Collectors.toList())))
                     .entrySet()
                     .stream()
-                    .sorted(Map.Entry.<Long, List<String>>comparingByKey(Comparator.reverseOrder())) // Сортируем по количеству медалей (ключу Map)
+                    .sorted(Map.Entry.<Long, List<String>>comparingByKey(Comparator.reverseOrder()))
                     .limit(3)
-                    .flatMap(entry -> entry.getValue().stream()) // Достаем список стран из каждой группы и делаем плоский список
+                    .flatMap(entry -> entry.getValue().stream())
                     .toList();
         }
     }
 
 
-    public static Map<KindOfSport, List<String>>
+    public static Map<KindOfSport, Set<String>>
     AthletesWithMedalsAndSport(List<OlympicMedalsRecord> data) {
         if (data == null || data.isEmpty()) {
             return Map.of();
@@ -41,7 +41,7 @@ public class OlympicStatsService {
             return data.stream()
                     .collect(Collectors.groupingBy(
                             OlympicMedalsRecord::sport,
-                            Collectors.mapping(OlympicMedalsRecord::athlete, Collectors.toList())
+                            Collectors.mapping(OlympicMedalsRecord::athlete, Collectors.toSet())
                     ));
         }
     }

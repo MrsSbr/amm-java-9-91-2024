@@ -3,10 +3,7 @@ import ru.vsu.amm.java.main.Enum.KindOfSport;
 import ru.vsu.amm.java.main.OlympicRecord.OlympicMedalsRecord;
 import ru.vsu.amm.java.main.Service.OlympicStatsService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.vsu.amm.java.main.Enum.KindOfSport.*;
@@ -84,7 +81,7 @@ public class ServiceTest {
 
     @Test
     public void NullAthletesWithMedalsAndSport() {
-        Map<KindOfSport, List<String>> result = service.AthletesWithMedalsAndSport(nullEntities);
+        Map<KindOfSport, Set<String>> result = service.AthletesWithMedalsAndSport(nullEntities);
         assertEquals(result, new HashMap<>());
     }
 
@@ -95,12 +92,12 @@ public class ServiceTest {
                 new OlympicMedalsRecord("Russia", RUNNING, "Gavrilov", 1),
                 new OlympicMedalsRecord("Russia", HIGH_JUMP, "Gavrilov", 2),
                 new OlympicMedalsRecord("Russia", BOXING, "Gavrilov", 3));
-        Map<KindOfSport, List<String>> result = service.AthletesWithMedalsAndSport(data);
-        Map<KindOfSport, List<String>> trueList = Map.of(
-                SWIMMING, new ArrayList<String>(List.of("Gavrilov")),
-                BOXING, new ArrayList<String>(List.of("Gavrilov")),
-                HIGH_JUMP, new ArrayList<String>(List.of("Gavrilov")),
-                RUNNING, new ArrayList<String>(List.of("Gavrilov")));
+        Map<KindOfSport, Set<String>> result = service.AthletesWithMedalsAndSport(data);
+        Map<KindOfSport, Set<String>> trueList = Map.of(
+                SWIMMING, new HashSet<String>(Set.of("Gavrilov")),
+                BOXING, new HashSet<String>(Set.of("Gavrilov")),
+                HIGH_JUMP, new HashSet<String>(Set.of("Gavrilov")),
+                RUNNING, new HashSet<String>(Set.of("Gavrilov")));
         assertEquals(result, trueList);
     }
 
@@ -112,9 +109,9 @@ public class ServiceTest {
                 new OlympicMedalsRecord("Russia", SWIMMING, "Artemov", 2),
                 new OlympicMedalsRecord("Italy", SWIMMING, "Kaevskiy", 3));
 
-        Map<KindOfSport, List<String>> result = service.AthletesWithMedalsAndSport(data);
-        Map<KindOfSport, List<String>> trueList = Map.of(
-                SWIMMING, new ArrayList<String>(List.of("Gavrilov",
+        Map<KindOfSport, Set<String>> result = service.AthletesWithMedalsAndSport(data);
+        Map<KindOfSport, Set<String>> trueList = Map.of(
+                SWIMMING, new HashSet<String>(Set.of("Gavrilov",
                         "Feshenko", "Artemov", "Kaevskiy")));
         assertEquals(result, trueList);
     }
