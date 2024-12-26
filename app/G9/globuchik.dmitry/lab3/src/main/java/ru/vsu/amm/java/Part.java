@@ -3,7 +3,7 @@ package ru.vsu.amm.java;
 import java.util.Objects;
 
 public class Part {
-    private DetailTypes type;
+    private final DetailTypes type;
 
     public Part(DetailTypes type) {
         this.type = type;

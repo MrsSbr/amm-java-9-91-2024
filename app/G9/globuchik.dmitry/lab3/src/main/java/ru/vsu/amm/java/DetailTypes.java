@@ -10,6 +10,6 @@ public enum DetailTypes {
 
     public static DetailTypes getRandomType() {
         Random random = new Random();
-        return  DetailTypes.values()[random.nextInt(DetailTypes.values().length)];
+        return DetailTypes.values()[random.nextInt(DetailTypes.values().length)];
     }
 }

@@ -2,7 +2,6 @@ package ru.vsu.amm.java;
 
 //import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -62,7 +61,7 @@ class DetailsListTest {
         assertNotNull(counts);
         assertFalse(counts.isEmpty());
 
-        for(String count : counts) {
+        for (String count : counts) {
             assertTrue(count.matches(".*: \\d+"));
         }
     }

@@ -1,6 +1,8 @@
 package ru.vsu.amm.java;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DetailsService {
@@ -26,7 +28,7 @@ public class DetailsService {
         Set<DetailTypes> uniqueDetailTypes = getUniqueDetailTypes(parts);
         List<String> result = new ArrayList<>(uniqueDetailTypes.size());
         for (DetailTypes detailType : uniqueDetailTypes) {
-            int count = (int)parts.stream()
+            int count = (int) parts.stream()
                     .filter(part -> part.getType() == detailType)
                     .count();
             result.add(detailType + ": " + count);
