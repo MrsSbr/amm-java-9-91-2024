@@ -105,7 +105,6 @@ student("golukovich.timofey", G9) {
     lab(2)
     lab(3)
     lab(4)
-    lab(5)
 }
 
 
@@ -120,6 +119,7 @@ student("bogatyirev.kirill", G9){
 student("zayseva.anastasiya", G9) {
     lab(0)
     lab(1)
+    lab(2)
 }
 
 
