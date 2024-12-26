@@ -8,7 +8,7 @@ public class GameApplication {
     public static void main(String[] args) {
         List<GameRecord> records = FileHandler.readRecordsFromFile(PATH);
 
-        Genre topGenre = GameService.getTopGenre(records);
+        Genre topGenre = GameService.getTopGenreOrNull(records);
         if (topGenre == null) {
             System.out.println("Error null");
         } else {
@@ -16,7 +16,7 @@ public class GameApplication {
         }
 
 
-        var mostTimeSpentMonth = GameService.getMonthWithMostHours(records);
+        var mostTimeSpentMonth = GameService.getMonthWithMostHoursOrNull(records);
         if (mostTimeSpentMonth == null) {
             System.out.println("Error null");
         } else {
