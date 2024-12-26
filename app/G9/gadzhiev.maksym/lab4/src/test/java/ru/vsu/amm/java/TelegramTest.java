@@ -9,8 +9,8 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TelegramTest {
 
@@ -89,15 +89,14 @@ public class TelegramTest {
     @Test
     void testLeastUsedEmotionsInTheLastYear() {
         List<Message> messages = Arrays.asList(
-                new Message(LocalDate.now().minusDays(3), "Gadzhiev", "Hello! Maksim ️✌️"),
-                new Message(LocalDate.now().minusDays(3), "Aksenov", "Hello! ✌️ How are you, Maksim"),
-                new Message(LocalDate.now().minusDays(2), "Gadzhiev", "Bye! Maksim")
+                new Message(LocalDate.now().minusDays(3), "Gadzhiev", "Hello! Maksim" + new String(Character.toChars(0x1F600))),
+                new Message(LocalDate.now().minusDays(3), "Aksenov", "Hello! How are you, Maksim" + new String(Character.toChars(0x1F600))),
+                new Message(LocalDate.now().minusDays(2), "Gadzhiev", "Bye! Maksim" + new String(Character.toChars(0x1F601)))
         );
 
         String result = MessageService.leastUsedEmotionsInTheLastYear(messages);
-        assertEquals("️✌️", result);
+        assertEquals(new String(Character.toChars(0x1F601)), result);
     }
-
 
 
 }
