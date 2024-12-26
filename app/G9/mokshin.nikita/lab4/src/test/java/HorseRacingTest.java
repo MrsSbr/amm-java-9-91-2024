@@ -7,6 +7,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -98,5 +99,27 @@ public class HorseRacingTest {
         assertEquals(0, dawnStats.getFirstPlaces());
         assertEquals(1, dawnStats.getSecondPlaces());
         assertEquals(2, dawnStats.getThirdPlaces());
+    }
+
+    @Test
+    void testFindMostFrequentHorseWithEmptyList() {
+        List<HorseRacing> emptyRaces = Collections.emptyList();
+        String mostFrequentHorse = HorseRacingService.findMostFrequentHorse(emptyRaces);
+        assertNull(mostFrequentHorse);
+    }
+
+    @Test
+    void testFindMostSuccessfulHorseWithEmptyList() {
+        List<HorseRacing> emptyRaces = Collections.emptyList();
+        String mostSuccessfulHorse = HorseRacingService.findMostSuccessfulHorse(emptyRaces);
+        assertNull(mostSuccessfulHorse);
+    }
+
+    @Test
+    void testCalculateHorseStatisticsWithEmptyList() {
+        List<HorseRacing> emptyRaces = Collections.emptyList();
+        Map<String, HorseStatistics> horseStatistics = HorseRacingService.calculateHorseStatistics(emptyRaces);
+        assertNotNull(horseStatistics);
+        assertTrue(horseStatistics.isEmpty());
     }
 }
