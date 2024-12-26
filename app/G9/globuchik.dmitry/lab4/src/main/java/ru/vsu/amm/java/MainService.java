@@ -32,12 +32,12 @@ public class MainService {
         OrderFileService.saveToFile(orders);
         try {
             orders = OrderFileService.loadFromFile();
+
+            System.out.println(OrderService.findMostPopular(orders));
+            System.out.println(OrderService.findLaziestMonth(orders));
+            System.out.println(OrderService.findCourier(orders));
         } catch (FileNotFoundException e) {
             logger.log(Level.WARNING, e.getMessage());
         }
-
-        System.out.println(OrderService.findMostPopular(orders));
-        System.out.println(OrderService.findLaziestMonth(orders));
-        System.out.println(OrderService.findCourier(orders));
     }
 }
