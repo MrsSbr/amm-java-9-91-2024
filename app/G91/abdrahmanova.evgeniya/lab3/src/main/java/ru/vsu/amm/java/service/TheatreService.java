@@ -30,7 +30,7 @@ public class TheatreService {
                     for (TicketCount ticketCount : ticketsCounts) {
                         if (ticketCount.getPerfomanceName() == perfomance.getName()) {
                             ticketCount.incrementCount();
-                            break; // Crucial: Exit the inner loop once the match is found
+                            break;
                         }
                     }
                 });
