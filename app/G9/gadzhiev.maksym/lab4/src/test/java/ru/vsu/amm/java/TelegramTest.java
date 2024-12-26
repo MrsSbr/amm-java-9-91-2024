@@ -89,13 +89,13 @@ public class TelegramTest {
     @Test
     void testLeastUsedEmotionsInTheLastYear() {
         List<Message> messages = Arrays.asList(
-                new Message(LocalDate.now().minusDays(3), "Gadzhiev", "Hello! Maksim ??"),
-                new Message(LocalDate.now().minusDays(3), "Aksenov", "Hello! ??? How are you, Maksim?"),
+                new Message(LocalDate.now().minusDays(3), "Gadzhiev", "Hello! Maksim ️✌️"),
+                new Message(LocalDate.now().minusDays(3), "Aksenov", "Hello! ✌️ How are you, Maksim"),
                 new Message(LocalDate.now().minusDays(2), "Gadzhiev", "Bye! Maksim")
         );
 
         String result = MessageService.leastUsedEmotionsInTheLastYear(messages);
-        assertEquals("???", result);
+        assertEquals("️✌️", result);
     }
 
 
