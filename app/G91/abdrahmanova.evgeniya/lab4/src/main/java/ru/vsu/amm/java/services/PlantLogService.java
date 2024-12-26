@@ -53,7 +53,8 @@ public class PlantLogService {
 
         Integer minEarnings = plantEarnings.values().stream()
                 .min(Integer::compareTo)
-                .orElse(0);
+                .get();
+
         return plantEarnings.entrySet().stream()
                 .filter(entry -> entry.getValue().equals(minEarnings))
                 .map(Map.Entry::getKey)

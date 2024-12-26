@@ -17,8 +17,13 @@ import java.util.stream.Collectors;
 
 public class PlantLogReader {
 
-    private  Logger logger;
+    public static final int NAME_INDEX = 0;
+    public static final int TYPE_INDEX = 1;
+    public static final int SIZE_INDEX = 2;
+    public static final int PRICE_INDEX = 3;
+    public static final int DATE_INDEX = 4;
 
+    private  Logger logger;
 
     public PlantLogReader(Logger logger) {
         this.logger = logger;
@@ -36,11 +41,11 @@ public class PlantLogReader {
                     .filter(parts -> parts.length == 5)
                     .map(parts -> {
                         try {
-                            String name = parts[0].trim();
-                            PlantType type = PlantType.valueOf(parts[1].trim().toUpperCase());
-                            int sizePot = Integer.parseInt(parts[2].trim());
-                            int price = Integer.parseInt(parts[3].trim());
-                            LocalDate date = LocalDate.parse(parts[4].trim(), dateFormatter);
+                            String name = parts[NAME_INDEX].trim();
+                            PlantType type = PlantType.valueOf(parts[TYPE_INDEX].trim().toUpperCase());
+                            int sizePot = Integer.parseInt(parts[SIZE_INDEX].trim());
+                            int price = Integer.parseInt(parts[PRICE_INDEX].trim());
+                            LocalDate date = LocalDate.parse(parts[DATE_INDEX].trim(), dateFormatter);
                             return new PlantLog(name, type, sizePot, price, date);
 
                         } catch (IllegalArgumentException | NullPointerException e) {

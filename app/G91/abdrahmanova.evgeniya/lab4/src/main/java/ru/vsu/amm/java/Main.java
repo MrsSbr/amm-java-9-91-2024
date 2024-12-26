@@ -15,12 +15,11 @@ import java.util.logging.Logger;
 
 public class Main {
     private static final Logger logger = Logger.getLogger(Main.class.getName());
+    private static final String FILEPATH = "app/G91/abdrahmanova.evgeniya/lab4/src/main/java/ru/vsu/amm/java/files/plants";
     public static void main(String[] args) {
-
-        String filePath = "app/G91/abdrahmanova.evgeniya/lab4/src/main/java/ru/vsu/amm/java/files/plants";
         try {
             PlantLogReader reader = new PlantLogReader(logger);
-            List<PlantLog> logs = reader.readPlantLogsFromFile(filePath);
+            List<PlantLog> logs = reader.readPlantLogsFromFile(FILEPATH);
             logs.forEach(System.out::println);
 
             PlantLogService plantLogService = new PlantLogService(logs);
