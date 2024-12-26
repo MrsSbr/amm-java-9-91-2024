@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class HorseRacingService {
     private static final Logger logger = Logger.getLogger(HorseRacingService.class.getName());
@@ -65,12 +67,17 @@ public class HorseRacingService {
 
     public static String findMostFrequentHorse(List<HorseRacing> races) {
         logger.log(Level.INFO, "Finding the most frequently participating horse");
-        Map<String, Integer> horseParticipationCount = new HashMap<>();
-        for (HorseRacing race : races) {
-            horseParticipationCount.merge(race.getFirstPlaceNameHorse(), 1, Integer::sum);
-            horseParticipationCount.merge(race.getSecondPlaceNameHorse(), 1, Integer::sum);
-            horseParticipationCount.merge(race.getThirdPlaceNameHorse(), 1, Integer::sum);
-        }
+        Map<String, Integer> horseParticipationCount = races.stream()
+                .flatMap(race -> Stream.of(
+                        race.getFirstPlaceNameHorse(),
+                        race.getSecondPlaceNameHorse(),
+                        race.getThirdPlaceNameHorse()
+                ))
+                .collect(Collectors.toMap(
+                        horseName -> horseName,
+                        horseName -> 1,
+                        Integer::sum
+                ));
         String result = findHorseNameMaxCount(horseParticipationCount);
         logger.log(Level.INFO, "The most frequently participating horse is: {0}", result);
         return result;
@@ -78,13 +85,18 @@ public class HorseRacingService {
 
     public static String findMostSuccessfulHorse(List<HorseRacing> races) {
         logger.log(Level.INFO, "Finding the most successful horse");
-        Map<String, Integer> horseSuccessCount = new HashMap<>();
+        Map<String, Integer> horseSuccessCount = races.stream()
+                .flatMap(race -> Stream.of(
+                        Map.entry(race.getFirstPlaceNameHorse(), 3),
+                        Map.entry(race.getSecondPlaceNameHorse(), 2),
+                        Map.entry(race.getThirdPlaceNameHorse(), 1)
+                ))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        Integer::sum
+                ));
 
-        for (HorseRacing race : races) {
-            horseSuccessCount.merge(race.getFirstPlaceNameHorse(), 3, Integer::sum);
-            horseSuccessCount.merge(race.getSecondPlaceNameHorse(), 2, Integer::sum);
-            horseSuccessCount.merge(race.getThirdPlaceNameHorse(), 1, Integer::sum);
-        }
         String result = findHorseNameMaxCount(horseSuccessCount);
         logger.log(Level.INFO, "The most successful horse is: {0}", result);
         return result;
@@ -92,49 +104,52 @@ public class HorseRacingService {
 
     public static Map<String, HorseStatistics> calculateHorseStatistics(List<HorseRacing> horseRacings) {
         logger.log(Level.INFO, "Calculating statistics for horses");
-        Map<String, HorseStatistics> horseStats = new HashMap<>();
-
-        for (HorseRacing race : horseRacings) {
-            if(horseStats.containsKey(race.getFirstPlaceNameHorse())) {
-                horseStats.get(race.getFirstPlaceNameHorse()).addFirstPlace();
-            } else {
-                HorseStatistics horseStatistics = new HorseStatistics();
-                horseStatistics.addFirstPlace();
-                horseStats.put(race.getFirstPlaceNameHorse(), horseStatistics);
-            }
-
-            if(horseStats.containsKey(race.getSecondPlaceNameHorse())) {
-                horseStats.get(race.getSecondPlaceNameHorse()).addSecondPlace();
-            } else {
-                HorseStatistics horseStatistics = new HorseStatistics();
-                horseStatistics.addSecondPlace();
-                horseStats.put(race.getSecondPlaceNameHorse(), horseStatistics);
-            }
-
-            if(horseStats.containsKey(race.getThirdPlaceNameHorse())) {
-                horseStats.get(race.getThirdPlaceNameHorse()).addThirdPlace();
-            } else {
-                HorseStatistics horseStatistics = new HorseStatistics();
-                horseStatistics.addThirdPlace();
-                horseStats.put(race.getThirdPlaceNameHorse(), horseStatistics);
-            }
-        }
+        Map<String, HorseStatistics> horseStats = horseRacings.stream()
+                .flatMap(race -> Stream.of(
+                        Map.entry(race.getFirstPlaceNameHorse(), 1),
+                        Map.entry(race.getSecondPlaceNameHorse(), 2),
+                        Map.entry(race.getThirdPlaceNameHorse(), 3)
+                ))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> {
+                            HorseStatistics stats = new HorseStatistics();
+                            switch (entry.getValue()) {
+                                case 1:
+                                    stats.addFirstPlace();
+                                    break;
+                                case 2:
+                                    stats.addSecondPlace();
+                                    break;
+                                case 3:
+                                    stats.addThirdPlace();
+                                    break;
+                            }
+                            return stats;
+                        },
+                        (existing, replacement) -> {
+                            if (replacement.getFirstPlaces() > 0) {
+                                existing.addFirstPlace();
+                            }
+                            if (replacement.getSecondPlaces() > 0) {
+                                existing.addSecondPlace();
+                            }
+                            if (replacement.getThirdPlaces() > 0) {
+                                existing.addThirdPlace();
+                            }
+                            return existing;
+                        }
+                ));
 
         logger.log(Level.INFO, "Successfully calculated statistics for {0} horses", horseStats.size());
         return horseStats;
     }
 
-    private static String findHorseNameMaxCount(Map<String, Integer> hourseMap) {
-        String maxCountNameHorse = null;
-        int maxCount = 0;
-
-        for (Map.Entry<String, Integer> entry : hourseMap.entrySet()) {
-            if (entry.getValue() > maxCount) {
-                maxCountNameHorse = entry.getKey();
-                maxCount = entry.getValue();
-            }
-        }
-        return maxCountNameHorse;
+    private static String findHorseNameMaxCount(Map<String, Integer> horseMap) {
+        return horseMap.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 
 }
