@@ -40,7 +40,7 @@ student("bogdanov.nikita", G9) {
 
 
 
-    lab(3) 
+    lab(3)
     lab(4)
 }
 
@@ -123,7 +123,7 @@ student("bogatyirev.kirill", G9){
     lab(2)
     lab(3)
     lab(4)
- }
+}
 
 
 student("zayseva.anastasiya", G9) {
@@ -262,7 +262,7 @@ student ("safonova.nastia", G9){
     lab(1)
     lab(4)
     lab(3)
-    lab(2) 
+    lab(2)
 }
 
 student("serova.polina", G9) {
@@ -335,8 +335,8 @@ student("tottskiy.stepan", G9) {
     lab(1)
     lab(2)
     lab(3)
-    }
-    
+}
+
 student("nikitina.elizaveta", G9) {
     lab(0)
     lab(1)
