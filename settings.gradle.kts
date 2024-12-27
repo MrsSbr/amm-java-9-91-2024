@@ -186,6 +186,9 @@ student("jasser.daniel", G9) {
 student("jasser.daniel", G9) {
     lab(2)
 }
+student("jasser.daniel", G9) {
+    lab(4)
+}
 
 student("gavrilov.mihail", G9) {
     lab(0)
