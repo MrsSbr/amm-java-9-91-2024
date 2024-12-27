@@ -18,6 +18,10 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class FileIO {
+    private final static int PASTRY_NAME_INDEX = 0;
+    private final static int DATE_INDEX = 1;
+    private final static int WEIGHT_INDEX = 2;
+    private final static int COST_INDEX = 3;
 
     public static Logger logger = Logger.getLogger(FileIO.class.getName());
 
@@ -51,10 +55,10 @@ public class FileIO {
             List<PastryRecord> pastryRecordList = reader.lines()
                     .map(line -> {
                         String[] parts = line.split(";");
-                        PastryName name = PastryName.valueOf(parts[0]);
-                        LocalDate date_of_issue = LocalDate.parse(parts[1]);
-                        int weight = Integer.parseInt(parts[2]);
-                        int cost = Integer.parseInt(parts[3]);
+                        PastryName name = PastryName.valueOf(parts[PASTRY_NAME_INDEX]);
+                        LocalDate date_of_issue = LocalDate.parse(parts[DATE_INDEX]);
+                        int weight = Integer.parseInt(parts[WEIGHT_INDEX]);
+                        int cost = Integer.parseInt(parts[COST_INDEX]);
                         return new PastryRecord(date_of_issue, name, weight, cost);
                     }).toList();
             logger.log(Level.INFO, "Saving completed.");
