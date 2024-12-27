@@ -26,6 +26,7 @@ student("kireev.dmitrii", G91) {
     lab(3)
     lab(4)
     lab(5)
+    lab(6)
 }
 
 student("sbrodova.daria", G91) {
@@ -36,12 +37,18 @@ student("bogdanov.nikita", G9) {
     lab(0)
     lab(1)
     lab(2)
+
+
+
     lab(3)
+    lab(4)
 }
 
 student("kurkina.tanya", G91) {
     lab(0)
     lab(1)
+    lab(4)
+    lab(3)
     lab(2)
 }
 
@@ -105,22 +112,26 @@ student("golukovich.timofey", G9) {
     lab(2)
     lab(3)
     lab(4)
+    lab(5)
+    lab(6)
 }
 
-student("bogatyirev.kirill", G9) {
-    lab(0)
-    lab(1)
-    lab(2)
-    lab(3)
-}
 
-student("zayseva.anastasiya", G9) {
+student("bogatyirev.kirill", G9){
     lab(0)
     lab(1)
     lab(2)
     lab(3)
     lab(4)
 }
+
+
+student("zayseva.anastasiya", G9) {
+    lab(0)
+    lab(1)
+    lab(3)
+}
+
 
 student("korneeva.svetlana", G91) {
     lab(0)
@@ -149,6 +160,7 @@ student("em.vera", G91) {
     lab(3)
     lab(4)
     lab(5)
+    lab(6)
 }
 
 student("em.vera", G91) {
@@ -195,6 +207,8 @@ student("mokshin.nikita", G9) {
     lab(0)
     lab(1)
     lab(2)
+    lab(3)
+    lab(4)
 }
 
 student("anikandrov.andrey", G9) {
@@ -231,15 +245,21 @@ student("jasser.daniel", G9) {
 student("jasser.daniel", G9) {
     lab(2)
 }
+student("jasser.daniel", G9) {
+    lab(3)
+}
 
 student("gavrilov.mihail", G9) {
     lab(0)
     lab(1)
     lab(2)
+    lab(4)
 }
-student("safonova.nastia", G9) {
+student ("safonova.nastia", G9){
     lab(0)
     lab(1)
+    lab(4)
+    lab(3)
     lab(2)
 }
 
@@ -269,6 +289,7 @@ student("kreydun.nicholas", G9) {
     lab(3)
     lab(4)
     lab(5)
+    lab(6)
 }
 
 
@@ -293,9 +314,14 @@ student("kavunov.victor", G9) {
 student("tupikova.viktoria", G9) {
     lab(0)
 }
+
+
 student("tottskiy.stepan", G9) {
     lab(0)
     lab(1)
+    lab(2)
+    lab(3)
+    lab(4)
 }
 
 
@@ -306,20 +332,29 @@ student("tottskiy.stepan", G9) {
     lab(0)
     lab(1)
     lab(2)
+    lab(3)
 }
 
 student("nikitina.elizaveta", G9) {
     lab(0)
     lab(1)
     lab(2)
+    lab(3)
+    lab(4)
 }
 
 student("globuchik.dmitry", G9) {
     lab(0)
     lab(1)
     lab(2)
+    lab(3)
+    lab(4)
 }
 
+
+student("nikitina.elizaveta", G9) {
+    lab(0)
+}
 // DSL для подпроектов [Не трогать]
 includeProject("template-lab0", file("template/lab0"))
 
