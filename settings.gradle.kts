@@ -251,6 +251,7 @@ student("jasser.daniel", G9) {
     lab(2)
 }
 student("jasser.daniel", G9) {
+    lab(4)
     lab(3)
 }
 
