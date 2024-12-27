@@ -1,0 +1,12 @@
+Russia,BOXING,Feshenko,1
+America,BOXING,Trump,3
+France,BOXING,Nurman,2
+Russia,SWIMMING,Feshenko,3
+Italy,HIGH_JUMP,Musolini,1
+Ukraine,RUNNING,Belousov,2
+France,HIGH_JUMP,Nurman,3
+Russia,RUNNING,Feshenko,3
+France,RUNNING,Nurman,1
+Armenia,SWIMMING,Gagik,2
+Russia,HIGH_JUMP,Gavrilov,1
+America,SWIMMING,Ferdande,1
