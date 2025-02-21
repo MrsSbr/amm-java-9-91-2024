@@ -25,6 +25,10 @@ public class CurrencyRepository implements CrudRepository<Currency> {
         return null;
     }
 
+    public Optional<Currency> findByCode(String code) {
+        return Optional.empty();
+    }
+
     @Override
     public void update(Currency entity) {
 
