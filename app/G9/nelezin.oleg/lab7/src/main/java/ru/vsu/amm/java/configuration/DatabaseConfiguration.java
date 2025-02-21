@@ -5,7 +5,6 @@ import org.postgresql.ds.PGSimpleDataSource;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
 import java.util.Properties;
 
 public class DatabaseConfiguration {
@@ -17,7 +16,7 @@ public class DatabaseConfiguration {
                 .getResourceAsStream("db.properties")) {
             prop.load(input);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage()); // TO DO log
         }
         pgSimpleDataSource.setUrl(prop.getProperty("db.url"));
         pgSimpleDataSource.setUser(prop.getProperty("db.username"));
