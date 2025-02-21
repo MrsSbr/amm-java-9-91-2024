@@ -105,6 +105,7 @@ student("nelezin.oleg", G9) {
     lab(4)
     lab(5)
     lab(6)
+    lab(7)
 }
 
 student("golukovich.timofey", G9) {
