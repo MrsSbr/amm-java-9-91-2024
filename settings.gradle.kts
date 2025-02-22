@@ -234,6 +234,9 @@ student("kanatnikov.maxim", G9) {
     lab(4)
 }
 
+student("karachev.dmitry", G9) {
+    lab(0)
+}
 
 student("garshin.maxim", G9) {
     lab(0)
