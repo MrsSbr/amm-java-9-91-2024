@@ -1,15 +1,15 @@
 package ru.vsu.amm.java.entities;
 
 public class User {
-    private int userID;
-    private int passwordHash;
+    private long userID;
+    private String password;
     private String phoneNumber;
     private String email;
     private String login;
 
     public User() {}
 
-    public int getUserID() {
+    public long getUserID() {
         return userID;
     }
 
@@ -17,12 +17,12 @@ public class User {
         this.userID = userID;
     }
 
-    public int getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(int passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPhoneNumber() {

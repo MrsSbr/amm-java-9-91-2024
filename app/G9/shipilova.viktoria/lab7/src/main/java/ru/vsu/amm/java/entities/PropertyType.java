@@ -1,46 +1,46 @@
 package ru.vsu.amm.java.entities;
 
-import java.time.LocalDate;
+import ru.vsu.amm.java.enams.PropertyTypeName;
 
 public class PropertyType {
-    private int propertyTypeID;
-    private String propertyTypeName;
-    private int nextDestinationID;
-    private LocalDate lastOfStorageDate;
+    private long propertyTypeID;
+    private PropertyTypeName propertyTypeName;
+    private long nextDestinationID;
+    private int storageDays;
     private int storageCost;
 
     public PropertyType() {}
 
-    public int getPropertyTypeID() {
+    public long getPropertyTypeID() {
         return propertyTypeID;
     }
 
-    public void setPropertyTypeID(int propertyTypeID) {
+    public void setPropertyTypeID(long propertyTypeID) {
         this.propertyTypeID = propertyTypeID;
     }
 
-    public String getPropertyTypeName() {
+    public PropertyTypeName getPropertyTypeName() {
         return propertyTypeName;
     }
 
-    public void setPropertyTypeName(String propertyTypeName) {
+    public void setPropertyTypeName(PropertyTypeName propertyTypeName) {
         this.propertyTypeName = propertyTypeName;
     }
 
-    public int getNextDestinationID() {
+    public long getNextDestinationID() {
         return nextDestinationID;
     }
 
-    public void setNextDestinationID(int nextDestinationID) {
+    public void setNextDestinationID(long nextDestinationID) {
         this.nextDestinationID = nextDestinationID;
     }
 
-    public LocalDate getLastOfStorageDate() {
-        return lastOfStorageDate;
+    public int getStorageDays() {
+        return storageDays;
     }
 
-    public void setLastOfStorageDate(LocalDate lastOfStorageDate) {
-        this.lastOfStorageDate = lastOfStorageDate;
+    public void setStorageDays(int storageDays) {
+        this.storageDays = storageDays;
     }
 
     public int getStorageCost() {

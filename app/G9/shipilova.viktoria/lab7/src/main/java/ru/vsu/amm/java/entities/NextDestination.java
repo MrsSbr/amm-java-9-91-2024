@@ -1,25 +1,27 @@
 package ru.vsu.amm.java.entities;
 
+import ru.vsu.amm.java.enams.NextDestinationName;
+
 public class NextDestination {
-    private int nextDestinationID;
-    private String nextDestinationName;
+    private long nextDestinationID;
+    private NextDestinationName nextDestinationName;
     private String description;
 
     public NextDestination() {}
 
-    public int getNextDestinationID() {
+    public long getNextDestinationID() {
         return nextDestinationID;
     }
 
-    public void setNextDestinationID(int nextDestinationID) {
+    public void setNextDestinationID(long nextDestinationID) {
         this.nextDestinationID = nextDestinationID;
     }
 
-    public String getNextDestinationName() {
+    public NextDestinationName getNextDestinationName() {
         return nextDestinationName;
     }
 
-    public void setNextDestinationName(String nextDestinationName) {
+    public void setNextDestinationName(NextDestinationName nextDestinationName) {
         this.nextDestinationName = nextDestinationName;
     }
 

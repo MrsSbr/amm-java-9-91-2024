@@ -3,31 +3,33 @@ package ru.vsu.amm.java.entities;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import ru.vsu.amm.java.enams.ReturnStatus;
+
 public class FoundProperty {
-    private int foundPropertyID;
-    private int propertyTypeID;
+    private long foundPropertyID;
+    private long propertyTypeID;
     private LocalDate dateOfFinding;
     private LocalTime timeOfFinding;
-    private String returnStatus;
+    private ReturnStatus returnStatus;
     private String placeOfFinding;
     private String description;
-    private int userID;
+    private long userID;
 
     public FoundProperty() {}
 
-    public int getFoundPropertyID() {
+    public long getFoundPropertyID() {
         return foundPropertyID;
     }
 
-    public void setFoundPropertyID(int foundPropertyID) {
+    public void setFoundPropertyID(long foundPropertyID) {
         this.foundPropertyID = foundPropertyID;
     }
 
-    public int getPropertyTypeID() {
+    public long getPropertyTypeID() {
         return propertyTypeID;
     }
 
-    public void setPropertyTypeID(int propertyTypeID) {
+    public void setPropertyTypeID(long propertyTypeID) {
         this.propertyTypeID = propertyTypeID;
     }
 
@@ -47,11 +49,11 @@ public class FoundProperty {
         this.timeOfFinding = timeOfFinding;
     }
 
-    public String getReturnStatus() {
+    public ReturnStatus getReturnStatus() {
         return returnStatus;
     }
 
-    public void setReturnStatus(String returnStatus) {
+    public void setReturnStatus(ReturnStatus returnStatus) {
         this.returnStatus = returnStatus;
     }
 
@@ -71,11 +73,11 @@ public class FoundProperty {
         this.description = description;
     }
 
-    public int getUserID() {
+    public long getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(long userID) {
         this.userID = userID;
     }
 }
