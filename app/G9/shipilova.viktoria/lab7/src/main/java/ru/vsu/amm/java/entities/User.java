@@ -1,5 +1,8 @@
 package ru.vsu.amm.java.entities;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class User {
     private long userID;
     private String password;
@@ -13,7 +16,7 @@ public class User {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(long userID) {
         this.userID = userID;
     }
 
@@ -29,16 +32,24 @@ public class User {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNumber(String phoneNumber) throws IllegalArgumentException {
+        if (isValidPhoneNumber(phoneNumber)) {
+            this.phoneNumber = phoneNumber;
+        } else {
+            throw new IllegalArgumentException("Invalid phone number");
+        }
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String email) throws IllegalArgumentException {
+        if (isValidEmail(email)) {
+            this.email = email;
+        } else {
+            throw new IllegalArgumentException("Invalid email address");
+        }
     }
 
     public String getLogin() {
@@ -47,5 +58,17 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        Pattern p = Pattern.compile("\\+7\\d{10}$");
+        Matcher m = p.matcher(phoneNumber);
+        return m.matches();
+    }
+
+    private boolean isValidEmail(String email) {
+        Pattern p = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
+        Matcher m = p.matcher(email);
+        return m.matches();
     }
 }

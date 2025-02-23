@@ -37,7 +37,10 @@ public class FoundProperty {
         return dateOfFinding;
     }
 
-    public void setDateOfFinding(LocalDate dateOfFinding) {
+    public void setDateOfFinding(LocalDate dateOfFinding) throws IllegalArgumentException {
+        if (dateOfFinding.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Date of Finding cannot be in the future");
+        }
         this.dateOfFinding = dateOfFinding;
     }
 
