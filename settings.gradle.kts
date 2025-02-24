@@ -372,7 +372,9 @@ student("nikitina.elizaveta", G9) {
 
 student("plotnikova.irina", G9) {
     lab(0)
+    lab(1)
 }
+
 // DSL для подпроектов [Не трогать]
 includeProject("template-lab0", file("template/lab0"))
 
