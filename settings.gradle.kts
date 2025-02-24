@@ -370,6 +370,11 @@ student("nikitina.elizaveta", G9) {
 }
 
 
+student ("kotov.vladimir", G9){
+    lab(0)
+}
+
+
 student("plotnikova.irina", G9) {
     lab(0)
 }
