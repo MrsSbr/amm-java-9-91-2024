@@ -86,6 +86,7 @@ student("simonov.ivan", G91) {
     lab(2)
     lab(3)
     lab(4)
+    lab(7)
 }
 
 student("ulyanov.leonid", G91) {
@@ -104,6 +105,7 @@ student("nelezin.oleg", G9) {
     lab(4)
     lab(5)
     lab(6)
+    lab(7)
 }
 
 student("golukovich.timofey", G9) {
@@ -232,6 +234,9 @@ student("kanatnikov.maxim", G9) {
     lab(4)
 }
 
+student("karachev.dmitry", G9) {
+    lab(0)
+}
 
 student("garshin.maxim", G9) {
     lab(0)
@@ -274,6 +279,7 @@ student ("semenov.elisey", G9){
     lab(0)
     lab(1)
     lab(2)
+
 }
 
 student("serova.polina", G9) {
@@ -366,6 +372,16 @@ student("globuchik.dmitry", G9) {
 
 
 student("nikitina.elizaveta", G9) {
+    lab(0)
+}
+
+
+student ("kotov.vladimir", G9){
+    lab(0)
+}
+
+
+student("plotnikova.irina", G9) {
     lab(0)
 }
 // DSL для подпроектов [Не трогать]
