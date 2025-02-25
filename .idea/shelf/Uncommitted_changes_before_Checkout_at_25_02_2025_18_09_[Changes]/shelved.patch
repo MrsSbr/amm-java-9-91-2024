@@ -1,0 +1,57 @@
+Index: .idea/workspace.xml
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -4,8 +4,8 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="aba98ce3-7430-47a1-a86d-31f2946e84d7" name="Changes" comment="Lab0">
+-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
++    <list default="true" id="aba98ce3-7430-47a1-a86d-31f2946e84d7" name="Changes" comment="Lab1">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -66,7 +66,6 @@
+     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+     "RunOnceActivity.OpenProjectViewOnStart": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+     "last_opened_file_path": "C:/Users/admin/IdeaProjects/amm-java-9-91-2024/app/G9/semenov.elisey/lab1",
+     "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog"
+   }
+@@ -108,7 +107,21 @@
+       <option name="project" value="LOCAL" />
+       <updated>1738771069960</updated>
+     </task>
+-    <option name="localTasksCounter" value="2" />
++    <task id="LOCAL-00002" summary="Lab1">
++      <created>1740494650378</created>
++      <option name="number" value="00002" />
++      <option name="presentableId" value="LOCAL-00002" />
++      <option name="project" value="LOCAL" />
++      <updated>1740494650378</updated>
++    </task>
++    <task id="LOCAL-00003" summary="Lab1">
++      <created>1740494676738</created>
++      <option name="number" value="00003" />
++      <option name="presentableId" value="LOCAL-00003" />
++      <option name="project" value="LOCAL" />
++      <updated>1740494676738</updated>
++    </task>
++    <option name="localTasksCounter" value="4" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -129,6 +142,7 @@
+     <MESSAGE value="Lab0:Initial commit" />
+     <MESSAGE value="Lab0: Initial commit" />
+     <MESSAGE value="Lab0" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Lab0" />
++    <MESSAGE value="Lab1" />
++    <option name="LAST_COMMIT_MESSAGE" value="Lab1" />
+   </component>
+ </project>
+\ No newline at end of file
