@@ -1,27 +1,36 @@
 package ru.vsu.amm.java;
 
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Candies {
     public static void main(String[] args) {
         int[] candyType = {1, 1, 2, 3};
-        System.out.println(maxUniqueCandies(candyType));
+
+        if (checkCandies(candyType)) {
+            System.out.println(maxUniqueCandies(candyType));
+        } else {
+            System.out.println("Неверные входные данные!");
+        }
     }
 
-    public static int maxUniqueCandies(int[] candyType) {
+    public static boolean checkCandies(int[] candyType) {
         int n = candyType.length;
-
-        // проверки
         if (n < 2 || n > 10000 || n % 2 != 0) {
-            throw new IllegalArgumentException("Error");
+            return false;
         }
 
         for (int candy : candyType) {
             if (candy < -100000 || candy > 100000) {
-                throw new IllegalArgumentException("Error");
+                return false;
             }
         }
+        return true;
+    }
+
+    public static int maxUniqueCandies(int[] candyType) {
+        int n = candyType.length;
 
         int maxCandiesToEat = n / 2;
 
