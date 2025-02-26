@@ -2,13 +2,14 @@ package ru.vsu.amm.java;
 
 import ru.vsu.amm.java.entity.Winner;
 import ru.vsu.amm.java.enums.Department;
-
+import ru.vsu.amm.java.util.DataGenerator;
+import ru.vsu.amm.java.service.WinnerService;
 import java.util.List;
 
 public class WinnerApplication {
     public static void main(String[] args) {
-        List<Winner> winners = ru.vsu.amm.java.DataGenerator.generateWinners(20);
-        ru.vsu.amm.java.WinnerService winnerService = new ru.vsu.amm.java.WinnerService();
+        List<Winner> winners = DataGenerator.generateWinners(20);
+        WinnerService winnerService = new WinnerService();
 
         List<Department> departmentsWithMostWins = winnerService.getDepartmentsWithMostWins(winners);
         System.out.print("departmentsWithMostWins: ");
