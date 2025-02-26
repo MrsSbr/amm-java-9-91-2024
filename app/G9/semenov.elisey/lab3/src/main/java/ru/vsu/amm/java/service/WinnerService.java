@@ -1,13 +1,19 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.service;
+
+import ru.vsu.amm.java.entity.Winner;
+import ru.vsu.amm.java.enums.Department;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public class WinnerService {
+    private static final Logger logger = Logger.getLogger(WinnerService.class.getName());
 
     public List<Department> getDepartmentsWithMostWins(List<Winner> winners) {
+        logger.info("call getDepartmentsWithMostWins");
         List<Department> departments = winners.stream()
                 .map(Winner::getDepartment)
                 .distinct()
@@ -31,6 +37,7 @@ public class WinnerService {
     }
 
     public List<String> getUniqueWinners(List<Winner> winners) {
+        logger.info("call getUniqueWinners");
         return winners.stream()
                 .map(Winner::getName)
                 .distinct()
@@ -38,6 +45,7 @@ public class WinnerService {
     }
 
     public int getOneTimeWinnersCount(List<Winner> winners) {
+        logger.info("call getOneTimeWinnersCount");
         List<String> names = winners.stream()
                 .map(Winner::getName)
                 .toList();

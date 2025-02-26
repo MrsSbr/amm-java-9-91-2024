@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d196ca5-5f11-4981-a5b4-cb1839b77061" name="Changes" comment="lab2" />
+    <list default="true" id="8d196ca5-5f11-4981-a5b4-cb1839b77061" name="Changes" comment="lab3">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/G9/semenov.elisey/lab3/src/main/java/ru/vsu/amm/java/DataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/G9/semenov.elisey/lab3/src/main/java/ru/vsu/amm/java/util/DataGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/G9/semenov.elisey/lab3/src/main/java/ru/vsu/amm/java/Department.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/G9/semenov.elisey/lab3/src/main/java/ru/vsu/amm/java/enums/Department.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/G9/semenov.elisey/lab3/src/main/java/ru/vsu/amm/java/Winner.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/G9/semenov.elisey/lab3/src/main/java/ru/vsu/amm/java/entity/Winner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/G9/semenov.elisey/lab3/src/main/java/ru/vsu/amm/java/WinnerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/G9/semenov.elisey/lab3/src/main/java/ru/vsu/amm/java/WinnerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/G9/semenov.elisey/lab3/src/main/java/ru/vsu/amm/java/WinnerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/G9/semenov.elisey/lab3/src/main/java/ru/vsu/amm/java/service/WinnerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/G9/semenov.elisey/lab3/src/test/java/WinnerApplicationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/G9/semenov.elisey/lab3/src/test/java/WinnerApplicationTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,6 +43,9 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -49,6 +60,14 @@
     </key>
   </component>
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="lab3">
+      <created>1740579784760</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740579784760</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -61,5 +80,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <MESSAGE value="lab3" />
+    <option name="LAST_COMMIT_MESSAGE" value="lab3" />
   </component>
 </project>

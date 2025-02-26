@@ -1,4 +1,6 @@
-package ru.vsu.amm.java;
+package ru.vsu.amm.java.entity;
+
+import ru.vsu.amm.java.enums.Department;
 
 public class Winner {
     private int year;

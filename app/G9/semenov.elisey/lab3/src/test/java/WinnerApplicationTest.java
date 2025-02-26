@@ -1,8 +1,8 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.vsu.amm.java.Department;
-import ru.vsu.amm.java.Winner;
-import ru.vsu.amm.java.WinnerService;
+import ru.vsu.amm.java.enums.Department;
+import ru.vsu.amm.java.entity.Winner;
+import ru.vsu.amm.java.service.WinnerService;
 
 import java.util.Arrays;
 import java.util.List;
