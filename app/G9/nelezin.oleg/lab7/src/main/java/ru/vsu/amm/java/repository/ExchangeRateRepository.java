@@ -4,6 +4,10 @@ import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entity.ExchangeRate;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +19,23 @@ public class ExchangeRateRepository implements CrudRepository<ExchangeRate> {
     }
 
     @Override
-    public Optional<ExchangeRate> findById(Long id) {
+    public Optional<ExchangeRate> findById(Long id) throws SQLException {
+        final String query = "SELECT * FROM exchange_rate WHERE id = ?";
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setLong(1, id);
+        preparedStatement.execute();
+
+        ResultSet resultSet = preparedStatement.getResultSet();
+        if (resultSet.next()) {
+            return Optional.of(new ExchangeRate(
+               resultSet.getLong("id"),
+               resultSet.getLong("base_currency_id"),
+               resultSet.getLong("target_currency_id"),
+               resultSet.getBigDecimal("rate")
+            ));
+        }
+
         return Optional.empty();
     }
 
