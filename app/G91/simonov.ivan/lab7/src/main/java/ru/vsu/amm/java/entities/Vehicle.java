@@ -10,28 +10,12 @@ public class Vehicle {
 
     public Vehicle() {}
 
-    public String getColour() {
-        return colour;
+    public int getVehicleId() {
+        return vehicleId;
     }
 
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
+    public void setVehicleId(int vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     public String getRegistrationNumber() {
@@ -49,27 +33,47 @@ public class Vehicle {
         int regionCode = 2;
         int country = 3;
 
-        if (splits.length != 4 ||
-                !splits[letters].matches("[A-Z]+") ||
-                !splits[digits].matches("[0-9]+") ||
-                !splits[regionCode].matches("[0-9]+") ||
-                !splits[country].matches("[A-Z]+")) {
+        if (splits.length != 4
+                || !splits[letters].matches("[A-Z]+")
+                || !splits[digits].matches("[0-9]+")
+                || !splits[regionCode].matches("[0-9]+")
+                || !splits[country].matches("[A-Z]+")) {
 
-            throw new IllegalArgumentException("Invalid registration number!");
+            isValid = false;
         }
 
         return isValid;
     }
 
     public void setRegistrationNumber(String registrationNumber) {
-        this.registrationNumber = registrationNumber;
+        if (checkRegistrationNumber(registrationNumber)) {
+            this.registrationNumber = registrationNumber;
+        } else {
+            throw new IllegalArgumentException("Invalid registration number!");
+        }
     }
 
-    public int getVehicleId() {
-        return vehicleId;
+    public String getModel() {
+        return model;
     }
 
-    public void setVehicleId(int vehicleId) {
-        this.vehicleId = vehicleId;
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 }
