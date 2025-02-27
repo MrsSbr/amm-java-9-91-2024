@@ -1,0 +1,5 @@
+DROP TABLE "Comments";
+DROP TABLE Likes;
+DROP TABLE Posts;
+DROP TABLE Users;
+DROP TABLE Loggers;
