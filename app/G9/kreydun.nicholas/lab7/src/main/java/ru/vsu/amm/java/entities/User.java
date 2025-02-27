@@ -1,6 +1,6 @@
 package ru.vsu.amm.java.entities;
 
-import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.UUID;
 
 public class User {
@@ -9,7 +9,7 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private Timestamp createdAt;
+    private LocalTime createdAt;
 
     public User() {}
 
@@ -37,10 +37,10 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public Timestamp getCreatedAt() {
+    public LocalTime getCreatedAt() {
         return createdAt;
     }
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(LocalTime createdAt) {
         this.createdAt = createdAt;
     }
 }
