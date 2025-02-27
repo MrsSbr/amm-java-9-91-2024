@@ -1,4 +1,4 @@
-package Enums;
+package ru.vsu.amm.java.Enums;
 
 public enum Roles {
     ADMIN,

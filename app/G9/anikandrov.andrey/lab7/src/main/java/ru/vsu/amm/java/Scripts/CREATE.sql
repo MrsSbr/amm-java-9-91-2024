@@ -14,27 +14,24 @@ ALTER TABLE UserTable
 ALTER TABLE UserTable
     ADD CONSTRAINT Phone_Unique UNIQUE (Phone);
 
-CREATE TABLE EventTable (
-        EventID SERIAL PRIMARY KEY,
+CREATE TABLE RentalObjectTable (
+        ObjectID SERIAL PRIMARY KEY,
+        ObjectName VARCHAR(200) NOT NULL,
+        ObjectType VARCHAR(10) NOT NULL,
+        ObjectInfo TEXT,
+        Price INT -- rent price in rubles (for day)
+);
+
+CREATE TABLE AgreementTable (
+        AgreementID SERIAL PRIMARY KEY,
+        UserID INTEGER REFERENCES UserTable (UserID),
+        ObjectID INTEGER REFERENCES RentalObjectTable (ObjectID),
         EventName VARCHAR(200) NOT NULL,
         EventInfo TEXT,
         TimeBegin DATE,
         TimeEnd DATE,
-        PeopleCount INT,
-        Price INT -- participation price in rubles
+        SumPrice INT -- sum price in rubles
 );
 
-CREATE TABLE ItemTable (
-       ItemID SERIAL PRIMARY KEY,
-       ItemName VARCHAR(100) NOT NULL,
-       ItemInfo TEXT,
-       Price INT -- rental price for day in rubles
-);
 
-CREATE TABLE HabitationTable (
-        HabitationID SERIAL PRIMARY KEY,
-        HabitationName VARCHAR(100) NOT NULL,
-        HabitationInfo TEXT,
-        Price INT -- booking price for day in rubles
-);
 

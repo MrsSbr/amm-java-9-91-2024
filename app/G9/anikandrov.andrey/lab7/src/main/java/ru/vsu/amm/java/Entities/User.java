@@ -1,5 +1,5 @@
-package Entities;
-import Enums.Roles;
+package ru.vsu.amm.java.Entities;
+import ru.vsu.amm.java.Enums.Roles;
 
 import java.util.Date;
 
