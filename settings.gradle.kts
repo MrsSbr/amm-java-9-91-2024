@@ -166,6 +166,7 @@ student("em.vera", G91) {
     lab(4)
     lab(5)
     lab(6)
+    lab(7)
 }
 
 student("em.vera", G91) {
