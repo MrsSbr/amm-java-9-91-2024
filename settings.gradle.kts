@@ -368,6 +368,15 @@ student("globuchik.dmitry", G9) {
 }
 
 
+
+student("plotnikova.irina", G9) {
+    lab(0)
+    lab(1)
+    lab(2)
+}
+
+
+=======
 student("nikitina.elizaveta", G9) {
     lab(0)
 }
@@ -378,9 +387,7 @@ student ("kotov.vladimir", G9){
 }
 
 
-student("plotnikova.irina", G9) {
-    lab(0)
-}
+
 // DSL для подпроектов [Не трогать]
 includeProject("template-lab0", file("template/lab0"))
 
