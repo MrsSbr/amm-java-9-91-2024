@@ -19,5 +19,5 @@ Output: 0
 
 row == grid.length
 col == grid[i].length
-1 <= row, col <= 10
+1 <= row, col <= 10^5
 0 <= grid[i][j] <= 15
