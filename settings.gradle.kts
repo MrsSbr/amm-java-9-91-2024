@@ -297,6 +297,7 @@ student("shipilova.viktoria", G9) {
     lab(4)
     lab(5)
     lab(6)
+    lab(7)
 }
 student("kreydun.nicholas", G9) {
     lab(0)
