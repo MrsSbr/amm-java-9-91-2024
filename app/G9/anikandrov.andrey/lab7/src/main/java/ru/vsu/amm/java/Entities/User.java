@@ -52,7 +52,11 @@ public class User {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        if (phone != null && phone.matches("^[0-9]{11}$")) {
+            this.phone = phone;
+        } else {
+            throw new IllegalArgumentException("setPhone Error");
+        }
     }
 
     public Date getBirthDate() {
