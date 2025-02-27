@@ -1,0 +1,24 @@
+2024-11-21 21:19:43 ru.vsu.amm.java.Main
+INFO: среднее время приготовления: {ESPRESSO=9.5, LATTE=9.0, CAPPUCCINO=6.25}
+2024-11-21 21:19:43 ru.vsu.amm.java.Main
+INFO: напиток с наилучшим соотношением цена/время: Optional[ESPRESSO]
+2024-11-21 21:19:43 ru.vsu.amm.java.Main
+INFO: самый загруженный час по будням: Optional[3]
+2024-11-21 21:19:43 ru.vsu.amm.java.Main
+INFO: напитки, которые чаще всего заказывают с 7 до 12 утра:[]
+2024-11-21 21:30:53 ru.vsu.amm.java.Main
+INFO: среднее время приготовления: {LATTE=10.0, CAPPUCCINO=8.0, ESPRESSO=6.6666665}
+2024-11-21 21:30:53 ru.vsu.amm.java.Main
+INFO: напиток с наилучшим соотношением цена/время: Optional[ESPRESSO]
+2024-11-21 21:30:53 ru.vsu.amm.java.Main
+INFO: самый загруженный час по будням: Optional[15]
+2024-11-21 21:30:53 ru.vsu.amm.java.Main
+INFO: напитки, которые чаще всего заказывают с 7 до 12 утра:[ESPRESSO]
+2024-11-21 22:22:02 ru.vsu.amm.java.Main
+INFO: среднее время приготовления: {LATTE=7.0, CAPPUCCINO=4.8, ESPRESSO=4.5}
+2024-11-21 22:22:02 ru.vsu.amm.java.Main
+INFO: напиток с наилучшим соотношением цена/время: Optional[LATTE]
+2024-11-21 22:22:02 ru.vsu.amm.java.Main
+INFO: самый загруженный час по будням: Optional[2]
+2024-11-21 22:22:02 ru.vsu.amm.java.Main
+INFO: напитки, которые чаще всего заказывают с 7 до 12 утра:[]
