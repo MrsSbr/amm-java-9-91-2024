@@ -37,3 +37,6 @@ ALTER TABLE user_car
     ADD CONSTRAINT user_car_car_fk FOREIGN KEY (car_id) REFERENCES car(id) ON DELETE CASCADE,
     ADD CONSTRAINT user_car_duration_check CHECK (duration >= 0),
     ADD CONSTRAINT user_car_price_check CHECK (price_per_minute >= 0);
+
+CREATE INDEX idx_user_car_user_id ON user_car (user_id);
+CREATE INDEX idx_user_car_car_id ON user_car (car_id);
