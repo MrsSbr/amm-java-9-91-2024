@@ -1,0 +1,4 @@
+John Doe;North;10 North St;2;Daily Times;NEWSPAPER;2024-07-01;2024-12-31;Weekly News;MAGAZINE;2024-07-01;2024-09-30
+Jane Smith;South;20 South St;1;Daily Times;NEWSPAPER;2024-08-01;2024-12-31
+Alice Brown;East;30 East St;1;Fashion Today;MAGAZINE;2024-07-01;2024-12-31
+David Johnson;West;40 West St;2;Daily Times;NEWSPAPER;2024-06-01;2024-11-30;Health Journal;MAGAZINE;2024-05-15;2024-10-15
