@@ -8,14 +8,14 @@ public class UserEntity {
     private long userId;
     private String name;
     private String email;
-    private String password;
+    private String passwordHash;
     private String phone;
 
 
-    public UserEntity (String name, String email, String password, String phone) {
+    public UserEntity (String name, String email, String passwordHash, String phone) {
     this.name = name;
     this.email = email;
-    this.password = password;
+    this.passwordHash = passwordHash;
     this.phone = phone;
     }
 }
