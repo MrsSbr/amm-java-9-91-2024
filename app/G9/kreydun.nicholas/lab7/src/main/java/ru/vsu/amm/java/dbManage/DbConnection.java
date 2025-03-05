@@ -4,13 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import static ru.vsu.amm.java.service.Logg.logger;
+import static ru.vsu.amm.java.services.Logg.logger;
 
 public class DbConnection {
 
     private static final String DB_URL = "jdbc:postgresql://localhost:5434/";
 
-    public Connection connectToDb(String dbname, String user, String pass) {
+    public void connectToDb(String dbname, String user, String pass) {
 
         Connection conn = null;
 
@@ -26,6 +26,5 @@ public class DbConnection {
             logger.info("Error connecting to PostgreSQL: " + e.getMessage());
         }
 
-        return conn;
     }
 }

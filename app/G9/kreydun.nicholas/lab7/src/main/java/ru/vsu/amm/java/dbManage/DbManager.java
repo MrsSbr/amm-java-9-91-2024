@@ -8,7 +8,7 @@ import java.sql.*;
 import ru.vsu.amm.java.entities.Post;
 import ru.vsu.amm.java.entities.User;
 
-import static ru.vsu.amm.java.service.Logg.logger;
+import static ru.vsu.amm.java.services.Logg.logger;
 
 public class DbManager {
 

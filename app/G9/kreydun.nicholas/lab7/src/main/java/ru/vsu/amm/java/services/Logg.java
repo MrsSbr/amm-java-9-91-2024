@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.service;
+package ru.vsu.amm.java.services;
 
 import java.io.File;
 import java.io.IOException;
