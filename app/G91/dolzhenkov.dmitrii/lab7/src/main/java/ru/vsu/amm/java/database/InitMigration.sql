@@ -16,8 +16,8 @@ CREATE TABLE Trip (
     scooter_id BIGINT NOT NULL,
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP,
-    startLocation TEXT,
-    endLocation TEXT,
+    start_location TEXT,
+    end_location TEXT,
     FOREIGN KEY (person_id) REFERENCES Person(id) ON DELETE CASCADE,
     FOREIGN KEY (scooter_id) REFERENCES Scooter(id) ON DELETE SET NULL
 );
