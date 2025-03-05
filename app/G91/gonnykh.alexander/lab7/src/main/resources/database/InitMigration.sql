@@ -7,8 +7,7 @@ CREATE TABLE car
     status TEXT NOT NULL
 );
 
-ALTER TABLE car
-    ADD CONSTRAINT car_status_check CHECK (status IN ('AVAILABLE', 'IN_USE', 'MAINTENANCE'));
+CREATE INDEX idx_car_id ON car (id);
 
 CREATE TABLE users
 (
@@ -17,6 +16,8 @@ CREATE TABLE users
     hash_password TEXT NOT NULL,
     email         TEXT NOT NULL
 );
+
+CREATE INDEX idx_users_id ON users (id);
 
 ALTER TABLE users
     ADD CONSTRAINT users_username_unique UNIQUE (username),
@@ -28,15 +29,14 @@ CREATE TABLE user_car
     user_id          BIGINT         NOT NULL,
     car_id           BIGINT         NOT NULL,
     start_trip       TIMESTAMP      NOT NULL,
-    duration         BIGINT,
+    duration         INTEGER,
     price_per_minute DECIMAL(10, 2) NOT NULL
 );
 
-ALTER TABLE user_car
-    ADD CONSTRAINT user_car_user_fk FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-    ADD CONSTRAINT user_car_car_fk FOREIGN KEY (car_id) REFERENCES car(id) ON DELETE CASCADE,
-    ADD CONSTRAINT user_car_duration_check CHECK (duration >= 0),
-    ADD CONSTRAINT user_car_price_check CHECK (price_per_minute >= 0);
-
+CREATE INDEX idx_user_car_id ON user_car (id);
 CREATE INDEX idx_user_car_user_id ON user_car (user_id);
 CREATE INDEX idx_user_car_car_id ON user_car (car_id);
+
+ALTER TABLE user_car
+    ADD CONSTRAINT user_car_user_fk FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    ADD CONSTRAINT user_car_car_fk FOREIGN KEY (car_id) REFERENCES car(id) ON DELETE CASCADE;

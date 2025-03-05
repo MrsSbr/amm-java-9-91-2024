@@ -13,7 +13,7 @@ public class UserCarEntity {
     private Long userId;
     private Long carId;
     private LocalDateTime startTrip;
-    private Long duration;
+    private Integer duration;
     private BigDecimal priceForMinute;
 
 }
