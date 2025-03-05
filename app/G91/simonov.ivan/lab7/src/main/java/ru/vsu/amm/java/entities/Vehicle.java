@@ -26,18 +26,18 @@ public class Vehicle {
 
         boolean isValid = true;
 
-        String[] splits = registrationNumber.split(":");
+        String[] regNumData = registrationNumber.split(":");
 
         int letters = 0;
         int digits = 1;
         int regionCode = 2;
         int country = 3;
 
-        if (splits.length != 4
-                || !splits[letters].matches("[A-Z]+")
-                || !splits[digits].matches("[0-9]+")
-                || !splits[regionCode].matches("[0-9]+")
-                || !splits[country].matches("[A-Z]+")) {
+        if (regNumData.length != 4
+                || !regNumData[letters].matches("[A-Z]+")
+                || !regNumData[digits].matches("[0-9]+")
+                || !regNumData[regionCode].matches("[0-9]+")
+                || !regNumData[country].matches("[A-Z]+")) {
 
             isValid = false;
         }
