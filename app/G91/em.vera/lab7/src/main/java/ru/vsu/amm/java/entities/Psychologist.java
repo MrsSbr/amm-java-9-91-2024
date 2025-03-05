@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.vsu.amm.java.enums.Gender;
 
 import java.time.LocalDate;
 
@@ -16,7 +17,7 @@ public class Psychologist {
     private String name;
     private String surname;
     private LocalDate birthdate;
-    private Character gender;
+    private Gender gender;
     private Short experience;
     private String login;
     private String password;

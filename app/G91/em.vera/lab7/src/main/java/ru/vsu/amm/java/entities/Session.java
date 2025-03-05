@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -16,6 +17,6 @@ public class Session {
     private Psychologist psychologist;
     private Client client;
     private LocalDate date;
-    private Float price;
+    private BigDecimal price;
     private Short duration;
 }
