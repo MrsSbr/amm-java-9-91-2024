@@ -10,11 +10,9 @@ CREATE TABLE car
 CREATE TABLE users
 (
     id            BIGSERIAL PRIMARY KEY,
-    username      TEXT NOT NULL,
+    username      TEXT NOT NULL UNIQUE ,
     hash_password TEXT NOT NULL,
-    email         TEXT NOT NULL,
-    CONSTRAINT users_username_unique UNIQUE (username),
-    CONSTRAINT users_email_unique UNIQUE (email)
+    email         TEXT NOT NULL UNIQUE ,
 );
 
 CREATE TABLE user_car
