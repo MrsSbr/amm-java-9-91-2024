@@ -1,17 +1,17 @@
 CREATE TABLE Person (
-    id BIGINT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     hash_password TEXT NOT NULL
 );
 
 CREATE TABLE Scooter (
-    id BIGINT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     model TEXT NOT NULL,
     location TEXT
 );
 
 CREATE TABLE Trip (
-    id BIGINT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     person_id BIGINT NOT NULL,
     scooter_id BIGINT NOT NULL,
     start_time TIMESTAMP NOT NULL,
