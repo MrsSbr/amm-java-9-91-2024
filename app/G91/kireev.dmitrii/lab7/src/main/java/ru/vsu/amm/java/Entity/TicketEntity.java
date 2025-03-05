@@ -10,6 +10,7 @@ public class TicketEntity {
 
     private long ticketId;
     private String status;
+    private int hallNumber;
     private int placeNumber;
     private Timestamp startTime;
     private Timestamp endTime;
@@ -17,8 +18,9 @@ public class TicketEntity {
     private long userId;
     private long filmId;
 
-    public TicketEntity(String status, int placeNumber, Timestamp startTime, Timestamp endTime, long userId, long filmId) {
+    public TicketEntity(String status,int hallNumber, int placeNumber, Timestamp startTime, Timestamp endTime, long userId, long filmId) {
         this.status = status;
+        this.hallNumber = hallNumber;
         this.placeNumber = placeNumber;
         this.startTime = startTime;
         this.endTime = endTime;
