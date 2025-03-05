@@ -1,18 +1,12 @@
 
 CREATE TABLE UserTable (
        UserID SERIAL PRIMARY KEY,
-       UserName VARCHAR(200) NOT NULL,
+       UserName VARCHAR(200) NOT NULL UNIQUE,
        Password VARCHAR(30) NOT NULL,
        UserRole VARCHAR(50),
-       Phone VARCHAR(11),
+       Phone VARCHAR(11) UNIQUE,
        BirthDate DATE
 );
-
-ALTER TABLE UserTable
-    ADD CONSTRAINT UserName_Unique UNIQUE (UserName);
-
-ALTER TABLE UserTable
-    ADD CONSTRAINT Phone_Unique UNIQUE (Phone);
 
 CREATE TABLE RentalObjectTable (
         ObjectID SERIAL PRIMARY KEY,
