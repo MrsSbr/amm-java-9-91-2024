@@ -28,16 +28,12 @@ ALTER TABLE Hotel
 
 CREATE TABLE Hotel_room(
     Room_id 		SERIAL 		PRIMARY KEY,
-    Hotel_id 		INTEGER     NOT NULL,
+    Hotel_id 		INTEGER     NOT NULL REFERENCES Hotel(Hotel_id),
     Room_number		INTEGER		NOT NULL,
     Floor_number 	INTEGER 	NOT NULL,
     Beds_count 		INTEGER 	NOT NULL,
     Specifications 	VARCHAR(300)
 );
-
-ALTER TABLE Hotel_room
-    ADD CONSTRAINT FK_Hotel_room_Hotel
-        FOREIGN KEY(Hotel_id) REFERENCES Hotel(Hotel_id);
 
 ALTER TABLE Hotel_room
     ADD CONSTRAINT Unique_Hotel_room_Number_Floor
@@ -51,7 +47,7 @@ ALTER TABLE Hotel_room
 
 CREATE TABLE Employee(
     Employee_id			SERIAL			PRIMARY KEY,
-    Hotel_id			INTEGER			NOT NULL,
+    Hotel_id			INTEGER			NOT NULL REFERENCES Hotel(Hotel_id),
     "Name"				VARCHAR(100)	NOT NULL,
     Phone_number 		CHARACTER(12) 	NOT NULL,
     Email 				VARCHAR(30) 	NOT NULL,
@@ -60,10 +56,6 @@ CREATE TABLE Employee(
     Passport_series		CHARACTER(6)	NOT NULL,
     Salary				INTEGER			NOT NULL
 );
-
-ALTER TABLE Employee
-    ADD CONSTRAINT FK_Employee_Hotel
-        FOREIGN KEY(Hotel_id) REFERENCES Hotel(Hotel_id);
 
 ALTER TABLE Employee
     ADD CHECK(Phone_number ~ '^\+7[0-9]{10}$');
