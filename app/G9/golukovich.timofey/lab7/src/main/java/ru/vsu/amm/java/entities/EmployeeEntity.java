@@ -5,6 +5,8 @@ import java.util.Date;
 public class EmployeeEntity {
     public int id;
     public int hotelId;
+    public String login;
+    public String password;
     public String name;
     public String phoneNumber;
     public String email;
