@@ -9,9 +9,6 @@ CREATE TABLE "User"
 	"Role" TEXT NOT NULL
 );
 
-CREATE INDEX I_User_Id_user ON "User"(Id_user);
-CREATE INDEX I_User_Login ON "User"(Login);
-
 CREATE TABLE Vehicle
 (
 	Id_vehicle SERIAL PRIMARY KEY,
@@ -20,8 +17,6 @@ CREATE TABLE Vehicle
 	Brand TEXT NOT NULL,
 	Colour TEXT NOT NULL
 );
-
-CREATE INDEX I_Vehicle_Id_vehicle ON Vehicle(Id_vehicle);
 
 CREATE TABLE "Session"
 (	
@@ -33,6 +28,5 @@ CREATE TABLE "Session"
 	ExitDate DATE
 );
 
-CREATE INDEX I_Session_Id_session ON "Session"(Id_session);
 CREATE INDEX I_Session_Id_user ON "Session"(Id_user);
 CREATE INDEX I_Session_Id_vehicle ON "Session"(Id_vehicle);
