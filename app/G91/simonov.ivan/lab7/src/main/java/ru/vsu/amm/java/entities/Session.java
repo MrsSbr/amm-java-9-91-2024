@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.entities;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Session {
@@ -7,7 +8,7 @@ public class Session {
     private int sessionId;
     private int userId;
     private int vehicleId;
-    private double parkingPrice;
+    private BigDecimal parkingPrice;
     private LocalDateTime entryDate;
     private LocalDateTime exitDate;
 
@@ -37,13 +38,13 @@ public class Session {
         this.vehicleId = vehicleId;
     }
 
-    public double getParkingPrice() {
+    public BigDecimal getParkingPrice() {
         return parkingPrice;
     }
 
-    public void setParkingPrice(double parkingPrice) {
+    public void setParkingPrice(BigDecimal parkingPrice) {
 
-        if (parkingPrice >= 0) {
+        if (parkingPrice.compareTo(BigDecimal.ZERO) >= 0) {
             this.parkingPrice = parkingPrice;
         } else {
             throw new IllegalArgumentException("Invalid parking price!");
