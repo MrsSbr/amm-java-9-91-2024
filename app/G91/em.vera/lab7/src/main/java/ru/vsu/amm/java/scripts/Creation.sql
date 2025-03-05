@@ -26,6 +26,3 @@ CREATE TABLE Session (
     FOREIGN KEY (Id_psychologist) REFERENCES Psychologist(Id_psychologist) ON DELETE SET NULL,
     FOREIGN KEY (Id_client) REFERENCES Client(Id_client) ON DELETE SET NULL
 );
-
-CREATE INDEX idx_session_psychologist ON Session (Id_psychologist);
-CREATE INDEX idx_session_client ON Session (Id_client);
