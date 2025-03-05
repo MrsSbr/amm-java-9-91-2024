@@ -8,8 +8,6 @@ CREATE TABLE IF NOT EXISTS "User"(
 	PhoneNumber char(11) NOT NULL -- проверка: начинается с 7
 );
 
-CREATE INDEX Ind_User_Id_user ON "User"(Id_user);
-
 ALTER TABLE IF EXISTS "User"
 ADD CONSTRAINT U_User_Email UNIQUE(Email);
 
@@ -23,8 +21,6 @@ CREATE TABLE IF NOT EXISTS Book(
 	BookType varchar(100) NOT NULL
 );
 
-CREATE INDEX Ind_Book_Id_book ON Book(Id_book);
-
 CREATE TABLE IF NOT EXISTS BookUpdates(
 	Id_update serial PRIMARY KEY,
 	Id_book integer, 
@@ -33,7 +29,6 @@ CREATE TABLE IF NOT EXISTS BookUpdates(
 	UpdateType varchar(100) NOT NULL
 );
 
-CREATE INDEX Ind_BookUpdates_Id_update ON BookUpdates(Id_update);
 CREATE INDEX Ind_BookUpdate_Id_book ON BookUpdates(Id_book);
 CREATE INDEX Ind_BookUpdate_Id_user ON BookUpdates(Id_user);
 
