@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.configuration;
 
 import org.postgresql.ds.PGSimpleDataSource;
+import ru.vsu.amm.java.exception.PropertiesFileException;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class DatabaseConfiguration {
                 .getResourceAsStream("db.properties")) {
             prop.load(input);
         } catch (IOException e) {
-            System.out.println(e.getMessage()); // TO DO log
+            throw new PropertiesFileException(e.getMessage());
         }
         pgSimpleDataSource.setUrl(prop.getProperty("db.url"));
         pgSimpleDataSource.setUser(prop.getProperty("db.username"));
