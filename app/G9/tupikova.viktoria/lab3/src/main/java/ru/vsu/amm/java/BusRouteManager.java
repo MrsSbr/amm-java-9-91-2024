@@ -14,7 +14,7 @@ public class BusRouteManager {
     private final Random random;
 
     public BusRouteManager() {
-        weeklyReports = new ArrayList<BusRouteReport>();
+        weeklyReports = new ArrayList<>();
         random = new Random();
     }
 

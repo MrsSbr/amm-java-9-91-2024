@@ -2,8 +2,6 @@ import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.BusRouteManager;
 import ru.vsu.amm.java.BusRouteReport;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
