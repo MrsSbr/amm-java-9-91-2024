@@ -1,6 +1,6 @@
-package java.ru.vsu.amm.java.entities;
+package ru.vsu.amm.java.entities;
 
-import java.ru.vsu.amm.java.enums.UpdateType;
+import ru.vsu.amm.java.enums.UpdateType;
 import java.time.LocalDateTime;
 
 public class BookUpdates {

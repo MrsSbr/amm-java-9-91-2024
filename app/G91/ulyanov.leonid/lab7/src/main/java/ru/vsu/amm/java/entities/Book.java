@@ -1,6 +1,6 @@
-package java.ru.vsu.amm.java.entities;
+package ru.vsu.amm.java.entities;
 
-import java.ru.vsu.amm.java.enums.BookType;
+import ru.vsu.amm.java.enums.BookType;
 
 public class Book {
     private Integer bookId;

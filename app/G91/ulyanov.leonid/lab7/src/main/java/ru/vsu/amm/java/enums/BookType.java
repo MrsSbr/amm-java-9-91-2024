@@ -1,4 +1,4 @@
-package java.ru.vsu.amm.java.enums;
+package ru.vsu.amm.java.enums;
 
 public enum BookType {
     ARTICLE,

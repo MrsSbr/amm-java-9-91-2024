@@ -1,4 +1,4 @@
-package java.ru.vsu.amm.java.entities;
+package ru.vsu.amm.java.entities;
 
 public class User {
     private Integer userId;
