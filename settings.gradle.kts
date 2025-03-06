@@ -280,6 +280,10 @@ student ("safonova.nastia", G9){
 
 student ("semenov.elisey", G9){
     lab(0)
+    lab(1)
+    lab(4)
+    lab(3)
+    lab(2)
 }
 
 student("serova.polina", G9) {

@@ -1,0 +1,8 @@
+15.01.2025;Bear;fish,honey,berries;35.0
+16.01.2025;Giraffe;leaves,twigs,fruits;45.0
+17.01.2025;Penguin;fish,squid;15.0
+18.01.2025;Snake;rodents,eggs;8.0
+19.01.2025;Bear;honey,fruits;32.0
+20.01.2025;Giraffe;leaves,hay;40.0
+21.01.2025;Penguin;fish;12.5
+22.02.2025;Snake;rodents;7.0
