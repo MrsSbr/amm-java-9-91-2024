@@ -1,5 +1,7 @@
 package ru.vsu.amm.java.entities;
 
+import ru.vsu.amm.java.enums.Role;
+
 public class UserEntity {
     private int userId;
     private String firstName;
@@ -9,12 +11,13 @@ public class UserEntity {
     private String email;
     private String phoneNumber;
     private String passwordHash;
+    private Role Role;
 
     public UserEntity() {
     }
 
     public UserEntity(int userId, String firstName, String lastName, String patronymic,
-                      String city, String email, String phoneNumber, String passwordHash) {
+                      String city, String email, String phoneNumber, String passwordHash, Role role) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,6 +26,7 @@ public class UserEntity {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.passwordHash = passwordHash;
+        this.Role = role;
     }
 
     public int getUserId() {
@@ -87,5 +91,13 @@ public class UserEntity {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public ru.vsu.amm.java.enums.Role getRole() {
+        return Role;
+    }
+
+    public void setRole(ru.vsu.amm.java.enums.Role role) {
+        Role = role;
     }
 }
