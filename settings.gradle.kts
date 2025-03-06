@@ -343,6 +343,7 @@ student("tottskiy.stepan", G9) {
 
 student("tupikova.viktoria", G9) {
     lab(0)
+    lab(3)
 }
 student("tottskiy.stepan", G9) {
     lab(0)
