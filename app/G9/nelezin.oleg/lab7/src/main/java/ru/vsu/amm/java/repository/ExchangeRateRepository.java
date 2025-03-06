@@ -20,7 +20,14 @@ public class ExchangeRateRepository implements CrudRepository<ExchangeRate> {
 
     @Override
     public Optional<ExchangeRate> findById(Long id) throws SQLException {
-        final String query = "SELECT * FROM exchange_rate WHERE id = ?";
+        final String query = """
+            SELECT 
+                id, 
+                base_currency_id, 
+                target_currency_id, 
+                rate 
+            FROM exchange_rate WHERE id = ?
+            """;
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setLong(1, id);

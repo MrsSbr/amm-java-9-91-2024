@@ -22,7 +22,7 @@ public class UserRepository implements CrudRepository<UserEntity> {
 
     @Override
     public Optional<UserEntity> findById(Long id) throws SQLException {
-        final String query = "SELECT * FROM user_entity WHERE id = ?";
+        final String query = "SELECT id, login, password FROM user_entity WHERE id = ?";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setLong(1, id);
@@ -42,7 +42,7 @@ public class UserRepository implements CrudRepository<UserEntity> {
 
     @Override
     public List<UserEntity> findAll() throws SQLException {
-        final String query = "SELECT * FROM user_entity";
+        final String query = "SELECT id, login, password FROM user_entity";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.execute();
@@ -62,7 +62,7 @@ public class UserRepository implements CrudRepository<UserEntity> {
     }
 
     public Optional<UserEntity> findByLogin(String login) throws SQLException {
-        final String query = "SELECT * FROM user_entity WHERE login = ?";
+        final String query = "SELECT id, login, password FROM user_entity WHERE login = ?";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, login);

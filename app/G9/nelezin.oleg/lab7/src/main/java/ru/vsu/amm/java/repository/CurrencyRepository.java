@@ -22,7 +22,7 @@ public class CurrencyRepository implements CrudRepository<Currency> {
 
     @Override
     public Optional<Currency> findById(Long id) throws SQLException {
-        final String query = "SELECT * FROM currency WHERE id = ?";
+        final String query = "SELECT id, code, name, sign FROM currency WHERE id = ?";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setLong(1, id);
@@ -43,7 +43,7 @@ public class CurrencyRepository implements CrudRepository<Currency> {
 
     @Override
     public List<Currency> findAll() throws SQLException {
-        final String query = "SELECT * FROM currency";
+        final String query = "SELECT id, code, name, sign FROM currency";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.execute();
@@ -62,7 +62,7 @@ public class CurrencyRepository implements CrudRepository<Currency> {
     }
 
     public Optional<Currency> findByCode(String code) throws SQLException {
-        final String query = "SELECT * FROM currency WHERE code = ?";
+        final String query = "SELECT id, code, name, sign FROM currency WHERE code = ?";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, code);

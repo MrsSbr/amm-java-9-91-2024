@@ -19,10 +19,10 @@ public class AuthServiceImpl implements AuthService {
         try {
             UserEntity user = userRepository.findByLogin(login).orElseThrow(
                     () -> new RuntimeException("Такого пользователя не существует")
-            ); // TO DO custom exception
+            ); // TODO custom exception
             return BCrypt.checkpw(password, user.getPassword());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); // TODO custom exception
         }
     }
 
@@ -39,7 +39,7 @@ public class AuthServiceImpl implements AuthService {
             }
             return false;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); // TODO custom exception
         }
     }
 }
