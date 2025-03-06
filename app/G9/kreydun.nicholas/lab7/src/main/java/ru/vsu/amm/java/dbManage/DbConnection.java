@@ -6,25 +6,29 @@ import java.sql.SQLException;
 
 import static ru.vsu.amm.java.services.Logg.logger;
 
+import java.util.Properties;
+
 public class DbConnection {
+    private static final Properties properties = new Properties();
 
-    private static final String DB_URL = "jdbc:postgresql://localhost:5434/";
+    static {
 
-    public void connectToDb(String dbname, String user, String pass) {
-
-        Connection conn = null;
-
-        try {
-            conn = DriverManager.getConnection(DB_URL + dbname + "?user=" + user + "&password=" + pass);
-
-            if (conn != null) {
-                logger.info("Connected to PostgreSQL database: " + dbname);
-            } else {
-                logger.warning("Failed to connect to PostgreSQL database: " + dbname);
-            }
-        } catch (SQLException e) {
-            logger.info("Error connecting to PostgreSQL: " + e.getMessage());
-        }
-
+        properties.setProperty("jdbc.url", "jdbc:postgresql://localhost:5434/SocialNetwork_");
+        properties.setProperty("jdbc.username", "postgres");
+        properties.setProperty("jdbc.password", "12345");
     }
+
+    public static Connection getConnection() throws SQLException {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            logger.warning("PostgreSQL JDBC driver not found.");
+            throw new SQLException("PostgreSQL JDBC driver not found.", e);
+        }
+        return DriverManager.getConnection(
+                properties.getProperty("jdbc.url"),
+                properties.getProperty("jdbc.username"),
+                properties.getProperty("jdbc.password")
+        );
+    };
 }
