@@ -1,5 +1,8 @@
 package ru.vsu.amm.java.servlet;
 
+import ru.vsu.amm.java.service.AuthService;
+import ru.vsu.amm.java.service.impl.AuthServiceImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +17,8 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        // TO DO reg
+
+        AuthService authService = new AuthServiceImpl();
+        boolean isRegisterSuccessful = authService.login(login, password);
     }
 }

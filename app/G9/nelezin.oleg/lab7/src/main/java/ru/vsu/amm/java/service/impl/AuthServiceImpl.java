@@ -2,6 +2,8 @@ package ru.vsu.amm.java.service.impl;
 
 import org.mindrot.jbcrypt.BCrypt;
 import ru.vsu.amm.java.entity.UserEntity;
+import ru.vsu.amm.java.exception.DatabaseException;
+import ru.vsu.amm.java.exception.WrongUserCredentialsException;
 import ru.vsu.amm.java.repository.UserRepository;
 import ru.vsu.amm.java.service.AuthService;
 
@@ -18,11 +20,11 @@ public class AuthServiceImpl implements AuthService {
     public boolean login(String login, String password) {
         try {
             UserEntity user = userRepository.findByLogin(login).orElseThrow(
-                    () -> new RuntimeException("Такого пользователя не существует")
-            ); // TODO custom exception
+                    () -> new WrongUserCredentialsException("Такого пользователя не существует")
+            );
             return BCrypt.checkpw(password, user.getPassword());
         } catch (SQLException e) {
-            throw new RuntimeException(e); // TODO custom exception
+            throw new DatabaseException(e.getMessage());
         }
     }
 
@@ -39,7 +41,7 @@ public class AuthServiceImpl implements AuthService {
             }
             return false;
         } catch (SQLException e) {
-            throw new RuntimeException(e); // TODO custom exception
+            throw new DatabaseException(e.getMessage());
         }
     }
 }
