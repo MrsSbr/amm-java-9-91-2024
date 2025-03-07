@@ -244,6 +244,7 @@ student("garshin.maxim", G9) {
     lab(2)
     lab(3)
     lab(4)
+    lab(7)
 }
 
 student("jasser.daniel", G9) {
