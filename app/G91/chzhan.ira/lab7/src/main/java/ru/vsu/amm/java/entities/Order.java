@@ -1,13 +1,15 @@
 package ru.vsu.amm.java.entities;
 
+import java.math.BigDecimal;
+
 public class Order {
     private Long id;
     private Long customerId;
     private Long toyId;
     private int quantity;
-    private double totalPrice;
+    private BigDecimal totalPrice;
 
-    public Order(Long id, Long customerId, Long toyId, int quantity, double totalPrice) {
+    public Order(Long id, Long customerId, Long toyId, int quantity, BigDecimal totalPrice) {
         this.id = id;
         this.customerId = customerId;
         this.toyId = toyId;
@@ -47,11 +49,11 @@ public class Order {
         this.quantity = quantity;
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 }

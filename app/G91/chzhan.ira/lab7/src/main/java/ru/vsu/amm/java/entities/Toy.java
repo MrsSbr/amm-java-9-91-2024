@@ -1,11 +1,22 @@
 package ru.vsu.amm.java.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Toy {
     private Long id;
     private String name;
-    private double price;
+    private BigDecimal price;
 
-    public Toy (Long id, String name, double price) {
+    public Toy (Long id, String name, BigDecimal price) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -27,11 +38,11 @@ public class Toy {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }
