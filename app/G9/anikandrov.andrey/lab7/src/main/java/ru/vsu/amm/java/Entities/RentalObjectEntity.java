@@ -3,9 +3,8 @@ package ru.vsu.amm.java.Entities;
 import ru.vsu.amm.java.Enums.ObjectType;
 
 import java.io.Serial;
-import java.util.Date;
 
-public class RentalObject {
+public class RentalObjectEntity {
     private Serial objectID;
     private String objectName;
     private ObjectType objectType;
@@ -13,9 +12,9 @@ public class RentalObject {
     private Integer price;
 
 
-    public RentalObject() {}
+    public RentalObjectEntity() {}
 
-    public RentalObject(Serial objectID, String objectName, ObjectType objectType, String info, Integer price) {
+    public RentalObjectEntity(Serial objectID, String objectName, ObjectType objectType, String info, Integer price) {
         this.objectID = objectID;
         this.objectName = objectName;
         this.objectType = objectType;

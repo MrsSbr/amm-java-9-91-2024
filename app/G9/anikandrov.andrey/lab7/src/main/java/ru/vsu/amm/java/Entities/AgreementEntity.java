@@ -3,7 +3,7 @@ package ru.vsu.amm.java.Entities;
 import java.io.Serial;
 import java.time.LocalDate;
 
-public class Agreement {
+public class AgreementEntity {
     private Serial agreementID;
     private Serial userID;
     private Serial objectID;
@@ -12,9 +12,9 @@ public class Agreement {
     private Integer sumPrice;
 
 
-    public Agreement () {}
+    public AgreementEntity() {}
 
-    public Agreement(Serial agreementID, Serial userID, Serial objectID, LocalDate timeStart, LocalDate timeEnd, Integer sumPrice) {
+    public AgreementEntity(Serial agreementID, Serial userID, Serial objectID, LocalDate timeStart, LocalDate timeEnd, Integer sumPrice) {
         this.agreementID = agreementID;
         this.userID = userID;
         this.objectID = objectID;
