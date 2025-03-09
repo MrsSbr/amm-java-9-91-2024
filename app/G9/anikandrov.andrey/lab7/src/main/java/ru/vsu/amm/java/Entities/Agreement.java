@@ -1,68 +1,69 @@
 package ru.vsu.amm.java.Entities;
 
-import java.util.Date;
+import java.io.Serial;
+import java.time.LocalDate;
 
 public class Agreement {
-    private long agreementID;
-    private long userID;
-    private long objectID;
-    private Date timeBegin;
-    private Date timeEnd;
+    private Serial agreementID;
+    private Serial userID;
+    private Serial objectID;
+    private LocalDate timeStart;
+    private LocalDate timeEnd;
     private Integer sumPrice;
 
 
     public Agreement () {}
 
-    public Agreement(long agreementID, long userID, long objectID, Date timeBegin, Date timeEnd, Integer sumPrice) {
+    public Agreement(Serial agreementID, Serial userID, Serial objectID, LocalDate timeStart, LocalDate timeEnd, Integer sumPrice) {
         this.agreementID = agreementID;
         this.userID = userID;
         this.objectID = objectID;
-        this.timeBegin = timeBegin;
+        this.timeStart = timeStart;
         this.timeEnd = timeEnd;
         this.sumPrice = sumPrice;
     }
 
-    public long getAgreementID() {
+    public Serial getAgreementID() {
         return agreementID;
     }
 
-    public void setAgreementID(long agreementID) {
+    public void setAgreementID(Serial agreementID) {
         this.agreementID = agreementID;
     }
 
-    public long getUserID() {
+    public Serial getUserID() {
         return userID;
     }
 
-    public void setUserID(long userID) {
+    public void setUserID(Serial userID) {
         this.userID = userID;
     }
 
-    public long getObjectID() {
+    public Serial getObjectID() {
         return objectID;
     }
 
-    public void setObjectID(long objectID) {
+    public void setObjectID(Serial objectID) {
         this.objectID = objectID;
     }
 
-    public Date getTimeBegin() {
-        return timeBegin;
+    public LocalDate getTimeStart() {
+        return timeStart;
     }
 
-    public void setTimeBegin(Date timeBegin) {
-        if (timeEnd != null && timeBegin != null && timeBegin.after(timeEnd)) {
+    public void setTimeStart(LocalDate timeStart) {
+        if (timeEnd != null && timeStart != null && timeStart.isAfter(timeEnd)) {
             throw new IllegalArgumentException("setTimeBegin Error");
         }
-        this.timeBegin = timeBegin;
+        this.timeStart = timeStart;
     }
 
-    public Date getTimeEnd() {
+    public LocalDate getTimeEnd() {
         return timeEnd;
     }
 
-    public void setTimeEnd(Date timeEnd) {
-        if (timeBegin != null && timeEnd != null && timeEnd.before(timeBegin)) {
+    public void setTimeEnd(LocalDate timeEnd) {
+        if (timeStart != null && timeEnd != null && timeEnd.isBefore(timeStart)) {
             throw new IllegalArgumentException("setTimeEnd Error");
         }
         this.timeEnd = timeEnd;

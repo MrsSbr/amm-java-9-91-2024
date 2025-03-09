@@ -1,10 +1,11 @@
 package ru.vsu.amm.java.Entities;
 import ru.vsu.amm.java.Enums.Roles;
 
+import java.io.Serial;
 import java.util.Date;
 
 public class User {
-    private long userID;
+    private Serial userID;
     private String userName;
     private String password;
     private Roles role;
@@ -14,7 +15,7 @@ public class User {
 
     public User () {}
 
-    public User(long userID, String userName, String password, Roles role, String phone, Date birthDate) {
+    public User(Serial userID, String userName, String password, Roles role, String phone, Date birthDate) {
         this.userID = userID;
         this.userName = userName;
         this.password = password;
@@ -23,11 +24,11 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public long getUserID() {
+    public Serial getUserID() {
         return userID;
     }
 
-    public void setUserID(long userID) {
+    public void setUserID(Serial userID) {
         this.userID = userID;
     }
 
