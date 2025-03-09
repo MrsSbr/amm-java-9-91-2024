@@ -3,20 +3,20 @@ package ru.vsu.amm.java.entities;
 import ru.vsu.amm.java.enams.PropertyTypeName;
 
 public class PropertyType {
-    private long propertyTypeID;
+    private long id;
     private PropertyTypeName propertyTypeName;
-    private long nextDestinationID;
+    private NextDestination nextDestination;
     private int storageDays;
     private int storageCost;
 
     public PropertyType() {}
 
-    public long getPropertyTypeID() {
-        return propertyTypeID;
+    public long getId() {
+        return id;
     }
 
-    public void setPropertyTypeID(long propertyTypeID) {
-        this.propertyTypeID = propertyTypeID;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public PropertyTypeName getPropertyTypeName() {
@@ -27,12 +27,12 @@ public class PropertyType {
         this.propertyTypeName = propertyTypeName;
     }
 
-    public long getNextDestinationID() {
-        return nextDestinationID;
+    public NextDestination getNextDestination() {
+        return nextDestination;
     }
 
-    public void setNextDestinationID(long nextDestinationID) {
-        this.nextDestinationID = nextDestinationID;
+    public void setNextDestination(NextDestination nextDestination) {
+        this.nextDestination = nextDestination;
     }
 
     public int getStorageDays() {

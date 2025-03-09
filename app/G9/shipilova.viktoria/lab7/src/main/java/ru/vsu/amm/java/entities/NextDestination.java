@@ -3,18 +3,18 @@ package ru.vsu.amm.java.entities;
 import ru.vsu.amm.java.enams.NextDestinationName;
 
 public class NextDestination {
-    private long nextDestinationID;
+    private long id;
     private NextDestinationName nextDestinationName;
     private String description;
 
     public NextDestination() {}
 
-    public long getNextDestinationID() {
-        return nextDestinationID;
+    public long getId() {
+        return id;
     }
 
-    public void setNextDestinationID(long nextDestinationID) {
-        this.nextDestinationID = nextDestinationID;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public NextDestinationName getNextDestinationName() {

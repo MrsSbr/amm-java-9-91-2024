@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class User {
-    private long userID;
+    private long id;
     private String password;
     private String phoneNumber;
     private String email;
@@ -12,12 +12,12 @@ public class User {
 
     public User() {}
 
-    public long getUserID() {
-        return userID;
+    public long getId() {
+        return id;
     }
 
-    public void setUserID(long userID) {
-        this.userID = userID;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getPassword() {
