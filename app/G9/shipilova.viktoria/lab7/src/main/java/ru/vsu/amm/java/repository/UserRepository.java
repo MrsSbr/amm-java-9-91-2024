@@ -1,7 +1,7 @@
 package ru.vsu.amm.java.repository;
 
+import ru.vsu.amm.java.connection.DataSourceProvider;
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.connection.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ public class UserRepository implements CrudRepository<User> {
         User user = null;
         final String sql = "SELECT UserID, Password, PhoneNumber, Email, Login FROM users WHERE UserID = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceProvider.getDataSource().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, id);
@@ -45,7 +45,7 @@ public class UserRepository implements CrudRepository<User> {
         List<User> users = new ArrayList<>();
         final String sql = "SELECT UserID, Password, PhoneNumber, Email, Login FROM Users";
 
-        try (Connection connection = DatabaseConnection.getConnection();
+        try (Connection connection = DataSourceProvider.getDataSource().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
 
@@ -70,7 +70,7 @@ public class UserRepository implements CrudRepository<User> {
     public void save(User user) {
         String sql = "INSERT INTO Users (Password, PhoneNumber, Email, Login) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceProvider.getDataSource().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, user.getPassword());
@@ -88,7 +88,7 @@ public class UserRepository implements CrudRepository<User> {
     public void update(User user) {
         String sql = "UPDATE Users SET Password = ?, PhoneNumber = ?, Email = ?, Login = ? WHERE UserID = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceProvider.getDataSource().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, user.getPassword());
@@ -108,7 +108,7 @@ public class UserRepository implements CrudRepository<User> {
     public void delete(long id) {
         String sql = "DELETE FROM Users WHERE UserID = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceProvider.getDataSource().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, id);

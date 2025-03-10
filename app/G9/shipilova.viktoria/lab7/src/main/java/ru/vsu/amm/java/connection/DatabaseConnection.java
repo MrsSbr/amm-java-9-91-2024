@@ -10,7 +10,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DatabaseConnection {
+public class DatabaseConnection { // Надо будет удалить
     private static final Logger logger = Logger.getLogger(DatabaseConnection.class.getName());
 
     public static Connection getConnection() throws SQLException {
@@ -20,7 +20,7 @@ public class DatabaseConnection {
 
         Properties props = new Properties();
 
-        try(InputStream input = DatabaseConnection.class.getClassLoader()
+        try (InputStream input = DatabaseConnection.class.getClassLoader()
                 .getResourceAsStream("db.properties")) {
             props.load(input);
 

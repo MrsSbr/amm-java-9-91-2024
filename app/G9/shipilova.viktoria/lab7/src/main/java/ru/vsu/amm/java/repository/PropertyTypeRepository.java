@@ -1,8 +1,8 @@
 package ru.vsu.amm.java.repository;
 
+import ru.vsu.amm.java.connection.DataSourceProvider;
 import ru.vsu.amm.java.entities.PropertyType;
 import ru.vsu.amm.java.entities.NextDestination;
-import ru.vsu.amm.java.connection.DatabaseConnection;
 import ru.vsu.amm.java.enams.PropertyTypeName;
 
 import java.sql.Connection;
@@ -23,7 +23,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
         PropertyType propertyType = null;
         final String sql = "SELECT PropertyTypeID, PropertyTypeName, NextDestinationID, StorageDays, StorageCost FROM PropertyType WHERE PropertyTypeID = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceProvider.getDataSource().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, id);
@@ -54,7 +54,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
         List<PropertyType> propertyTypes = new ArrayList<>();
         final String sql = "SELECT PropertyTypeID, PropertyTypeName, NextDestinationID, StorageDays, StorageCost FROM PropertyType";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceProvider.getDataSource().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
 
@@ -83,7 +83,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
     public void save(PropertyType propertyType) {
         final String sql = "INSERT INTO PropertyType (PropertyTypeName, NextDestinationID, StorageDays, StorageCost) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceProvider.getDataSource().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, propertyType.getPropertyTypeName().toString());
@@ -101,7 +101,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
     public void update(PropertyType propertyType) {
         final String sql = "UPDATE PropertyType SET PropertyTypeName = ?, NextDestinationID = ?, StorageDays = ?, StorageCost = ? WHERE PropertyTypeID = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceProvider.getDataSource().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, propertyType.getPropertyTypeName().toString());
@@ -120,7 +120,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
     public void delete(long id) {
         final String sql = "DELETE FROM PropertyType WHERE PropertyTypeID = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceProvider.getDataSource().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, id);

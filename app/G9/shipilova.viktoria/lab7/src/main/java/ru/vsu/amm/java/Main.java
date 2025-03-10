@@ -6,10 +6,10 @@ import ru.vsu.amm.java.repository.UserRepository;
 public class Main {
     public static void main(String[] args) {
         User user = new User();
-        user.setLogin("Vasyaaa");
-        user.setPassword("123");
-        user.setPhoneNumber("+79202222224");
-        user.setEmail("vasyaaa@gmail.com");
+        user.setLogin("Petya");
+        user.setPassword("111");
+        user.setPhoneNumber("+79202222227");
+        user.setEmail("petya@gmail.com");
         UserRepository userRepository = new UserRepository();
         userRepository.save(user);
         var users = userRepository.getAll();
