@@ -9,10 +9,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PropertyTypeRepository implements CrudRepository<PropertyType> {
+    private static final Logger logger = Logger.getLogger(PropertyTypeRepository.class.getName());
 
     @Override
     public PropertyType getById(long id) {
@@ -39,7 +43,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
                 propertyType.setStorageCost(rs.getInt("StorageCost"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e); // log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
 
         return propertyType;
@@ -69,7 +73,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
                 propertyTypes.add(propertyType);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e); // log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
 
         return propertyTypes;
@@ -89,7 +93,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e); // log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -108,7 +112,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e); // log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -123,7 +127,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e); // log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 }

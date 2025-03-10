@@ -8,10 +8,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class NextDestinationRepository implements CrudRepository<NextDestination> {
+    private static final Logger logger = Logger.getLogger(NextDestinationRepository.class.getName());
 
     @Override
     public NextDestination getById(long id) {
@@ -32,7 +36,7 @@ public class NextDestinationRepository implements CrudRepository<NextDestination
                 nextDestination.setDescription(rs.getString("Description"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e); // log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
 
         return nextDestination;
@@ -57,7 +61,7 @@ public class NextDestinationRepository implements CrudRepository<NextDestination
                 nextDestinations.add(nextDestination);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e); // log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
 
         return nextDestinations;
@@ -75,7 +79,7 @@ public class NextDestinationRepository implements CrudRepository<NextDestination
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e); // log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -92,7 +96,7 @@ public class NextDestinationRepository implements CrudRepository<NextDestination
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e); // log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -107,7 +111,7 @@ public class NextDestinationRepository implements CrudRepository<NextDestination
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e); // log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 }

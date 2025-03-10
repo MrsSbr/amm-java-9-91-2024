@@ -10,8 +10,11 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserRepository implements CrudRepository<User> {
+    private static final Logger logger = Logger.getLogger(UserRepository.class.getName());
 
     @Override
     public User getById(long id) {
@@ -32,7 +35,7 @@ public class UserRepository implements CrudRepository<User> {
                 user.setLogin(rs.getString("Login"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e); //log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
         return user;
     }
@@ -56,7 +59,7 @@ public class UserRepository implements CrudRepository<User> {
                 users.add(user);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e); //log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
 
         return users;
@@ -77,7 +80,7 @@ public class UserRepository implements CrudRepository<User> {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e); //log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -96,7 +99,7 @@ public class UserRepository implements CrudRepository<User> {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e); //log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
 
     }
@@ -112,7 +115,7 @@ public class UserRepository implements CrudRepository<User> {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e); //log
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
 
     }

@@ -5,9 +5,13 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DatabaseConnection {
+    private static final Logger logger = Logger.getLogger(DatabaseConnection.class.getName());
 
     public static Connection getConnection() throws SQLException {
         String dbUrl = null;
@@ -25,6 +29,7 @@ public class DatabaseConnection {
             dbPass = props.getProperty("db.password");
         }
         catch (IOException e) {
+            logger.log(Level.SEVERE, "Could not load properties file", e);
             throw new SQLException("Could not read properties file");
         }
 
@@ -33,6 +38,7 @@ public class DatabaseConnection {
         try {
             connection = DriverManager.getConnection(dbUrl, dbUser, dbPass);
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Could not connect to database", e);
             throw new SQLException("Could not connect to database");
         }
         return connection;
