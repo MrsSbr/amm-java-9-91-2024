@@ -83,4 +83,18 @@ public class FoundProperty {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "FoundProperty{" +
+                "id=" + id +
+                ", propertyType=" + propertyType +
+                ", dateOfFinding=" + dateOfFinding +
+                ", timeOfFinding=" + timeOfFinding +
+                ", returnStatus=" + returnStatus +
+                ", placeOfFinding='" + placeOfFinding + '\'' +
+                ", description='" + description + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

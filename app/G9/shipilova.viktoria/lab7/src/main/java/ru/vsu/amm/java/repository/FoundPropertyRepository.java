@@ -3,7 +3,7 @@ package ru.vsu.amm.java.repository;
 import ru.vsu.amm.java.entities.FoundProperty;
 import ru.vsu.amm.java.entities.PropertyType;
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.connection.dbConnection;
+import ru.vsu.amm.java.connection.DatabaseConnection;
 import ru.vsu.amm.java.enams.ReturnStatus;
 
 import java.sql.Connection;
@@ -15,20 +15,13 @@ import java.util.List;
 
 public class FoundPropertyRepository implements CrudRepository<FoundProperty> {
 
-    private final PropertyTypeRepository propertyTypeRepository;
-    private final UserRepository userRepository;
-
-    public FoundPropertyRepository(PropertyTypeRepository propertyTypeRepository, UserRepository userRepository) {
-        this.propertyTypeRepository = propertyTypeRepository;
-        this.userRepository = userRepository;
-    }
 
     @Override
     public FoundProperty getById(long id) {
         FoundProperty foundProperty = null;
         final String sql = "SELECT FoundPropertyID, PropertyTypeID, DateOfFinding, TimeOfFinding, ReturnStatus, PlaceOfFinding, Description, UserID FROM FoundProperties WHERE FoundPropertyID = ?";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, id);
@@ -39,7 +32,8 @@ public class FoundPropertyRepository implements CrudRepository<FoundProperty> {
                 foundProperty.setId(rs.getLong("FoundPropertyID"));
 
                 long propertyTypeId = rs.getLong("PropertyTypeID");
-                PropertyType propertyType = propertyTypeRepository.getById(propertyTypeId);
+                PropertyType propertyType = new PropertyType();
+                propertyType.setId(propertyTypeId);
                 foundProperty.setPropertyType(propertyType);
 
                 foundProperty.setDateOfFinding(rs.getDate("DateOfFinding").toLocalDate());
@@ -49,7 +43,8 @@ public class FoundPropertyRepository implements CrudRepository<FoundProperty> {
                 foundProperty.setDescription(rs.getString("Description"));
 
                 long userId = rs.getLong("UserID");
-                User user = userRepository.getById(userId);
+                User user = new User();
+                user.setId(userId);
                 foundProperty.setUser(user);
             }
         } catch (SQLException e) {
@@ -64,7 +59,7 @@ public class FoundPropertyRepository implements CrudRepository<FoundProperty> {
         List<FoundProperty> foundProperties = new ArrayList<>();
         final String sql = "SELECT FoundPropertyID, PropertyTypeID, DateOfFinding, TimeOfFinding, ReturnStatus, PlaceOfFinding, Description, UserID FROM FoundProperties";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
 
@@ -73,7 +68,8 @@ public class FoundPropertyRepository implements CrudRepository<FoundProperty> {
                 foundProperty.setId(rs.getLong("FoundPropertyID"));
 
                 long propertyTypeId = rs.getLong("PropertyTypeID");
-                PropertyType propertyType = propertyTypeRepository.getById(propertyTypeId);
+                PropertyType propertyType = new PropertyType();
+                propertyType.setId(propertyTypeId);
                 foundProperty.setPropertyType(propertyType);
 
                 foundProperty.setDateOfFinding(rs.getDate("DateOfFinding").toLocalDate());
@@ -83,7 +79,8 @@ public class FoundPropertyRepository implements CrudRepository<FoundProperty> {
                 foundProperty.setDescription(rs.getString("Description"));
 
                 long userId = rs.getLong("UserID");
-                User user = userRepository.getById(userId);
+                User user = new User();
+                user.setId(userId);
                 foundProperty.setUser(user);
 
                 foundProperties.add(foundProperty);
@@ -99,7 +96,7 @@ public class FoundPropertyRepository implements CrudRepository<FoundProperty> {
     public void save(FoundProperty foundProperty) {
         final String sql = "INSERT INTO FoundProperties (PropertyTypeID, DateOfFinding, TimeOfFinding, ReturnStatus, PlaceOfFinding, Description, UserID) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, foundProperty.getPropertyType().getId());
@@ -121,7 +118,7 @@ public class FoundPropertyRepository implements CrudRepository<FoundProperty> {
     public void update(FoundProperty foundProperty) {
         final String sql = "UPDATE FoundProperties SET PropertyTypeID = ?, DateOfFinding = ?, TimeOfFinding = ?, ReturnStatus = ?, PlaceOfFinding = ?, Description = ?, UserID = ? WHERE FoundPropertyID = ?";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, foundProperty.getPropertyType().getId());
@@ -144,7 +141,7 @@ public class FoundPropertyRepository implements CrudRepository<FoundProperty> {
     public void delete(long id) {
         final String sql = "DELETE FROM FoundProperties WHERE FoundPropertyID = ?";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, id);

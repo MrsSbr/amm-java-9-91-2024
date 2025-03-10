@@ -1,32 +1,28 @@
 package ru.vsu.amm.java.connection;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class dbConnection {
+public class DatabaseConnection {
 
     public static Connection getConnection() throws SQLException {
         String dbUrl = null;
         String dbUser = null;
         String dbPass = null;
 
-        FileInputStream fis;
         Properties props = new Properties();
 
-        try {
-            fis = new FileInputStream("src/main/java/ru/vsu/amm/java/resources/db.properties");
-            props.load(fis);
+        try(InputStream input = DatabaseConnection.class.getClassLoader()
+                .getResourceAsStream("db.properties")) {
+            props.load(input);
 
-            dbUrl = props.getProperty("db.uel");
+            dbUrl = props.getProperty("db.url");
             dbUser = props.getProperty("db.username");
             dbPass = props.getProperty("db.password");
-        } catch (FileNotFoundException e) {
-            throw new SQLException("Could not find properties file");
         }
         catch (IOException e) {
             throw new SQLException("Could not read properties file");

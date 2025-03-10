@@ -50,4 +50,15 @@ public class PropertyType {
     public void setStorageCost(int storageCost) {
         this.storageCost = storageCost;
     }
+
+    @Override
+    public String toString() {
+        return "PropertyType{" +
+                "id=" + id +
+                ", propertyTypeName=" + propertyTypeName +
+                ", nextDestination=" + nextDestination +
+                ", storageDays=" + storageDays +
+                ", storageCost=" + storageCost +
+                '}';
+    }
 }

@@ -2,7 +2,7 @@ package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.entities.PropertyType;
 import ru.vsu.amm.java.entities.NextDestination;
-import ru.vsu.amm.java.connection.dbConnection;
+import ru.vsu.amm.java.connection.DatabaseConnection;
 import ru.vsu.amm.java.enams.PropertyTypeName;
 
 import java.sql.Connection;
@@ -14,18 +14,12 @@ import java.util.List;
 
 public class PropertyTypeRepository implements CrudRepository<PropertyType> {
 
-    private final NextDestinationRepository nextDestinationRepository;
-
-    public PropertyTypeRepository(NextDestinationRepository nextDestinationRepository) {
-        this.nextDestinationRepository = nextDestinationRepository;
-    }
-
     @Override
     public PropertyType getById(long id) {
         PropertyType propertyType = null;
         final String sql = "SELECT PropertyTypeID, PropertyTypeName, NextDestinationID, StorageDays, StorageCost FROM PropertyType WHERE PropertyTypeID = ?";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, id);
@@ -37,7 +31,8 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
                 propertyType.setPropertyTypeName(PropertyTypeName.valueOf(rs.getString("PropertyTypeName")));
 
                 long nextDestinationId = rs.getLong("NextDestinationID");
-                NextDestination nextDestination = nextDestinationRepository.getById(nextDestinationId);
+                NextDestination nextDestination = new NextDestination();
+                nextDestination.setId(nextDestinationId);
                 propertyType.setNextDestination(nextDestination);
 
                 propertyType.setStorageDays(rs.getInt("StorageDays"));
@@ -55,7 +50,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
         List<PropertyType> propertyTypes = new ArrayList<>();
         final String sql = "SELECT PropertyTypeID, PropertyTypeName, NextDestinationID, StorageDays, StorageCost FROM PropertyType";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
 
@@ -65,7 +60,8 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
                 propertyType.setPropertyTypeName(PropertyTypeName.valueOf(rs.getString("PropertyTypeName")));
 
                 long nextDestinationId = rs.getLong("NextDestinationID");
-                NextDestination nextDestination = nextDestinationRepository.getById(nextDestinationId);
+                NextDestination nextDestination = new NextDestination();
+                nextDestination.setId(nextDestinationId);
                 propertyType.setNextDestination(nextDestination);
 
                 propertyType.setStorageDays(rs.getInt("StorageDays"));
@@ -83,7 +79,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
     public void save(PropertyType propertyType) {
         final String sql = "INSERT INTO PropertyType (PropertyTypeName, NextDestinationID, StorageDays, StorageCost) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, propertyType.getPropertyTypeName().toString());
@@ -101,7 +97,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
     public void update(PropertyType propertyType) {
         final String sql = "UPDATE PropertyType SET PropertyTypeName = ?, NextDestinationID = ?, StorageDays = ?, StorageCost = ? WHERE PropertyTypeID = ?";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, propertyType.getPropertyTypeName().toString());
@@ -120,7 +116,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
     public void delete(long id) {
         final String sql = "DELETE FROM PropertyType WHERE PropertyTypeID = ?";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, id);

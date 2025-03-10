@@ -32,4 +32,13 @@ public class NextDestination {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "NextDestination{" +
+                "id=" + id +
+                ", nextDestinationName=" + nextDestinationName +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

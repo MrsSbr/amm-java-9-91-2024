@@ -1,7 +1,7 @@
 package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.entities.NextDestination;
-import ru.vsu.amm.java.connection.dbConnection;
+import ru.vsu.amm.java.connection.DatabaseConnection;
 import ru.vsu.amm.java.enams.NextDestinationName;
 
 import java.sql.Connection;
@@ -18,7 +18,7 @@ public class NextDestinationRepository implements CrudRepository<NextDestination
         NextDestination nextDestination = null;
         final String sql = "SELECT NextDestinationID, NextDestinationName, Description FROM NextDestination WHERE NextDestinationID = ?";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, id);
@@ -43,7 +43,7 @@ public class NextDestinationRepository implements CrudRepository<NextDestination
         List<NextDestination> nextDestinations = new ArrayList<>();
         final String sql = "SELECT NextDestinationID, NextDestinationName, Description FROM NextDestination";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
 
@@ -67,7 +67,7 @@ public class NextDestinationRepository implements CrudRepository<NextDestination
     public void save(NextDestination nextDestination) {
         final String sql = "INSERT INTO NextDestination (NextDestinationName, Description) VALUES (?, ?)";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, nextDestination.getNextDestinationName().name());
@@ -83,7 +83,7 @@ public class NextDestinationRepository implements CrudRepository<NextDestination
     public void update(NextDestination nextDestination) {
         final String sql = "UPDATE NextDestination SET NextDestinationName = ?, Description = ? WHERE NextDestinationID = ?";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, nextDestination.getNextDestinationName().name());
@@ -100,7 +100,7 @@ public class NextDestinationRepository implements CrudRepository<NextDestination
     public void delete(long id) {
         final String sql = "DELETE FROM NextDestination WHERE NextDestinationID = ?";
 
-        try (Connection conn = dbConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, id);

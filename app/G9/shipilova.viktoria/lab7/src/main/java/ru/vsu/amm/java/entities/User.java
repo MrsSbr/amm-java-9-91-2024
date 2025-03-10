@@ -71,4 +71,15 @@ public class User {
         Matcher m = p.matcher(email);
         return m.matches();
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", password='" + password + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", login='" + login + '\'' +
+                '}';
+    }
 }
