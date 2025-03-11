@@ -73,7 +73,7 @@ public class RentalObjectRepository implements DatabaseRepository<RentalObjectEn
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, entity.getObjectName());
-        preparedStatement.setString(2, entity.getObjectType().name()); // Преобразуем enum в строку
+        preparedStatement.setString(2, entity.getObjectType().name());
         preparedStatement.setString(3, entity.getInfo());
         preparedStatement.setInt(4, entity.getPrice());
         preparedStatement.execute();
