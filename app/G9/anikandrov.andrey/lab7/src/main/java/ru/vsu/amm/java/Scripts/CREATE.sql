@@ -1,10 +1,10 @@
 
 CREATE TABLE UserTable (
        UserID BIGINT PRIMARY KEY,
-       UserName VARCHAR(200) NOT NULL,
+       UserName VARCHAR(200) NOT NULL UNIQUE,
        Password VARCHAR(30) NOT NULL,
        UserRole VARCHAR(30),
-       Phone VARCHAR(11),
+       Phone VARCHAR(11) UNIQUE,
        BirthDate DATE
 );
 
