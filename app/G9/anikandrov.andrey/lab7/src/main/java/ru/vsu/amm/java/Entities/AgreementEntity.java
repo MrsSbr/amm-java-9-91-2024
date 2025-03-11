@@ -1,12 +1,12 @@
 package ru.vsu.amm.java.Entities;
 
-import java.io.Serial;
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class AgreementEntity {
-    private Serial agreementID;
-    private Serial userID;
-    private Serial objectID;
+    private Long agreementID;
+    private Long userID;
+    private Long objectID;
     private LocalDate timeStart;
     private LocalDate timeEnd;
     private Integer sumPrice;
@@ -14,7 +14,7 @@ public class AgreementEntity {
 
     public AgreementEntity() {}
 
-    public AgreementEntity(Serial agreementID, Serial userID, Serial objectID, LocalDate timeStart, LocalDate timeEnd, Integer sumPrice) {
+    public AgreementEntity(Long agreementID, Long userID, Long objectID, LocalDate timeStart, LocalDate timeEnd, Integer sumPrice) {
         this.agreementID = agreementID;
         this.userID = userID;
         this.objectID = objectID;
@@ -23,27 +23,27 @@ public class AgreementEntity {
         this.sumPrice = sumPrice;
     }
 
-    public Serial getAgreementID() {
+    public Long getAgreementID() {
         return agreementID;
     }
 
-    public void setAgreementID(Serial agreementID) {
+    public void setAgreementID(Long agreementID) {
         this.agreementID = agreementID;
     }
 
-    public Serial getUserID() {
+    public Long getUserID() {
         return userID;
     }
 
-    public void setUserID(Serial userID) {
+    public void setUserID(Long userID) {
         this.userID = userID;
     }
 
-    public Serial getObjectID() {
+    public Long getObjectID() {
         return objectID;
     }
 
-    public void setObjectID(Serial objectID) {
+    public void setObjectID(Long objectID) {
         this.objectID = objectID;
     }
 

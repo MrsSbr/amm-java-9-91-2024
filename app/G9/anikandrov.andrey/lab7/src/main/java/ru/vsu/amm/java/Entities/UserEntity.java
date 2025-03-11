@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.Entities;
 import ru.vsu.amm.java.Enums.Roles;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class UserEntity {
@@ -9,7 +10,7 @@ public class UserEntity {
     private String password;
     private Roles role;
     private String phone;
-    private Date birthDate;
+    private LocalDate birthDate;
 
 
     public UserEntity() {}
@@ -18,6 +19,15 @@ public class UserEntity {
         this.userID = userID;
         this.userName = userName;
         this.password = password;
+    }
+
+    public UserEntity(Long userID, String userName, String password, Roles role, String phone, LocalDate birthDate) {
+        this.userID = userID;
+        this.userName = userName;
+        this.password = password;
+        this.role = role;
+        this.phone = phone;
+        this.birthDate = birthDate;
     }
 
     public UserEntity(Long userID, String userName, String password, Roles role, String phone, Date birthDate) {
@@ -46,6 +56,14 @@ public class UserEntity {
         this.userName = userName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Roles getRole() {
         return role;
     }
@@ -66,11 +84,11 @@ public class UserEntity {
         }
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 }

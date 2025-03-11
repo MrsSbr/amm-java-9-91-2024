@@ -9,9 +9,9 @@ public interface DatabaseRepository<T> {
 
     List<T> findAll() throws SQLException;
 
-//    void update(T entity);
-//
-//    void save(T entity) throws SQLException;
-//
-//    void delete(T entity);
+    void update(T entity) throws SQLException;
+
+    void save(T entity) throws SQLException;
+
+    void delete(T entity) throws SQLException;
 }

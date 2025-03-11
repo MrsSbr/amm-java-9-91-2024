@@ -2,10 +2,9 @@ package ru.vsu.amm.java.Entities;
 
 import ru.vsu.amm.java.Enums.ObjectType;
 
-import java.io.Serial;
 
 public class RentalObjectEntity {
-    private Serial objectID;
+    private Long objectID;
     private String objectName;
     private ObjectType objectType;
     private String info;
@@ -14,7 +13,7 @@ public class RentalObjectEntity {
 
     public RentalObjectEntity() {}
 
-    public RentalObjectEntity(Serial objectID, String objectName, ObjectType objectType, String info, Integer price) {
+    public RentalObjectEntity(Long objectID, String objectName, ObjectType objectType, String info, Integer price) {
         this.objectID = objectID;
         this.objectName = objectName;
         this.objectType = objectType;
@@ -22,11 +21,11 @@ public class RentalObjectEntity {
         this.price = price;
     }
 
-    public Serial getObjectID() {
+    public Long getObjectID() {
         return objectID;
     }
 
-    public void setObjectID(Serial objectID) {
+    public void setObjectID(Long objectID) {
         this.objectID = objectID;
     }
 

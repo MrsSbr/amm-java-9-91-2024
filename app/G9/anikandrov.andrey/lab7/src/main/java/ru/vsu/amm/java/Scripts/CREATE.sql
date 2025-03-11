@@ -1,6 +1,6 @@
 
 CREATE TABLE UserTable (
-       UserID SERIAL PRIMARY KEY,
+       UserID BIGINT PRIMARY KEY,
        UserName VARCHAR(200) NOT NULL,
        Password VARCHAR(30) NOT NULL,
        UserRole VARCHAR(30),
@@ -15,7 +15,7 @@ ALTER TABLE UserTable
     ADD CONSTRAINT Phone_Unique UNIQUE (Phone);
 
 CREATE TABLE RentalObjectTable (
-        ObjectID SERIAL PRIMARY KEY,
+        ObjectID BIGINT PRIMARY KEY,
         ObjectName VARCHAR(200) NOT NULL,
         ObjectType VARCHAR(30) NOT NULL,
         ObjectInfo TEXT,
@@ -23,9 +23,9 @@ CREATE TABLE RentalObjectTable (
 );
 
 CREATE TABLE AgreementTable (
-        AgreementID SERIAL PRIMARY KEY,
-        UserID INTEGER REFERENCES UserTable (UserID),
-        ObjectID INTEGER REFERENCES RentalObjectTable (ObjectID),
+        AgreementID BIGINT PRIMARY KEY,
+        UserID BIGINT REFERENCES UserTable (UserID),
+        ObjectID BIGINT REFERENCES RentalObjectTable (ObjectID),
         EventName VARCHAR(200) NOT NULL,
         EventInfo TEXT,
         TimeStart DATE,
