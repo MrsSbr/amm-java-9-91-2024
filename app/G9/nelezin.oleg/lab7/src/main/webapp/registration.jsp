@@ -8,7 +8,7 @@
 <form action="reg" method="post">
   <p>
     <b>Логин:</b><br>
-    <input type="text" name="lohin" size="30">
+    <input type="text" name="login" size="30">
   </p>
   <p>
     <b>Пароль:</b><br>
