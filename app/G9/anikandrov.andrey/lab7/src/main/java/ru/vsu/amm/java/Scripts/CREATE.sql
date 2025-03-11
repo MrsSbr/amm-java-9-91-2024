@@ -8,18 +8,12 @@ CREATE TABLE UserTable (
        BirthDate DATE
 );
 
-ALTER TABLE UserTable
-    ADD CONSTRAINT UserName_Unique UNIQUE (UserName);
-
-ALTER TABLE UserTable
-    ADD CONSTRAINT Phone_Unique UNIQUE (Phone);
-
 CREATE TABLE RentalObjectTable (
         ObjectID BIGINT PRIMARY KEY,
         ObjectName VARCHAR(200) NOT NULL,
         ObjectType VARCHAR(30) NOT NULL,
         ObjectInfo TEXT,
-        Price INT -- rent price in rubles (for day)
+        Price INTEGER -- rent price in rubles (for day)
 );
 
 CREATE TABLE AgreementTable (
