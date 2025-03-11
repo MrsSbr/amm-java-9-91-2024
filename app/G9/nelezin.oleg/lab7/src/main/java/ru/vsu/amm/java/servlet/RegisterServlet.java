@@ -8,9 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "LoginServlet", urlPatterns = "/reg")
+@WebServlet(name = "RegisterServlet", urlPatterns = "/reg")
 public class RegisterServlet extends HttpServlet {
 
     @Override
@@ -19,6 +20,14 @@ public class RegisterServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         AuthService authService = new AuthServiceImpl();
-        boolean isRegisterSuccessful = authService.login(login, password);
+        boolean isRegisterSuccessful = authService.register(login, password);
+
+        if (isRegisterSuccessful) {
+            HttpSession httpSession = req.getSession();
+            httpSession.setAttribute("user", login);
+            resp.sendRedirect("main.jsp");
+        } else {
+            // TODO
+        }
     }
 }
