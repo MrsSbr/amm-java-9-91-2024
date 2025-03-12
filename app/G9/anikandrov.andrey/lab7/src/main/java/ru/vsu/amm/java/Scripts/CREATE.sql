@@ -8,12 +8,6 @@ CREATE TABLE UserTable (
        BirthDate DATE
 );
 
-ALTER TABLE UserTable
-    ADD CONSTRAINT UserName_Unique UNIQUE (UserName);
-
-ALTER TABLE UserTable
-    ADD CONSTRAINT Phone_Unique UNIQUE (Phone);
-
 CREATE TABLE RentalObjectTable (
         ObjectID BIGINT PRIMARY KEY,
         ObjectName VARCHAR(200) NOT NULL,
