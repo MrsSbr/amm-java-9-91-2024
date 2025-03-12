@@ -4,12 +4,8 @@ import ru.vsu.amm.java.Configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.Entities.UserEntity;
 import ru.vsu.amm.java.Enums.Roles;
 
-import java.util.Date;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,9 +21,11 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
     @Override
     public Optional<UserEntity> findById(Long id) throws SQLException {
         final String query = "SELECT UserID, UserName, Password, Role, Phone, BirthDate FROM UserTable WHERE id = ?";
+
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setLong(1, id);
+
         preparedStatement.execute();
 
         ResultSet resultSet = preparedStatement.getResultSet();
@@ -43,6 +41,7 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
                     resultSet.getDate("BirthDate")
             ));
         }
+
         return Optional.empty();
     }
 
@@ -52,8 +51,6 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.execute();
-
         ResultSet resultSet = preparedStatement.getResultSet();
 
         List<UserEntity> users = new ArrayList<>();
@@ -83,7 +80,7 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
         preparedStatement.setString(2, entity.getPassword());
         preparedStatement.setString(3, entity.getRole().name());
         preparedStatement.setString(4, entity.getPhone());
-        preparedStatement.setDate(5, entity.getBirthDate().toLocalDate());
+        preparedStatement.setDate(5, Date.valueOf(entity.getBirthDate()));
 
         preparedStatement.execute();
     }
@@ -94,16 +91,14 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-
         preparedStatement.setLong(1, entity.getUserID());
 
         preparedStatement.execute();
-
     }
 
     @Override
     public void update(UserEntity entity) throws SQLException {
-        final String query = "UPDATE UserTable SET UserName = ?, Password = ? WHERE UserID = ?";
+        final String query = "UPDATE UserTable SET UserName = ?, Password = ?,  WHERE UserID = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -113,7 +108,5 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
         preparedStatement.setLong(3, entity.getUserID());
 
         preparedStatement.execute();
-
     }
-
 }

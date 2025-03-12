@@ -23,84 +23,94 @@ public class AgreementRepository implements DatabaseRepository<AgreementEntity> 
     @Override
     public Optional<AgreementEntity> findById(Long id) throws SQLException {
         final String query = "SELECT agreementID, userID, objectID, timeStart, timeEnd, sumPrice FROM AgreementTable WHERE agreementID = ?";
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, id);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return Optional.of(new AgreementEntity(
-                            resultSet.getLong("agreementID"),
-                            resultSet.getLong("userID"),
-                            resultSet.getLong("objectID"),
-                            resultSet.getDate("timeStart").toLocalDate(),
-                            resultSet.getDate("timeEnd").toLocalDate(),
-                            resultSet.getInt("sumPrice")
-                    ));
-                }
-            }
+
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setLong(1, id);
+
+        preparedStatement.execute();
+
+        ResultSet resultSet = preparedStatement.getResultSet();
+
+        if (resultSet.next()) {
+            return Optional.of(new AgreementEntity(
+                    resultSet.getLong("agreementID"),
+                    resultSet.getLong("userID"),
+                    resultSet.getLong("objectID"),
+                    resultSet.getDate("timeStart").toLocalDate(),
+                    resultSet.getDate("timeEnd").toLocalDate(),
+                    resultSet.getInt("sumPrice")
+            ));
         }
+
         return Optional.empty();
     }
 
     @Override
     public List<AgreementEntity> findAll() throws SQLException {
         final String query = "SELECT agreementID, userID, objectID, timeStart, timeEnd, sumPrice FROM AgreementTable";
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            List<AgreementEntity> agreements = new ArrayList<>();
-            while (resultSet.next()) {
-                agreements.add(new AgreementEntity(
-                        resultSet.getLong("agreementID"),
-                        resultSet.getLong("userID"),
-                        resultSet.getLong("objectID"),
-                        resultSet.getDate("timeStart").toLocalDate(),
-                        resultSet.getDate("timeEnd").toLocalDate(),
-                        resultSet.getInt("sumPrice")
-                ));
-            }
-            return agreements;
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        List<AgreementEntity> agreements = new ArrayList<>();
+        while (resultSet.next()) {
+            agreements.add(new AgreementEntity(
+                    resultSet.getLong("agreementID"),
+                    resultSet.getLong("userID"),
+                    resultSet.getLong("objectID"),
+                    resultSet.getDate("timeStart").toLocalDate(),
+                    resultSet.getDate("timeEnd").toLocalDate(),
+                    resultSet.getInt("sumPrice")
+            ));
         }
+
+        return agreements;
     }
 
     @Override
     public void save(AgreementEntity entity) throws SQLException {
         final String query = "INSERT INTO AgreementTable (userID, objectID, timeStart, timeEnd, sumPrice) VALUES (?, ?, ?, ?, ?)";
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, entity.getUserID());
-            preparedStatement.setLong(2, entity.getObjectID());
-            preparedStatement.setDate(3, Date.valueOf(entity.getTimeStart()));
-            preparedStatement.setDate(4, Date.valueOf(entity.getTimeEnd()));
-            preparedStatement.setInt(5, entity.getSumPrice());
-            preparedStatement.execute();
-        }
+
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+        preparedStatement.setLong(1, entity.getUserID());
+        preparedStatement.setLong(2, entity.getObjectID());
+        preparedStatement.setDate(3, Date.valueOf(entity.getTimeStart()));
+        preparedStatement.setDate(4, Date.valueOf(entity.getTimeEnd()));
+        preparedStatement.setInt(5, entity.getSumPrice());
+
+        preparedStatement.execute();
     }
 
     @Override
     public void delete(AgreementEntity entity) throws SQLException {
         final String query = "DELETE FROM AgreementTable WHERE agreementID = ?";
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, entity.getAgreementID());
-            preparedStatement.execute();
-        }
+
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setLong(1, entity.getAgreementID());
+
+        preparedStatement.execute();
     }
 
     @Override
     public void update(AgreementEntity entity) throws SQLException {
         final String query = "UPDATE AgreementTable SET userID = ?, objectID = ?, timeStart = ?, timeEnd = ?, sumPrice = ? WHERE agreementID = ?";
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, entity.getUserID());
-            preparedStatement.setLong(2, entity.getObjectID());
-            preparedStatement.setDate(3, Date.valueOf(entity.getTimeStart()));
-            preparedStatement.setDate(4, Date.valueOf(entity.getTimeEnd()));
-            preparedStatement.setInt(5, entity.getSumPrice());
-            preparedStatement.setLong(6, entity.getAgreementID());
-            preparedStatement.execute();
-        }
+
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+        preparedStatement.setLong(1, entity.getUserID());
+        preparedStatement.setLong(2, entity.getObjectID());
+        preparedStatement.setDate(3, Date.valueOf(entity.getTimeStart()));
+        preparedStatement.setDate(4, Date.valueOf(entity.getTimeEnd()));
+        preparedStatement.setInt(5, entity.getSumPrice());
+        preparedStatement.setLong(6, entity.getAgreementID());
+
+        preparedStatement.execute();
     }
 
 }
