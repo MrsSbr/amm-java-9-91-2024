@@ -2,6 +2,7 @@ package ru.vsu.amm.java.Entities;
 import ru.vsu.amm.java.Enums.Roles;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class UserEntity {
@@ -36,7 +37,9 @@ public class UserEntity {
         this.password = password;
         this.role = role;
         this.phone = phone;
-        this.birthDate = birthDate;
+        this.birthDate = birthDate.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
     }
 
 
