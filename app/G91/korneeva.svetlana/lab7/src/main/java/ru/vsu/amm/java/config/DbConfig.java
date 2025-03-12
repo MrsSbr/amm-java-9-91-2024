@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+
 public class DbConfig {
     public static DataSource getDataSource() {
         PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();

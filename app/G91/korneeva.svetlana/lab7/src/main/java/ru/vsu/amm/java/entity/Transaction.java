@@ -66,6 +66,7 @@ public class Transaction {
         return data;
     }
 
+
     public void setDate(LocalDateTime date) {
         this.data = date;
     }

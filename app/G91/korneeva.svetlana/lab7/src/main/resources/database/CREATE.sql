@@ -4,6 +4,7 @@ CREATE TABLE users (
     hash_password VARCHAR(255) NOT NULL
 );
 
+
 CREATE TABLE transactions (
     id SERIAL PRIMARY KEY,
     user_id BIGINT REFERENCES users(id),

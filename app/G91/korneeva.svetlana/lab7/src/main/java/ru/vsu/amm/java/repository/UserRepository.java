@@ -36,6 +36,7 @@ public class UserRepository {
         return Optional.empty();
     }
 
+
     public void save(UserEntity user) throws SQLException {
         final String query = "INSERT INTO users (email, hash_password) VALUES (?, ?)";
         try (Connection connection = dataSource.getConnection();
