@@ -15,6 +15,11 @@ import java.io.IOException;
 public class RegisterServlet extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        getServletContext().getRequestDispatcher("/registration.jsp").forward(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
@@ -25,7 +30,7 @@ public class RegisterServlet extends HttpServlet {
         if (isRegisterSuccessful) {
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", login);
-            resp.sendRedirect("main.jsp");
+            resp.sendRedirect("index.jsp");
         } else {
             // TODO
         }

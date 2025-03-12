@@ -14,6 +14,9 @@
     <b>Пароль:</b><br>
     <input type="password" name="password" size="30">
   </p>
+  <p>
+    <input type="submit" value="ОК">
+  </p>
 </form>
 <p>Уже есть аккаунт? <a href="login.jsp">Войти</a></p>
 </body>
