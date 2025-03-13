@@ -30,7 +30,6 @@ public class UserEntity {
         return hashPassword;
     }
 
-
     public void setHashPassword(String hashPassword) {
         this.hashPassword = hashPassword;
     }
