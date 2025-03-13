@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class Transaction {
 
-    private  Long id;
+    private Long id;
 
     private Long userId;
 

@@ -20,30 +20,28 @@ public class UserRepository {
 
     public Optional<UserEntity> findByEmail(String email) throws SQLException {
         final String query = "SELECT id, email, hash_password FROM users WHERE email = ?";
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                return Optional.of(new UserEntity(
-                        resultSet.getLong("id"),
-                        resultSet.getString("email"),
-                        resultSet.getString("hash_password")
-                ));
-            }
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, email);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            return Optional.of(new UserEntity(
+                    resultSet.getLong("id"),
+                    resultSet.getString("email"),
+                    resultSet.getString("hash_password")
+            ));
         }
+
         return Optional.empty();
     }
 
-
     public void save(UserEntity user) throws SQLException {
         final String query = "INSERT INTO users (email, hash_password) VALUES (?, ?)";
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, user.getEmail());
-            preparedStatement.setString(2, user.getHashPassword());
-            preparedStatement.executeUpdate();
-        }
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, user.getEmail());
+        preparedStatement.setString(2, user.getHashPassword());
+        preparedStatement.executeUpdate();
+
     }
 }
