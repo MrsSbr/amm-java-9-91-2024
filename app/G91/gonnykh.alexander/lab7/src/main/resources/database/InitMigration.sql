@@ -1,7 +1,7 @@
 CREATE TABLE car
 (
     id     BIGSERIAL PRIMARY KEY,
-    make   TEXT NOT NULL,
+    manufacturer TEXT NOT NULL,
     model  TEXT NOT NULL,
     year   INT  NOT NULL,
     status TEXT NOT NULL
@@ -11,7 +11,7 @@ CREATE TABLE users
 (
     id            BIGSERIAL PRIMARY KEY,
     username      TEXT NOT NULL UNIQUE ,
-    hash_password TEXT NOT NULL,
+    password TEXT NOT NULL,
     email         TEXT NOT NULL UNIQUE ,
 );
 

@@ -8,7 +8,7 @@ import ru.vsu.amm.java.enums.Status;
 @AllArgsConstructor
 public class CarEntity {
     private Long id;
-    private String make;
+    private String manufacturer;
     private String model;
     private int year;
     private Status status;
