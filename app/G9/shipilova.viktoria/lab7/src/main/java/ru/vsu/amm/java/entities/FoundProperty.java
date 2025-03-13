@@ -6,31 +6,31 @@ import java.time.LocalTime;
 import ru.vsu.amm.java.enams.ReturnStatus;
 
 public class FoundProperty {
-    private long foundPropertyID;
-    private long propertyTypeID;
+    private long id;
+    private PropertyType propertyType;
     private LocalDate dateOfFinding;
     private LocalTime timeOfFinding;
     private ReturnStatus returnStatus;
     private String placeOfFinding;
     private String description;
-    private long userID;
+    private User user;
 
     public FoundProperty() {}
 
-    public long getFoundPropertyID() {
-        return foundPropertyID;
+    public long getId() {
+        return id;
     }
 
-    public void setFoundPropertyID(long foundPropertyID) {
-        this.foundPropertyID = foundPropertyID;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public long getPropertyTypeID() {
-        return propertyTypeID;
+    public PropertyType getPropertyType() {
+        return propertyType;
     }
 
-    public void setPropertyTypeID(long propertyTypeID) {
-        this.propertyTypeID = propertyTypeID;
+    public void setPropertyType(PropertyType propertyType) {
+        this.propertyType = propertyType;
     }
 
     public LocalDate getDateOfFinding() {
@@ -76,11 +76,25 @@ public class FoundProperty {
         this.description = description;
     }
 
-    public long getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(long userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "FoundProperty{" +
+                "id=" + id +
+                ", propertyType=" + propertyType +
+                ", dateOfFinding=" + dateOfFinding +
+                ", timeOfFinding=" + timeOfFinding +
+                ", returnStatus=" + returnStatus +
+                ", placeOfFinding='" + placeOfFinding + '\'' +
+                ", description='" + description + '\'' +
+                ", user=" + user +
+                '}';
     }
 }
