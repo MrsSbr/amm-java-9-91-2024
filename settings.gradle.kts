@@ -326,6 +326,7 @@ student("enokyan.gera", G91) {
     lab(4)
     lab(5)
     lab(6)
+    lab(7)
 }
 
 student("kavunov.victor", G9) {
