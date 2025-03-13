@@ -17,7 +17,7 @@ public class DatabaseConfiguration {
                 .getResourceAsStream("db.properties")) {
             prop.load(input);
         } catch (IOException e) {
-            throw new PropertiesFileException(e.getMessage());
+            throw new PropertiesFileException("Ошибка доступа к файлу конфигурации");
         }
         pgSimpleDataSource.setUrl(prop.getProperty("db.url"));
         pgSimpleDataSource.setUser(prop.getProperty("db.username"));

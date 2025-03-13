@@ -21,13 +21,13 @@ public class ExchangeRateRepository implements CrudRepository<ExchangeRate> {
     @Override
     public Optional<ExchangeRate> findById(Long id) throws SQLException {
         final String query = """
-            SELECT 
-                id, 
-                base_currency_id, 
-                target_currency_id, 
-                rate 
-            FROM exchange_rate WHERE id = ?
-            """;
+                SELECT 
+                    id, 
+                    base_currency_id, 
+                    target_currency_id, 
+                    rate 
+                FROM exchange_rate WHERE id = ?
+                """;
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setLong(1, id);
@@ -49,6 +49,33 @@ public class ExchangeRateRepository implements CrudRepository<ExchangeRate> {
     @Override
     public List<ExchangeRate> findAll() {
         return null;
+    }
+
+    public Optional<ExchangeRate> findByCodes(Long baseCurrencyId, Long targetCurrencyId) throws SQLException {
+        final String query = """
+                SELECT 
+                    id, 
+                    base_currency_id, 
+                    target_currency_id, 
+                    rate
+                FROM exchange_rate WHERE base_currency_id = ? AND target_currency_id = ?
+                """;
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setLong(1, baseCurrencyId);
+        preparedStatement.setLong(2, targetCurrencyId);
+        preparedStatement.execute();
+
+        ResultSet resultSet = preparedStatement.getResultSet();
+        if (resultSet.next()) {
+            return Optional.of(new ExchangeRate(
+                    resultSet.getLong("id"),
+                    resultSet.getLong("base_currency_id"),
+                    resultSet.getLong("target_currency_id"),
+                    resultSet.getBigDecimal("rate")
+            ));
+        }
+        return Optional.empty();
     }
 
     @Override
