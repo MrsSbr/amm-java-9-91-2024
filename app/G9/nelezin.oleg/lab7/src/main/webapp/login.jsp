@@ -18,6 +18,10 @@
         <input type="submit" value="ОК">
     </p>
 </form>
-<p>Нет аккаунта? <a href="registration.jsp">Зарегистрироваться</a></p>
+<p>Нет аккаунта? <a href="/reg">Зарегистрироваться</a></p>
+<% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+<% if (errorMessage != null) { %>
+<div style="color: red;"><%= errorMessage %></div>
+<% } %>
 </body>
 </html>

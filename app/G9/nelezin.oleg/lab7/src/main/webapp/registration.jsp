@@ -18,7 +18,12 @@
     <input type="submit" value="ОК">
   </p>
 </form>
-<p>Уже есть аккаунт? <a href="login.jsp">Войти</a></p>
+<p>Уже есть аккаунт? <a href="/login">Войти</a></p>
+
+<% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+<% if (errorMessage != null) { %>
+<div style="color: red;"><%= errorMessage %></div>
+<% } %>
 </body>
 </html>
 

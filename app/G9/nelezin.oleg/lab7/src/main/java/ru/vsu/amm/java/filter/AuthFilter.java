@@ -24,12 +24,12 @@ public class AuthFilter implements Filter {
         String registerUrl = req.getContextPath() + "/reg";
         boolean loggedIn = httpSession != null && httpSession.getAttribute("user") != null;
         boolean loginRequest = req.getRequestURI().equals(loginUrl) || req.getRequestURI().equals(loginUrl + ".jsp");
-        boolean registerRequest = req.getRequestURI().equals(registerUrl) || req.getRequestURI().equals(registerUrl + ".jsp");
+        boolean registerRequest = req.getRequestURI().equals(registerUrl) || req.getRequestURI().equals("/registration.jsp");
 
         if (loginRequest || registerRequest || loggedIn) {
             chain.doFilter(req, resp);
         } else {
-            resp.sendRedirect(req.getContextPath() + "/login.jsp");
+            resp.sendRedirect(req.getContextPath() + "/login");
         }
     }
 }

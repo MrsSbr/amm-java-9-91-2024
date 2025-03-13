@@ -38,8 +38,9 @@ public class AuthServiceImpl implements AuthService {
                         .build();
                 userRepository.save(newUser);
                 return true;
+            } else {
+                throw new WrongUserCredentialsException("Пользователь с таким логином уже существует");
             }
-            return false;
         } catch (SQLException e) {
             throw new DatabaseException(e.getMessage());
         }

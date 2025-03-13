@@ -20,8 +20,7 @@ public class CurrenciesServlet extends HttpServlet {
         CurrencyService currencyService = new CurrencyServiceImpl();
         List<Currency> currencies = currencyService.getAllCurrencies();
 
-        System.out.println(currencies.size());
         req.setAttribute("currencies", currencies);
-        req.getRequestDispatcher("/currencies.jsp").forward(req, resp);
+        req.getRequestDispatcher("/currencies").forward(req, resp);
     }
 }

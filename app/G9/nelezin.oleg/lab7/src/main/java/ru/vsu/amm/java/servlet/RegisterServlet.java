@@ -1,5 +1,7 @@
 package ru.vsu.amm.java.servlet;
 
+import ru.vsu.amm.java.exception.DatabaseException;
+import ru.vsu.amm.java.exception.WrongUserCredentialsException;
 import ru.vsu.amm.java.service.AuthService;
 import ru.vsu.amm.java.service.impl.AuthServiceImpl;
 
@@ -25,14 +27,16 @@ public class RegisterServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         AuthService authService = new AuthServiceImpl();
-        boolean isRegisterSuccessful = authService.register(login, password);
 
-        if (isRegisterSuccessful) {
+        try {
+            authService.register(login, password);
+
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", login);
-            resp.sendRedirect("index.jsp");
-        } else {
-            // TODO
+            resp.sendRedirect("/currencies");
+        } catch (WrongUserCredentialsException | DatabaseException e) {
+            req.setAttribute("errorMessage", e.getMessage());
+            getServletContext().getRequestDispatcher("/registration.jsp").forward(req, resp);
         }
     }
 }

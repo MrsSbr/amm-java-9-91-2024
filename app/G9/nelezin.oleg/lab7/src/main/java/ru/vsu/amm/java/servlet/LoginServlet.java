@@ -2,6 +2,8 @@ package ru.vsu.amm.java.servlet;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ru.vsu.amm.java.exception.DatabaseException;
+import ru.vsu.amm.java.exception.WrongUserCredentialsException;
 import ru.vsu.amm.java.service.AuthService;
 import ru.vsu.amm.java.service.impl.AuthServiceImpl;
 
@@ -29,14 +31,16 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         AuthService authService = new AuthServiceImpl();
-        boolean isLoginSuccessful = authService.login(login, password);
-
-        if (isLoginSuccessful) {
+        try {
+            authService.login(login, password);
+            System.out.println(123);
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", login);
-            resp.sendRedirect("index.jsp");
-        } else {
-            // TODO
+            resp.sendRedirect("/currencies");
+        } catch (WrongUserCredentialsException | DatabaseException e) {
+            System.out.println(e.getMessage());
+            req.setAttribute("errorMessage", e.getMessage());
+            getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
         }
     }
 }
