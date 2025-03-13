@@ -33,7 +33,6 @@ public class LoginServlet extends HttpServlet {
         AuthService authService = new AuthServiceImpl();
         try {
             authService.login(login, password);
-            System.out.println(123);
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", login);
             resp.sendRedirect("/currencies");

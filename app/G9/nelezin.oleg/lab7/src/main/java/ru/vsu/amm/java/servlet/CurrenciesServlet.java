@@ -21,6 +21,6 @@ public class CurrenciesServlet extends HttpServlet {
         List<Currency> currencies = currencyService.getAllCurrencies();
 
         req.setAttribute("currencies", currencies);
-        req.getRequestDispatcher("/currencies").forward(req, resp);
+        req.getRequestDispatcher("/currencies.jsp").forward(req, resp);
     }
 }
