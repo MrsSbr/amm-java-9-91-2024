@@ -1,6 +1,8 @@
 package ru.vsu.amm.java.entities;
 
-import java.util.Date;
+import ru.vsu.amm.java.enums.EmployeePost;
+
+import java.time.LocalDateTime;
 
 public class EmployeeEntity {
     private int id;
@@ -12,8 +14,9 @@ public class EmployeeEntity {
     private String email;
     private String passportNumber;
     private String passportSeries;
-    private String post;
+    private EmployeePost post;
     private int salary;
+    private LocalDateTime birthday;
 
     public int getId() {
         return id;
@@ -87,11 +90,11 @@ public class EmployeeEntity {
         this.passportSeries = passportSeries;
     }
 
-    public String getPost() {
+    public EmployeePost getPost() {
         return post;
     }
 
-    public void setPost(String post) {
+    public void setPost(EmployeePost post) {
         this.post = post;
     }
 
@@ -101,5 +104,13 @@ public class EmployeeEntity {
 
     public void setSalary(int salary) {
         this.salary = salary;
+    }
+
+    public LocalDateTime getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDateTime birthday) {
+        this.birthday = birthday;
     }
 }
