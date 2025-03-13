@@ -101,7 +101,7 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
 
     @Override
     public void update(UserEntity entity) throws SQLException {
-        final String query = "UPDATE UserTable SET UserName = ?, Password = ?,  WHERE UserID = ?";
+        final String query = "UPDATE UserTable SET UserName = ?, Password = ?, Role = ?, Phone = ? WHERE UserID = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -109,6 +109,8 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
         preparedStatement.setString(1, entity.getUserName());
         preparedStatement.setString(2, entity.getPassword());
         preparedStatement.setLong(3, entity.getUserID());
+        preparedStatement.setString(4, entity.getUserRole());
+        preparedStatement.setString(5, entity.getPhone());
 
         preparedStatement.execute();
     }
