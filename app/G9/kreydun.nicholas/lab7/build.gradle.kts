@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation ("javax.servlet:javax.servlet-api:4.0.1")
     implementation ("org.jetbrains:annotations:23.0.0")
     implementation("com.zaxxer:HikariCP:5.1.0")
     implementation("org.postgresql:postgresql:42.7.5")
