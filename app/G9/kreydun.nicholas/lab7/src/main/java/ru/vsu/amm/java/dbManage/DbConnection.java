@@ -11,13 +11,6 @@ import java.util.Properties;
 public class DbConnection {
     private static final Properties properties = new Properties();
 
-    static {
-
-        properties.setProperty("jdbc.url", "jdbc:postgresql://localhost:5434/SocialNetwork_");
-        properties.setProperty("jdbc.username", "postgres");
-        properties.setProperty("jdbc.password", "12345");
-    }
-
     public static Connection getConnection() throws SQLException {
         try {
             Class.forName("org.postgresql.Driver");
