@@ -1,0 +1,1 @@
+DROP TABLE shareholder,stocks,shareholder_stocks;
