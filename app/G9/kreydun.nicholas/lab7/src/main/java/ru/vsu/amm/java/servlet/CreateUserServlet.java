@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalTime;
 import java.util.UUID;
+import java.time.LocalTime;
 
 @WebServlet("/createUser")
 public class CreateUserServlet extends HttpServlet {
