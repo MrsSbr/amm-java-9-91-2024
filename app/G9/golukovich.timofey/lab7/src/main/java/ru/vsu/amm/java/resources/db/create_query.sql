@@ -51,9 +51,6 @@ ALTER TABLE Employee
     ADD CHECK(Phone_number ~ '^\+7[0-9]{10}$');
 
 ALTER TABLE Employee
-    ADD CHECK(Email LIKE '_%@_%._%');
-
-ALTER TABLE Employee
     ADD CONSTRAINT Unique_passport_data
         UNIQUE(Passport_number, Passport_series);
 ALTER TABLE Employee
