@@ -10,14 +10,18 @@ import ru.vsu.amm.java.service.ExchangeService;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class ExchangeServiceImpl implements ExchangeService {
+
+    private static final Logger log = Logger.getLogger(ExchangeServiceImpl.class.getName());
 
     private final CurrencyService currencyService;
 
     private final ExchangeRateRepository exchangeRateRepository;
 
     public ExchangeServiceImpl() {
+        log.info("call ExchangeServiceImpl constructor");
         currencyService = new CurrencyServiceImpl();
         exchangeRateRepository = new ExchangeRateRepository();
     }
@@ -26,6 +30,7 @@ public class ExchangeServiceImpl implements ExchangeService {
     public BigDecimal exchangeCurrencies(String firstCurrencyCode,
                                          String secondCurrencyCode,
                                          double amount) {
+        log.info("call exchangeCurrencies");
         Currency firstCurrency = currencyService.findByCode(firstCurrencyCode);
         Currency secondCurrency = currencyService.findByCode(secondCurrencyCode);
 
@@ -37,6 +42,7 @@ public class ExchangeServiceImpl implements ExchangeService {
             return exchangeRate.getRate().multiply(BigDecimal.valueOf(amount));
 
         } catch (SQLException e) {
+            log.severe("error DatabaseException");
             throw new DatabaseException(e.getMessage());
         }
 
