@@ -2,7 +2,6 @@ package ru.vsu.amm.java.configuration;
 
 import org.postgresql.ds.PGSimpleDataSource;
 import ru.vsu.amm.java.exception.PropertiesFileException;
-import ru.vsu.amm.java.filter.AuthFilter;
 
 import javax.sql.DataSource;
 import java.io.IOException;

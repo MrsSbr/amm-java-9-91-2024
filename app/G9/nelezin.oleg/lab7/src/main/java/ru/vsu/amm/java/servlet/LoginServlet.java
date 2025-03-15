@@ -1,7 +1,6 @@
 package ru.vsu.amm.java.servlet;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.exception.DatabaseException;
 import ru.vsu.amm.java.exception.WrongUserCredentialsException;
 import ru.vsu.amm.java.service.AuthService;
