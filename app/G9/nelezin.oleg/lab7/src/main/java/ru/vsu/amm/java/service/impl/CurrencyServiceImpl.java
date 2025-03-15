@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.service.impl;
 
 import ru.vsu.amm.java.entity.Currency;
+import ru.vsu.amm.java.exception.DataNotFoundException;
 import ru.vsu.amm.java.exception.DatabaseException;
 import ru.vsu.amm.java.repository.CurrencyRepository;
 import ru.vsu.amm.java.service.CurrencyService;
@@ -26,5 +27,17 @@ public class CurrencyServiceImpl implements CurrencyService {
             throw new DatabaseException(e.getMessage());
         }
         return currencies;
+    }
+
+    @Override
+    public Currency findByCode(String code) {
+        try {
+            Currency currency = currencyRepository.findByCode(code).orElseThrow(
+                    () -> new DataNotFoundException("Не найдена запрашиваемая валюта")
+            );
+            return currency;
+        } catch (SQLException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 }

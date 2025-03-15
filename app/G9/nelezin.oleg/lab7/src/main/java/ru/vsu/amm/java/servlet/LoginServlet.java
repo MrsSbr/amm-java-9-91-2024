@@ -37,7 +37,6 @@ public class LoginServlet extends HttpServlet {
             httpSession.setAttribute("user", login);
             resp.sendRedirect("/currencies");
         } catch (WrongUserCredentialsException | DatabaseException e) {
-            System.out.println(e.getMessage());
             req.setAttribute("errorMessage", e.getMessage());
             getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
         }
