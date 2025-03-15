@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class User {
-    private long userID;
+    private long id;
     private String password;
     private String phoneNumber;
     private String email;
@@ -12,12 +12,12 @@ public class User {
 
     public User() {}
 
-    public long getUserID() {
-        return userID;
+    public long getId() {
+        return id;
     }
 
-    public void setUserID(long userID) {
-        this.userID = userID;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getPassword() {
@@ -70,5 +70,16 @@ public class User {
         Pattern p = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
         Matcher m = p.matcher(email);
         return m.matches();
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", password='" + password + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", login='" + login + '\'' +
+                '}';
     }
 }

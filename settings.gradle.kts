@@ -79,6 +79,7 @@ student("gonnykh.alexander", G91) {
     lab(4)
     lab(5)
     lab(6)
+    lab(7)
 }
 
 student("simonov.ivan", G91) {
@@ -118,6 +119,7 @@ student("golukovich.timofey", G9) {
     lab(4)
     lab(5)
     lab(6)
+    lab(7)
 }
 
 
@@ -211,6 +213,7 @@ student("barkov.pavel", G9) {
     lab(2)
     lab(3)
     lab(4)
+    lab(7)
 }
 
 student("mokshin.nikita", G9) {
@@ -249,6 +252,7 @@ student("garshin.maxim", G9) {
     lab(2)
     lab(3)
     lab(4)
+    lab(7)
 }
 
 student("jasser.daniel", G9) {
@@ -312,6 +316,7 @@ student("kreydun.nicholas", G9) {
     lab(4)
     lab(5)
     lab(6)
+    lab(7)
 }
 
 
@@ -323,6 +328,7 @@ student("enokyan.gera", G91) {
     lab(4)
     lab(5)
     lab(6)
+    lab(7)
 }
 
 student("kavunov.victor", G9) {
@@ -331,6 +337,7 @@ student("kavunov.victor", G9) {
     lab(2)
     lab(3)
     lab(4)
+    lab(7)
 }
 
 student("tupikova.viktoria", G9) {
