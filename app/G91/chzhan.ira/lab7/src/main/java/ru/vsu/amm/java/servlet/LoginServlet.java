@@ -22,14 +22,14 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String login = req.getParameter("login");
+        String name = req.getParameter("name");
         String password = req.getParameter("password");
 
         AuthenticationService authService = new AuthenticationService();
         try {
-            authService.login(login, password);
+            authService.login(name, password);
             HttpSession httpSession = req.getSession();
-            httpSession.setAttribute("user", login);
+            httpSession.setAttribute("user", name);
             resp.sendRedirect("/index.jsp");
         } catch (NotFoundException | DbException e) {
             System.out.println(e.getMessage());
