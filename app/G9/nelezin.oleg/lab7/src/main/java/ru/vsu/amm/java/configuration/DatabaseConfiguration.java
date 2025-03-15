@@ -7,8 +7,11 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public class DatabaseConfiguration {
+
+    private static final Logger log = Logger.getLogger(DatabaseConfiguration.class.getName());
 
     public static DataSource getDataSource() {
         PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();
@@ -22,6 +25,7 @@ public class DatabaseConfiguration {
         pgSimpleDataSource.setUrl(prop.getProperty("db.url"));
         pgSimpleDataSource.setUser(prop.getProperty("db.username"));
         pgSimpleDataSource.setPassword(prop.getProperty("db.password"));
+        log.info("DataSource is configured");
         return pgSimpleDataSource;
     }
 }

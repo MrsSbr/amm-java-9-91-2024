@@ -7,4 +7,6 @@ import java.util.List;
 public interface CurrencyService {
 
     List<Currency> getAllCurrencies();
+
+    Currency findByCode(String code);
 }
