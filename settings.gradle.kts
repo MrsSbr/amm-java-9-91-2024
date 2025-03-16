@@ -223,6 +223,7 @@ student("mokshin.nikita", G9) {
     lab(2)
     lab(3)
     lab(4)
+    lab(7)
 }
 
 student("anikandrov.andrey", G9) {
