@@ -1,19 +1,15 @@
-package ru.vsu.amm.java.model;
+package ru.vsu.amm.java.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Builder;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Getter
 @Setter
-public class User {
-    private Long id;
-    private String name;
+public class CredentialsRequest {
     private String login;
-    private String hashPassword;
+    private String password;
 }

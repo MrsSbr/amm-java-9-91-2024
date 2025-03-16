@@ -12,4 +12,8 @@ import lombok.Setter;
 public class Genre {
     private Long id;
     private String title;
+
+    public Genre(String title) {
+        this.title = title;
+    }
 }

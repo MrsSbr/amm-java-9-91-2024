@@ -2,18 +2,29 @@ package ru.vsu.amm.java.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import ru.vsu.amm.java.exception.PropertiesFileException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class DatabaseConfig {
-    private static final String url = "jdbc:postgresql://localhost:5432/film";
-    private static final String username = "film";
-    private static final String password = "12345678";
+    private static final Properties properties = new Properties();
+
+    static {
+        try (InputStream input = DatabaseConfig.class.getClassLoader().getResourceAsStream("application.properties")) {
+            properties.load(input);
+        } catch (IOException e) {
+            throw new PropertiesFileException("Error accessing the configuration file");
+        }
+    }
 
     public static HikariDataSource getDataSource() {
         HikariConfig config = new HikariConfig();
-        config.setDriverClassName("org.postgresql.Driver");
-        config.setJdbcUrl(url);
-        config.setUsername(username);
-        config.setPassword(password);
+        config.setDriverClassName(properties.getProperty("db.driver"));
+        config.setJdbcUrl(properties.getProperty("db.url"));
+        config.setUsername(properties.getProperty("db.username"));
+        config.setPassword(properties.getProperty("db.password"));
 
         return new HikariDataSource(config);
     }

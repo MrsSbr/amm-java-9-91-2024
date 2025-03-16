@@ -20,7 +20,7 @@ public class UserRepository implements CrudRepository<User> {
     }
 
     public Optional<User> findByLogin(String login) {
-        String sql = "SELECT id, name, login, hash_password FROM user WHERE login = ?";
+        String sql = "SELECT id, name, login, hash_password FROM user_entity WHERE login = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, login);
@@ -44,7 +44,7 @@ public class UserRepository implements CrudRepository<User> {
 
     @Override
     public Optional<User> findById(long id) {
-        String sql = "SELECT id, name, login, hash_password FROM user WHERE id = ?";
+        String sql = "SELECT id, name, login, hash_password FROM user_entity WHERE id = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, id);
@@ -69,7 +69,7 @@ public class UserRepository implements CrudRepository<User> {
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT id, name, login, hash_password FROM user";
+        String sql = "SELECT id, name, login, hash_password FROM user_entity";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
@@ -90,13 +90,13 @@ public class UserRepository implements CrudRepository<User> {
 
     @Override
     public void save(User user) {
-        String sql = user.getId() == null ? "INSERT INTO user (name, login, hash_password) VALUES (?, ?, ?)" : "UPDATE user SET name = ?, login = ?, hash_password = ? WHERE id = ?";
+        String sql = user.getId() == null ? "INSERT INTO user_entity (name, login, hash_password) VALUES (?, ?, ?)" : "UPDATE user_entity SET name = ?, login = ?, hash_password = ? WHERE id = ?";
 
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, user.getName());
             statement.setString(2, user.getLogin());
-            statement.setString(3, user.getHash_password());
+            statement.setString(3, user.getHashPassword());
 
             if (user.getId() == null) {
                 statement.executeUpdate();
@@ -112,7 +112,7 @@ public class UserRepository implements CrudRepository<User> {
 
     @Override
     public void delete(User user) {
-        String sql = "DELETE FROM user WHERE id = ?";
+        String sql = "DELETE FROM user_entity WHERE id = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, user.getId());
