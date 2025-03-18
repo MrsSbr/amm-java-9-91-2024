@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,19 +63,24 @@ public class GenreRepository implements CrudRepository<Genre> {
 
     @Override
     public void save(Genre genre) {
-        String sql = genre.getId() == null ? "INSERT INTO genre (title) VALUES (?)" : "UPDATE genre SET title = ? WHERE id = ?";
+        String sql = """
+                        INSERT INTO genre (id, title)
+                        VALUES (?, ?)
+                        ON CONFLICT (id) DO UPDATE
+                        SET title = EXCLUDED.title
+                    """;
 
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, genre.getTitle());
 
             if (genre.getId() == null) {
-                statement.executeUpdate();
+                statement.setLong(1, Types.BIGINT);
             } else {
-                statement.setLong(2, genre.getId());
-                statement.executeUpdate();
+                statement.setLong(1, genre.getId());
             }
-
+            statement.setLong(2, genre.getId());
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new SqlException(e.getMessage());
         }
