@@ -81,6 +81,7 @@ public class UserRepository implements CrudRepository<User> {
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -119,4 +120,31 @@ public class UserRepository implements CrudRepository<User> {
         }
 
     }
+
+    public User findByLoginAndPassword(String login, String password) {
+        User user = null;
+        final String sql = "SELECT UserID, Password, PhoneNumber, Email, Login FROM users WHERE Login = ? AND Password = ?";
+
+        try (Connection conn = DataSourceProvider.getDataSource().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, login);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                user = new User();
+                user.setId(rs.getLong("UserID"));
+                user.setPassword(rs.getString("Password"));
+                user.setPhoneNumber(rs.getString("PhoneNumber"));
+                user.setEmail(rs.getString("Email"));
+                user.setLogin(rs.getString("Login"));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+        return user;
+    }
+
+
 }
