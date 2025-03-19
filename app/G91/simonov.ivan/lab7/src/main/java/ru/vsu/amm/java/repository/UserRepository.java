@@ -24,7 +24,8 @@ public class UserRepository implements ParkingRepository<User> {
     @Override
     public Optional<User> getById(int id) throws SQLException {
 
-        String sql = "SELECT Id_user, LastName, FirstName, Patronymic, Login, Password, Role FROM User WHERE Id_user = ?";
+        String sql = "SELECT Id_user, LastName, FirstName, Patronymic, Login, Password, Role " +
+                "FROM \"User\" WHERE Id_user = ?";
 
         Connection connection = dataSource.getConnection();
 
@@ -43,7 +44,7 @@ public class UserRepository implements ParkingRepository<User> {
     @Override
     public List<User> getAll() throws SQLException {
 
-        String sql = "SELECT Id_user, LastName, FirstName, Patronymic, Login, Password, Role FROM User";
+        String sql = "SELECT Id_user, LastName, FirstName, Patronymic, Login, Password, Role FROM \"User\"";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql);
@@ -61,13 +62,39 @@ public class UserRepository implements ParkingRepository<User> {
     @Override
     public void save(User entity) throws SQLException {
 
-        String sql = "INSERT INTO User (LastName, FirstName, Patronymic, Login, Password, Role) " +
+        String sql = "INSERT INTO \"User\" (LastName, FirstName, Patronymic, Login, Password, Role) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql);
 
         UserMapper.mapObjectToRow(entity, stmt);
+        stmt.execute();
+    }
+
+    @Override
+    public void update(User entity) throws SQLException {
+
+        String sql = "UPDATE \"User\" SET LastName = ?, FirstName = ?, " +
+                "Patronymic = ?, Login = ?, Password = ?, Role = ? WHERE Id_user = ?";
+
+        Connection connection = dataSource.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql);
+
+        UserMapper.mapObjectToRow(entity, stmt);
+        stmt.setInt(7, entity.getUserId());
+        stmt.execute();
+    }
+
+    @Override
+    public void delete(User entity) throws SQLException {
+
+        String sql = "DELETE FROM \"User\" WHERE Id_user = ?";
+
+        Connection connection = dataSource.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql);
+
+        stmt.setInt(1, entity.getUserId());
         stmt.execute();
     }
 }

@@ -69,4 +69,30 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
         VehicleMapper.mapObjectToRow(entity, stmt);
         stmt.execute();
     }
+
+    @Override
+    public void update(Vehicle entity) throws SQLException {
+
+        String sql = "UPDATE Vehicle SET RegistrationNumber = ?, Model = ?, Brand = ?, Colour = ? " +
+                "WHERE Id_vehicle = ?";
+
+        Connection connection = dataSource.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql);
+
+        VehicleMapper.mapObjectToRow(entity, stmt);
+        stmt.setInt(5, entity.getVehicleId());
+        stmt.execute();
+    }
+
+    @Override
+    public void delete(Vehicle entity) throws SQLException {
+
+        String sql = "DELETE FROM Vehicle WHERE Id_vehicle = ?";
+
+        Connection connection = dataSource.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql);
+
+        stmt.setInt(1, entity.getVehicleId());
+        stmt.execute();
+    }
 }
