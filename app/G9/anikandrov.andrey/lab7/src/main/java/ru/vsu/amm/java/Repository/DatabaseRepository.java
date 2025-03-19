@@ -7,8 +7,6 @@ import java.util.Optional;
 public interface DatabaseRepository<T> {
     Optional<T> findById(Long id) throws SQLException;
 
-    Optional<T> findByUserName(Long id) throws SQLException;
-
     List<T> findAll() throws SQLException;
 
     void update(T entity) throws SQLException;

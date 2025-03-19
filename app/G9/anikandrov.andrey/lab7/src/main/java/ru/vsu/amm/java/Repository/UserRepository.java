@@ -49,13 +49,12 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
         return Optional.empty();
     }
 
-    @Override
-    public Optional<UserEntity> findByUserName(Long id) throws SQLException {
+    public Optional<UserEntity> findByUserName(String username) throws SQLException {
         final String query = "SELECT User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date FROM User_Table WHERE User_Name = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, id);
+        preparedStatement.setString(1, username);
 
         preparedStatement.execute();
 
