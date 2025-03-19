@@ -24,7 +24,7 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
     @Override
     public Optional<Vehicle> getById(int id) throws SQLException {
 
-        String sql = "SELECT * FROM Vehicle WHERE Id_vehicle = ?";
+        String sql = "SELECT Id_vehicle, RegistrationNumber, Model, Brand, Colour FROM Vehicle WHERE Id_vehicle = ?";
 
         Connection connection = dataSource.getConnection();
 
@@ -43,7 +43,7 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
     @Override
     public List<Vehicle> getAll() throws SQLException {
 
-        String sql = "SELECT * FROM Vehicle";
+        String sql = "SELECT Id_vehicle, RegistrationNumber, Model, Brand, Colour FROM Vehicle";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql);
@@ -56,5 +56,17 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
         }
 
         return vehicles;
+    }
+
+    @Override
+    public void save(Vehicle entity) throws SQLException {
+
+        String sql = "INSERT INTO Vehicle (RegistrationNumber, Model, Brand, Colour) VALUES (?, ?, ?, ?)";
+
+        Connection connection = dataSource.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql);
+
+        VehicleMapper.mapObjectToRow(entity, stmt);
+        stmt.execute();
     }
 }

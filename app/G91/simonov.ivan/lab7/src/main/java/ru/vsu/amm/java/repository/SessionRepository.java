@@ -5,10 +5,7 @@ import ru.vsu.amm.java.entities.Session;
 import ru.vsu.amm.java.mappers.SessionMapper;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +21,7 @@ public class SessionRepository implements ParkingRepository<Session> {
     @Override
     public Optional<Session> getById(int id) throws SQLException {
 
-        String sql = "SELECT * FROM Session WHERE Id_session = ?";
+        String sql = "SELECT Id_session, Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate FROM Session WHERE Id_session = ?";
 
         Connection connection = dataSource.getConnection();
 
@@ -43,7 +40,7 @@ public class SessionRepository implements ParkingRepository<Session> {
     @Override
     public List<Session> getAll() throws SQLException {
 
-        String sql = "SELECT * FROM Session";
+        String sql = "SELECT Id_session, Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate FROM Session";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql);
@@ -56,5 +53,17 @@ public class SessionRepository implements ParkingRepository<Session> {
         }
 
         return sessions;
+    }
+
+    @Override
+    public void save(Session entity) throws SQLException {
+
+        String sql = "INSERT INTO Session (Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate) VALUES (?, ?, ?, ?, ?)";
+
+        Connection connection = dataSource.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql);
+
+        SessionMapper.mapObjectToRow(entity, stmt);
+        stmt.execute();
     }
 }

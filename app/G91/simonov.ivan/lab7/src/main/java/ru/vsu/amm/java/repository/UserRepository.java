@@ -24,7 +24,7 @@ public class UserRepository implements ParkingRepository<User> {
     @Override
     public Optional<User> getById(int id) throws SQLException {
 
-        String sql = "SELECT * FROM User WHERE Id_user = ?";
+        String sql = "SELECT Id_user, LastName, FirstName, Patronymic, Login, Password, Role FROM User WHERE Id_user = ?";
 
         Connection connection = dataSource.getConnection();
 
@@ -43,7 +43,7 @@ public class UserRepository implements ParkingRepository<User> {
     @Override
     public List<User> getAll() throws SQLException {
 
-        String sql = "SELECT * FROM User";
+        String sql = "SELECT Id_user, LastName, FirstName, Patronymic, Login, Password, Role FROM User";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql);
@@ -56,5 +56,18 @@ public class UserRepository implements ParkingRepository<User> {
         }
 
         return users;
+    }
+
+    @Override
+    public void save(User entity) throws SQLException {
+
+        String sql = "INSERT INTO User (LastName, FirstName, Patronymic, Login, Password, Role) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+        Connection connection = dataSource.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql);
+
+        UserMapper.mapObjectToRow(entity, stmt);
+        stmt.execute();
     }
 }

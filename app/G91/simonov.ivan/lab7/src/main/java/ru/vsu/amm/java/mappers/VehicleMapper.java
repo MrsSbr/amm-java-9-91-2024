@@ -2,6 +2,7 @@ package ru.vsu.amm.java.mappers;
 
 import ru.vsu.amm.java.entities.Vehicle;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -18,5 +19,13 @@ public class VehicleMapper {
         vehicle.setColour(rs.getString("Colour"));
 
         return vehicle;
+    }
+
+    public static void mapObjectToRow(Vehicle entity, PreparedStatement stmt) throws SQLException {
+
+        stmt.setString(1, entity.getRegistrationNumber());
+        stmt.setString(2, entity.getModel());
+        stmt.setString(3, entity.getBrand());
+        stmt.setString(4, entity.getColour());
     }
 }
