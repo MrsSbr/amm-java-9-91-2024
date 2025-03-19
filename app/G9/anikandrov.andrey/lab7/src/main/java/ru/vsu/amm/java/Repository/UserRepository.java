@@ -20,7 +20,7 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
 
     @Override
     public Optional<UserEntity> findById(Long id) throws SQLException {
-        final String query = "SELECT UserID, UserName, Password, Role, Phone, BirthDate FROM UserTable WHERE id = ?";
+        final String query = "SELECT User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date FROM User_Table WHERE User_ID = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -31,14 +31,41 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
         ResultSet resultSet = preparedStatement.getResultSet();
 
         if (resultSet.next()) {
-            Roles role = Roles.valueOf(resultSet.getString("Role"));
+            Roles role = Roles.valueOf(resultSet.getString("User_Role"));
             return Optional.of(new UserEntity(
-                    resultSet.getLong("UserID"),
-                    resultSet.getString("UserName"),
-                    resultSet.getString("Password"),
+                    resultSet.getLong("User_ID"),
+                    resultSet.getString("User_Name"),
+                    resultSet.getString("User_Password"),
                     role,
                     resultSet.getString("Phone"),
-                    resultSet.getDate("BirthDate")
+                    resultSet.getDate("Birth_Date")
+            ));
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<UserEntity> findByUserName(Long id) throws SQLException {
+        final String query = "SELECT User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date FROM User_Table WHERE User_Name = ?";
+
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setLong(1, id);
+
+        preparedStatement.execute();
+
+        ResultSet resultSet = preparedStatement.getResultSet();
+
+        if (resultSet.next()) {
+            Roles role = Roles.valueOf(resultSet.getString("User_Role"));
+            return Optional.of(new UserEntity(
+                    resultSet.getLong("User_ID"),
+                    resultSet.getString("User_Name"),
+                    resultSet.getString("User_Password"),
+                    role,
+                    resultSet.getString("Phone"),
+                    resultSet.getDate("Birth_Date")
             ));
         }
 
@@ -47,7 +74,7 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
 
     @Override
     public List<UserEntity> findAll() throws SQLException {
-        final String query = "SELECT UserID, UserName, Password, Role, Phone, BirthDate FROM UserTable WHERE id = ?";
+        final String query = "SELECT User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date FROM User_Table WHERE User_ID = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -57,12 +84,12 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
         while (resultSet.next()) {
             Roles role = Roles.valueOf(resultSet.getString("Role"));
             users.add(new UserEntity(
-                    resultSet.getLong("UserID"),
-                    resultSet.getString("UserName"),
-                    resultSet.getString("Password"),
+                    resultSet.getLong("User_ID"),
+                    resultSet.getString("User_Name"),
+                    resultSet.getString("User_Password"),
                     role,
                     resultSet.getString("Phone"),
-                    resultSet.getDate("BirthDate")
+                    resultSet.getDate("Birth_Date")
             ));
         }
 
@@ -71,7 +98,7 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
 
     @Override
     public void save(UserEntity entity) throws SQLException {
-        final String query = "INSERT INTO UserTable (UserName, Password, Role, Phone, BirthDate) VALUES (?, ?, ?, ?, ?)";
+        final String query = "INSERT INTO User_Table (User_Name, User_Password, User_Role, Phone, Birth_Date) VALUES (?, ?, ?, ?, ?)";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -87,7 +114,7 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
 
     @Override
     public void delete(UserEntity entity) throws SQLException {
-        final String query = "DELETE FROM UserTable WHERE UserID = ?";
+        final String query = "DELETE FROM User_Table WHERE User_ID = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -98,7 +125,7 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
 
     @Override
     public void update(UserEntity entity) throws SQLException {
-        final String query = "UPDATE UserTable SET UserName = ?, Password = ?,  WHERE UserID = ?";
+        final String query = "UPDATE User_Table SET User_Name = ?, User_Password = ?  WHERE User_ID = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
