@@ -24,81 +24,126 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
     @Override
     public Optional<Vehicle> getById(int id) throws SQLException {
 
-        String sql = "SELECT Id_vehicle, RegistrationNumber, Model, Brand, Colour FROM Vehicle WHERE Id_vehicle = ?";
+        String sql = """
+                SELECT Id_vehicle, RegistrationNumber, Model, Brand, Colour
+                FROM Vehicle
+                WHERE Id_vehicle = ?
+                """;
 
-        Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setInt(1, id);
+            stmt.setInt(1, id);
 
-        ResultSet rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
 
-        VehicleMapper vehicleMapper = new VehicleMapper();
+            VehicleMapper vehicleMapper = new VehicleMapper();
 
-        if (rs.next()) {
-            return Optional.of(vehicleMapper.mapRowToObject(rs));
+            if (rs.next()) {
+                return Optional.of(vehicleMapper.mapRowToObject(rs));
+            }
+
+            return Optional.empty();
+
+        } catch (SQLException e) {
+
+            throw new SQLException(e.getMessage());
+
         }
-
-        return Optional.empty();
     }
 
     @Override
     public List<Vehicle> getAll() throws SQLException {
 
-        String sql = "SELECT Id_vehicle, RegistrationNumber, Model, Brand, Colour FROM Vehicle";
+        String sql = """
+                SELECT Id_vehicle, RegistrationNumber, Model, Brand, Colour
+                FROM Vehicle
+                """;
 
-        Connection connection = dataSource.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-        List<Vehicle> vehicles = new ArrayList<>();
+            ResultSet rs = stmt.executeQuery();
 
-        VehicleMapper vehicleMapper = new VehicleMapper();
+            List<Vehicle> vehicles = new ArrayList<>();
 
-        while (rs.next()) {
-            vehicles.add(vehicleMapper.mapRowToObject(rs));
+            VehicleMapper vehicleMapper = new VehicleMapper();
+
+            while (rs.next()) {
+                vehicles.add(vehicleMapper.mapRowToObject(rs));
+            }
+
+            return vehicles;
+
+        } catch (SQLException e) {
+
+            throw new SQLException(e.getMessage());
+
         }
-
-        return vehicles;
     }
 
     @Override
     public void save(Vehicle entity) throws SQLException {
 
-        String sql = "INSERT INTO Vehicle (RegistrationNumber, Model, Brand, Colour) VALUES (?, ?, ?, ?)";
+        String sql = """
+                INSERT INTO Vehicle (RegistrationNumber, Model, Brand, Colour)
+                VALUES (?, ?, ?, ?)
+                """;
 
-        Connection connection = dataSource.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        try (Connection connection = dataSource.getConnection()) {
 
-        VehicleMapper vehicleMapper = new VehicleMapper(entity);
-        vehicleMapper.mapObjectToRow(stmt);
-        stmt.execute();
+            VehicleMapper vehicleMapper = new VehicleMapper();
+            PreparedStatement stmt = vehicleMapper.mapObjectToRow(entity, connection, sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+
+            throw new SQLException(e.getMessage());
+
+        }
     }
 
     @Override
     public void update(Vehicle entity) throws SQLException {
 
-        String sql = "UPDATE Vehicle SET RegistrationNumber = ?, Model = ?, Brand = ?, Colour = ? " +
-                "WHERE Id_vehicle = ?";
+        String sql = """
+                UPDATE Vehicle
+                SET RegistrationNumber = ?, Model = ?, Brand = ?, Colour = ?
+                WHERE Id_vehicle = ?
+                """;
 
-        Connection connection = dataSource.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        try (Connection connection = dataSource.getConnection()) {
 
-        VehicleMapper vehicleMapper = new VehicleMapper(entity);
-        vehicleMapper.mapObjectToRow(stmt);
-        stmt.setInt(5, entity.getVehicleId());
-        stmt.execute();
+            VehicleMapper vehicleMapper = new VehicleMapper();
+            PreparedStatement stmt = vehicleMapper.mapObjectToRow(entity, connection, sql);
+            stmt.setInt(5, entity.getVehicleId());
+            stmt.execute();
+
+        } catch (SQLException e) {
+
+            throw new SQLException(e.getMessage());
+
+        }
     }
 
     @Override
     public void delete(Vehicle entity) throws SQLException {
 
-        String sql = "DELETE FROM Vehicle WHERE Id_vehicle = ?";
+        String sql = """
+                DELETE FROM Vehicle
+                WHERE Id_vehicle = ?
+                """;
 
-        Connection connection = dataSource.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-        stmt.setInt(1, entity.getVehicleId());
-        stmt.execute();
+            stmt.setInt(1, entity.getVehicleId());
+            stmt.execute();
+
+        } catch (SQLException e) {
+
+            throw new SQLException(e.getMessage());
+
+        }
     }
 }

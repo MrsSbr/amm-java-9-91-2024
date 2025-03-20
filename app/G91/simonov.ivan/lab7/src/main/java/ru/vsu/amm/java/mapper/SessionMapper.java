@@ -1,7 +1,9 @@
 package ru.vsu.amm.java.mapper;
 
 import ru.vsu.amm.java.entities.Session;
+import ru.vsu.amm.java.entities.User;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,13 +11,7 @@ import java.sql.Timestamp;
 
 public class SessionMapper implements EntityMapper<Session> {
 
-    private Session entity;
-
     public SessionMapper() {}
-
-    public SessionMapper(Session session) {
-        this.entity = session;
-    }
 
     @Override
     public Session mapRowToObject(ResultSet rs) throws SQLException {
@@ -33,12 +29,18 @@ public class SessionMapper implements EntityMapper<Session> {
     }
 
     @Override
-    public void mapObjectToRow(PreparedStatement stmt) throws SQLException {
+    public PreparedStatement mapObjectToRow(Session entity,
+                                            Connection connection,
+                                            String sql) throws SQLException {
+
+        PreparedStatement stmt = connection.prepareStatement(sql);
 
         stmt.setInt(1, entity.getUserId());
         stmt.setInt(2, entity.getVehicleId());
         stmt.setBigDecimal(3, entity.getParkingPrice());
         stmt.setTimestamp(4, Timestamp.valueOf(entity.getEntryDate()));
         stmt.setTimestamp(5, Timestamp.valueOf(entity.getExitDate()));
+
+        return stmt;
     }
 }

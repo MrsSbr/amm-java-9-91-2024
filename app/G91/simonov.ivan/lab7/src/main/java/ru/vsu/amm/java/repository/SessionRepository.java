@@ -24,84 +24,126 @@ public class SessionRepository implements ParkingRepository<Session> {
     @Override
     public Optional<Session> getById(int id) throws SQLException {
 
-        String sql = "SELECT Id_session, Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate " +
-                "FROM \"Session\" WHERE Id_session = ?";
+        String sql = """
+                SELECT Id_session, Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate
+                FROM "Session"
+                WHERE Id_session = ?
+                """;
 
-        Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setInt(1, id);
+            stmt.setInt(1, id);
 
-        ResultSet rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
 
-        SessionMapper sessionMapper = new SessionMapper();
+            SessionMapper sessionMapper = new SessionMapper();
 
-        if (rs.next()) {
-            return Optional.of(sessionMapper.mapRowToObject(rs));
+            if (rs.next()) {
+                return Optional.of(sessionMapper.mapRowToObject(rs));
+            }
+
+            return Optional.empty();
+
+        } catch (SQLException e) {
+
+            throw new SQLException(e.getMessage());
+
         }
-
-        return Optional.empty();
     }
 
     @Override
     public List<Session> getAll() throws SQLException {
 
-        String sql = "SELECT Id_session, Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate " +
-                "FROM \"Session\"";
+        String sql = """
+                SELECT Id_session, Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate
+                FROM "Session"
+                """;
 
-        Connection connection = dataSource.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-        List<Session> sessions = new ArrayList<>();
+            ResultSet rs = stmt.executeQuery();
 
-        SessionMapper sessionMapper = new SessionMapper();
+            List<Session> sessions = new ArrayList<>();
 
-        while (rs.next()) {
-            sessions.add(sessionMapper.mapRowToObject(rs));
+            SessionMapper sessionMapper = new SessionMapper();
+
+            while (rs.next()) {
+                sessions.add(sessionMapper.mapRowToObject(rs));
+            }
+
+            return sessions;
+
+        } catch (SQLException e) {
+
+            throw new SQLException(e.getMessage());
+
         }
-
-        return sessions;
     }
 
     @Override
     public void save(Session entity) throws SQLException {
 
-        String sql = "INSERT INTO \"Session\" (Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate) " +
-                "VALUES (?, ?, ?, ?, ?)";
+        String sql = """
+               INSERT INTO "Session" (Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate)
+               VALUES (?, ?, ?, ?, ?)
+               """;
 
-        Connection connection = dataSource.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        try (Connection connection = dataSource.getConnection()) {
 
-        SessionMapper sessionMapper = new SessionMapper(entity);
-        sessionMapper.mapObjectToRow(stmt);
-        stmt.execute();
+            SessionMapper sessionMapper = new SessionMapper();
+            PreparedStatement stmt = sessionMapper.mapObjectToRow(entity, connection, sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+
+            throw new SQLException(e.getMessage());
+
+        }
     }
 
     @Override
     public void update(Session entity) throws SQLException {
 
-        String sql = "UPDATE \"Session\" SET Id_user = ?, Id_vehicle = ?, " +
-                "ParkingPrice = ?, EntryDate = ?, ExitDate = ? WHERE Id_session = ?";
+        String sql = """
+                UPDATE "Session" SET Id_user = ?, Id_vehicle = ?, ParkingPrice = ?, EntryDate = ?, ExitDate = ?
+                WHERE Id_session = ?
+                """;
 
-        Connection connection = dataSource.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        try (Connection connection = dataSource.getConnection()) {
 
-        SessionMapper sessionMapper = new SessionMapper(entity);
-        sessionMapper.mapObjectToRow(stmt);
-        stmt.setInt(6, entity.getSessionId());
-        stmt.execute();
+            SessionMapper sessionMapper = new SessionMapper();
+            PreparedStatement stmt = sessionMapper.mapObjectToRow(entity, connection, sql);
+
+            stmt.setInt(6, entity.getSessionId());
+            stmt.execute();
+
+        } catch (SQLException e) {
+
+            throw new SQLException(e.getMessage());
+
+        }
     }
 
     @Override
     public void delete(Session entity) throws SQLException {
 
-        String sql = "DELETE FROM \"Session\" WHERE Id_session = ?";
+        String sql = """
+                DELETE FROM "Session"
+                WHERE Id_session = ?
+                """;
 
-        Connection connection = dataSource.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-        stmt.setInt(1, entity.getSessionId());
-        stmt.execute();
+            stmt.setInt(1, entity.getSessionId());
+            stmt.execute();
+
+        } catch (SQLException e) {
+
+            throw new SQLException(e.getMessage());
+
+        }
     }
 }

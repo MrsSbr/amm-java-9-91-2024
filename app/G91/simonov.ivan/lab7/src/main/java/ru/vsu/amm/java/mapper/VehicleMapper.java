@@ -2,19 +2,14 @@ package ru.vsu.amm.java.mapper;
 
 import ru.vsu.amm.java.entities.Vehicle;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class VehicleMapper implements EntityMapper<Vehicle> {
 
-    private Vehicle entity;
-
     public VehicleMapper() {}
-
-    public VehicleMapper(Vehicle vehicle) {
-        this.entity = vehicle;
-    }
 
     @Override
     public Vehicle mapRowToObject(ResultSet rs) throws SQLException {
@@ -31,11 +26,17 @@ public class VehicleMapper implements EntityMapper<Vehicle> {
     }
 
     @Override
-    public void mapObjectToRow(PreparedStatement stmt) throws SQLException {
+    public PreparedStatement mapObjectToRow(Vehicle entity,
+                                            Connection connection,
+                                            String sql) throws SQLException {
+
+        PreparedStatement stmt = connection.prepareStatement(sql);
 
         stmt.setString(1, entity.getRegistrationNumber());
         stmt.setString(2, entity.getModel());
         stmt.setString(3, entity.getBrand());
         stmt.setString(4, entity.getColour());
+
+        return stmt;
     }
 }

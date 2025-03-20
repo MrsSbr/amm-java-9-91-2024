@@ -3,19 +3,14 @@ package ru.vsu.amm.java.mapper;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.enums.Role;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserMapper implements EntityMapper<User> {
 
-    private User entity;
-
     public UserMapper() {}
-
-    public UserMapper(User user) {
-        this.entity = user;
-    }
 
     @Override
     public User mapRowToObject(ResultSet rs) throws SQLException {
@@ -34,7 +29,11 @@ public class UserMapper implements EntityMapper<User> {
     }
 
     @Override
-    public void mapObjectToRow(PreparedStatement stmt) throws SQLException {
+    public PreparedStatement mapObjectToRow(User entity,
+                                            Connection connection,
+                                            String sql) throws SQLException {
+
+        PreparedStatement stmt = connection.prepareStatement(sql);
 
         stmt.setString(1, entity.getLastName());
         stmt.setString(2, entity.getFirstName());
@@ -42,5 +41,7 @@ public class UserMapper implements EntityMapper<User> {
         stmt.setString(4, entity.getLogin());
         stmt.setString(5, entity.getPassword());
         stmt.setString(6, entity.getRole().name());
+
+        return stmt;
     }
 }
