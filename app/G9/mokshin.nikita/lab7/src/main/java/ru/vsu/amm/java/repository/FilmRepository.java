@@ -11,7 +11,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -77,8 +76,8 @@ public class FilmRepository implements CrudRepository<Film> {
     public void save(Film film) {
         logger.info("Saving film: {}", film);
         String sql = film.getId() == null ?
-                "INSERT INTO film (title, slogan, description, release_date, genre_id, id_user) VALUES (?, ?, ?, ?, ?, ?)" :
-                "UPDATE film SET title = ?, slogan = ?, description = ?, release_date = ?, genre_id = ?, id_user = ? WHERE id = ?";
+                "INSERT INTO film (title, slogan, description, release_date, id_genre, id_user) VALUES (?, ?, ?, ?, ?, ?)" :
+                "UPDATE film SET title = ?, slogan = ?, description = ?, release_date = ?, id_genre = ?, id_user = ? WHERE id = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
 
