@@ -102,23 +102,17 @@ public class UserRepository implements CrudRepository<User> {
     @Override
     public void save(User user) {
         logger.info("Saving user: {}", user);
-        String sql = """
-                        INSERT INTO user_entity (id, name, login, hash_password)
-                        VALUES (?, ?, ?, ?)
-                        ON CONFLICT (id) DO UPDATE
-                        SET id = EXCLUDED.id, name = EXCLUDED.name, login = EXCLUDED.login, hash_password = EXCLUDED.hash_password
-                    """;
+        String sql = user.getId() == null ? "INSERT INTO user_entity (name, login, hash_password) VALUES (?, ?, ?)" : "UPDATE user SET name = ?, login = ?, hash_password = ? WHERE id = ?";
+
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
-            if (user.getId() == null) {
-                statement.setLong(1, Types.BIGINT);
-            } else {
-                statement.setLong(1, user.getId());
-            }
-            statement.setString(2, user.getName());
-            statement.setString(3, user.getLogin());
-            statement.setString(4, user.getHashPassword());
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getLogin());
+            statement.setString(3, user.getHashPassword());
 
+            if (user.getId() != null) {
+                statement.setLong(4, user.getId());
+            }
             statement.executeUpdate();
 
             logger.info("User saved successfully: {}", user);

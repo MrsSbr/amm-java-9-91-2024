@@ -72,23 +72,15 @@ public class GenreRepository implements CrudRepository<Genre> {
     @Override
     public void save(Genre genre) {
         logger.info("Saving genre: {}", genre);
-        String sql = """
-                        INSERT INTO genre (id, title)
-                        VALUES (?, ?)
-                        ON CONFLICT (id) DO UPDATE
-                        SET title = EXCLUDED.title
-                    """;
+        String sql = genre.getId() == null ? "INSERT INTO genre (title) VALUES (?)" : "UPDATE genre SET title = ? WHERE id = ?";
 
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, genre.getTitle());
 
-            if (genre.getId() == null) {
-                statement.setLong(1, Types.BIGINT);
-            } else {
-                statement.setLong(1, genre.getId());
+            if (genre.getId() != null) {
+                statement.setLong(2, genre.getId());
             }
-            statement.setLong(2, genre.getId());
             statement.executeUpdate();
 
             logger.info("Genre saved successfully: {}", genre);

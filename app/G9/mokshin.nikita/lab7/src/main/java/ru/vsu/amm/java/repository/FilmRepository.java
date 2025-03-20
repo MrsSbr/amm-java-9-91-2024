@@ -76,27 +76,22 @@ public class FilmRepository implements CrudRepository<Film> {
     @Override
     public void save(Film film) {
         logger.info("Saving film: {}", film);
-        String sql = """
-                        INSERT INTO film (id, title, slogan, description, release_date, id_genre, id_user)
-                        VALUES (?, ?, ?, ?, ?, ?, ?)
-                        ON CONFLICT (id) DO UPDATE
-                        SET title = EXCLUDED.title, slogan = EXCLUDED.slogan, description = EXCLUDED.description, release_date = EXCLUDED.release_date, id_genre = EXCLUDED.id_genre, id_user = EXCLUDED.id_user
-                    """;
+        String sql = film.getId() == null ?
+                "INSERT INTO film (title, slogan, description, release_date, genre_id, id_user) VALUES (?, ?, ?, ?, ?, ?)" :
+                "UPDATE film SET title = ?, slogan = ?, description = ?, release_date = ?, genre_id = ?, id_user = ? WHERE id = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            if (film.getId() == null) {
-                statement.setLong(1, Types.BIGINT);
-            } else {
-                statement.setLong(1, film.getId());
-            }
-            statement.setString(2, film.getTitle());
-            statement.setString(3, film.getSlogan());
-            statement.setString(4, film.getDescription());
-            statement.setDate(5, Date.valueOf(film.getReleaseDate()));
-            statement.setLong(6, film.getGenreOptional().get().getId());
-            statement.setLong(7, film.getAuthorOptional().get().getId());
+            statement.setString(1, film.getTitle());
+            statement.setString(2, film.getSlogan());
+            statement.setString(3, film.getDescription());
+            statement.setDate(4, Date.valueOf(film.getReleaseDate()));
+            statement.setLong(5, film.getGenreOptional().get().getId());
+            statement.setLong(6, film.getAuthorOptional().get().getId());
 
+            if (film.getId() != null) {
+                statement.setLong(7, film.getId());
+            }
             statement.executeUpdate();
 
             logger.info("Film saved successfully: {}", film);
