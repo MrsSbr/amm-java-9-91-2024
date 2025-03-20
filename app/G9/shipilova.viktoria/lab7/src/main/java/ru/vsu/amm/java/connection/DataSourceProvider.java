@@ -5,10 +5,6 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import javax.sql.DataSource;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,27 +14,18 @@ public class DataSourceProvider {
     private static DataSource dataSource;
 
     private static void loadProperties(HikariConfig config) {
-        Properties props = new Properties();
-
-        try (InputStream input = DataSourceProvider.class.getClassLoader()
-                .getResourceAsStream("db.properties")){
-            props.load(input);
-            config.setJdbcUrl(props.getProperty("db.url"));
-            config.setUsername(props.getProperty("db.username"));
-            config.setPassword(props.getProperty("db.password"));
-            config.setDriverClassName(props.getProperty("db.driver-class-name"));
-            config.setPoolName(props.getProperty("db.pool-name"));
-            config.setAutoCommit(Boolean.parseBoolean(props.getProperty("db.auto-commit")));
-            config.setConnectionTimeout(Integer.parseInt(props.getProperty("db.connection-timeout")));
-            config.setIdleTimeout(Integer.parseInt(props.getProperty("db.idle-timeout")));
-            config.setMaxLifetime(Integer.parseInt(props.getProperty("db.max-lifetime")));
-            config.setMinimumIdle(Integer.parseInt(props.getProperty("db.min-idle")));
-            config.setMaximumPoolSize(Integer.parseInt(props.getProperty("db.maximum-pool-size")));
-
-            logger.log(Level.INFO, "Loaded properties from " + props.getProperty("db.url"));
-        } catch (IOException ex) {
-            logger.log(Level.SEVERE, "Failed to load properties from " + props.getProperty("db.url"), ex);
-        }
+        DatabaseProperties props = new DatabaseProperties();
+        config.setJdbcUrl(props.getUrl());
+        config.setUsername(props.getUsername());
+        config.setPassword(props.getPassword());
+        config.setDriverClassName(props.getDriverClassName());
+        config.setPoolName(props.getPoolName());
+        config.setAutoCommit(props.isAutoCommit());
+        config.setConnectionTimeout(props.getConnectionTimeout());
+        config.setIdleTimeout(props.getIdleTimeout());
+        config.setMaxLifetime(props.getMaxLifetime());
+        config.setMinimumIdle(props.getMinIdle());
+        config.setMaximumPoolSize(props.getMaximumPoolSize());
     }
 
     public static DataSource getDataSource() {

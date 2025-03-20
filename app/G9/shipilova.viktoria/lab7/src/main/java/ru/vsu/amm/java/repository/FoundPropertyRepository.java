@@ -59,6 +59,7 @@ public class FoundPropertyRepository implements CrudRepository<FoundProperty> {
 
     @Override
     public List<FoundProperty> getAll() {
+
         List<FoundProperty> foundProperties = new ArrayList<>();
         final String sql = "SELECT FoundPropertyID, PropertyTypeID, DateOfFinding, TimeOfFinding, ReturnStatus, PlaceOfFinding, Description, UserID FROM FoundProperties";
 
@@ -85,7 +86,6 @@ public class FoundPropertyRepository implements CrudRepository<FoundProperty> {
                 User user = new User();
                 user.setId(userId);
                 foundProperty.setUser(user);
-
                 foundProperties.add(foundProperty);
             }
         } catch (SQLException e) {
