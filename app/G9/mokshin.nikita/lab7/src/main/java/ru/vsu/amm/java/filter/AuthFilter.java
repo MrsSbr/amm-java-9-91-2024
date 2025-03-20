@@ -9,12 +9,16 @@ import jakarta.servlet.Filter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.vsu.amm.java.model.User;
 
 import java.io.IOException;
 import java.util.List;
 
 @WebFilter("/*")
 public class AuthFilter implements Filter {
+    private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
     private final List<String> allowedPaths = List.of(
             "/login",
             "/login.jsp",
@@ -31,11 +35,19 @@ public class AuthFilter implements Filter {
         HttpSession session = req.getSession(false);
 
         boolean loggedIn = session != null && session.getAttribute("user") != null;
-        boolean allowed = allowedPaths.contains(path);
+        boolean isAllowedPath = allowedPaths.contains(path);
 
-        if (loggedIn || allowed) {
+        logger.info("Request received: method={}, path={}, loggedIn={}", req.getMethod(), path, loggedIn);
+
+        if (loggedIn || isAllowedPath) {
+            User user = null;
+            if (session != null) {
+                user = (User) session.getAttribute("user");
+            }
+            logger.info("Access granted: path={} (loggedIn={}, allowed={}) user={}", path, loggedIn, isAllowedPath, user);
             filterChain.doFilter(request, response);
         } else {
+            logger.info("Unauthorized access attempt: path={}", path);
             resp.sendRedirect("/login");
         }
     }

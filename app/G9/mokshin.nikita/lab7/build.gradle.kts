@@ -22,6 +22,8 @@ dependencies {
     compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
     implementation("org.postgresql:postgresql:42.7.3")
     implementation("com.zaxxer:HikariCP:6.2.1")
+    implementation ("org.slf4j:slf4j-api:2.0.17")
+    implementation ("ch.qos.logback:logback-classic:1.5.18")
     compileOnly("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")
 }

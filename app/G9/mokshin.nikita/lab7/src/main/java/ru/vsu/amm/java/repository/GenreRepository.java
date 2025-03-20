@@ -1,5 +1,7 @@
 package ru.vsu.amm.java.repository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.vsu.amm.java.exception.SqlException;
 import ru.vsu.amm.java.model.Genre;
 
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class GenreRepository implements CrudRepository<Genre> {
+    private static final Logger logger = LoggerFactory.getLogger(GenreRepository.class);
     private final DataSource dataSource;
 
     public GenreRepository(DataSource dataSource) {
@@ -22,6 +25,7 @@ public class GenreRepository implements CrudRepository<Genre> {
 
     @Override
     public Optional<Genre> findById(long id) {
+        logger.info("Find genre with id={}", id);
         String sql = "SELECT id, title FROM genre WHERE id = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -32,9 +36,11 @@ public class GenreRepository implements CrudRepository<Genre> {
                 Genre genre = new Genre(
                         resultSet.getLong("id"),
                         resultSet.getString("title"));
+                logger.info("Genre found: {}", genre);
                 return Optional.of(genre);
             }
         } catch (SQLException e) {
+            logger.error("Error finding genre with id={}: {}", id, e.getMessage());
             throw new SqlException(e.getMessage());
         }
         return Optional.empty();
@@ -42,6 +48,7 @@ public class GenreRepository implements CrudRepository<Genre> {
 
     @Override
     public List<Genre> findAll() {
+        logger.info("Find all genres");
         List<Genre> genres = new ArrayList<>();
         String sql = "SELECT id, title FROM genre";
         try (Connection connection = dataSource.getConnection()) {
@@ -54,8 +61,9 @@ public class GenreRepository implements CrudRepository<Genre> {
                         resultSet.getString("title"));
                 genres.add(genre);
             }
-
+            logger.info("Found {} genres", genres.size());
         } catch (SQLException e) {
+            logger.error("Error found all genres: {}", e.getMessage());
             throw new SqlException(e.getMessage());
         }
         return genres;
@@ -63,6 +71,7 @@ public class GenreRepository implements CrudRepository<Genre> {
 
     @Override
     public void save(Genre genre) {
+        logger.info("Saving genre: {}", genre);
         String sql = """
                         INSERT INTO genre (id, title)
                         VALUES (?, ?)
@@ -81,20 +90,26 @@ public class GenreRepository implements CrudRepository<Genre> {
             }
             statement.setLong(2, genre.getId());
             statement.executeUpdate();
+
+            logger.info("Genre saved successfully: {}", genre);
         } catch (SQLException e) {
+            logger.error("Error saving genre: {}", e.getMessage());
             throw new SqlException(e.getMessage());
         }
     }
 
     @Override
     public void delete(Genre genre) {
+        logger.info("Deleting genre with id={}", genre.getId());
         String sql = "DELETE FROM genre WHERE id = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, genre.getId());
 
             statement.executeUpdate();
+            logger.info("Genre with id={} deleted successfully", genre.getId());
         } catch (SQLException e) {
+            logger.error("Error deleting genre with id={}: {}", genre.getId(), e.getMessage());
             throw new SqlException(e.getMessage());
         }
     }

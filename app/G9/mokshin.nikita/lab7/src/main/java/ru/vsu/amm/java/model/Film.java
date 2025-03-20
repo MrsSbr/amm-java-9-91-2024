@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import java.util.Optional;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Film {
     private Long id;
     private String title;
