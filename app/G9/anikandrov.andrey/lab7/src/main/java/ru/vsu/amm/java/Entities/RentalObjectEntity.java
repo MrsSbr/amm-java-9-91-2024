@@ -7,17 +7,17 @@ public class RentalObjectEntity {
     private Long objectID;
     private String objectName;
     private ObjectType objectType;
-    private String info;
+    private String objectInfo;
     private Integer price;
 
 
     public RentalObjectEntity() {}
 
-    public RentalObjectEntity(Long objectID, String objectName, ObjectType objectType, String info, Integer price) {
+    public RentalObjectEntity(Long objectID, String objectName, ObjectType objectType, String objectInfo, Integer price) {
         this.objectID = objectID;
         this.objectName = objectName;
         this.objectType = objectType;
-        this.info = info;
+        this.objectInfo = objectInfo;
         this.price = price;
     }
 
@@ -45,12 +45,12 @@ public class RentalObjectEntity {
         this.objectType = objectType;
     }
 
-    public String getInfo() {
-        return info;
+    public String getObjectInfo() {
+        return objectInfo;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public void setObjectInfo(String objectInfo) {
+        this.objectInfo = objectInfo;
     }
 
     public Integer getPrice() {

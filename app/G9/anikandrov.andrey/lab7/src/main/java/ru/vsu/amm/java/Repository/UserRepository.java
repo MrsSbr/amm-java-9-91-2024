@@ -101,16 +101,17 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
 
     @Override
     public void save(UserEntity entity) throws SQLException {
-        final String query = "INSERT INTO User_Table (User_Name, User_Password, User_Role, Phone, Birth_Date) VALUES (?, ?, ?, ?, ?)";
+        final String query = "INSERT INTO User_Table (User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date) VALUES (?, ?, ?, ?, ?, ?)";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
-        preparedStatement.setString(1, entity.getUserName());
-        preparedStatement.setString(2, entity.getPassword());
-        preparedStatement.setString(3, entity.getRole().name());
-        preparedStatement.setString(4, entity.getPhone());
-        preparedStatement.setDate(5, Date.valueOf(entity.getBirthDate()));
+        preparedStatement.setLong(1, entity.getUserID());
+        preparedStatement.setString(2, entity.getUserName());
+        preparedStatement.setString(3, entity.getUserPassword());
+        preparedStatement.setString(4, entity.getUserRole().name());
+        preparedStatement.setString(5, entity.getPhone());
+        preparedStatement.setDate(6, Date.valueOf(entity.getBirthDate()));
 
         preparedStatement.execute();
     }
@@ -134,7 +135,7 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         preparedStatement.setString(1, entity.getUserName());
-        preparedStatement.setString(2, entity.getPassword());
+        preparedStatement.setString(2, entity.getUserPassword());
         preparedStatement.setLong(3, entity.getUserID());
 
         preparedStatement.execute();

@@ -20,8 +20,6 @@ CREATE TABLE AgreementTable (
         AgreementID BIGINT PRIMARY KEY,
         UserID BIGINT REFERENCES UserTable (UserID),
         ObjectID BIGINT REFERENCES RentalObjectTable (ObjectID),
-        EventName VARCHAR(200) NOT NULL,
-        EventInfo TEXT,
         TimeStart DATE,
         TimeEnd DATE,
         SumPrice INT -- sum price in rubles
