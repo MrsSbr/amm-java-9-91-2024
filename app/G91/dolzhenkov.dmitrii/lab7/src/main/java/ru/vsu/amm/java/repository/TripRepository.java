@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.repository;
 
 import lombok.RequiredArgsConstructor;
+import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.TripEntity;
 import ru.vsu.amm.java.mappers.TripMapper;
 
@@ -10,9 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 public class TripRepository implements CrudRepository<TripEntity>{
     private final DataSource dataSource;
+
+    public TripRepository()
+    {
+        this.dataSource= DatabaseConfiguration.getDataSource();
+    }
 
     @Override
     public Optional<TripEntity> findById(Long id) throws SQLException {

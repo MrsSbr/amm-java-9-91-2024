@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.repository;
 
 import lombok.RequiredArgsConstructor;
+import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.ScooterEntity;
 import ru.vsu.amm.java.mappers.ScooterMapper;
 
@@ -13,9 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 public class ScooterRepository implements CrudRepository<ScooterEntity>{
     private final DataSource dataSource;
+
+    public ScooterRepository()
+    {
+        this.dataSource= DatabaseConfiguration.getDataSource();
+    }
 
     @Override
     public Optional<ScooterEntity> findById(Long id) throws SQLException {
