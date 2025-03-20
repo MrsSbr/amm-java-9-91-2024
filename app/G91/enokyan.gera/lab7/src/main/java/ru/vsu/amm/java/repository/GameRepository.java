@@ -32,7 +32,15 @@ public class GameRepository implements CrudRepository<GameEntity> {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return new GameEntity(resultSet.getLong("id"), resultSet.getLong("first_player_id"), resultSet.getLong("first_player_id"), resultSet.getTimestamp("finished").toLocalDateTime(), GameResultMapper.mapStringToGameResult(resultSet.getString("result")), resultSet.getDouble("first_players_rating_before"), resultSet.getDouble("first_players_rating_before"));
+                return new GameEntity(
+                        resultSet.getLong("id"),
+                        resultSet.getLong("first_player_id"),
+                        resultSet.getLong("first_player_id"),
+                        resultSet.getTimestamp("finished").toLocalDateTime(),
+                        GameResultMapper.mapStringToGameResult(resultSet.getString("result")),
+                        resultSet.getDouble("first_players_rating_before"),
+                        resultSet.getDouble("first_players_rating_before")
+                );
             }
         } catch (SQLException e) {
             // log
@@ -52,7 +60,17 @@ public class GameRepository implements CrudRepository<GameEntity> {
 
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
-                users.add(new GameEntity(resultSet.getLong("id"), resultSet.getLong("first_player_id"), resultSet.getLong("first_player_id"), resultSet.getTimestamp("finished").toLocalDateTime(), GameResultMapper.mapStringToGameResult(resultSet.getString("result")), resultSet.getDouble("first_players_rating_before"), resultSet.getDouble("first_players_rating_before")));
+                users.add(
+                        new GameEntity(
+                                resultSet.getLong("id"),
+                                resultSet.getLong("first_player_id"),
+                                resultSet.getLong("first_player_id"),
+                                resultSet.getTimestamp("finished").toLocalDateTime(),
+                                GameResultMapper.mapStringToGameResult(resultSet.getString("result")),
+                                resultSet.getDouble("first_players_rating_before"),
+                                resultSet.getDouble("first_players_rating_before")
+                        )
+                );
             }
         } catch (SQLException e) {
             // log
