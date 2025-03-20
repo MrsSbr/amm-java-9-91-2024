@@ -1,6 +1,6 @@
-package ru.vsu.amm.java.Repository;
+package ru.vsu.amm.java.Repository.Impl;
 
-import ru.vsu.amm.java.Mapper.UserMapper;
+import ru.vsu.amm.java.Mapper.Impl.UserMapper;
 import ru.vsu.amm.java.Model.Entity.UserEntity;
 import ru.vsu.amm.java.Repository.Interface.CrudRepo;
 

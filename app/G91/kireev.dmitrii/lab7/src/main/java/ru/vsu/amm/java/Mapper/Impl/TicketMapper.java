@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.Mapper;
+package ru.vsu.amm.java.Mapper.Impl;
 
 import ru.vsu.amm.java.Mapper.Interface.Mapper;
 import ru.vsu.amm.java.Model.Entity.TicketEntity;
