@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("war")
 }
 
 group = "ru.vsu.amm.java"
@@ -7,6 +8,10 @@ version = "unspecified"
 
 repositories {
     mavenCentral()
+}
+
+tasks.war {
+    archiveFileName.set("ROOT.war")
 }
 
 dependencies {
