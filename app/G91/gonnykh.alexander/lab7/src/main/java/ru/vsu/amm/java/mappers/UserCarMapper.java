@@ -8,11 +8,11 @@ import java.sql.SQLException;
 public class UserCarMapper {
     public static UserCarEntity ResultSetToUserCarEntity(ResultSet rs) throws SQLException {
         return new UserCarEntity(rs.getLong("id"),
-                rs.getLong("userId"),
-                rs.getLong("carId"),
-                rs.getTimestamp("startTrip").toLocalDateTime(),
-                rs.getInt("duration"),
-                rs.getBigDecimal("priceForMinute")
+                rs.getLong("user_id"),
+                rs.getLong("car_id"),
+                rs.getTimestamp("start_trip").toLocalDateTime(),
+                rs.getTimestamp("end_trip").toLocalDateTime(),
+                rs.getBigDecimal("price_per_minute")
         );
     }
 }

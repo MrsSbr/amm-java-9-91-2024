@@ -51,13 +51,13 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
 
     @Override
     public void save(UserCarEntity entity) throws SQLException {
-        final String query = "INSERT INTO user_car(user_id, car_id, start_trip, duration, price_per_minute) VALUES(?,?,?,?,?)";
+        final String query = "INSERT INTO user_car(user_id, car_id, start_trip, end_trip, price_per_minute) VALUES(?,?,?,?,?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, entity.getUserId());
             preparedStatement.setLong(2, entity.getCarId());
             preparedStatement.setTimestamp(3, Timestamp.valueOf(entity.getStartTrip()));
-            preparedStatement.setInt(4, entity.getDuration());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(entity.getEndTrip()));
             preparedStatement.setBigDecimal(5, entity.getPriceForMinute());
             preparedStatement.executeUpdate();
         }
@@ -65,13 +65,13 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
 
     @Override
     public void update(UserCarEntity entity) throws SQLException {
-        final String query = "UPDATE user_car SET user_id = ?, car_id = ?, start_trip = ?, duration = ?, price_per_minute = ? WHERE id = ?";
+        final String query = "UPDATE user_car SET user_id = ?, car_id = ?, start_trip = ?, end_trip = ?, price_per_minute = ? WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, entity.getUserId());
             preparedStatement.setLong(2, entity.getCarId());
             preparedStatement.setTimestamp(3, Timestamp.valueOf(entity.getStartTrip()));
-            preparedStatement.setInt(4, entity.getDuration());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(entity.getEndTrip()));
             preparedStatement.setBigDecimal(5, entity.getPriceForMinute());
             preparedStatement.setLong(6, entity.getId());
             preparedStatement.executeUpdate();
