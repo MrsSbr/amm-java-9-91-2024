@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.mappers;
+package ru.vsu.amm.java.mapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -2,7 +2,7 @@ package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.mappers.UserMapper;
+import ru.vsu.amm.java.mapper.UserMapper;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
