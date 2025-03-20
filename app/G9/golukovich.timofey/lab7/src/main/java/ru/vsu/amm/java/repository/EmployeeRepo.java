@@ -6,12 +6,13 @@ import ru.vsu.amm.java.enums.EmployeePost;
 
 import javax.sql.DataSource;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class EmployeeRepo implements IRepo<EmployeeEntity> {
+public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
     private final DataSource dataSource;
 
     public EmployeeRepo() {
@@ -20,9 +21,10 @@ public class EmployeeRepo implements IRepo<EmployeeEntity> {
 
     @Override
     public Optional<EmployeeEntity> getById(int id) throws SQLException {
-        final String query = "SELECT id, hotelId, login, password, name, "
-                + "phoneNumber, email, passportNumber, passportSeries, "
-                + "post, salary, birthday FROM employee WHERE id = ?";
+        final String query = """
+                SELECT id, hotelId, login, password, name, phoneNumber,
+                email, passportNumber, passportSeries, post, salary, birthday
+                FROM employee WHERE id = ?""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -52,9 +54,10 @@ public class EmployeeRepo implements IRepo<EmployeeEntity> {
 
     @Override
     public List<EmployeeEntity> getAll() throws SQLException {
-        final String query = "SELECT id, hotelId, login, password, name, "
-                + "phoneNumber, email, passportNumber, passportSeries, "
-                + "post, salary, birthday FROM employee";
+        final String query = """
+                SELECT id, hotelId, login, password, name, phoneNumber, email,
+                passportNumber, passportSeries, post, salary, birthday
+                FROM employee""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -84,46 +87,29 @@ public class EmployeeRepo implements IRepo<EmployeeEntity> {
 
     @Override
     public void update(EmployeeEntity entity) throws SQLException {
-        final String query = "UPDATE employee SET hotelId = ?, login = ?, password = ?, name = ?, "
-                + "phoneNumber = ?, email = ?, passportNumber = ?, passportSeries = ?, "
-                + "post = ?, salary = ?, birthday = ? WHERE id = ?";
+        final String query = """
+                UPDATE employee
+                SET hotelId = ?, login = ?, password = ?, name = ?, phoneNumber = ?, email = ?,
+                passportNumber = ?, passportSeries = ?, post = ?, salary = ?, birthday = ?
+                WHERE id = ?""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, entity.getHotelId());
-        preparedStatement.setString(2, entity.getLogin());
-        preparedStatement.setString(3, entity.getPassword());
-        preparedStatement.setString(4, entity.getName());
-        preparedStatement.setString(5, entity.getPhoneNumber());
-        preparedStatement.setString(6, entity.getEmail());
-        preparedStatement.setString(7, entity.getPassportNumber());
-        preparedStatement.setString(8, entity.getPassportSeries());
-        preparedStatement.setString(9, entity.getPost().toString());
-        preparedStatement.setInt(10, entity.getSalary());
-        preparedStatement.setDate(11, Date.valueOf(entity.getBirthday()));
+        setPreparedStatement(preparedStatement, entity);
         preparedStatement.setInt(12, entity.getId());
         preparedStatement.execute();
     }
 
     @Override
     public void save(EmployeeEntity entity) throws SQLException {
-        final String query = "INSERT INTO employee (hotelId, login, password, name, "
-                + "phoneNumber, email, passportNumber, passportSeries, "
-                + "post, salary, birthday) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        final String query = """
+                INSERT INTO employee (hotelId, login, password, name, phoneNumber,
+                email, passportNumber, passportSeries, post, salary, birthday)
+                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, entity.getHotelId());
-        preparedStatement.setString(2, entity.getLogin());
-        preparedStatement.setString(3, entity.getPassword());
-        preparedStatement.setString(4, entity.getName());
-        preparedStatement.setString(5, entity.getPhoneNumber());
-        preparedStatement.setString(6, entity.getEmail());
-        preparedStatement.setString(7, entity.getPassportNumber());
-        preparedStatement.setString(8, entity.getPassportSeries());
-        preparedStatement.setString(9, entity.getPost().toString());
-        preparedStatement.setInt(10, entity.getSalary());
-        preparedStatement.setDate(11, Date.valueOf(entity.getBirthday()));
+        setPreparedStatement(preparedStatement, entity);
         preparedStatement.execute();
     }
 
@@ -135,5 +121,19 @@ public class EmployeeRepo implements IRepo<EmployeeEntity> {
         var preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, id);
         preparedStatement.execute();
+    }
+
+    private void setPreparedStatement(PreparedStatement preparedStatement, EmployeeEntity entity) throws SQLException {
+        preparedStatement.setInt(1, entity.getHotelId());
+        preparedStatement.setString(2, entity.getLogin());
+        preparedStatement.setString(3, entity.getPassword());
+        preparedStatement.setString(4, entity.getName());
+        preparedStatement.setString(5, entity.getPhoneNumber());
+        preparedStatement.setString(6, entity.getEmail());
+        preparedStatement.setString(7, entity.getPassportNumber());
+        preparedStatement.setString(8, entity.getPassportSeries());
+        preparedStatement.setString(9, entity.getPost().toString());
+        preparedStatement.setInt(10, entity.getSalary());
+        preparedStatement.setDate(11, Date.valueOf(entity.getBirthday()));
     }
 }

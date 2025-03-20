@@ -1,7 +1,6 @@
 package ru.vsu.amm.java.entities;
 
 import ru.vsu.amm.java.enums.EmployeePost;
-
 import java.time.LocalDate;
 
 public class EmployeeEntity {

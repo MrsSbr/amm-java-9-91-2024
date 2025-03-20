@@ -1,7 +1,6 @@
 package ru.vsu.amm.java.dbConnection;
 
 import org.postgresql.ds.PGSimpleDataSource;
-import ru.vsu.amm.java.entities.EmployeeEntity;
 
 import javax.sql.DataSource;
 import java.io.IOException;

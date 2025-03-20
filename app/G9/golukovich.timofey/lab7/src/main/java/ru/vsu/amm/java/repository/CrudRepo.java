@@ -1,13 +1,11 @@
 package ru.vsu.amm.java.repository;
 
-import ru.vsu.amm.java.entities.HotelEntity;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public interface IRepo<T> {
-    public Optional<T> getById(int id) throws SQLException;
+public interface CrudRepo<T> {
+    Optional<T> getById(int id) throws SQLException;
 
     List<T> getAll() throws SQLException;
 
