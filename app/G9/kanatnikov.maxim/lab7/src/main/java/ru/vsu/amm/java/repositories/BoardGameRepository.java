@@ -50,6 +50,162 @@ public class BoardGameRepository implements Repository<BoardGame> {
         return Optional.empty();
     }
 
+    public Optional<BoardGame> findByName(String name) throws SQLException {
+        final String query = "SELECT Board_Game_Id, Name, Price, Genre, Min_Age, Publisher, Description" +
+                " FROM BoardGame WHERE Name = ?";
+        try (var connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setString(1, name);
+            preparedStatement.execute();
+
+            ResultSet resultSet = preparedStatement.getResultSet();
+
+            if (resultSet.next()) {
+                Genre genre = Genre.valueOf(resultSet.getString("Genre"));
+                return Optional.of(new BoardGame(
+                        resultSet.getLong("Board_Game_Id"),
+                        resultSet.getString("Name"),
+                        resultSet.getInt("Price"),
+                        genre,
+                        resultSet.getInt("Min_Age"),
+                        resultSet.getString("Publisher"),
+                        resultSet.getString("Description")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        return Optional.empty();
+    }
+
+    public Optional<BoardGame> findByPublisher(String publisher) throws SQLException {
+        final String query = "SELECT Board_Game_Id, Name, Price, Genre, Min_Age, Publisher, Description" +
+                " FROM BoardGame WHERE Publisher = ?";
+        try (var connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setString(1, publisher);
+            preparedStatement.execute();
+
+            ResultSet resultSet = preparedStatement.getResultSet();
+
+            if (resultSet.next()) {
+                Genre genre = Genre.valueOf(resultSet.getString("Genre"));
+                return Optional.of(new BoardGame(
+                        resultSet.getLong("Board_Game_Id"),
+                        resultSet.getString("Name"),
+                        resultSet.getInt("Price"),
+                        genre,
+                        resultSet.getInt("Min_Age"),
+                        resultSet.getString("Publisher"),
+                        resultSet.getString("Description")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        return Optional.empty();
+    }
+
+    public List<BoardGame> findByGenre(Genre genre) throws SQLException {
+        List<BoardGame> boardGames = new ArrayList<>();
+        final String query = "SELECT Board_Game_Id, Name, Price, Genre, Min_Age, Publisher, Description" +
+                " FROM BoardGame WHERE Genre = ?";
+
+        try (var connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setString(1, genre.name());
+            preparedStatement.execute();
+
+            ResultSet resultSet = preparedStatement.getResultSet();
+
+            while (resultSet.next()) {
+                boardGames.add(new BoardGame(
+                        resultSet.getLong("Board_Game_Id"),
+                        resultSet.getString("Name"),
+                        resultSet.getInt("Price"),
+                        genre,
+                        resultSet.getInt("Min_Age"),
+                        resultSet.getString("Publisher"),
+                        resultSet.getString("Description")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        return boardGames;
+    }
+
+    public List<BoardGame> findByPrice(int minPrice, int maxPrice) throws SQLException {
+        List<BoardGame> boardGames = new ArrayList<>();
+        final String query = "SELECT Board_Game_Id, Name, Price, Genre, Min_Age, Publisher, Description" +
+                " FROM BoardGame WHERE Price BETWEEN ? AND ?";
+
+        try (var connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(1, minPrice);
+            preparedStatement.setInt(2, maxPrice);
+            preparedStatement.execute();
+
+            ResultSet resultSet = preparedStatement.getResultSet();
+
+            while (resultSet.next()) {
+                Genre genre = Genre.valueOf(resultSet.getString("Genre"));
+                boardGames.add(new BoardGame(
+                        resultSet.getLong("Board_Game_Id"),
+                        resultSet.getString("Name"),
+                        resultSet.getInt("Price"),
+                        genre,
+                        resultSet.getInt("Min_Age"),
+                        resultSet.getString("Publisher"),
+                        resultSet.getString("Description")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        return boardGames;
+    }
+
+    public List<BoardGame> findByAge(int minAge) throws SQLException {
+        List<BoardGame> boardGames = new ArrayList<>();
+        final String query = "SELECT Board_Game_Id, Name, Price, Genre, Min_Age, Publisher, Description" +
+                " FROM BoardGame WHERE Min_Age <= ?";
+
+        try (var connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(1, minAge);
+            preparedStatement.execute();
+
+            ResultSet resultSet = preparedStatement.getResultSet();
+
+            while (resultSet.next()) {
+                Genre genre = Genre.valueOf(resultSet.getString("Genre"));
+                boardGames.add(new BoardGame(
+                        resultSet.getLong("Board_Game_Id"),
+                        resultSet.getString("Name"),
+                        resultSet.getInt("Price"),
+                        genre,
+                        resultSet.getInt("Min_Age"),
+                        resultSet.getString("Publisher"),
+                        resultSet.getString("Description")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        return boardGames;
+    }
+
     @Override
     public List<BoardGame> findAll() throws SQLException {
         List<BoardGame> boardGames = new ArrayList<>();
