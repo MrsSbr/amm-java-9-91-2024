@@ -12,7 +12,7 @@ public class Main {
 
         // Создание нового пользователя
         User newUser = new User();
-        newUser.setUsername("testUser123");
+        newUser.setUsername("testUser1234");
         newUser.setEmail("testUser123@example.com");
         newUser.setPassword("password");
 
