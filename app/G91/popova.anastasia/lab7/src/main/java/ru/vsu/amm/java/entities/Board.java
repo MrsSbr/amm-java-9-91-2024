@@ -9,7 +9,9 @@ public class Board {
     private String boardTitle;
     private String boardDescription;
 
-    public Board() {};
+    public Board() {
+        this.boardID = UUID.randomUUID();
+    };
 
     private UUID getBoardID() {
         return boardID;

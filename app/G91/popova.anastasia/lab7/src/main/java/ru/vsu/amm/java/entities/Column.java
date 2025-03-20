@@ -6,10 +6,11 @@ public class Column {
 
     private UUID columnID;
     private UUID boardID;
-    //private UUID userID; —— не уверена, что нужно сюда тащить этот айдишник
     private String columnTitle;
 
-    public Column() {};
+    public Column() {
+        this.columnID = UUID.randomUUID();
+    };
 
     private UUID getColumnID() {
         return columnID;

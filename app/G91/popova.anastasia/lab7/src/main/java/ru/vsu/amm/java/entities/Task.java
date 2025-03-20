@@ -1,16 +1,20 @@
 package ru.vsu.amm.java.entities;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class Task {
-
     private UUID taskID;
     private UUID columnID;
     private String taskTitle;
     private String taskUrgency;
     private String taskDescription;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    public Task() {};
+    public Task() {
+        this.taskID = UUID.randomUUID();
+    };
 
     private UUID getTaskID() {
         return taskID;
@@ -50,5 +54,21 @@ public class Task {
 
     private void setTaskDescription(String taskDescription) {
         this.taskDescription = taskDescription;
+    }
+
+    private LocalDate gestartDate() {
+        return startDate;
+    }
+
+    private void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    private LocalDate getEndDate() {
+        return endDate;
+    }
+
+    private void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 }
