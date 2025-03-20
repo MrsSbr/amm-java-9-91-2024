@@ -13,6 +13,21 @@ import java.io.IOException;
 
 import static org.mockito.Mockito.*;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import ru.vsu.amm.java.entities.User;
+import ru.vsu.amm.java.repository.UserRepository;
+import ru.vsu.amm.java.servlet.LoginServlet;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import java.io.IOException;
+
+import static org.mockito.Mockito.*;
+
 class LoginServletTest {
 
     private LoginServlet loginServlet;
