@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.Enum;
+package ru.vsu.amm.java.Model.Enum;
 
 public enum TicketStatus {
     BOOKED,     // Забронирован
