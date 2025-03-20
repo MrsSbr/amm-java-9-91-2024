@@ -2,6 +2,7 @@ package ru.vsu.amm.java.service.impl;
 
 import ru.vsu.amm.java.entity.UserEntity;
 import ru.vsu.amm.java.exception.AuthException;
+import ru.vsu.amm.java.exception.DatabaseException;
 import ru.vsu.amm.java.repository.UserRepository;
 import ru.vsu.amm.java.service.AuthenticationService;
 
@@ -23,7 +24,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             );
             // TODO check password
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Ошибка с базой данных");
         }
     }
 
@@ -37,7 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 throw new AuthException("Логин занят");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Ошибка с базой данных");
         }
     }
 }
