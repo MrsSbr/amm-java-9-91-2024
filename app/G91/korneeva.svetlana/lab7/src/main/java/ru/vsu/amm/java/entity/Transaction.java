@@ -2,6 +2,7 @@ package ru.vsu.amm.java.entity;
 
 import ru.vsu.amm.java.enums.Category;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Transaction {
@@ -10,7 +11,7 @@ public class Transaction {
 
     private Long userId;
 
-    private Integer amount;
+    private BigDecimal amount;
 
     private Boolean type;
 
@@ -21,7 +22,7 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(Long id, Long userId, Integer amount, Boolean type, LocalDateTime data, Category category) {
+    public Transaction(Long id, Long userId, BigDecimal amount, Boolean type, LocalDateTime data, Category category) {
         this.id = id;
         this.userId = userId;
         this.amount = amount;
@@ -46,11 +47,11 @@ public class Transaction {
         this.userId = userId;
     }
 
-    public Integer getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

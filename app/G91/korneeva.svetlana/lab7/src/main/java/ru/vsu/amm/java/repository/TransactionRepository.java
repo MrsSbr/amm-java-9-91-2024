@@ -33,7 +33,7 @@ public class TransactionRepository {
             return Optional.of(new Transaction(
                     resultSet.getLong("id"),
                     resultSet.getLong("user_id"),
-                    resultSet.getInt("amount"),
+                    resultSet.getBigDecimal("amount"),
                     resultSet.getBoolean("type"),
                     resultSet.getTimestamp("date").toLocalDateTime(),
                     Category.valueOf(resultSet.getString("category"))
@@ -55,7 +55,7 @@ public class TransactionRepository {
             transactions.add(new Transaction(
                     resultSet.getLong("id"),
                     resultSet.getLong("user_id"),
-                    resultSet.getInt("amount"),
+                    resultSet.getBigDecimal("amount"),
                     resultSet.getBoolean("type"),
                     resultSet.getTimestamp("date").toLocalDateTime(),
                     Category.valueOf(resultSet.getString("category"))
@@ -69,7 +69,7 @@ public class TransactionRepository {
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setLong(1, transaction.getUserId());
-        preparedStatement.setInt(2, transaction.getAmount());
+        preparedStatement.setBigDecimal(2, transaction.getAmount());
         preparedStatement.setBoolean(3, transaction.getType());
         preparedStatement.setTimestamp(4, java.sql.Timestamp.valueOf(transaction.getDate()));
         preparedStatement.setString(5, transaction.getCategory().name());
@@ -82,7 +82,7 @@ public class TransactionRepository {
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setLong(1, transaction.getUserId());
-        preparedStatement.setInt(2, transaction.getAmount());
+        preparedStatement.setBigDecimal(2, transaction.getAmount());
         preparedStatement.setBoolean(3, transaction.getType());
         preparedStatement.setTimestamp(4, java.sql.Timestamp.valueOf(transaction.getDate()));
         preparedStatement.setString(5, transaction.getCategory().name());
