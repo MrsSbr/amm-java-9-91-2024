@@ -1,6 +1,6 @@
 package ru.vsu.amm.java.repository;
 
-import lombok.RequiredArgsConstructor;
+import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.UserCarEntity;
 import ru.vsu.amm.java.mappers.UserCarMapper;
 
@@ -14,9 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 public class UserCarRepository implements CrudRepository<UserCarEntity> {
     private final DataSource dataSource;
+
+    public UserCarRepository(DataSource dataSource) {
+        this.dataSource = DatabaseConfiguration.getDataSource();
+    }
 
     @Override
     public Optional<UserCarEntity> findById(Long id) throws SQLException {

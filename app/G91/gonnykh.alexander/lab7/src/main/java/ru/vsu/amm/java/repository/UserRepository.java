@@ -1,6 +1,6 @@
 package ru.vsu.amm.java.repository;
 
-import lombok.RequiredArgsConstructor;
+import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.UserEntity;
 import ru.vsu.amm.java.mappers.UserMapper;
 
@@ -13,9 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 public class UserRepository implements CrudRepository<UserEntity> {
     private final DataSource dataSource;
+
+    public UserRepository(DataSource dataSource) {
+        this.dataSource = DatabaseConfiguration.getDataSource();
+    }
 
     @Override
     public Optional<UserEntity> findById(Long id) throws SQLException {
