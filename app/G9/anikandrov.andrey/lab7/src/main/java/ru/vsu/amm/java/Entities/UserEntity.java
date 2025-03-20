@@ -2,8 +2,6 @@ package ru.vsu.amm.java.Entities;
 import ru.vsu.amm.java.Enums.Roles;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 public class UserEntity {
     private Long userID;
@@ -30,18 +28,6 @@ public class UserEntity {
         this.phone = phone;
         this.birthDate = birthDate;
     }
-
-    public UserEntity(Long userID, String userName, String userPassword, Roles userRole, String phone, Date birthDate) {
-        this.userID = userID;
-        this.userName = userName;
-        this.userPassword = userPassword;
-        this.userRole = userRole;
-        this.phone = phone;
-        this.birthDate = birthDate.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-    }
-
 
     public Long getUserID() {
         return userID;
@@ -93,5 +79,17 @@ public class UserEntity {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "user_ID=" + userID +
+                ", userName='" + userName + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", userRole=" + userRole +
+                ", phone='" + phone + '\'' +
+                ", birthDate=" + birthDate +
+                '}';
     }
 }

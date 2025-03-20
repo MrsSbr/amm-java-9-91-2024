@@ -11,7 +11,6 @@ import java.time.Month;
 public class Main {
     public static void main(String[] args) {
         UserEntity user = new UserEntity();
-        user.setUserID(101L);
         user.setUserName("Andrey");
         user.setUserPassword("p@s5w0rd");
         user.setUserRole(Roles.ADMIN);
@@ -20,8 +19,7 @@ public class Main {
 
         UserRepository userRepository = new UserRepository();
         try {
-
-            userRepository.save(user);
+            //userRepository.save(user);
             var users = userRepository.findAll();
             for (UserEntity tmpUser: users) {
                 System.out.println(tmpUser);

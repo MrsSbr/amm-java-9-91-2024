@@ -42,7 +42,7 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
                     resultSet.getString("User_Password"),
                     role,
                     resultSet.getString("Phone"),
-                    resultSet.getDate("Birth_Date")
+                    resultSet.getDate("Birth_Date").toLocalDate()
             ));
         }
 
@@ -68,7 +68,7 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
                     resultSet.getString("User_Password"),
                     role,
                     resultSet.getString("Phone"),
-                    resultSet.getDate("Birth_Date")
+                    resultSet.getDate("Birth_Date").toLocalDate()
             ));
         }
 
@@ -77,23 +77,24 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
 
     @Override
     public List<UserEntity> findAll() throws SQLException {
-        final String query = "SELECT User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date FROM User_Table WHERE User_ID = ?";
-
-        Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ResultSet resultSet = preparedStatement.getResultSet();
+        final String query = "SELECT User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date FROM User_Table";
 
         List<UserEntity> users = new ArrayList<>();
-        while (resultSet.next()) {
-            Roles role = Roles.valueOf(resultSet.getString("Role"));
-            users.add(new UserEntity(
-                    resultSet.getLong("User_ID"),
-                    resultSet.getString("User_Name"),
-                    resultSet.getString("User_Password"),
-                    role,
-                    resultSet.getString("Phone"),
-                    resultSet.getDate("Birth_Date")
-            ));
+
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+                Roles role = Roles.valueOf(resultSet.getString("User_Role"));
+                users.add(new UserEntity(
+                        resultSet.getLong("User_ID"),
+                        resultSet.getString("User_Name"),
+                        resultSet.getString("User_Password"),
+                        role,
+                        resultSet.getString("Phone"),
+                        resultSet.getDate("Birth_Date").toLocalDate()
+                ));
+            }
         }
 
         return users;
@@ -101,17 +102,17 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
 
     @Override
     public void save(UserEntity entity) throws SQLException {
-        final String query = "INSERT INTO User_Table (User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date) VALUES (?, ?, ?, ?, ?, ?)";
+        final String query = "INSERT INTO User_Table (User_Name, User_Password, User_Role, Phone, Birth_Date) VALUES (?, ?, ?, ?, ?)";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
-        preparedStatement.setLong(1, entity.getUserID());
-        preparedStatement.setString(2, entity.getUserName());
-        preparedStatement.setString(3, entity.getUserPassword());
-        preparedStatement.setString(4, entity.getUserRole().name());
-        preparedStatement.setString(5, entity.getPhone());
-        preparedStatement.setDate(6, Date.valueOf(entity.getBirthDate()));
+
+        preparedStatement.setString(1, entity.getUserName());
+        preparedStatement.setString(2, entity.getUserPassword());
+        preparedStatement.setString(3, entity.getUserRole().name());
+        preparedStatement.setString(4, entity.getPhone());
+        preparedStatement.setDate(5, Date.valueOf(entity.getBirthDate()));
 
         preparedStatement.execute();
     }
