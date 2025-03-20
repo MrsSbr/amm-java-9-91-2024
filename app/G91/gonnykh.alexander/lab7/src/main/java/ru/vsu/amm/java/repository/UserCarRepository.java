@@ -17,7 +17,7 @@ import java.util.Optional;
 public class UserCarRepository implements CrudRepository<UserCarEntity> {
     private final DataSource dataSource;
 
-    public UserCarRepository(DataSource dataSource) {
+    public UserCarRepository() {
         this.dataSource = DatabaseConfiguration.getDataSource();
     }
 
