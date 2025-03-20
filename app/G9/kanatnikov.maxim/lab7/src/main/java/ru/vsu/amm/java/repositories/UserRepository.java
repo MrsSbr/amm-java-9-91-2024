@@ -145,21 +145,20 @@ public class UserRepository implements Repository<UserEntity> {
 
     @Override
     public void save(UserEntity entity) throws SQLException {
-        final String query = "INSERT INTO UserEntity (User_Id, First_Name, Last_Name, Patronymic, City, Email, " +
-                "Phone_Number, Password, Role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        final String query = "INSERT INTO UserEntity (First_Name, Last_Name, Patronymic, City, Email, " +
+                "Phone_Number, Password, Role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
-            preparedStatement.setLong(1, entity.getUserId());
-            preparedStatement.setString(2, entity.getFirstName());
-            preparedStatement.setString(3, entity.getLastName());
-            preparedStatement.setString(4, entity.getPatronymic());
-            preparedStatement.setString(5, entity.getCity());
-            preparedStatement.setString(6, entity.getEmail());
-            preparedStatement.setString(7, entity.getPhoneNumber());
-            preparedStatement.setString(8, entity.getPassword());
-            preparedStatement.setString(9, entity.getRole().name());
+            preparedStatement.setString(1, entity.getFirstName());
+            preparedStatement.setString(2, entity.getLastName());
+            preparedStatement.setString(3, entity.getPatronymic());
+            preparedStatement.setString(4, entity.getCity());
+            preparedStatement.setString(5, entity.getEmail());
+            preparedStatement.setString(6, entity.getPhoneNumber());
+            preparedStatement.setString(7, entity.getPassword());
+            preparedStatement.setString(8, entity.getRole().name());
 
             preparedStatement.execute();
         } catch (SQLException e) {
