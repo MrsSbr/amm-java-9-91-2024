@@ -7,9 +7,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserMapper {
+public class UserMapper implements EntityMapper<User> {
 
-    public static User mapRowToObject(ResultSet rs) throws SQLException {
+    private User entity;
+
+    public UserMapper() {}
+
+    public UserMapper(User user) {
+        this.entity = user;
+    }
+
+    @Override
+    public User mapRowToObject(ResultSet rs) throws SQLException {
 
         User user = new User();
 
@@ -24,7 +33,8 @@ public class UserMapper {
         return user;
     }
 
-    public static void mapObjectToRow(User entity, PreparedStatement stmt) throws SQLException {
+    @Override
+    public void mapObjectToRow(PreparedStatement stmt) throws SQLException {
 
         stmt.setString(1, entity.getLastName());
         stmt.setString(2, entity.getFirstName());

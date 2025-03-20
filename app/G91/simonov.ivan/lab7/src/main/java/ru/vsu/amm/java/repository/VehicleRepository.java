@@ -33,8 +33,10 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
 
         ResultSet rs = stmt.executeQuery();
 
+        VehicleMapper vehicleMapper = new VehicleMapper();
+
         if (rs.next()) {
-            return Optional.of(VehicleMapper.mapRowToObject(rs));
+            return Optional.of(vehicleMapper.mapRowToObject(rs));
         }
 
         return Optional.empty();
@@ -51,8 +53,10 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
 
         List<Vehicle> vehicles = new ArrayList<>();
 
+        VehicleMapper vehicleMapper = new VehicleMapper();
+
         while (rs.next()) {
-            vehicles.add(VehicleMapper.mapRowToObject(rs));
+            vehicles.add(vehicleMapper.mapRowToObject(rs));
         }
 
         return vehicles;
@@ -66,7 +70,8 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
         Connection connection = dataSource.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql);
 
-        VehicleMapper.mapObjectToRow(entity, stmt);
+        VehicleMapper vehicleMapper = new VehicleMapper(entity);
+        vehicleMapper.mapObjectToRow(stmt);
         stmt.execute();
     }
 
@@ -79,7 +84,8 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
         Connection connection = dataSource.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql);
 
-        VehicleMapper.mapObjectToRow(entity, stmt);
+        VehicleMapper vehicleMapper = new VehicleMapper(entity);
+        vehicleMapper.mapObjectToRow(stmt);
         stmt.setInt(5, entity.getVehicleId());
         stmt.execute();
     }

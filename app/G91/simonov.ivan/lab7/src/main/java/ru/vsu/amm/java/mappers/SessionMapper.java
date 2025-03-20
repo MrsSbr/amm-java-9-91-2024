@@ -7,9 +7,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class SessionMapper {
+public class SessionMapper implements EntityMapper<Session> {
 
-    public static Session mapRowToObject(ResultSet rs) throws SQLException {
+    private Session entity;
+
+    public SessionMapper() {}
+
+    public SessionMapper(Session session) {
+        this.entity = session;
+    }
+
+    @Override
+    public Session mapRowToObject(ResultSet rs) throws SQLException {
 
         Session session = new Session();
 
@@ -23,7 +32,8 @@ public class SessionMapper {
         return session;
     }
 
-    public static void mapObjectToRow(Session entity, PreparedStatement stmt) throws SQLException {
+    @Override
+    public void mapObjectToRow(PreparedStatement stmt) throws SQLException {
 
         stmt.setInt(1, entity.getUserId());
         stmt.setInt(2, entity.getVehicleId());

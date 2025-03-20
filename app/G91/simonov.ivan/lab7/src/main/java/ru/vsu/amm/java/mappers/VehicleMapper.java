@@ -6,9 +6,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class VehicleMapper {
+public class VehicleMapper implements EntityMapper<Vehicle> {
 
-    public static Vehicle mapRowToObject(ResultSet rs) throws SQLException {
+    private Vehicle entity;
+
+    public VehicleMapper() {}
+
+    public VehicleMapper(Vehicle vehicle) {
+        this.entity = vehicle;
+    }
+
+    @Override
+    public Vehicle mapRowToObject(ResultSet rs) throws SQLException {
 
         Vehicle vehicle = new Vehicle();
 
@@ -21,7 +30,8 @@ public class VehicleMapper {
         return vehicle;
     }
 
-    public static void mapObjectToRow(Vehicle entity, PreparedStatement stmt) throws SQLException {
+    @Override
+    public void mapObjectToRow(PreparedStatement stmt) throws SQLException {
 
         stmt.setString(1, entity.getRegistrationNumber());
         stmt.setString(2, entity.getModel());

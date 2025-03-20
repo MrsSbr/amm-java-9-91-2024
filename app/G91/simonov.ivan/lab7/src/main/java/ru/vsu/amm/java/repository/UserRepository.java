@@ -34,8 +34,10 @@ public class UserRepository implements ParkingRepository<User> {
 
         ResultSet rs = stmt.executeQuery();
 
+        UserMapper userMapper = new UserMapper();
+
         if (rs.next()) {
-            return Optional.of(UserMapper.mapRowToObject(rs));
+            return Optional.of(userMapper.mapRowToObject(rs));
         }
 
         return Optional.empty();
@@ -52,8 +54,10 @@ public class UserRepository implements ParkingRepository<User> {
 
         List<User> users = new ArrayList<>();
 
+        UserMapper userMapper = new UserMapper();
+
         while (rs.next()) {
-            users.add(UserMapper.mapRowToObject(rs));
+            users.add(userMapper.mapRowToObject(rs));
         }
 
         return users;
@@ -68,7 +72,8 @@ public class UserRepository implements ParkingRepository<User> {
         Connection connection = dataSource.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql);
 
-        UserMapper.mapObjectToRow(entity, stmt);
+        UserMapper userMapper = new UserMapper(entity);
+        userMapper.mapObjectToRow(stmt);
         stmt.execute();
     }
 
@@ -81,7 +86,8 @@ public class UserRepository implements ParkingRepository<User> {
         Connection connection = dataSource.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql);
 
-        UserMapper.mapObjectToRow(entity, stmt);
+        UserMapper userMapper = new UserMapper(entity);
+        userMapper.mapObjectToRow(stmt);
         stmt.setInt(7, entity.getUserId());
         stmt.execute();
     }

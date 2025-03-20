@@ -34,8 +34,10 @@ public class SessionRepository implements ParkingRepository<Session> {
 
         ResultSet rs = stmt.executeQuery();
 
+        SessionMapper sessionMapper = new SessionMapper();
+
         if (rs.next()) {
-            return Optional.of(SessionMapper.mapRowToObject(rs));
+            return Optional.of(sessionMapper.mapRowToObject(rs));
         }
 
         return Optional.empty();
@@ -53,8 +55,10 @@ public class SessionRepository implements ParkingRepository<Session> {
 
         List<Session> sessions = new ArrayList<>();
 
+        SessionMapper sessionMapper = new SessionMapper();
+
         while (rs.next()) {
-            sessions.add(SessionMapper.mapRowToObject(rs));
+            sessions.add(sessionMapper.mapRowToObject(rs));
         }
 
         return sessions;
@@ -69,7 +73,8 @@ public class SessionRepository implements ParkingRepository<Session> {
         Connection connection = dataSource.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql);
 
-        SessionMapper.mapObjectToRow(entity, stmt);
+        SessionMapper sessionMapper = new SessionMapper(entity);
+        sessionMapper.mapObjectToRow(stmt);
         stmt.execute();
     }
 
@@ -82,7 +87,8 @@ public class SessionRepository implements ParkingRepository<Session> {
         Connection connection = dataSource.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql);
 
-        SessionMapper.mapObjectToRow(entity, stmt);
+        SessionMapper sessionMapper = new SessionMapper(entity);
+        sessionMapper.mapObjectToRow(stmt);
         stmt.setInt(6, entity.getSessionId());
         stmt.execute();
     }
