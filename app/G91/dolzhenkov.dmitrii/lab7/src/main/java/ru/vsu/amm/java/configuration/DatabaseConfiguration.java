@@ -13,7 +13,7 @@ public class DatabaseConfiguration {
         try (InputStream inputStream = DatabaseConfiguration.class.getClassLoader()
                 .getResourceAsStream("database.properties")) {
             properties.load(inputStream);
-        } catch (IOException e) {
+        } catch (IOException e) { //todo logger
             throw new RuntimeException(e.getMessage());
         }
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
