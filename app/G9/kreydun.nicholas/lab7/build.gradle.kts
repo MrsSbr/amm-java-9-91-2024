@@ -4,14 +4,14 @@ plugins {
 }
 
 group = "ru.vsu.amm.java"
-version = "unspecified"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation("org.apache.tomcat:tomcat-jasper:9.0.46")
+    testImplementation ("org.mockito:mockito-core:5.7.0")
+    implementation("org.apache.tomcat:tomcat-jasper:10.1.39")
     implementation("javax.servlet:javax.servlet-api:4.0.1")
     implementation("org.jetbrains:annotations:23.0.0")
     implementation("com.zaxxer:HikariCP:5.1.0")
@@ -22,9 +22,4 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
-}
-
-war {
-    webAppDirName = "src/main/webapp"
-    version = "1.0.0"
 }

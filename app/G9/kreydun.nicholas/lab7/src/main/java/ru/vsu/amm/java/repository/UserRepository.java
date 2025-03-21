@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.repository;
 
+import org.jetbrains.annotations.Nullable;
 import ru.vsu.amm.java.dbManage.DbConnection;
 import ru.vsu.amm.java.entities.User;
 
@@ -39,6 +40,31 @@ public class UserRepository implements Repository<User> {
             logger.warning("Error getting user by ID: " + e.getMessage());
         }
         return user;
+    }
+
+    @Nullable
+    public User getByEmail(String email) {
+        String sql = "SELECT \"ID\", Username, Email, \"Password\", Created_at FROM Users WHERE Email = ?";
+
+        try (Connection conn = DbConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, email);  // Передаем email в SQL-запрос
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User();
+                    user.setId(UUID.fromString(rs.getString("ID")));  // ID остается UUID
+                    user.setUsername(rs.getString("Username"));
+                    user.setEmail(rs.getString("Email"));
+                    user.setPassword(rs.getString("Password"));
+                    user.setCreatedAt(rs.getTime("Created_at").toLocalTime());
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            logger.warning("Error getting user by email: " + e.getMessage());
+        }
+        return null;  // Если пользователя нет, возвращаем null
     }
 
     @Override
