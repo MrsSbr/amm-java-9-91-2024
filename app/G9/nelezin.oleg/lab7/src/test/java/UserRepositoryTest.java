@@ -37,12 +37,8 @@ public class UserRepositoryTest {
     @Test
     public void testSaveAndFindById() throws SQLException {
         UserEntity user = new UserEntity(null, "testUser", "testPass");
-        userRepository.save(user);
 
-        Optional<UserEntity> fetchedByLogin = userRepository.findByLogin("testUser");
-        assertTrue(fetchedByLogin.isPresent(), "Пользователь должен быть найден по логину после сохранения");
-
-        Long userId = fetchedByLogin.get().getId();
+        Long userId = userRepository.save(user);
         assertNotNull(userId, "Id пользователя не должен быть null");
 
         Optional<UserEntity> fetchedById = userRepository.findById(userId);
