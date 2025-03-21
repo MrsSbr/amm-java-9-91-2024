@@ -14,14 +14,14 @@ public class DbConnection {
     public static Connection getConnection() throws SQLException {
         try {
             Class.forName("org.postgresql.Driver");
+
         } catch (ClassNotFoundException e) {
             logger.warning("PostgreSQL JDBC driver not found.");
             throw new SQLException("PostgreSQL JDBC driver not found.", e);
         }
         return DriverManager.getConnection(
-                properties.getProperty("jdbc.url"),
-                properties.getProperty("jdbc.username"),
-                properties.getProperty("jdbc.password")
-        );
+                "jdbc:postgresql://localhost:5434/SocialNetwork_",
+                "postgres",
+                "12345");
     };
 }

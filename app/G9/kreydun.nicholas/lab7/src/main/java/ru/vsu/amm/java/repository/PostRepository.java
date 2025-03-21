@@ -66,7 +66,7 @@ public class PostRepository implements Repository<Post> {
 
     @Override
     public UUID create(Post post) {
-        UUID newId = UUID.randomUUID();
+        UUID newId = post.getId();
         String sql = "INSERT INTO Posts (\"ID\", User_ID, \"Content\") VALUES (?, ?, ?)";
 
         try (Connection conn = DbConnection.getConnection();
@@ -119,4 +119,34 @@ public class PostRepository implements Repository<Post> {
             return false;
         }
     }
+
+    public List<Post> getPostsByUserId(UUID userId) {
+        List<Post> posts = new ArrayList<>();
+        String sql = "SELECT \"ID\", \"Content\", user_Id FROM Posts WHERE user_Id = ?";
+
+        try (Connection conn = DbConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setObject(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                UUID postId = (UUID) rs.getObject("ID");
+                String content = rs.getString("Content");
+                UUID ownerId = (UUID) rs.getObject("user_Id");
+
+                Post post = new Post();
+                post.setContent(content);
+                post.setUserId(userId);
+                post.setId(postId);
+
+                posts.add(post);
+            }
+
+        } catch (SQLException e) {
+            logger.warning("Error fetching posts for user: " + e.getMessage());
+        }
+        return posts;
+    }
+
 }

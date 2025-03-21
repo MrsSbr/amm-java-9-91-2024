@@ -1,12 +1,13 @@
 package ru.vsu.amm.java.servlet;
 
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.repository.UserRepository;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
 import java.time.LocalTime;
@@ -15,6 +16,8 @@ import java.time.LocalTime;
 public class CreateUserServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession();
+
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -27,8 +30,15 @@ public class CreateUserServlet extends HttpServlet {
         user.setCreatedAt(LocalTime.now());
 
         UserRepository userRepository = new UserRepository();
-        userRepository.create(user);
 
-        response.sendRedirect("userCreated.jsp");
+        UUID resultId = userRepository.create(user);
+        if (resultId != null) {
+            response.sendRedirect("userCreated.jsp");
+        }
+        else {
+            session.setAttribute("error", "Такой пользователь уже есть!");
+            response.sendRedirect("register.jsp");
+        }
+
     }
 }

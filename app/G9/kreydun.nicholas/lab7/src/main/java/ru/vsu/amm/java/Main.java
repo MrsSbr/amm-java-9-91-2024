@@ -1,42 +1,28 @@
 package ru.vsu.amm.java;
 
-import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.repository.UserRepository;
+import org.apache.catalina.LifecycleException;
+import org.apache.catalina.startup.Tomcat;
+import ru.vsu.amm.java.config.ServletConfig;
+import ru.vsu.amm.java.services.Logg;
 
-import java.util.List;
-import java.util.UUID;
+import java.io.File;
 
 public class Main {
-    public static void main(String[] args) {
-        UserRepository userRepository = new UserRepository();
+    public static void main(String[] args) throws LifecycleException {
+        String webappDirLocation = "app/G9/kreydun.nicholas/lab7/src/main/webapp";
+        Tomcat tomcat = new Tomcat();
+        tomcat.setPort(8080);
 
-        // Создание нового пользователя
-        User newUser = new User();
-        newUser.setUsername("testUser1234");
-        newUser.setEmail("testUser123@example.com");
-        newUser.setPassword("password");
+        tomcat.getConnector();
+        tomcat.setBaseDir(new File("tomcat-work").getAbsolutePath());
 
-        UUID userId = userRepository.create(newUser);
-        if (userId != null) {
-            System.out.println("User created with ID: " + userId);
+        // Создаем контекст
+        var ctx = tomcat.addWebapp("/", new File(webappDirLocation).getAbsolutePath());
 
-            // Получение и вывод данных о пользователе
-            User retrievedUser = userRepository.getById(userId);
-            if (retrievedUser != null) {
-                System.out.println("Retrieved User: " + retrievedUser.getUsername());
+        ServletConfig.registerServlets(tomcat, ctx);
 
-                // Обновление пользователя
-                retrievedUser.setUsername("updatedUser123");
-                boolean isUpdated = userRepository.update(retrievedUser);
-                if (isUpdated) {
-                    User updatedUser = userRepository.getById(userId);
-                    System.out.println("Updated User: " + updatedUser.getUsername());
-                }
-            }
-        }
-
-        List<User> allUsers = userRepository.getAll();
-        System.out.println("Total Users: " + allUsers.size());
-        allUsers.forEach(user -> System.out.println("User: " + user.getUsername()));
+        Logg.logger.info("Starting Embedded Tomcat...");
+        tomcat.start();
+        tomcat.getServer().await();
     }
 }
