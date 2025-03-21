@@ -136,18 +136,37 @@ public class UserRepository implements Repository<User> {
 
     @Override
     public boolean delete(UUID id) {
-        String sql = "DELETE FROM Users WHERE \"ID\" = ?";
+        String deletePostsSql = "DELETE FROM Posts WHERE user_Id = ?";
+        String deleteUserSql = "DELETE FROM Users WHERE \"ID\" = ?";
 
-        try (Connection conn = DbConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DbConnection.getConnection()) {
+            conn.setAutoCommit(false);
 
-            pstmt.setObject(1, id);
-            return pstmt.executeUpdate() > 0;
+            // 1. Удаляем все посты пользователя
+            try (PreparedStatement deletePostsStmt = conn.prepareStatement(deletePostsSql)) {
+                deletePostsStmt.setObject(1, id);
+                deletePostsStmt.executeUpdate();
+            }
+
+            // 2. Удаляем самого пользователя
+            try (PreparedStatement deleteUserStmt = conn.prepareStatement(deleteUserSql)) {
+                deleteUserStmt.setObject(1, id);
+                int affectedRows = deleteUserStmt.executeUpdate();
+
+                if (affectedRows > 0) {
+                    conn.commit();
+                    return true;
+                } else {
+                    conn.rollback();
+                    return false;
+                }
+            }
 
         } catch (SQLException e) {
-            logger.warning("Error deleting user: " + e.getMessage());
+            logger.warning("Error deleting user and posts: " + e.getMessage());
             return false;
         }
     }
+
 }
 

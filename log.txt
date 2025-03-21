@@ -1,6 +1,2 @@
-мар. 06, 2025 2:49:43 PM ru.vsu.amm.java.dbManage.DbConnection connectToDb
-INFO: Connected to PostgreSQL database: SocialNetwork_
-мар. 06, 2025 2:49:43 PM ru.vsu.amm.java.dbManage.DbManager createUser
-WARNING: Error creating user: The url cannot be null
-мар. 06, 2025 2:49:43 PM ru.vsu.amm.java.dbManage.DbManager getAllUsers
-WARNING: Error getting all users: The url cannot be null
+мар. 21, 2025 8:02:31 PM ru.vsu.amm.java.Main main
+INFO: Starting Embedded Tomcat...
