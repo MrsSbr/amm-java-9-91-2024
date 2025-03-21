@@ -4,12 +4,12 @@ public class PurchaseHistory {
     private long orderNumber;
     private int payment;
     private long userId;
-    private int boardGameId;
+    private long boardGameId;
 
     public PurchaseHistory() {
     }
 
-    public PurchaseHistory(long orderNumber, int payment, long userId, int boardGameId) {
+    public PurchaseHistory(long orderNumber, int payment, long userId, long boardGameId) {
         this.orderNumber = orderNumber;
         this.payment = payment;
         this.userId = userId;
@@ -40,11 +40,11 @@ public class PurchaseHistory {
         this.userId = userId;
     }
 
-    public int getBoardGameId() {
+    public long getBoardGameId() {
         return boardGameId;
     }
 
-    public void setBoardGameId(int boardGameId) {
+    public void setBoardGameId(long boardGameId) {
         this.boardGameId = boardGameId;
     }
 }

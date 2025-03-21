@@ -11,12 +11,12 @@ CREATE TABLE IF NOT EXISTS UserEntity (
 );
 
 CREATE TABLE IF NOT EXISTS BoardGame (
-    Board_Game_Id SERIAL  PRIMARY KEY,
-    "Name"        TEXT    NOT NULL,
-    Price         INTEGER NOT NULL,
-    Genre         TEXT    NOT NULL,
+    Board_Game_Id BIGSERIAL PRIMARY KEY,
+    "Name"        TEXT      NOT NULL,
+    Price         INTEGER   NOT NULL,
+    Genre         TEXT      NOT NULL,
     Min_Age       INTEGER,
-    Publisher     TEXT    NOT NULL,
+    Publisher     TEXT      NOT NULL,
     Description   TEXT
 );
 
@@ -27,8 +27,8 @@ CREATE INDEX Game_Genre_Index
     ON BoardGame(Genre);
 
 CREATE TABLE IF NOT EXISTS PurchaseHistory (
-    Order_Number        BIGSERIAL  PRIMARY KEY,
-    Payment             INTEGER NOT NULL,
-    User_Id             BIGINT  NOT NULL REFERENCES UserEntity(User_Id),
-    Board_Game_Id       INTEGER NOT NULL REFERENCES BoardGame(Board_Game_Id)
+    Order_Number  BIGSERIAL PRIMARY KEY,
+    Payment       INTEGER   NOT NULL,
+    User_Id       BIGINT    NOT NULL REFERENCES UserEntity(User_Id),
+    Board_Game_Id BIGINT    NOT NULL REFERENCES BoardGame(Board_Game_Id)
 );
