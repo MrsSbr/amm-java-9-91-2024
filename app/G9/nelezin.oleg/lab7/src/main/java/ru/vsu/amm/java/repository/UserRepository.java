@@ -2,12 +2,14 @@ package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entity.UserEntity;
+import ru.vsu.amm.java.exception.DatabaseException;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -81,13 +83,21 @@ public class UserRepository implements CrudRepository<UserEntity> {
     }
 
     @Override
-    public void save(UserEntity entity) throws SQLException {
+    public Long save(UserEntity entity) throws SQLException {
         final String query = "INSERT INTO user_entity (login, password) VALUES (?, ?)";
         Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setString(1, entity.getLogin());
         preparedStatement.setString(2, entity.getPassword());
         preparedStatement.execute();
+
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                return generatedKeys.getLong(1);
+            } else {
+                throw new DatabaseException("Не удалось получить id после вставки.");
+            }
+        }
     }
 
     @Override
