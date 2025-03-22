@@ -3,7 +3,6 @@ package ru.vsu.amm.java.Repository;
 import ru.vsu.amm.java.Configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.Entities.RentalObjectEntity;
 import ru.vsu.amm.java.Enums.ObjectType;
-import ru.vsu.amm.java.Enums.Roles;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -81,7 +80,7 @@ public class RentalObjectRepository implements DatabaseRepository<RentalObjectEn
 
         preparedStatement.setString(1, entity.getObjectName());
         preparedStatement.setString(2, entity.getObjectType().name());
-        preparedStatement.setString(3, entity.getInfo());
+        preparedStatement.setString(3, entity.getObjectInfo());
         preparedStatement.setInt(4, entity.getPrice());
 
         preparedStatement.execute();
@@ -106,7 +105,7 @@ public class RentalObjectRepository implements DatabaseRepository<RentalObjectEn
 
         preparedStatement.setString(1, entity.getObjectName());
         preparedStatement.setString(2, entity.getObjectType().toString());
-        preparedStatement.setString(3, entity.getInfo());
+        preparedStatement.setString(3, entity.getObjectInfo());
         preparedStatement.setInt(4, entity.getPrice());
         preparedStatement.setLong(5, entity.getObjectID());
 
