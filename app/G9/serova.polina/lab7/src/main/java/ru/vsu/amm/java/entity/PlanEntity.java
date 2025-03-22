@@ -1,16 +1,19 @@
 package ru.vsu.amm.java.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.time.LocalTime;
 import java.util.List;
 
-public class Plan {
+@AllArgsConstructor
+@Getter
+public class PlanEntity {
     private long id;
     private String medicationName;
     private double dosageMg;
     private List<LocalTime> takingTime;
     private int durationDays;
-    private int patientId;
-    private User patient;
-    private int doctorId;
-    private User doctor;
+    private long patientId;
+    private long doctorId;
 }
