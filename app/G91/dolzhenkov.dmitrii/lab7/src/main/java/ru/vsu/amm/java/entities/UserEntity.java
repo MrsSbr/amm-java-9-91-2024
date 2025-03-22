@@ -8,5 +8,5 @@ import lombok.Data;
 public class UserEntity {
     private Long id;
     private String userName;
-    private String hashPassword;
+    private String password;
 }

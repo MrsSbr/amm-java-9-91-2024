@@ -9,10 +9,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class TripEntity {
     private Long id;
-    private Long scooter_id;
-    private Long person_id;
+    private Long userId;
+    private Long scooterId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private String startLocation;
-    private String endLocation;
+
+    private Double startLatitude;
+    private Double startLongitude;
+
+    private Double endLatitude;
+    private Double endLongitude;
 }
