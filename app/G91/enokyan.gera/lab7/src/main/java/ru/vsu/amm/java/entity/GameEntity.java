@@ -1,15 +1,18 @@
 package ru.vsu.amm.java.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 
-public class Game {
+@AllArgsConstructor
+@Getter
+public class GameEntity {
     private long id;
-    private LocalDateTime finished;
     private long firstPlayerId;
-    private Player firstPlayer;
     private long secondPlayerId;
-    private Player secondPlayer;
+    private LocalDateTime finished;
+    private GameResult result;
     private double firstPlayersRating;
     private double secondPlayersRating;
-    private short result;
 }
