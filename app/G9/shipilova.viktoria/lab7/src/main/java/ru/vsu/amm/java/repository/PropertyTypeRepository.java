@@ -80,7 +80,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
     }
 
     @Override
-    public void save(PropertyType propertyType) {
+    public Long save(PropertyType propertyType) {
         final String sql = "INSERT INTO PropertyType (PropertyTypeName, NextDestinationID, StorageDays, StorageCost) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DataSourceProvider.getDataSource().getConnection();
@@ -94,7 +94,9 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new RuntimeException(e);
         }
+        return propertyType.getId();
     }
 
     @Override

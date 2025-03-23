@@ -96,7 +96,7 @@ public class FoundPropertyRepository implements CrudRepository<FoundProperty> {
     }
 
     @Override
-    public void save(FoundProperty foundProperty) {
+    public Long save(FoundProperty foundProperty) {
         final String sql = "INSERT INTO FoundProperties (PropertyTypeID, DateOfFinding, TimeOfFinding, ReturnStatus, PlaceOfFinding, Description, UserID) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DataSourceProvider.getDataSource().getConnection();
@@ -114,7 +114,9 @@ public class FoundPropertyRepository implements CrudRepository<FoundProperty> {
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new RuntimeException(e);
         }
+        return foundProperty.getId();
     }
 
     @Override
