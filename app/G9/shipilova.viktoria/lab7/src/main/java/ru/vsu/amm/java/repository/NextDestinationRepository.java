@@ -68,7 +68,7 @@ public class NextDestinationRepository implements CrudRepository<NextDestination
     }
 
     @Override
-    public void save(NextDestination nextDestination) {
+    public Long save(NextDestination nextDestination) {
         final String sql = "INSERT INTO NextDestination (NextDestinationName, Description) VALUES (?, ?)";
 
         try (Connection conn = DataSourceProvider.getDataSource().getConnection();
@@ -80,7 +80,9 @@ public class NextDestinationRepository implements CrudRepository<NextDestination
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new RuntimeException(e);
         }
+        return nextDestination.getId();
     }
 
     @Override

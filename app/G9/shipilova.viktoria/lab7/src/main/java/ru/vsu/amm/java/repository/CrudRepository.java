@@ -10,7 +10,7 @@ public interface CrudRepository<T> {
 
     List<T> getAll();
 
-    void save(T entity);
+    Long save(T entity);
 
     void update(T entity);
 
