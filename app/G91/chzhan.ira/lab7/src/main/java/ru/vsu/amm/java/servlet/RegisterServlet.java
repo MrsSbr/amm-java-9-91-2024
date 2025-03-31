@@ -1,7 +1,8 @@
 package ru.vsu.amm.java.servlet;
 
-import ru.vsu.amm.java.exception.AlreadyExistsException;
 import ru.vsu.amm.java.exception.DbException;
+import ru.vsu.amm.java.exception.NotFoundException;
+import ru.vsu.amm.java.exception.PasswordNotMatchException;
 import ru.vsu.amm.java.service.AuthenticationService;
 
 import javax.servlet.ServletException;
@@ -18,7 +19,6 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
-
     }
 
     @Override
@@ -32,10 +32,9 @@ public class RegisterServlet extends HttpServlet {
             authService.register(name, password);
 
             HttpSession httpSession = req.getSession();
-            httpSession.setAttribute("user", name);
-            resp.sendRedirect("/index");
-        } catch (AlreadyExistsException | DbException e) {
-            System.out.println(e.getMessage());
+            httpSession.setAttribute("customer", name);
+            resp.sendRedirect("/index.jsp");
+        } catch (PasswordNotMatchException | NotFoundException | DbException e) {
             getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
         }
     }

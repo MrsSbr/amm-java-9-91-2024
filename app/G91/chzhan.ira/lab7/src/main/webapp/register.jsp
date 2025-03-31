@@ -15,8 +15,9 @@
         <input type="password" name="password" size="30">
     </p>
     <p>
-        <input type="submit" value="Зарегистрироваться">
+        <input type="submit" value="ОК">
     </p>
 </form>
+<p><a href="/login">Войти</a></p>
 </body>
 </html>
