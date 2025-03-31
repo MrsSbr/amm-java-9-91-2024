@@ -12,17 +12,49 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserRepository implements ParkingRepository<User> {
 
+    private static final Logger logger = Logger.getLogger(UserRepository.class.getName());
     private final DataSource dataSource;
 
     public UserRepository() {
         dataSource = DatabaseConfiguration.getDataSource();
     }
 
+    public Optional<User> getByLoginAndPassword(String login, String password) {
+
+        String sql = """
+                SELECT Id_user, LastName, FirstName, Patronymic, Login, Password, Role
+                FROM "User"
+                WHERE Login = ? AND Password = ?
+                """;
+
+        try (Connection connection = dataSource.getConnection()) {
+
+            UserMapper userMapper = new UserMapper();
+            PreparedStatement stmt = userMapper.mapAuthorisation(connection, sql, login, password);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return Optional.of(userMapper.mapRowToObject(rs));
+            }
+
+        } catch (SQLException e) {
+
+            logger.log(Level.SEVERE, e.getMessage(), e);
+
+        }
+
+        return Optional.empty();
+
+    }
+
     @Override
-    public Optional<User> getById(int id) throws SQLException {
+    public Optional<User> getById(int id) {
 
         String sql = """
                 SELECT Id_user, LastName, FirstName, Patronymic, Login, Password, Role
@@ -30,24 +62,31 @@ public class UserRepository implements ParkingRepository<User> {
                 WHERE Id_user = ?
                 """;
 
-        Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setInt(1, id);
+            stmt.setInt(1, id);
 
-        ResultSet rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
 
-        UserMapper userMapper = new UserMapper();
+            UserMapper userMapper = new UserMapper();
 
-        if (rs.next()) {
-            return Optional.of(userMapper.mapRowToObject(rs));
+            if (rs.next()) {
+                return Optional.of(userMapper.mapRowToObject(rs));
+            }
+
+        } catch (SQLException e) {
+
+            logger.log(Level.SEVERE, e.getMessage(), e);
+
         }
 
         return Optional.empty();
+
     }
 
     @Override
-    public List<User> getAll() throws SQLException {
+    public List<User> getAll() {
 
         String sql = """
                 SELECT Id_user, LastName, FirstName, Patronymic, Login, Password, Role
@@ -71,13 +110,15 @@ public class UserRepository implements ParkingRepository<User> {
 
         }  catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
+
+        return null;
     }
 
     @Override
-    public void save(User entity) throws SQLException {
+    public void save(User entity) {
 
         String sql = """
                 INSERT INTO "User" (LastName, FirstName, Patronymic, Login, Password, Role)
@@ -92,14 +133,14 @@ public class UserRepository implements ParkingRepository<User> {
 
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
 
     }
 
     @Override
-    public void update(User entity) throws SQLException {
+    public void update(User entity) {
 
         String sql = """
                 UPDATE "User"
@@ -116,13 +157,13 @@ public class UserRepository implements ParkingRepository<User> {
 
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
     }
 
     @Override
-    public void delete(User entity) throws SQLException {
+    public void delete(User entity) {
 
         String sql = """
                 DELETE FROM "User"
@@ -137,7 +178,7 @@ public class UserRepository implements ParkingRepository<User> {
 
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
     }

@@ -12,6 +12,19 @@ public class UserMapper implements EntityMapper<User> {
 
     public UserMapper() {}
 
+    public PreparedStatement mapAuthorisation(Connection connection,
+                                              String login,
+                                              String password,
+                                              String sql) throws SQLException {
+
+        PreparedStatement stmt = connection.prepareStatement(sql);
+
+        stmt.setString(1, login);
+        stmt.setString(2, password);
+
+        return stmt;
+    }
+
     @Override
     public User mapRowToObject(ResultSet rs) throws SQLException {
 

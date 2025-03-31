@@ -12,9 +12,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VehicleRepository implements ParkingRepository<Vehicle> {
 
+    private static final Logger logger = Logger.getLogger(VehicleRepository.class.getName());
     private final DataSource dataSource;
 
     public VehicleRepository() {
@@ -22,7 +25,7 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
     }
 
     @Override
-    public Optional<Vehicle> getById(int id) throws SQLException {
+    public Optional<Vehicle> getById(int id) {
 
         String sql = """
                 SELECT Id_vehicle, RegistrationNumber, Model, Brand, Colour
@@ -43,17 +46,18 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
                 return Optional.of(vehicleMapper.mapRowToObject(rs));
             }
 
-            return Optional.empty();
-
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
+
+        return Optional.empty();
+
     }
 
     @Override
-    public List<Vehicle> getAll() throws SQLException {
+    public List<Vehicle> getAll() {
 
         String sql = """
                 SELECT Id_vehicle, RegistrationNumber, Model, Brand, Colour
@@ -77,13 +81,16 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
 
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
+
+        return null;
+
     }
 
     @Override
-    public void save(Vehicle entity) throws SQLException {
+    public void save(Vehicle entity) {
 
         String sql = """
                 INSERT INTO Vehicle (RegistrationNumber, Model, Brand, Colour)
@@ -98,13 +105,13 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
 
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
     }
 
     @Override
-    public void update(Vehicle entity) throws SQLException {
+    public void update(Vehicle entity) {
 
         String sql = """
                 UPDATE Vehicle
@@ -121,13 +128,13 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
 
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
     }
 
     @Override
-    public void delete(Vehicle entity) throws SQLException {
+    public void delete(Vehicle entity) {
 
         String sql = """
                 DELETE FROM Vehicle
@@ -142,7 +149,7 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
 
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
     }

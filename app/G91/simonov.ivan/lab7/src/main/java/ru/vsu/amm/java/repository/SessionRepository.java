@@ -12,9 +12,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SessionRepository implements ParkingRepository<Session> {
 
+    private static final Logger logger = Logger.getLogger(SessionRepository.class.getName());
     private final DataSource dataSource;
 
     public SessionRepository() {
@@ -22,7 +25,7 @@ public class SessionRepository implements ParkingRepository<Session> {
     }
 
     @Override
-    public Optional<Session> getById(int id) throws SQLException {
+    public Optional<Session> getById(int id) {
 
         String sql = """
                 SELECT Id_session, Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate
@@ -43,17 +46,18 @@ public class SessionRepository implements ParkingRepository<Session> {
                 return Optional.of(sessionMapper.mapRowToObject(rs));
             }
 
-            return Optional.empty();
-
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
+
+        return Optional.empty();
+
     }
 
     @Override
-    public List<Session> getAll() throws SQLException {
+    public List<Session> getAll() {
 
         String sql = """
                 SELECT Id_session, Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate
@@ -77,13 +81,16 @@ public class SessionRepository implements ParkingRepository<Session> {
 
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
+
+        return null;
+
     }
 
     @Override
-    public void save(Session entity) throws SQLException {
+    public void save(Session entity) {
 
         String sql = """
                INSERT INTO "Session" (Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate)
@@ -98,13 +105,13 @@ public class SessionRepository implements ParkingRepository<Session> {
 
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
     }
 
     @Override
-    public void update(Session entity) throws SQLException {
+    public void update(Session entity) {
 
         String sql = """
                 UPDATE "Session" SET Id_user = ?, Id_vehicle = ?, ParkingPrice = ?, EntryDate = ?, ExitDate = ?
@@ -121,13 +128,13 @@ public class SessionRepository implements ParkingRepository<Session> {
 
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
     }
 
     @Override
-    public void delete(Session entity) throws SQLException {
+    public void delete(Session entity) {
 
         String sql = """
                 DELETE FROM "Session"
@@ -142,7 +149,7 @@ public class SessionRepository implements ParkingRepository<Session> {
 
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
     }
