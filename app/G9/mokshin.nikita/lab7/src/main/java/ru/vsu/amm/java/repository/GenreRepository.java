@@ -72,7 +72,7 @@ public class GenreRepository implements CrudRepository<Genre> {
     @Override
     public void save(Genre genre) {
         logger.info("Saving genre: {}", genre);
-        String sql = genre.getId() == null ? "INSERT INTO genre (title) VALUES (?)" : "UPDATE genre SET title = ? WHERE id = ?";
+        String sql = genre.getId() == null ? "INSERT INTO genre (title) VALUES (?) RETURNING id" : "UPDATE genre SET title = ? WHERE id = ?";
 
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -80,12 +80,18 @@ public class GenreRepository implements CrudRepository<Genre> {
 
             if (genre.getId() != null) {
                 statement.setLong(2, genre.getId());
+                statement.executeUpdate();
+            } else {
+                statement.executeQuery();
+                ResultSet resultSet = statement.getResultSet();
+                if (resultSet.next()) {
+                    genre.setId(resultSet.getLong("id"));
+                }
             }
-            statement.executeUpdate();
 
             logger.info("Genre saved successfully: {}", genre);
         } catch (SQLException e) {
-            logger.error("Error saving genre: {}", e.getMessage());
+            logger.error("Error saving genre {}: {}", genre, e.getMessage());
             throw new SqlException(e.getMessage());
         }
     }
