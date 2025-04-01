@@ -1,9 +1,13 @@
 package ru.vsu.amm.java.entity;
 
-import java.time.LocalDate;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-public class User {
+import java.time.LocalDate;
+
+@AllArgsConstructor
+@Getter
+public class UserEntity {
     private long id;
     private String name;
     private String surname;
@@ -11,8 +15,5 @@ public class User {
     private LocalDate birthday;
     private String email;
     private String passwordHash;
-    private int roleId;
     private Role role;
-    private List<Plan> plansAsDoctor;
-    private List<Plan> plansAsPatient;
 }
