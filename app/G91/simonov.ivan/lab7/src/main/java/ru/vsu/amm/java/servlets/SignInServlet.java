@@ -36,7 +36,7 @@ public class SignInServlet extends HttpServlet {
 
         } else {
 
-            // ошибка
+            response.sendRedirect("signIn.jsp?error=Invalid login or password!");
 
         }
     }

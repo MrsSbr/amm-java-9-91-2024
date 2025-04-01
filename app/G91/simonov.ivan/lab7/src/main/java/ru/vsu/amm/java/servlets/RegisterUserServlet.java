@@ -20,10 +20,10 @@ public class RegisterUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        UserMapper userMapper = new UserMapper();
-        User user = userMapper.mapRequestToObject(request);
-
         try {
+
+            UserMapper userMapper = new UserMapper();
+            User user = userMapper.mapRequestToObject(request);
 
             userRepository.save(user);
 
@@ -38,7 +38,7 @@ public class RegisterUserServlet extends HttpServlet {
 
         } catch (RuntimeException e) {
 
-            // ошибка
+            response.sendRedirect(String.format("register.jsp?error=%s", e.getMessage()));
 
         }
     }

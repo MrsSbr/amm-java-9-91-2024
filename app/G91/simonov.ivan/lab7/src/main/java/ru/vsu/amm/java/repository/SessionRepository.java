@@ -2,7 +2,9 @@ package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.Session;
+import ru.vsu.amm.java.entities.Vehicle;
 import ru.vsu.amm.java.mapper.SessionMapper;
+import ru.vsu.amm.java.mapper.VehicleMapper;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
