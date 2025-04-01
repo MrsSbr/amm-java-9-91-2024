@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.mapper;
 
+import javax.servlet.http.HttpServletRequest;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.enums.Role;
 
@@ -23,6 +24,20 @@ public class UserMapper implements EntityMapper<User> {
         stmt.setString(2, password);
 
         return stmt;
+    }
+
+    public User mapRequestToObject(HttpServletRequest request) {
+
+        User user = new User();
+
+        user.setLastName(request.getParameter("lastName"));
+        user.setFirstName(request.getParameter("firstName"));
+        user.setPatronymic(request.getParameter("patronymic"));
+        user.setLogin(request.getParameter("login"));
+        user.setPassword(request.getParameter("password"));
+        user.setRole(Role.USER);
+
+        return user;
     }
 
     @Override
