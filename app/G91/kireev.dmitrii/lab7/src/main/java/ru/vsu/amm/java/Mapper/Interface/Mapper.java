@@ -6,5 +6,4 @@ import java.sql.SQLException;
 public interface Mapper<T> {
 
      T resultSetToEntity(ResultSet rs) throws SQLException;
-     f
 }
