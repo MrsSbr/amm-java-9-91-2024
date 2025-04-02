@@ -11,7 +11,7 @@ import java.time.OffsetDateTime;
 public class TicketEntity {
 
 
-    private long ticketId;
+    private Long ticketId;
     private TicketStatus status;
     private int hallNumber;
     private int placeNumber;

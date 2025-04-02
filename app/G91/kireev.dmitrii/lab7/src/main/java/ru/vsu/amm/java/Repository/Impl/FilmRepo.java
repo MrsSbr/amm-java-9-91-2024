@@ -57,6 +57,12 @@ public class FilmRepo implements CrudRepo<FilmEntity> {
             preparedStatement.setString(4, entity.getScreenWriter());
             preparedStatement.setDouble(5, entity.getRating());
             preparedStatement.executeUpdate();
+
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    entity.setFilmId(generatedKeys.getLong(1));
+                }
+            }
         }
     }
 

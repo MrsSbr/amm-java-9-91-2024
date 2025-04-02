@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserEntity {
 
-    private long userId;
+    private Long userId;
     private String name;
     private String email;
     private String password;

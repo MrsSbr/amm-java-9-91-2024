@@ -1,7 +1,9 @@
 package ru.vsu.amm.java.Util;
 
+import ru.vsu.amm.java.Exception.ConfigurationException;
 import ru.vsu.amm.java.Model.DTO.PropertiesDTO;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -13,10 +15,6 @@ public class PropertiesInitializer {
 
         try (InputStream input = PropertiesInitializer.class.getClassLoader().getResourceAsStream("database.properties")) {
 
-            if (input == null) {
-                throw new RuntimeException("Unable to find database.properties");
-            }
-
             properties.load(input);
 
             return new PropertiesDTO(
@@ -25,8 +23,8 @@ public class PropertiesInitializer {
                     properties.getProperty("db.password")
             );
 
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to load database properties", e);
+        } catch (IOException e) {
+            throw new ConfigurationException("Failed to load database properties");
         }
     }
 }

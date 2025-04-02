@@ -51,10 +51,12 @@ public class UserRepo implements CrudRepo<UserEntity> {
 
     @Override
     public void save(UserEntity entity) throws SQLException {
-        final String query = "INSERT INTO USER(name,email, password, phone) VALUES(?,?)";
+        final String query = "INSERT INTO USER(name, email, password, phone) VALUES(?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, entity.getName());
-            preparedStatement.setString(2, entity.getPassword());
+            preparedStatement.setString(2, entity.getEmail());
+            preparedStatement.setString(3, entity.getPassword());
+            preparedStatement.setString(4, entity.getPhone());
             preparedStatement.executeUpdate();
         }
     }
@@ -67,6 +69,12 @@ public class UserRepo implements CrudRepo<UserEntity> {
             preparedStatement.setString(2, entity.getPassword());
             preparedStatement.setLong(3, entity.getUserId());
             preparedStatement.executeUpdate();
+
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    entity.setUserId(generatedKeys.getLong(1));
+                }
+            }
         }
     }
 
@@ -77,5 +85,18 @@ public class UserRepo implements CrudRepo<UserEntity> {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         }
+    }
+
+    public Optional<UserEntity> findByEmail(String email) throws SQLException {
+        final String query = "SELECT userId, name, email, password, phone FROM User WHERE email = ?";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Optional.of(userMapper.resultSetToEntity(resultSet));
+                }
+            }
+        }
+        return Optional.empty();
     }
 }

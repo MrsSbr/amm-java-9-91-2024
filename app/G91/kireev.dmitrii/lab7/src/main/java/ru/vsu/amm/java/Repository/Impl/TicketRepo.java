@@ -60,6 +60,12 @@ public class TicketRepo implements CrudRepo<TicketEntity> {
             preparedStatement.setLong(6, entity.getUserId());
             preparedStatement.setLong(7, entity.getFilmId());
             preparedStatement.executeUpdate();
+
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    entity.setTicketId(generatedKeys.getLong(1));
+                }
+            }
         }
     }
 

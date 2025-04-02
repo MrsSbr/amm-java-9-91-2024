@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 public class FilmEntity {
 
-    private long filmId;
+    private Long filmId;
     private String name;
     private String genre;
     private Duration duration;
