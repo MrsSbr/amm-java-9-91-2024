@@ -50,8 +50,8 @@ public class UserMapper implements EntityMapper<User> {
         user.setFirstName(rs.getString("FirstName"));
         user.setPatronymic(rs.getString("Patronymic"));
         user.setLogin(rs.getString("Login"));
-        user.setPassword(rs.getString("Password"));
-        user.setRole(Role.valueOf(rs.getString("Role")));
+        user.setPassword(rs.getString("\"Password\""));
+        user.setRole(Role.valueOf(rs.getString("\"Role\"")));
 
         return user;
     }

@@ -3,6 +3,7 @@ package ru.vsu.amm.java.servlets;
 import ru.vsu.amm.java.entities.Session;
 import ru.vsu.amm.java.repository.SessionRepository;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@WebServlet("/updateSession")
 public class UpdateSessionServlet extends HttpServlet {
 
     private SessionRepository sessionRepository = new SessionRepository();

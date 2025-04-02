@@ -27,9 +27,9 @@ public class UserRepository implements ParkingRepository<User> {
     public Optional<User> getByLoginAndPassword(String login, String password) {
 
         String sql = """
-                SELECT Id_user, LastName, FirstName, Patronymic, Login, Password, Role
+                SELECT Id_user, LastName, FirstName, Patronymic, Login, "Password", "Role"
                 FROM "User"
-                WHERE Login = ? AND Password = ?
+                WHERE Login = ? AND "Password" = ?
                 """;
 
         try (Connection connection = dataSource.getConnection()) {
@@ -57,7 +57,7 @@ public class UserRepository implements ParkingRepository<User> {
     public Optional<User> getById(int id) {
 
         String sql = """
-                SELECT Id_user, LastName, FirstName, Patronymic, Login, Password, Role
+                SELECT Id_user, LastName, FirstName, Patronymic, Login, "Password", "Role"
                 FROM "User"
                 WHERE Id_user = ?
                 """;
@@ -89,7 +89,7 @@ public class UserRepository implements ParkingRepository<User> {
     public List<User> getAll() {
 
         String sql = """
-                SELECT Id_user, LastName, FirstName, Patronymic, Login, Password, Role
+                SELECT Id_user, LastName, FirstName, Patronymic, Login, "Password", "Role"
                 FROM "User"
                 """;
 
@@ -121,7 +121,7 @@ public class UserRepository implements ParkingRepository<User> {
     public int save(User entity) {
 
         String sql = """
-                INSERT INTO "User" (LastName, FirstName, Patronymic, Login, Password, Role)
+                INSERT INTO "User" (LastName, FirstName, Patronymic, Login, "Password", "Role")
                 VALUES (?, ?, ?, ?, ?, ?)
                 """;
 
@@ -151,7 +151,7 @@ public class UserRepository implements ParkingRepository<User> {
 
         String sql = """
                 UPDATE "User"
-                SET LastName = ?, FirstName = ?, Patronymic = ?, Login = ?, Password = ?, Role = ?
+                SET LastName = ?, FirstName = ?, Patronymic = ?, Login = ?, "Password" = ?, "Role" = ?
                 WHERE Id_user = ?
                 """;
 

@@ -14,7 +14,7 @@
     <p style="color: #54e354;">${param.message}</p>
 </c:if>
 
-<form action="sign_in" method="post">
+<form action="signIn" method="post">
     <label for="login">Логин:</label>
     <input type="text" id="login" name="login" required>
     <br>

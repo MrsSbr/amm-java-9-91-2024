@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/register_user")
+@WebServlet("/registerUser")
 public class RegisterUserServlet extends HttpServlet {
 
     private UserRepository userRepository = new UserRepository();

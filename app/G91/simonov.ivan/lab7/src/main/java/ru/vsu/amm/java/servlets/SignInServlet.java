@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet("/sign_in")
+@WebServlet("/signIn")
 public class SignInServlet extends HttpServlet {
 
     private UserRepository userRepository = new UserRepository();

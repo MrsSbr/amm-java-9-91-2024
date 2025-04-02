@@ -7,6 +7,7 @@ import ru.vsu.amm.java.repository.SessionRepository;
 import ru.vsu.amm.java.repository.UserRepository;
 import ru.vsu.amm.java.repository.VehicleRepository;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@WebServlet("/addSession")
 public class AddSessionServlet extends HttpServlet {
 
     private SessionRepository sessionRepository = new SessionRepository();

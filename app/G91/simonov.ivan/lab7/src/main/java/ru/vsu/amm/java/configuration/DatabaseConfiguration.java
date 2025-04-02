@@ -14,7 +14,7 @@ public class DatabaseConfiguration {
         Properties properties = new Properties();
 
         try (InputStream input = DatabaseConfiguration.class.getClassLoader()
-                .getResourceAsStream("dp.properties")) {
+                .getResourceAsStream("database.properties")) {
 
             properties.load(input);
 

@@ -14,7 +14,7 @@
     <p style="color: #51d251;">${param.message}</p>
 </c:if>
 
-<form action="register_user" method="post">
+<form action="registerUser" method="post">
     <label for="lastName">Фамилия:</label>
     <input type="text" id="lastName" name="lastName" required>
     <br>
