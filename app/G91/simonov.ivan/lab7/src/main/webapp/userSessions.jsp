@@ -48,6 +48,7 @@
     </tr>
     </thead>
     <tbody>
+
     <c:forEach items="${sessions}" var="session">
         <tr>
             <c:if test="${not isUser}">

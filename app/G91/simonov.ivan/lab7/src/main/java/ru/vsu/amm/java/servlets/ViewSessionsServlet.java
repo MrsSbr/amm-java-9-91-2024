@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ru.vsu.amm.java.entities.Session;
 import ru.vsu.amm.java.entities.User;
+import ru.vsu.amm.java.enums.Role;
 import ru.vsu.amm.java.repository.SessionRepository;
 import ru.vsu.amm.java.repository.UserRepository;
 import ru.vsu.amm.java.repository.VehicleRepository;
@@ -28,7 +29,6 @@ public class ViewSessionsServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         List<Session> sessionList =  sessionRepository.getAll();
-        boolean isUser = false;
 
         switch (user.getRole()) {
 
@@ -50,7 +50,6 @@ public class ViewSessionsServlet extends HttpServlet {
 
             case USER -> {
 
-                isUser = true;
                 VehicleRepository vehicleRepository = new VehicleRepository();
 
                 sessionList.stream()
@@ -62,7 +61,7 @@ public class ViewSessionsServlet extends HttpServlet {
         }
 
         request.setAttribute("sessions", sessionList);
-        request.setAttribute("isUser", isUser);
+        request.setAttribute("isUser", user.getRole() == Role.USER);
         request.getRequestDispatcher("userSessions.jsp").forward(request, response);
 
     }
