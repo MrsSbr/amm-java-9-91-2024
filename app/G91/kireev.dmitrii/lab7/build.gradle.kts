@@ -31,6 +31,11 @@ dependencies {
     // Lombok
     compileOnly("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")
+
+    // Jakarta EE
+    implementation("jakarta.servlet:jakarta.servlet-api:5.0.0")
+    implementation("jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.0.0")
+
 }
 
 tasks.test {
