@@ -1,8 +1,10 @@
 package ru.vsu.amm.java.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.UserCarEntity;
 import ru.vsu.amm.java.mappers.UserCarMapper;
+import ru.vsu.amm.java.utils.ErrorMessages;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 public class UserCarRepository implements CrudRepository<UserCarEntity> {
     private final DataSource dataSource;
 
@@ -23,7 +26,7 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
 
     @Override
     public Optional<UserCarEntity> findById(Long id) throws SQLException {
-        final String query = "SELECT * FROM user_car WHERE id = ?";
+        final String query = "SELECT id, userId, carId, startTrip, endTrip, priceForMinute FROM user_car WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
@@ -32,14 +35,16 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
                     return Optional.of(UserCarMapper.ResultSetToUserCarEntity(resultSet));
                 }
             }
-
+        } catch (SQLException e) {
+            log.error(ErrorMessages.FIND_USER_CAR_BY_ID + id, e);
+            throw new SQLException(ErrorMessages.FIND_USER_CAR_BY_ID + id, e);
         }
         return Optional.empty();
     }
 
     @Override
     public List<UserCarEntity> findAll() throws SQLException {
-        final String query = "SELECT * FROM user_car";
+        final String query = "SELECT id, userId, carId, startTrip, endTrip, priceForMinute FROM user_car";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -49,6 +54,9 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
                 }
                 return usersCars;
             }
+        } catch (SQLException e) {
+            log.error(ErrorMessages.FIND_ALL_USER_CARS, e);
+            throw new SQLException(ErrorMessages.FIND_ALL_USER_CARS, e);
         }
     }
 
@@ -63,6 +71,9 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
             preparedStatement.setTimestamp(4, Timestamp.valueOf(entity.getEndTrip()));
             preparedStatement.setBigDecimal(5, entity.getPriceForMinute());
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            log.error(ErrorMessages.SAVE_USER_CAR, e);
+            throw new SQLException(ErrorMessages.SAVE_USER_CAR, e);
         }
     }
 
@@ -78,6 +89,9 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
             preparedStatement.setBigDecimal(5, entity.getPriceForMinute());
             preparedStatement.setLong(6, entity.getId());
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            log.error(ErrorMessages.UPDATE_USER_CAR, e);
+            throw new SQLException(ErrorMessages.UPDATE_USER_CAR, e);
         }
     }
 
@@ -88,6 +102,9 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            log.error(ErrorMessages.DELETE_USER_CAR_BY_ID + id, e);
+            throw new SQLException(ErrorMessages.DELETE_USER_CAR_BY_ID + id, e);
         }
     }
 }
