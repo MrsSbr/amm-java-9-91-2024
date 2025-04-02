@@ -1,10 +1,11 @@
-package ru.vsu.amm.java.repository;
+package ru.vsu.amm.java.repository.implementations;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.UserEntity;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.mappers.UserMapper;
+import ru.vsu.amm.java.repository.interfaces.CrudRepository;
 import ru.vsu.amm.java.utils.ErrorMessages;
 
 import javax.sql.DataSource;
@@ -108,5 +109,24 @@ public class UserRepository implements CrudRepository<UserEntity> {
             log.error(ErrorMessages.DELETE_USER_BY_ID + id, e);
             throw new DataAccessException(ErrorMessages.DELETE_USER_BY_ID + id, e);
         }
+    }
+
+    public Optional<UserEntity> findByEmail(String email) {
+        final String query = "SELECT id, username, password, email FROM user WHERE email = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, email);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Optional.of(UserMapper.ResultSetToUserEntity(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            log.error(ErrorMessages.FIND_USER_BY_EMAIL + email, e);
+            throw new DataAccessException(ErrorMessages.FIND_USER_BY_EMAIL + email, e);
+        }
+        return Optional.empty();
     }
 }

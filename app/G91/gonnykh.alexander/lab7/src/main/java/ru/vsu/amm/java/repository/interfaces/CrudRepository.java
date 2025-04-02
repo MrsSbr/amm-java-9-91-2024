@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.repository;
+package ru.vsu.amm.java.repository.interfaces;
 
 import java.sql.SQLException;
 import java.util.List;

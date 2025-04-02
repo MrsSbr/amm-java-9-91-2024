@@ -1,9 +1,10 @@
-package ru.vsu.amm.java.repository;
+package ru.vsu.amm.java.repository.implementations;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.UserCarEntity;
 import ru.vsu.amm.java.mappers.UserCarMapper;
+import ru.vsu.amm.java.repository.interfaces.CrudRepository;
 import ru.vsu.amm.java.utils.ErrorMessages;
 
 import javax.sql.DataSource;
