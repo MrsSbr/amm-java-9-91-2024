@@ -24,6 +24,35 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
         dataSource = DatabaseConfiguration.getDataSource();
     }
 
+    public Optional<Vehicle> getByInfo(Vehicle entity) {
+
+        String sql = """
+                SELECT Id_vehicle, RegistrationNumber, Model, Brand, Colour
+                FROM Vehicle
+                WHERE RegistrationNumber = ? AND Model = ? AND Brand = ? AND Colour = ?
+                """;
+
+        try (Connection connection = dataSource.getConnection()) {
+
+            VehicleMapper vehicleMapper = new VehicleMapper();
+            PreparedStatement stmt = vehicleMapper.mapObjectToRow(entity, connection, sql);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return Optional.of(vehicleMapper.mapRowToObject(rs));
+            }
+
+        } catch (SQLException e) {
+
+            logger.log(Level.SEVERE, e.getMessage(), e);
+
+        }
+
+        return Optional.empty();
+
+    }
+
     @Override
     public Optional<Vehicle> getById(int id) {
 
@@ -90,7 +119,7 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
     }
 
     @Override
-    public void save(Vehicle entity) {
+    public int save(Vehicle entity) {
 
         String sql = """
                 INSERT INTO Vehicle (RegistrationNumber, Model, Brand, Colour)
@@ -103,11 +132,19 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
             PreparedStatement stmt = vehicleMapper.mapObjectToRow(entity, connection, sql);
             stmt.execute();
 
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+                return generatedKeys.getInt(1);
+            }
+
         } catch (SQLException e) {
 
             logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
+
+        return 0;
     }
 
     @Override

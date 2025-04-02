@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
     <title>Сессии парковки</title>
@@ -27,6 +28,7 @@
 </c:if>
 
 <table>
+    <thead>
     <tr>
         <c:if test="${not isUser}">
             <th>ID сессии</th>
@@ -44,7 +46,8 @@
         <th>Дата въезда</th>
         <th>Дата выезда</th>
     </tr>
-
+    </thead>
+    <tbody>
     <c:forEach items="${sessions}" var="session">
         <tr>
             <c:if test="${not isUser}">
@@ -69,11 +72,11 @@
             <td>${session.vehicle.brand}</td>
             <td>${session.vehicle.colour}</td>
             <td>${session.parkingPrice}</td>
-            <td>${session.entryDate}</td>
+            <td><fmt:formatDate value="${session.entryDate}" pattern="dd.MM.yyyy HH:mm"/></td>
             <td>
                 <c:choose>
                     <c:when test="${not empty session.exitDate}">
-                        <em>session.exitDate</em>
+                        <fmt:formatDate value="${session.exitDate}" pattern="dd.MM.yyyy HH:mm"/>
                     </c:when>
                     <c:otherwise>
                         <em>-----</em>
@@ -82,6 +85,7 @@
             </td>
         </tr>
     </c:forEach>
+    </tbody>
 </table>
 </body>
 </html>

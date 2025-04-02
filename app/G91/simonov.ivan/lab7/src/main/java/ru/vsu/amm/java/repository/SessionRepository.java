@@ -2,9 +2,7 @@ package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.Session;
-import ru.vsu.amm.java.entities.Vehicle;
 import ru.vsu.amm.java.mapper.SessionMapper;
-import ru.vsu.amm.java.mapper.VehicleMapper;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -92,7 +90,7 @@ public class SessionRepository implements ParkingRepository<Session> {
     }
 
     @Override
-    public void save(Session entity) {
+    public int save(Session entity) {
 
         String sql = """
                INSERT INTO "Session" (Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate)
@@ -105,11 +103,19 @@ public class SessionRepository implements ParkingRepository<Session> {
             PreparedStatement stmt = sessionMapper.mapObjectToRow(entity, connection, sql);
             stmt.execute();
 
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+                return generatedKeys.getInt(1);
+            }
+
         } catch (SQLException e) {
 
             logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
+
+        return 0;
     }
 
     @Override

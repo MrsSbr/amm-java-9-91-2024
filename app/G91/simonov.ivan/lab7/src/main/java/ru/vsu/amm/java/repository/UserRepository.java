@@ -118,7 +118,7 @@ public class UserRepository implements ParkingRepository<User> {
     }
 
     @Override
-    public void save(User entity) {
+    public int save(User entity) {
 
         String sql = """
                 INSERT INTO "User" (LastName, FirstName, Patronymic, Login, Password, Role)
@@ -131,12 +131,19 @@ public class UserRepository implements ParkingRepository<User> {
             PreparedStatement stmt = userMapper.mapObjectToRow(entity, connection, sql);
             stmt.execute();
 
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+                return generatedKeys.getInt(1);
+            }
+
         } catch (SQLException e) {
 
             logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
 
+        return 0;
     }
 
     @Override

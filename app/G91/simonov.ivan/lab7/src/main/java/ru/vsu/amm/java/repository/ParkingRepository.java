@@ -10,7 +10,7 @@ public interface ParkingRepository<T> {
 
     List<T> getAll() throws SQLException;
 
-    void save(T entity) throws SQLException;
+    int save(T entity) throws SQLException;
 
     void update(T entity) throws SQLException;
 

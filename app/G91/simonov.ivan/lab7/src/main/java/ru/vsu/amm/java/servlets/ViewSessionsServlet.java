@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/viewSessions")
+@WebServlet("/view_sessions")
 public class ViewSessionsServlet extends HttpServlet {
 
     private SessionRepository sessionRepository = new SessionRepository();
