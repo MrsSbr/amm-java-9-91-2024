@@ -3,8 +3,7 @@ package ru.vsu.amm.java.service.implementations;
 
 import ru.vsu.amm.java.entities.UserEntity;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
-import ru.vsu.amm.java.model.requests.LoginRequest;
-import ru.vsu.amm.java.model.requests.RegisterRequest;
+import ru.vsu.amm.java.model.requests.UserRequest;
 import ru.vsu.amm.java.repository.UserRepository;
 import ru.vsu.amm.java.service.interfaces.AuthService;
 import ru.vsu.amm.java.utils.BcryptPasswordEncoder;
@@ -20,7 +19,7 @@ public class UserAuthManager implements AuthService {
     }
 
     @Override
-    public void login(LoginRequest request) {
+    public void login(UserRequest request) {
         UserEntity user = userRepository.findByName(request.name())
                 .orElseThrow(() -> new WrongUserCredentialsException(ErrorMessages.USER_NOT_FOUND));
 
@@ -28,7 +27,7 @@ public class UserAuthManager implements AuthService {
     }
 
     @Override
-    public void register(RegisterRequest request) {
+    public void register(UserRequest request) {
         checkUserExistence(request.name());
         UserEntity userEntity = new UserEntity(null, request.name(),
                     passwordEncoder.hashPassword(request.password()));

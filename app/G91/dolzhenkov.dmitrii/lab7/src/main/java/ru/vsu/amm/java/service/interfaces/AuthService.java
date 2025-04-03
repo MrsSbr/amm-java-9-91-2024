@@ -1,11 +1,10 @@
 package ru.vsu.amm.java.service.interfaces;
 
-import ru.vsu.amm.java.model.requests.LoginRequest;
-import ru.vsu.amm.java.model.requests.RegisterRequest;
+import ru.vsu.amm.java.model.requests.UserRequest;
 
 public interface AuthService {
 
-    void login(LoginRequest request);
+    void login(UserRequest request);
 
-    void register(RegisterRequest request);
+    void register(UserRequest request);
 }

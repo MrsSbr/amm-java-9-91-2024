@@ -2,7 +2,7 @@ package ru.vsu.amm.java.servlet;
 
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
-import ru.vsu.amm.java.model.requests.RegisterRequest;
+import ru.vsu.amm.java.model.requests.UserRequest;
 import ru.vsu.amm.java.service.implementations.UserAuthManager;
 import ru.vsu.amm.java.service.interfaces.AuthService;
 import ru.vsu.amm.java.utils.ErrorMessages;
@@ -37,9 +37,9 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-            RegisterRequest registerRequest = new RegisterRequest(name, password);
+            UserRequest userRequest = new UserRequest(name, password);
 
-            authService.register(registerRequest);
+            authService.register(userRequest);
             HttpSession session = request.getSession();
             session.setAttribute("login", name);
             response.sendRedirect(MAIN_UI);
