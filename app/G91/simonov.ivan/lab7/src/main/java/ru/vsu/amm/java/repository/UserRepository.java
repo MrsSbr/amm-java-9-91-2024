@@ -35,7 +35,7 @@ public class UserRepository implements ParkingRepository<User> {
         try (Connection connection = dataSource.getConnection()) {
 
             UserMapper userMapper = new UserMapper();
-            PreparedStatement stmt = userMapper.mapAuthorisation(connection, sql, login, password);
+            PreparedStatement stmt = userMapper.mapAuthorisation(connection, login, password, sql);
 
             ResultSet rs = stmt.executeQuery();
 

@@ -25,18 +25,26 @@ public class RegisterUserServlet extends HttpServlet {
             UserMapper userMapper = new UserMapper();
             User user = userMapper.mapRequestToObject(request);
 
-            userRepository.save(user);
+            if (userRepository.getByLoginAndPassword(user.getLogin(), user.getPassword()).isEmpty()) {
 
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
+                userRepository.save(user);
 
-            String redirect = Redirection.redirectBasedOnRole(user);
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
 
-            // доп сообщение
+                String redirect = Redirection.redirectBasedOnRole(user);
 
-            response.sendRedirect(redirect);
+                // доп сообщение
 
-        } catch (RuntimeException e) {
+                response.sendRedirect(redirect);
+
+            } else {
+
+                response.sendRedirect("register.jsp?error=%User already exists!");
+
+            }
+
+        } catch(RuntimeException e){
 
             response.sendRedirect(String.format("register.jsp?error=%s", e.getMessage()));
 

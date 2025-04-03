@@ -11,7 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -43,9 +42,10 @@ public class AddSessionServlet extends HttpServlet {
         }
 
         Vehicle vehicle = new Vehicle();
+        vehicle.setRegistrationNumber(request.getParameter("registrationNumber"));
         vehicle.setModel(request.getParameter("model"));
         vehicle.setBrand(request.getParameter("brand"));
-        vehicle.setModel(request.getParameter("model"));
+        vehicle.setColour(request.getParameter("colour"));
 
         VehicleRepository vehicleRepository = new VehicleRepository();
         Optional<Vehicle> repVehicle = vehicleRepository.getByInfo(vehicle);
@@ -63,6 +63,6 @@ public class AddSessionServlet extends HttpServlet {
 
         sessionRepository.save(userSession);
 
-        response.sendRedirect("addSession?message=Session successfully added!");
+        response.sendRedirect("addSession.jsp?message=Session successfully added!");
     }
 }

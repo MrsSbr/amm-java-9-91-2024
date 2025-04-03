@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page import="java.time.format.DateTimeFormatter"%>
 
 <html>
 <head>
@@ -57,9 +58,14 @@
                 <td class="user-info">
                         ${session.user.lastName}
                         ${session.user.firstName}
-                            <c:if test="${not empty session.user.patronymic}">
-                                ${session.user.patronymic}
-                            </c:if>
+                            <c:choose>
+                                <c:when test="${not empty session.user.patronymic}">
+                                    ${session.user.patronymic}
+                                </c:when>
+                                <c:otherwise>
+                                    <em>-----</em>
+                                </c:otherwise>
+                            </c:choose>
                 </td>
                 <td class="user-info">
                         ${session.user.login}
@@ -68,16 +74,17 @@
                         ${session.user.password}
                 </td>
             </c:if>
+            <td>${session.vehicle.vehicleId}</td>
             <td>${session.vehicle.registrationNumber}</td>
             <td>${session.vehicle.model}</td>
             <td>${session.vehicle.brand}</td>
             <td>${session.vehicle.colour}</td>
             <td>${session.parkingPrice}</td>
-            <td><fmt:formatDate value="${session.entryDate}" pattern="dd.MM.yyyy HH:mm"/></td>
+            <td>${session.entryDate.format(DateTimeFormatter.ofPattern('dd.MM.yyyy HH:mm'))}</td>
             <td>
                 <c:choose>
                     <c:when test="${not empty session.exitDate}">
-                        <fmt:formatDate value="${session.exitDate}" pattern="dd.MM.yyyy HH:mm"/>
+                        ${session.exitDate.format(DateTimeFormatter.ofPattern('dd.MM.yyyy HH:mm'))}
                     </c:when>
                     <c:otherwise>
                         <em>-----</em>

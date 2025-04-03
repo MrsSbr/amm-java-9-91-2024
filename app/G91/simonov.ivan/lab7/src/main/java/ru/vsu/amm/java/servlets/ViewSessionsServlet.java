@@ -37,14 +37,12 @@ public class ViewSessionsServlet extends HttpServlet {
                 UserRepository userRepository = new UserRepository();
                 VehicleRepository vehicleRepository = new VehicleRepository();
 
-                sessionList.stream()
-                        .filter(s -> s.getUser().getUserId() == user.getUserId())
-                        .forEach(s -> {
+                sessionList.forEach(s -> {
 
-                            s.setUser(userRepository.getById(s.getUser().getUserId()).get());
-                            s.setVehicle(vehicleRepository.getById(s.getVehicle().getVehicleId()).get());
+                    s.setUser(userRepository.getById(s.getUser().getUserId()).get());
+                    s.setVehicle(vehicleRepository.getById(s.getVehicle().getVehicleId()).get());
 
-                        });
+                });
 
             }
 

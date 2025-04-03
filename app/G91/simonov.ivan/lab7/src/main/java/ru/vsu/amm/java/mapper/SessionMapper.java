@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class SessionMapper implements EntityMapper<Session> {
 
@@ -30,7 +32,10 @@ public class SessionMapper implements EntityMapper<Session> {
         session.setSessionId(rs.getInt("Id_session"));
         session.setParkingPrice(rs.getBigDecimal("ParkingPrice"));
         session.setEntryDate(rs.getTimestamp("EntryDate").toLocalDateTime());
-        session.setExitDate(rs.getTimestamp("ExitDate").toLocalDateTime());
+
+        Timestamp exitDateTimestamp = rs.getTimestamp("ExitDate");
+        LocalDateTime exitDate = (exitDateTimestamp == null) ? null : exitDateTimestamp.toLocalDateTime();
+        session.setExitDate(exitDate);
 
         return session;
     }
@@ -46,7 +51,9 @@ public class SessionMapper implements EntityMapper<Session> {
         stmt.setInt(2, entity.getVehicle().getVehicleId());
         stmt.setBigDecimal(3, entity.getParkingPrice());
         stmt.setTimestamp(4, Timestamp.valueOf(entity.getEntryDate()));
-        stmt.setTimestamp(5, Timestamp.valueOf(entity.getExitDate()));
+
+        LocalDateTime exitDate = entity.getExitDate();
+        stmt.setTimestamp(5, exitDate == null ? null : Timestamp.valueOf(entity.getExitDate()));
 
         return stmt;
     }

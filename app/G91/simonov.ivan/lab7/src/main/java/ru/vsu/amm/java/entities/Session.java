@@ -64,10 +64,11 @@ public class Session {
     }
 
     public void setExitDate(LocalDateTime exitDate) {
-        if (entryDate != null && exitDate.isAfter(entryDate)) {
-            this.exitDate = exitDate;
-        } else {
+
+        if (exitDate != null && entryDate != null && exitDate.isBefore(entryDate)) {
             throw new IllegalArgumentException("Invalid exit date!");
         }
+
+        this.exitDate = exitDate;
     }
 }
