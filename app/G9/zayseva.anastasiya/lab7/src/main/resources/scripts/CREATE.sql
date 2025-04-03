@@ -11,7 +11,7 @@ CREATE TABLE Users
 CREATE TABLE Courses
 (
     CourseId    BIGSERIAL PRIMARY KEY,
-    Title       TEXT,
+    Title       TEXT NOT NULL,
     Description TEXT
 );
 
@@ -24,6 +24,7 @@ CREATE TABLE UsersCourses
     EnrollmentStatus VARCHAR(50) DEFAULT 'Active',
     CONSTRAINT FK_UsersCourses_Users FOREIGN KEY (UserId) REFERENCES Users (UserId),
     CONSTRAINT FK_UsersCourses_Courses FOREIGN KEY (CourseId) REFERENCES Courses (CourseId)
+    CONSTRAINT CHK_EnrollmentStatus CHECK (EnrollmentStatus IN ('ACTIVE', 'COMPLETED', 'CANCELLED', 'PAUSED'))
 );
 
 CREATE INDEX IDX_UsersCourses_UserId ON UsersCourses (UserId);
