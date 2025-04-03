@@ -24,5 +24,6 @@
     <br>
     <button type="submit">Войти</button>
 </form>
+<p><a href="index.jsp">Перейти на главную страницу</a></p>
 </body>
 </html>

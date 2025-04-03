@@ -108,7 +108,7 @@ public class UserRepository implements ParkingRepository<User> {
 
             return users;
 
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
 
             logger.log(Level.SEVERE, e.getMessage(), e);
 

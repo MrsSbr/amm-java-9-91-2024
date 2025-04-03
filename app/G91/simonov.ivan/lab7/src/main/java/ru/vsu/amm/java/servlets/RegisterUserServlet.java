@@ -33,9 +33,6 @@ public class RegisterUserServlet extends HttpServlet {
                 session.setAttribute("user", user);
 
                 String redirect = Redirection.redirectBasedOnRole(user);
-
-                // доп сообщение
-
                 response.sendRedirect(redirect);
 
             } else {
@@ -44,7 +41,7 @@ public class RegisterUserServlet extends HttpServlet {
 
             }
 
-        } catch(RuntimeException e){
+        } catch (RuntimeException e) {
 
             response.sendRedirect(String.format("register.jsp?error=%s", e.getMessage()));
 

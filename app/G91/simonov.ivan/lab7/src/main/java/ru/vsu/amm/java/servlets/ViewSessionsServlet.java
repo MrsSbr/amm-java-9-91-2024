@@ -23,12 +23,13 @@ public class ViewSessionsServlet extends HttpServlet {
     private SessionRepository sessionRepository = new SessionRepository();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
-        List<Session> sessionList =  sessionRepository.getAll();
+        List<Session> sessionList = sessionRepository.getAll();
 
         switch (user.getRole()) {
 
@@ -50,9 +51,11 @@ public class ViewSessionsServlet extends HttpServlet {
 
                 VehicleRepository vehicleRepository = new VehicleRepository();
 
-                sessionList.stream()
+                sessionList = sessionList.stream()
                         .filter(s -> s.getUser().getUserId() == user.getUserId())
-                        .forEach(s -> s.setVehicle(vehicleRepository.getById(s.getVehicle().getVehicleId()).get()));
+                        .peek(s -> s.setVehicle(vehicleRepository.getById(s.getVehicle()
+                                .getVehicleId()).get()))
+                        .toList();
 
             }
 

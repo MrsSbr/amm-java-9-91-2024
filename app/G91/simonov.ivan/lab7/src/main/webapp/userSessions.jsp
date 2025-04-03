@@ -73,8 +73,8 @@
                 <td class="user-info">
                         ${session.user.password}
                 </td>
+                <td>${session.vehicle.vehicleId}</td>
             </c:if>
-            <td>${session.vehicle.vehicleId}</td>
             <td>${session.vehicle.registrationNumber}</td>
             <td>${session.vehicle.model}</td>
             <td>${session.vehicle.brand}</td>

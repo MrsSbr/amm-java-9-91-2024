@@ -34,5 +34,6 @@
     <br>
     <button type="submit">Зарегистрироваться</button>
 </form>
+<p><a href="index.jsp">Перейти на главную страницу</a></p>
 </body>
 </html>

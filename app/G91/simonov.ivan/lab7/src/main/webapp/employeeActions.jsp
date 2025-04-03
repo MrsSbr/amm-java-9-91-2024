@@ -10,5 +10,6 @@
     <li><a href="addSession.jsp">Добавить сессию</a></li>
     <li><a href="userSessions.jsp">Просмотреть сессии</a></li>
 </ul>
+<p><a href="index.jsp">Перейти на главную страницу</a></p>
 </body>
 </html>

@@ -34,7 +34,7 @@ public class SessionRepository implements ParkingRepository<Session> {
                 """;
 
         try (Connection connection = dataSource.getConnection();
-                PreparedStatement stmt = connection.prepareStatement(sql)) {
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
 
@@ -93,9 +93,9 @@ public class SessionRepository implements ParkingRepository<Session> {
     public int save(Session entity) {
 
         String sql = """
-               INSERT INTO "Session" (Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate)
-               VALUES (?, ?, ?, ?, ?)
-               """;
+                INSERT INTO "Session" (Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate)
+                VALUES (?, ?, ?, ?, ?)
+                """;
 
         try (Connection connection = dataSource.getConnection()) {
 
