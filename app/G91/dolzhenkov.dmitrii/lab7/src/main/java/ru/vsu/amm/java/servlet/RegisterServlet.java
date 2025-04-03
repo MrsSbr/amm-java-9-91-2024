@@ -26,8 +26,8 @@ public class RegisterServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher(REGISTER_PAGE).forward(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        showAccessInterface(request, response);
     }
 
     @Override
@@ -48,5 +48,11 @@ public class RegisterServlet extends HttpServlet {
             getServletContext().getRequestDispatcher(REGISTER_PAGE).forward(req, resp);
         }
 
+    }
+
+    private void showAccessInterface(HttpServletRequest request,
+                                     HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher(REGISTER_PAGE).forward(request, response);
     }
 }

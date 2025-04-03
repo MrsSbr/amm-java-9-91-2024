@@ -18,7 +18,7 @@ import java.io.IOException;
 @WebServlet(name = "AuthController", urlPatterns = "/signin")
 public class AuthController extends HttpServlet {
 
-    private static final String AUTH_VIEW  = "/auth.jsp";
+    private static final String AUTH_VIEW  = "/signin.jsp";
     private static final String MAIN_UI  = "/index.jsp";
     private final AuthService authService;
 
@@ -27,8 +27,8 @@ public class AuthController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher(AUTH_VIEW).forward(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        showAccessInterface(request, response);
     }
 
     @Override
@@ -46,5 +46,11 @@ public class AuthController extends HttpServlet {
             req.setAttribute(ErrorMessages.ERROR_MESSAGE, e.getMessage());
             getServletContext().getRequestDispatcher(AUTH_VIEW).forward(req, resp);
         }
+    }
+
+    private void showAccessInterface(HttpServletRequest request,
+                                     HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher(AUTH_VIEW).forward(request, response);
     }
 }
