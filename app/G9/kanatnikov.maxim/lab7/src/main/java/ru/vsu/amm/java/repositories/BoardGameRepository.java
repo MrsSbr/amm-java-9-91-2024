@@ -21,8 +21,10 @@ public class BoardGameRepository implements Repository<BoardGame> {
 
     @Override
     public Optional<BoardGame> findById(Long id) throws SQLException {
-        final String query = "SELECT Board_Game_Id, Name, Price, Genre, Min_Age, Publisher, Description" +
-                " FROM BoardGame WHERE Board_Game_Id = ?";
+        final String query = """
+                SELECT Board_Game_Id, "Name", Price, Genre, Min_Age, Publisher, Description
+                FROM BoardGame WHERE Board_Game_Id = ?
+                """;
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
@@ -51,8 +53,10 @@ public class BoardGameRepository implements Repository<BoardGame> {
     }
 
     public Optional<BoardGame> findByName(String name) throws SQLException {
-        final String query = "SELECT Board_Game_Id, Name, Price, Genre, Min_Age, Publisher, Description" +
-                " FROM BoardGame WHERE Name = ?";
+        final String query = """
+                SELECT Board_Game_Id, "Name", Price, Genre, Min_Age, Publisher, Description
+                FROM BoardGame WHERE "Name" = ?
+                """;
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
@@ -81,8 +85,10 @@ public class BoardGameRepository implements Repository<BoardGame> {
     }
 
     public Optional<BoardGame> findByPublisher(String publisher) throws SQLException {
-        final String query = "SELECT Board_Game_Id, Name, Price, Genre, Min_Age, Publisher, Description" +
-                " FROM BoardGame WHERE Publisher = ?";
+        final String query = """
+                SELECT Board_Game_Id, "Name", Price, Genre, Min_Age, Publisher, Description
+                FROM BoardGame WHERE Publisher = ?
+                """;
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
@@ -112,8 +118,10 @@ public class BoardGameRepository implements Repository<BoardGame> {
 
     public List<BoardGame> findByGenre(Genre genre) throws SQLException {
         List<BoardGame> boardGames = new ArrayList<>();
-        final String query = "SELECT Board_Game_Id, Name, Price, Genre, Min_Age, Publisher, Description" +
-                " FROM BoardGame WHERE Genre = ?";
+        final String query = """
+                SELECT Board_Game_Id, "Name", Price, Genre, Min_Age, Publisher, Description
+                FROM BoardGame WHERE Genre = ?
+                """;
 
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -143,8 +151,10 @@ public class BoardGameRepository implements Repository<BoardGame> {
 
     public List<BoardGame> findByPrice(int minPrice, int maxPrice) throws SQLException {
         List<BoardGame> boardGames = new ArrayList<>();
-        final String query = "SELECT Board_Game_Id, Name, Price, Genre, Min_Age, Publisher, Description" +
-                " FROM BoardGame WHERE Price BETWEEN ? AND ?";
+        final String query = """
+                SELECT Board_Game_Id, "Name", Price, Genre, Min_Age, Publisher, Description
+                FROM BoardGame WHERE Price BETWEEN ? AND ?
+                """;
 
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -176,8 +186,10 @@ public class BoardGameRepository implements Repository<BoardGame> {
 
     public List<BoardGame> findByAge(int minAge) throws SQLException {
         List<BoardGame> boardGames = new ArrayList<>();
-        final String query = "SELECT Board_Game_Id, Name, Price, Genre, Min_Age, Publisher, Description" +
-                " FROM BoardGame WHERE Min_Age <= ?";
+        final String query = """
+                SELECT Board_Game_Id, "Name", Price, Genre, Min_Age, Publisher, Description
+                FROM BoardGame WHERE Min_Age <= ?
+                """;
 
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -210,8 +222,10 @@ public class BoardGameRepository implements Repository<BoardGame> {
     public List<BoardGame> findAll() throws SQLException {
         List<BoardGame> boardGames = new ArrayList<>();
 
-        final String query = "SELECT Board_Game_Id, Name, Price, Genre, Min_Age, Publisher, Description" +
-                " FROM BoardGame";
+        final String query = """
+                SELECT Board_Game_Id, "Name", Price, Genre, Min_Age, Publisher, Description
+                FROM BoardGame
+                """;
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
@@ -240,8 +254,10 @@ public class BoardGameRepository implements Repository<BoardGame> {
 
     @Override
     public void update(BoardGame entity) throws SQLException {
-        final String query = "UPDATE BoardGame SET Name = ?, Price = ?, Genre = ?, Min_Age = ?, " +
-                "Publisher = ?, Description = ? WHERE Board_Game_Id = ?";
+        final String query = """
+                UPDATE BoardGame SET "Name" = ?, Price = ?, Genre = ?, Min_Age = ?,
+                Publisher = ?, Description = ? WHERE Board_Game_Id = ?
+                """;
 
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -262,8 +278,10 @@ public class BoardGameRepository implements Repository<BoardGame> {
 
     @Override
     public void save(BoardGame entity) throws SQLException {
-        final String query = "INSERT INTO BoardGame (Name, Price, Genre, Min_Age, Publisher, Description) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+        final String query = """
+                INSERT INTO BoardGame ("Name", Price, Genre, Min_Age, Publisher, Description)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """;
 
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
