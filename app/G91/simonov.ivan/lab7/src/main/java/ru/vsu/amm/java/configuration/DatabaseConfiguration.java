@@ -26,7 +26,7 @@ public class DatabaseConfiguration {
 
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
 
-        dataSource.setUrl(properties.getProperty("db.url"));
+        dataSource.setUrl(properties.getProperty("db.url") + "?useUnicode=true&characterEncoding=UTF-8");
         dataSource.setUser(properties.getProperty("db.username"));
         dataSource.setPassword(properties.getProperty("db.password"));
 

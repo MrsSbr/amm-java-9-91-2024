@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.mapper;
 
+import javax.servlet.http.HttpServletRequest;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.enums.Role;
 
@@ -11,6 +12,33 @@ import java.sql.SQLException;
 public class UserMapper implements EntityMapper<User> {
 
     public UserMapper() {}
+
+    public PreparedStatement mapAuthorisation(Connection connection,
+                                              String login,
+                                              String password,
+                                              String sql) throws SQLException {
+
+        PreparedStatement stmt = connection.prepareStatement(sql);
+
+        stmt.setString(1, login);
+        stmt.setString(2, password);
+
+        return stmt;
+    }
+
+    public User mapRequestToObject(HttpServletRequest request) {
+
+        User user = new User();
+
+        user.setLastName(request.getParameter("lastName"));
+        user.setFirstName(request.getParameter("firstName"));
+        user.setPatronymic(request.getParameter("patronymic"));
+        user.setLogin(request.getParameter("login"));
+        user.setPassword(request.getParameter("password"));
+        user.setRole(Role.USER);
+
+        return user;
+    }
 
     @Override
     public User mapRowToObject(ResultSet rs) throws SQLException {
