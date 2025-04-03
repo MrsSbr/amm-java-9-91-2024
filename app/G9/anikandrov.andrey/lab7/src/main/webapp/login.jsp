@@ -104,10 +104,5 @@
     <div class="error-message"><%= errorMessage %></div>
     <% } %>
 </div>
-
-
-
-
-
 </body>
 </html>

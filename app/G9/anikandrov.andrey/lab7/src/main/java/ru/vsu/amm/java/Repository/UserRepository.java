@@ -103,8 +103,6 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
     @Override
     public void save(UserEntity entity) throws SQLException {
 
-        System.out.println("Save1");
-
         final String query = "INSERT INTO User_Table (User_Name, User_Password, User_Role, Phone, Birth_Date) VALUES (?, ?, ?, ?, ?)";
 
         Connection connection = dataSource.getConnection();

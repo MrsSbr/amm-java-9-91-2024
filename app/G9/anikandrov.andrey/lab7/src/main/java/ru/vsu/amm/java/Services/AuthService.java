@@ -21,6 +21,10 @@ public class AuthService {
             UserEntity user = userRepository.findByUserName(name).orElseThrow(
                     () -> new NotFoundException("Login Error")
             );
+
+            if (!user.getUserPassword().equals(password)) {
+                throw new NotFoundException("Invalid Password");
+            }
         } catch (SQLException e) {
             throw new DatabaseException(e.getMessage());
         }
