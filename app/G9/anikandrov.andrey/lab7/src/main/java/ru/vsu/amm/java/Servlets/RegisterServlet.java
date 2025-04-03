@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.Servlets;
 
+import ru.vsu.amm.java.Exception.AlreadyExistException;
 import ru.vsu.amm.java.Exception.DatabaseException;
 import ru.vsu.amm.java.Exception.NotFoundException;
 import ru.vsu.amm.java.Services.AuthService;
@@ -23,7 +24,6 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
-        System.out.println("login"+login);
         String password = req.getParameter("password");
 
         AuthService authService = new AuthService();
@@ -34,7 +34,7 @@ public class RegisterServlet extends HttpServlet {
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", login);
             resp.sendRedirect("/home.jsp");
-        } catch (NotFoundException | DatabaseException e) {
+        } catch (AlreadyExistException | DatabaseException e) {
             req.setAttribute("errorMessage", e.getMessage());
             getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
         }

@@ -5,7 +5,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
+            background-color: white;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -76,7 +76,7 @@
     </style>
 </head>
 <body>
-<img src="logo.jpg" alt="Логотип" class="header-image">
+<img src="logo.png" alt="Логотип" class="header-image">
 
 <div class="login-container">
     <h2>Вход</h2>
