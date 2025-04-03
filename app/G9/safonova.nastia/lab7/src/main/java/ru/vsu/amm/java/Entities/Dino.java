@@ -1,6 +1,6 @@
 public class Dino {
     private long idDino;
-    private int weight;
+    private double weight;
     private LocalDate dateOfDeath;
     private LocalDate dateOfBirthDino;
     private Kind kindOfDino;
@@ -8,7 +8,7 @@ public class Dino {
 
     public Dino() {}
 
-    public Dino(long idDino, int weight, LocalDate dateOfDeath, LocalDate dateOfBirthDino, Kind kindOfDino, String nameDino) {
+    public Dino(long idDino, double weight, LocalDate dateOfDeath, LocalDate dateOfBirthDino, Kind kindOfDino, String nameDino) {
         this.idDino = idDino;
         this.weight = weight;
         this.dateOfDeath = dateOfDeath;
@@ -25,11 +25,11 @@ public class Dino {
         this.idDino = idDino;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
