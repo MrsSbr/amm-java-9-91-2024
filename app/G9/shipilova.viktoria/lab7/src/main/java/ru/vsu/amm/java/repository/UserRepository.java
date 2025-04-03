@@ -67,7 +67,7 @@ public class UserRepository implements CrudRepository<User> {
     }
 
     @Override
-    public void save(User user) {
+    public Long save(User user) {
         String sql = "INSERT INTO Users (Password, PhoneNumber, Email, Login) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DataSourceProvider.getDataSource().getConnection();
@@ -81,8 +81,12 @@ public class UserRepository implements CrudRepository<User> {
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
+            if (e.getSQLState().equals("23505")) {
+                throw new RuntimeException("Duplicate key violation: " + e.getMessage(), e);
+            }
             throw new RuntimeException(e);
         }
+        return user.getId();
     }
 
     @Override

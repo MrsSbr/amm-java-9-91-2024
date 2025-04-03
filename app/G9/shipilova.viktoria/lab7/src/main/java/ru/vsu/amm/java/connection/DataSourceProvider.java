@@ -12,6 +12,7 @@ public class DataSourceProvider {
     private static final Logger logger = Logger.getLogger(DataSourceProvider.class.getName());
 
     private static DataSource dataSource;
+    private static DataSource testDataSource;
 
     private static void loadProperties(HikariConfig config) {
         DatabaseProperties props = new DatabaseProperties();
@@ -29,6 +30,9 @@ public class DataSourceProvider {
     }
 
     public static DataSource getDataSource() {
+        if (testDataSource != null) {
+            return testDataSource; // Используем тестовую базу
+        }
         if (dataSource == null) {
             HikariConfig config = new HikariConfig();
             loadProperties(config);
@@ -37,5 +41,18 @@ public class DataSourceProvider {
             logger.log(Level.INFO, "Loaded properties from " + config.getJdbcUrl());
         }
         return dataSource;
+    }
+
+    public static void setTestDataSource(DataSource testDataSource) {
+        DataSourceProvider.testDataSource = testDataSource;
+        logger.log(Level.INFO, "Тестовый DataSource успешно установлен");
+    }
+
+    /**
+     * Сбрасывает тестовый DataSource, возвращаясь к основному.
+     */
+    public static void resetTestDataSource() {
+        testDataSource = null;
+        logger.log(Level.INFO, "Тестовый DataSource сброшен");
     }
 }
