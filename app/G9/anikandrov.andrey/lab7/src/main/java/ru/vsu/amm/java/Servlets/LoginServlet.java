@@ -1,6 +1,5 @@
 package ru.vsu.amm.java.Servlets;
 
-import lombok.AllArgsConstructor;
 import ru.vsu.amm.java.Services.AuthService;
 import ru.vsu.amm.java.Exception.DatabaseException;
 import ru.vsu.amm.java.Exception.NotFoundException;
