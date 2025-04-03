@@ -14,25 +14,19 @@ import java.util.Optional;
 
 public class DefaultAuthService implements AuthService {
     private final UserRepository userRepository;
-    private final BcryptPasswordEncoder bcryptPasswordEncoder;
+    private final BcryptPasswordEncoder passwordEncoder;
 
     public DefaultAuthService() {
-        this.bcryptPasswordEncoder = new BcryptPasswordEncoder();
+        this.passwordEncoder = new BcryptPasswordEncoder(12);
         this.userRepository = new UserRepository();
     }
 
     @Override
     public void login(LoginRequest request) {
-        Optional<UserEntity> userOptional = userRepository.findByName(request.name());
+        UserEntity user = userRepository.findByName(request.name())
+                .orElseThrow(() -> new WrongUserCredentialsException(ErrorMessages.USER_NOT_FOUND));
 
-        if (userOptional.isEmpty()) {
-            throw new WrongUserCredentialsException(ErrorMessages.USER_NOT_FOUND);
-        }
-
-        if (!bcryptPasswordEncoder.checkPassword(userOptional.get().getPassword(), request.password())) {
-            throw new WrongUserCredentialsException(ErrorMessages.INCORRECT_PASSWORD);
-        }
-
+        performPasswordCheck(user.getPassword(), request.password());
     }
 
     @Override
@@ -43,8 +37,14 @@ public class DefaultAuthService implements AuthService {
             throw new WrongUserCredentialsException(ErrorMessages.USER_ALREADY_EXISTS);
         } else {
             UserEntity userEntity = new UserEntity(null, request.name(),
-                    bcryptPasswordEncoder.hashPassword(request.password()));
+                    passwordEncoder.hashPassword(request.password()));
             userRepository.save(userEntity);
+        }
+    }
+
+    private void performPasswordCheck(String storedHash, String rawPassword) {
+        if (!passwordEncoder.checkPassword(storedHash, rawPassword)) {
+            throw new WrongUserCredentialsException(ErrorMessages.INCORRECT_PASSWORD);
         }
     }
 }
