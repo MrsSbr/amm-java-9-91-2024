@@ -2,21 +2,22 @@ package ru.vsu.amm.java.Entities;
 
 import ru.vsu.amm.java.Enums.Role;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class User {
     private long userId;
     private String surname;
     private String name;
     private String patronymicname;
-    private Date birthday;
+    private LocalDate birthday;
     private String email;
     private String phoneNumber;
     private Role role;
 
-    public User() {}
+    public User() {
+    }
 
-    public User(long userId, String surname, String name, String patronymicname, Date birthday,
+    public User(long userId, String surname, String name, String patronymicname, LocalDate birthday,
                 String email, String phoneNumber, Role role) {
         this.userId = userId;
         this.surname = surname;
@@ -28,27 +29,67 @@ public class User {
         this.role = role;
     }
 
-    public long getUserId() { return userId; }
-    public void setUserId(long userId) { this.userId = userId; }
+    public long getUserId() {
+        return userId;
+    }
 
-    public String getSurname() { return surname; }
-    public void setSurname(String surname) { this.surname = surname; }
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getSurname() {
+        return surname;
+    }
 
-    public String getPatronymicname() { return patronymicname; }
-    public void setPatronymicname() {this.patronymicname = patronymicname; }
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
 
-    public Date getBirthday() { return birthday; }
-    public void setBirthday(Date birthday) { this.birthday = birthday; }
+    public String getName() {
+        return name;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public String getPatronymicname() {
+        return patronymicname;
+    }
 
-    public Role getRole() { return role; }
-    public void setRole(Role role) { this.role = role; }
+    public void setPatronymicname() {
+        this.patronymicname = patronymicname;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

@@ -5,7 +5,8 @@ public class SmartphoneInOrder {
     private int smartphoneId;
     public int amount;
 
-    public SmartphoneInOrder() {}
+    public SmartphoneInOrder() {
+    }
 
     public SmartphoneInOrder(long orderNum, int smartphoneId, int amount) {
         this.orderNum = orderNum;
@@ -13,12 +14,27 @@ public class SmartphoneInOrder {
         this.amount = amount;
     }
 
-    public long getOrderNum() { return orderNum; }
-    public void setOrderNum(long orderNum) { this.orderNum = orderNum; }
+    public long getOrderNum() {
+        return orderNum;
+    }
 
-    public long getSmartphoneId() { return smartphoneId; }
-    public void setSmartphoneId(int smartphoneId) { this.smartphoneId = smartphoneId; }
+    public void setOrderNum(long orderNum) {
+        this.orderNum = orderNum;
+    }
 
-    public int getAmount() { return amount; }
-    public void setAmount(int amount) { this.amount = amount; }
+    public long getSmartphoneId() {
+        return smartphoneId;
+    }
+
+    public void setSmartphoneId(int smartphoneId) {
+        this.smartphoneId = smartphoneId;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 }
