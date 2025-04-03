@@ -75,7 +75,7 @@ public class PurchaseHistoryRepository implements Repository<PurchaseHistory> {
     @Override
     public void update(PurchaseHistory entity) throws SQLException {
         final String query = "UPDATE PurchaseHistory SET Payment = ?, " +
-                "User_Id = ?, Board_Game_Id = ? WHERE Order_Number = ?)";
+                "User_Id = ?, Board_Game_Id = ? WHERE Order_Number = ?";
 
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -93,7 +93,7 @@ public class PurchaseHistoryRepository implements Repository<PurchaseHistory> {
 
     @Override
     public void save(PurchaseHistory entity) throws SQLException {
-        final String query = "INSERT INTO PurchaseHistory (Payment, User_Id, Board_Game_Id VALUES (?, ?, ?)";
+        final String query = "INSERT INTO PurchaseHistory (Payment, User_Id, Board_Game_Id) VALUES (?, ?, ?)";
 
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
