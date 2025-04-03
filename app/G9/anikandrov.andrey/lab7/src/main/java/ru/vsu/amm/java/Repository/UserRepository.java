@@ -5,11 +5,7 @@ import ru.vsu.amm.java.Entities.UserEntity;
 import ru.vsu.amm.java.Enums.Roles;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.Date;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,17 +102,31 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
 
     @Override
     public void save(UserEntity entity) throws SQLException {
+
         final String query = "INSERT INTO User_Table (User_Name, User_Password, User_Role, Phone, Birth_Date) VALUES (?, ?, ?, ?, ?)";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
-
         preparedStatement.setString(1, entity.getUserName());
         preparedStatement.setString(2, entity.getUserPassword());
-        preparedStatement.setString(3, entity.getUserRole().name());
-        preparedStatement.setString(4, entity.getPhone());
-        preparedStatement.setDate(5, Date.valueOf(entity.getBirthDate()));
+        if (entity.getUserRole() == null) {
+            preparedStatement.setNull(3, Types.VARCHAR);
+        } else {
+            preparedStatement.setString(3, entity.getUserRole().name());
+        }
+
+        if (entity.getPhone() == null || entity.getPhone().isEmpty()) {
+            preparedStatement.setNull(4, Types.VARCHAR);
+        } else {
+            preparedStatement.setString(4, entity.getPhone());
+        }
+
+        if (entity.getBirthDate() == null) {
+            preparedStatement.setNull(5, Types.DATE);
+        } else {
+            preparedStatement.setDate(5, Date.valueOf(entity.getBirthDate()));
+        }
 
         preparedStatement.execute();
     }

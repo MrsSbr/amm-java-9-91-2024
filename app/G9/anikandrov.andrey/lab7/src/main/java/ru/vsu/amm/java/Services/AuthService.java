@@ -31,7 +31,7 @@ public class AuthService {
     public void register(String name, String password) {
         try {
             if (userRepository.findByUserName(name).isEmpty()) {
-                UserEntity customer = new UserEntity(null, name, password);
+                UserEntity customer = new UserEntity(name, password);
                 userRepository.save(customer);
             } else {
                 throw new AlreadyExistException("User With Such UserName Already Exist");

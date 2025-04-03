@@ -27,17 +27,13 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        System.out.println(login + " " + password);
-
         AuthService authService = new AuthService();
         try {
-            System.out.println("QQQ");
             authService.login(login, password);
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", login);
             resp.sendRedirect("/home.jsp");
         } catch (NotFoundException | DatabaseException e) {
-            System.out.println("ERRRORRRR");
             req.setAttribute("errorMessage", e.getMessage());
             getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
         }

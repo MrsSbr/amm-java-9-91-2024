@@ -32,7 +32,7 @@ public class RegisterServlet extends HttpServlet {
 
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", login);
-            resp.sendRedirect("/index.jsp");
+            resp.sendRedirect("/home.jsp");
         } catch (NotFoundException | DatabaseException e) {
             req.setAttribute("errorMessage", e.getMessage());
             getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
