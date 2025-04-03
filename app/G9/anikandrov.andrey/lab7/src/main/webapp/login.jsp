@@ -76,7 +76,7 @@
     </style>
 </head>
 <body>
-<img src="" alt="Логотип" class="header-image">
+<img src="logo.jpg" alt="Логотип" class="header-image">
 
 <div class="login-container">
     <h2>Вход</h2>
