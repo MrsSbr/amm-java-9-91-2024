@@ -24,6 +24,8 @@ public class PostRepository implements Repository<Post> {
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+            logger.info("Trying to connect and do query getById posts by ID:");
+
             pstmt.setObject(1, id);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
@@ -49,6 +51,8 @@ public class PostRepository implements Repository<Post> {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
+            logger.info("Trying to connect and do query get all posts");
+
             while (rs.next()) {
                 Post post = new Post();
                 post.setId(UUID.fromString(rs.getString("ID")));
@@ -72,6 +76,8 @@ public class PostRepository implements Repository<Post> {
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+            logger.info("Trying to connect and do query create Post");
+
             pstmt.setObject(1, newId);
             pstmt.setObject(2, post.getUserId());
             pstmt.setString(3, post.getContent());
@@ -91,6 +97,8 @@ public class PostRepository implements Repository<Post> {
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+            logger.info("Trying to connect and do query update by post: " + post.getClass().getName());
+
             pstmt.setString(1, post.getContent());
             pstmt.setObject(2, post.getId());
 
@@ -108,6 +116,8 @@ public class PostRepository implements Repository<Post> {
 
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            logger.info("Trying to connect and do query delete by ID: " + id);
 
             pstmt.setObject(1, id);
 
@@ -129,6 +139,8 @@ public class PostRepository implements Repository<Post> {
 
             pstmt.setObject(1, userId);
             ResultSet rs = pstmt.executeQuery();
+
+            logger.info("Trying to connect and do query getPostByUserId");
 
             while (rs.next()) {
                 UUID postId = (UUID) rs.getObject("ID");

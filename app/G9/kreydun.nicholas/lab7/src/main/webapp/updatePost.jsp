@@ -8,12 +8,9 @@
     Post post = null;
 
     if (postIdParam != null) {
-        try {
-            UUID postId = UUID.fromString(postIdParam);
-            PostRepository postRepository = new PostRepository();
-            post = postRepository.getById(postId);
-        } catch (IllegalArgumentException e) {
-        }
+        UUID postId = UUID.fromString(postIdParam);
+        PostRepository postRepository = new PostRepository();
+        post = postRepository.getById(postId);
     }
 %>
 

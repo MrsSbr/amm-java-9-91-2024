@@ -1,2 +1,2 @@
-мар. 21, 2025 8:02:31 PM ru.vsu.amm.java.Main main
+апр. 03, 2025 6:41:45 PM ru.vsu.amm.java.Main main
 INFO: Starting Embedded Tomcat...

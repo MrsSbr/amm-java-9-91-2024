@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.UUID;
 import java.time.LocalTime;
 
+import static ru.vsu.amm.java.services.Logg.logger;
+
 @WebServlet("/createPost")
 public class CreatePostServlet extends HttpServlet {
     @Override
@@ -20,6 +22,7 @@ public class CreatePostServlet extends HttpServlet {
         String userIdParam = request.getParameter("userId");
         UUID userId;
 
+        logger.info("");
         try {
             userId = UUID.fromString(userIdParam);
         } catch (IllegalArgumentException e) {

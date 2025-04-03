@@ -4,8 +4,12 @@ import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 import ru.vsu.amm.java.servlet.*;
 
+import static ru.vsu.amm.java.services.Logg.logger;
+
 public class ServletConfig {
     public static void registerServlets(Tomcat tomcat, Context ctx) {
+        logger.info("Registering servlets...");
+
         Tomcat.addServlet(ctx, "CreatePostServlet", new CreatePostServlet());
         ctx.addServletMappingDecoded("/createPost", "CreatePostServlet");
 
@@ -35,5 +39,7 @@ public class ServletConfig {
 
         Tomcat.addServlet(ctx, "DeleteUserServlet", new DeleteUserServlet());
         ctx.addServletMappingDecoded("/deleteUser", "DeleteUserServlet");
+
+        logger.info("Registered servlets successfully");
     }
 }
