@@ -17,6 +17,8 @@ public class AuthService {
     }
 
     public void login(String name, String password) {
+        System.out.println('C');
+
         try {
             UserEntity user = userRepository.findByUserName(name).orElseThrow(
                     () -> new NotFoundException("Login Error")

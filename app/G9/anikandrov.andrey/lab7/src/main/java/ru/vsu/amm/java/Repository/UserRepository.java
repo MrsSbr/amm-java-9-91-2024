@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -52,26 +53,29 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
     public Optional<UserEntity> findByUserName(String username) throws SQLException {
         final String query = "SELECT User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date FROM User_Table WHERE User_Name = ?";
 
-        Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, username);
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-        preparedStatement.execute();
+            preparedStatement.setString(1, username);
 
-        ResultSet resultSet = preparedStatement.getResultSet();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    Roles role = Roles.valueOf(resultSet.getString("User_Role"));
 
-        if (resultSet.next()) {
-            Roles role = Roles.valueOf(resultSet.getString("User_Role"));
-            return Optional.of(new UserEntity(
-                    resultSet.getLong("User_ID"),
-                    resultSet.getString("User_Name"),
-                    resultSet.getString("User_Password"),
-                    role,
-                    resultSet.getString("Phone"),
-                    resultSet.getDate("Birth_Date").toLocalDate()
-            ));
+                    Date birthDate = resultSet.getDate("Birth_Date");
+                    LocalDate localBirthDate = (birthDate != null) ? birthDate.toLocalDate() : null;
+
+                    return Optional.of(new UserEntity(
+                            resultSet.getLong("User_ID"),
+                            resultSet.getString("User_Name"),
+                            resultSet.getString("User_Password"),
+                            role,
+                            resultSet.getString("Phone"),
+                            localBirthDate
+                    ));
+                }
+            }
         }
-
         return Optional.empty();
     }
 

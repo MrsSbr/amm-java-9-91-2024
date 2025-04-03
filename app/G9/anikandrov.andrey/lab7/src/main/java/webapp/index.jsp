@@ -1,1 +1,0 @@
-<h1>indexJava7</h1>
