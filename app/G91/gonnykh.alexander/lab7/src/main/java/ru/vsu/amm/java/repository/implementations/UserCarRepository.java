@@ -3,6 +3,7 @@ package ru.vsu.amm.java.repository.implementations;
 import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.UserCarEntity;
+import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.mappers.UserCarMapper;
 import ru.vsu.amm.java.repository.interfaces.CrudRepository;
 import ru.vsu.amm.java.utils.ErrorMessages;
@@ -38,7 +39,7 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
             }
         } catch (SQLException e) {
             log.error(ErrorMessages.FIND_USER_CAR_BY_ID + id, e);
-            throw new SQLException(ErrorMessages.FIND_USER_CAR_BY_ID + id, e);
+            throw new DataAccessException(ErrorMessages.FIND_USER_CAR_BY_ID + id, e);
         }
         return Optional.empty();
     }
@@ -57,7 +58,7 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
             }
         } catch (SQLException e) {
             log.error(ErrorMessages.FIND_ALL_USER_CARS, e);
-            throw new SQLException(ErrorMessages.FIND_ALL_USER_CARS, e);
+            throw new DataAccessException(ErrorMessages.FIND_ALL_USER_CARS, e);
         }
     }
 
@@ -74,7 +75,7 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             log.error(ErrorMessages.SAVE_USER_CAR, e);
-            throw new SQLException(ErrorMessages.SAVE_USER_CAR, e);
+            throw new DataAccessException(ErrorMessages.SAVE_USER_CAR, e);
         }
     }
 
@@ -92,7 +93,7 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             log.error(ErrorMessages.UPDATE_USER_CAR, e);
-            throw new SQLException(ErrorMessages.UPDATE_USER_CAR, e);
+            throw new DataAccessException(ErrorMessages.UPDATE_USER_CAR, e);
         }
     }
 
@@ -105,7 +106,7 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             log.error(ErrorMessages.DELETE_USER_CAR_BY_ID + id, e);
-            throw new SQLException(ErrorMessages.DELETE_USER_CAR_BY_ID + id, e);
+            throw new DataAccessException(ErrorMessages.DELETE_USER_CAR_BY_ID + id, e);
         }
     }
 }
