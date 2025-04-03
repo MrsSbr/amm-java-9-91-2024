@@ -21,8 +21,10 @@ public class UserRepository implements Repository<UserEntity> {
 
     @Override
     public Optional<UserEntity> findById(Long id) throws SQLException {
-        final String query = "SELECT User_Id, First_Name, Last_Name, Patronymic, City, Email, Phone_Number, " +
-                "Password, Role FROM UserEntity WHERE User_Id = ?";
+        final String query = """
+                SELECT User_Id, First_Name, Last_Name, Patronymic, City, Email, Phone_Number,
+                "Password", "Role" FROM UserEntity WHERE User_Id = ?
+                """;
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
@@ -53,8 +55,10 @@ public class UserRepository implements Repository<UserEntity> {
     }
 
     public Optional<UserEntity> findByEmail(String email) throws SQLException {
-        final String query = "SELECT User_Id, First_Name, Last_Name, Patronymic, City, Email, Phone_Number, " +
-                "Password, Role FROM UserEntity WHERE Email = ?";
+        final String query = """
+                SELECT User_Id, First_Name, Last_Name, Patronymic, City, Email, Phone_Number,
+                "Password", "Role" FROM UserEntity WHERE Email = ?
+                """;
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
@@ -88,8 +92,10 @@ public class UserRepository implements Repository<UserEntity> {
     public List<UserEntity> findAll() throws SQLException {
         List<UserEntity> users = new ArrayList<>();
 
-        final String query = "SELECT User_Id, First_Name, Last_Name, Patronymic, City, Email, Phone_Number, " +
-                "Password, Role FROM UserEntity";
+        final String query = """
+                SELECT User_Id, First_Name, Last_Name, Patronymic, City, Email, Phone_Number,
+                "Password", "Role" FROM UserEntity
+                """;
 
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -121,8 +127,10 @@ public class UserRepository implements Repository<UserEntity> {
 
     @Override
     public void update(UserEntity entity) throws SQLException {
-        final String query = "UPDATE UserEntity SET First_Name = ?, Last_Name = ?, Patronymic = ?, " +
-                "City = ?, Email = ?, Phone_Number = ?, Password = ?, Role = ? WHERE User_Id = ?";
+        final String query = """
+                UPDATE UserEntity SET First_Name = ?, Last_Name = ?, Patronymic = ?,
+                City = ?, Email = ?, Phone_Number = ?, "Password" = ?, "Role" = ? WHERE User_Id = ?
+                """;
 
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -145,8 +153,10 @@ public class UserRepository implements Repository<UserEntity> {
 
     @Override
     public void save(UserEntity entity) throws SQLException {
-        final String query = "INSERT INTO UserEntity (First_Name, Last_Name, Patronymic, City, Email, " +
-                "Phone_Number, Password, Role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        final String query = """
+                INSERT INTO UserEntity (First_Name, Last_Name, Patronymic, City, Email,
+                Phone_Number, "Password", "Role") VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """;
 
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
