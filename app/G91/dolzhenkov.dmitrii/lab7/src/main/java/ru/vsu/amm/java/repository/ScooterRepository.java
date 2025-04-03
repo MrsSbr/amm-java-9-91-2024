@@ -1,6 +1,5 @@
 package ru.vsu.amm.java.repository;
 
-import lombok.RequiredArgsConstructor;
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.ScooterEntity;
 import ru.vsu.amm.java.mappers.ScooterMapper;
@@ -24,7 +23,7 @@ public class ScooterRepository implements CrudRepository<ScooterEntity>{
 
     @Override
     public Optional<ScooterEntity> findById(Long id) throws SQLException {
-        final String query = "SELECT * FROM Scooter WHERE id = ?";
+        final String query = "SELECT model, latitude, longitude, status  FROM Scooter WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
@@ -40,7 +39,7 @@ public class ScooterRepository implements CrudRepository<ScooterEntity>{
 
     @Override
     public List<ScooterEntity> findAll() throws SQLException {
-        final String query = "SELECT * FROM Scooter";
+        final String query = "SELECT id, model, latitude, longitude, status FROM Scooter";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {

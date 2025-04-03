@@ -1,6 +1,5 @@
 package ru.vsu.amm.java.repository;
 
-import lombok.RequiredArgsConstructor;
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.UserEntity;
 import ru.vsu.amm.java.mappers.UserMapper;
@@ -24,7 +23,7 @@ public class UserRepository implements CrudRepository<UserEntity>{
 
     @Override
     public Optional<UserEntity> findById(Long id) throws SQLException {
-        final String query = "SELECT * FROM User WHERE id = ?";
+        final String query = "SELECT name, password FROM User WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
@@ -40,7 +39,7 @@ public class UserRepository implements CrudRepository<UserEntity>{
 
     @Override
     public List<UserEntity> findAll() throws SQLException {
-        final String query = "SELECT * FROM User";
+        final String query = "SELECT id, name, password FROM User";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
