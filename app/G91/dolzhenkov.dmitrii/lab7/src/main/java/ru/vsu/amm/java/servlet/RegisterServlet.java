@@ -18,7 +18,7 @@ import java.io.IOException;
 @WebServlet(name = "RegisterServlet", urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
     private static final String REGISTER_PAGE = "/register.jsp";
-    private static final String HOME_PAGE = "/index.jsp";
+    private static final String MAIN_UI = "/index.jsp";
     private final AuthService authService;
 
     public RegisterServlet() {
@@ -33,7 +33,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String name = req.getParameter("name");
+        String name = req.getParameter("login");
         String password = req.getParameter("password");
 
         try {
@@ -41,8 +41,8 @@ public class RegisterServlet extends HttpServlet {
 
             authService.register(registerRequest);
             HttpSession session = req.getSession();
-            session.setAttribute("name", name);
-            resp.sendRedirect(HOME_PAGE);
+            session.setAttribute("login", name);
+            resp.sendRedirect(MAIN_UI);
         } catch (WrongUserCredentialsException | DataAccessException e) {
             req.setAttribute(ErrorMessages.ERROR_MESSAGE, e.getMessage());
             getServletContext().getRequestDispatcher(REGISTER_PAGE).forward(req, resp);
