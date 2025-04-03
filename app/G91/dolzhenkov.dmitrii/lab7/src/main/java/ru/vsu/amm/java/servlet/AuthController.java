@@ -3,7 +3,7 @@ package ru.vsu.amm.java.servlet;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.model.requests.LoginRequest;
-import ru.vsu.amm.java.service.implementations.DefaultAuthService;
+import ru.vsu.amm.java.service.implementations.UserAuthManager;
 import ru.vsu.amm.java.service.interfaces.AuthService;
 import ru.vsu.amm.java.utils.ErrorMessages;
 
@@ -23,7 +23,7 @@ public class AuthController extends HttpServlet {
     private final AuthService authService;
 
     public AuthController() {
-        this.authService = new DefaultAuthService();
+        this.authService = new UserAuthManager();
     }
 
     @Override
@@ -32,19 +32,19 @@ public class AuthController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("login");
-        String password = req.getParameter("password");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("login");
+        String password = request.getParameter("password");
 
         try {
             authService.login(new LoginRequest(name, password));
 
-            HttpSession session = req.getSession();
+            HttpSession session = request.getSession();
             session.setAttribute("login", name);
-            resp.sendRedirect(MAIN_UI );
+            response.sendRedirect(MAIN_UI);
         } catch (WrongUserCredentialsException | DataAccessException e) {
-            req.setAttribute(ErrorMessages.ERROR_MESSAGE, e.getMessage());
-            getServletContext().getRequestDispatcher(AUTH_VIEW).forward(req, resp);
+            request.setAttribute(ErrorMessages.ERROR_MESSAGE, e.getMessage());
+            getServletContext().getRequestDispatcher(AUTH_VIEW).forward(request, response);
         }
     }
 

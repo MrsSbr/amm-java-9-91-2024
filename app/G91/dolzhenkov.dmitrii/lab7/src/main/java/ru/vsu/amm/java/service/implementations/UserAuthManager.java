@@ -10,13 +10,11 @@ import ru.vsu.amm.java.service.interfaces.AuthService;
 import ru.vsu.amm.java.utils.BcryptPasswordEncoder;
 import ru.vsu.amm.java.utils.ErrorMessages;
 
-import java.util.Optional;
-
-public class DefaultAuthService implements AuthService {
+public class UserAuthManager implements AuthService {
     private final UserRepository userRepository;
     private final BcryptPasswordEncoder passwordEncoder;
 
-    public DefaultAuthService() {
+    public UserAuthManager() {
         this.passwordEncoder = new BcryptPasswordEncoder(12);
         this.userRepository = new UserRepository();
     }
@@ -31,14 +29,15 @@ public class DefaultAuthService implements AuthService {
 
     @Override
     public void register(RegisterRequest request) {
-        Optional<UserEntity> userOptional = userRepository.findByName(request.name());
-
-        if (userOptional.isPresent()) {
-            throw new WrongUserCredentialsException(ErrorMessages.USER_ALREADY_EXISTS);
-        } else {
-            UserEntity userEntity = new UserEntity(null, request.name(),
+        checkUserExistence(request.name());
+        UserEntity userEntity = new UserEntity(null, request.name(),
                     passwordEncoder.hashPassword(request.password()));
-            userRepository.save(userEntity);
+        userRepository.save(userEntity);
+    }
+
+    private void checkUserExistence(String username) {
+        if (userRepository.findByName(username).isPresent()) {
+            throw new WrongUserCredentialsException(ErrorMessages.USER_ALREADY_EXISTS);
         }
     }
 

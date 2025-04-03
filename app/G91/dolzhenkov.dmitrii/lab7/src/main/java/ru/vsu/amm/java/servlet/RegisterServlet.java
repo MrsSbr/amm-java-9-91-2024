@@ -3,7 +3,7 @@ package ru.vsu.amm.java.servlet;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.model.requests.RegisterRequest;
-import ru.vsu.amm.java.service.implementations.DefaultAuthService;
+import ru.vsu.amm.java.service.implementations.UserAuthManager;
 import ru.vsu.amm.java.service.interfaces.AuthService;
 import ru.vsu.amm.java.utils.ErrorMessages;
 
@@ -22,7 +22,7 @@ public class RegisterServlet extends HttpServlet {
     private final AuthService authService;
 
     public RegisterServlet() {
-        this.authService = new DefaultAuthService();
+        this.authService = new UserAuthManager();
     }
 
     @Override
@@ -31,21 +31,21 @@ public class RegisterServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String name = req.getParameter("login");
-        String password = req.getParameter("password");
+        String name = request.getParameter("login");
+        String password = request.getParameter("password");
 
         try {
             RegisterRequest registerRequest = new RegisterRequest(name, password);
 
             authService.register(registerRequest);
-            HttpSession session = req.getSession();
+            HttpSession session = request.getSession();
             session.setAttribute("login", name);
-            resp.sendRedirect(MAIN_UI);
+            response.sendRedirect(MAIN_UI);
         } catch (WrongUserCredentialsException | DataAccessException e) {
-            req.setAttribute(ErrorMessages.ERROR_MESSAGE, e.getMessage());
-            getServletContext().getRequestDispatcher(REGISTER_PAGE).forward(req, resp);
+            request.setAttribute(ErrorMessages.ERROR_MESSAGE, e.getMessage());
+            getServletContext().getRequestDispatcher(REGISTER_PAGE).forward(request, response);
         }
 
     }
