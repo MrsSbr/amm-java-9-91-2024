@@ -104,12 +104,12 @@ public class UserRepository implements CrudRepository<UserEntity>{
         }
     }
 
-    public Optional<UserEntity> findByName(String email) {
+    public Optional<UserEntity> findByName(String name) {
         final String query = "SELECT id, name, password FROM User WHERE name = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, email);
+            preparedStatement.setString(1, name);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -117,8 +117,8 @@ public class UserRepository implements CrudRepository<UserEntity>{
                 }
             }
         } catch (SQLException e) {
-            log.error(ErrorMessages.FIND_USER_BY_NAME + email, e);
-            throw new DataAccessException(ErrorMessages.FIND_USER_BY_NAME + email, e);
+            log.error(ErrorMessages.FIND_USER_BY_NAME + name, e);
+            throw new DataAccessException(ErrorMessages.FIND_USER_BY_NAME + name, e);
         }
         return Optional.empty();
     }
