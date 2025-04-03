@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.Entities;
+package ru.vsu.amm.java.Repository.Entities;
 
 public class Shareholder {
     private Integer id;

@@ -1,7 +1,9 @@
 package ru.vsu.amm.java.Repository;
 
+import ru.vsu.amm.java.Repository.Convertors.ResultSetToShareholderStocks;
 import ru.vsu.amm.java.DBConnection.DBConfiguration;
-import ru.vsu.amm.java.Entities.ShareholderStocks;
+import ru.vsu.amm.java.Repository.Entities.ShareholderStocks;
+import ru.vsu.amm.java.Repository.Interface.CRepositoryInterface;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ShareholderStocksRepository implements ICRepository<ShareholderStocks> {
+public class ShareholderStocksRepository implements CRepositoryInterface<ShareholderStocks> {
     private final DataSource dataSource;
 
     public ShareholderStocksRepository() {
@@ -27,11 +29,7 @@ public class ShareholderStocksRepository implements ICRepository<ShareholderStoc
         preparedStation.execute();
         var result = preparedStation.getResultSet();
         if (result.next()) {
-            return Optional.of(new ShareholderStocks(
-                    result.getInt(1),
-                    result.getInt(2),
-                    result.getInt(3)
-            ));
+            return Optional.of(ResultSetToShareholderStocks.Convert(result));
         }
         return Optional.empty();
     }
@@ -45,11 +43,7 @@ public class ShareholderStocksRepository implements ICRepository<ShareholderStoc
         List<ShareholderStocks> list = new ArrayList<>();
         var result = preparedStation.getResultSet();
         while (result.next()) {
-            list.add(new ShareholderStocks(
-                    result.getInt(1),
-                    result.getInt(2),
-                    result.getInt(3)
-            ));
+            list.add(ResultSetToShareholderStocks.Convert(result));
         }
         return list;
     }

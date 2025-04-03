@@ -1,7 +1,9 @@
 package ru.vsu.amm.java.Repository;
 
+import ru.vsu.amm.java.Repository.Convertors.ResultSetToStocks;
 import ru.vsu.amm.java.DBConnection.DBConfiguration;
-import ru.vsu.amm.java.Entities.Stocks;
+import ru.vsu.amm.java.Repository.Entities.Stocks;
+import ru.vsu.amm.java.Repository.Interface.RepositoryInterface;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class StocksRepository implements IRepository<Stocks>{
+public class StocksRepository implements RepositoryInterface<Stocks> {
 
     private final DataSource dataSource;
 
@@ -25,13 +27,20 @@ public class StocksRepository implements IRepository<Stocks>{
         preparedStation.execute();
         var result = preparedStation.getResultSet();
         if(result.next()){
-            return Optional.of(new Stocks(
-                    result.getInt(1),
-                    result.getDouble(2),
-                    result.getInt(3),
-                    result.getString(4),
-                    result.getDouble(5)
-            ));
+            return Optional.of(ResultSetToStocks.Convert(result));
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Stocks> getByName(String name) throws SQLException {
+        final String query = "SELECT id,price,count,name,edividends FROM stocks WHERE name = ?";
+        var connection = dataSource.getConnection();
+        var preparedStation = connection.prepareStatement(query);
+        preparedStation.setString(1,name);
+        preparedStation.execute();
+        var result = preparedStation.getResultSet();
+        if(result.next()){
+            return Optional.of(ResultSetToStocks.Convert(result));
         }
         return Optional.empty();
     }
@@ -45,13 +54,7 @@ public class StocksRepository implements IRepository<Stocks>{
         List<Stocks> list = new ArrayList<>();
         var result = preparedStation.getResultSet();
         while(result.next()){
-            list.add(new Stocks(
-                    result.getInt(1),
-                    result.getDouble(2),
-                    result.getInt(3),
-                    result.getString(4),
-                    result.getDouble(5)
-            ));
+            list.add(ResultSetToStocks.Convert(result));
         }
         return list;
     }
