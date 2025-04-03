@@ -1,9 +1,5 @@
 package ru.vsu.amm.java.Servlets;
 
-import ru.vsu.amm.java.Services.AuthService;
-import ru.vsu.amm.java.Exception.DatabaseException;
-import ru.vsu.amm.java.Exception.NotFoundException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,5 +20,4 @@ public class LogoutServlet extends HttpServlet {
         }
         resp.sendRedirect("/login");
     }
-
 }
