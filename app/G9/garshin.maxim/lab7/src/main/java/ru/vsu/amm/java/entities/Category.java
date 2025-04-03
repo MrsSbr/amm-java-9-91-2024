@@ -3,12 +3,10 @@ package ru.vsu.amm.java.entities;
 public class Category {
     private long categoryId;
     private String title;
-    private String description;
 
-    public Category(long categoryId, String title, String description) {
+    public Category(long categoryId, String title) {
         this.categoryId = categoryId;
         this.title = title;
-        this.description = description;
     }
 
     public long getCategoryId() {
@@ -25,13 +23,5 @@ public class Category {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }
