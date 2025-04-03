@@ -30,6 +30,7 @@ public class LoginServlet extends HttpServlet {
         AuthService authService = new AuthService();
         try {
             authService.login(login, password);
+
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", login);
             resp.sendRedirect("/home.jsp");
