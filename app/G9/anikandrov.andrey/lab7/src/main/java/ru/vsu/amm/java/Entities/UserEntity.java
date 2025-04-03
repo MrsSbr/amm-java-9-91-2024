@@ -2,46 +2,37 @@ package ru.vsu.amm.java.Entities;
 import ru.vsu.amm.java.Enums.Roles;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 public class UserEntity {
     private Long userID;
     private String userName;
-    private String password;
-    private Roles role;
+    private String userPassword;
+    private Roles userRole;
     private String phone;
     private LocalDate birthDate;
 
 
     public UserEntity() {}
 
-    public UserEntity(Long userID, String userName, String password) {
-        this.userID = userID;
+    public UserEntity(String userName, String userPassword) {
         this.userName = userName;
-        this.password = password;
+        this.userPassword = userPassword;
     }
 
-    public UserEntity(Long userID, String userName, String password, Roles role, String phone, LocalDate birthDate) {
+    public UserEntity(Long userID, String userName, String userPassword) {
         this.userID = userID;
         this.userName = userName;
-        this.password = password;
-        this.role = role;
+        this.userPassword = userPassword;
+    }
+
+    public UserEntity(Long userID, String userName, String userPassword, Roles userRole, String phone, LocalDate birthDate) {
+        this.userID = userID;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.userRole = userRole;
         this.phone = phone;
         this.birthDate = birthDate;
     }
-
-    public UserEntity(Long userID, String userName, String password, Roles role, String phone, Date birthDate) {
-        this.userID = userID;
-        this.userName = userName;
-        this.password = password;
-        this.role = role;
-        this.phone = phone;
-        this.birthDate = birthDate.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-    }
-
 
     public Long getUserID() {
         return userID;
@@ -59,20 +50,20 @@ public class UserEntity {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
-    public Roles getRole() {
-        return role;
+    public Roles getUserRole() {
+        return userRole;
     }
 
-    public void setRole(Roles role) {
-        this.role = role;
+    public void setUserRole(Roles userRole) {
+        this.userRole = userRole;
     }
 
     public String getPhone() {
@@ -93,5 +84,17 @@ public class UserEntity {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "user_ID=" + userID +
+                ", userName='" + userName + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", userRole=" + userRole +
+                ", phone='" + phone + '\'' +
+                ", birthDate=" + birthDate +
+                '}';
     }
 }
