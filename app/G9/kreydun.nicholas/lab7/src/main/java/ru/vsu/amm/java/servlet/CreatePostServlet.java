@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.vsu.amm.java.entities.Post;
 import ru.vsu.amm.java.repository.PostRepository;
+import ru.vsu.amm.java.services.PostService;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -38,7 +39,8 @@ public class CreatePostServlet extends HttpServlet {
         post.setCreatedAt(LocalTime.now());
 
         PostRepository postRepository = new PostRepository();
-        postRepository.create(post);
+        PostService postService = new PostService(postRepository);
+        postService.create(post);
 
         request.setAttribute("success", "Пост успешно создан!");
         response.sendRedirect("index");

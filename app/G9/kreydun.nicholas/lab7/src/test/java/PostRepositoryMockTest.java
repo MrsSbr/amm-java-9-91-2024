@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entities.Post;
 import ru.vsu.amm.java.repository.PostRepository;
+import ru.vsu.amm.java.services.PostService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +39,10 @@ class PostRepositoryMockTest {
     @Test
     void testGetPostById() {
         when(postRepository.getById(postId)).thenReturn(testPost);
+        PostService postService = new PostService(postRepository);
 
+        //тестируем пост сервис
+        // проверяем логику сервиса
         Post foundPost = postRepository.getById(postId);
 
         assertNotNull(foundPost);
