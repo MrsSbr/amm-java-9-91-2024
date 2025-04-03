@@ -11,7 +11,7 @@ public interface CrudRepository<T> {
 
     void update(T entity);
 
-    void save(T entity) throws SQLException;
+    Long save(T entity) throws SQLException;
 
     void delete(T entity);
 }

@@ -84,8 +84,8 @@ public class ExchangeRateRepository implements CrudRepository<ExchangeRate> {
     }
 
     @Override
-    public void save(ExchangeRate entity) {
-
+    public Long save(ExchangeRate entity) {
+        return null;
     }
 
     @Override
