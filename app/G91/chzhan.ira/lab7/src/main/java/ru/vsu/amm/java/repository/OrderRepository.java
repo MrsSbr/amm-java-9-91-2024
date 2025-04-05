@@ -1,5 +1,4 @@
 package ru.vsu.amm.java.repository;
-
 import ru.vsu.amm.java.config.DbConfig;
 import ru.vsu.amm.java.entities.Order;
 import ru.vsu.amm.java.entities.Toy;
@@ -41,5 +40,18 @@ public class OrderRepository {
             }
         }
         return orders;
+    }
+
+    public void save (Order order) throws SQLException {
+        final String query = "INSERT INTO orders (customer_id, toy_id, quantity, total_price) VALUES(?,?,?,?)";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setLong(1, order.getCustomerId());
+            preparedStatement.setLong(2, order.getToyId());
+            preparedStatement.setInt(3, order.getQuantity());
+            preparedStatement.setBigDecimal(4, order.getTotalPrice());
+            preparedStatement.executeUpdate();
+        }
     }
 }

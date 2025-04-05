@@ -18,6 +18,6 @@
         <input type="submit" value="ОК">
     </p>
 </form>
-<p><a href="/login">Войти</a></p>
+<p><a href="login">Войти</a></p>
 </body>
 </html>

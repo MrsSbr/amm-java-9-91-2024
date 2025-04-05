@@ -1,5 +1,7 @@
 package ru.vsu.amm.java.filter;
 
+import ru.vsu.amm.java.entities.Customer;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -12,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-@WebFilter(filterName = "AuthenticationFilter", urlPatterns = "/*")
+@WebFilter(filterName = "AuthentificationFilter", urlPatterns = "/*")
 public class AuthentificationFilter implements Filter {
 
     private static final Logger log = Logger.getLogger(AuthentificationFilter.class.getName());
@@ -26,9 +28,9 @@ public class AuthentificationFilter implements Filter {
 
         String loginUrl = req.getContextPath() + "/login";
         String registerUrl = req.getContextPath() + "/register";
-        boolean loggedIn = httpSession != null && httpSession.getAttribute("customer") != null;
-        boolean loginRequest = req.getRequestURI().equals(loginUrl) || req.getRequestURI().equals(loginUrl + ".jsp");
-        boolean registerRequest = req.getRequestURI().equals(registerUrl) || req.getRequestURI().equals("/register.jsp");
+        boolean loggedIn = httpSession != null && httpSession.getAttribute("customer") != null; // проверяем наличие объекта Customer
+        boolean loginRequest = req.getRequestURI().equals(loginUrl) || req.getRequestURI().endsWith("login.jsp");
+        boolean registerRequest = req.getRequestURI().equals(registerUrl) || req.getRequestURI().endsWith("register.jsp");
 
         if (loginRequest || registerRequest || loggedIn) {
             log.info("filter passed!");
