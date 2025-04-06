@@ -10,7 +10,11 @@ import util.TestDataSourceProvider;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class UserRepositoryTest {
 
@@ -80,10 +84,9 @@ public class UserRepositoryTest {
 
         assertNotNull(exception.getCause());
         SQLException sqlException = (SQLException) exception.getCause();
-        assertEquals("23505", sqlException.getSQLState());
+        assertEquals(UserRepository.CODE, sqlException.getSQLState());
         assertTrue(sqlException.getMessage().contains("Unique index or primary key violation"));
     }
-
 
     @Test
     public void testUpdate() {

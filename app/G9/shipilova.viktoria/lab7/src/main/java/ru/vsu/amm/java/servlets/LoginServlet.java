@@ -1,7 +1,7 @@
 package ru.vsu.amm.java.servlets;
 
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.repository.UserRepository;
+import ru.vsu.amm.java.services.UserService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,15 +14,15 @@ import java.nio.charset.StandardCharsets;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    private UserRepository userRepository = new UserRepository();
+    private UserService userService = new UserService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
-        User user = userRepository.findByLoginAndPassword(
-                request.getParameter("login"),
-                request.getParameter("password")
-        );
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
+
+        User user = userService.findUserByLoginAndPassword(login, password);
 
         if (user != null) {
             session.setAttribute("user", user);
@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
             session.removeAttribute("redirectTo");
             response.sendRedirect(redirectTo);
         } else {
-            String errorMessage = URLEncoder.encode("Неверный логин или пароль", StandardCharsets.UTF_8.toString());
+            String errorMessage = URLEncoder.encode("Неверный логин или пароль", StandardCharsets.UTF_8);
             response.sendRedirect("login.jsp?error=" + errorMessage);
         }
     }
