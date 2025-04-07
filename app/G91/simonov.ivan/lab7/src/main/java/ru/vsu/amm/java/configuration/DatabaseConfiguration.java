@@ -1,13 +1,22 @@
 package ru.vsu.amm.java.configuration;
 
 import org.postgresql.ds.PGSimpleDataSource;
+import ru.vsu.amm.java.repository.SessionRepository;
 
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static ru.vsu.amm.java.utils.LoggerInitializer.initializeLogger;
 
 public class DatabaseConfiguration {
+
+    private static final Logger logger = initializeLogger(
+            "app/G91/simonov.ivan/lab7/src/main/java/ru/vsu/amm/java/logs/database-configuration-logs.log",
+            SessionRepository.class.getName());
 
     public static DataSource getDataSource() {
 
@@ -20,7 +29,7 @@ public class DatabaseConfiguration {
 
         } catch (IOException e) {
 
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
 

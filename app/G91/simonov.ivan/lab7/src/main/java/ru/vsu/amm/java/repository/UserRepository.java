@@ -15,9 +15,14 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static ru.vsu.amm.java.utils.LoggerInitializer.initializeLogger;
+
 public class UserRepository implements ParkingRepository<User> {
 
-    private static final Logger logger = Logger.getLogger(UserRepository.class.getName());
+    private static final Logger logger = initializeLogger(
+            "app/G91/simonov.ivan/lab7/src/main/java/ru/vsu/amm/java/logs/user-repository-logs.log",
+            SessionRepository.class.getName());
+
     private final DataSource dataSource;
 
     public UserRepository() {
