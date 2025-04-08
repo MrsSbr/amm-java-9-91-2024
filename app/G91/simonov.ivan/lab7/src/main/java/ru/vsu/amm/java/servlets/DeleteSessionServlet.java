@@ -27,13 +27,13 @@ public class DeleteSessionServlet extends HttpServlet {
 
         try {
 
-            deleteService.deleteSession((Session) request.getAttribute("session"));
+            deleteService.deleteSession(Integer.parseInt(request.getParameter("sessionId")));
 
-            response.sendRedirect("userSessions.jsp?message=Session deleted successfully!");
+            response.sendRedirect("viewSessions?message=Session deleted successfully!");
 
         } catch (DeleteException e) {
 
-            response.sendRedirect(String.format("userSessions.jsp?error=%s", e.getMessage()));
+            response.sendRedirect(String.format("viewSessions?error=%s", e.getMessage()));
 
         }
 

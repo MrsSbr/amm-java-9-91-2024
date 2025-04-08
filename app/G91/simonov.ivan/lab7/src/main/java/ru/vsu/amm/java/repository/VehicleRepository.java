@@ -2,15 +2,13 @@ package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.Vehicle;
+import ru.vsu.amm.java.exceptions.AddException;
 import ru.vsu.amm.java.exceptions.DeleteException;
 import ru.vsu.amm.java.exceptions.UpdateException;
 import ru.vsu.amm.java.mapper.VehicleMapper;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -148,6 +146,7 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
         } catch (SQLException e) {
 
             logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new AddException(e.getMessage());
 
         }
 
@@ -179,7 +178,7 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
     }
 
     @Override
-    public void delete(Vehicle entity) {
+    public void delete(int id) {
 
         String sql = """
                 DELETE FROM Vehicle
@@ -189,7 +188,7 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-            stmt.setInt(1, entity.getVehicleId());
+            stmt.setInt(1, id);
             stmt.execute();
 
         } catch (SQLException e) {

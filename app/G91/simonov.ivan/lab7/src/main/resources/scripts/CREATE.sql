@@ -24,8 +24,8 @@ CREATE TABLE "Session"
 	Id_user INTEGER NOT NULL REFERENCES "User"(Id_user),
 	Id_vehicle INTEGER NOT NULL REFERENCES Vehicle(Id_vehicle),
 	ParkingPrice DECIMAL(10, 2) NOT NULL,
-	EntryDate DATE NOT NULL,
-	ExitDate DATE
+	EntryDate TIMESTAMP NOT NULL,
+	ExitDate TIMESTAMP
 );
 
 CREATE INDEX I_Session_Id_user ON "Session"(Id_user);

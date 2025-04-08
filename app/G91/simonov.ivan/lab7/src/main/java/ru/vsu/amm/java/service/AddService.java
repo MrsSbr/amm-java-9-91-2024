@@ -60,7 +60,8 @@ public class AddService {
 
         } else {
 
-            vehicle.setVehicleId(vehicleRepository.save(vehicle));
+            int vehicleId = vehicleRepository.save(vehicle);
+            vehicle.setVehicleId(vehicleId);
             userSession.setVehicle(vehicle);
 
         }

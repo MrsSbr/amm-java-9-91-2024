@@ -2,6 +2,7 @@ package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.Session;
+import ru.vsu.amm.java.exceptions.AddException;
 import ru.vsu.amm.java.exceptions.DeleteException;
 import ru.vsu.amm.java.exceptions.UpdateException;
 import ru.vsu.amm.java.mapper.SessionMapper;
@@ -119,6 +120,7 @@ public class SessionRepository implements ParkingRepository<Session> {
         } catch (SQLException e) {
 
             logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new AddException(e.getMessage());
 
         }
 
@@ -150,7 +152,7 @@ public class SessionRepository implements ParkingRepository<Session> {
     }
 
     @Override
-    public void delete(Session entity) {
+    public void delete(int id) {
 
         String sql = """
                 DELETE FROM "Session"
@@ -160,7 +162,7 @@ public class SessionRepository implements ParkingRepository<Session> {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-            stmt.setInt(1, entity.getSessionId());
+            stmt.setInt(1, id);
             stmt.execute();
 
         } catch (SQLException e) {

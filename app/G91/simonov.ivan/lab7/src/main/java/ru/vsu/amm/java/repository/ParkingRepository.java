@@ -14,5 +14,5 @@ public interface ParkingRepository<T> {
 
     void update(T entity) throws SQLException;
 
-    void delete(T entity) throws SQLException;
+    void delete(int id) throws SQLException;
 }

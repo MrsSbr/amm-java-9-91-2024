@@ -2,6 +2,7 @@ package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.User;
+import ru.vsu.amm.java.exceptions.AddException;
 import ru.vsu.amm.java.exceptions.DeleteException;
 import ru.vsu.amm.java.exceptions.UpdateException;
 import ru.vsu.amm.java.mapper.UserMapper;
@@ -147,6 +148,7 @@ public class UserRepository implements ParkingRepository<User> {
         } catch (SQLException e) {
 
             logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new AddException(e.getMessage());
 
         }
 
@@ -178,7 +180,7 @@ public class UserRepository implements ParkingRepository<User> {
     }
 
     @Override
-    public void delete(User entity) {
+    public void delete(int id) {
 
         String sql = """
                 DELETE FROM "User"
@@ -188,7 +190,7 @@ public class UserRepository implements ParkingRepository<User> {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-            stmt.setInt(1, entity.getUserId());
+            stmt.setInt(1, id);
             stmt.execute();
 
         } catch (SQLException e) {

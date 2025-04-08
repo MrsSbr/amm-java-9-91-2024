@@ -5,8 +5,8 @@ import ru.vsu.amm.java.enums.Role;
 import ru.vsu.amm.java.exceptions.AuthException;
 import ru.vsu.amm.java.requests.RegisterRequest;
 import ru.vsu.amm.java.service.AuthService;
-import ru.vsu.amm.java.utils.Redirection;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,10 +44,9 @@ public class RegisterUserServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
 
-            String redirect = Redirection.redirectBasedOnRole(user);
-            response.sendRedirect(redirect);
+            request.getRequestDispatcher("redirectUser").forward(request, response);
 
-        } catch (AuthException e) {
+        } catch (AuthException | ServletException e) {
 
             response.sendRedirect(String.format("register.jsp?error=%s", e.getMessage()));
 

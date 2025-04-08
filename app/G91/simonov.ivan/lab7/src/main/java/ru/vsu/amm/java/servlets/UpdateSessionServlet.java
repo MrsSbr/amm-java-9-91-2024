@@ -1,37 +1,37 @@
 package ru.vsu.amm.java.servlets;
 
-import ru.vsu.amm.java.entities.Session;
-import ru.vsu.amm.java.repository.SessionRepository;
+import ru.vsu.amm.java.exceptions.UpdateException;
+import ru.vsu.amm.java.service.UpdateService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @WebServlet("/updateSession")
 public class UpdateSessionServlet extends HttpServlet {
 
-    private SessionRepository sessionRepository = new SessionRepository();
+    private final UpdateService updateService;
+
+    public UpdateSessionServlet() {
+
+        updateService = new UpdateService();
+
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        int sessionId = Integer.parseInt(request.getParameter("sessionId"));
+        try {
 
-        Optional<Session> repSession = sessionRepository.getById(sessionId);
+            updateService.update(Integer.parseInt(request.getParameter("sessionId")));
 
-        if (repSession.isPresent()) {
+            response.sendRedirect("viewSessions?message=Session updated successfully!");
 
-            repSession.get().setExitDate(LocalDateTime.now());
-            sessionRepository.update(repSession.get());
-            response.sendRedirect("userSessions.jsp?message=Session upgraded successfully!");
+        } catch (UpdateException e) {
 
-        } else {
-
-            response.sendRedirect("userSessions.jsp?error=Session not found!");
+            response.sendRedirect(String.format("viewSessions?error=%s", e.getMessage()));
 
         }
 

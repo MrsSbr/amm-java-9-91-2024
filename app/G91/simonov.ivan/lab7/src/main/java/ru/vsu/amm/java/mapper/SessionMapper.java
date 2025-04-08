@@ -4,11 +4,7 @@ import ru.vsu.amm.java.entities.Session;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.entities.Vehicle;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -45,7 +41,7 @@ public class SessionMapper implements EntityMapper<Session> {
                                             Connection connection,
                                             String sql) throws SQLException {
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
         stmt.setInt(1, entity.getUser().getUserId());
         stmt.setInt(2, entity.getVehicle().getVehicleId());

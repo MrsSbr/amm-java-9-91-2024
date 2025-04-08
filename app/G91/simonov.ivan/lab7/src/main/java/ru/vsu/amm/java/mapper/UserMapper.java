@@ -5,10 +5,7 @@ import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.enums.Role;
 import ru.vsu.amm.java.requests.RegisterRequest;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserMapper implements EntityMapper<User> {
 
@@ -62,7 +59,7 @@ public class UserMapper implements EntityMapper<User> {
                                             Connection connection,
                                             String sql) throws SQLException {
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
         stmt.setString(1, entity.getLastName());
         stmt.setString(2, entity.getFirstName());

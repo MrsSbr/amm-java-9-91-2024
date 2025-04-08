@@ -4,8 +4,8 @@ import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.exceptions.AuthException;
 import ru.vsu.amm.java.requests.SignInRequest;
 import ru.vsu.amm.java.service.AuthService;
-import ru.vsu.amm.java.utils.Redirection;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,10 +40,9 @@ public class SignInServlet extends HttpServlet {
 
             session.setAttribute("user", user);
 
-            String redirect = Redirection.redirectBasedOnRole(user);
-            response.sendRedirect(redirect);
+            request.getRequestDispatcher("redirectUser").forward(request, response);
 
-        } catch (AuthException e) {
+        } catch (AuthException | ServletException e) {
 
             response.sendRedirect(String.format("signIn.jsp?error=%s", e.getMessage()));
 

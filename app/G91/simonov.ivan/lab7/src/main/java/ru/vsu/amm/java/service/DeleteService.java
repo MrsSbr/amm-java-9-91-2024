@@ -1,6 +1,5 @@
 package ru.vsu.amm.java.service;
 
-import ru.vsu.amm.java.entities.Session;
 import ru.vsu.amm.java.repository.SessionRepository;
 
 public class DeleteService {
@@ -13,9 +12,9 @@ public class DeleteService {
 
     }
 
-    public void deleteSession(Session session) {
+    public void deleteSession(int sessionId) {
 
-        sessionRepository.delete(session);
+        sessionRepository.delete(sessionId);
 
     }
 }

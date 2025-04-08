@@ -24,6 +24,13 @@
 
 <h1>Добавление сессии</h1>
 
+<c:if test="${not empty param.error}">
+    <p style="color: red;">${param.error}</p>
+</c:if>
+<c:if test="${not empty param.message}">
+    <p style="color: #51d251;">${param.message}</p>
+</c:if>
+
 <form action="addSession" method="post">
 
     <div class="form-group">
@@ -63,6 +70,8 @@
 
     <button type="submit">Добавить</button>
 </form>
-<p><a href="index.jsp">Перейти на главную страницу</a></p>
+<form action="redirectUser" method="get">
+    <button type="submit" class="return-link">Вернуться к списку действий</button>
+</form>
 </body>
 </html>
