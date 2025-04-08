@@ -1,26 +1,26 @@
 package ru.vsu.amm.java.entities;
 
 public class PurchaseHistory {
-    private long orderNumber;
+    private Long orderNumber;
     private int payment;
-    private long userId;
-    private long boardGameId;
+    private Long userId;
+    private Long boardGameId;
 
     public PurchaseHistory() {
     }
 
-    public PurchaseHistory(long orderNumber, int payment, long userId, long boardGameId) {
+    public PurchaseHistory(Long orderNumber, int payment, Long userId, Long boardGameId) {
         this.orderNumber = orderNumber;
         this.payment = payment;
         this.userId = userId;
         this.boardGameId = boardGameId;
     }
 
-    public long getOrderNumber() {
+    public Long getOrderNumber() {
         return orderNumber;
     }
 
-    public void setOrderNumber(long orderNumber) {
+    public void setOrderNumber(Long orderNumber) {
         this.orderNumber = orderNumber;
     }
 
@@ -32,19 +32,19 @@ public class PurchaseHistory {
         this.payment = payment;
     }
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public long getBoardGameId() {
+    public Long getBoardGameId() {
         return boardGameId;
     }
 
-    public void setBoardGameId(long boardGameId) {
+    public void setBoardGameId(Long boardGameId) {
         this.boardGameId = boardGameId;
     }
 }
