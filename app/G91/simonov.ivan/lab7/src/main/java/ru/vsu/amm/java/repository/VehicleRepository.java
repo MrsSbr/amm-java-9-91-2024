@@ -2,6 +2,8 @@ package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.Vehicle;
+import ru.vsu.amm.java.exceptions.DeleteException;
+import ru.vsu.amm.java.exceptions.UpdateException;
 import ru.vsu.amm.java.mapper.VehicleMapper;
 
 import javax.sql.DataSource;
@@ -171,6 +173,7 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
         } catch (SQLException e) {
 
             logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new UpdateException(e.getMessage());
 
         }
     }
@@ -192,6 +195,7 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
         } catch (SQLException e) {
 
             logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new DeleteException(e.getMessage());
 
         }
     }

@@ -2,6 +2,8 @@ package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.User;
+import ru.vsu.amm.java.exceptions.DeleteException;
+import ru.vsu.amm.java.exceptions.UpdateException;
 import ru.vsu.amm.java.mapper.UserMapper;
 
 import javax.sql.DataSource;
@@ -170,6 +172,7 @@ public class UserRepository implements ParkingRepository<User> {
         } catch (SQLException e) {
 
             logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new UpdateException(e.getMessage());
 
         }
     }
@@ -191,6 +194,7 @@ public class UserRepository implements ParkingRepository<User> {
         } catch (SQLException e) {
 
             logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new DeleteException(e.getMessage());
 
         }
     }
