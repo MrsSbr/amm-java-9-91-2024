@@ -10,8 +10,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PurchaseHistoryRepository implements Repository<PurchaseHistory> {
+    private static final Logger logger = Logger.getLogger(PurchaseHistoryRepository.class.getName());
     private final DataSource dataSource;
 
     public PurchaseHistoryRepository() {
@@ -39,7 +42,8 @@ public class PurchaseHistoryRepository implements Repository<PurchaseHistory> {
                 ));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
 
         return Optional.empty();
@@ -66,7 +70,8 @@ public class PurchaseHistoryRepository implements Repository<PurchaseHistory> {
                 ));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
 
         return purchaseHistories;
@@ -87,7 +92,8 @@ public class PurchaseHistoryRepository implements Repository<PurchaseHistory> {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
     }
 
@@ -104,7 +110,8 @@ public class PurchaseHistoryRepository implements Repository<PurchaseHistory> {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
     }
 
@@ -119,7 +126,8 @@ public class PurchaseHistoryRepository implements Repository<PurchaseHistory> {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
     }
 }

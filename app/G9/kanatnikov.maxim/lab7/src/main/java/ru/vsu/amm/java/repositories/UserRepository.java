@@ -11,8 +11,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserRepository implements Repository<UserEntity> {
+    private static final Logger logger = Logger.getLogger(UserRepository.class.getName());
     private final DataSource dataSource;
 
     public UserRepository() {
@@ -48,7 +51,8 @@ public class UserRepository implements Repository<UserEntity> {
                 ));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
 
         return Optional.empty();
@@ -82,7 +86,8 @@ public class UserRepository implements Repository<UserEntity> {
                 ));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
 
         return Optional.empty();
@@ -119,7 +124,8 @@ public class UserRepository implements Repository<UserEntity> {
                 ));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
 
         return users;
@@ -147,7 +153,8 @@ public class UserRepository implements Repository<UserEntity> {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
     }
 
@@ -172,7 +179,8 @@ public class UserRepository implements Repository<UserEntity> {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
     }
 
@@ -187,7 +195,8 @@ public class UserRepository implements Repository<UserEntity> {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
     }
 }

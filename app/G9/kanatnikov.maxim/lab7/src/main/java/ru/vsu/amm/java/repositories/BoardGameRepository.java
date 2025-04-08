@@ -11,8 +11,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BoardGameRepository implements Repository<BoardGame> {
+    private static final Logger logger = Logger.getLogger(BoardGameRepository.class.getName());
     private final DataSource dataSource;
 
     public BoardGameRepository() {
@@ -46,7 +49,8 @@ public class BoardGameRepository implements Repository<BoardGame> {
                 ));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
 
         return Optional.empty();
@@ -78,60 +82,29 @@ public class BoardGameRepository implements Repository<BoardGame> {
                 ));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
 
         return Optional.empty();
     }
 
-    public Optional<BoardGame> findByPublisher(String publisher) throws SQLException {
-        final String query = """
+    public List<BoardGame> findBy(String field, String value) throws SQLException {
+        List<BoardGame> boardGames = new ArrayList<>();
+        final String query = String.format("""
                 SELECT Board_Game_Id, "Name", Price, Genre, Min_Age, Publisher, Description
-                FROM BoardGame WHERE Publisher = ?
-                """;
+                FROM BoardGame WHERE %s = ?
+                """, field);
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
-            preparedStatement.setString(1, publisher);
+            preparedStatement.setString(1, value);
             preparedStatement.execute();
 
             ResultSet resultSet = preparedStatement.getResultSet();
 
             if (resultSet.next()) {
                 Genre genre = Genre.valueOf(resultSet.getString("Genre"));
-                return Optional.of(new BoardGame(
-                        resultSet.getLong("Board_Game_Id"),
-                        resultSet.getString("Name"),
-                        resultSet.getInt("Price"),
-                        genre,
-                        resultSet.getInt("Min_Age"),
-                        resultSet.getString("Publisher"),
-                        resultSet.getString("Description")
-                ));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-
-        return Optional.empty();
-    }
-
-    public List<BoardGame> findByGenre(Genre genre) throws SQLException {
-        List<BoardGame> boardGames = new ArrayList<>();
-        final String query = """
-                SELECT Board_Game_Id, "Name", Price, Genre, Min_Age, Publisher, Description
-                FROM BoardGame WHERE Genre = ?
-                """;
-
-        try (var connection = dataSource.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-
-            preparedStatement.setString(1, genre.name());
-            preparedStatement.execute();
-
-            ResultSet resultSet = preparedStatement.getResultSet();
-
-            while (resultSet.next()) {
                 boardGames.add(new BoardGame(
                         resultSet.getLong("Board_Game_Id"),
                         resultSet.getString("Name"),
@@ -143,7 +116,8 @@ public class BoardGameRepository implements Repository<BoardGame> {
                 ));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
 
         return boardGames;
@@ -178,7 +152,8 @@ public class BoardGameRepository implements Repository<BoardGame> {
                 ));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
 
         return boardGames;
@@ -212,7 +187,8 @@ public class BoardGameRepository implements Repository<BoardGame> {
                 ));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
 
         return boardGames;
@@ -246,7 +222,8 @@ public class BoardGameRepository implements Repository<BoardGame> {
                 ));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
 
         return boardGames;
@@ -272,7 +249,8 @@ public class BoardGameRepository implements Repository<BoardGame> {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
     }
 
@@ -296,7 +274,8 @@ public class BoardGameRepository implements Repository<BoardGame> {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
     }
 
@@ -311,7 +290,8 @@ public class BoardGameRepository implements Repository<BoardGame> {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new SQLException(e.getMessage());
         }
     }
 }
