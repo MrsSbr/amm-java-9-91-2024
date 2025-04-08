@@ -1,7 +1,8 @@
 package ru.vsu.amm.java.servlets;
 
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.repository.UserRepository;
+import ru.vsu.amm.java.exceptions.AuthException;
+import ru.vsu.amm.java.service.AuthService;
 import ru.vsu.amm.java.utils.Redirection;
 
 import javax.servlet.annotation.WebServlet;
@@ -10,34 +11,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Optional;
 
 @WebServlet("/signIn")
 public class SignInServlet extends HttpServlet {
 
-    private UserRepository userRepository = new UserRepository();
+    private final AuthService authService = new AuthService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         HttpSession session = request.getSession();
 
-        Optional<User> user = userRepository.getByLoginAndPassword(
-                request.getParameter("login"),
-                request.getParameter("password"));
+        try {
 
-        if (user.isPresent()) {
+            User user = authService.signIn(request);
 
-            session.setAttribute("user", user.get());
+            session.setAttribute("user", user);
 
-            String redirect = Redirection.redirectBasedOnRole(user.get());
+            String redirect = Redirection.redirectBasedOnRole(user);
 
             response.sendRedirect(redirect);
 
-        } else {
+        } catch (AuthException e) {
 
-            response.sendRedirect("signIn.jsp?error=Invalid login or password!");
+            response.sendRedirect(String.format("signIn.jsp?error=%s", e.getMessage()));
 
         }
+
     }
 }

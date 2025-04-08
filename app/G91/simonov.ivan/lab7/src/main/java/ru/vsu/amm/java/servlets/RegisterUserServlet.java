@@ -1,8 +1,10 @@
 package ru.vsu.amm.java.servlets;
 
 import ru.vsu.amm.java.entities.User;
+import ru.vsu.amm.java.exceptions.AuthException;
 import ru.vsu.amm.java.mapper.UserMapper;
 import ru.vsu.amm.java.repository.UserRepository;
+import ru.vsu.amm.java.service.AuthService;
 import ru.vsu.amm.java.utils.Redirection;
 
 import javax.servlet.annotation.WebServlet;
@@ -15,33 +17,22 @@ import java.io.IOException;
 @WebServlet("/registerUser")
 public class RegisterUserServlet extends HttpServlet {
 
-    private UserRepository userRepository = new UserRepository();
+    private final AuthService authService = new AuthService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         try {
 
-            UserMapper userMapper = new UserMapper();
-            User user = userMapper.mapRequestToObject(request);
+            User user = authService.register(request);
 
-            if (userRepository.getByLoginAndPassword(user.getLogin(), user.getPassword()).isEmpty()) {
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
 
-                userRepository.save(user);
+            String redirect = Redirection.redirectBasedOnRole(user);
+            response.sendRedirect(redirect);
 
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-
-                String redirect = Redirection.redirectBasedOnRole(user);
-                response.sendRedirect(redirect);
-
-            } else {
-
-                response.sendRedirect("register.jsp?error=%User already exists!");
-
-            }
-
-        } catch (RuntimeException e) {
+        } catch (AuthException e) {
 
             response.sendRedirect(String.format("register.jsp?error=%s", e.getMessage()));
 
