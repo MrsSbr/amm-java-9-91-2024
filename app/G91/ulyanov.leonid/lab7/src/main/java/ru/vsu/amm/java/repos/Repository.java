@@ -7,7 +7,7 @@ import java.util.Optional;
 public interface Repository<T> {
     Optional<T> getById(int id) throws SQLException;
 
-    List<T> getAll() throws SQLException    ;
+    List<T> getAll() throws SQLException;
 
     void create(T object) throws SQLException;
 

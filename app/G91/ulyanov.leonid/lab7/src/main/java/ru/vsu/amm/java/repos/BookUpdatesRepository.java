@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.repos;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.entities.BookUpdates;
 import ru.vsu.amm.java.mappers.BookUpdatesMapper;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 public class BookUpdatesRepository implements Repository<BookUpdates> {
     private final DataSource dataSource;
 
@@ -22,8 +24,9 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
     @Override
     public Optional<BookUpdates> getById(int id) throws SQLException {
         String query = """
-                SELECT *
-                FROM BookUpdates WHERE Id_update = ?;
+                SELECT Id_book, Id_user, UpdateTime, UpdateType
+                FROM BookUpdates
+                WHERE Id_update = ?;
                 """;
 
         Connection connection = dataSource.getConnection();
@@ -42,7 +45,7 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
     @Override
     public List<BookUpdates> getAll() throws SQLException {
         String query = """
-                SELECT *
+                SELECT Id_book, Id_user, UpdateTime, UpdateType
                 FROM BookUpdates;
                 """;
 
@@ -59,6 +62,7 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
 
             return bookUpdates;
         } catch (SQLException e) {
+            log.error(e.getMessage(), e);
             throw new SQLException(e.getMessage());
         }
     }
@@ -66,7 +70,7 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
     @Override
     public void create(BookUpdates bookUpdates) throws SQLException {
         String query = """
-                INSERT INTO BookUpdates(BookId, UserId, UpdateTime, UpdateType)
+                INSERT INTO BookUpdates(Id_book, Id_user, UpdateTime, UpdateType)
                 VALUES (?, ?, ?, ?);
                 """;
 
@@ -77,6 +81,7 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
             ps.execute();
 
         } catch (SQLException e) {
+            log.error(e.getMessage(), e);
             throw new SQLException(e.getMessage());
         }
     }
@@ -85,7 +90,7 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
     public void update(BookUpdates bookUpdates) throws SQLException {
         String query = """
                 UPDATE BookUpdates
-                SET BookId = ?, UserId = ?, UpdateTime = ?, UpdateType = ?
+                SET Id_book = ?, Id_user = ?, UpdateTime = ?, UpdateType = ?
                     WHERE Id_update = ?;
                 """;
 
@@ -97,6 +102,8 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
             ps.execute();
 
         } catch (SQLException e) {
+            log.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             throw new SQLException(e.getMessage());
         }
     }
@@ -114,6 +121,7 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
             ps.execute();
 
         } catch (SQLException e) {
+            log.error(e.getMessage(), e);
             throw new SQLException(e.getMessage());
         }
     }

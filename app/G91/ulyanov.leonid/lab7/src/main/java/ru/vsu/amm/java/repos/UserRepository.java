@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.repos;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.mappers.UserMapper;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 public class UserRepository implements Repository<User> {
     private final DataSource dataSource;
 
@@ -59,6 +61,8 @@ public class UserRepository implements Repository<User> {
 
             return users;
         } catch (SQLException e) {
+            log.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             throw new SQLException(e.getMessage());
         }
     }
@@ -77,6 +81,7 @@ public class UserRepository implements Repository<User> {
             ps.execute();
 
         } catch (SQLException e) {
+            log.error(e.getMessage(), e);
             throw new SQLException(e.getMessage());
         }
     }
@@ -97,6 +102,7 @@ public class UserRepository implements Repository<User> {
             ps.execute();
 
         } catch (SQLException e) {
+            log.error(e.getMessage(), e);
             throw new SQLException(e.getMessage());
         }
     }
@@ -114,6 +120,7 @@ public class UserRepository implements Repository<User> {
             ps.execute();
 
         } catch (SQLException e) {
+            log.error(e.getMessage(), e);
             throw new SQLException(e.getMessage());
         }
     }

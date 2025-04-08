@@ -3,7 +3,11 @@ package ru.vsu.amm.java.mappers;
 import ru.vsu.amm.java.entities.BookUpdates;
 import ru.vsu.amm.java.enums.UpdateType;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class BookUpdatesMapper implements Mapper<BookUpdates> {
     public BookUpdatesMapper() {
