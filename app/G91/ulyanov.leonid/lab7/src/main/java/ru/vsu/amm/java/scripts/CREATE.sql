@@ -14,10 +14,10 @@ ADD CONSTRAINT U_User_Email UNIQUE(Email);
 CREATE TABLE IF NOT EXISTS Book(
 	Id_book serial PRIMARY KEY,
 	Title text NOT NULL,
-	NumberOfPages smallint NOT NULL,
-	PublishingYear smallint NOT NULL,
-	Publisher varchar(100) NOT NULL,
 	Author varchar(150) NOT NULL,
+	Publisher varchar(100) NOT NULL,
+	NumberOfPages smallint NOT NULL,
+	PublishedYear smallint NOT NULL,
 	BookType varchar(100) NOT NULL
 );
 
