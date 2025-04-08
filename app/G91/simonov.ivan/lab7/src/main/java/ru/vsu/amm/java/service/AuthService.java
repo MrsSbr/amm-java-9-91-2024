@@ -4,8 +4,9 @@ import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.exceptions.AuthException;
 import ru.vsu.amm.java.mapper.UserMapper;
 import ru.vsu.amm.java.repository.UserRepository;
+import ru.vsu.amm.java.requests.RegisterRequest;
+import ru.vsu.amm.java.requests.SignInRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 public class AuthService {
@@ -18,12 +19,13 @@ public class AuthService {
 
     }
 
-    public User signIn(HttpServletRequest request) {
+    public User signIn(SignInRequest request) {
 
 
         Optional<User> user = userRepository.getByLoginAndPassword(
-                request.getParameter("login"),
-                request.getParameter("password"));
+                request.login(),
+                request.password()
+        );
 
         if (user.isPresent()) {
 
@@ -37,7 +39,7 @@ public class AuthService {
 
     }
 
-    public User register(HttpServletRequest request) {
+    public User register(RegisterRequest request) {
 
         UserMapper userMapper = new UserMapper();
         User user = userMapper.mapRequestToObject(request);

@@ -2,6 +2,7 @@ package ru.vsu.amm.java.servlets;
 
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.exceptions.AuthException;
+import ru.vsu.amm.java.requests.SignInRequest;
 import ru.vsu.amm.java.service.AuthService;
 import ru.vsu.amm.java.utils.Redirection;
 
@@ -15,7 +16,13 @@ import java.io.IOException;
 @WebServlet("/signIn")
 public class SignInServlet extends HttpServlet {
 
-    private final AuthService authService = new AuthService();
+    private final AuthService authService;
+
+    public SignInServlet() {
+
+        authService = new AuthService();
+
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -24,12 +31,16 @@ public class SignInServlet extends HttpServlet {
 
         try {
 
-            User user = authService.signIn(request);
+            SignInRequest signInRequest = new SignInRequest(
+                    request.getParameter("login"),
+                    request.getParameter("password")
+            );
+
+            User user = authService.signIn(signInRequest);
 
             session.setAttribute("user", user);
 
             String redirect = Redirection.redirectBasedOnRole(user);
-
             response.sendRedirect(redirect);
 
         } catch (AuthException e) {

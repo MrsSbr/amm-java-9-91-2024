@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import ru.vsu.amm.java.entities.Session;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.enums.Role;
-import ru.vsu.amm.java.repository.SessionRepository;
-import ru.vsu.amm.java.repository.UserRepository;
-import ru.vsu.amm.java.repository.VehicleRepository;
+import ru.vsu.amm.java.service.ViewService;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
@@ -20,7 +18,13 @@ import java.util.List;
 @WebServlet("/viewSessions")
 public class ViewSessionsServlet extends HttpServlet {
 
-    private SessionRepository sessionRepository = new SessionRepository();
+    private final ViewService viewService;
+
+    public ViewSessionsServlet() {
+
+        viewService = new ViewService();
+
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -29,37 +33,7 @@ public class ViewSessionsServlet extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
-        List<Session> sessionList = sessionRepository.getAll();
-
-        switch (user.getRole()) {
-
-            case ADMIN, EMPLOYEE -> {
-
-                UserRepository userRepository = new UserRepository();
-                VehicleRepository vehicleRepository = new VehicleRepository();
-
-                sessionList.forEach(s -> {
-
-                    s.setUser(userRepository.getById(s.getUser().getUserId()).get());
-                    s.setVehicle(vehicleRepository.getById(s.getVehicle().getVehicleId()).get());
-
-                });
-
-            }
-
-            case USER -> {
-
-                VehicleRepository vehicleRepository = new VehicleRepository();
-
-                sessionList = sessionList.stream()
-                        .filter(s -> s.getUser().getUserId() == user.getUserId())
-                        .peek(s -> s.setVehicle(vehicleRepository.getById(s.getVehicle()
-                                .getVehicleId()).get()))
-                        .toList();
-
-            }
-
-        }
+        List<Session> sessionList = viewService.viewSessions(user);
 
         request.setAttribute("sessions", sessionList);
         request.setAttribute("isUser", user.getRole() == Role.USER);

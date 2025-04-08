@@ -3,6 +3,7 @@ package ru.vsu.amm.java.mapper;
 import javax.servlet.http.HttpServletRequest;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.enums.Role;
+import ru.vsu.amm.java.requests.RegisterRequest;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,16 +27,16 @@ public class UserMapper implements EntityMapper<User> {
         return stmt;
     }
 
-    public User mapRequestToObject(HttpServletRequest request) {
+    public User mapRequestToObject(RegisterRequest request) {
 
         User user = new User();
 
-        user.setLastName(request.getParameter("lastName"));
-        user.setFirstName(request.getParameter("firstName"));
-        user.setPatronymic(request.getParameter("patronymic"));
-        user.setLogin(request.getParameter("login"));
-        user.setPassword(request.getParameter("password"));
-        user.setRole(Role.USER);
+        user.setLastName(request.lastName());
+        user.setFirstName(request.firstName());
+        user.setPatronymic(request.patronymic());
+        user.setLogin(request.login());
+        user.setPassword(request.password());
+        user.setRole(request.role());
 
         return user;
     }
