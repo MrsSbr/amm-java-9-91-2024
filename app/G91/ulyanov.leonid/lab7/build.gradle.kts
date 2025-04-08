@@ -1,5 +1,11 @@
 plugins {
     id("java")
+    id("war")
+}
+
+tasks.war {
+    archiveBaseName.set("ulyanov-leonid")
+    archiveFileName.set("ulyanov-leonid.war")
 }
 
 group = "ru.vsu.amm.java"
@@ -18,6 +24,9 @@ dependencies {
     implementation ("org.apache.logging.log4j:log4j-api:2.20.0")
     implementation ("org.apache.logging.log4j:log4j-core:2.20.0")
     implementation ("org.apache.logging.log4j:log4j-slf4j-impl:2.20.0")
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
+    implementation("javax.servlet:jstl:1.2")
+    implementation("org.mindrot:jbcrypt:0.4")
 }
 
 tasks.test {

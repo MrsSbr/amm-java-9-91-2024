@@ -21,35 +21,60 @@ public class UserRepository implements Repository<User> {
         this.dataSource = dataSource;
     }
 
-    @Override
-    public Optional<User> getById(int id) throws SQLException {
+    public Optional<User> getByEmail(String email) {
         String query = """
-                SELECT *
-                FROM "User" WHERE Id_user = ?;
+                SELECT Email, "Password", LastName, FirstName, PatronymicName, PhoneNumber
+                FROM "User" WHERE Email = ? AND "Password" = ?;
                 """;
 
-        Connection connection = dataSource.getConnection();
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, id);
-        ResultSet resultSet = ps.executeQuery();
-        UserMapper userMapper = new UserMapper();
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, email);
+            ResultSet resultSet = ps.executeQuery();
+            UserMapper userMapper = new UserMapper();
 
-        if (resultSet.next()) {
-            return Optional.of(userMapper.mapRowToObject(resultSet));
+            if (resultSet.next()) {
+                return Optional.of(userMapper.mapRowToObject(resultSet));
+            }
+        } catch (SQLException e) {
+            log.error(e.getMessage());
         }
 
         return Optional.empty();
     }
 
     @Override
-    public List<User> getAll() throws SQLException {
+    public Optional<User> getById(int id) {
         String query = """
-                SELECT *
+                SELECT Email, "Password", LastName, FirstName, PatronymicName, PhoneNumber
+                FROM "User" WHERE Id_user = ?;
+                """;
+
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            UserMapper userMapper = new UserMapper();
+
+            if (resultSet.next()) {
+                return Optional.of(userMapper.mapRowToObject(resultSet));
+            }
+        } catch (SQLException e) {
+            log.error(e.getMessage());
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public List<User> getAll() {
+        String query = """
+                SELECT Email, "Password", LastName, FirstName, PatronymicName, PhoneNumber
                 FROM "User";
                 """;
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement ps = connection.prepareStatement(query)) {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(query);
             ResultSet resultSet = ps.executeQuery();
             UserMapper userMapper = new UserMapper();
 
@@ -58,17 +83,16 @@ public class UserRepository implements Repository<User> {
             while (resultSet.next()) {
                 users.add(userMapper.mapRowToObject(resultSet));
             }
-
             return users;
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
-            log.error(e.getMessage(), e);
-            throw new SQLException(e.getMessage());
         }
+
+        return new ArrayList<>();
     }
 
     @Override
-    public void create(User user) throws SQLException {
+    public void create(User user) {
         String query = """
                 INSERT INTO "User"(Email, Password, LastName, FirstName, PatronymicName, PhoneNumber)
                 VALUES (?, ?, ?, ?, ?, ?);
@@ -82,12 +106,11 @@ public class UserRepository implements Repository<User> {
 
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
-            throw new SQLException(e.getMessage());
         }
     }
 
     @Override
-    public void update(User user) throws SQLException {
+    public void update(User user) {
         String query = """
                 UPDATE "User"
                 SET Email = ?, Password = ?, LastName = ?, FirstName = ?, PatronymicName = ?, PhoneNumber = ?
@@ -103,12 +126,11 @@ public class UserRepository implements Repository<User> {
 
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
-            throw new SQLException(e.getMessage());
         }
     }
 
     @Override
-    public void delete(User user) throws SQLException {
+    public void delete(User user) {
         String query = """
                 DELETE FROM "User"
                 WHERE Id_user = ?;
@@ -121,7 +143,6 @@ public class UserRepository implements Repository<User> {
 
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
-            throw new SQLException(e.getMessage());
         }
     }
 }

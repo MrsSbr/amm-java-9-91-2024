@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.mappers;
 
 import ru.vsu.amm.java.entities.User;
+import ru.vsu.amm.java.requests.RegisterRequest;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserMapper implements Mapper<User> {
-    public UserMapper() {}
+    public UserMapper() {
+    }
 
     @Override
     public User mapRowToObject(ResultSet resultSet) throws SQLException {
@@ -38,5 +40,19 @@ public class UserMapper implements Mapper<User> {
         ps.setString(6, user.getPhoneNumber());
 
         return ps;
+    }
+
+    public User mapRequestToObject(RegisterRequest request) {
+
+        User user = new User();
+
+        user.setEmail(request.email());
+        user.setPassword(request.password());
+        user.setLastName(request.lastName());
+        user.setFirstName(request.firstName());
+        user.setPatronymic(request.patronymicName());
+        user.setPhoneNumber(request.phoneNumber());
+
+        return user;
     }
 }

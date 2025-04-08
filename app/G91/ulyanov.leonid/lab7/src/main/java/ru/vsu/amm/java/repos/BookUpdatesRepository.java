@@ -29,21 +29,25 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
                 WHERE Id_update = ?;
                 """;
 
-        Connection connection = dataSource.getConnection();
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, id);
-        ResultSet resultSet = ps.executeQuery();
-        BookUpdatesMapper bookUpdatesMapper = new BookUpdatesMapper();
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            BookUpdatesMapper bookUpdatesMapper = new BookUpdatesMapper();
 
-        if (resultSet.next()) {
-            return Optional.of(bookUpdatesMapper.mapRowToObject(resultSet));
+            if (resultSet.next()) {
+                return Optional.of(bookUpdatesMapper.mapRowToObject(resultSet));
+            }
+
+        } catch (SQLException e) {
+            log.error(e.getMessage(), e);
         }
 
         return Optional.empty();
     }
 
     @Override
-    public List<BookUpdates> getAll() throws SQLException {
+    public List<BookUpdates> getAll() {
         String query = """
                 SELECT Id_book, Id_user, UpdateTime, UpdateType
                 FROM BookUpdates;
@@ -63,12 +67,12 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
             return bookUpdates;
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
-            throw new SQLException(e.getMessage());
         }
+        return new ArrayList<>();
     }
 
     @Override
-    public void create(BookUpdates bookUpdates) throws SQLException {
+    public void create(BookUpdates bookUpdates) {
         String query = """
                 INSERT INTO BookUpdates(Id_book, Id_user, UpdateTime, UpdateType)
                 VALUES (?, ?, ?, ?);
@@ -82,12 +86,11 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
 
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
-            throw new SQLException(e.getMessage());
         }
     }
 
     @Override
-    public void update(BookUpdates bookUpdates) throws SQLException {
+    public void update(BookUpdates bookUpdates) {
         String query = """
                 UPDATE BookUpdates
                 SET Id_book = ?, Id_user = ?, UpdateTime = ?, UpdateType = ?
@@ -103,13 +106,11 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
 
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
-            log.error(e.getMessage(), e);
-            throw new SQLException(e.getMessage());
         }
     }
 
     @Override
-    public void delete(BookUpdates bookUpdates) throws SQLException {
+    public void delete(BookUpdates bookUpdates) {
         String query = """
                 DELETE FROM BookUpdates
                 WHERE id_update = ?;
@@ -122,7 +123,6 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
 
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
-            throw new SQLException(e.getMessage());
         }
     }
 }

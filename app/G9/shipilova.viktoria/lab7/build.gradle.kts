@@ -21,9 +21,9 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("com.h2database:h2:2.1.214")
-    testImplementation 'org.apache.tomcat.embed:tomcat-embed-core:10.1.13'
-    testImplementation 'org.apache.tomcat.embed:tomcat-embed-jasper:10.1.13'
-    testImplementation 'javax.servlet:javax.servlet-api:4.0.1'
+    testImplementation("org.apache.tomcat.embed:tomcat-embed-core:10.1.13")
+    testImplementation("org.apache.tomcat.embed:tomcat-embed-jasper:10.1.13")
+    testImplementation("javax.servlet:javax.servlet-api:4.0.1")
 }
 
 tasks.test {
