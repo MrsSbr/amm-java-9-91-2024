@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS UserEntity;
+DROP TABLE IF EXISTS BoardGame;
+DROP TABLE IF EXISTS PurchaseHistory;
