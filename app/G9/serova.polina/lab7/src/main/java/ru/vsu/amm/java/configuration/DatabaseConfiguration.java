@@ -1,25 +1,60 @@
 package ru.vsu.amm.java.configuration;
 
-import org.postgresql.ds.PGSimpleDataSource;
+import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
+import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DatabaseConfiguration {
+    private static final class Holder {
+        static final DatabaseConfiguration INSTANCE = new DatabaseConfiguration();
+    }
+
+    private static final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
+    private final HikariDataSource dataSource;
+
+    private DatabaseConfiguration() {
+        HikariDataSource hikariDataSource = new HikariDataSource();
+        hikariDataSource.setDriverClassName(org.postgresql.Driver.class.getName());
+        DatabaseProperties databaseProperties = new DatabaseProperties("db.properties");
+        hikariDataSource.setJdbcUrl(databaseProperties.getUrl());
+        hikariDataSource.setUsername(databaseProperties.getUsername());
+        hikariDataSource.setPassword(databaseProperties.getPassword());
+        executeInitScript(hikariDataSource, databaseProperties.getInitScriptPath());
+        dataSource = hikariDataSource;
+    }
 
     public static DataSource getDataSource() {
-        PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();
-        Properties prop = new Properties();
-        try (InputStream input = DatabaseConfiguration.class.getClassLoader()
-                .getResourceAsStream("db.properties")) {
-            prop.load(input);
-        } catch (IOException e) {
-            System.out.println(e.getMessage()); // TO DO log
+        return Holder.INSTANCE.dataSource;
+    }
+
+    private void executeInitScript(HikariDataSource ds, String scriptPath) {
+        try (Connection connection = ds.getConnection();
+             Statement statement = connection.createStatement();
+             InputStream is = DatabaseConfiguration.class.getClassLoader()
+                     .getResourceAsStream(scriptPath)) {
+
+            if (is == null) {
+                throw new IOException("Не удалось прочитать файл " + scriptPath);
+            }
+
+            String sql = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+            String[] sqlCommands = sql.split(";\\s*");
+            for (String command : sqlCommands) {
+                if (!command.trim().isEmpty()) {
+                    statement.execute(command);
+                }
+            }
+
+        } catch (SQLException | IOException e) {
+            log.error("Ошибка при инициализации баз данных", e);
         }
-        pgSimpleDataSource.setUrl(prop.getProperty("db.url"));
-        pgSimpleDataSource.setUser(prop.getProperty("db.username"));
-        pgSimpleDataSource.setPassword(prop.getProperty("db.password"));
-        return pgSimpleDataSource;
     }
 }

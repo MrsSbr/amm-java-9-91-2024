@@ -30,16 +30,24 @@ public class UserRepository implements CrudRepository<UserEntity> {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return new UserEntity(
-                        resultSet.getLong("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("surname"),
-                        resultSet.getString("patronymic"),
-                        resultSet.getDate("birtdate").toLocalDate(),
-                        resultSet.getString("email"),
-                        resultSet.getString("password_hash"),
-                        RoleMapper.mapStringToRole(resultSet.getString("role"))
-                );
+                return makeUserFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            // TODO: add logging
+            return null;
+        }
+        return null;
+    }
+
+    public UserEntity findByEmail(String email) {
+        final String query = "SELECT id, name, surname, patronymic, birthday, email, password_hash, role FROM user_entity WHERE email = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return makeUserFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             // TODO: add logging
@@ -59,19 +67,9 @@ public class UserRepository implements CrudRepository<UserEntity> {
 
             while (resultSet.next()) {
                 users.add(
-                        new UserEntity(
-                            resultSet.getLong("id"),
-                            resultSet.getString("name"),
-                            resultSet.getString("surname"),
-                            resultSet.getString("patronymic"),
-                            resultSet.getDate("birtdate").toLocalDate(),
-                            resultSet.getString("email"),
-                            resultSet.getString("password_hash"),
-                            RoleMapper.mapStringToRole(resultSet.getString("role"))
-                        )
+                        makeUserFromResultSet(resultSet)
                 );
             }
-
         } catch (SQLException e) {
             // TODO add logging
             return null;
@@ -129,5 +127,18 @@ public class UserRepository implements CrudRepository<UserEntity> {
         } catch (SQLException e) {
             // TODO: add logging
         }
+    }
+
+    private UserEntity makeUserFromResultSet(ResultSet resultSet) throws SQLException {
+        return new UserEntity(
+                resultSet.getLong("id"),
+                resultSet.getString("name"),
+                resultSet.getString("surname"),
+                resultSet.getString("patronymic"),
+                resultSet.getDate("birthday").toLocalDate(),
+                resultSet.getString("email"),
+                resultSet.getString("password_hash"),
+                RoleMapper.mapStringToRole(resultSet.getString("role"))
+        );
     }
 }
