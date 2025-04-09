@@ -29,40 +29,51 @@ public class AddService {
     public void addSession(AddSessionRequest request) {
 
         Session userSession = new Session();
-        userSession.setEntryDate(LocalDateTime.now());
-        userSession.setParkingPrice(request.parkingPrice());
 
-        Optional<User> repUser = userRepository.getById(request.userId());
+        String notFoundMsg = "User not found!";
 
-        if (repUser.isPresent()) {
+        try {
 
-            userSession.setUser(repUser.get());
+            userSession.setEntryDate(LocalDateTime.now());
+            userSession.setParkingPrice(request.parkingPrice());
 
-        } else {
+            Optional<User> repUser = userRepository.getById(request.userId());
 
-            throw new AddException("User not found!");
+            if (repUser.isPresent()) {
 
-        }
+                userSession.setUser(repUser.get());
 
-        AddVehicleRequest addVehicleRequest = request.addVehicleRequest();
-        Vehicle vehicle = new Vehicle();
+            } else {
 
-        vehicle.setRegistrationNumber(addVehicleRequest.registrationNumber());
-        vehicle.setModel(addVehicleRequest.model());
-        vehicle.setBrand(addVehicleRequest.brand());
-        vehicle.setColour(addVehicleRequest.colour());
+                throw new AddException(notFoundMsg);
 
-        Optional<Vehicle> repVehicle = vehicleRepository.getByInfo(vehicle);
+            }
 
-        if (repVehicle.isPresent()) {
+            AddVehicleRequest addVehicleRequest = request.addVehicleRequest();
+            Vehicle vehicle = new Vehicle();
 
-            userSession.setVehicle(repVehicle.get());
+            vehicle.setRegistrationNumber(addVehicleRequest.registrationNumber());
+            vehicle.setModel(addVehicleRequest.model());
+            vehicle.setBrand(addVehicleRequest.brand());
+            vehicle.setColour(addVehicleRequest.colour());
 
-        } else {
+            Optional<Vehicle> repVehicle = vehicleRepository.getByInfo(vehicle);
 
-            int vehicleId = vehicleRepository.save(vehicle);
-            vehicle.setVehicleId(vehicleId);
-            userSession.setVehicle(vehicle);
+            if (repVehicle.isPresent()) {
+
+                userSession.setVehicle(repVehicle.get());
+
+            } else {
+
+                int vehicleId = vehicleRepository.save(vehicle);
+                vehicle.setVehicleId(vehicleId);
+                userSession.setVehicle(vehicle);
+
+            }
+
+        } catch (IllegalArgumentException e) {
+
+            throw new AddException(e.getMessage());
 
         }
 

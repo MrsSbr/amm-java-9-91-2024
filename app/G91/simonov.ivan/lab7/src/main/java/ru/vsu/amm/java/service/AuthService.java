@@ -42,8 +42,18 @@ public class AuthService {
 
     public User register(RegisterRequest request) {
 
-        UserMapper userMapper = new UserMapper();
-        User user = userMapper.mapRequestToObject(request);
+        User user;
+
+        try {
+
+            UserMapper userMapper = new UserMapper();
+            user = userMapper.mapRequestToObject(request);
+
+        } catch (IllegalArgumentException e) {
+
+            throw new AuthException(e.getMessage());
+
+        }
 
         String existenceMsg = "User already exists!";
 
@@ -65,6 +75,7 @@ public class AuthService {
             throw new AuthException(existenceMsg);
 
         }
+
     }
 
 }

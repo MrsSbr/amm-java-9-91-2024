@@ -21,14 +21,22 @@ public class UpdateService {
 
         Optional<Session> repSession = sessionRepository.getById(sessionId);
 
-        if (repSession.isPresent()) {
+        try {
 
-            repSession.get().setExitDate(LocalDateTime.now());
-            sessionRepository.update(repSession.get());
+            if (repSession.isPresent()) {
 
-        } else {
+                repSession.get().setExitDate(LocalDateTime.now());
+                sessionRepository.update(repSession.get());
 
-            throw new UpdateException("Session with id " + sessionId + " does not exist!");
+            } else {
+
+                throw new UpdateException("Session with id " + sessionId + " does not exist!");
+
+            }
+
+        } catch (IllegalArgumentException e) {
+
+            throw new UpdateException(e.getMessage());
 
         }
 

@@ -1,8 +1,6 @@
 package ru.vsu.amm.java.servlets;
 
-import ru.vsu.amm.java.entities.Session;
 import ru.vsu.amm.java.exceptions.DeleteException;
-import ru.vsu.amm.java.repository.SessionRepository;
 import ru.vsu.amm.java.service.DeleteService;
 
 import javax.servlet.annotation.WebServlet;
