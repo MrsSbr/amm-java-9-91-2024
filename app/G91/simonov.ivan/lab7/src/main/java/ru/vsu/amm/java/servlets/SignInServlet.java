@@ -5,13 +5,14 @@ import ru.vsu.amm.java.exceptions.AuthException;
 import ru.vsu.amm.java.requests.SignInRequest;
 import ru.vsu.amm.java.service.AuthService;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+
+import static ru.vsu.amm.java.utils.Redirection.redirectToActionsList;
 
 @WebServlet("/signIn")
 public class SignInServlet extends HttpServlet {
@@ -40,9 +41,10 @@ public class SignInServlet extends HttpServlet {
 
             session.setAttribute("user", user);
 
-            request.getRequestDispatcher("redirectUser").forward(request, response);
+            String redirect = redirectToActionsList(user);
+            response.sendRedirect(redirect);
 
-        } catch (AuthException | ServletException e) {
+        } catch (AuthException e) {
 
             response.sendRedirect(String.format("signIn.jsp?error=%s", e.getMessage()));
 

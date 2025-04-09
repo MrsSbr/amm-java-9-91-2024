@@ -6,10 +6,12 @@
         .form-group {
             margin-bottom: 15px;
         }
+
         label {
             display: inline-block;
             width: 200px;
         }
+
         input[title]:hover:after {
             content: attr(title);
             position: absolute;
@@ -70,8 +72,6 @@
 
     <button type="submit">Добавить</button>
 </form>
-<form action="redirectUser" method="get">
-    <button type="submit" class="return-link">Вернуться к списку действий</button>
-</form>
+<p><a href="adminActions.jsp" class="return-link">Перейти к списку действий</a></p>
 </body>
 </html>

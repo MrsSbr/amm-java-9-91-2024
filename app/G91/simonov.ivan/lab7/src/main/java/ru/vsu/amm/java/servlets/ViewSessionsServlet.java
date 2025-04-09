@@ -7,13 +7,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import ru.vsu.amm.java.entities.Session;
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.enums.Role;
 import ru.vsu.amm.java.service.ViewService;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+
+import static ru.vsu.amm.java.utils.Redirection.redirectToViewSessions;
 
 @WebServlet("/viewSessions")
 public class ViewSessionsServlet extends HttpServlet {
@@ -36,8 +37,9 @@ public class ViewSessionsServlet extends HttpServlet {
         List<Session> sessionList = viewService.viewSessions(user);
 
         request.setAttribute("sessions", sessionList);
-        request.setAttribute("isUser", user.getRole() == Role.USER);
-        request.getRequestDispatcher("userSessions.jsp").forward(request, response);
+
+        String redirect = redirectToViewSessions(user);
+        request.getRequestDispatcher(redirect).forward(request, response);
 
     }
 

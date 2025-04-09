@@ -7,7 +7,7 @@
 <h1>Панель действий админа</h1>
 <p>Выберите действие:</p>
 <ul>
-    <li><a href="addSession.jsp">Добавить сессию</a></li>
+    <li><a href="addSessionAdmin.jsp">Добавить сессию</a></li>
     <li><a href="viewSessions">Просмотреть сессии</a></li>
 </ul>
 <p><a href="index.jsp">Перейти на главную страницу</a></p>

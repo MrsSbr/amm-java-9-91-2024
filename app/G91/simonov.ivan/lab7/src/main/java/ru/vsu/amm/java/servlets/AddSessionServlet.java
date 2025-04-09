@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.servlets;
 
+import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.exceptions.AddException;
 import ru.vsu.amm.java.requests.AddSessionRequest;
 import ru.vsu.amm.java.requests.AddVehicleRequest;
@@ -9,8 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
+
+import static ru.vsu.amm.java.utils.Redirection.redirectToAddSession;
 
 @WebServlet("/addSession")
 public class AddSessionServlet extends HttpServlet {
@@ -25,6 +29,11 @@ public class AddSessionServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+
+        String redirect = redirectToAddSession(user);
 
         try {
 
@@ -41,11 +50,11 @@ public class AddSessionServlet extends HttpServlet {
 
             addService.addSession(addSessionRequest);
 
-            response.sendRedirect("addSession.jsp?message=Session successfully added!");
+            response.sendRedirect(String.format("%s?message=Session successfully added!", redirect));
 
         } catch (AddException e) {
 
-            response.sendRedirect(String.format("addSession.jsp?error=%s", e.getMessage()));
+            response.sendRedirect(String.format("%s?error=%s", redirect, e.getMessage()));
 
         }
     }

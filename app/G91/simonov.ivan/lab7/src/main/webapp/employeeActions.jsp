@@ -7,8 +7,8 @@
 <h1>Панель действий сотрудника</h1>
 <p>Выберите действие:</p>
 <ul>
-    <li><a href="addSession.jsp">Добавить сессию</a></li>
-    <li><a href="userSessions.jsp">Просмотреть сессии</a></li>
+    <li><a href="addSessionEmployee.jsp">Добавить сессию</a></li>
+    <li><a href="viewSessions">Просмотреть сессии</a></li>
 </ul>
 <p><a href="index.jsp">Перейти на главную страницу</a></p>
 </body>
