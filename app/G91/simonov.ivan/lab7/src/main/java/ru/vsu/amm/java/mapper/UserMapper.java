@@ -1,11 +1,15 @@
 package ru.vsu.amm.java.mapper;
 
-import javax.servlet.http.HttpServletRequest;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.enums.Role;
 import ru.vsu.amm.java.requests.RegisterRequest;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 
 public class UserMapper implements EntityMapper<User> {
 

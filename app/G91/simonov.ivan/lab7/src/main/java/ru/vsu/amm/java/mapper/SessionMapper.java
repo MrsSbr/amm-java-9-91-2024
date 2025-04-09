@@ -4,9 +4,13 @@ import ru.vsu.amm.java.entities.Session;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.entities.Vehicle;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 public class SessionMapper implements EntityMapper<Session> {
 

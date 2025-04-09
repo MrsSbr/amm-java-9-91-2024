@@ -2,7 +2,11 @@ package ru.vsu.amm.java.mapper;
 
 import ru.vsu.amm.java.entities.Vehicle;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class VehicleMapper implements EntityMapper<Vehicle> {
 
