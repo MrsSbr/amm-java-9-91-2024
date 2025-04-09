@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.service;
 
 import ru.vsu.amm.java.entities.User;
+import ru.vsu.amm.java.exceptions.AddException;
 import ru.vsu.amm.java.exceptions.AuthException;
 import ru.vsu.amm.java.mapper.UserMapper;
 import ru.vsu.amm.java.repository.UserRepository;
@@ -44,17 +45,26 @@ public class AuthService {
         UserMapper userMapper = new UserMapper();
         User user = userMapper.mapRequestToObject(request);
 
-        if (userRepository.getByLoginAndPassword(user.getLogin(), user.getPassword()).isEmpty()) {
+        String existenceMsg = "User already exists!";
 
-            userRepository.save(user);
-            return user;
+        try {
 
-        } else {
+            if (userRepository.getByLoginAndPassword(user.getLogin(), user.getPassword()).isEmpty()) {
 
-            throw new AuthException("User already exists!");
+                userRepository.save(user);
+                return user;
+
+            } else {
+
+                throw new AuthException(existenceMsg);
+
+            }
+
+        } catch (AddException e) {
+
+            throw new AuthException(existenceMsg);
 
         }
-
     }
 
 }
