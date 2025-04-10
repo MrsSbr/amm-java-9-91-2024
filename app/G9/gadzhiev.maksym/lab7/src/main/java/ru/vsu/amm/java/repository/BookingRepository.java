@@ -4,9 +4,7 @@ import ru.vsu.amm.java.config.DatabaseConfig;
 import ru.vsu.amm.java.entity.Booking;
 
 import javax.sql.DataSource;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 
 public class BookingRepository implements BaseRepository<Booking> {
@@ -23,25 +21,26 @@ public class BookingRepository implements BaseRepository<Booking> {
                 FROM booking  WHERE id = ?
                 """;
 
-        var connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement pStmt = connection.prepareStatement(query)) {
 
-        var pStmt = connection.prepareStatement(query);
-        pStmt.setLong(1, id);
-        pStmt.execute();
+            pStmt.setLong(1, id);
 
-        var result = pStmt.getResultSet();
-        if (result.next()) {
-            return Optional.of(new Booking(
-                    result.getLong("id"),
-                    result.getDate("checkInDate").toLocalDate(),
-                    result.getDate("checkOutDate").toLocalDate(),
-                    result.getLong("price"),
-                    result.getString("status"),
-                    result.getLong("userId"),
-                    result.getLong("realEstateId"))
-            );
+            try(ResultSet result = pStmt.executeQuery()) {
+                if (result.next()) {
+                    return Optional.of(new Booking(
+                            result.getLong("id"),
+                            result.getDate("checkInDate").toLocalDate(),
+                            result.getDate("checkOutDate").toLocalDate(),
+                            result.getLong("price"),
+                            result.getString("status"),
+                            result.getLong("userId"),
+                            result.getLong("realEstateId"))
+                    );
+                }
+                return Optional.empty();
+            }
         }
-        return Optional.empty();
     }
 
     @Override
@@ -51,36 +50,37 @@ public class BookingRepository implements BaseRepository<Booking> {
                 SET checkInDate = ?, checkOutDate = ?, price = ?
                 status = ?, userId = ?, realEstateId = ?
                 WHERE id = ?""";
-
-        var connection = dataSource.getConnection();
-
-        var pStmt = connection.prepareStatement(query);
-        setPreparedStatement(pStmt, entity);
-        pStmt.setLong(7, entity.getId());
-        pStmt.execute();
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement pStmt = connection.prepareStatement(query)) {
+            setPreparedStatement(pStmt, entity);
+            pStmt.setLong(7, entity.getId());
+            pStmt.execute();
+        }
     }
 
     @Override
-    public void save(Booking entity) throws SQLException {
+    public boolean save(Booking entity) throws SQLException {
         final String query = """
                 INSERT INTO booking (checkInDate, checkOutDate, price,
                 status, userId, realEstateId)
                 VALUES (?, ?, ?, ?, ?, ?)
                 """;
-        var connection = dataSource.getConnection();
-        var pStmt = connection.prepareStatement(query);
-        setPreparedStatement(pStmt, entity);
-        pStmt.execute();
+        try(Connection  connection = dataSource.getConnection();
+            PreparedStatement pStmt = connection.prepareStatement(query)) {
+            setPreparedStatement(pStmt, entity);
+            return pStmt.executeUpdate() == 1;
+        }
     }
 
     @Override
     public void delete(Long id) throws SQLException {
         final String query = "DELETE FROM booking WHERE id = ?";
-        var connection = dataSource.getConnection();
 
-        var pStmt = connection.prepareStatement(query);
-        pStmt.setLong(1, id);
-        pStmt.execute();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement pStmt = connection.prepareStatement(query)) {
+            pStmt.setLong(1, id);
+            pStmt.execute();
+        }
     }
 
     private void setPreparedStatement(PreparedStatement pStmt, Booking entity) throws SQLException {

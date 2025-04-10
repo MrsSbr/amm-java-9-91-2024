@@ -4,7 +4,9 @@ import ru.vsu.amm.java.config.DatabaseConfig;
 import ru.vsu.amm.java.entity.UserEntity;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -21,21 +23,24 @@ public class UserEntityRepository implements BaseRepository<UserEntity> {
                 SELECT id, login, password, number, email
                 FROM userEntity WHERE id = ?
                 """;
-        var connection = dataSource.getConnection();
-        var pStmt = connection.prepareStatement(query);
-        pStmt.setLong(1, id);
-        pStmt.execute();
-        var result = pStmt.getResultSet();
-        if (result.next()) {
-            return Optional.of(new UserEntity(
-                    result.getLong("id"),
-                    result.getString("login"),
-                    result.getString("password"),
-                    result.getString("number"),
-                    result.getString("email")
-            ));
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement pStmt = connection.prepareStatement(query)) {
+
+            pStmt.setLong(1, id);
+
+            try (ResultSet result = pStmt.executeQuery()) {
+                if (result.next()) {
+                    return Optional.of(new UserEntity(
+                            result.getLong("id"),
+                            result.getString("login"),
+                            result.getString("password"),
+                            result.getString("number"),
+                            result.getString("email")
+                    ));
+                }
+                return Optional.empty();
+            }
         }
-        return Optional.empty();
     }
 
     @Override
@@ -45,11 +50,12 @@ public class UserEntityRepository implements BaseRepository<UserEntity> {
                 SET login = ?, password = ?, number = ?, email = ?
                 WHERE id = ?
                 """;
-        var connection = dataSource.getConnection();
-        var pStmt = connection.prepareStatement(query);
-        setPrepareStatement(pStmt, entity);
-        pStmt.setLong(5, entity.getId());
-        pStmt.execute();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement pStmt = connection.prepareStatement(query)) {
+            setPrepareStatement(pStmt, entity);
+            pStmt.setLong(5, entity.getId());
+            pStmt.execute();
+        }
     }
 
     private void setPrepareStatement(PreparedStatement pStmt, UserEntity entity) throws SQLException {
@@ -60,23 +66,49 @@ public class UserEntityRepository implements BaseRepository<UserEntity> {
     }
 
     @Override
-    public void save(UserEntity entity) throws SQLException {
+    public boolean save(UserEntity entity) throws SQLException {
         final String query = """
                 INSERT INTO userEntity (login, password, number, email)
                 VALUES (?, ?, ?, ?)
                 """;
-        var connection = dataSource.getConnection();
-        var pStmt = connection.prepareStatement(query);
-        setPrepareStatement(pStmt, entity);
-        pStmt.execute();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement pStmt = connection.prepareStatement(query)) {
+            setPrepareStatement(pStmt, entity);
+            return pStmt.executeUpdate() == 1;
+        }
     }
 
     @Override
     public void delete(Long id) throws SQLException {
         final String query = "DELETE FROM userEntity WHERE id = ?";
-        var connection = dataSource.getConnection();
-        var pStmt = connection.prepareStatement(query);
-        pStmt.setLong(1, id);
-        pStmt.execute();
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement pStmt = connection.prepareStatement(query)) {
+            pStmt.setLong(1, id);
+            pStmt.execute();
+        }
+    }
+
+    public Optional<UserEntity> findByLogin(String login) throws SQLException {
+        final String query = """
+                SELECT id, login, password, number_phone, email
+                FROM user_entity WHERE login = ?
+                """;
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, login);
+
+            try(ResultSet result = preparedStatement.executeQuery()) {
+                if (result.next()) {
+                    return Optional.of(new UserEntity(
+                            result.getLong("id"),
+                            result.getString("login"),
+                            result.getString("password"),
+                            result.getString("number_phone"),
+                            result.getString("email")));
+                }
+                return Optional.empty();
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
 package ru.vsu.amm.java.entity;
 
+import ru.vsu.amm.java.repository.UserEntityRepository;
+
 public class UserEntity {
     private Long id;
     private String login;
@@ -33,5 +35,9 @@ public class UserEntity {
 
     public Long getId() {
         return id;
+    }
+
+    public void setPassword(String s) {
+        this.password = s;
     }
 }

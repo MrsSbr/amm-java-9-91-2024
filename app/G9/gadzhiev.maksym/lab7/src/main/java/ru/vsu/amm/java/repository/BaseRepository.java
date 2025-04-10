@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface BaseRepository<T> {
     Optional<T> findById(Long id) throws SQLException;
     void update(T entity) throws SQLException;
-    void save(T entity) throws SQLException;
+    boolean save(T entity) throws SQLException;
     void delete(Long id) throws SQLException;
 
 }
