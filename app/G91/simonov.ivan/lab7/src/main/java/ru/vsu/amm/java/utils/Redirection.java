@@ -34,4 +34,14 @@ public class Redirection {
         };
 
     }
+
+    public static String redirectToViewUsers(User user) {
+
+        return  switch (user.getRole()) {
+            case Role.USER -> "viewSessions";
+            case Role.EMPLOYEE -> "viewUsersEmployee.jsp";
+            case Role.ADMIN -> "viewUsersAdmin.jsp";
+        };
+
+    }
 }

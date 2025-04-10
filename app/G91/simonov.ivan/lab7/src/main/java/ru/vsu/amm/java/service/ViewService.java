@@ -52,4 +52,18 @@ public class ViewService {
         };
 
     }
+
+    public List<User> viewUsers(User user) {
+
+        List<User> userList = userRepository.getAll();
+
+        return switch (user.getRole()) {
+
+            case ADMIN, EMPLOYEE -> userList;
+
+            default -> null;
+
+        };
+
+    }
 }
