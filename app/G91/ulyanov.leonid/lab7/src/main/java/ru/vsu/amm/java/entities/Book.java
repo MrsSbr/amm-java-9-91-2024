@@ -2,7 +2,7 @@ package ru.vsu.amm.java.entities;
 
 import lombok.Data;
 import ru.vsu.amm.java.enums.BookType;
-import ru.vsu.amm.java.requests.CreateBookRequest;
+import ru.vsu.amm.java.requests.Book.DownloadBookRequest;
 
 @Data
 public class Book {
@@ -17,7 +17,7 @@ public class Book {
     public Book() {
     }
 
-    public Book(CreateBookRequest request) {
+    public Book(DownloadBookRequest request) {
         this.title = request.title();
         this.author = request.author();
         this.publisher = request.publisher();

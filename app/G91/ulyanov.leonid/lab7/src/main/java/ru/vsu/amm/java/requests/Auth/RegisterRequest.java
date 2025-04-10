@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.requests;
+package ru.vsu.amm.java.requests.Auth;
 
 public record RegisterRequest(String email,
                               String password,

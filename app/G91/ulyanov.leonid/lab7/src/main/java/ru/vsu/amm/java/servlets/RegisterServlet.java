@@ -1,7 +1,7 @@
 package ru.vsu.amm.java.servlets;
 
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.requests.RegisterRequest;
+import ru.vsu.amm.java.requests.Auth.RegisterRequest;
 import ru.vsu.amm.java.services.AuthService;
 
 import javax.servlet.annotation.WebServlet;

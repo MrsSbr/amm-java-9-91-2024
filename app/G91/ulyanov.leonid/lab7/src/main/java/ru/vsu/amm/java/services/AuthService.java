@@ -5,8 +5,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.mappers.UserMapper;
 import ru.vsu.amm.java.repos.UserRepository;
-import ru.vsu.amm.java.requests.LoginRequest;
-import ru.vsu.amm.java.requests.RegisterRequest;
+import ru.vsu.amm.java.requests.Auth.LoginRequest;
+import ru.vsu.amm.java.requests.Auth.RegisterRequest;
 
 import javax.naming.AuthenticationException;
 import java.util.Optional;

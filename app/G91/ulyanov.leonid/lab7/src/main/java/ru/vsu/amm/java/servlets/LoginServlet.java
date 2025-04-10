@@ -1,7 +1,7 @@
 package ru.vsu.amm.java.servlets;
 
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.requests.LoginRequest;
+import ru.vsu.amm.java.requests.Auth.LoginRequest;
 import ru.vsu.amm.java.services.AuthService;
 
 import javax.naming.AuthenticationException;

@@ -1,7 +1,7 @@
 package ru.vsu.amm.java.mappers;
 
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.requests.RegisterRequest;
+import ru.vsu.amm.java.requests.Auth.RegisterRequest;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

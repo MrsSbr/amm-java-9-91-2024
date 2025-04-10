@@ -8,7 +8,7 @@ import ru.vsu.amm.java.enums.UpdateType;
 import ru.vsu.amm.java.repos.BookRepository;
 import ru.vsu.amm.java.repos.BookUpdatesRepository;
 import ru.vsu.amm.java.repos.UserRepository;
-import ru.vsu.amm.java.requests.CreateBookUpdateRequest;
+import ru.vsu.amm.java.requests.BookUpdate.DownloadBookUpdateRequest;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.time.LocalDateTime;
@@ -28,7 +28,8 @@ public class CreateService {
         this.bookUpdates = bookUpdates;
     }
 
-    public void createBook(CreateBookUpdateRequest request) throws InstanceAlreadyExistsException {
+    public void createBook(DownloadBookUpdateRequest request)
+            throws InstanceAlreadyExistsException {
         BookUpdate bookUpdate = new BookUpdate();
 
         try {
@@ -43,7 +44,7 @@ public class CreateService {
                 throw new NoSuchElementException("User not found.");
             }
 
-            Book book = new Book(request.createBookRequest());
+            Book book = new Book(request.downloadBookRequest());
             Optional<Book> bookOptional = books.getByInfo(book);
 
             if (bookOptional.isPresent()) {
