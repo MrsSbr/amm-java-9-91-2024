@@ -9,9 +9,11 @@ public class User {
     private String surname;
     private String name;
     private String patronymicname;
-    private LocalDate birthday;
-    private String email;
     private String phoneNumber;
+    private String password;
+    private String email;
+    private LocalDate birthday;
+
     private Role role;
 
     public User() {
@@ -57,16 +59,16 @@ public class User {
         return patronymicname;
     }
 
-    public void setPatronymicname() {
+    public void setPatronymicname(String patronymicname) {
         this.patronymicname = patronymicname;
     }
 
-    public LocalDate getBirthday() {
-        return birthday;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -77,12 +79,20 @@ public class User {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 
     public Role getRole() {
