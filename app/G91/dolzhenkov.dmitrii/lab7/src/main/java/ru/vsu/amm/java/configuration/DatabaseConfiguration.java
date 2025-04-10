@@ -15,7 +15,7 @@ public class DatabaseConfiguration {
         try (InputStream inputStream = DatabaseConfiguration.class.getClassLoader()
                 .getResourceAsStream("database.properties")) {
             properties.load(inputStream);
-        } catch (IOException e) { //todo logger
+        } catch (IOException e) {
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }

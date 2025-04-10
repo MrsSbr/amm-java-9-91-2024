@@ -20,6 +20,7 @@ public class ErrorMessages {
     public static final String INCORRECT_PASSWORD = "Incorrect password";
     public static final String USER_ALREADY_EXISTS = "User already exists";
     public static final String FIND_USER_BY_NAME = "Failed to find user by name: ";
+    public static final String FIND_USER_ROLE = "Failed to find user role: ";
 
     public static final String ERROR_MESSAGE = "errorMessage";
 }

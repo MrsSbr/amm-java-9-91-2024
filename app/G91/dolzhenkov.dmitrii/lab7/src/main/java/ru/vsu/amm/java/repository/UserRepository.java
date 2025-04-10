@@ -27,7 +27,7 @@ public class UserRepository implements CrudRepository<UserEntity>{
 
     @Override
     public Optional<UserEntity> findById(Long id) {
-        final String query = "SELECT name, password FROM User WHERE id = ?";
+        final String query = "SELECT name, password, role FROM \"User\" WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
@@ -46,7 +46,7 @@ public class UserRepository implements CrudRepository<UserEntity>{
 
     @Override
     public List<UserEntity> findAll() {
-        final String query = "SELECT id, name, password FROM User";
+        final String query = "SELECT id, name, password, role FROM \"User\"";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -64,11 +64,12 @@ public class UserRepository implements CrudRepository<UserEntity>{
 
     @Override
     public void save(UserEntity entity) {
-        final String query = "INSERT INTO User(name, password) VALUES(?,?)";
+        final String query = "INSERT INTO \"User\"(name, password, role) VALUES(?,?,?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, entity.getUserName());
             preparedStatement.setString(2, entity.getPassword());
+            preparedStatement.setString(3, entity.getUserRole().name());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             log.error(ErrorMessages.SAVE_USER, e);
@@ -78,12 +79,13 @@ public class UserRepository implements CrudRepository<UserEntity>{
 
     @Override
     public void update(UserEntity entity) {
-        final String query = "UPDATE User SET name = ?, password = ? WHERE id = ?";
+        final String query = "UPDATE \"User\" SET name = ?, password = ?, role = ? WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, entity.getUserName());
             preparedStatement.setString(2, entity.getPassword());
-            preparedStatement.setLong(3, entity.getId());
+            preparedStatement.setString(3, entity.getUserRole().name());
+            preparedStatement.setLong(4, entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             log.error(ErrorMessages.UPDATE_USER + entity, e);
@@ -93,7 +95,7 @@ public class UserRepository implements CrudRepository<UserEntity>{
 
     @Override
     public void delete(Long id) {
-        final String query = "DELETE FROM User WHERE id = ?";
+        final String query = "DELETE FROM \"User\" WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
@@ -105,7 +107,7 @@ public class UserRepository implements CrudRepository<UserEntity>{
     }
 
     public Optional<UserEntity> findByName(String name) {
-        final String query = "SELECT id, name, password FROM User WHERE name = ?";
+        final String query = "SELECT id, name, password, role FROM \"User\" WHERE name = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 

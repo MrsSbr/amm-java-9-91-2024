@@ -1,5 +1,10 @@
 plugins {
     id("java")
+    id("war")
+}
+
+tasks.war{
+    archiveFileName.set("dolzhenkov.dmitrii.war")
 }
 
 group = "ru.vsu.amm.java"
