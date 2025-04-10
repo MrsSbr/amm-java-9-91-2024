@@ -28,17 +28,25 @@ public class ViewService {
 
         return switch (user.getRole()) {
 
-            case ADMIN, EMPLOYEE -> sessionList.stream().peek(s -> {
+            case ADMIN, EMPLOYEE -> {
 
-                s.setUser(userRepository.getById(s.getUser().getUserId()).get());
-                s.setVehicle(vehicleRepository.getById(s.getVehicle().getVehicleId()).get());
+                sessionList.forEach(s -> {
 
-            }).toList();
+                    s.setUser(userRepository.getById(s.getUser().getUserId()).get());
+                    s.setVehicle(vehicleRepository.getById(s.getVehicle().getVehicleId()).get());
+
+                });
+
+                yield sessionList;
+
+            }
 
             case USER -> sessionList.stream()
                     .filter(s -> s.getUser().getUserId() == user.getUserId())
-                    .peek(s -> s.setVehicle(vehicleRepository.getById(s.getVehicle()
-                            .getVehicleId()).get()))
+                    .map(s -> {
+                        s.setVehicle(vehicleRepository.getById(s.getVehicle().getVehicleId()).get());
+                        return s;
+                    })
                     .toList();
 
         };
