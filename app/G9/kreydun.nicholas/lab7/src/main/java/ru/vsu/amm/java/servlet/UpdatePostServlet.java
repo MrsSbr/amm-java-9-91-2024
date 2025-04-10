@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.Post;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.repository.PostRepository;
+import ru.vsu.amm.java.services.PostService;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -30,7 +31,8 @@ public class UpdatePostServlet extends HttpServlet {
             String newContent = request.getParameter("content");
 
             PostRepository postRepository = new PostRepository();
-            Post existingPost = postRepository.getById(postId);
+            PostService postService = new PostService(postRepository);
+            Post existingPost = postService.getById(postId);
 
             if (existingPost == null) {
                 session.setAttribute("error", "Пост не найден.");

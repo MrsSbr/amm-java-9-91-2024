@@ -22,7 +22,7 @@ public class UserRepositoryTest {
 
     private UserRepository userRepository;
     private UUID testUserId;
-    private final String email = "test2@example.com";
+    private final String email = "test21@example.com";
 
     @BeforeEach
     void setUp() {
@@ -34,7 +34,7 @@ public class UserRepositoryTest {
     void testCreateUser() {
         User user = new User();
         user.setId(UUID.randomUUID());
-        user.setUsername("testuser2");
+        user.setUsername("testuser21");
         user.setEmail(email);
         user.setPassword("password123");
 
@@ -49,8 +49,8 @@ public class UserRepositoryTest {
     void testFindUserById() {
         User foundUser = userRepository.getById(testUserId);
         assertNotNull(foundUser);
-        assertEquals("testuser2", foundUser.getUsername());
-        assertEquals("test2@example.com", foundUser.getEmail());
+        assertEquals("testuser21", foundUser.getUsername());
+        assertEquals("test21@example.com", foundUser.getEmail());
     }
     @Test
     @Order(3)
@@ -66,15 +66,15 @@ public class UserRepositoryTest {
         User user = userRepository.getById(testUserId);
         assertNotNull(user, "Пользователь должен существовать перед обновлением");
 
-        user.setUsername("UpdatedName");
-        user.setEmail("updated@example.com");
+        user.setUsername("UpdatedName1");
+        user.setEmail("updated1@example.com");
 
         boolean isUpdated = userRepository.update(user);
         assertTrue(isUpdated, "Обновление должно быть успешным");
 
         User updatedUser = userRepository.getById(testUserId);
-        assertEquals("UpdatedName", updatedUser.getUsername(), "Имя пользователя не обновилось");
-        assertEquals("updated@example.com", updatedUser.getEmail(), "Email пользователя не обновился");
+        assertEquals("UpdatedName1", updatedUser.getUsername(), "Имя пользователя не обновилось");
+        assertEquals("updated1@example.com", updatedUser.getEmail(), "Email пользователя не обновился");
     }
     @Test
     @Order(5)

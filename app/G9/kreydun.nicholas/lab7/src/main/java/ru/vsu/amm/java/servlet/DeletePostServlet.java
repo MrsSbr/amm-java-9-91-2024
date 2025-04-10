@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.repository.PostRepository;
+import ru.vsu.amm.java.services.PostService;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -25,7 +26,9 @@ public class DeletePostServlet extends HttpServlet {
         UUID postId = UUID.fromString(request.getParameter("postId"));;
 
         PostRepository postRepository = new PostRepository();
-        boolean isDeleted = postRepository.delete(postId);
+        PostService postService = new PostService(postRepository);
+
+        boolean isDeleted = postService.delete(postId);
 
         if (isDeleted) {
             session.setAttribute("success", "Пост успешно удален.");

@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.repository.UserRepository;
+import ru.vsu.amm.java.services.UserService;
 
 import java.io.IOException;
 
@@ -42,7 +43,8 @@ public class UpdateUserServlet extends HttpServlet {
         user.setEmail(email);
 
         UserRepository userRepository = new UserRepository();
-        boolean isUpdated = userRepository.update(user);
+        UserService userService = new UserService(userRepository);
+        boolean isUpdated = userService.update(user);
 
         if (isUpdated) {
             session.setAttribute("user", user);

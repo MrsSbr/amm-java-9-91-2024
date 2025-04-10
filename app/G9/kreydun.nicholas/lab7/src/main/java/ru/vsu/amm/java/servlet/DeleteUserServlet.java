@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.repository.UserRepository;
+import ru.vsu.amm.java.services.UserService;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -25,7 +26,9 @@ public class DeleteUserServlet extends HttpServlet {
 
         UUID userId = user.getId();
         UserRepository userRepository = new UserRepository();
-        boolean isDeleted = userRepository.delete(userId);
+        UserService userService = new UserService(userRepository);
+
+        boolean isDeleted = userService.delete(userId);
 
         if (isDeleted) {
             session.invalidate();

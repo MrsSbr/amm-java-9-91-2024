@@ -1,2 +1,20 @@
-апр. 03, 2025 6:41:45 PM ru.vsu.amm.java.Main main
+апр. 10, 2025 5:46:23 PM ru.vsu.amm.java.config.ServletConfig registerServlets
+INFO: Registering servlets...
+апр. 10, 2025 5:46:23 PM ru.vsu.amm.java.config.ServletConfig registerServlets
+INFO: Registered servlets successfully
+апр. 10, 2025 5:46:23 PM ru.vsu.amm.java.Main main
 INFO: Starting Embedded Tomcat...
+апр. 10, 2025 5:48:37 PM ru.vsu.amm.java.repository.PostRepository getPostsByUserId
+INFO: Trying to connect and do query getPostByUserId
+апр. 10, 2025 5:48:46 PM ru.vsu.amm.java.servlet.CreatePostServlet doPost
+INFO: 
+апр. 10, 2025 5:48:46 PM ru.vsu.amm.java.repository.PostRepository create
+INFO: Trying to connect and do query create Post
+апр. 10, 2025 5:48:46 PM ru.vsu.amm.java.repository.PostRepository getPostsByUserId
+INFO: Trying to connect and do query getPostByUserId
+апр. 10, 2025 5:48:52 PM ru.vsu.amm.java.servlet.CreatePostServlet doPost
+INFO: 
+апр. 10, 2025 5:48:52 PM ru.vsu.amm.java.repository.PostRepository create
+INFO: Trying to connect and do query create Post
+апр. 10, 2025 5:48:52 PM ru.vsu.amm.java.repository.PostRepository getPostsByUserId
+INFO: Trying to connect and do query getPostByUserId

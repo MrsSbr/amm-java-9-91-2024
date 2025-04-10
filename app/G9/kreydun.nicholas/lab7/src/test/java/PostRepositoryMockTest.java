@@ -20,12 +20,14 @@ import static org.mockito.Mockito.any;
 class PostRepositoryMockTest {
 
     private PostRepository postRepository;
+    private PostService postService;
     private Post testPost;
     private UUID postId;
 
     @BeforeEach
     void setUp() {
         postRepository = mock(PostRepository.class);
+        postService = new PostService(postRepository);
 
         postId = UUID.randomUUID();
         UUID userId = UUID.randomUUID();
@@ -39,11 +41,8 @@ class PostRepositoryMockTest {
     @Test
     void testGetPostById() {
         when(postRepository.getById(postId)).thenReturn(testPost);
-        PostService postService = new PostService(postRepository);
 
-        //тестируем пост сервис
-        // проверяем логику сервиса
-        Post foundPost = postRepository.getById(postId);
+        Post foundPost = postService.getById(postId);
 
         assertNotNull(foundPost);
         assertEquals("Test Post", foundPost.getContent());
@@ -55,7 +54,7 @@ class PostRepositoryMockTest {
         List<Post> posts = Arrays.asList(testPost, new Post());
         when(postRepository.getAll()).thenReturn(posts);
 
-        List<Post> result = postRepository.getAll();
+        List<Post> result = postService.getAll();
 
         assertEquals(2, result.size());
         verify(postRepository, times(1)).getAll();
@@ -65,7 +64,7 @@ class PostRepositoryMockTest {
     void testCreatePost() {
         when(postRepository.create(any(Post.class))).thenReturn(postId);
 
-        UUID newPostId = postRepository.create(testPost);
+        UUID newPostId = postService.create(testPost);
 
         assertNotNull(newPostId);
         verify(postRepository, times(1)).create(testPost);
@@ -75,7 +74,7 @@ class PostRepositoryMockTest {
     void testUpdatePost() {
         when(postRepository.update(testPost)).thenReturn(true);
 
-        boolean result = postRepository.update(testPost);
+        boolean result = postService.update(testPost);
 
         assertTrue(result);
         verify(postRepository, times(1)).update(testPost);
@@ -85,7 +84,7 @@ class PostRepositoryMockTest {
     void testDeletePost() {
         when(postRepository.delete(postId)).thenReturn(true);
 
-        boolean result = postRepository.delete(postId);
+        boolean result = postService.delete(postId);
 
         assertTrue(result);
         verify(postRepository, times(1)).delete(postId);

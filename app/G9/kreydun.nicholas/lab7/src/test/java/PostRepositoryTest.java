@@ -27,7 +27,7 @@ public class PostRepositoryTest {
     @BeforeEach
     void setUp() {
         postRepository = new PostRepository();
-        testUserId = UUID.fromString("5a8d84a7-88ec-4119-8cce-b91173605285");
+        testUserId = UUID.fromString("bea5cec5-0abe-4bcb-9adb-c110faf9dd9a");
     }
 
     @Test

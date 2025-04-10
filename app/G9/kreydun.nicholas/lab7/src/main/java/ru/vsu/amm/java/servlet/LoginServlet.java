@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.repository.UserRepository;
+import ru.vsu.amm.java.services.UserService;
 
 import java.io.IOException;
 
@@ -17,7 +18,8 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         UserRepository userRepository = new UserRepository();
-        User user = userRepository.getByEmail(email);
+        UserService userService = new UserService(userRepository);
+        User user = userService.getByEmail(email);
 
         if (user != null && user.getPassword().equals(password)) {
             HttpSession session = request.getSession();

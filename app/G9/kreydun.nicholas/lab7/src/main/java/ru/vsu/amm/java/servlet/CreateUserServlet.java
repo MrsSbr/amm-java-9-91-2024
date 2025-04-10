@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.repository.UserRepository;
+import ru.vsu.amm.java.services.UserService;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -15,6 +16,7 @@ import java.time.LocalTime;
 @WebServlet("/createUser")
 public class CreateUserServlet extends HttpServlet {
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
 
@@ -30,15 +32,15 @@ public class CreateUserServlet extends HttpServlet {
         user.setCreatedAt(LocalTime.now());
 
         UserRepository userRepository = new UserRepository();
+        UserService userService = new UserService(userRepository);
 
-        UUID resultId = userRepository.create(user);
+        UUID resultId = userService.create(user);
+
         if (resultId != null) {
             response.sendRedirect("userCreated.jsp");
-        }
-        else {
+        } else {
             session.setAttribute("error", "Такой пользователь уже есть!");
             response.sendRedirect("register.jsp");
         }
-
     }
 }

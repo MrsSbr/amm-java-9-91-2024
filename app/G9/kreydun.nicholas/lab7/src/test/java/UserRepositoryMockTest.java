@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.repository.UserRepository;
+import ru.vsu.amm.java.services.UserService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,13 +18,16 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.any;
 
 class UserRepositoryMockTest {
+
     private UserRepository userRepository;
+    private UserService userService;
     private User testUser;
     private UUID userId;
 
     @BeforeEach
     void setUp() {
         userRepository = mock(UserRepository.class);
+        userService = new UserService(userRepository);
 
         userId = UUID.randomUUID();
         testUser = new User();
@@ -37,7 +41,7 @@ class UserRepositoryMockTest {
     void testGetUserById() {
         when(userRepository.getById(userId)).thenReturn(testUser);
 
-        User foundUser = userRepository.getById(userId);
+        User foundUser = userService.getById(userId);
 
         assertNotNull(foundUser);
         assertEquals("testuser", foundUser.getUsername());
@@ -49,7 +53,7 @@ class UserRepositoryMockTest {
         List<User> users = Arrays.asList(testUser, new User());
         when(userRepository.getAll()).thenReturn(users);
 
-        List<User> result = userRepository.getAll();
+        List<User> result = userService.getAll();
 
         assertEquals(2, result.size());
         verify(userRepository, times(1)).getAll();
@@ -59,7 +63,7 @@ class UserRepositoryMockTest {
     void testCreateUser() {
         when(userRepository.create(any(User.class))).thenReturn(userId);
 
-        UUID newUserId = userRepository.create(testUser);
+        UUID newUserId = userService.create(testUser);
 
         assertNotNull(newUserId);
         verify(userRepository, times(1)).create(testUser);
@@ -69,7 +73,7 @@ class UserRepositoryMockTest {
     void testUpdateUser() {
         when(userRepository.update(testUser)).thenReturn(true);
 
-        boolean result = userRepository.update(testUser);
+        boolean result = userService.update(testUser);
 
         assertTrue(result);
         verify(userRepository, times(1)).update(testUser);
@@ -79,7 +83,7 @@ class UserRepositoryMockTest {
     void testDeleteUser() {
         when(userRepository.delete(userId)).thenReturn(true);
 
-        boolean result = userRepository.delete(userId);
+        boolean result = userService.delete(userId);
 
         assertTrue(result);
         verify(userRepository, times(1)).delete(userId);

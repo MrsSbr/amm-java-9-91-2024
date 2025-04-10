@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.Post;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.repository.PostRepository;
+import ru.vsu.amm.java.services.PostService;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,7 +24,8 @@ public class UserPostsServlet extends HttpServlet {
 
         if (user != null) {
             PostRepository postRepository = new PostRepository();
-            List<Post> userPosts = postRepository.getPostsByUserId(user.getId());
+            PostService postService = new PostService(postRepository);
+            List<Post> userPosts = postService.getPostsByUserId(user.getId());
             request.setAttribute("posts", userPosts);
         }
 
