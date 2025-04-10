@@ -8,6 +8,6 @@ import lombok.Data;
 public class UserEntity {
     private Long id;
     private String username;
-    private String hashPassword;
+    private String password;
     private String email;
 }
