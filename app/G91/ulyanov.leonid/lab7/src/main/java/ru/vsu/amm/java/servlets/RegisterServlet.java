@@ -39,7 +39,7 @@ public class RegisterServlet extends HttpServlet {
             httpSession.setAttribute("user", user);
             response.sendRedirect("books.jsp");
         } catch (AuthenticationException e) {
-            response.sendRedirect(String.format("register.jsp?error=%s", e.getMessage()));
+            response.sendRedirect(String.format("%s", e.getMessage())); // TODO: связать с jsp
         }
     }
 }

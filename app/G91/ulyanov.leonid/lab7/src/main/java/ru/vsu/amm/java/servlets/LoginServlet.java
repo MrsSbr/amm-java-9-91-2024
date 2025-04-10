@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
                           HttpServletResponse response) throws IOException {
         try {
             LoginRequest signInRequest = new LoginRequest(
-                    request.getParameter("login"),
+                    request.getParameter("email"),
                     request.getParameter("password")
             );
 
@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
             httpSession.setAttribute("user", user);
             response.sendRedirect("books.jsp");
         } catch (AuthenticationException e) {
-            response.sendRedirect(String.format("login.jsp?error=%s", e.getMessage()));
+            response.sendRedirect(String.format("%s", e.getMessage())); // TODO: связать с jsp
         }
     }
 }
