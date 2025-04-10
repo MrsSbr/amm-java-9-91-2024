@@ -42,7 +42,7 @@ public class SmartphoneInOrderRepository implements CrudRepository<SmartphoneInO
 
     @Override
     public List<SmartphoneInOrder> findAll() {
-        String query = "SELECT * FROM SmartphonesInOrders;";
+        String query = "SELECT SmartphoneInOrderID, OrderNum, SmartphoneID, Amount FROM SmartphonesInOrders;";
         List<SmartphoneInOrder> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -100,7 +100,8 @@ public class SmartphoneInOrderRepository implements CrudRepository<SmartphoneInO
     }
 
     public List<SmartphoneInOrder> findAllByOrderNum(Long orderNum) {
-        String query = "SELECT * FROM SmartphonesInOrders WHERE OrderNum = ?;";
+        String query = "SELECT SmartphoneInOrderID, OrderNum, SmartphoneID, Amount " +
+                "FROM SmartphonesInOrders WHERE OrderNum = ?;";
         List<SmartphoneInOrder> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -119,7 +120,8 @@ public class SmartphoneInOrderRepository implements CrudRepository<SmartphoneInO
     }
 
     public List<SmartphoneInOrder> findAllBySmartphone(Long smartphoneId) {
-        String query = "SELECT * FROM SmartphonesInOrders WHERE OrderNum = ?;";
+        String query = "SELECT SmartphoneInOrderID, OrderNum, SmartphoneID, Amount " +
+                "FROM SmartphonesInOrders WHERE OrderNum = ?;";
         List<SmartphoneInOrder> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);

@@ -24,7 +24,8 @@ public class UserRepository implements CrudRepository<User> {
 
     @Override
     public Optional<User> findById(Long id) {
-        String query = "SELECT * FROM Users WHERE UserId = ?;";
+        String query = "SELECT UserID, Surname, Name, Patronymicname, PhoneNumber, Email, Password, Birthday, Role " +
+                "FROM Users WHERE UserId = ?;";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
@@ -43,7 +44,8 @@ public class UserRepository implements CrudRepository<User> {
 
     @Override
     public List<User> findAll() throws SQLException {
-        String query = "SELECT * FROM Users;";
+        String query = "SELECT UserID, Surname, Name, Patronymicname, PhoneNumber, Email, Password, Birthday, Role " +
+                "FROM Users;";
         List<User> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -103,7 +105,8 @@ public class UserRepository implements CrudRepository<User> {
     }
 
     public Optional<User> findByPhoneNumber(String phoneNumber) {
-        String query = "SELECT * FROM Users WHERE PhoneNumber = ?;";
+        String query = "SELECT UserID, Surname, Name, Patronymicname, PhoneNumber, Email, Password, Birthday, Role " +
+                "FROM Users WHERE PhoneNumber = ?;";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, phoneNumber);
@@ -121,7 +124,8 @@ public class UserRepository implements CrudRepository<User> {
     }
 
     public Optional<User> findByEmail(String email) {
-        String query = "SELECT * FROM Users WHERE Email = ?;";
+        String query = "SELECT UserID, Surname, Name, Patronymicname, PhoneNumber, Email, Password, Birthday, Role " +
+                "FROM Users WHERE Email = ?;";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, email);

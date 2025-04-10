@@ -24,7 +24,9 @@ public class SmartphoneRepository implements CrudRepository<Smartphone> {
 
     @Override
     public Optional<Smartphone> findById(Long id) {
-        String query = "SELECT * FROM Smartphones WHERE SmartphoneId = ?;";
+        String query = "SELECT SmartphoneID, Brand, Model, RAM, StorageMemory, MainCameraResolution, " +
+                "ScreenSize, Color, Price, Amount " +
+                "FROM Smartphones WHERE SmartphoneId = ?;";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
@@ -42,7 +44,9 @@ public class SmartphoneRepository implements CrudRepository<Smartphone> {
 
     @Override
     public List<Smartphone> findAll() {
-        String query = "SELECT * FROM Smartphones;";
+        String query = "SELECT SmartphoneID, Brand, Model, RAM, StorageMemory, MainCameraResolution, " +
+                "ScreenSize, Color, Price, Amount " +
+                "FROM Smartphones;";
         List<Smartphone> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -103,7 +107,9 @@ public class SmartphoneRepository implements CrudRepository<Smartphone> {
     }
 
     public List<Smartphone> findAllWithBrand(String brand) {
-        String query = "SELECT * FROM Smartphones WHERE Brand = ?;";
+        String query = "SELECT SmartphoneID, Brand, Model, RAM, StorageMemory, MainCameraResolution, " +
+                "ScreenSize, Color, Price, Amount " +
+                "FROM Smartphones WHERE Brand = ?;";
         List<Smartphone> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -122,7 +128,9 @@ public class SmartphoneRepository implements CrudRepository<Smartphone> {
     }
 
     public List<Smartphone> findAllWithBrandAndModel(String brand, String model) {
-        String query = "SELECT * FROM Smartphones WHERE Brand = ? AND Model = ?;";
+        String query = "SELECT SmartphoneID, Brand, Model, RAM, StorageMemory, MainCameraResolution, " +
+                "ScreenSize, Color, Price, Amount " +
+                "FROM Smartphones WHERE Brand = ? AND Model = ?;";
         List<Smartphone> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -142,7 +150,9 @@ public class SmartphoneRepository implements CrudRepository<Smartphone> {
     }
 
     public List<Smartphone> findAllWithScreenSize(float minSize, float maxSize) {
-        String query = "SELECT * FROM Smartphones WHERE ScreenSize IS BETWEEN ? AND ?;";
+        String query = "SELECT SmartphoneID, Brand, Model, RAM, StorageMemory, MainCameraResolution, " +
+                "ScreenSize, Color, Price, Amount " +
+                "FROM Smartphones WHERE ScreenSize IS BETWEEN ? AND ?;";
         List<Smartphone> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -162,7 +172,9 @@ public class SmartphoneRepository implements CrudRepository<Smartphone> {
     }
 
     public List<Smartphone> findAllWithRam(int minSize, int maxSize) {
-        String query = "SELECT * FROM Smartphones WHERE RAM IS BETWEEN ? AND ?;";
+        String query = "SELECT SmartphoneID, Brand, Model, RAM, StorageMemory, MainCameraResolution, " +
+                "ScreenSize, Color, Price, Amount " +
+                "FROM Smartphones WHERE RAM IS BETWEEN ? AND ?;";
         List<Smartphone> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -182,7 +194,9 @@ public class SmartphoneRepository implements CrudRepository<Smartphone> {
     }
 
     public List<Smartphone> findAllWithStorageMemory(int minSize, int maxSize) {
-        String query = "SELECT * FROM Smartphones WHERE StorageMemory IS BETWEEN ? AND ?;";
+        String query = "SELECT SmartphoneID, Brand, Model, RAM, StorageMemory, MainCameraResolution, " +
+                "ScreenSize, Color, Price, Amount " +
+                "FROM Smartphones WHERE StorageMemory IS BETWEEN ? AND ?;";
         List<Smartphone> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -202,7 +216,9 @@ public class SmartphoneRepository implements CrudRepository<Smartphone> {
     }
 
     public List<Smartphone> findAllWithMainCameraResolution(float minResolution, float maxResolution) {
-        String query = "SELECT * FROM Smartphones WHERE MainCameraResolution IS BETWEEN ? AND ?;";
+        String query = "SELECT SmartphoneID, Brand, Model, RAM, StorageMemory, MainCameraResolution, " +
+                "ScreenSize, Color, Price, Amount " +
+                "FROM Smartphones WHERE MainCameraResolution IS BETWEEN ? AND ?;";
         List<Smartphone> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -222,7 +238,9 @@ public class SmartphoneRepository implements CrudRepository<Smartphone> {
     }
 
     public List<Smartphone> findAllWithPrice(float minPrice, float maxPrice) {
-        String query = "SELECT * FROM Smartphones WHERE Price IS BETWEEN ? AND ?;";
+        String query = "SELECT SmartphoneID, Brand, Model, RAM, StorageMemory, MainCameraResolution, " +
+                "ScreenSize, Color, Price, Amount " +
+                "FROM Smartphones WHERE Price IS BETWEEN ? AND ?;";
         List<Smartphone> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);

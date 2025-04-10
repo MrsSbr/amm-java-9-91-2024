@@ -24,7 +24,7 @@ public class OrderRepository implements CrudRepository<Order> {
 
     @Override
     public Optional<Order> findById(Long id) {
-        String query = "SELECT * FROM Orders WHERE OrderNum = ?;";
+        String query = "SELECT OrderNum, UserId, TotalCost, RegitrationDate FROM Orders WHERE OrderNum = ?;";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
@@ -42,7 +42,7 @@ public class OrderRepository implements CrudRepository<Order> {
 
     @Override
     public List<Order> findAll() {
-        String query = "SELECT * FROM Orders;";
+        String query = "SELECT OrderNum, UserId, TotalCost, RegitrationDate FROM Orders;";
         List<Order> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -100,7 +100,7 @@ public class OrderRepository implements CrudRepository<Order> {
     }
 
     public List<Order> findAllByUser(Long userId) {
-        String query = "SELECT * FROM Orders WHERE UserID = ?;";
+        String query = "SELECT OrderNum, UserId, TotalCost, RegitrationDate FROM Orders WHERE UserID = ?;";
         List<Order> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
