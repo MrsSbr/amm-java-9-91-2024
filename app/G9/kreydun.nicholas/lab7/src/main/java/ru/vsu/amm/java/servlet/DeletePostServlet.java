@@ -7,14 +7,22 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.repository.PostRepository;
 import ru.vsu.amm.java.services.PostService;
 
 import java.io.IOException;
 import java.util.UUID;
+
 @WebServlet("/deletePost")
 public class DeletePostServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private PostService postService;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        postService = new PostService();
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
@@ -23,10 +31,7 @@ public class DeletePostServlet extends HttpServlet {
             return;
         }
 
-        UUID postId = UUID.fromString(request.getParameter("postId"));;
-
-        PostRepository postRepository = new PostRepository();
-        PostService postService = new PostService(postRepository);
+        UUID postId = UUID.fromString(request.getParameter("postId"));
 
         boolean isDeleted = postService.delete(postId);
 
@@ -39,3 +44,4 @@ public class DeletePostServlet extends HttpServlet {
         response.sendRedirect("index");
     }
 }
+

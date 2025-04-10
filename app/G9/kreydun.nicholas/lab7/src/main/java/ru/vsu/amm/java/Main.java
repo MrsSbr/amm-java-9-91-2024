@@ -16,7 +16,6 @@ public class Main {
         tomcat.getConnector();
         tomcat.setBaseDir(new File("tomcat-work").getAbsolutePath());
 
-        // Создаем контекст
         var ctx = tomcat.addWebapp("/", new File(webappDirLocation).getAbsolutePath());
 
         ServletConfig.registerServlets(tomcat, ctx);

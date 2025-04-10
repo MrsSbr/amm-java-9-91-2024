@@ -1,20 +1,26 @@
 package ru.vsu.amm.java.servlet;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.repository.UserRepository;
 import ru.vsu.amm.java.services.UserService;
 
 import java.io.IOException;
 import java.util.UUID;
-import java.time.LocalTime;
 
 @WebServlet("/createUser")
 public class CreateUserServlet extends HttpServlet {
+    private UserService userService;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        userService = new UserService();
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -29,10 +35,6 @@ public class CreateUserServlet extends HttpServlet {
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
-        user.setCreatedAt(LocalTime.now());
-
-        UserRepository userRepository = new UserRepository();
-        UserService userService = new UserService(userRepository);
 
         UUID resultId = userService.create(user);
 

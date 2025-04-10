@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.repository.UserRepository;
 import ru.vsu.amm.java.services.UserService;
 
 import java.io.IOException;
@@ -15,7 +14,15 @@ import java.util.UUID;
 
 @WebServlet("/deleteUser")
 public class DeleteUserServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private UserService userService;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        userService = new UserService();
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
@@ -25,9 +32,6 @@ public class DeleteUserServlet extends HttpServlet {
         }
 
         UUID userId = user.getId();
-        UserRepository userRepository = new UserRepository();
-        UserService userService = new UserService(userRepository);
-
         boolean isDeleted = userService.delete(userId);
 
         if (isDeleted) {

@@ -3,21 +3,32 @@ package ru.vsu.amm.java.services;
 import ru.vsu.amm.java.entities.Post;
 import ru.vsu.amm.java.repository.PostRepository;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
 public class PostService {
     private final PostRepository postRepository;
 
-    public PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
+    public PostService() {
+        this.postRepository = new PostRepository();
     }
 
-    public UUID create(Post post) {
-        if (post != null) {
-            return postRepository.create(post);
+    public UUID create(String content, String userIdParam) {
+        UUID userId;
+        try {
+            userId = UUID.fromString(userIdParam);
+        } catch (IllegalArgumentException e) {
+            return null;
         }
-        return null;
+
+        Post post = new Post();
+        post.setId(UUID.randomUUID());
+        post.setUserId(userId);
+        post.setContent(content);
+        post.setCreatedAt(LocalTime.now());
+
+        return postRepository.create(post);
     }
 
     public Post getById(UUID id) {
@@ -32,15 +43,16 @@ public class PostService {
         return postRepository.getPostsByUserId(userId);
     }
 
-    public boolean update(Post post) {
-        if (post != null) {
-            return postRepository.update(post);
+    public boolean update(UUID postId, String newContent) {
+        Post existingPost = postRepository.getById(postId);
+        if (existingPost != null) {
+            existingPost.setContent(newContent);
+            return postRepository.update(existingPost);
         }
         return false;
     }
 
-    public boolean delete(UUID id) {
-        return postRepository.delete(id);
+    public boolean delete(UUID postId) {
+        return postRepository.delete(postId);
     }
 }
-

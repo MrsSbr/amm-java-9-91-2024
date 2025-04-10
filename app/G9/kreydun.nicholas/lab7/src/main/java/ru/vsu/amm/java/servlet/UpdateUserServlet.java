@@ -14,8 +14,15 @@ import java.io.IOException;
 
 @WebServlet("/updateUser")
 public class UpdateUserServlet extends HttpServlet {
+    private UserService userService;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        userService = new UserService();
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
@@ -42,8 +49,6 @@ public class UpdateUserServlet extends HttpServlet {
         user.setUsername(username);
         user.setEmail(email);
 
-        UserRepository userRepository = new UserRepository();
-        UserService userService = new UserService(userRepository);
         boolean isUpdated = userService.update(user);
 
         if (isUpdated) {

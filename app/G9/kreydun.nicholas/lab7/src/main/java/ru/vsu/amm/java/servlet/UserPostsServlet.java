@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.Post;
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.repository.PostRepository;
 import ru.vsu.amm.java.services.PostService;
 
 import java.io.IOException;
@@ -16,6 +15,13 @@ import java.util.List;
 
 @WebServlet("/index")
 public class UserPostsServlet extends HttpServlet {
+    private PostService postService;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        postService = new PostService();  // Сервис создается только один раз
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -23,8 +29,6 @@ public class UserPostsServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         if (user != null) {
-            PostRepository postRepository = new PostRepository();
-            PostService postService = new PostService(postRepository);
             List<Post> userPosts = postService.getPostsByUserId(user.getId());
             request.setAttribute("posts", userPosts);
         }
