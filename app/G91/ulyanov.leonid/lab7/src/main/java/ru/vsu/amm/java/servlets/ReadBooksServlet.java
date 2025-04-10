@@ -1,4 +1,4 @@
 package ru.vsu.amm.java.servlets;
 
-public class AddBookServlet {
+public class ReadBooksServlet {
 }

@@ -92,7 +92,7 @@ public class UserRepository implements Repository<User> {
     }
 
     @Override
-    public void create(User user) {
+    public Integer create(User user) {
         String query = """
                 INSERT INTO "User"(Email, Password, LastName, FirstName, PatronymicName, PhoneNumber)
                 VALUES (?, ?, ?, ?, ?, ?);
@@ -104,9 +104,13 @@ public class UserRepository implements Repository<User> {
             PreparedStatement ps = userMapper.mapObjectToRow(user, connection, query);
             ps.execute();
 
+            ResultSet resultSet = ps.getGeneratedKeys();
+            return resultSet.getInt(1);
+
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
         }
+        return 0;
     }
 
     @Override

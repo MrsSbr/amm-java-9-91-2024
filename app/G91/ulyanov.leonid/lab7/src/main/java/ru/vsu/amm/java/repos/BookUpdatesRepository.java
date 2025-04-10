@@ -1,7 +1,7 @@
 package ru.vsu.amm.java.repos;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.vsu.amm.java.entities.BookUpdates;
+import ru.vsu.amm.java.entities.BookUpdate;
 import ru.vsu.amm.java.mappers.BookUpdatesMapper;
 
 import javax.sql.DataSource;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-public class BookUpdatesRepository implements Repository<BookUpdates> {
+public class BookUpdatesRepository implements Repository<BookUpdate> {
     private final DataSource dataSource;
 
     public BookUpdatesRepository(final DataSource dataSource) {
@@ -22,7 +22,7 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
     }
 
     @Override
-    public Optional<BookUpdates> getById(int id) throws SQLException {
+    public Optional<BookUpdate> getById(int id) throws SQLException {
         String query = """
                 SELECT Id_book, Id_user, UpdateTime, UpdateType
                 FROM BookUpdates
@@ -47,7 +47,7 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
     }
 
     @Override
-    public List<BookUpdates> getAll() {
+    public List<BookUpdate> getAll() {
         String query = """
                 SELECT Id_book, Id_user, UpdateTime, UpdateType
                 FROM BookUpdates;
@@ -58,7 +58,7 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
             ResultSet resultSet = ps.executeQuery();
             BookUpdatesMapper bookUpdatesMapper = new BookUpdatesMapper();
 
-            List<BookUpdates> bookUpdates = new ArrayList<>();
+            List<BookUpdate> bookUpdates = new ArrayList<>();
 
             while (resultSet.next()) {
                 bookUpdates.add(bookUpdatesMapper.mapRowToObject(resultSet));
@@ -72,7 +72,7 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
     }
 
     @Override
-    public void create(BookUpdates bookUpdates) {
+    public Integer create(BookUpdate bookUpdate) {
         String query = """
                 INSERT INTO BookUpdates(Id_book, Id_user, UpdateTime, UpdateType)
                 VALUES (?, ?, ?, ?);
@@ -81,16 +81,20 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
         try (Connection connection = dataSource.getConnection()) {
 
             BookUpdatesMapper bookUpdatesMapper = new BookUpdatesMapper();
-            PreparedStatement ps = bookUpdatesMapper.mapObjectToRow(bookUpdates, connection, query);
+            PreparedStatement ps = bookUpdatesMapper.mapObjectToRow(bookUpdate, connection, query);
             ps.execute();
+
+            ResultSet resultSet = ps.getGeneratedKeys();
+            return resultSet.getInt(1);
 
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
         }
+        return 0;
     }
 
     @Override
-    public void update(BookUpdates bookUpdates) {
+    public void update(BookUpdate bookUpdate) {
         String query = """
                 UPDATE BookUpdates
                 SET Id_book = ?, Id_user = ?, UpdateTime = ?, UpdateType = ?
@@ -100,8 +104,8 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
         try (Connection connection = dataSource.getConnection()) {
 
             BookUpdatesMapper bookUpdatesMapper = new BookUpdatesMapper();
-            PreparedStatement ps = bookUpdatesMapper.mapObjectToRow(bookUpdates, connection, query);
-            ps.setInt(1, bookUpdates.getUpdateId());
+            PreparedStatement ps = bookUpdatesMapper.mapObjectToRow(bookUpdate, connection, query);
+            ps.setInt(1, bookUpdate.getUpdateId());
             ps.execute();
 
         } catch (SQLException e) {
@@ -110,7 +114,7 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
     }
 
     @Override
-    public void delete(BookUpdates bookUpdates) {
+    public void delete(BookUpdate bookUpdate) {
         String query = """
                 DELETE FROM BookUpdates
                 WHERE id_update = ?;
@@ -118,7 +122,7 @@ public class BookUpdatesRepository implements Repository<BookUpdates> {
 
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, bookUpdates.getUpdateId());
+            ps.setInt(1, bookUpdate.getUpdateId());
             ps.execute();
 
         } catch (SQLException e) {
