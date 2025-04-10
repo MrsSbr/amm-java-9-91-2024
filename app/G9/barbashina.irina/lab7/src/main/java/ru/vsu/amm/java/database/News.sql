@@ -10,9 +10,6 @@ CREATE TABLE Author
 ALTER TABLE Author
 ADD CONSTRAINT pk_author PRIMARY KEY(id_author);
 
-ALTER TABLE Author
-ADD CONSTRAINT ch_date CHECK(registration_date <= CURRENT_DATE);
-
 CREATE TABLE Сategory
 (
 	id_category BIGSERIAL,
@@ -35,9 +32,6 @@ CREATE TABLE Article
 
 ALTER TABLE Article
 ADD CONSTRAINT pk_article PRIMARY KEY(id_article);
-
-ALTER TABLE Article
-ADD CONSTRAINT ch_date CHECK(date_publication <= CURRENT_DATE);
 
 ALTER TABLE Article ADD ref_category BIGINT;
 ALTER TABLE Article
