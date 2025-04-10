@@ -11,9 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static ru.vsu.amm.java.utils.LoggerInitializer.initializeLogger;
 
 @WebFilter("/*")
 public class AuthFilter implements Filter {
+
+    private static final Logger logger = initializeLogger(
+            "app/G91/simonov.ivan/lab7/src/main/java/ru/vsu/amm/java/logs/auth-filter-logs.log",
+            AuthFilter.class.getName());
 
     private static final List<String> PUBLIC_PATHS = List.of(
             "/signIn",
@@ -39,9 +47,17 @@ public class AuthFilter implements Filter {
 
         if (isPublicPath || isSignedIn) {
 
+            logger.log(Level.INFO,
+                    String.format("Filter passed by user %s!",
+                            session == null ? "unknown" : session.getId()));
+
             chain.doFilter(request, response);
 
         } else {
+
+            logger.log(Level.INFO,
+                    String.format("Filter not passed by %s user!",
+                            session == null ? "unknown" : session.getId()));
 
             httpResponse.sendRedirect(String.format("%s/index.jsp", httpRequest.getContextPath()));
 
