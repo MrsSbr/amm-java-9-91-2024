@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 public class UserRepository implements CrudRepository<User> {
     private static final Logger logger = Logger.getLogger(UserRepository.class.getName());
+    public static final String CODE = "23505";
 
     @Override
     public User getById(long id) {
@@ -81,7 +82,7 @@ public class UserRepository implements CrudRepository<User> {
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
-            if (e.getSQLState().equals("23505")) {
+            if (e.getSQLState().equals(CODE)) {
                 throw new RuntimeException("Duplicate key violation: " + e.getMessage(), e);
             }
             throw new RuntimeException(e);
