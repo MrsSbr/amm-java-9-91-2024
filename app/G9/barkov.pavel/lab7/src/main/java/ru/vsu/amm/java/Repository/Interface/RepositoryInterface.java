@@ -1,11 +1,11 @@
-package ru.vsu.amm.java.Repository;
+package ru.vsu.amm.java.Repository.Interface;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public interface ICRepository<T> {
-    Optional<T> get(int first_id, int second_id) throws SQLException;
+public interface RepositoryInterface<T> {
+    Optional<T> get(int id) throws SQLException;
 
     List<T> getAll() throws SQLException;
 
@@ -13,5 +13,5 @@ public interface ICRepository<T> {
 
     void update(T entity) throws SQLException;
 
-    void delete(int first_id, int second_id) throws SQLException;
+    void delete(int id) throws SQLException;
 }

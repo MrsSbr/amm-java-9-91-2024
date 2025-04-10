@@ -1,7 +1,9 @@
 package ru.vsu.amm.java.Repository;
 
+import ru.vsu.amm.java.Repository.Convertors.ResultSetToShareholder;
 import ru.vsu.amm.java.DBConnection.DBConfiguration;
-import ru.vsu.amm.java.Entities.Shareholder;
+import ru.vsu.amm.java.Repository.Entities.Shareholder;
+import ru.vsu.amm.java.Repository.Interface.RepositoryInterface;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ShareholderRepository implements IRepository<Shareholder> {
+public class ShareholderRepository implements RepositoryInterface<Shareholder> {
     private final DataSource dataSource;
 
     public ShareholderRepository(){
@@ -25,14 +27,20 @@ public class ShareholderRepository implements IRepository<Shareholder> {
         preparedStation.execute();
         var result = preparedStation.getResultSet();
         if(result.next()){
-            return Optional.of(new Shareholder(
-                    result.getInt(1),
-                    result.getString(2),
-                    result.getString(3),
-                    result.getString(4),
-                    result.getString(5),
-                    result.getString(6)
-            ));
+            return Optional.of(ResultSetToShareholder.Convert(result));
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Shareholder> getByEmail(String email) throws SQLException {
+        final String query = "SELECT id,password,fio,document,email,phone FROM shareholder WHERE email = ?";
+        var connection = dataSource.getConnection();
+        var preparedStation = connection.prepareStatement(query);
+        preparedStation.setString(1,email);
+        preparedStation.execute();
+        var result = preparedStation.getResultSet();
+        if(result.next()){
+            return Optional.of(ResultSetToShareholder.Convert(result));
         }
         return Optional.empty();
     }
@@ -46,14 +54,7 @@ public class ShareholderRepository implements IRepository<Shareholder> {
         List<Shareholder> list = new ArrayList<>();
         var result = preparedStation.getResultSet();
         while(result.next()){
-            list.add(new Shareholder(
-                    result.getInt(1),
-                    result.getString(2),
-                    result.getString(3),
-                    result.getString(4),
-                    result.getString(5),
-                    result.getString(6)
-            ));
+            list.add(ResultSetToShareholder.Convert(result));
         }
         return list;
     }
