@@ -22,6 +22,10 @@ public class UserRepository implements CrudRepository<UserEntity> {
         dataSource = DatabaseConfiguration.getDataSource();
     }
 
+    public UserRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Override
     public Optional<UserEntity> findById(Long id) throws SQLException {
         final String query = "SELECT id, login, password FROM user_entity WHERE id = ?";
