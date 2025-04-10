@@ -31,8 +31,8 @@ public class SmartphoneMapper implements Mapper<Smartphone> {
 
     @Override
     public PreparedStatement mapObjectToRow(Smartphone smartphone,
-                                     Connection connection,
-                                     String query) throws SQLException {
+                                            Connection connection,
+                                            String query) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, smartphone.getBrand());
         preparedStatement.setString(2, smartphone.getModel());

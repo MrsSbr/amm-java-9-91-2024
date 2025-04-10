@@ -1,10 +1,9 @@
 package ru.vsu.amm.java.Repositories;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.Configuration.DbConfiguration;
 import ru.vsu.amm.java.Entities.Order;
-import ru.vsu.amm.java.Entities.Smartphone;
 import ru.vsu.amm.java.Mappers.OrderMapper;
-import ru.vsu.amm.java.Mappers.SmartphoneMapper;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 public class OrderRepository implements CrudRepository<Order> {
     private final DataSource dataSource;
 
@@ -24,15 +24,14 @@ public class OrderRepository implements CrudRepository<Order> {
 
     @Override
     public Optional<Order> findById(Long id) {
-        String query = "SELECT UserId, TotalCost, RegistrationDate " +
-                "FROM Orders WHERE OrderNum = ?;";
+        String query = "SELECT * FROM Orders WHERE OrderNum = ?;";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             OrderMapper orderMapper = new OrderMapper();
 
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 return Optional.of(orderMapper.mapRowToObject(resultSet));
             }
         } catch (SQLException e) {
@@ -40,16 +39,16 @@ public class OrderRepository implements CrudRepository<Order> {
         }
         return Optional.empty();
     }
+
     @Override
     public List<Order> findAll() {
-        String query = "SELECT * " +
-                "FROM Orders;";
+        String query = "SELECT * FROM Orders;";
         List<Order> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             OrderMapper orderMapper = new OrderMapper();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 Order order = orderMapper.mapRowToObject(resultSet);
                 result.add(order);
             }
@@ -59,6 +58,7 @@ public class OrderRepository implements CrudRepository<Order> {
         }
         return new ArrayList<>();
     }
+
     @Override
     public void save(Order entity) {
         String query = "INSERT INTO Orders VALUES(?, ?, ?, ?);";
@@ -70,6 +70,7 @@ public class OrderRepository implements CrudRepository<Order> {
             log.error(e.getMessage());
         }
     }
+
     @Override
     public void update(Order entity) {
         String query = "UPDATE Smartphones " +
@@ -85,6 +86,7 @@ public class OrderRepository implements CrudRepository<Order> {
             log.error(e.getMessage());
         }
     }
+
     @Override
     public void delete(Long id) {
         String query = "DELETE FROM Orders WHERE OrderNum = ?;";
@@ -95,5 +97,24 @@ public class OrderRepository implements CrudRepository<Order> {
         } catch (SQLException e) {
             log.error(e.getMessage());
         }
+    }
+
+    public List<Order> findAllByUser(Long userId) {
+        String query = "SELECT * FROM Orders WHERE UserID = ?;";
+        List<Order> result = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            OrderMapper orderMapper = new OrderMapper();
+            while (resultSet.next()) {
+                Order order = orderMapper.mapRowToObject(resultSet);
+                result.add(order);
+            }
+            return result;
+        } catch (SQLException e) {
+            log.error(e.getMessage());
+        }
+        return new ArrayList<>();
     }
 }

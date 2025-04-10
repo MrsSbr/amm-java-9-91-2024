@@ -3,8 +3,11 @@ package ru.vsu.amm.java.Mappers;
 import ru.vsu.amm.java.Entities.User;
 import ru.vsu.amm.java.Enums.Role;
 
-import java.sql.*;
-import java.time.LocalDate;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserMapper implements Mapper<User> {
     public UserMapper() {
