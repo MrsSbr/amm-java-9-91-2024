@@ -2,12 +2,15 @@ package ru.vsu.amm.java.mapper;
 
 import ru.vsu.amm.java.entities.Session;
 import ru.vsu.amm.java.entities.User;
+import ru.vsu.amm.java.entities.Vehicle;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class SessionMapper implements EntityMapper<Session> {
 
@@ -18,12 +21,21 @@ public class SessionMapper implements EntityMapper<Session> {
 
         Session session = new Session();
 
+        User user = new User();
+        user.setUserId(rs.getInt("Id_user"));
+        session.setUser(user);
+
+        Vehicle vehicle = new Vehicle();
+        vehicle.setVehicleId(rs.getInt("Id_vehicle"));
+        session.setVehicle(vehicle);
+
         session.setSessionId(rs.getInt("Id_session"));
-        session.setUserId(rs.getInt("Id_user"));
-        session.setVehicleId(rs.getInt("Id_vehicle"));
         session.setParkingPrice(rs.getBigDecimal("ParkingPrice"));
         session.setEntryDate(rs.getTimestamp("EntryDate").toLocalDateTime());
-        session.setExitDate(rs.getTimestamp("ExitDate").toLocalDateTime());
+
+        Timestamp exitDateTimestamp = rs.getTimestamp("ExitDate");
+        LocalDateTime exitDate = (exitDateTimestamp == null) ? null : exitDateTimestamp.toLocalDateTime();
+        session.setExitDate(exitDate);
 
         return session;
     }
@@ -33,13 +45,15 @@ public class SessionMapper implements EntityMapper<Session> {
                                             Connection connection,
                                             String sql) throws SQLException {
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-        stmt.setInt(1, entity.getUserId());
-        stmt.setInt(2, entity.getVehicleId());
+        stmt.setInt(1, entity.getUser().getUserId());
+        stmt.setInt(2, entity.getVehicle().getVehicleId());
         stmt.setBigDecimal(3, entity.getParkingPrice());
         stmt.setTimestamp(4, Timestamp.valueOf(entity.getEntryDate()));
-        stmt.setTimestamp(5, Timestamp.valueOf(entity.getExitDate()));
+
+        LocalDateTime exitDate = entity.getExitDate();
+        stmt.setTimestamp(5, exitDate == null ? null : Timestamp.valueOf(entity.getExitDate()));
 
         return stmt;
     }

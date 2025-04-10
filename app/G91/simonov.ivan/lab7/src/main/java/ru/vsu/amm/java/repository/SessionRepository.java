@@ -2,6 +2,9 @@ package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.Session;
+import ru.vsu.amm.java.exceptions.AddException;
+import ru.vsu.amm.java.exceptions.DeleteException;
+import ru.vsu.amm.java.exceptions.UpdateException;
 import ru.vsu.amm.java.mapper.SessionMapper;
 
 import javax.sql.DataSource;
@@ -12,8 +15,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static ru.vsu.amm.java.utils.LoggerInitializer.initializeLogger;
 
 public class SessionRepository implements ParkingRepository<Session> {
+
+    private static final Logger logger = initializeLogger(
+            "app/G91/simonov.ivan/lab7/src/main/java/ru/vsu/amm/java/logs/session-repository-logs.log",
+            SessionRepository.class.getName());
 
     private final DataSource dataSource;
 
@@ -22,7 +33,7 @@ public class SessionRepository implements ParkingRepository<Session> {
     }
 
     @Override
-    public Optional<Session> getById(int id) throws SQLException {
+    public Optional<Session> getById(int id) {
 
         String sql = """
                 SELECT Id_session, Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate
@@ -31,7 +42,7 @@ public class SessionRepository implements ParkingRepository<Session> {
                 """;
 
         try (Connection connection = dataSource.getConnection();
-                PreparedStatement stmt = connection.prepareStatement(sql)) {
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
 
@@ -43,17 +54,18 @@ public class SessionRepository implements ParkingRepository<Session> {
                 return Optional.of(sessionMapper.mapRowToObject(rs));
             }
 
-            return Optional.empty();
-
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
+
+        return Optional.empty();
+
     }
 
     @Override
-    public List<Session> getAll() throws SQLException {
+    public List<Session> getAll() {
 
         String sql = """
                 SELECT Id_session, Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate
@@ -77,18 +89,21 @@ public class SessionRepository implements ParkingRepository<Session> {
 
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
 
         }
+
+        return null;
+
     }
 
     @Override
-    public void save(Session entity) throws SQLException {
+    public int save(Session entity) {
 
         String sql = """
-               INSERT INTO "Session" (Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate)
-               VALUES (?, ?, ?, ?, ?)
-               """;
+                INSERT INTO "Session" (Id_user, Id_vehicle, ParkingPrice, EntryDate, ExitDate)
+                VALUES (?, ?, ?, ?, ?)
+                """;
 
         try (Connection connection = dataSource.getConnection()) {
 
@@ -96,15 +111,24 @@ public class SessionRepository implements ParkingRepository<Session> {
             PreparedStatement stmt = sessionMapper.mapObjectToRow(entity, connection, sql);
             stmt.execute();
 
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+                return generatedKeys.getInt(1);
+            }
+
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new AddException(e.getMessage());
 
         }
+
+        return 0;
     }
 
     @Override
-    public void update(Session entity) throws SQLException {
+    public void update(Session entity) {
 
         String sql = """
                 UPDATE "Session" SET Id_user = ?, Id_vehicle = ?, ParkingPrice = ?, EntryDate = ?, ExitDate = ?
@@ -121,13 +145,14 @@ public class SessionRepository implements ParkingRepository<Session> {
 
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new UpdateException(e.getMessage());
 
         }
     }
 
     @Override
-    public void delete(Session entity) throws SQLException {
+    public void delete(int id) {
 
         String sql = """
                 DELETE FROM "Session"
@@ -137,12 +162,13 @@ public class SessionRepository implements ParkingRepository<Session> {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-            stmt.setInt(1, entity.getSessionId());
+            stmt.setInt(1, id);
             stmt.execute();
 
         } catch (SQLException e) {
 
-            throw new SQLException(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new DeleteException(e.getMessage());
 
         }
     }

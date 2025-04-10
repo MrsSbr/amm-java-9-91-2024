@@ -51,7 +51,7 @@ public class User {
     }
 
     public void setLogin(String login) {
-        if (login.matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$")) {
+        if (login.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
             this.login = login;
         } else {
             throw new IllegalArgumentException("Invalid login!");

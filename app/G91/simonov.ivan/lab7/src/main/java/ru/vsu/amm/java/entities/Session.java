@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 public class Session {
 
     private int sessionId;
-    private int userId;
-    private int vehicleId;
+    private User user;
+    private Vehicle vehicle;
     private BigDecimal parkingPrice;
     private LocalDateTime entryDate;
     private LocalDateTime exitDate;
@@ -22,20 +22,20 @@ public class Session {
         this.sessionId = sessionId;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public int getVehicleId() {
-        return vehicleId;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public void setVehicleId(int vehicleId) {
-        this.vehicleId = vehicleId;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     public BigDecimal getParkingPrice() {
@@ -64,10 +64,11 @@ public class Session {
     }
 
     public void setExitDate(LocalDateTime exitDate) {
-        if (entryDate != null && exitDate.isAfter(entryDate)) {
-            this.exitDate = exitDate;
-        } else {
+
+        if (exitDate != null && entryDate != null && exitDate.isBefore(entryDate)) {
             throw new IllegalArgumentException("Invalid exit date!");
         }
+
+        this.exitDate = exitDate;
     }
 }
