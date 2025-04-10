@@ -15,7 +15,7 @@ public class ExchangeRateRepository implements CrudRepository<ExchangeRate> {
     private final DataSource dataSource;
 
     public ExchangeRateRepository() {
-        dataSource = DatabaseConfiguration.getDataSource();
+        dataSource = DatabaseConfiguration.getDataSourceForService();
     }
 
     @Override

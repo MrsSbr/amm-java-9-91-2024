@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.repository;
 
+import lombok.Setter;
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entity.UserEntity;
 import ru.vsu.amm.java.exception.DatabaseException;
@@ -14,12 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Setter
 public class UserRepository implements CrudRepository<UserEntity> {
 
-    private final DataSource dataSource;
+    private DataSource dataSource;
 
     public UserRepository() {
-        dataSource = DatabaseConfiguration.getDataSource();
+        dataSource = DatabaseConfiguration.getDataSourceForService();
     }
 
     public UserRepository(DataSource dataSource) {
