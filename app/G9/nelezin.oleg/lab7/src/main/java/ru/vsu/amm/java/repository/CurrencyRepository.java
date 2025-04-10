@@ -17,7 +17,7 @@ public class CurrencyRepository implements CrudRepository<Currency> {
     private final DataSource dataSource;
 
     public CurrencyRepository() {
-        dataSource = DatabaseConfiguration.getDataSource();
+        dataSource = DatabaseConfiguration.getDataSourceForService();
     }
 
     @Override
@@ -83,15 +83,5 @@ public class CurrencyRepository implements CrudRepository<Currency> {
     @Override
     public Long save(Currency entity) {
         return null;
-    }
-
-    @Override
-    public void delete(Currency entity) {
-
-    }
-
-    @Override
-    public void update(Currency entity) {
-
     }
 }
