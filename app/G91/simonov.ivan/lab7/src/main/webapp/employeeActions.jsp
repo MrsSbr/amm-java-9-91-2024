@@ -9,6 +9,7 @@
 <ul>
     <li><a href="addSessionEmployee.jsp">Добавить сессию</a></li>
     <li><a href="viewSessions">Просмотреть сессии</a></li>
+    <li><a href="viewUsers">Просмотреть пользователей</a></li>
 </ul>
 <p><a href="index.jsp">Перейти на главную страницу</a></p>
 </body>
