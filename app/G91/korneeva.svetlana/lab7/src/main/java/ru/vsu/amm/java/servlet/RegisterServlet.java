@@ -33,7 +33,8 @@ public class RegisterServlet extends HttpServlet {
             session.setAttribute("email", email);
             resp.sendRedirect("/index.jsp");
         } catch (AuthException | DatabaseException e) {
-
+            req.setAttribute("errorMessage", e.getMessage());
+            getServletContext().getRequestDispatcher("/registration.jsp").forward(req, resp);
         }
     }
 }
