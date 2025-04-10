@@ -79,17 +79,7 @@ public class ExchangeRateRepository implements CrudRepository<ExchangeRate> {
     }
 
     @Override
-    public void update(ExchangeRate entity) {
-
-    }
-
-    @Override
-    public void save(ExchangeRate entity) {
-
-    }
-
-    @Override
-    public void delete(ExchangeRate entity) {
-
+    public Long save(ExchangeRate entity) {
+        return null;
     }
 }

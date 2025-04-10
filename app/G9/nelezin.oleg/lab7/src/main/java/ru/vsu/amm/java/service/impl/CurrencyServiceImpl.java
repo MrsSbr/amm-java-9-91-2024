@@ -22,6 +22,10 @@ public class CurrencyServiceImpl implements CurrencyService {
         currencyRepository = new CurrencyRepository();
     }
 
+    public CurrencyServiceImpl(CurrencyRepository currencyRepository) {
+        this.currencyRepository = currencyRepository;
+    }
+
     @Override
     public List<Currency> getAllCurrencies() {
         log.info("call getAllCurrencies");

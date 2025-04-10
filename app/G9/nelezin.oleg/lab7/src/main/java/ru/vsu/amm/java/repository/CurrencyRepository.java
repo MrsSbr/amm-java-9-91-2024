@@ -81,8 +81,8 @@ public class CurrencyRepository implements CrudRepository<Currency> {
     }
 
     @Override
-    public void save(Currency entity) {
-
+    public Long save(Currency entity) {
+        return null;
     }
 
     @Override
