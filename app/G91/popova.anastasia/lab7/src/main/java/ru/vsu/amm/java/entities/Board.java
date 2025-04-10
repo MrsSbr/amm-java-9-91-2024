@@ -13,35 +13,35 @@ public class Board {
         this.boardID = UUID.randomUUID();
     };
 
-    private UUID getBoardID() {
+    public UUID getBoardID() {
         return boardID;
     }
 
-    private void setBoardID(UUID boardID) {
+    public void setBoardID(UUID boardID) {
         this.boardID = boardID;
     }
 
-    private UUID getUserID() {
+    public UUID getUserID() {
         return userID;
     }
 
-    private void setUserID(UUID userID) {
+    public void setUserID(UUID userID) {
         this.userID = userID;
     }
 
-    private String getBoardTitle() {
+    public String getBoardTitle() {
         return boardTitle;
     }
 
-    private void setBoardTitle(String boardTitle) {
+    public void setBoardTitle(String boardTitle) {
         this.boardTitle = boardTitle;
     }
 
-    private String getBoardDescription() {
+    public String getBoardDescription() {
         return boardDescription;
     }
 
-    private void setBoardDescription(String boardDescription) {
+    public void setBoardDescription(String boardDescription) {
         this.boardDescription = boardDescription;
     }
 }
