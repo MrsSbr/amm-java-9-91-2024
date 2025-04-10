@@ -3,7 +3,7 @@ package ru.vsu.amm.java.entities;
 import ru.vsu.amm.java.enums.Role;
 
 public class UserEntity {
-    private long userId;
+    private Long userId;
     private String firstName;
     private String lastName;
     private String patronymic;
@@ -16,7 +16,7 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(long userId, String firstName, String lastName, String patronymic,
+    public UserEntity(Long userId, String firstName, String lastName, String patronymic,
                       String city, String email, String phoneNumber, String password, Role role) {
         this.userId = userId;
         this.firstName = firstName;
@@ -29,11 +29,11 @@ public class UserEntity {
         this.role = role;
     }
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
