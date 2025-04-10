@@ -6,7 +6,7 @@ public class Guide {
     private int id;
     private String fullName;
     private String bio;
-    private float rating;
+    private double rating;
     private Language languages;
     private String eMail;
     private String numberPhone;
@@ -30,8 +30,8 @@ public class Guide {
     public String getBio() { return bio; }
     public void setBio(String bio) { this.bio = bio; }
 
-    public float getRating() { return rating; }
-    public void setRating(float rating) { this.rating = rating; }
+    public double getRating() { return rating; }
+    public void setRating(double rating) { this.rating = rating; }
 
     public Language getLanguages() { return languages; }
     public void setLanguages(Language languages) { this.languages = languages; }

@@ -1,7 +1,7 @@
 CREATE TABLE Guide (
 id_guide SERIAL PRIMARY KEY,
 Full_name VARCHAR(100) NOT NULL,
-Bio VARCHAR(300) NOT NULL,
+Bio TEXT NOT NULL,
 Rating INTEGER NOT NULL,
 E_mail VARCHAR(50) NOT NULL,
 Number_phone VARCHAR(20) NOT NULL
@@ -16,12 +16,12 @@ ADD CONSTRAINT Unique_Guide_Number_phone UNIQUE(Number_phone);
 CREATE TABLE Tour (
 id_tour SERIAL PRIMARY KEY,
 id_guide INTEGER NOT NULL REFERENCES Guide(id_guide),
-Title VARCHAR(50) NOT NULL,
-Description VARCHAR(300) NOT NULL,
+Title TEXT NOT NULL,
+Description TEXT NOT NULL,
 Duration INTEGER NOT NULL,
 Price INTEGER NOT NULL,
 Max_participants INTEGER NOT NULL,
-Start_location VARCHAR(50),
+Start_location TEXT,
 Language_tour VARCHAR(200)
 );
 
@@ -38,12 +38,6 @@ ADD CONSTRAINT Unique_User_E_mail UNIQUE(E_mail);
 
 ALTER TABLE User_tour
 ADD CONSTRAINT Unique_User_Number_phone UNIQUE(Number_phone);
-
-ALTER TABLE User_tour
-ADD CHECK(Age > 0);
-
-ALTER TABLE User_tour
-ADD CHECK(Birthday > 1884)
 
 CREATE TABLE Booking (
 id_booking SERIAL PRIMARY KEY,

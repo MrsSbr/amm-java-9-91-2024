@@ -1,5 +1,7 @@
 package ru.vsu.amm.java.Entities;
 
+import ru.vsu.amm.java.Enums.Status;
+
 import java.time.LocalDate;
 
 public class Booking {
@@ -9,9 +11,9 @@ public class Booking {
     private LocalDate date;
     private int countParticipants;
     private int totalPrice;
-    private String status;
+    private Status status;
 
-    public Booking(int id, int idTour, int idUser, LocalDate date, int countParticipants, int totalPrice, String status) {
+    public Booking(int id, int idTour, int idUser, LocalDate date, int countParticipants, int totalPrice, Status status) {
         this.id = id;
         this.idTour = idTour;
         this.idUser = idUser;
@@ -39,6 +41,6 @@ public class Booking {
     public int getTotalPrice() { return totalPrice; }
     public void setTotalPrice(int totalPrice) { this.totalPrice = totalPrice; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public Status getStatus() { return status; }
+    public void setStatus(Status status) { this.status = status; }
 }

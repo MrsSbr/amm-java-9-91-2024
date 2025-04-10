@@ -18,13 +18,18 @@ public class User {
     }
 
     public int getId() { return id; }
-    public void setId(int id) {this.id = id;}
+    public void setId(int id) { this.id = id; }
 
     public String getFullName() { return fullName; }
     public void setFullName(String fullName) { this.fullName = fullName; }
 
     public LocalDate getBirthday() { return birthday; }
-    public void setBirthday(LocalDate birthday) { this.birthday = birthday; }
+    public void setBirthday(LocalDate birthday) {
+        LocalDate earliestAllowed = LocalDate.of(1884, 1, 1);
+        if (birthday.isBefore(earliestAllowed)) {
+            throw new IllegalArgumentException("invalid birthday!");
+        }
+        this.birthday = birthday; }
 
     public String geteMail() { return eMail; }
     public void seteMail(String eMail) { this.eMail = eMail; }
