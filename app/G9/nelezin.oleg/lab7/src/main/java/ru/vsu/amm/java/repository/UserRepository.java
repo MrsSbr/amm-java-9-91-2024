@@ -103,14 +103,4 @@ public class UserRepository implements CrudRepository<UserEntity> {
             }
         }
     }
-
-    @Override
-    public void delete(UserEntity entity) {
-
-    }
-
-    @Override
-    public void update(UserEntity entity) {
-
-    }
 }
