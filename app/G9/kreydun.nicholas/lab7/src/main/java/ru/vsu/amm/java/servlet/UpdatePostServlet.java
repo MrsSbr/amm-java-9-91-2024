@@ -23,7 +23,7 @@ public class UpdatePostServlet extends HttpServlet {
         postService = new PostService();
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 

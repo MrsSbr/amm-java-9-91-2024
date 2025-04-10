@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.repository.UserRepository;
 import ru.vsu.amm.java.services.UserService;
 
 import java.io.IOException;

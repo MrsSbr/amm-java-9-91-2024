@@ -10,7 +10,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public UserService() {
-        this.userRepository = new UserRepository();  // Репозиторий создается внутри сервиса
+        this.userRepository = new UserRepository();
     }
 
     public UUID create(User user) {
