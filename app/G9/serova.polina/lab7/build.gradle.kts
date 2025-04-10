@@ -4,7 +4,7 @@ plugins {
 }
 
 tasks.war {
-    archiveFileName.set("ROOT.war")
+    archiveFileName.set("serova.polina-lab7.war")
 }
 
 group = "ru.vsu.amm.java"
@@ -24,6 +24,7 @@ dependencies {
     implementation("com.zaxxer:HikariCP:6.2.1")
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
+    implementation("org.mindrot:jbcrypt:0.4")
 }
 
 tasks.test {
