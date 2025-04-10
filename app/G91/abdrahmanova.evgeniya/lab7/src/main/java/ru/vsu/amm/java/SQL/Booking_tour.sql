@@ -28,7 +28,7 @@ Language_tour VARCHAR(200)
 CREATE TABLE User_tour (
 id_user SERIAL PRIMARY KEY,
 Full_name VARCHAR(100) NOT NULL,
-Age INTEGER NOT NULL,
+Birthday DATE NOT NULL,
 E_mail VARCHAR(50) NOT NULL,
 Number_phone VARCHAR(20) NOT NULL
 );
@@ -41,6 +41,9 @@ ADD CONSTRAINT Unique_User_Number_phone UNIQUE(Number_phone);
 
 ALTER TABLE User_tour
 ADD CHECK(Age > 0);
+
+ALTER TABLE User_tour
+ADD CHECK(Birthday > 1884)
 
 CREATE TABLE Booking (
 id_booking SERIAL PRIMARY KEY,

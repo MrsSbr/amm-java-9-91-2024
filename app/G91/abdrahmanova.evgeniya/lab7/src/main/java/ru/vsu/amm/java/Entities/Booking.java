@@ -21,24 +21,24 @@ public class Booking {
         this.status = status;
     }
 
-    public int getId() {return id;}
-    public void setId(int id) {this.id = id;}
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public int getIdTour() {return idTour;}
-    public void setIdTour(int idTour) {this.idTour = idTour;}
+    public int getIdTour() { return idTour; }
+    public void setIdTour(int idTour) { this.idTour = idTour; }
 
-    public int getIdUser() {return idUser;}
-    public void setIdUser(int idUser) {this.idUser = idUser;}
+    public int getIdUser() { return idUser; }
+    public void setIdUser(int idUser) { this.idUser = idUser; }
 
-    public LocalDate getDate() {return date;}
-    public void setDate(LocalDate date) {this.date = date;}
+    public LocalDate getDate() { return date; }
+    public void setDate(LocalDate date) { this.date = date; }
 
-    public int getCountParticipants() {return countParticipants;}
-    public void setCountParticipants(int countParticipants) {this.countParticipants = countParticipants;}
+    public int getCountParticipants() { return countParticipants; }
+    public void setCountParticipants(int countParticipants) { this.countParticipants = countParticipants; }
 
-    public int getTotalPrice() {return totalPrice;}
-    public void setTotalPrice(int totalPrice) {this.totalPrice = totalPrice;}
+    public int getTotalPrice() { return totalPrice; }
+    public void setTotalPrice(int totalPrice) { this.totalPrice = totalPrice; }
 
-    public String getStatus() {return status;}
-    public void setStatus(String status) {this.status = status;}
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }

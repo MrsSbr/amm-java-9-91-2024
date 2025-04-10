@@ -1,15 +1,17 @@
 package ru.vsu.amm.java.Entities;
 
+import ru.vsu.amm.java.Enums.Language;
+
 public class Guide {
     private int id;
     private String fullName;
     private String bio;
     private float rating;
-    private String languages;
+    private Language languages;
     private String eMail;
     private String numberPhone;
 
-    public Guide(int id, String fullName, String bio, float rating, String languages, String eMail, String numberPhone) {
+    public Guide(int id, String fullName, String bio, float rating, Language languages, String eMail, String numberPhone) {
         this.id = id;
         this.fullName = fullName;
         this.bio = bio;
@@ -31,8 +33,8 @@ public class Guide {
     public float getRating() { return rating; }
     public void setRating(float rating) { this.rating = rating; }
 
-    public String getLanguages() { return languages; }
-    public void setLanguages(String languages) { this.languages = languages; }
+    public Language getLanguages() { return languages; }
+    public void setLanguages(Language languages) { this.languages = languages; }
 
     public String getEMail() { return eMail; }
     public void setEMail(String eMail) { this.eMail = eMail; }

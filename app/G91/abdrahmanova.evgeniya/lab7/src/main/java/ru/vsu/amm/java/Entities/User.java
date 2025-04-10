@@ -1,16 +1,18 @@
 package ru.vsu.amm.java.Entities;
 
+import java.time.LocalDate;
+
 public class User {
     private int id;
     private String fullName;
-    private int Age;
+    private LocalDate birthday;
     private String eMail;
     private String numberPhone;
 
-    public User(int id, String fullName, int Age, String eMail, String numberPhone) {
+    public User(int id, String fullName, LocalDate birthday, String eMail, String numberPhone) {
         this.id = id;
         this.fullName = fullName;
-        this.Age = Age;
+        this.birthday = birthday;
         this.eMail = eMail;
         this.numberPhone = numberPhone;
     }
@@ -21,8 +23,8 @@ public class User {
     public String getFullName() { return fullName; }
     public void setFullName(String fullName) { this.fullName = fullName; }
 
-    public int getAge() { return Age; }
-    public void setAge(int age) { Age = age; }
+    public LocalDate getBirthday() { return birthday; }
+    public void setBirthday(LocalDate birthday) { this.birthday = birthday; }
 
     public String geteMail() { return eMail; }
     public void seteMail(String eMail) { this.eMail = eMail; }
