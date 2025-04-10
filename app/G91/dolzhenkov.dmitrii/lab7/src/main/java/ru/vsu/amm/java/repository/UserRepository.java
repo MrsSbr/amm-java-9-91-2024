@@ -1,8 +1,11 @@
 package ru.vsu.amm.java.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.UserEntity;
+import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.mappers.UserMapper;
+import ru.vsu.amm.java.utils.ErrorMessages;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -13,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 public class UserRepository implements CrudRepository<UserEntity>{
     private final DataSource dataSource;
 
@@ -22,7 +26,7 @@ public class UserRepository implements CrudRepository<UserEntity>{
     }
 
     @Override
-    public Optional<UserEntity> findById(Long id) throws SQLException {
+    public Optional<UserEntity> findById(Long id) {
         final String query = "SELECT name, password FROM User WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -33,12 +37,15 @@ public class UserRepository implements CrudRepository<UserEntity>{
                 }
             }
 
+        } catch (SQLException e) {
+            log.error(ErrorMessages.FIND_USER_BY_ID + id, e);
+            throw new DataAccessException(ErrorMessages.FIND_USER_BY_ID + id, e);
         }
         return Optional.empty();
     }
 
     @Override
-    public List<UserEntity> findAll() throws SQLException {
+    public List<UserEntity> findAll() {
         final String query = "SELECT id, name, password FROM User";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -49,22 +56,28 @@ public class UserRepository implements CrudRepository<UserEntity>{
                 }
                 return users;
             }
+        } catch (SQLException e) {
+            log.error(ErrorMessages.FIND_ALL_USERS, e);
+            throw new DataAccessException(ErrorMessages.FIND_ALL_USERS, e);
         }
     }
 
     @Override
-    public void save(UserEntity entity) throws SQLException {
+    public void save(UserEntity entity) {
         final String query = "INSERT INTO User(name, password) VALUES(?,?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, entity.getUserName());
             preparedStatement.setString(2, entity.getPassword());
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            log.error(ErrorMessages.SAVE_USER, e);
+            throw new DataAccessException(ErrorMessages.SAVE_USER, e);
         }
     }
 
     @Override
-    public void update(UserEntity entity) throws SQLException {
+    public void update(UserEntity entity) {
         final String query = "UPDATE User SET name = ?, password = ? WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -72,16 +85,41 @@ public class UserRepository implements CrudRepository<UserEntity>{
             preparedStatement.setString(2, entity.getPassword());
             preparedStatement.setLong(3, entity.getId());
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            log.error(ErrorMessages.UPDATE_USER + entity, e);
+            throw new DataAccessException(ErrorMessages.UPDATE_USER + entity, e);
         }
     }
 
     @Override
-    public void delete(Long id) throws SQLException {
+    public void delete(Long id) {
         final String query = "DELETE FROM User WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            log.error(ErrorMessages.DELETE_USER_BY_ID + id, e);
+            throw new DataAccessException(ErrorMessages.DELETE_USER_BY_ID + id, e);
         }
+    }
+
+    public Optional<UserEntity> findByName(String name) {
+        final String query = "SELECT id, name, password FROM User WHERE name = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, name);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Optional.of(UserMapper.ResultSetToUserEntity(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            log.error(ErrorMessages.FIND_USER_BY_NAME + name, e);
+            throw new DataAccessException(ErrorMessages.FIND_USER_BY_NAME + name, e);
+        }
+        return Optional.empty();
     }
 }
