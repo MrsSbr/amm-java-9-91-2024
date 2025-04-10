@@ -41,14 +41,14 @@ public class LoginServlet extends HttpServlet {
         String email = req.getParameter("email");
         LoginRequest loginRequest = new LoginRequest(email,
                 req.getParameter("password"));
-         try {
-             UserEntity user = authService.login(loginRequest);
-             session.setAttribute("user", user);
-             resp.sendRedirect("/catalog");
-         } catch (SQLException | AuthenticationException e) {
-             logger.log(Level.SEVERE, String.format("Fail to login user %s", email));
-             req.setAttribute("errorMessage", e.getMessage());
-             getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
-         }
+        try {
+            UserEntity user = authService.login(loginRequest);
+            session.setAttribute("user", user);
+            resp.sendRedirect("/catalog");
+        } catch (SQLException | AuthenticationException e) {
+            logger.log(Level.SEVERE, String.format("Fail to login user %s", email));
+            req.setAttribute("errorMessage", e.getMessage());
+            getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
+        }
     }
 }
