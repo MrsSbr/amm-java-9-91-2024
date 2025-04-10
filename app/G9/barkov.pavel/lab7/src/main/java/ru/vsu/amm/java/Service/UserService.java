@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.Service;
 
 import ru.vsu.amm.java.Exeption.NotFoundException;
+import ru.vsu.amm.java.Exeption.UnCorrectDataException;
 import ru.vsu.amm.java.Repository.Entities.Shareholder;
 import ru.vsu.amm.java.Repository.ShareholderRepository;
 import ru.vsu.amm.java.Service.Convertors.ShareholderModelToEntity;
@@ -15,30 +16,31 @@ public class UserService implements UserServiceInterface {
     private ShareholderRepository userRepository;
     private static final Logger logger = Logger.getLogger(UserService.class.getName());
 
-    public UserService(){
+    public UserService() {
         logger.info("Create service");
         userRepository = new ShareholderRepository();
     }
+
     @Override
-    public boolean register(ShareholderCreateModel user, String password) throws SQLException{
+    public boolean register(ShareholderCreateModel user, String password) throws SQLException {
         logger.info("Start registration");
-        if(userRepository.getByEmail(user.email()).isEmpty()){
+        if (userRepository.getByEmail(user.email()).isEmpty()) {
             userRepository.create(ShareholderModelToEntity
-                    .Convert(user,BCrypt.hashpw(password,BCrypt.gensalt())));
+                    .convert(user, BCrypt.hashpw(password, BCrypt.gensalt())));
             return true;
-        }
-        else
-        {
+        } else {
             logger.severe("User already exists");
             return false;
         }
     }
 
     @Override
-    public boolean login(String email, String password) throws SQLException{
+    public int login(String email, String password) throws SQLException {
         logger.info("Start login");
         Shareholder user = userRepository.getByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User not found"));
-            return BCrypt.checkpw(password,user.getPassword());
+        if(!BCrypt.checkpw(password, user.getPassword()))
+            throw new UnCorrectDataException("Wrong password");
+        return user.getId();
     }
 }
