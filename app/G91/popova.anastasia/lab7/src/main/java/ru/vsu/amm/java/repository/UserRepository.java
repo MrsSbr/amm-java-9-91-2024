@@ -19,7 +19,7 @@ public class UserRepository implements CRUDRepository<User> {
     @Override
     public User getByID(UUID userID) {
 
-        final String sql = "SELECT UserID, Password, Email, Login FROM users WHERE UserID = ?";
+        final String sql = "SELECT UserID, Password, Email, Name FROM users WHERE UserID = ?";
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -40,6 +40,33 @@ public class UserRepository implements CRUDRepository<User> {
             logger.severe("error while trying to get user: " + e.getMessage());
         }
         return null;
+    }
+
+    public User getByEmail(String email) {
+        final String sql = "SELECT UserID, Password, Email, Name FROM users WHERE Email = ?";
+
+        try (Connection c = DatabaseConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                User user = new User();
+                user.setUserID((UUID)rs.getObject("UserID"));
+                user.setPassword(rs.getString("Password"));
+                user.setEmail(rs.getString("Email"));
+                user.setName(rs.getString("Name"));
+                return user;
+            }
+
+
+        } catch (SQLException e) {
+            logger.severe("error while trying to get user by email: " + e.getMessage());
+        }
+
+        return null;
+
     }
 
     @Override
@@ -71,14 +98,15 @@ public class UserRepository implements CRUDRepository<User> {
 
     @Override
     public void save(User user) {
-        final String sql = "INSERT INTO users (Password, Email, Name) VALUES (?, ?, ?)";
+        final String sql = "INSERT INTO users (UserID, Password, Email, Name) VALUES (?, ?, ?, ?)";
 
         try (Connection c = DatabaseConnection.getConnection();
             PreparedStatement ps = c.prepareStatement(sql)) {
 
-            ps.setString(1, user.getPassword());
-            ps.setString(2, user.getEmail());
-            ps.setString(3, user.getName());
+            ps.setObject(1, user.getUserID());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getName());
             ps.executeUpdate();
 
         } catch (SQLException e) {
