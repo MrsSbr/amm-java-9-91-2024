@@ -1,38 +1,35 @@
-DROP TABLE IF EXISTS medicine CASCADE;
-DROP TABLE IF EXISTS person_entity CASCADE;
-DROP TABLE IF EXISTS receipt CASCADE;
+--DROP TABLE IF EXISTS achievement CASCADE;
+--DROP TABLE IF EXISTS userentity CASCADE;
+--DROP TABLE IF EXISTS earnedachievement CASCADE;
 
-CREATE TABLE medicine
+CREATE TABLE achievement
 (
     id                BIGSERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-	description TEXT NOT NULL,
-	size TEXT NOT NULL,
-	type TEXT NOT NULL
+    description TEXT NOT NULL,
+    type TEXT NOT NULL
 );
 
-CREATE TABLE person_entity
+CREATE TABLE userentity
 (
     id           BIGSERIAL PRIMARY KEY,
-	firstname	 TEXT NOT NULL,
-	lastname     TEXT NOT NULL,
-	patronymicname TEXT NOT NULL,
-    number_phone TEXT NOT NULL UNIQUE,
+    login TEXT NOT NULL UNIQUE,
+    nickname TEXT NOT NULL,
+    phonenumber TEXT NOT NULL UNIQUE,
+    passwordhash TEXT NOT NULL,
     email        TEXT NOT NULL UNIQUE
 );
 
-CREATE TABLE receipt
+CREATE TABLE earnedachievement
 (
     id             BIGSERIAL PRIMARY KEY,
-	dosage TEXT NOT NULL,
-	person_id BIGSERIAL NOT NULL,
-	medicine_id BIGSERIAL NOT NULL,
-	appointment_time TIME NOT NULL,
-	amount_to_consume int NOT NULL,
-	amount_consumed int,
-    CONSTRAINT fk_person FOREIGN KEY (person_id) REFERENCES person_entity (id),
-    CONSTRAINT fk_medicine FOREIGN KEY (medicine_id) REFERENCES medicine (id)
+    achievement_id BIGSERIAL NOT NULL,
+    user_id BIGSERIAL NOT NULL,
+    obtainedat TIME NOT NULL,
+    status TEXT NOT NULL,
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES userentity (id),
+    CONSTRAINT fk_achievement FOREIGN KEY (achievement_id) REFERENCES achievement (id)
 );
 
-CREATE INDEX idx_person_id_receipt ON receipt(person_id);
-CREATE INDEX idx_receipt_id_medicine ON receipt(medicine_id);
+CREATE INDEX idx_user_id_earnedachievement ON earnedachievement(user_id);
+CREATE INDEX idx_earnedachievement_id_achievement ON earnedachievement(achievement_id);
