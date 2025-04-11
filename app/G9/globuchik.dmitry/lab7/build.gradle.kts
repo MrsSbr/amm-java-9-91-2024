@@ -4,7 +4,7 @@ plugins {
 }
 
 tasks.war {
-    archiveFileName.set("lab7.war")
+    archiveFileName.set("laba7.war")
 }
 
 group = "ru.vsu.amm.java"
