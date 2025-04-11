@@ -142,12 +142,16 @@ public class UserRepository implements Repository<User> {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setObject(1, id);
-            return pstmt.executeUpdate() > 0;
+            int affectedRows = pstmt.executeUpdate();
+
+            return affectedRows > 0;
 
         } catch (SQLException e) {
             logger.warning("Error deleting user: " + e.getMessage());
             return false;
         }
     }
+
+
 }
 

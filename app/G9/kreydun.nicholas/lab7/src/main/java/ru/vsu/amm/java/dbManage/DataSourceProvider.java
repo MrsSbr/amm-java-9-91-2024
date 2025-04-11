@@ -15,6 +15,7 @@ public class DataSourceProvider {
     private static DataSource dataSource;
 
     public static DataSource getDataSource() {
+        logger.info("Loading DataSource");
         if (dataSource == null) {
             HikariConfig config = new HikariConfig();
             loadProperties(config);

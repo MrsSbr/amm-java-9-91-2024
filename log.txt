@@ -1,6 +1,56 @@
-мар. 06, 2025 2:49:43 PM ru.vsu.amm.java.dbManage.DbConnection connectToDb
-INFO: Connected to PostgreSQL database: SocialNetwork_
-мар. 06, 2025 2:49:43 PM ru.vsu.amm.java.dbManage.DbManager createUser
-WARNING: Error creating user: The url cannot be null
-мар. 06, 2025 2:49:43 PM ru.vsu.amm.java.dbManage.DbManager getAllUsers
-WARNING: Error getting all users: The url cannot be null
+апр. 11, 2025 8:34:16 AM ru.vsu.amm.java.config.ServletConfig registerServlets
+INFO: Registering servlets...
+апр. 11, 2025 8:34:16 AM ru.vsu.amm.java.config.ServletConfig registerServlets
+INFO: Registered servlets successfully
+апр. 11, 2025 8:34:16 AM ru.vsu.amm.java.Main main
+INFO: Starting Embedded Tomcat...
+апр. 11, 2025 8:34:56 AM ru.vsu.amm.java.filters.AuthFilter doFilter
+INFO: AuthFilter do filter
+апр. 11, 2025 8:34:56 AM ru.vsu.amm.java.filters.AuthFilter doFilter
+INFO: Chain...
+апр. 11, 2025 8:35:07 AM ru.vsu.amm.java.filters.AuthFilter doFilter
+INFO: AuthFilter do filter
+апр. 11, 2025 8:35:07 AM ru.vsu.amm.java.filters.AuthFilter doFilter
+INFO: Chain...
+апр. 11, 2025 8:35:14 AM ru.vsu.amm.java.filters.AuthFilter doFilter
+INFO: AuthFilter do filter
+апр. 11, 2025 8:35:14 AM ru.vsu.amm.java.filters.AuthFilter doFilter
+INFO: Chain...
+апр. 11, 2025 8:35:15 AM ru.vsu.amm.java.repository.PostRepository getPostsByUserId
+INFO: Trying to connect and do query getPostByUserId
+апр. 11, 2025 8:35:17 AM ru.vsu.amm.java.filters.AuthFilter doFilter
+INFO: AuthFilter do filter
+апр. 11, 2025 8:35:17 AM ru.vsu.amm.java.repository.PostRepository getById
+INFO: Trying to connect and do query getById posts by ID:
+апр. 11, 2025 8:35:17 AM ru.vsu.amm.java.filters.AuthFilter doFilter
+INFO: Chain...
+апр. 11, 2025 8:35:21 AM ru.vsu.amm.java.repository.PostRepository getById
+INFO: Trying to connect and do query getById posts by ID:
+апр. 11, 2025 8:35:21 AM ru.vsu.amm.java.repository.PostRepository getById
+INFO: Trying to connect and do query getById posts by ID:
+апр. 11, 2025 8:35:21 AM ru.vsu.amm.java.repository.PostRepository update
+INFO: Trying to connect and do query update by post: ru.vsu.amm.java.entities.Post
+апр. 11, 2025 8:35:21 AM ru.vsu.amm.java.repository.PostRepository getPostsByUserId
+INFO: Trying to connect and do query getPostByUserId
+апр. 11, 2025 8:35:22 AM ru.vsu.amm.java.filters.AuthFilter doFilter
+INFO: AuthFilter do filter
+апр. 11, 2025 8:35:22 AM ru.vsu.amm.java.filters.AuthFilter doFilter
+INFO: Chain...
+апр. 11, 2025 8:35:24 AM ru.vsu.amm.java.servlet.CreatePostServlet doPost
+INFO: Creating post in servlet
+апр. 11, 2025 8:35:24 AM ru.vsu.amm.java.repository.PostRepository create
+INFO: Trying to connect and do query create Post
+апр. 11, 2025 8:35:24 AM ru.vsu.amm.java.repository.PostRepository getPostsByUserId
+INFO: Trying to connect and do query getPostByUserId
+апр. 11, 2025 8:35:30 AM ru.vsu.amm.java.repository.PostRepository delete
+INFO: Trying to connect and do query delete by ID: 91ef25e4-79b8-4ff9-9b6e-bcfa5b06b076
+апр. 11, 2025 8:35:30 AM ru.vsu.amm.java.repository.PostRepository getPostsByUserId
+INFO: Trying to connect and do query getPostByUserId
+апр. 11, 2025 8:35:31 AM ru.vsu.amm.java.filters.AuthFilter doFilter
+INFO: AuthFilter do filter
+апр. 11, 2025 8:35:31 AM ru.vsu.amm.java.filters.AuthFilter doFilter
+INFO: Chain...
+апр. 11, 2025 8:35:33 AM ru.vsu.amm.java.filters.AuthFilter doFilter
+INFO: AuthFilter do filter
+апр. 11, 2025 8:35:33 AM ru.vsu.amm.java.filters.AuthFilter doFilter
+INFO: Chain...

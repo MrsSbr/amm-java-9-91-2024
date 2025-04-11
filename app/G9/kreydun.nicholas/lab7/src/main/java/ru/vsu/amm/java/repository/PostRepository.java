@@ -24,6 +24,8 @@ public class PostRepository implements Repository<Post> {
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+            logger.info("Trying to connect and do query getById posts by ID:");
+
             pstmt.setObject(1, id);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
@@ -49,6 +51,8 @@ public class PostRepository implements Repository<Post> {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
+            logger.info("Trying to connect and do query get all posts");
+
             while (rs.next()) {
                 Post post = new Post();
                 post.setId(UUID.fromString(rs.getString("ID")));
@@ -66,11 +70,13 @@ public class PostRepository implements Repository<Post> {
 
     @Override
     public UUID create(Post post) {
-        UUID newId = UUID.randomUUID();
+        UUID newId = post.getId();
         String sql = "INSERT INTO Posts (\"ID\", User_ID, \"Content\") VALUES (?, ?, ?)";
 
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            logger.info("Trying to connect and do query create Post");
 
             pstmt.setObject(1, newId);
             pstmt.setObject(2, post.getUserId());
@@ -91,6 +97,8 @@ public class PostRepository implements Repository<Post> {
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+            logger.info("Trying to connect and do query update by post: " + post.getClass().getName());
+
             pstmt.setString(1, post.getContent());
             pstmt.setObject(2, post.getId());
 
@@ -109,6 +117,8 @@ public class PostRepository implements Repository<Post> {
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+            logger.info("Trying to connect and do query delete by ID: " + id);
+
             pstmt.setObject(1, id);
 
             int affectedRows = pstmt.executeUpdate();
@@ -119,4 +129,36 @@ public class PostRepository implements Repository<Post> {
             return false;
         }
     }
+
+    public List<Post> getPostsByUserId(UUID userId) {
+        List<Post> posts = new ArrayList<>();
+        String sql = "SELECT \"ID\", \"Content\", user_Id FROM Posts WHERE user_Id = ?";
+
+        try (Connection conn = DbConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setObject(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            logger.info("Trying to connect and do query getPostByUserId");
+
+            while (rs.next()) {
+                UUID postId = (UUID) rs.getObject("ID");
+                String content = rs.getString("Content");
+                UUID ownerId = (UUID) rs.getObject("user_Id");
+
+                Post post = new Post();
+                post.setContent(content);
+                post.setUserId(userId);
+                post.setId(postId);
+
+                posts.add(post);
+            }
+
+        } catch (SQLException e) {
+            logger.warning("Error fetching posts for user: " + e.getMessage());
+        }
+        return posts;
+    }
+
 }
