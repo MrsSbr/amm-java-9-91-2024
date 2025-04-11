@@ -11,6 +11,8 @@ import ru.vsu.amm.java.services.UserService;
 
 import java.io.IOException;
 
+import java.util.UUID;
+
 @WebServlet("/updateUser")
 public class UpdateUserServlet extends HttpServlet {
     private UserService userService;
@@ -21,41 +23,39 @@ public class UpdateUserServlet extends HttpServlet {
         userService = new UserService();
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
 
-        if (user == null) {
+        Object userIdAttr = session.getAttribute("userId");
+        if (userIdAttr == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
+        UUID userId = UUID.fromString(userIdAttr.toString());
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String newPassword = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
 
-        if (newPassword != null && !newPassword.isEmpty()) {
-            if (!newPassword.equals(confirmPassword)) {
-                session.setAttribute("error", "Пароли не совпадают!");
-                response.sendRedirect("dashboard.jsp");
-                return;
-            }
-            user.setPassword(newPassword);
+        if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals(confirmPassword)) {
+            session.setAttribute("error", "Пароли не совпадают!");
+            response.sendRedirect("dashboard.jsp");
+            return;
         }
 
-        user.setUsername(username);
-        user.setEmail(email);
-
-        boolean isUpdated = userService.update(user);
+        boolean isUpdated = userService.update(userId, username, email, newPassword);
 
         if (isUpdated) {
-            session.setAttribute("user", user);
+            User updatedUser = userService.getById(userId);
+            session.setAttribute("user", updatedUser);
+
             session.setAttribute("success", "Данные успешно обновлены");
         } else {
             session.setAttribute("error", "Ошибка обновления данных");
         }
+
         response.sendRedirect("dashboard.jsp");
     }
 }

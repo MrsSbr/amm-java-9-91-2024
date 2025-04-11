@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.services.UserService;
 
 import java.io.IOException;
@@ -22,16 +21,17 @@ public class DeleteUserServlet extends HttpServlet {
         userService = new UserService();
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
 
-        if (user == null) {
+        Object userIdAttr = session.getAttribute("userId");
+        if (userIdAttr == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
-        UUID userId = user.getId();
+        UUID userId = UUID.fromString(userIdAttr.toString());
         boolean isDeleted = userService.delete(userId);
 
         if (isDeleted) {

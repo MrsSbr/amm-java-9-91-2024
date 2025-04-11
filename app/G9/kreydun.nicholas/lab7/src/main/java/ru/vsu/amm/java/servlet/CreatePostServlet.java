@@ -25,7 +25,7 @@ public class CreatePostServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String content = request.getParameter("content");
-        String userIdParam = request.getParameter("userId");
+        UUID userIdParam = UUID.fromString(request.getParameter("userId"));
 
         logger.info("Creating post in servlet");
 

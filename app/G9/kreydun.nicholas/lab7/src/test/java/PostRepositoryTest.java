@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class) // Упорядочиваем тесты
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PostRepositoryTest {
 
     private PostRepository postRepository;
@@ -66,6 +66,7 @@ public class PostRepositoryTest {
         assertTrue(isUpdated);
 
         Post updatedPost = postRepository.getById(testPostId);
+        assert updatedPost != null;
         assertEquals("Updated content", updatedPost.getContent());
     }
 

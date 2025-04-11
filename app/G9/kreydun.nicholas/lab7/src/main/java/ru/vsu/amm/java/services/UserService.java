@@ -13,11 +13,47 @@ public class UserService {
         this.userRepository = new UserRepository();
     }
 
-    public UUID create(User user) {
-        if (user != null) {
-            return userRepository.create(user);
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public UUID create(String username, String email, String password) {
+        if (email == null || userRepository.getByEmail(email) != null) {
+            return null;
         }
-        return null;
+
+        User user = new User();
+        user.setId(UUID.randomUUID());
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+
+        return userRepository.create(user);
+    }
+
+    public boolean update(UUID userId, String username, String email, String newPassword) {
+        try {
+            User user = userRepository.getById(userId);
+            if (user == null) return false;
+
+            user.setUsername(username);
+            user.setEmail(email);
+            if (newPassword != null && !newPassword.isEmpty()) {
+                user.setPassword(newPassword);
+            }
+
+            return userRepository.update(user);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    public boolean delete(UUID userId) {
+        try {
+            return userRepository.delete(userId);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     public User getById(UUID id) {
@@ -32,14 +68,4 @@ public class UserService {
         return userRepository.getAll();
     }
 
-    public boolean update(User user) {
-        if (user != null) {
-            return userRepository.update(user);
-        }
-        return false;
-    }
-
-    public boolean delete(UUID id) {
-        return userRepository.delete(id);
-    }
 }

@@ -14,13 +14,11 @@ public class PostService {
         this.postRepository = new PostRepository();
     }
 
-    public UUID create(String content, String userIdParam) {
-        UUID userId;
-        try {
-            userId = UUID.fromString(userIdParam);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
+    public PostService(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
+
+    public UUID create(String content, UUID userId) {
 
         Post post = new Post();
         post.setId(UUID.randomUUID());
@@ -31,8 +29,9 @@ public class PostService {
         return postRepository.create(post);
     }
 
-    public Post getById(UUID id) {
-        return postRepository.getById(id);
+    public boolean getById(UUID id) {
+        Post post = postRepository.getById(id);
+        return post == null;
     }
 
     public List<Post> getAll() {

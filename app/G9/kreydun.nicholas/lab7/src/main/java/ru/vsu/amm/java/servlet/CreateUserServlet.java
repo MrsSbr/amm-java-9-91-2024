@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.services.UserService;
 
 import java.io.IOException;
@@ -30,13 +29,7 @@ public class CreateUserServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        User user = new User();
-        user.setId(UUID.randomUUID());
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(password);
-
-        UUID resultId = userService.create(user);
+        UUID resultId = userService.create(username, email, password);
 
         if (resultId != null) {
             response.sendRedirect("userCreated.jsp");
@@ -46,3 +39,4 @@ public class CreateUserServlet extends HttpServlet {
         }
     }
 }
+

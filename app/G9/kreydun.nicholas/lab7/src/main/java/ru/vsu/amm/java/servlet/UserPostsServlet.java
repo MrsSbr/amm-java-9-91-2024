@@ -7,11 +7,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.Post;
-import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.services.PostService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @WebServlet("/index")
 public class UserPostsServlet extends HttpServlet {
@@ -26,10 +26,10 @@ public class UserPostsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        Object userIdAttr = session.getAttribute("userId");;
 
-        if (user != null) {
-            List<Post> userPosts = postService.getPostsByUserId(user.getId());
+        if (userIdAttr != null) {
+            List<Post> userPosts = postService.getPostsByUserId((UUID) userIdAttr);
             request.setAttribute("posts", userPosts);
         }
 

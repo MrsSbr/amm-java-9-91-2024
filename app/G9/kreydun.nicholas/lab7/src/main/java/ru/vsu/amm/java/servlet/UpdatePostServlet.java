@@ -6,8 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ru.vsu.amm.java.entities.Post;
-import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.services.PostService;
 
 import java.io.IOException;
@@ -25,28 +23,15 @@ public class UpdatePostServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-
-        if (user == null) {
-            session.setAttribute("error", "Вы должны войти в систему.");
-            response.sendRedirect("login.jsp");
-            return;
-        }
 
         try {
             UUID postId = UUID.fromString(request.getParameter("postId"));
             String newContent = request.getParameter("content");
 
-            Post existingPost = postService.getById(postId);
+            boolean result = postService.getById(postId);
 
-            if (existingPost == null) {
+            if (result) {
                 session.setAttribute("error", "Пост не найден.");
-                response.sendRedirect("index");
-                return;
-            }
-
-            if (!existingPost.getUserId().equals(user.getId())) {
-                session.setAttribute("error", "Вы не можете редактировать чужой пост.");
                 response.sendRedirect("index");
                 return;
             }
