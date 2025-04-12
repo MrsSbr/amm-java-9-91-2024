@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AchievementRepository implements Repository {
+public class AchievementRepository implements Repository<Achievement> {
     private final DataSource dataSource;
 
     public AchievementRepository(final DataSource dataSource) {
@@ -20,7 +20,7 @@ public class AchievementRepository implements Repository {
     }
 
     @Override
-    public Optional findById(Long id) throws SQLException {
+    public Optional<Achievement> findById(Long id) throws SQLException {
         final String sql = "SELECT id, name, description, type FROM achievement WHERE id = ? ORDER BY id";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -40,7 +40,7 @@ public class AchievementRepository implements Repository {
     }
 
     @Override
-    public List findAll() throws SQLException {
+    public List<Achievement> findAll() throws SQLException {
         final String sql = "SELECT id, name, description, type FROM achievement ORDER BY id";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -61,17 +61,17 @@ public class AchievementRepository implements Repository {
     }
 
     @Override
-    public void update(Object object) {
+    public void update(Achievement object) {
 
     }
 
     @Override
-    public void delete(Object object) {
+    public void delete(Achievement object) {
 
     }
 
     @Override
-    public void save(Object object) throws SQLException {
+    public void save(Achievement object) throws SQLException {
 
     }
 }

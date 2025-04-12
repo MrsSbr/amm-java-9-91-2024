@@ -14,7 +14,7 @@ import ru.vsu.amm.java.enums.AchievementStatus;
 
 import java.util.List;
 
-public class EarnedAchievementRepository implements Repository {
+public class EarnedAchievementRepository implements Repository<EarnedAchievement> {
     private final DataSource dataSource;
 
     public EarnedAchievementRepository(final DataSource dataSource) {
@@ -66,17 +66,17 @@ public class EarnedAchievementRepository implements Repository {
     }
 
     @Override
-    public void update(Object object) {
+    public void update(EarnedAchievement object) {
 
     }
 
     @Override
-    public void delete(Object object) {
+    public void delete(EarnedAchievement object) {
 
     }
 
     @Override
-    public void save(Object object) throws SQLException {
+    public void save(EarnedAchievement object) throws SQLException {
 
     }
 }

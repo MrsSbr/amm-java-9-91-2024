@@ -12,7 +12,7 @@ import ru.vsu.amm.java.entity.UserEntity;
 
 import java.util.List;
 
-public class UserRepository implements Repository {
+public class UserRepository implements Repository<UserEntity> {
 
     private final DataSource dataSource;
 
@@ -22,7 +22,7 @@ public class UserRepository implements Repository {
 
 
     @Override
-    public Optional findById(Long id) throws SQLException {
+    public Optional<UserEntity> findById(Long id) throws SQLException {
         final String sql = "SELECT id, login, nickname, phonenumber, passwordhash, email FROM userentity WHERE id = ? ORDER BY id";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -66,17 +66,17 @@ public class UserRepository implements Repository {
     }
 
     @Override
-    public void update(Object object) {
+    public void update(UserEntity object) {
 
     }
 
     @Override
-    public void delete(Object object) {
+    public void delete(UserEntity object) {
 
     }
 
     @Override
-    public void save(Object object) throws SQLException {
+    public void save(UserEntity object) throws SQLException {
 
     }
 }
