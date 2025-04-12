@@ -1,14 +1,14 @@
 package ru.vsu.amm.java.entity;
 
-import ru.vsu.amm.java.AchevementType;
+import ru.vsu.amm.java.enums.AchievementType;
 
 public class Achievement {
     private Long id;
     private String name;
     private String description;
-    private AchevementType type;
+    private AchievementType type;
 
-    public Achievement(Long id, String name, String description, AchevementType type) {
+    public Achievement(Long id, String name, String description, AchievementType type) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -27,7 +27,7 @@ public class Achievement {
         return description;
     }
 
-    public AchevementType getType() {
+    public AchievementType getType() {
         return type;
     }
 }

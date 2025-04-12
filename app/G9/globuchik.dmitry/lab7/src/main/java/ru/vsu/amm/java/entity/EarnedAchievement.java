@@ -1,17 +1,17 @@
 package ru.vsu.amm.java.entity;
 
-import ru.vsu.amm.java.AchievementStatus;
+import ru.vsu.amm.java.enums.AchievementStatus;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public class EarnedAchievement {
     private Long id;
     private Long achievementId;
     private Long userId;
-    private LocalTime obtainedAt;
+    private LocalDateTime obtainedAt;
     private AchievementStatus status;
 
-    public EarnedAchievement(Long id, Long achievementId, Long userId, LocalTime obtainedAt, AchievementStatus status) {
+    public EarnedAchievement(Long id, Long achievementId, Long userId, LocalDateTime obtainedAt, AchievementStatus status) {
         this.id = id;
         this.achievementId = achievementId;
         this.userId = userId;
@@ -23,7 +23,7 @@ public class EarnedAchievement {
         return id;
     }
 
-    public LocalTime getObtainedAt() {
+    public LocalDateTime getObtainedAt() {
         return obtainedAt;
     }
 
