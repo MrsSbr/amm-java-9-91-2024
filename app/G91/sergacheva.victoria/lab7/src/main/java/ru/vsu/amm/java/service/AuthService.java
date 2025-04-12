@@ -7,6 +7,8 @@ import ru.vsu.amm.java.exception.AuthException;
 import ru.vsu.amm.java.repository.UserRepository;
 import ru.vsu.amm.java.util.PasswordEncoder;
 
+import javax.lang.model.element.Name;
+
 public class AuthService {
     private final UserRepository userRepository;
 
@@ -33,11 +35,7 @@ public class AuthService {
 
         String hashedPassword = PasswordEncoder.encode(password);
 
-        User user = User.builder()
-                .login(login)
-                .name(name)
-                .hashPassword(hashedPassword)
-                .build();
+        User user = new User(name, login, hashedPassword);
 
         userRepository.save(user);
         user = userRepository.findByLogin(user.getLogin()).get();
