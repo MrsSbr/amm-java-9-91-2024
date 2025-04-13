@@ -17,6 +17,7 @@ public class UserEntity {
     public UserEntity(String userName, String userPassword) {
         this.userName = userName;
         this.userPassword = userPassword;
+        this.userRole = Roles.GUEST;
     }
 
     public UserEntity(Long userID, String userName, String userPassword) {

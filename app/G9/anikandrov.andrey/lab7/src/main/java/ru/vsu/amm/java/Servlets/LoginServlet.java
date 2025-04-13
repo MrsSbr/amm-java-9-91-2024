@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", login);
-            resp.sendRedirect("/home.jsp");
+            resp.sendRedirect("/home");
         } catch (NotFoundException | DatabaseException e) {
             req.setAttribute("errorMessage", e.getMessage());
             getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
