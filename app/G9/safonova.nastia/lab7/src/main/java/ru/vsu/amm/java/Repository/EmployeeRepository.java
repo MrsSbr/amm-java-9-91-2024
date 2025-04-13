@@ -125,8 +125,8 @@ public class EmployeeRepository implements DbRepository<Employee> {
         if (resultSet.next()) {
             return Optional.of(new Employee(
                     resultSet.getLong("IdEmpl"),
-                    resultSet.getString("EmplLogin"),
-                    resultSet.getString("EmplPassword"),
+                    resultSet.getString("LoginEmpl"),
+                    resultSet.getString("PasswordEmpl"),
                     resultSet.getString("SurnameEmpl"),
                     resultSet.getString("NameEmpl"),
                     resultSet.getString("PatronumicEmpl"),

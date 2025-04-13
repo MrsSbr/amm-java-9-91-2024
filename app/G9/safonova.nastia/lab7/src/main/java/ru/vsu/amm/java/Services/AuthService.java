@@ -12,8 +12,8 @@ public class AuthService {
 
     private final EmployeeRepository employeeRepository;
 
-    public AuthService(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public AuthService() {
+        this.employeeRepository = new EmployeeRepository();
     }
 
     public void login(String login, String password) {

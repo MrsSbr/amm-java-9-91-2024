@@ -13,7 +13,7 @@ public class DbConfiguration {
         PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();
         Properties prop = new Properties();
         try (InputStream input = DbConfiguration.class.getClassLoader()
-                .getResourceAsStream("application.properties")) {
+                .getResourceAsStream("db.properties")) {
             prop.load(input);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
