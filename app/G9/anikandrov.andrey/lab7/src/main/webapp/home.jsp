@@ -55,7 +55,7 @@
         <input type="submit" class="btn" value="Забронировать">
     </form>
 
-    <form action="myrental" method="get">
+    <form action="myrent" method="get">
         <input type="submit" class="btn" value="Мои брони">
     </form>
 
