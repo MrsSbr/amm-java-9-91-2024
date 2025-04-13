@@ -5,16 +5,34 @@ public class UserEntity {
     private String login;
     private String nickname;
     private String phoneNumber;
-    private String passwordHash;
+    private byte[] passwordHash;
     private String email;
+    private byte[] salt;
 
-    public UserEntity(Long id, String login, String nickname, String phoneNumber, String passwordHash, String email) {
+
+    public UserEntity(Long id, String login, String nickname, String phoneNumber, byte[] passwordHash, String email, byte[] salt) {
         this.id = id;
         this.login = login;
         this.nickname = nickname;
         this.phoneNumber = phoneNumber;
         this.passwordHash = passwordHash;
         this.email = email;
+        this.salt = salt;
+    }
+
+    public UserEntity(String login, String nickname, String phoneNumber, byte[] passwordHash, String email, byte[] salt) {
+        this.id = null;
+        this.login = login;
+        this.nickname = nickname;
+        this.phoneNumber = phoneNumber;
+        this.passwordHash = passwordHash;
+        this.email = email;
+        this.salt = salt;
+    }
+
+
+    public byte[] getSalt() {
+        return salt;
     }
 
     public Long getId() {
@@ -33,11 +51,15 @@ public class UserEntity {
         return phoneNumber;
     }
 
-    public String getPasswordHash() {
+    public byte[] getPasswordHash() {
         return passwordHash;
     }
 
     public String getEmail() {
         return email;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

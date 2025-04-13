@@ -1,10 +1,7 @@
 package ru.vsu.amm.java.repo;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -23,7 +20,7 @@ public class UserRepository implements Repository<UserEntity> {
 
     @Override
     public Optional<UserEntity> findById(Long id) throws SQLException {
-        final String sql = "SELECT id, login, nickname, phonenumber, passwordhash, email FROM userentity WHERE id = ? ORDER BY id";
+        final String sql = "SELECT id, login, nickname, phonenumber, passwordhash, email, salt FROM userentity WHERE id = ? ORDER BY id";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, id);
@@ -35,8 +32,9 @@ public class UserRepository implements Repository<UserEntity> {
                             resultSet.getString("login"),
                             resultSet.getString("nickname"),
                             resultSet.getString("phonenumber"),
-                            resultSet.getString("passwordhash"),
-                            resultSet.getString("email")
+                            resultSet.getBytes("passwordhash"),
+                            resultSet.getString("email"),
+                            resultSet.getBytes("salt")
                     ));
                 }
             }
@@ -46,7 +44,7 @@ public class UserRepository implements Repository<UserEntity> {
 
     @Override
     public List<UserEntity> findAll() throws SQLException {
-        final String sql = "SELECT id, login, nickname, phonenumber, passwordhash, email FROM userentity";
+        final String sql = "SELECT id, login, nickname, phonenumber, passwordhash,email, salt FROM userentity";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -57,11 +55,35 @@ public class UserRepository implements Repository<UserEntity> {
                             resultSet.getString("login"),
                             resultSet.getString("nickname"),
                             resultSet.getString("phonenumber"),
-                            resultSet.getString("passwordhash"),
-                            resultSet.getString("email")));
+                            resultSet.getBytes("passwordhash"),
+                            resultSet.getString("email"),
+                            resultSet.getBytes("salt")));
                 }
                 return users;
             }
+        }
+    }
+
+    public UserEntity findByLogin(String login) throws SQLException {
+        final String sql = "SELECT id, login, nickname, phonenumber, passwordhash, email, salt FROM userentity WHERE login = ? ORDER BY id";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, login);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new UserEntity(
+                            resultSet.getLong("id"),
+                            resultSet.getString("login"),
+                            resultSet.getString("nickname"),
+                            resultSet.getString("phonenumber"),
+                            resultSet.getBytes("passwordhash"),
+                            resultSet.getString("email"),
+                            resultSet.getBytes("salt")
+                    );
+                }
+            }
+            return null;
         }
     }
 
@@ -76,7 +98,24 @@ public class UserRepository implements Repository<UserEntity> {
     }
 
     @Override
-    public void save(UserEntity object) throws SQLException {
+    public void save(UserEntity user) throws SQLException {
+        String sql = "INSERT INTO userentity (login, nickname, phonenumber, passwordhash, salt, email) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getNickname());
+            statement.setString(3, user.getPhoneNumber());
+            statement.setBytes(4, user.getPasswordHash());
+            statement.setBytes(5, user.getSalt());
+            statement.setString(6, user.getEmail());
 
+            statement.executeUpdate();
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    user.setId(generatedKeys.getLong(1));
+                }
+            }
+        }
     }
 }
