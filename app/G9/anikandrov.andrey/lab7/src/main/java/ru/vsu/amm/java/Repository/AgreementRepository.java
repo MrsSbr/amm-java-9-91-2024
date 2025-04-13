@@ -24,7 +24,7 @@ public class AgreementRepository implements DatabaseRepository<AgreementEntity> 
 
     @Override
     public Optional<AgreementEntity> findById(Long id) throws SQLException {
-        final String query = "SELECT agreementID, userID, objectID, timeStart, timeEnd, sumPrice FROM AgreementTable WHERE agreementID = ?";
+        final String query = "SELECT agreement_id, user_id, object_id, time_start, time_end, sum_price FROM Agreement_Table WHERE agreement_id = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -36,12 +36,12 @@ public class AgreementRepository implements DatabaseRepository<AgreementEntity> 
 
         if (resultSet.next()) {
             return Optional.of(new AgreementEntity(
-                    resultSet.getLong("agreementID"),
-                    resultSet.getLong("userID"),
-                    resultSet.getLong("objectID"),
-                    resultSet.getDate("timeStart").toLocalDate(),
-                    resultSet.getDate("timeEnd").toLocalDate(),
-                    resultSet.getInt("sumPrice")
+                    resultSet.getLong("agreement_ID"),
+                    resultSet.getLong("user_id"),
+                    resultSet.getLong("object_id"),
+                    resultSet.getDate("time_start").toLocalDate(),
+                    resultSet.getDate("time_end").toLocalDate(),
+                    resultSet.getInt("sum_price")
             ));
         }
 
@@ -50,7 +50,7 @@ public class AgreementRepository implements DatabaseRepository<AgreementEntity> 
 
     @Override
     public List<AgreementEntity> findAll() throws SQLException {
-        final String query = "SELECT agreementID, userID, objectID, timeStart, timeEnd, sumPrice FROM AgreementTable";
+        final String query = "SELECT agreement_id, user_id, object_id, time_start, time_end, sum_price FROM Agreement_Table";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -59,12 +59,12 @@ public class AgreementRepository implements DatabaseRepository<AgreementEntity> 
         List<AgreementEntity> agreements = new ArrayList<>();
         while (resultSet.next()) {
             agreements.add(new AgreementEntity(
-                    resultSet.getLong("agreementID"),
-                    resultSet.getLong("userID"),
-                    resultSet.getLong("objectID"),
-                    resultSet.getDate("timeStart").toLocalDate(),
-                    resultSet.getDate("timeEnd").toLocalDate(),
-                    resultSet.getInt("sumPrice")
+                    resultSet.getLong("agreement_id"),
+                    resultSet.getLong("user_id"),
+                    resultSet.getLong("object_id"),
+                    resultSet.getDate("time_start").toLocalDate(),
+                    resultSet.getDate("time_end").toLocalDate(),
+                    resultSet.getInt("sum_price")
             ));
         }
 
@@ -73,7 +73,7 @@ public class AgreementRepository implements DatabaseRepository<AgreementEntity> 
 
     @Override
     public void save(AgreementEntity entity) throws SQLException {
-        final String query = "INSERT INTO AgreementTable (userID, objectID, timeStart, timeEnd, sumPrice) VALUES (?, ?, ?, ?, ?)";
+        final String query = "INSERT INTO agreement_table (user_id, object_id, time_start, time_end, sum_price) VALUES (?, ?, ?, ?, ?)";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -89,7 +89,7 @@ public class AgreementRepository implements DatabaseRepository<AgreementEntity> 
 
     @Override
     public void delete(AgreementEntity entity) throws SQLException {
-        final String query = "DELETE FROM AgreementTable WHERE agreementID = ?";
+        final String query = "DELETE FROM agreement_table WHERE agreement_id = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -100,7 +100,7 @@ public class AgreementRepository implements DatabaseRepository<AgreementEntity> 
 
     @Override
     public void update(AgreementEntity entity) throws SQLException {
-        final String query = "UPDATE AgreementTable SET userID = ?, objectID = ?, timeStart = ?, timeEnd = ?, sumPrice = ? WHERE agreementID = ?";
+        final String query = "UPDATE agreement_table SET user_id = ?, object_id = ?, time_start = ?, time_end = ?, sum_price = ? WHERE agreement_id = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
