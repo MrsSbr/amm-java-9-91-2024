@@ -2,7 +2,6 @@ package ru.vsu.amm.java.Repository;
 
 import ru.vsu.amm.java.Configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.Entities.AgreementEntity;
-import ru.vsu.amm.java.Entities.UserEntity;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
