@@ -22,8 +22,8 @@ dependencies {
     implementation("javax.servlet:jstl:1.2")
     implementation("org.postgresql:postgresql:42.7.3")
     implementation("org.mindrot:jbcrypt:0.4")
-    compileOnly("org.projectlombok:lombok:1.18.20")
-    annotationProcessor("org.projectlombok:lombok:1.18.20")
+    compileOnly("org.projectlombok:lombok:1.18.30")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
 }
 
 tasks.test {

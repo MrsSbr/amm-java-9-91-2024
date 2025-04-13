@@ -104,7 +104,7 @@ public class UserRepository implements Repository<UserEntity> {
 
     @Override
     public void save(UserEntity user) throws SQLException {
-        String sql = "INSERT INTO userentity (login, nickname, phonenumber, passwordhash, salt, email) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO public.userentity (login, nickname, phonenumber, passwordhash, salt, email) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getLogin());

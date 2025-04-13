@@ -15,11 +15,11 @@ import java.util.logging.Logger;
 
 public class AuthenticationService {
     private static final Logger LOGGER = Logger.getLogger(AuthenticationService.class.getName());
-    private final UserRepository userRepository;
+    private final UserRepository userRepository = new UserRepository(DatabaseAccess.getDataSource());;
 
     public AuthenticationService() throws IOException {
         LOGGER.log(Level.INFO, "Initializing Authentication Service");
-        userRepository = new UserRepository(DatabaseAccess.getDataSource());
+        //userRepository = new UserRepository(DatabaseAccess.getDataSource());
         LOGGER.log(Level.INFO, "Authentication Service successfully initialized");
     }
 
@@ -44,6 +44,7 @@ public class AuthenticationService {
         LOGGER.log(Level.INFO, "Attempting to register");
         try {
             UserEntity authUser = userRepository.findByLogin(login);
+            //UserEntity authUser = null;
             if (authUser == null) {
                 PasswordHash hash = new PasswordHash();
                 byte[][] passHashAndSalt = hash.encrypt(password);
