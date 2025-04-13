@@ -291,6 +291,7 @@ student ("safonova.nastia", G9){
     lab(4)
     lab(3)
     lab(2)
+    lab(7)
 }
 
 student ("semenov.elisey", G9){

@@ -1,3 +1,7 @@
+package ru.vsu.amm.java.Entities;
+
+import java.time.LocalDate;
+
 public class Incident {
     private long idIncident;
     private long emplId;
