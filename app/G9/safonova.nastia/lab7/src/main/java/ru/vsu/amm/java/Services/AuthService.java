@@ -17,6 +17,8 @@ public class AuthService {
     }
 
     public void login(String login, String password) {
+        validateCredentials(login, password);
+
         try {
             Employee empl = employeeRepository.findByLogin(login)
                     .orElseThrow(

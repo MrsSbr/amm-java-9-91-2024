@@ -25,11 +25,10 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        AuthService authService = new AuthService();
         try {
-            System.out.println(login + " " + password);
+            AuthService authService = new AuthService();
             authService.login(login, password);
-            System.out.println(" ! ");
+
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", login);
             resp.sendRedirect("/mainPage.jsp");

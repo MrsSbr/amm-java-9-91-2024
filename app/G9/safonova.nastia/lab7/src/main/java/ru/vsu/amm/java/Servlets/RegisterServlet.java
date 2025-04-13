@@ -25,9 +25,8 @@ public class RegisterServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        AuthService authService = new AuthService();
-
         try {
+            AuthService authService = new AuthService();
             authService.register(login, password);
 
             HttpSession httpSession = req.getSession();

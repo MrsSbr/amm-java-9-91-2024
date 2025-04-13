@@ -1,12 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Пользователь
-  Date: 13.04.2025
-  Time: 18:21
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -58,7 +50,6 @@
         }
 
         .btn {
-            background-color: #8fbc8f;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -66,11 +57,20 @@
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
-            margin: 10px 2px;
+            margin: 5px 0;
             cursor: pointer;
             border-radius: 20px;
             transition: background-color 0.3s;
             width: 100%;
+            box-sizing: border-box;
+        }
+
+        .btn-login {
+            background-color: #8fbc8f;
+        }
+
+        .btn-register {
+            background-color: #8fbc8f;
         }
 
         .error {
@@ -98,8 +98,10 @@
             <input type="password" id="password" name="password" required>
         </div>
 
-        <button type="submit" class="btn">Войти</button>
+        <button type="submit" class="btn btn-login">Войти</button>
     </form>
+
+    <a href="register.jsp" class="btn btn-register">Регистрация</a>
 </div>
 </body>
 </html>
