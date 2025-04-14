@@ -89,7 +89,7 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
         final String query = "INSERT INTO User_Table (User_Name, User_Password, User_Role, Phone, Birth_Date) VALUES (?, ?, ?, ?, ?)";
 
         Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
         preparedStatement.setString(1, entity.getUserName());
         preparedStatement.setString(2, entity.getUserPassword());
@@ -113,6 +113,14 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
         }
 
         preparedStatement.execute();
+
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                entity.setUserID(generatedKeys.getLong(1));
+            } else {
+                throw new SQLException("Save Error - ID error");
+            }
+        }
     }
 
     @Override
