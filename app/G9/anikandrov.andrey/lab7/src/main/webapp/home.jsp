@@ -11,6 +11,7 @@
             align-items: center;
         }
         .home-container {
+            margin-top: 50px;
             border: 1px solid #4682b4;
             border-radius: 5px;
             padding: 20px;

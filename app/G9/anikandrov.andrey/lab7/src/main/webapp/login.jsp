@@ -11,6 +11,7 @@
             align-items: center;
         }
         .login-container {
+            margin-top: 50px;
             border: 1px solid #4682b4;
             border-radius: 5px;
             padding: 20px;
@@ -46,7 +47,6 @@
     </style>
 </head>
 <body>
-<img src="logo.png" alt="Логотип" width="200">
 
 <div class="login-container">
     <h2>Вход</h2>
