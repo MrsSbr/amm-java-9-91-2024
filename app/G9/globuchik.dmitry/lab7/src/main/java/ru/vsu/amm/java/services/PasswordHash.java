@@ -8,7 +8,8 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
 public class PasswordHash {
-    public PasswordHash() {}
+    public PasswordHash() {
+    }
 
     public final byte[][] encrypt(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SecureRandom random = new SecureRandom();

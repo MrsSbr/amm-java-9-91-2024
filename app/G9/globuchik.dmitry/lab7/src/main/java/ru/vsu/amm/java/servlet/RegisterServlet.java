@@ -17,7 +17,7 @@ import java.io.IOException;
 public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/register.jsp").forward(req,resp);
+        getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class RegisterServlet extends HttpServlet {
         String nickname = req.getParameter("nickname");
         String phonenumber = req.getParameter("phonenumber");
 
-        AuthenticationService service = new AuthenticationService();
+        AuthenticationService service = new AuthenticationService();  //TODO EXCEPTION HANDLER + REDIRECT TO HOME + ADD ALL ACHIEVEMENTS TO earnedachievement of this user
         service.register(login, password, email, nickname, phonenumber);
 
         HttpSession session = req.getSession();

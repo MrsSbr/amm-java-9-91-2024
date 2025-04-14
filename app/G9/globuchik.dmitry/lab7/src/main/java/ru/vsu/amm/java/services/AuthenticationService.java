@@ -15,11 +15,11 @@ import java.util.logging.Logger;
 
 public class AuthenticationService {
     private static final Logger LOGGER = Logger.getLogger(AuthenticationService.class.getName());
-    private final UserRepository userRepository = new UserRepository(DatabaseAccess.getDataSource());;
+    private final UserRepository userRepository = new UserRepository(DatabaseAccess.getDataSource());
+    ;
 
     public AuthenticationService() throws IOException {
         LOGGER.log(Level.INFO, "Initializing Authentication Service");
-        //userRepository = new UserRepository(DatabaseAccess.getDataSource());
         LOGGER.log(Level.INFO, "Authentication Service successfully initialized");
     }
 

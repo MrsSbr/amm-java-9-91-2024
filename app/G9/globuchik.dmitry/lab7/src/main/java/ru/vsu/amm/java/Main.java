@@ -11,9 +11,7 @@ import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) throws IOException, SQLException {
-        System.out.println("Hello World!");
         Connection con = DatabaseAccess.getDataSource().getConnection();
-        System.out.println(con.getCatalog());
         final String sql = "SELECT table_name FROM information_schema.tables WHERE table_schema='public'";
 
         try (PreparedStatement statement = con.prepareStatement(sql);
