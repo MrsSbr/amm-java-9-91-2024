@@ -28,7 +28,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
-public class UserRepositoryTest {
+public class UserRepositoryJUTest {
 
     private UserRepository userRepository;
 

@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
 
-public class AuthServiceTest {
+public class AuthServiceJUTest {
 
     private AuthService authService;
     private UserRepository userRepository;

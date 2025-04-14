@@ -20,8 +20,8 @@ CREATE TABLE RentalObject_Table
 CREATE TABLE Agreement_Table
 (
     Agreement_ID BIGSERIAL PRIMARY KEY,
-    User_ID      BIGINT REFERENCES User_Table (User_ID),
-    Object_ID    BIGINT REFERENCES RentalObject_Table (Object_ID),
+    User_ID      BIGINT REFERENCES User_Table (User_ID) ON DELETE CASCADE,
+    Object_ID    BIGINT REFERENCES RentalObject_Table (Object_ID) ON DELETE CASCADE,
     Time_Start   DATE,
     Time_End     DATE,
     Sum_Price    INT -- sum price in rubles
