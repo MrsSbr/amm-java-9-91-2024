@@ -1,4 +1,5 @@
 package ru.vsu.amm.java.Entities;
+
 import ru.vsu.amm.java.Enums.Roles;
 
 import java.time.LocalDate;
@@ -12,7 +13,8 @@ public class UserEntity {
     private LocalDate birthDate;
 
 
-    public UserEntity() {}
+    public UserEntity() {
+    }
 
     public UserEntity(String userName, String userPassword) {
         this.userName = userName;

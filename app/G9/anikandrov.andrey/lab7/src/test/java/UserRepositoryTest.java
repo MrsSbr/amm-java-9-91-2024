@@ -118,10 +118,7 @@ public class UserRepositoryTest {
         when(resultSet.getString("User_Password")).thenReturn("password1", "password2");
         when(resultSet.getString("User_Role")).thenReturn("GUEST", "ADMIN");
         when(resultSet.getString("Phone")).thenReturn("123", "456");
-        when(resultSet.getDate("Birth_Date")).thenReturn(
-                Date.valueOf(LocalDate.of(1990, 1, 1)),
-                Date.valueOf(LocalDate.of(1995, 1, 1))
-        );
+        when(resultSet.getDate("Birth_Date")).thenReturn(Date.valueOf(LocalDate.of(1990, 1, 1)), Date.valueOf(LocalDate.of(1995, 1, 1)));
 
         List<UserEntity> users = userRepository.findAll();
 

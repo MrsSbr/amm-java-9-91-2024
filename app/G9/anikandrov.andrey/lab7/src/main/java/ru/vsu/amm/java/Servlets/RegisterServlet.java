@@ -2,7 +2,6 @@ package ru.vsu.amm.java.Servlets;
 
 import ru.vsu.amm.java.Exception.AlreadyExistException;
 import ru.vsu.amm.java.Exception.DatabaseException;
-import ru.vsu.amm.java.Exception.NotFoundException;
 import ru.vsu.amm.java.Services.AuthService;
 
 import javax.servlet.ServletException;
