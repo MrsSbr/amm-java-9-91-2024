@@ -93,7 +93,7 @@ public class BoardGameRepository implements Repository<BoardGame> {
         List<BoardGame> boardGames = new ArrayList<>();
         final String query = String.format("""
                 SELECT Board_Game_Id, "Name", Price, Genre, Min_Age, Publisher, Description
-                FROM BoardGame WHERE %s LIKE ?
+                FROM BoardGame WHERE %s ILIKE ?
                 """, field);
         try (var connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);

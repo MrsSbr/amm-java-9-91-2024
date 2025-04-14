@@ -150,7 +150,6 @@
     <c:otherwise>
         <table>
             <tr>
-                <th>ID</th>
                 <th>Название</th>
                 <th>Цена (руб)</th>
                 <th>Жанр</th>
@@ -160,7 +159,6 @@
             </tr>
             <c:forEach items="${games}" var="game">
                 <tr>
-                    <td>${game.boardGameId}</td>
                     <td>${game.name}</td>
                     <td>${game.price}</td>
                     <td>${game.genre}</td>
