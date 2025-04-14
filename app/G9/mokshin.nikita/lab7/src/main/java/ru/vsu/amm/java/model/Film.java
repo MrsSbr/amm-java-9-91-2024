@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.model;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 public class Film {
     private Long id;
     private String title;
