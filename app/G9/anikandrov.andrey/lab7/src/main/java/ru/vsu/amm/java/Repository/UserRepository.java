@@ -20,8 +20,12 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
 
     private final DataSource dataSource;
 
+    public UserRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     public UserRepository() {
-        dataSource = DatabaseConfiguration.getDataSource();
+        this.dataSource = DatabaseConfiguration.getDataSource();
     }
 
     @Override
@@ -38,13 +42,16 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
 
         if (resultSet.next()) {
             Roles role = Roles.valueOf(resultSet.getString("User_Role"));
+            Date birthDate = resultSet.getDate("Birth_Date");
+            LocalDate localBirthDate = (birthDate != null) ? birthDate.toLocalDate() : null;
+
             return Optional.of(new UserEntity(
                     resultSet.getLong("User_ID"),
                     resultSet.getString("User_Name"),
                     resultSet.getString("User_Password"),
                     role,
                     resultSet.getString("Phone"),
-                    resultSet.getDate("Birth_Date").toLocalDate()
+                    localBirthDate
             ));
         }
 
@@ -114,9 +121,7 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         preparedStatement.setString(1, entity.getUserName());
-        System.out.println(entity.getUserName());
         preparedStatement.setString(2, entity.getUserPassword());
-        System.out.println(entity.getUserPassword());
 
         if (entity.getUserRole() == null) {
             preparedStatement.setNull(3, Types.VARCHAR);
