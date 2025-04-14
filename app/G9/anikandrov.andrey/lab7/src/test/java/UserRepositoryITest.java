@@ -41,13 +41,11 @@ public class UserRepositoryITest {
 
     @AfterEach
     void cleanup() throws SQLException {
-        userRepository.findAll().forEach(user -> {
-            try {
-                userRepository.delete(user);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        });
+        if (testUser.getUserID() != null) {
+            UserEntity userToDelete = new UserEntity();
+            userToDelete.setUserID(testUser.getUserID());
+            userRepository.delete(userToDelete);
+        }
     }
 
     @Test
