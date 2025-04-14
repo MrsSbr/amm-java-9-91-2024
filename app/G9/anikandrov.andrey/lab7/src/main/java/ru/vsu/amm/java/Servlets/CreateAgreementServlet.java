@@ -32,6 +32,18 @@ public class CreateAgreementServlet extends HttpServlet {
             LocalDate startDate = LocalDate.parse(request.getParameter("startDate"));
             LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
 
+            if (startDate.isAfter(endDate)) {
+                session.setAttribute("errorMessage", "Дата начала не может быть позже даты окончания!");
+                response.sendRedirect(request.getContextPath() + "/rent");
+                return;
+            }
+
+            if (startDate.isBefore(LocalDate.now())) {
+                session.setAttribute("errorMessage", "Ошибка: Дата начала не может быть в прошлом!");
+                response.sendRedirect(request.getContextPath() + "/rent");
+                return;
+            }
+
             UserRepository userRepository = new UserRepository();
             RentalObjectRepository rentalObjectRepository = new RentalObjectRepository();
             AgreementRepository agreementRepository = new AgreementRepository();
@@ -58,8 +70,10 @@ public class CreateAgreementServlet extends HttpServlet {
 
             response.sendRedirect(request.getContextPath() + "/myrent");
 
-        } catch (SQLException | NumberFormatException e) {
-            throw new ServletException("Error creating agreement", e);
+        } catch (Exception e) {
+            session.setAttribute("errorMessage", "Ошибка при создании договора: " + e.getMessage());
+            response.sendRedirect(request.getContextPath() + "/rent");
         }
+
     }
 }

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <title>Аренда</title>
@@ -10,11 +11,25 @@
         div { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; }
         button { background: #4682b4; color: white; border: none; padding: 5px 10px; }
         input { margin: 5px 0; }
+        .error {
+            color: red;
+            font-weight: bold;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid red;
+            background-color: #ffeeee;
+        }
     </style>
 </head>
 <body>
 <h1>Аренда объектов</h1>
-<a href="/home"><button>На главную</button></a>
+<a href="${pageContext.request.contextPath}/home"><button>На главную</button></a>
+
+<%-- Display error message from session --%>
+<c:if test="${not empty sessionScope.errorMessage}">
+    <div class="error">${sessionScope.errorMessage}</div>
+    <c:remove var="errorMessage" scope="session"/>
+</c:if>
 
 <section>
     <h2>Предметы</h2>

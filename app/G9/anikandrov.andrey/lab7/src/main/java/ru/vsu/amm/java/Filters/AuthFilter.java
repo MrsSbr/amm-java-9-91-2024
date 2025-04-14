@@ -23,11 +23,12 @@ public class AuthFilter implements Filter {
         boolean loggedIn = session != null && session.getAttribute("user") != null;
 
         String loginUrl = req.getContextPath() + "/login";
-        String registerUrl = req.getContextPath() + "/reg";
+        String registerUrl = req.getContextPath() + "/register";
 
         boolean isLoginPage = req.getRequestURI().equals(loginUrl)
                 || req.getRequestURI().equals(loginUrl + ".jsp");
-        boolean isRegisterPage = req.getRequestURI().equals(registerUrl);
+        boolean isRegisterPage = req.getRequestURI().equals(registerUrl)
+                || req.getRequestURI().equals(registerUrl + ".jsp");
 
         if (isLoginPage || isRegisterPage || loggedIn) {
             chain.doFilter(req, resp);
