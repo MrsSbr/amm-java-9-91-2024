@@ -46,24 +46,9 @@ public class BoardGamesServiceImpl implements BoardGamesService {
     }
 
     @Override
-    public List<BoardGame> getBoardGameByField(String field, String value) throws SQLException, EntityNotFoundException {
+    public List<BoardGame> getBoardGameByField(String field, String value) throws SQLException {
         return boardGameRepository.findBy(field, value);
 
-    }
-
-    @Override
-    public List<BoardGame> getBoardGameByNamePart(String namePart) throws SQLException {
-        return boardGameRepository.findBy("\"Name\"", namePart);
-    }
-
-    @Override
-    public List<BoardGame> getBoardGameByGenrePart(String genrePart) throws SQLException {
-        return boardGameRepository.findBy("genre", genrePart);
-    }
-
-    @Override
-    public List<BoardGame> getBoardGameByPublisherPart(String publisherPart) throws SQLException {
-        return boardGameRepository.findBy("publisher", publisherPart);
     }
 
     @Override

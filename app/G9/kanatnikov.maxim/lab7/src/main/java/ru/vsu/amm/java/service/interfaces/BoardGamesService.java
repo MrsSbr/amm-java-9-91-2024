@@ -11,10 +11,7 @@ public interface BoardGamesService {
     List<BoardGame> getAllBoardGames() throws SQLException;
     BoardGame getBoardGameById(Long id) throws SQLException, EntityNotFoundException;
     BoardGame getBoardGameByName(String name) throws SQLException, EntityNotFoundException;
-    List<BoardGame> getBoardGameByField(String field, String value) throws SQLException, EntityNotFoundException;
-    List<BoardGame> getBoardGameByNamePart(String namePart) throws SQLException;
-    List<BoardGame> getBoardGameByGenrePart(String genrePart) throws SQLException;
-    List<BoardGame> getBoardGameByPublisherPart(String publisherPart) throws SQLException;
+    List<BoardGame> getBoardGameByField(String field, String value) throws SQLException;
     List<BoardGame> getBoardGameByPriceRange(int minPrice, int maxPrice) throws SQLException;
     List<BoardGame> getBoardGameByMinAge(int minAge) throws SQLException;
 }
