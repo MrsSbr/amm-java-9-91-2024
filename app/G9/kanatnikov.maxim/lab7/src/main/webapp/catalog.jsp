@@ -128,7 +128,7 @@
                 <input type="range"
                        class="multi-slider"
                        id="minAge"
-                       name="maxAge"
+                       name="age"
                        min="0"
                        max="18"
                        value="${empty param.maxAge ? 0 : param.maxAge}">
