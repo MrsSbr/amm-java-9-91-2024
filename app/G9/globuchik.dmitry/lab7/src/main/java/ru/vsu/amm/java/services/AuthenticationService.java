@@ -28,6 +28,7 @@ public class AuthenticationService {
         try {
             UserEntity authUser = userRepository.findByLogin(login);
             if (authUser == null) {
+                LOGGER.log(Level.SEVERE, "User not found");
                 throw new AuthenticationException("Login does not exist");
             }
             LOGGER.log(Level.INFO, "Logged successfully");

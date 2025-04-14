@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @AllArgsConstructor
@@ -26,5 +27,8 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         AuthenticationService service = new AuthenticationService();
+        service.login(login, password);
+        HttpSession session = req.getSession();
+        session.setAttribute("login", login);
     }
 }

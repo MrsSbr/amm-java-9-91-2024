@@ -36,6 +36,9 @@
     <p>
         <input type="submit" value="ОК">
     </p>
+    <p>
+        Есть аккаунт? <a href="/laba7/login">Войти</a>
+    </p>
 </form>
 
 <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
