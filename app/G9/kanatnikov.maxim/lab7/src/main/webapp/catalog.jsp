@@ -44,6 +44,7 @@
         }
         tr:hover {
             background-color: #f5f5f5;
+            cursor: pointer;
         }
         .error {
             color: red;
@@ -74,6 +75,14 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 25px;
+        }
+        .history-link {
+            margin: 20px 0;
+            display: inline-block;
+            padding: 10px;
+            background: #2196F3;
+            color: white;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -143,6 +152,8 @@
     </c:if>
 </div>
 
+<a href="/history" class="history-link">История покупок</a>
+
 <c:choose>
     <c:when test="${empty games}">
         <p>Игр по вашему запросу не найдено</p>
@@ -158,7 +169,7 @@
                 <th>Описание</th>
             </tr>
             <c:forEach items="${games}" var="game">
-                <tr>
+                <tr onclick="confirmPurchase('${game.boardGameId}', '${game.price}')">
                     <td>${game.name}</td>
                     <td>${game.price}</td>
                     <td>${game.genre}</td>
@@ -234,6 +245,25 @@
         };
 
         ageValue.textContent = formatAge(ageSlider.value);
+    }
+
+    function confirmPurchase(gameId, price) {
+        if (confirm('Купить игру за ' + price + ' руб.?')) {
+            fetch('/purchase', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'gameId=' + gameId + '&price=' + price
+            }).then(response => {
+                if (response.ok) {
+                    alert('Покупка успешно совершена!');
+                    location.reload();
+                } else {
+                    alert('Ошибка при покупке');
+                }
+            });
+        }
     }
 </script>
 </body>

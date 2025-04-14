@@ -28,7 +28,7 @@ public class BoardGamesServiceImpl implements BoardGamesService {
     public BoardGame getBoardGameById(Long id) throws SQLException, EntityNotFoundException {
         var boardGame = boardGameRepository.findById(id);
         if (boardGame.isEmpty()) {
-            logger.log(Level.SEVERE, "Board game with id " + id + " not found");
+            logger.log(Level.SEVERE, "Board game with orderNumber " + id + " not found");
             throw new EntityNotFoundException("Board game not found");
         }
         return boardGame.get();

@@ -1,9 +1,13 @@
 package ru.vsu.amm.java.repositories;
 
 import ru.vsu.amm.java.configuration.DbConfiguration;
+import ru.vsu.amm.java.entities.BoardGame;
 import ru.vsu.amm.java.entities.PurchaseHistory;
+import ru.vsu.amm.java.enums.Genre;
+import ru.vsu.amm.java.responces.PurchaseHistoryResponce;
 
 import javax.sql.DataSource;
+import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -75,6 +79,45 @@ public class PurchaseHistoryRepository implements Repository<PurchaseHistory> {
         }
 
         return purchaseHistories;
+    }
+
+    public List<PurchaseHistoryResponce> findByUserIdWithGames(Long userId) throws SQLException {
+        List<PurchaseHistoryResponce> responses = new ArrayList<>();
+        String query = """
+        SELECT ph.order_number, ph.payment, bg.* 
+        FROM PurchaseHistory ph
+        JOIN BoardGame bg ON ph.board_game_id = bg.board_game_id
+        WHERE ph.user_id = ?
+        """;
+
+        try (var connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                BoardGame game = new BoardGame(
+                        resultSet.getLong("board_game_id"),
+                        resultSet.getString("name"),
+                        resultSet.getInt("price"),
+                        Genre.valueOf(resultSet.getString("genre")),
+                        resultSet.getInt("min_age"),
+                        resultSet.getString("publisher"),
+                        resultSet.getString("description")
+                );
+
+                responses.add(new PurchaseHistoryResponce(
+                        resultSet.getLong("order_number"),
+                        resultSet.getInt("payment"),
+                        game
+                ));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error fetching purchases", e);
+            throw new SQLException(e);
+        }
+
+        return responses;
     }
 
     @Override
