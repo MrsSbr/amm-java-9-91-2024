@@ -1,15 +1,13 @@
-import org.junit.jupiter.api.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.Entities.UserEntity;
 import ru.vsu.amm.java.Enums.Roles;
 import ru.vsu.amm.java.Repository.UserRepository;
 import ru.vsu.amm.java.Configuration.DatabaseConfiguration;
 
-import javax.sql.DataSource;
-import java.sql.*;
-
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
