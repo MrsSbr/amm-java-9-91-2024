@@ -103,7 +103,7 @@ public class BoardGameRepository implements Repository<BoardGame> {
 
             ResultSet resultSet = preparedStatement.getResultSet();
 
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 Genre genre = Genre.valueOf(resultSet.getString("Genre"));
                 boardGames.add(new BoardGame(
                         resultSet.getLong("Board_Game_Id"),
