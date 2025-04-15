@@ -56,7 +56,7 @@ public class AuthService {
                 throw new AlreadyExistException("User With Such UserName Already Exist");
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Database error during registration: {0}", e.getMessage());
+            logger.log(Level.SEVERE, "Db error during registration: {0}", e.getMessage());
             throw new DatabaseException(e.getMessage());
         }
     }

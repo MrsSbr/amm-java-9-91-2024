@@ -7,10 +7,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebFilter(filterName = "AuthFilter", urlPatterns = "/*")
 public class AuthFilter implements Filter {
 
+    private static final Logger logger = Logger.getLogger(AuthFilter.class.getName());
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -31,8 +34,10 @@ public class AuthFilter implements Filter {
                 || req.getRequestURI().equals(registerUrl + ".jsp");
 
         if (isLoginPage || isRegisterPage || loggedIn) {
+            logger.log(Level.FINE, "Allowing access to: " + req.getRequestURI());
             chain.doFilter(req, resp);
         } else {
+            logger.log(Level.INFO, "Redirecting unauthorized request to " + req.getRequestURI() + " to login page");
             resp.sendRedirect(loginUrl);
         }
     }
