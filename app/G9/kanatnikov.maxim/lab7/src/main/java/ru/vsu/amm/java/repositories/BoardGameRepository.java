@@ -22,6 +22,10 @@ public class BoardGameRepository implements Repository<BoardGame> {
         dataSource = DbConfiguration.getDataSource();
     }
 
+    public BoardGameRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Override
     public Optional<BoardGame> findById(Long id) throws SQLException {
         final String query = """
