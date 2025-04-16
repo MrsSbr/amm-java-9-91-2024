@@ -29,7 +29,7 @@ public class SessionRepository implements ParkingRepository<Session> {
     private final DataSource dataSource;
 
     public SessionRepository() {
-        dataSource = DatabaseConfiguration.getDataSource();
+        dataSource = DatabaseConfiguration.getMainDataSource();
     }
 
     @Override
