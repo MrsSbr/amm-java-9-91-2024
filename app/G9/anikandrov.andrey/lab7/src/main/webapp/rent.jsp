@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -25,7 +25,6 @@
 <h1>Аренда объектов</h1>
 <a href="${pageContext.request.contextPath}/home"><button>На главную</button></a>
 
-<%-- Display error message from session --%>
 <c:if test="${not empty sessionScope.errorMessage}">
     <div class="error">${sessionScope.errorMessage}</div>
     <c:remove var="errorMessage" scope="session"/>
