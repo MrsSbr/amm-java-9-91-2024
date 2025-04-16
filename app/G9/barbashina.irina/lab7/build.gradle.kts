@@ -3,7 +3,6 @@ plugins {
     id("war")
 }
 
-
 tasks.war {
     archiveFileName.set("barbashina-irina.war")
     webInf {
@@ -24,19 +23,15 @@ repositories {
 }
 
 dependencies {
-    // Тесты
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
-    // Jakarta EE 9 (Tomcat 10+)
     compileOnly("jakarta.servlet:jakarta.servlet-api:5.0.0")
     implementation("org.apache.tomcat.embed:tomcat-embed-jasper:10.0.27")
 
-    // База данных
     implementation("org.postgresql:postgresql:42.7.3")
     implementation("org.mindrot:jbcrypt:0.4")
 
-    // Lombok
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
 

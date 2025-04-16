@@ -10,16 +10,16 @@ CREATE TABLE Author
 ALTER TABLE Author
 ADD CONSTRAINT pk_author PRIMARY KEY(id_author);
 
-CREATE TABLE Сategory
+CREATE TABLE Category
 (
 	id_category BIGSERIAL,
 	name_category TEXT NOT NULL
 );
 
-ALTER TABLE Сategory
+ALTER TABLE Category
 ADD CONSTRAINT pk_category PRIMARY KEY(id_category);
 
-ALTER TABLE Сategory
+ALTER TABLE Category
 ADD CONSTRAINT unique_name UNIQUE(name_category);
 
 CREATE TABLE Article
@@ -35,7 +35,7 @@ ADD CONSTRAINT pk_article PRIMARY KEY(id_article);
 
 ALTER TABLE Article ADD ref_category BIGINT;
 ALTER TABLE Article
-ADD CONSTRAINT fk_id_category FOREIGN KEY(ref_category) REFERENCES Сategory(id_category);
+ADD CONSTRAINT fk_id_category FOREIGN KEY(ref_category) REFERENCES Category(id_category);
 
 ALTER TABLE Article ADD ref_author BIGINT;
 ALTER TABLE Article

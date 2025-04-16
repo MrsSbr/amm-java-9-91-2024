@@ -1,8 +1,6 @@
 package ru.vsu.amm.java.service.impl;
 
-import ru.vsu.amm.java.entities.Author;
-import ru.vsu.amm.java.entities.Сategory;
-import ru.vsu.amm.java.repository.AuthorRepository;
+import ru.vsu.amm.java.entities.Category;
 import ru.vsu.amm.java.repository.CategoryRepository;
 import ru.vsu.amm.java.service.CategoryService;
 
@@ -22,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Сategory> getAllCategories() {
+    public List<Category> getAllCategories() {
         log.info("Call getAllCategories");
         try {
             return categoryRepository.findAll();
@@ -34,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Сategory getCategoryById(Long id) {
+    public Category getCategoryById(Long id) {
         log.info("Call getCategoryById");
         try {
             return categoryRepository.findById(id).orElseThrow(
@@ -47,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void createCategory(Сategory category) {
+    public void createCategory(Category category) {
         log.info("Call createCategory");
         try {
             categoryRepository.save(category);
@@ -58,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void updateCategory(Сategory category) {
+    public void updateCategory(Category category) {
         log.info("Call updateCategory");
         try {
             categoryRepository.update(category);
@@ -72,7 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategory(Long id) {
         log.info("Call deleteCategory");
         try {
-            Сategory category = getCategoryById(id);
+            Category category = getCategoryById(id);
             categoryRepository.delete(category);
         } catch (RuntimeException e) {
             log.log(Level.SEVERE, "Ошибка при удалении категории", e);

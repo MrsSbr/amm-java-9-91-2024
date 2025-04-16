@@ -1,13 +1,13 @@
 package ru.vsu.amm.java.service;
 
-import ru.vsu.amm.java.entities.Сategory;
+import ru.vsu.amm.java.entities.Category;
 
 import java.util.List;
 
 public interface CategoryService {
-    List<Сategory> getAllCategories();
-    Сategory getCategoryById(Long id);
-    void createCategory(Сategory category);
-    void updateCategory(Сategory category);
+    List<Category> getAllCategories();
+    Category getCategoryById(Long id);
+    void createCategory(Category category);
+    void updateCategory(Category category);
     void deleteCategory(Long id);
 }

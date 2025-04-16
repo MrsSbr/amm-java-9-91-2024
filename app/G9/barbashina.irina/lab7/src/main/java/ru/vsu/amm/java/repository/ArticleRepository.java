@@ -3,7 +3,7 @@ package ru.vsu.amm.java.repository;
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.Article;
 import ru.vsu.amm.java.entities.Author;
-import ru.vsu.amm.java.entities.Сategory;
+import ru.vsu.amm.java.entities.Category;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -21,12 +21,13 @@ public class ArticleRepository implements CrudRepository<Article> {
     @Override
     public Optional<Article> findById(Long id) throws SQLException {
         final String query = "SELECT " +
-                "art.id_article, art.title, art.article_content, art.date_publication," +
-                "c.name_category, aut.surname, aut.name_author, aut.patronymic" +
-                "FROM" +
-                "Article art" +
-                "JOIN Сategory c ON art.ref_category = c.id_category" +
-                "JOIN Author aut ON art.ref_author = aut.id_author" +
+                "art.id_article, art.title, art.article_content, art.date_publication, " +
+                "c.id_category AS category_id, c.name_category AS category_name, " +
+                "aut.id_author AS author_id, aut.surname, aut.name_author, aut.patronymic " +
+                "FROM " +
+                "Article art " +
+                "JOIN Category c ON art.ref_category = c.id_category " +
+                "JOIN Author aut ON art.ref_author = aut.id_author " +
                 "WHERE art.id_article = ?";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -43,11 +44,12 @@ public class ArticleRepository implements CrudRepository<Article> {
     @Override
     public List<Article> findAll() throws SQLException {
         final String query = "SELECT " +
-                "art.id_article, art.title, art.article_content, art.date_publication," +
-                "c.name_category, aut.surname, aut.name_author, aut.patronymic" +
-                "FROM" +
-                "Article art" +
-                "JOIN Сategory c ON art.ref_category = c.id_category" +
+                "art.id_article, art.title, art.article_content, art.date_publication, " +
+                "c.id_category AS category_id, c.name_category AS category_name, " +
+                "aut.id_author AS author_id, aut.surname, aut.name_author, aut.patronymic " +
+                "FROM " +
+                "Article art " +
+                "JOIN Category c ON art.ref_category = c.id_category " +
                 "JOIN Author aut ON art.ref_author = aut.id_author";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -62,17 +64,17 @@ public class ArticleRepository implements CrudRepository<Article> {
     }
 
     private Article mapResultSetToArticle(ResultSet resultSet) throws SQLException {
-        Сategory category = new Сategory(
-                resultSet.getLong("id_category"),
-                resultSet.getString("name_category")
+        Category category = new Category(
+                resultSet.getLong("category_id"),
+                resultSet.getString("category_name")
         );
 
         Author author = new Author(
-                resultSet.getLong("id_author"),
+                resultSet.getLong("author_id"),
                 resultSet.getString("surname"),
                 resultSet.getString("name_author"),
                 resultSet.getString("patronymic"),
-                resultSet.getDate("registration_date")
+                null // registration_date не выбирается
         );
 
         return new Article(
@@ -87,13 +89,14 @@ public class ArticleRepository implements CrudRepository<Article> {
 
     @Override
     public void save(Article entity) throws SQLException {
-        final String query = "INSERT INTO Article(title, article_content, date_publication" +
-                "ref_category, ref_author)" +
+        final String query = "INSERT INTO Article(title, article_content, date_publication, " +
+                "ref_category, ref_author) " +
                 "VALUES(?,?,?,?,?)";
+
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setString(1, entity.getTitle());
-        preparedStatement.setString(2, entity.getСontent());
+        preparedStatement.setString(2, entity.getContent());
         preparedStatement.setDate(3, new java.sql.Date(entity.getDatePublication().getTime()));
         preparedStatement.setLong(4, entity.getCategory().getId());
         preparedStatement.setLong(5, entity.getAuthor().getId());
@@ -110,14 +113,14 @@ public class ArticleRepository implements CrudRepository<Article> {
 
     @Override
     public void update(Article entity) throws SQLException {
-        final String query = "UPDATE Article" +
-                "SET title = ?, article_content = ?, date_publication = ?," +
-                "ref_category = ?, ref_author = ?" +
+        final String query = "UPDATE Article " +
+                "SET title = ?, article_content = ?, date_publication = ?, " +
+                "ref_category = ?, ref_author = ? " +
                 "WHERE id_article = ?";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, entity.getTitle());
-        preparedStatement.setString(2, entity.getСontent());
+        preparedStatement.setString(2, entity.getContent());
         preparedStatement.setDate(3, new java.sql.Date(entity.getDatePublication().getTime()));
         preparedStatement.setLong(4, entity.getCategory().getId());
         preparedStatement.setLong(5, entity.getAuthor().getId());

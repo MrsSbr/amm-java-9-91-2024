@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Сategory {
+public class Category {
     private Long id;
     private String name;
 }

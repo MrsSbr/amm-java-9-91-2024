@@ -12,7 +12,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class Author {
-    private long id;
+    private Long id;
     private String surname;
     private String name;
     private String patronymic;

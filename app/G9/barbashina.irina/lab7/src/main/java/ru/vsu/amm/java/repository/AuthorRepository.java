@@ -19,8 +19,8 @@ public class AuthorRepository implements CrudRepository<Author>{
 
     @Override
     public Optional<Author> findById(Long id) throws SQLException {
-        final String query = "SELECT id_author, surname, name_author, patronymic, registration_date" +
-                "FROM Author" +
+        final String query = "SELECT id_author, surname, name_author, patronymic, registration_date " +
+                "FROM Author " +
                 "WHERE id_author = ?";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -42,7 +42,7 @@ public class AuthorRepository implements CrudRepository<Author>{
 
     @Override
     public List<Author> findAll() throws SQLException {
-        final String query = "SELECT id_author, surname, name_author, patronymic, registration_date" +
+        final String query = "SELECT id_author, surname, name_author, patronymic, registration_date " +
                 "FROM Author";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -64,7 +64,7 @@ public class AuthorRepository implements CrudRepository<Author>{
 
     @Override
     public void save(Author entity) throws SQLException {
-        final String query = "INSERT INTO Author (surname, name_author, patronymic, registration_date)" +
+        final String query = "INSERT INTO Author (surname, name_author, patronymic, registration_date) " +
                 "VALUES (?, ?, ?, ?)";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -84,7 +84,7 @@ public class AuthorRepository implements CrudRepository<Author>{
     @Override
     public void update(Author entity) throws SQLException {
         final String query = "UPDATE Author" +
-                "SET surname = ?, name_author = ?, patronymic = ?, registration_date = ?" +
+                "SET surname = ?, name_author = ?, patronymic = ?, registration_date = ? " +
                 "WHERE id_author = ?";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);

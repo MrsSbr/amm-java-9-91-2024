@@ -14,9 +14,9 @@ import java.util.Date;
 public class Article {
     private Long id;
     private String title;
-    private String сontent;
+    private String content;
     private Date datePublication;
-    private Сategory category;
+    private Category category;
     private Author author;
 
     public void setDatePublication(Date datePublication) {

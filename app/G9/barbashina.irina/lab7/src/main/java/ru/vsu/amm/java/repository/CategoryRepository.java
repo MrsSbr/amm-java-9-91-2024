@@ -1,7 +1,7 @@
 package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
-import ru.vsu.amm.java.entities.Сategory;
+import ru.vsu.amm.java.entities.Category;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CategoryRepository implements CrudRepository<Сategory> {
+public class CategoryRepository implements CrudRepository<Category> {
     private final DataSource dataSource;
 
     public CategoryRepository() {
@@ -17,8 +17,8 @@ public class CategoryRepository implements CrudRepository<Сategory> {
     }
 
     @Override
-    public Optional<Сategory> findById(Long id) throws SQLException {
-        final String query = "SELECT id_category, name_category FROM Сategory WHERE id_category = ?";
+    public Optional<Category> findById(Long id) throws SQLException {
+        final String query = "SELECT id_category, name_category FROM Category WHERE id_category = ?";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setLong(1, id);
@@ -26,7 +26,7 @@ public class CategoryRepository implements CrudRepository<Сategory> {
 
         ResultSet resultSet = preparedStatement.getResultSet();
         if (resultSet.next()) {
-            return Optional.of(new Сategory(
+            return Optional.of(new Category(
                     resultSet.getLong("id_category"),
                     resultSet.getString("name_category")
             ));
@@ -35,16 +35,16 @@ public class CategoryRepository implements CrudRepository<Сategory> {
     }
 
     @Override
-    public List<Сategory> findAll() throws SQLException {
-        final String query = "SELECT id_category, name_category FROM Сategory";
+    public List<Category> findAll() throws SQLException {
+        final String query = "SELECT id_category, name_category FROM Category";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.execute();
 
         ResultSet resultSet = preparedStatement.getResultSet();
-        List<Сategory> categories = new ArrayList<>();
+        List<Category> categories = new ArrayList<>();
         while (resultSet.next()) {
-            categories.add(new Сategory(
+            categories.add(new Category(
                     resultSet.getLong("id_category"),
                     resultSet.getString("name_category")
             ));
@@ -53,8 +53,8 @@ public class CategoryRepository implements CrudRepository<Сategory> {
     }
 
     @Override
-    public void save(Сategory entity) throws SQLException {
-        final String query = "INSERT INTO Сategory (name_category) VALUES (?)";
+    public void save(Category entity) throws SQLException {
+        final String query = "INSERT INTO Category (name_category) VALUES (?)";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setString(1, entity.getName());
@@ -68,8 +68,8 @@ public class CategoryRepository implements CrudRepository<Сategory> {
     }
 
     @Override
-    public void update(Сategory entity) throws SQLException {
-        final String query = "UPDATE Сategory SET name_category = ? WHERE id_category = ?";
+    public void update(Category entity) throws SQLException {
+        final String query = "UPDATE Category SET name_category = ? WHERE id_category = ?";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, entity.getName());
@@ -78,8 +78,8 @@ public class CategoryRepository implements CrudRepository<Сategory> {
     }
 
     @Override
-    public void delete(Сategory entity) throws SQLException {
-        final String query = "DELETE FROM Сategory WHERE id_category = ?";
+    public void delete(Category entity) throws SQLException {
+        final String query = "DELETE FROM Category WHERE id_category = ?";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setLong(1, entity.getId());
