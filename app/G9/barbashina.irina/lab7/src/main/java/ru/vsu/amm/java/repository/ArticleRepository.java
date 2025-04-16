@@ -6,7 +6,12 @@ import ru.vsu.amm.java.entities.Author;
 import ru.vsu.amm.java.entities.Category;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,20 +28,23 @@ public class ArticleRepository implements CrudRepository<Article> {
         final String query = "SELECT " +
                 "art.id_article, art.title, art.article_content, art.date_publication, " +
                 "c.id_category AS category_id, c.name_category AS category_name, " +
-                "aut.id_author AS author_id, aut.surname, aut.name_author, aut.patronymic " +
+                "aut.id_author AS author_id, aut.surname, aut.name_author, aut.patronymic, aut.registration_date " +
                 "FROM " +
                 "Article art " +
                 "JOIN Category c ON art.ref_category = c.id_category " +
                 "JOIN Author aut ON art.ref_author = aut.id_author " +
                 "WHERE art.id_article = ?";
-        Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, id);
-        preparedStatement.execute();
 
-        ResultSet resultSet = preparedStatement.getResultSet();
-        if (resultSet.next()) {
-            return Optional.of(mapResultSetToArticle(resultSet));
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setLong(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Optional.of(mapResultSetToArticle(resultSet));
+                }
+            }
         }
         return Optional.empty();
     }
@@ -46,19 +54,21 @@ public class ArticleRepository implements CrudRepository<Article> {
         final String query = "SELECT " +
                 "art.id_article, art.title, art.article_content, art.date_publication, " +
                 "c.id_category AS category_id, c.name_category AS category_name, " +
-                "aut.id_author AS author_id, aut.surname, aut.name_author, aut.patronymic " +
+                "aut.id_author AS author_id, aut.surname, aut.name_author, aut.patronymic, aut.registration_date " +
                 "FROM " +
                 "Article art " +
                 "JOIN Category c ON art.ref_category = c.id_category " +
                 "JOIN Author aut ON art.ref_author = aut.id_author";
-        Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.execute();
 
-        ResultSet resultSet = preparedStatement.getResultSet();
         List<Article> articles = new ArrayList<>();
-        while (resultSet.next()) {
-            articles.add(mapResultSetToArticle(resultSet));
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                articles.add(mapResultSetToArticle(resultSet));
+            }
         }
         return articles;
     }
@@ -74,14 +84,14 @@ public class ArticleRepository implements CrudRepository<Article> {
                 resultSet.getString("surname"),
                 resultSet.getString("name_author"),
                 resultSet.getString("patronymic"),
-                null // registration_date не выбирается
+                resultSet.getObject("registration_date", LocalDate.class)
         );
 
         return new Article(
                 resultSet.getLong("id_article"),
                 resultSet.getString("title"),
                 resultSet.getString("article_content"),
-                resultSet.getDate("date_publication"),
+                resultSet.getObject("date_publication", LocalDate.class),
                 category,
                 author
         );
@@ -93,22 +103,23 @@ public class ArticleRepository implements CrudRepository<Article> {
                 "ref_category, ref_author) " +
                 "VALUES(?,?,?,?,?)";
 
-        Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        preparedStatement.setString(1, entity.getTitle());
-        preparedStatement.setString(2, entity.getContent());
-        preparedStatement.setDate(3, new java.sql.Date(entity.getDatePublication().getTime()));
-        preparedStatement.setLong(4, entity.getCategory().getId());
-        preparedStatement.setLong(5, entity.getAuthor().getId());
-        preparedStatement.executeUpdate();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-            if (generatedKeys.next()) {
-                entity.setId(generatedKeys.getLong(1));
+            preparedStatement.setString(1, entity.getTitle());
+            preparedStatement.setString(2, entity.getContent());
+            preparedStatement.setObject(3, entity.getDatePublication());
+            preparedStatement.setLong(4, entity.getCategory().getId());
+            preparedStatement.setLong(5, entity.getAuthor().getId());
+
+            preparedStatement.executeUpdate();
+
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    entity.setId(generatedKeys.getLong(1));
+                }
             }
         }
-
-
     }
 
     @Override
@@ -117,23 +128,30 @@ public class ArticleRepository implements CrudRepository<Article> {
                 "SET title = ?, article_content = ?, date_publication = ?, " +
                 "ref_category = ?, ref_author = ? " +
                 "WHERE id_article = ?";
-        Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, entity.getTitle());
-        preparedStatement.setString(2, entity.getContent());
-        preparedStatement.setDate(3, new java.sql.Date(entity.getDatePublication().getTime()));
-        preparedStatement.setLong(4, entity.getCategory().getId());
-        preparedStatement.setLong(5, entity.getAuthor().getId());
-        preparedStatement.setLong(6, entity.getId());
-        preparedStatement.executeUpdate();
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, entity.getTitle());
+            preparedStatement.setString(2, entity.getContent());
+            preparedStatement.setObject(3, entity.getDatePublication());
+            preparedStatement.setLong(4, entity.getCategory().getId());
+            preparedStatement.setLong(5, entity.getAuthor().getId());
+            preparedStatement.setLong(6, entity.getId());
+
+            preparedStatement.executeUpdate();
+        }
     }
 
     @Override
     public void delete(Article entity) throws SQLException {
         final String query = "DELETE FROM Article WHERE id_article = ?";
-        Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, entity.getId());
-        preparedStatement.executeUpdate();
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setLong(1, entity.getId());
+            preparedStatement.executeUpdate();
+        }
     }
 }

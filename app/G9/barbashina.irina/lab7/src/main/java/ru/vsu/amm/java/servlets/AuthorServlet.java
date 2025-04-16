@@ -10,14 +10,14 @@ import ru.vsu.amm.java.service.AuthorService;
 import ru.vsu.amm.java.service.impl.AuthorServiceImpl;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 @WebServlet("/authors")
 public class AuthorServlet extends HttpServlet {
     private final AuthorService authorService = new AuthorServiceImpl();
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -27,7 +27,7 @@ public class AuthorServlet extends HttpServlet {
 
         if ("new".equals(action)) {
             req.setAttribute("author", new Author());
-            req.setAttribute("today", dateFormat.format(new Date()));
+            req.setAttribute("today", LocalDate.now().format(dateFormatter));
             req.getRequestDispatcher("/WEB-INF/author-form.jsp").forward(req, resp);
         }
         else if ("edit".equals(action)) {
@@ -71,7 +71,7 @@ public class AuthorServlet extends HttpServlet {
                 throw new IllegalArgumentException("Фамилия, имя и дата обязательны для заполнения");
             }
 
-            Date registrationDate = dateFormat.parse(dateStr);
+            LocalDate registrationDate = LocalDate.parse(dateStr, dateFormatter);
 
             Author author = new Author();
             if (id != null) {
@@ -89,7 +89,7 @@ public class AuthorServlet extends HttpServlet {
             }
 
             resp.sendRedirect(req.getContextPath() + "/authors");
-        } catch (ParseException e) {
+        } catch (DateTimeParseException e) {
             req.setAttribute("error", "Неверный формат даты. Используйте формат ГГГГ-ММ-ДД");
             forwardToForm(req, resp, action, id);
         } catch (IllegalArgumentException e) {
@@ -108,6 +108,12 @@ public class AuthorServlet extends HttpServlet {
             author.setSurname(req.getParameter("surname"));
             author.setName(req.getParameter("name"));
             author.setPatronymic(req.getParameter("patronymic"));
+            try {
+                author.setRegistrationDate(LocalDate.parse(req.getParameter("registrationDate"), dateFormatter));
+            } catch (DateTimeParseException e) {
+                // Оставляем дату null или устанавливаем текущую дату
+                author.setRegistrationDate(null);
+            }
             req.setAttribute("author", author);
             req.setAttribute("today", req.getParameter("registrationDate"));
             req.getRequestDispatcher("/WEB-INF/author-form.jsp").forward(req, resp);
@@ -117,8 +123,8 @@ public class AuthorServlet extends HttpServlet {
             author.setName(req.getParameter("name"));
             author.setPatronymic(req.getParameter("patronymic"));
             try {
-                author.setRegistrationDate(dateFormat.parse(req.getParameter("registrationDate")));
-            } catch (ParseException e) {
+                author.setRegistrationDate(LocalDate.parse(req.getParameter("registrationDate"), dateFormatter));
+            } catch (DateTimeParseException e) {
 
             }
             req.setAttribute("author", author);

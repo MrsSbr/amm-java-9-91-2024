@@ -1,3 +1,4 @@
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -116,7 +117,7 @@
                 <td>${author.surname}</td>
                 <td>${author.name}</td>
                 <td>${author.patronymic}</td>
-                <td><fmt:formatDate value="${author.registrationDate}" pattern="dd.MM.yyyy" /></td>
+                <td>${fn:replace(author.registrationDate, '-', '.')}</td>
                 <td class="action-buttons">
                     <a href="authors?action=edit&id=${author.id}" class="edit-btn">Редактировать</a>
                     <a href="authors?action=delete&id=${author.id}" class="delete-btn">Удалить</a>

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,16 +15,15 @@ public class Article {
     private Long id;
     private String title;
     private String content;
-    private Date datePublication;
+    private LocalDate datePublication;
     private Category category;
     private Author author;
 
-    public void setDatePublication(Date datePublication) {
-        Date currentDate = new Date();
-        if (datePublication != null && datePublication.after(currentDate)) {
+    public void setDatePublication(LocalDate datePublication) {
+        LocalDate currentDate = LocalDate.now();
+        if (datePublication != null && datePublication.isAfter(currentDate)) {
             throw new IllegalArgumentException("Publication date cannot be in the future");
         }
         this.datePublication = datePublication;
     }
-
 }

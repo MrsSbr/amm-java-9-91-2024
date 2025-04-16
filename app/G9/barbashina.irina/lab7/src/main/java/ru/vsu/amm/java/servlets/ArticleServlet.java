@@ -16,7 +16,8 @@ import ru.vsu.amm.java.service.impl.AuthorServiceImpl;
 import ru.vsu.amm.java.service.impl.CategoryServiceImpl;
 
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @WebServlet("/articles")
@@ -109,7 +110,7 @@ public class ArticleServlet extends HttpServlet {
 
             article.setCategory(category);
             article.setAuthor(author);
-            article.setDatePublication(new Date());
+            article.setDatePublication(LocalDate.now());
 
             if ("insert".equals(action)) {
                 articleService.createArticle(article);
