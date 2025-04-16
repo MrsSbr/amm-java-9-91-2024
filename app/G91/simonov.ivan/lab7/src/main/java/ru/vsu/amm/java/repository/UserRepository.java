@@ -32,6 +32,10 @@ public class UserRepository implements ParkingRepository<User> {
         dataSource = DatabaseConfiguration.getMainDataSource();
     }
 
+    public UserRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     public Optional<User> getByLoginAndPassword(String login, String password) {
 
         String sql = """
