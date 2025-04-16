@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Optional;
 
 public class UserRepositoryIntegrationTest {
@@ -54,12 +55,59 @@ public class UserRepositoryIntegrationTest {
 
     }
 
+    private List<User> makeFewUsers() {
+
+        return List.of(
+                new User(
+                        "I",
+                        "I",
+                        "I",
+                        "i@i.ii",
+                        "1",
+                        Role.USER),
+
+                new User(
+                        "K",
+                        "K",
+                        "K",
+                        "k@k.kk",
+                        "2",
+                        Role.ADMIN),
+
+                new User(
+                        "U",
+                        "U",
+                        "U",
+                        "u@u.uu",
+                        "3",
+                        Role.EMPLOYEE)
+
+        );
+
+    }
+
     private int saveUser(User user) {
 
         int id = userRepository.save(user);
         Assertions.assertTrue(id > 0, "User saving failed!");
 
+        user.setUserId(id);
+
         return id;
+
+    }
+
+    @Test
+    public void testSaveAndGetByLoginAndPassword() {
+
+        User user = makeUser();
+
+        saveUser(user);
+
+        Optional<User> userById = userRepository.getByLoginAndPassword(user.getLogin(), user.getPassword());
+        Assertions.assertTrue(userById.isPresent(), "User wasn't found after saving!");
+
+        Assertions.assertEquals(userById.get(), user, "User was found incorrectly!");
 
     }
 
@@ -69,7 +117,6 @@ public class UserRepositoryIntegrationTest {
         User user = makeUser();
 
         int id = saveUser(user);
-        user.setUserId(id);
 
         Optional<User> userById = userRepository.getById(id);
         Assertions.assertTrue(userById.isPresent(), "User wasn't found after saving!");
@@ -79,12 +126,33 @@ public class UserRepositoryIntegrationTest {
     }
 
     @Test
+    public void testSaveAndGetAll() {
+
+        List<User> users = makeFewUsers();
+
+        for (User user : users) {
+
+            int id = saveUser(user);
+            user.setUserId(id);
+
+        }
+
+        List<User> allUsers = userRepository.getAll();
+
+        Assertions.assertEquals(
+                allUsers.size(), users.size(),
+                "Database contains a different number of users than the saved one!");
+
+        Assertions.assertTrue(allUsers.containsAll(users), "Not all saved users were found!");
+
+    }
+
+    @Test
     public void testSaveAndUpdate() {
 
         User user = makeUser();
 
         int id = saveUser(user);
-        user.setUserId(id);
 
         user.setLastName("U");
 
