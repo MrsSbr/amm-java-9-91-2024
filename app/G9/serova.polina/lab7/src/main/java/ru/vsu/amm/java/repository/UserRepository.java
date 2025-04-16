@@ -1,12 +1,13 @@
 package ru.vsu.amm.java.repository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entity.UserEntity;
 import ru.vsu.amm.java.util.RoleMapper;
-
 import javax.sql.DataSource;
-import java.sql.Date;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,11 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository implements CrudRepository<UserEntity> {
-
+    private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
     private final DataSource dataSource;
 
     public UserRepository() {
         dataSource = DatabaseConfiguration.getDataSource();
+        logger.info("Репозиторий пользователей инициализирован");
     }
 
     @Override
@@ -29,12 +31,14 @@ public class UserRepository implements CrudRepository<UserEntity> {
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
+
             if (resultSet.next()) {
+                logger.debug("Найден пользователь по ID: {}", id);
                 return makeUserFromResultSet(resultSet);
             }
+            logger.debug("Пользователь с ID {} не найден", id);
         } catch (SQLException e) {
-            // TODO: add logging
-            return null;
+            logger.error("Ошибка при поиске пользователя по ID: {}", id, e);
         }
         return null;
     }
@@ -46,12 +50,14 @@ public class UserRepository implements CrudRepository<UserEntity> {
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
+
             if (resultSet.next()) {
+                logger.debug("Найден пользователь по email: {}", email);
                 return makeUserFromResultSet(resultSet);
             }
+            logger.debug("Пользователь с email {} не найден", email);
         } catch (SQLException e) {
-            // TODO: add logging
-            return null;
+            logger.error("Ошибка при поиске пользователя по email: {}", email, e);
         }
         return null;
     }
@@ -66,12 +72,11 @@ public class UserRepository implements CrudRepository<UserEntity> {
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
-                users.add(
-                        makeUserFromResultSet(resultSet)
-                );
+                users.add(makeUserFromResultSet(resultSet));
             }
+            logger.debug("Загружено {} пользователей", users.size());
         } catch (SQLException e) {
-            // TODO add logging
+            logger.error("Ошибка при загрузке всех пользователей", e);
             return null;
         }
         return users;
@@ -91,8 +96,12 @@ public class UserRepository implements CrudRepository<UserEntity> {
             statement.setString(6, entity.getPasswordHash());
             statement.setString(7, RoleMapper.mapRoleToString(entity.getRole()));
             statement.executeUpdate();
+
+            logger.info("Добавлен новый пользователь: {} {} (email: {})",
+                    entity.getSurname(), entity.getName(), entity.getEmail());
         } catch (SQLException e) {
-            // TODO: add logging
+            logger.error("Ошибка при добавлении пользователя: {} {} (email: {})",
+                    entity.getSurname(), entity.getName(), entity.getEmail(), e);
         }
     }
 
@@ -111,8 +120,12 @@ public class UserRepository implements CrudRepository<UserEntity> {
             statement.setString(7, RoleMapper.mapRoleToString(entity.getRole()));
             statement.setLong(8, entity.getId());
             statement.executeUpdate();
+
+            logger.info("Обновлен пользователь с ID {}: {} {} (email: {})",
+                    entity.getId(), entity.getSurname(), entity.getName(), entity.getEmail());
         } catch (SQLException e) {
-            // TODO: add logging
+            logger.error("Ошибка при обновлении пользователя с ID {}: {} {} (email: {})",
+                    entity.getId(), entity.getSurname(), entity.getName(), entity.getEmail(), e);
         }
     }
 
@@ -124,8 +137,12 @@ public class UserRepository implements CrudRepository<UserEntity> {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, entity.getId());
             statement.executeUpdate();
+
+            logger.info("Удален пользователь с ID {}: {} {} (email: {})",
+                    entity.getId(), entity.getSurname(), entity.getName(), entity.getEmail());
         } catch (SQLException e) {
-            // TODO: add logging
+            logger.error("Ошибка при удалении пользователя с ID {}: {} {} (email: {})",
+                    entity.getId(), entity.getSurname(), entity.getName(), entity.getEmail(), e);
         }
     }
 
