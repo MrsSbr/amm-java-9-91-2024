@@ -24,12 +24,12 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws IOException {
         try {
-            LoginRequest signInRequest = new LoginRequest(
+            LoginRequest loginRequest = new LoginRequest(
                     request.getParameter("email"),
                     request.getParameter("password")
             );
 
-            User user = authService.login(signInRequest);
+            User user = authService.login(loginRequest);
 
             HttpSession httpSession = request.getSession();
             httpSession.setAttribute("user", user);
