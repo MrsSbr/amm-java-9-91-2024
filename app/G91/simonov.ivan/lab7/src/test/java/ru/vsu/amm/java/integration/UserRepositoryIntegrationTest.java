@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.enums.Role;
 import ru.vsu.amm.java.repository.UserRepository;
 
 import javax.sql.DataSource;
@@ -15,6 +14,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
+
+import static ru.vsu.amm.java.utils.UserFactory.makeFewUsers;
+import static ru.vsu.amm.java.utils.UserFactory.makeUser;
 
 public class UserRepositoryIntegrationTest {
 
@@ -40,50 +42,6 @@ public class UserRepositoryIntegrationTest {
                     """);
 
         }
-    }
-
-    private User makeUser() {
-
-        return new User(
-                "I",
-                "I",
-                "I",
-                "i@i.ii",
-                "1",
-                Role.USER
-        );
-
-    }
-
-    private List<User> makeFewUsers() {
-
-        return List.of(
-                new User(
-                        "I",
-                        "I",
-                        "I",
-                        "i@i.ii",
-                        "1",
-                        Role.USER),
-
-                new User(
-                        "K",
-                        "K",
-                        "K",
-                        "k@k.kk",
-                        "2",
-                        Role.ADMIN),
-
-                new User(
-                        "U",
-                        "U",
-                        "U",
-                        "u@u.uu",
-                        "3",
-                        Role.EMPLOYEE)
-
-        );
-
     }
 
     private int saveUser(User user) {

@@ -20,6 +20,12 @@ public class AuthService {
 
     }
 
+    public AuthService(UserRepository userRepository) {
+
+        this.userRepository = userRepository;
+
+    }
+
     public User signIn(SignInRequest request) {
 
 
