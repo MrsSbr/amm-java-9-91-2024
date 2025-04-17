@@ -1,32 +1,42 @@
 package ru.vsu.amm.java.servlet;
 
-import ru.vsu.amm.java.entities.Post;
-import ru.vsu.amm.java.repository.PostRepository;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import ru.vsu.amm.java.services.PostService;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
-import java.time.LocalTime;
+
+import static ru.vsu.amm.java.services.Logg.logger;
 
 @WebServlet("/createPost")
 public class CreatePostServlet extends HttpServlet {
+    private PostService postService;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        postService = new PostService();
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String content = request.getParameter("content");
-        UUID userId = UUID.fromString(request.getParameter("userId"));
+        UUID userIdParam = UUID.fromString(request.getParameter("userId"));
 
-        Post post = new Post();
-        post.setId(UUID.randomUUID());
-        post.setUserId(userId);
-        post.setContent(content);
-        post.setCreatedAt(LocalTime.now());
+        logger.info("Creating post in servlet");
 
-        PostRepository postRepository = new PostRepository();
-        postRepository.create(post);
+        UUID postId = postService.create(content, userIdParam);
 
-        response.sendRedirect("postCreated.jsp");
+        if (postId == null) {
+            request.setAttribute("error", "Ошибка: некорректный ID пользователя.");
+            request.getRequestDispatcher("index").forward(request, response);
+        } else {
+            request.setAttribute("success", "Пост успешно создан!");
+            response.sendRedirect("index");
+        }
     }
 }
