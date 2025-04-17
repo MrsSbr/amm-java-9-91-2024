@@ -23,7 +23,7 @@ public class GetAllCarsServlet extends HttpServlet {
 
         try {
             List<CarDto> carList = carService.getAllCars();
-            request.setAttribute("carList", carList);
+            request.setAttribute("cars", carList);
         } catch (DataAccessException e) {
             request.setAttribute(ERROR_MESSAGE, e.getMessage());
 

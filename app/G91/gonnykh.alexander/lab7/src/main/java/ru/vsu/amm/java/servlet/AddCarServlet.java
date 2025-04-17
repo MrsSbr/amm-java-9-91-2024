@@ -5,7 +5,6 @@ import ru.vsu.amm.java.enums.Status;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.model.dto.CarDto;
 import ru.vsu.amm.java.service.implementations.CarService;
-import ru.vsu.amm.java.utils.ErrorMessages;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,7 +45,7 @@ public class AddCarServlet extends HttpServlet {
             response.sendRedirect("/manageCars");
 
         } catch (IllegalArgumentException | DataAccessException e) {
-            request.setAttribute(ERROR_MESSAGE, ErrorMessages.ADD_CAR + e.getMessage());
+            request.setAttribute(ERROR_MESSAGE, e);
             getServletContext().getRequestDispatcher(MANAGE_CARS_PAGE).forward(request, response);
         }
     }

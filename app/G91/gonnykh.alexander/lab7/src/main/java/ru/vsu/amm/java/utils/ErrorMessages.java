@@ -22,5 +22,7 @@ public class ErrorMessages {
     public static final String USER_ALREADY_EXISTS = "User already exists";
     public static final String BOOK_CAR = "Failed to book car: ";
     public static final String CAR_ALREADY_RENTED = "Failed to car rented: ";
-    public static final String ADD_CAR = "Failed add car: ";
+    public static final String ADD_CAR = "Failed to add car: ";
+    public static final String DELETE_CAR = "Failed to delete car: ";
+    public static final String FETCH_CARS = "Failed to fetch cars: ";
 }

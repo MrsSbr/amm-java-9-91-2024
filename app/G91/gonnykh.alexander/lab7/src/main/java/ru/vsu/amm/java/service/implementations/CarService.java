@@ -19,6 +19,21 @@ public class CarService {
         this.userCarRepository = new UserCarRepository();
     }
 
+    public void addCar(CarDto carDto) {
+        CarEntity carEntity = CarMapper.CarDtoToCarEntity(carDto);
+        carRepository.save(carEntity);
+    }
+
+    public void deleteCar(Long carId) {
+        carRepository.delete(carId);
+    }
+
+    public void updateCar(CarDto carDto) {
+        //todo нельзя обновлять статус если занят кем-то
+        CarEntity carEntity = CarMapper.CarDtoToCarEntity(carDto);
+        carRepository.update(carEntity);
+    }
+
     public List<CarDto> getCarByStatus(Status status) {
         return carRepository.findByStatus(status)
                 .stream()
@@ -41,8 +56,5 @@ public class CarService {
         userCarRepository.bookCar(userId, carDto);
     }
 
-    public void addCar(CarDto carDto) {
-        CarEntity carEntity = CarMapper.CarDtoToCarEntity(carDto);
-        carRepository.save(carEntity);
-    }
+
 }

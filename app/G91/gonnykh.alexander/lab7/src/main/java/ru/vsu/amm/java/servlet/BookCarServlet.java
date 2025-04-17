@@ -34,10 +34,8 @@ public class BookCarServlet extends HttpServlet {
             CarDto carDto = carService.getCarById(carId);
             carService.bookCar(customerId, carDto);
             request.setAttribute(SUCCESS_MESSAGE, "Car successfully booked!");
-        } catch (DataAccessException e) {
-            request.setAttribute(ERROR_MESSAGE, "An error occurred while accessing the data.");
-        } catch (NoSuchElementException e) {
-            request.setAttribute(ERROR_MESSAGE, "Car not found.");
+        } catch (DataAccessException | NoSuchElementException e) {
+            request.setAttribute(e.getMessage(), e);
         } catch (IllegalArgumentException e) {
             request.setAttribute(ERROR_MESSAGE, "Invalid data provided.");
         }
@@ -46,7 +44,7 @@ public class BookCarServlet extends HttpServlet {
             List<CarDto> carList = carService.getCarByStatus(Status.AVAILABLE);
             request.setAttribute("cars", carList);
         } catch (DataAccessException e) {
-            request.setAttribute(ERROR_MESSAGE, "An error occurred while retrieving the car list.");
+            request.setAttribute(e.getMessage(), e);
         }
 
         getServletContext().getRequestDispatcher(MENU_RENT_CARS).forward(request, response);
