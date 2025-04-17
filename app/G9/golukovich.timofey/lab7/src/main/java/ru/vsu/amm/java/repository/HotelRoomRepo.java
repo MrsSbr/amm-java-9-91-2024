@@ -20,8 +20,8 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
     @Override
     public Optional<HotelRoomEntity> getById(int id) throws SQLException {
         final String query = """
-                SELECT id, hotelId, roomNumber, floorNumber, bedsCount, specifications
-                FROM hotel_room WHERE id = ?""";
+                SELECT room_id, hotel_id, room_number, floor_number, beds_count, specifications
+                FROM hotel_room WHERE room_id = ?""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -31,11 +31,11 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
         var resultSet = preparedStatement.getResultSet();
         if (resultSet.next()) {
             return Optional.of(new HotelRoomEntity(
-                    resultSet.getInt("id"),
-                    resultSet.getInt("hotelId"),
-                    resultSet.getInt("roomNumber"),
-                    resultSet.getInt("floorNumber"),
-                    resultSet.getInt("bedsCount"),
+                    resultSet.getInt("room_id"),
+                    resultSet.getInt("hotel_id"),
+                    resultSet.getInt("room_number"),
+                    resultSet.getInt("floor_number"),
+                    resultSet.getInt("beds_count"),
                     resultSet.getString("specifications"))
             );
         }
@@ -45,7 +45,7 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
 
     @Override
     public List<HotelRoomEntity> getAll() throws SQLException {
-        final String query = "SELECT id, hotelId, roomNumber, floorNumber, bedsCount, specifications FROM hotel_room";
+        final String query = "SELECT room_id, hotel_id, room_number, floor_number, beds_count, specifications FROM hotel_room";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -56,11 +56,11 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
         var resultSet = preparedStatement.getResultSet();
         while (resultSet.next()) {
             var entity = new HotelRoomEntity(
-                    resultSet.getInt("id"),
-                    resultSet.getInt("hotelId"),
-                    resultSet.getInt("roomNumber"),
-                    resultSet.getInt("floorNumber"),
-                    resultSet.getInt("bedsCount"),
+                    resultSet.getInt("room_id"),
+                    resultSet.getInt("hotel_id"),
+                    resultSet.getInt("room_number"),
+                    resultSet.getInt("floor_number"),
+                    resultSet.getInt("beds_count"),
                     resultSet.getString("specifications"));
             entityList.add(entity);
         }
@@ -71,8 +71,8 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
     @Override
     public void update(HotelRoomEntity entity) throws SQLException {
         final String query = """
-                UPDATE hotel_room SET hotelId = ?, roomNumber = ?, floorNumber = ?,
-                bedsCount = ?, specifications = ? WHERE id = ?""";
+                UPDATE hotel_room SET hotel_id = ?, room_number = ?, floor_number = ?,
+                beds_count = ?, specifications = ? WHERE room_id = ?""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -84,7 +84,7 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
     @Override
     public void save(HotelRoomEntity entity) throws SQLException {
         final String query = """
-                INSERT INTO hotel_room (hotelId, roomNumber, floorNumber, bedsCount, specifications)
+                INSERT INTO hotel_room (hotel_id, room_number, floor_number, beds_count, specifications)
                 VALUES (?, ?, ?, ?, ?)""";
         var connection = dataSource.getConnection();
 
@@ -95,7 +95,7 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
 
     @Override
     public void delete(int id) throws SQLException {
-        final String query = "DELETE FROM hotel_room WHERE id = ?";
+        final String query = "DELETE FROM hotel_room WHERE room_id = ?";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
