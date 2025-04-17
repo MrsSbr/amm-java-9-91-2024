@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ResultSetToShareholderStocks {
-    public static ShareholderStocks Convert(ResultSet result) throws SQLException {
+    public static ShareholderStocks convert(ResultSet result) throws SQLException {
         return new ShareholderStocks(
                 result.getInt(1),
                 result.getInt(2),
