@@ -100,8 +100,7 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
 
-        return Objects.equals(userId, user.userId) &&
-                Objects.equals(lastName, user.lastName) &&
+        return Objects.equals(lastName, user.lastName) &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(patronymic, user.patronymic) &&
                 Objects.equals(login, user.login) &&
@@ -112,7 +111,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, lastName, firstName, patronymic, login, password, role);
+        return Objects.hash(lastName, firstName, patronymic, login, password, role);
     }
 
 }
