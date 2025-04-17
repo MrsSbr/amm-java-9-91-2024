@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.servlet;
 
+import ru.vsu.amm.java.enums.Role;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.model.requests.RegisterRequest;
@@ -26,27 +27,26 @@ public class RegisterServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher(REGISTER_PAGE).forward(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        getServletContext().getRequestDispatcher(REGISTER_PAGE).forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String name = req.getParameter("name");
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
 
         try {
-            RegisterRequest registerRequest = new RegisterRequest(name, email, password);
+            RegisterRequest registerRequest = new RegisterRequest(name, email, password, Role.USER);
 
             authService.register(registerRequest);
-            HttpSession session = req.getSession();
+            HttpSession session = request.getSession();
             session.setAttribute("email", email);
-            resp.sendRedirect(HOME_PAGE);
+            response.sendRedirect(HOME_PAGE);
         } catch (WrongUserCredentialsException | DataAccessException e) {
-            req.setAttribute(ERROR_MESSAGE, e.getMessage());
-            getServletContext().getRequestDispatcher(REGISTER_PAGE).forward(req, resp);
+            request.setAttribute(ERROR_MESSAGE, e.getMessage());
+            getServletContext().getRequestDispatcher(REGISTER_PAGE).forward(request, response);
         }
 
     }
