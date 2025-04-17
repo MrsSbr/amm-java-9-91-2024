@@ -26,7 +26,7 @@ public class GenreServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         logger.info("Received GET request to /genres");
 
         List<Genre> genres = genreRepository.findAll();

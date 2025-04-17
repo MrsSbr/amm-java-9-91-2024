@@ -117,7 +117,7 @@ public class UserRepository implements CrudRepository<User> {
 
             logger.info("User saved successfully: {}", user);
         } catch (SQLException e) {
-            logger.error("Error saving user: {}", e.getMessage());
+            logger.error("Error saving user {}: {}", user, e.getMessage());
             throw new SqlException(e.getMessage());
         }
     }

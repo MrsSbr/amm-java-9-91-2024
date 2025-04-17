@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.vsu.amm.java.model.Film;
+import ru.vsu.amm.java.model.User;
 import ru.vsu.amm.java.repository.FilmRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +28,11 @@ public class FilmServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         logger.info("Received GET request to /films");
+        User author = (User) req.getSession().getAttribute("user");
 
         List<Film> films = filmRepository.findAll();
         req.setAttribute("films", films);
+        req.setAttribute("author", author);
         req.getRequestDispatcher("/films.jsp").forward(req, resp);
     }
 }
