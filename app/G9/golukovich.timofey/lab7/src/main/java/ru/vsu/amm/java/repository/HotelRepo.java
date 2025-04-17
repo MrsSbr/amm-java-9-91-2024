@@ -20,7 +20,7 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
 
     @Override
     public Optional<HotelEntity> getById(int id) throws SQLException {
-        final String query = "SELECT id, name, address, email, phoneNumber, openingDate FROM hotel WHERE id = ?";
+        final String query = "SELECT hotel_id, name, address, email, phone_number, opening_date FROM hotel WHERE hotel_id = ?";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -30,12 +30,12 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
         var resultSet = preparedStatement.getResultSet();
         if (resultSet.next()) {
             return Optional.of(new HotelEntity(
-                    resultSet.getInt("id"),
+                    resultSet.getInt("hotel_id"),
                     resultSet.getString("name"),
                     resultSet.getString("address"),
                     resultSet.getString("email"),
-                    resultSet.getString("phoneNumber"),
-                    resultSet.getDate("openingDate").toLocalDate())
+                    resultSet.getString("phone_number"),
+                    resultSet.getDate("opening_date").toLocalDate())
             );
         }
 
@@ -44,7 +44,7 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
 
     @Override
     public List<HotelEntity> getAll() throws SQLException {
-        final String query = "SELECT id, name, address, email, phoneNumber, openingDate FROM hotel";
+        final String query = "SELECT hotel_id, name, address, email, phone_number, opening_date FROM hotel";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -55,12 +55,12 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
         var resultSet = preparedStatement.getResultSet();
         while (resultSet.next()) {
             var entity = new HotelEntity(
-                    resultSet.getInt("id"),
+                    resultSet.getInt("hotel_id"),
                     resultSet.getString("name"),
                     resultSet.getString("address"),
                     resultSet.getString("email"),
-                    resultSet.getString("phoneNumber"),
-                    resultSet.getDate("openingDate").toLocalDate()
+                    resultSet.getString("phone_number"),
+                    resultSet.getDate("opening_date").toLocalDate()
             );
             entityList.add(entity);
         }
@@ -71,8 +71,8 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
     @Override
     public void update(HotelEntity entity) throws SQLException {
         final String query = """
-                UPDATE hotel SET name = ?, address = ?, email = ?, phoneNumber = ?, openingDate = ? 
-                WHERE id = ?""";
+                UPDATE hotel SET name = ?, address = ?, email = ?, phone_number = ?, opening_date = ? 
+                WHERE hotel_id = ?""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -84,7 +84,7 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
     @Override
     public void save(HotelEntity entity) throws SQLException {
         final String query = """
-                INSERT INTO hotel (name, address, email, phoneNumber, openingDate)
+                INSERT INTO hotel (name, address, email, phone_number, opening_date)
                 VALUES (?, ?, ?, ?, ?)""";
         var connection = dataSource.getConnection();
 
@@ -95,7 +95,7 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
 
     @Override
     public void delete(int id) throws SQLException {
-        final String query = "DELETE FROM hotel WHERE id = ?";
+        final String query = "DELETE FROM hotel WHERE hotel_id = ?";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
