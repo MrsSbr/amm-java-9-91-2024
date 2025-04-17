@@ -1,5 +1,7 @@
 package ru.vsu.amm.java.repository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.vsu.amm.java.config.DbConfig;
 import ru.vsu.amm.java.entity.UserEntity;
 
@@ -11,6 +13,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class UserRepository {
+    private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
 
     private final DataSource dataSource;
 
@@ -25,13 +28,16 @@ public class UserRepository {
         preparedStatement.setString(1, email);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            return Optional.of(new UserEntity(
+            Optional<UserEntity> userEntityOptional = Optional.of(new UserEntity(
                     resultSet.getLong("id"),
                     resultSet.getString("email"),
                     resultSet.getString("hash_password")
             ));
+            logger.info("User found: {}", userEntityOptional.get().getEmail());
+            return userEntityOptional;
         }
 
+        logger.info("No user found with email: {}", email);
         return Optional.empty();
     }
 
@@ -42,6 +48,6 @@ public class UserRepository {
         preparedStatement.setString(1, user.getEmail());
         preparedStatement.setString(2, user.getHashPassword());
         preparedStatement.executeUpdate();
-
+        logger.info("Saved user: {}", user.getEmail());
     }
 }

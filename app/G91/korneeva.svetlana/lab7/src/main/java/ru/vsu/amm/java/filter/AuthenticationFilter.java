@@ -1,10 +1,15 @@
 package ru.vsu.amm.java.filter;
 
-import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 @WebFilter(filterName = "AuthenticationFilter", urlPatterns = "/*")
 public class AuthenticationFilter implements Filter {
@@ -17,7 +22,7 @@ public class AuthenticationFilter implements Filter {
 
         String loginUrl = req.getContextPath() + "/login";
         String registerUrl = req.getContextPath() + "/register";
-        boolean loggedIn = httpSession != null && httpSession.getAttribute("email") != null;
+        boolean loggedIn = httpSession != null && httpSession.getAttribute("user") != null;
         boolean loginRequest = req.getRequestURI().equals(loginUrl) || req.getRequestURI().equals(loginUrl + ".jsp");
         boolean registerRequest = req.getRequestURI().equals(registerUrl) || req.getRequestURI().equals("/register.jsp");
 

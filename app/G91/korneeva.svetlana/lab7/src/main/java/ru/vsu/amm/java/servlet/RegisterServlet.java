@@ -1,20 +1,21 @@
 package ru.vsu.amm.java.servlet;
 
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import ru.vsu.amm.java.entity.UserEntity;
 import ru.vsu.amm.java.exception.AuthException;
 import ru.vsu.amm.java.exception.DatabaseException;
 import ru.vsu.amm.java.service.AuthenticationService;
 import ru.vsu.amm.java.service.impl.AuthenticationServiceImpl;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "RegisterServlet", urlPatterns = "/register")
+@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
     @Override
@@ -28,10 +29,10 @@ public class RegisterServlet extends HttpServlet {
         String password = req.getParameter("password");
         AuthenticationService authService = new AuthenticationServiceImpl();
         try {
-            authService.register(email, password);
-            HttpSession session = req.getSession();
-            session.setAttribute("email", email);
-            resp.sendRedirect("/index.jsp");
+            UserEntity user = authService.register(email, password);
+            HttpSession session = req.getSession(true);
+            session.setAttribute("user", user);
+            resp.sendRedirect("/transactions");
         } catch (AuthException | DatabaseException e) {
             req.setAttribute("errorMessage", e.getMessage());
             getServletContext().getRequestDispatcher("/registration.jsp").forward(req, resp);

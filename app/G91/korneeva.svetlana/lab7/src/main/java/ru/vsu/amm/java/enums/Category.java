@@ -8,5 +8,6 @@ public enum Category {
     SHOPPING,
     HEALTH,
     EDUCATION,
+    WORK,
     OTHER
 }

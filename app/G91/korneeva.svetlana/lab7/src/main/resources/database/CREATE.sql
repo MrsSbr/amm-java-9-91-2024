@@ -8,9 +8,9 @@ CREATE TABLE users (
 CREATE TABLE transactions (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT REFERENCES users(id),
-    amount DOUBLE PRECISION NOT NULL,
+    amount NUMERIC(19, 2) NOT NULL,
     type BOOLEAN NOT NULL,
-    data TIMESTAMP NOT NULL,
+    date_create TIMESTAMP NOT NULL,
     category TEXT NOT NULL
 );
 

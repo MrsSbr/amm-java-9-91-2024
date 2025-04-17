@@ -1,10 +1,12 @@
 package ru.vsu.amm.java.entity;
 
+import lombok.Builder;
 import ru.vsu.amm.java.enums.Category;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Builder
 public class Transaction {
 
     private Long id;
@@ -15,19 +17,19 @@ public class Transaction {
 
     private Boolean type;
 
-    private LocalDateTime data;
+    private LocalDateTime date;
 
     private Category category;
 
     public Transaction() {
     }
 
-    public Transaction(Long id, Long userId, BigDecimal amount, Boolean type, LocalDateTime data, Category category) {
+    public Transaction(Long id, Long userId, BigDecimal amount, Boolean type, LocalDateTime date, Category category) {
         this.id = id;
         this.userId = userId;
         this.amount = amount;
         this.type = type;
-        this.data = data;
+        this.date = date;
         this.category = category;
     }
 
@@ -64,11 +66,11 @@ public class Transaction {
     }
 
     public LocalDateTime getDate() {
-        return data;
+        return date;
     }
 
     public void setDate(LocalDateTime date) {
-        this.data = date;
+        this.date = date;
     }
 
     public Category getCategory() {

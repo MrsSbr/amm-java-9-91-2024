@@ -1,8 +1,10 @@
 package ru.vsu.amm.java.service;
 
+import ru.vsu.amm.java.entity.UserEntity;
+
 public interface AuthenticationService {
 
-    void login(String email, String hashPassword);
+    UserEntity login(String email, String hashPassword);
 
-    void register(String email, String hashPassword);
+    UserEntity register(String email, String hashPassword);
 }
