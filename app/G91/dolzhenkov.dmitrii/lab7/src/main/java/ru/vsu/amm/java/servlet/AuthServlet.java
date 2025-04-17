@@ -20,7 +20,7 @@ import java.io.IOException;
 public class AuthServlet extends HttpServlet {
     private static final String AUTH_VIEW  = "/signin.jsp";
     private static final String ADD_SCOOTER_VIEW = "/addScooter.jsp";
-    private static final String MAIN_UI  = "/index.jsp";
+    private static final String MAIN_UI  = "/main.jsp";
     private final AuthService authService;
 
     public AuthServlet() {

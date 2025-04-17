@@ -27,7 +27,7 @@ public class UserRepository implements CrudRepository<UserEntity>{
 
     @Override
     public Optional<UserEntity> findById(Long id) {
-        final String query = "SELECT name, password, role FROM \"User\" WHERE id = ?";
+        final String query = "SELECT id, name, password, role FROM \"User\" WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);

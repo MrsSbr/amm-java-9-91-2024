@@ -1,13 +1,8 @@
 package ru.vsu.amm.java.servlet;
 
-import ru.vsu.amm.java.enums.UserRole;
 import ru.vsu.amm.java.exceptions.DataAccessException;
-import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.model.requests.ScooterRequest;
-import ru.vsu.amm.java.model.requests.UserRequest;
 import ru.vsu.amm.java.service.implementations.ScooterServiceImpl;
-import ru.vsu.amm.java.service.implementations.UserAuthManager;
-import ru.vsu.amm.java.service.interfaces.AuthService;
 import ru.vsu.amm.java.service.interfaces.ScooterService;
 import ru.vsu.amm.java.utils.ErrorMessages;
 

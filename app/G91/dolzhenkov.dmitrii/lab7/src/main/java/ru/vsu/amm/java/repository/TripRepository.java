@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static ru.vsu.amm.java.mappers.TripMapper.setPreparedStatement;
+import static ru.vsu.amm.java.mappers.TripMapper.setUpdatePreparedStatement;
 
 @Slf4j
 public class TripRepository implements CrudRepository<TripEntity>{
@@ -29,7 +30,7 @@ public class TripRepository implements CrudRepository<TripEntity>{
 
     @Override
     public Optional<TripEntity> findById(Long id) {
-        final String query = "SELECT user_id, scooter_id, start_time, end_time, start_latitude, " +
+        final String query = "SELECT id, user_id, scooter_id, start_time, end_time, start_latitude, " +
                 "start_longitude, end_latitude, end_longitude FROM Trip WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -81,11 +82,11 @@ public class TripRepository implements CrudRepository<TripEntity>{
 
     @Override
     public void update(TripEntity entity) {
-        final String query = "UPDATE Trip SET user_id = ?, scooter_id = ?, start_time = ?, end_time = ?, " +
+        final String query = "UPDATE Trip SET id = ?, user_id = ?, scooter_id = ?, start_time = ?, end_time = ?, " +
                 "start_latitude = ?, start_longitude = ?, end_latitude = ?, end_longitude = ? WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            setPreparedStatement(preparedStatement, entity);
+            setUpdatePreparedStatement(preparedStatement, entity);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             log.error(ErrorMessages.UPDATE_TRIP, e);
