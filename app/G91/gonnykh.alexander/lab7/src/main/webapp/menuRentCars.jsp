@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="ru.vsu.amm.java.enums.Status" %>
 <html>
 <head>
     <title>Available Cars</title>
@@ -159,7 +158,6 @@
 
                 <form action="${pageContext.request.contextPath}/bookCar" method="post" class="bookCarForm">
                     <input type="hidden" name="carId" value="${car.id}"/>
-                    <input type="hidden" name="userId" value="${user.id}"/> <!-- Added user ID here -->
                     <input type="submit" class="book-btn" value="Book Now"/>
                 </form>
             </div>
@@ -181,11 +179,17 @@
                     e.preventDefault();
 
                     const formData = new FormData(form);
-                    const url = form.action;
+                    const params = new URLSearchParams();
+                    formData.forEach((value, key) => {
+                        params.append(key, value);
+                    });
 
-                    fetch(url, {
+                    fetch(form.action, {
                         method: form.method,
-                        body: formData
+                        body: params,
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        }
                     })
                         .then(response => {
                             if (!response.ok) {
@@ -238,6 +242,7 @@
         setInterval(refreshCarList, 5000);
     });
 </script>
+
 
 </body>
 </html>

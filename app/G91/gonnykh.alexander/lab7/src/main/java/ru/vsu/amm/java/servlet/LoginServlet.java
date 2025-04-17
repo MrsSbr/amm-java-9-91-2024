@@ -22,7 +22,6 @@ public class LoginServlet extends HttpServlet {
     private static final String HOME_PAGE = "/index.jsp";
     private static final String ERROR_MESSAGE = "errorMessage";
     private final AuthService authService;
-    private final UserService userService;
 
     public LoginServlet() {
         this.authService = new DefaultAuthService();
@@ -44,7 +43,6 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession session = req.getSession();
             session.setAttribute("email", email);
-            session.setAttribute("userId", user.getId());
 
             resp.sendRedirect("/availableCars");
         } catch (WrongUserCredentialsException | DataAccessException e) {

@@ -33,7 +33,7 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
 
     @Override
     public Optional<UserCarEntity> findById(Long id) {
-        final String query = "SELECT id, userId, carId, startTrip, endTrip, priceForMinute FROM user_car WHERE id = ?";
+        final String query = "SELECT id, user_id, car_id, start_trip, end_trip, price_per_minute FROM user_car WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
@@ -51,7 +51,7 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
 
     @Override
     public List<UserCarEntity> findAll() {
-        final String query = "SELECT id, userId, carId, startTrip, endTrip, priceForMinute FROM user_car";
+        final String query = "SELECT id, user_id, car_id, start_trip, end_trip, price_per_minute FROM user_car";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -140,7 +140,7 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
             }
 
             try (PreparedStatement insertStmt = conn.prepareStatement(
-                    "INSERT INTO user_car (user_id, car_id, start_time, end_time, price) VALUES (?, ?, ?, ?, ?)")) {
+                    "INSERT INTO user_car (user_id, car_id, start_trip, end_trip, price_per_minute) VALUES (?, ?, ?, ?, ?)")) {
                 insertStmt.setLong(1, userId);
                 insertStmt.setLong(2, carDto.getId());
                 insertStmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
