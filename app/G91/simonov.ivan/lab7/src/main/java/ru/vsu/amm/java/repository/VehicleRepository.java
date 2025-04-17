@@ -29,7 +29,7 @@ public class VehicleRepository implements ParkingRepository<Vehicle> {
     private final DataSource dataSource;
 
     public VehicleRepository() {
-        dataSource = DatabaseConfiguration.getDataSource();
+        dataSource = DatabaseConfiguration.getMainDataSource();
     }
 
     public Optional<Vehicle> getByInfo(Vehicle entity) {

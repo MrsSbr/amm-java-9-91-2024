@@ -20,6 +20,12 @@ public class AuthService {
 
     }
 
+    public AuthService(UserRepository userRepository) {
+
+        this.userRepository = userRepository;
+
+    }
+
     public User signIn(SignInRequest request) {
 
 
@@ -61,7 +67,7 @@ public class AuthService {
 
             if (userRepository.getByLoginAndPassword(user.getLogin(), user.getPassword()).isEmpty()) {
 
-                userRepository.save(user);
+                user.setUserId(userRepository.save(user));
                 return user;
 
             } else {
