@@ -1,13 +1,19 @@
 package ru.vsu.amm.java.data.entities;
 
-public class Player {
+public class DbPlayer {
     private Long id;
     private String login;
     private String password;
     private String email;
 
-    public Player(Long id, String login, String password, String email) {
+    public DbPlayer(Long id, String login, String password, String email) {
         this.id = id;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+    }
+
+    public DbPlayer(String login, String password, String email) {
         this.login = login;
         this.password = password;
         this.email = email;

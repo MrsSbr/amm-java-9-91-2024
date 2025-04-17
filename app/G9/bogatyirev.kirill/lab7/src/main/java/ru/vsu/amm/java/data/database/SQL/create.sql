@@ -10,7 +10,8 @@ CREATE TABLE Card
     id BIGSERIAL PRIMARY KEY,
     topic TEXT NOT NULL UNIQUE,
     difficulty TEXT NOT NULL,
-    CONSTRAINT fk_WToA FOREIGN KEY(word_to_action_id) REFERENCES Word_To_Action(id)
+    player_id BIGINT,
+    CONSTRAINT fk_Player FOREIGN KEY(player_id) REFERENCES Player(id)
 );
 
 
@@ -20,15 +21,6 @@ CREATE TABLE Player
     login TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE
-);
-
-CREATE TABLE Game
-(
-    id BIGSERIAL PRIMARY KEY,
-    card_id BIGINT,
-    player_id BIGINT,
-    CONSTRAINT fk_card FOREIGN KEY (card_id) REFERENCES Card(id),
-    CONSTRAINT fk_player FOREIGN KEY (player_id) REFERENCES Player(id)
 );
 
 CREATE TABLE Word_To_Action
