@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ScooterMapper {
-    public static ScooterEntity ResultSetToCarEntity(ResultSet rs) throws SQLException {
+    public static ScooterEntity ResultSetToScooterEntity(ResultSet rs) throws SQLException {
         return new ScooterEntity(rs.getLong("id"),
                 rs.getString("model"),
                 rs.getDouble("latitude"),

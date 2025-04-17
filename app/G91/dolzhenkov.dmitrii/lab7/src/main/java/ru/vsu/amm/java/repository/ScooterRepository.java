@@ -27,13 +27,13 @@ public class ScooterRepository implements CrudRepository<ScooterEntity>{
 
     @Override
     public Optional<ScooterEntity> findById(Long id) {
-        final String query = "SELECT model, latitude, longitude, status  FROM Scooter WHERE id = ?";
+        final String query = "SELECT id, model, latitude, longitude, status  FROM Scooter WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return Optional.of(ScooterMapper.ResultSetToCarEntity(resultSet));
+                    return Optional.of(ScooterMapper.ResultSetToScooterEntity(resultSet));
                 }
             }
             return Optional.empty();
@@ -49,17 +49,18 @@ public class ScooterRepository implements CrudRepository<ScooterEntity>{
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                List<ScooterEntity> cars = new ArrayList<>();
+                List<ScooterEntity> scooters = new ArrayList<>();
                 while (resultSet.next()) {
-                    cars.add(ScooterMapper.ResultSetToCarEntity(resultSet));
+                    scooters.add(ScooterMapper.ResultSetToScooterEntity(resultSet));
                 }
-                return cars;
+                return scooters;
             }
         } catch (SQLException e) {
             log.error(ErrorMessages.FIND_ALL_SCOOTER, e);
             throw new DataAccessException(ErrorMessages.FIND_ALL_SCOOTER, e);
         }
     }
+
 
     @Override
     public void save(ScooterEntity entity) {
