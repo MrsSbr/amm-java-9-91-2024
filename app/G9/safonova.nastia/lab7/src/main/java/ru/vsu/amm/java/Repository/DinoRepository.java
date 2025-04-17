@@ -1,25 +1,25 @@
 package ru.vsu.amm.java.Repository;
 
-import ru.vsu.amm.java.Configuration.DatabaseConfiguration;
+import ru.vsu.amm.java.Configuration.DbConfiguration;
 import ru.vsu.amm.java.Entities.Dino;
-import ru.vsu.amm.java.Enums.Roles;
+import ru.vsu.amm.java.Enums.Kind;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class DinoRepository implements DatabaseRepository<Dino> {
+public class DinoRepository implements DbRepository<Dino> {
 
     private final DataSource dataSource;
 
     public DinoRepository() {
-        dataSource = DatabaseConfiguration.getDataSource();
+        dataSource = DbConfiguration.getDataSource();
     }
 
     @Override
@@ -39,8 +39,8 @@ public class DinoRepository implements DatabaseRepository<Dino> {
             return Optional.of(new Dino(
                     resultSet.getLong("IdDino"),
                     resultSet.getDouble("Weight"),
-                    resultSet.getLocalDate("DateOfDeath"),
-                    resultSet.getLocalDate("DateOfBirthDino"),
+                    resultSet.getDate("DateOfDeath").toLocalDate(),
+                    resultSet.getDate("DateOfBirthDino").toLocalDate(),
                     kind,
                     resultSet.getString("NameDino")
             ));
@@ -63,8 +63,8 @@ public class DinoRepository implements DatabaseRepository<Dino> {
             dinos.add(new Dino(
                     resultSet.getLong("IdDino"),
                     resultSet.getDouble("Weight"),
-                    resultSet.getLocalDate("DateOfDeath"),
-                    resultSet.getLocalDate("DateOfBirthDino"),
+                    resultSet.getDate("DateOfDeath").toLocalDate(),
+                    resultSet.getDate("DateOfBirthDino").toLocalDate(),
                     kind,
                     resultSet.getString("NameDino")
             ));
@@ -81,9 +81,9 @@ public class DinoRepository implements DatabaseRepository<Dino> {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         preparedStatement.setDouble(1, entity.getWeight());
-        preparedStatement.setLocalDate(2, entity.getDateOfBirthDino());
-        preparedStatement.setLocalDate(3, entity.getDateOfDeath());
-        preparedStatement.setString(4, entity.getKindOfDino());
+        preparedStatement.setDate(2, Date.valueOf(entity.getDateOfBirthDino()));
+        preparedStatement.setDate(3, Date.valueOf(entity.getDateOfDeath()));
+        preparedStatement.setString(4, entity.getKindOfDino().name());
         preparedStatement.setString(5, entity.getNameDino());
 
         preparedStatement.execute();
@@ -108,9 +108,9 @@ public class DinoRepository implements DatabaseRepository<Dino> {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         preparedStatement.setDouble(1, entity.getWeight());
-        preparedStatement.setLocalDate(2, entity.getDateOfBirthDino());
-        preparedStatement.setLocalDate(3, entity.getDateOfDeath());
-        preparedStatement.setString(4, entity.getKindOfDino());
+        preparedStatement.setDate(2, Date.valueOf(entity.getDateOfBirthDino()));
+        preparedStatement.setDate(3, Date.valueOf(entity.getDateOfDeath()));
+        preparedStatement.setString(4, entity.getKindOfDino().name());
         preparedStatement.setString(5, entity.getNameDino());
         preparedStatement.setLong(6, entity.getIdDino());
 
