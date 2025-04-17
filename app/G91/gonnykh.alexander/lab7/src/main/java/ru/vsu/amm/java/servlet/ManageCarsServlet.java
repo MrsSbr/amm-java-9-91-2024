@@ -21,7 +21,7 @@ public class ManageCarsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<CarDto> cars = carService.getAllCars();
+            List<CarDto> cars = carService.findAllNotRentedCars();
             request.setAttribute("cars", cars);
 
         } catch (DataAccessException e) {

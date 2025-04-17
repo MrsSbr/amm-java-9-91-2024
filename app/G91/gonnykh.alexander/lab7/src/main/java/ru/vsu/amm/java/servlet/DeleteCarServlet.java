@@ -36,7 +36,7 @@ public class DeleteCarServlet extends HttpServlet {
         }
 
         try {
-            request.setAttribute(CAR_LIST_ATTRIBUTE, carService.getAllCars());
+            request.setAttribute(CAR_LIST_ATTRIBUTE, carService.findAllCars());
         } catch (DataAccessException e) {
             errorMessages.add(e.getMessage());
         }

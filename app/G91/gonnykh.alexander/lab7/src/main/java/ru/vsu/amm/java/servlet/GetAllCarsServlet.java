@@ -22,7 +22,7 @@ public class GetAllCarsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try {
-            List<CarDto> carList = carService.getAllCars();
+            List<CarDto> carList = carService.findAllCars();
             request.setAttribute("cars", carList);
         } catch (DataAccessException e) {
             request.setAttribute(ERROR_MESSAGE, e.getMessage());

@@ -31,7 +31,7 @@ public class BookCarServlet extends HttpServlet {
         String email = (String) session.getAttribute("email");
         try {
             Long customerId = userService.getUserByEmail(email).getId();
-            CarDto carDto = carService.getCarById(carId);
+            CarDto carDto = carService.findCarsById(carId);
             carService.bookCar(customerId, carDto);
             request.setAttribute(SUCCESS_MESSAGE, "Car successfully booked!");
         } catch (DataAccessException | NoSuchElementException e) {
@@ -41,7 +41,7 @@ public class BookCarServlet extends HttpServlet {
         }
 
         try {
-            List<CarDto> carList = carService.getCarByStatus(Status.AVAILABLE);
+            List<CarDto> carList = carService.findCarsByStatus(Status.AVAILABLE);
             request.setAttribute("cars", carList);
         } catch (DataAccessException e) {
             request.setAttribute(e.getMessage(), e);

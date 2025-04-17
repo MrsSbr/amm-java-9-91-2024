@@ -1,6 +1,5 @@
 package ru.vsu.amm.java.servlet;
 
-import ru.vsu.amm.java.entities.CarEntity;
 import ru.vsu.amm.java.enums.Status;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.model.dto.CarDto;
@@ -24,7 +23,7 @@ public class GetAvailableCarsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<CarDto> cars = carService.getCarByStatus(Status.AVAILABLE);
+            List<CarDto> cars = carService.findCarsByStatus(Status.AVAILABLE);
             request.setAttribute("cars", cars);
             getServletContext().getRequestDispatcher(MENU_RENT_CARS_PAGE)
                     .forward(request, response);

@@ -49,20 +49,7 @@ public class CarRepository implements CrudRepository<CarEntity> {
     @Override
     public List<CarEntity> findAll() {
         final String query = "SELECT id, manufacturer, model, year, status, car_class FROM car";
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                List<CarEntity> cars = new ArrayList<>();
-                while (resultSet.next()) {
-                    cars.add(CarMapper.resultSetToCarEntity(resultSet));
-                }
-                return cars;
-            }
-        } catch (SQLException e) {
-            log.error(ErrorMessages.FIND_ALL_CARS, e);
-            throw new DataAccessException(ErrorMessages.FIND_ALL_CARS, e);
-        }
+        return getCarEntities(query);
     }
 
     @Override
@@ -127,6 +114,32 @@ public class CarRepository implements CrudRepository<CarEntity> {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, String.valueOf(status));
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                List<CarEntity> cars = new ArrayList<>();
+                while (resultSet.next()) {
+                    cars.add(CarMapper.resultSetToCarEntity(resultSet));
+                }
+                return cars;
+            }
+        } catch (SQLException e) {
+            log.error(ErrorMessages.FIND_ALL_CARS, e);
+            throw new DataAccessException(ErrorMessages.FIND_ALL_CARS, e);
+        }
+    }
+
+    public List<CarEntity> findNotRented() {
+        final String query = """
+                SELECT id, manufacturer, model, year, status, car_class FROM car
+                WHERE status IN ('AVAILABLE','BROKEN')
+                """;
+        return getCarEntities(query);
+    }
+
+
+    private List<CarEntity> getCarEntities(String query) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<CarEntity> cars = new ArrayList<>();

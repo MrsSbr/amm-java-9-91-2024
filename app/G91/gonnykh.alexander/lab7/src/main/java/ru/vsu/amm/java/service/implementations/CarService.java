@@ -29,24 +29,33 @@ public class CarService {
     }
 
     public void updateCar(CarDto carDto) {
-        //todo нельзя обновлять статус если занят кем-то
         CarEntity carEntity = CarMapper.CarDtoToCarEntity(carDto);
         carRepository.update(carEntity);
     }
 
-    public List<CarDto> getCarByStatus(Status status) {
+    public List<CarDto> findCarsByStatus(Status status) {
         return carRepository.findByStatus(status)
                 .stream()
-                .map(CarMapper::carEntityToCarDto).toList();
+                .map(CarMapper::carEntityToCarDto)
+                .toList();
     }
 
-    public List<CarDto> getAllCars() {
+
+    public List<CarDto> findAllCars() {
         return carRepository.findAll()
                 .stream()
-                .map(CarMapper::carEntityToCarDto).toList();
+                .map(CarMapper::carEntityToCarDto)
+                .toList();
     }
 
-    public CarDto getCarById(Long id) {
+    public List<CarDto> findAllNotRentedCars() {
+        return carRepository.findNotRented()
+                .stream()
+                .map(CarMapper::carEntityToCarDto)
+                .toList();
+    }
+
+    public CarDto findCarsById(Long id) {
         CarEntity carEntity = carRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Car not found"));
         return CarMapper.carEntityToCarDto(carEntity);
