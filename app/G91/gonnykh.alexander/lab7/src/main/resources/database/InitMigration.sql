@@ -4,15 +4,17 @@ CREATE TABLE car
     manufacturer TEXT NOT NULL,
     model  TEXT NOT NULL,
     year   INT  NOT NULL,
-    status TEXT NOT NULL
+    status    TEXT NOT NULL,
+    car_class TEXT NOT NULL
 );
 
-CREATE TABLE user
+CREATE TABLE "user"
 (
     id            BIGSERIAL PRIMARY KEY,
     username      TEXT NOT NULL UNIQUE ,
     password TEXT NOT NULL,
-    email         TEXT NOT NULL UNIQUE
+    email TEXT NOT NULL UNIQUE,
+    role  TEXT NOT NULL
 );
 
 CREATE TABLE user_car
@@ -23,7 +25,7 @@ CREATE TABLE user_car
     start_trip       TIMESTAMP      NOT NULL,
     end_trip         TIMESTAMP      NOT NULL,
     price_per_minute DECIMAL(10, 2) NOT NULL,
-    CONSTRAINT user_car_user_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
+    CONSTRAINT user_car_user_fk FOREIGN KEY (user_id) REFERENCES "user" (id) ON DELETE CASCADE,
     CONSTRAINT user_car_car_fk FOREIGN KEY (car_id) REFERENCES car(id) ON DELETE CASCADE
 );
 

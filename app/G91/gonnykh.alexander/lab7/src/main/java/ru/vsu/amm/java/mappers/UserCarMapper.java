@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserCarMapper {
-    public static UserCarEntity ResultSetToUserCarEntity(ResultSet rs) throws SQLException {
+    public static UserCarEntity resultSetToUserCarEntity(ResultSet rs) throws SQLException {
         return new UserCarEntity(rs.getLong("id"),
                 rs.getLong("user_id"),
                 rs.getLong("car_id"),

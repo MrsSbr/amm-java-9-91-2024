@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.servlet;
 
+import ru.vsu.amm.java.enums.Role;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.model.requests.RegisterRequest;
@@ -32,13 +33,12 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
         try {
-            RegisterRequest registerRequest = new RegisterRequest(name, email, password);
+            RegisterRequest registerRequest = new RegisterRequest(name, email, password, Role.USER);
 
             authService.register(registerRequest);
             HttpSession session = req.getSession();

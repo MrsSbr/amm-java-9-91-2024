@@ -3,6 +3,7 @@ package ru.vsu.amm.java.servlet;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.model.requests.LoginRequest;
+import ru.vsu.amm.java.service.implementations.UserService;
 import ru.vsu.amm.java.service.implementations.DefaultAuthService;
 import ru.vsu.amm.java.service.interfaces.AuthService;
 
@@ -21,6 +22,7 @@ public class LoginServlet extends HttpServlet {
     private static final String HOME_PAGE = "/index.jsp";
     private static final String ERROR_MESSAGE = "errorMessage";
     private final AuthService authService;
+    private final UserService userService;
 
     public LoginServlet() {
         this.authService = new DefaultAuthService();
@@ -39,9 +41,12 @@ public class LoginServlet extends HttpServlet {
         try {
             authService.login(new LoginRequest(email, password));
 
+
             HttpSession session = req.getSession();
             session.setAttribute("email", email);
-            resp.sendRedirect(HOME_PAGE);
+            session.setAttribute("userId", user.getId());
+
+            resp.sendRedirect("/availableCars");
         } catch (WrongUserCredentialsException | DataAccessException e) {
             req.setAttribute(ERROR_MESSAGE, e.getMessage());
             getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
