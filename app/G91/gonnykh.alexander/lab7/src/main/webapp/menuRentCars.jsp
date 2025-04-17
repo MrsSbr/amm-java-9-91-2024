@@ -133,7 +133,9 @@
         <c:if test="${not empty errorMessage}">
             <div class="error">${errorMessage}</div>
         </c:if>
-        <div id="successMsg" class="success"></div>
+        <c:if test="${not empty successMessage}">
+            <div class="success">${successMessage}</div>
+        </c:if>
 
         <c:forEach var="car" items="${cars}">
             <div class="car-card" id="car-${car.id}">
@@ -156,7 +158,7 @@
                     </c:choose>
                 </p>
 
-                <form action="${pageContext.request.contextPath}/bookCar" method="post" class="bookCarForm">
+                <form action="${pageContext.request.contextPath}/bookCar" method="post">
                     <input type="hidden" name="carId" value="${car.id}"/>
                     <input type="submit" class="book-btn" value="Book Now"/>
                 </form>
@@ -168,81 +170,5 @@
         </c:if>
     </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const successMsg = document.getElementById("successMsg");
-
-        function attachFormHandlers() {
-            document.querySelectorAll("form.bookCarForm").forEach(form => {
-                form.addEventListener("submit", function (e) {
-                    e.preventDefault();
-
-                    const formData = new FormData(form);
-                    const params = new URLSearchParams();
-                    formData.forEach((value, key) => {
-                        params.append(key, value);
-                    });
-
-                    fetch(form.action, {
-                        method: form.method,
-                        body: params,
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        }
-                    })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error("Network response was not ok");
-                            }
-                            return response.text();
-                        })
-                        .then(data => {
-                            successMsg.innerText = "Successfully booked the car";
-                            refreshCarList();
-                        })
-                        .catch(error => {
-                            console.error("Booking error:", error);
-                            alert("Booking failed. Please try again.");
-                        });
-                });
-            });
-        }
-
-        function refreshCarList() {
-            fetch("${pageContext.request.contextPath}/availableCars", {
-                method: "GET",
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest"
-                }
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("Failed to fetch car list");
-                    }
-                    return response.text();
-                })
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, "text/html");
-                    const newContent = doc.querySelector(".content");
-                    const currentContent = document.querySelector(".content");
-
-                    if (newContent && currentContent) {
-                        currentContent.innerHTML = newContent.innerHTML;
-                        attachFormHandlers();
-                    }
-                })
-                .catch(error => {
-                    console.error("Failed to update car list:", error);
-                });
-        }
-
-        attachFormHandlers();
-        setInterval(refreshCarList, 5000);
-    });
-</script>
-
-
 </body>
 </html>

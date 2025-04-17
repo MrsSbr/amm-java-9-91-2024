@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.servlet;
 
+import ru.vsu.amm.java.enums.Status;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.model.dto.CarDto;
 import ru.vsu.amm.java.service.implementations.CarService;
@@ -12,30 +13,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @WebServlet(name = "BookCarServlet", urlPatterns = "/bookCar")
 public class BookCarServlet extends HttpServlet {
     private final CarService carService = new CarService();
     private final UserService userService = new UserService();
+    private static final String MENU_RENT_CARS = "/menuRentCars.jsp";
+    private static final String ERROR_MESSAGE = "errorMessage";
+    private static final String SUCCESS_MESSAGE = "successMessage";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        Long carId = Long.parseLong(request.getParameter("carId"));
+        String email = (String) session.getAttribute("email");
         try {
-            Long carId = Long.parseLong(request.getParameter("carId"));
-            String email = (String) session.getAttribute("email");
             Long customerId = userService.getUserByEmail(email).getId();
             CarDto carDto = carService.getCarById(carId);
             carService.bookCar(customerId, carDto);
-            response.setStatus(HttpServletResponse.SC_OK);
+            request.setAttribute(SUCCESS_MESSAGE, "Car successfully booked!");
         } catch (DataAccessException e) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            request.setAttribute(ERROR_MESSAGE, "An error occurred while accessing the data.");
         } catch (NoSuchElementException e) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            request.setAttribute(ERROR_MESSAGE, "Car not found.");
         } catch (IllegalArgumentException e) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            request.setAttribute(ERROR_MESSAGE, "Invalid data provided.");
         }
-    }
 
+        try {
+            List<CarDto> carList = carService.getCarByStatus(Status.AVAILABLE);
+            request.setAttribute("cars", carList);
+        } catch (DataAccessException e) {
+            request.setAttribute(ERROR_MESSAGE, "An error occurred while retrieving the car list.");
+        }
+
+        getServletContext().getRequestDispatcher(MENU_RENT_CARS).forward(request, response);
+    }
 }

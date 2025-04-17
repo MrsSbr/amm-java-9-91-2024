@@ -2,8 +2,8 @@ package ru.vsu.amm.java.servlet;
 
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
+import ru.vsu.amm.java.model.dto.UserDto;
 import ru.vsu.amm.java.model.requests.LoginRequest;
-import ru.vsu.amm.java.service.implementations.UserService;
 import ru.vsu.amm.java.service.implementations.DefaultAuthService;
 import ru.vsu.amm.java.service.interfaces.AuthService;
 
@@ -19,7 +19,6 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     private static final String LOGIN_PAGE = "/login.jsp";
-    private static final String HOME_PAGE = "/index.jsp";
     private static final String ERROR_MESSAGE = "errorMessage";
     private final AuthService authService;
 
@@ -28,26 +27,29 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
 
         try {
-            authService.login(new LoginRequest(email, password));
+            UserDto newUser = authService.login(new LoginRequest(email, password));
 
-
-            HttpSession session = req.getSession();
+            HttpSession session = request.getSession();
             session.setAttribute("email", email);
 
-            resp.sendRedirect("/availableCars");
+            switch (newUser.getRole()) {
+                case USER -> response.sendRedirect("/availableCars");
+                case ADMIN -> response.sendRedirect("/manageCars");
+            }
+
         } catch (WrongUserCredentialsException | DataAccessException e) {
-            req.setAttribute(ERROR_MESSAGE, e.getMessage());
-            getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
+            request.setAttribute(ERROR_MESSAGE, e.getMessage());
+            getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(request, response);
         }
     }
 }

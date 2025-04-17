@@ -25,6 +25,12 @@ public class CarService {
                 .map(CarMapper::carEntityToCarDto).toList();
     }
 
+    public List<CarDto> getAllCars() {
+        return carRepository.findAll()
+                .stream()
+                .map(CarMapper::carEntityToCarDto).toList();
+    }
+
     public CarDto getCarById(Long id) {
         CarEntity carEntity = carRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Car not found"));
@@ -33,5 +39,10 @@ public class CarService {
 
     public void bookCar(Long userId, CarDto carDto) {
         userCarRepository.bookCar(userId, carDto);
+    }
+
+    public void addCar(CarDto carDto) {
+        CarEntity carEntity = CarMapper.CarDtoToCarEntity(carDto);
+        carRepository.save(carEntity);
     }
 }

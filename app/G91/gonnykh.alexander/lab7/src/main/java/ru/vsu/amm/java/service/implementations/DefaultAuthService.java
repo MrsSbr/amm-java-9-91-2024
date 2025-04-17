@@ -2,6 +2,8 @@ package ru.vsu.amm.java.service.implementations;
 
 import ru.vsu.amm.java.entities.UserEntity;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
+import ru.vsu.amm.java.mappers.UserMapper;
+import ru.vsu.amm.java.model.dto.UserDto;
 import ru.vsu.amm.java.model.requests.LoginRequest;
 import ru.vsu.amm.java.model.requests.RegisterRequest;
 import ru.vsu.amm.java.repository.implementations.UserRepository;
@@ -21,7 +23,7 @@ public class DefaultAuthService implements AuthService {
     }
 
     @Override
-    public void login(LoginRequest request) {
+    public UserDto login(LoginRequest request) {
         Optional<UserEntity> userOptional = userRepository.findByEmail(request.email());
 
         if (userOptional.isEmpty()) {
@@ -31,6 +33,8 @@ public class DefaultAuthService implements AuthService {
         if (!bcryptPasswordEncoder.checkPassword(request.password(), userOptional.get().getPassword())) {
             throw new WrongUserCredentialsException(ErrorMessages.INCORRECT_PASSWORD);
         }
+
+        return UserMapper.UserEntityToUserDto(userOptional.get());
 
     }
 
@@ -44,6 +48,7 @@ public class DefaultAuthService implements AuthService {
             UserEntity userEntity = new UserEntity(null, request.name(),
                     bcryptPasswordEncoder.hashPassword(request.password()), request.email(), request.role());
             userRepository.save(userEntity);
+
         }
     }
 }
