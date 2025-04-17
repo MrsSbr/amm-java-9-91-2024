@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.data.entities;
+package ru.vsu.amm.java.domain.entities;
 
 public class Action {
     private Long id;
