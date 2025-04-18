@@ -1,17 +1,26 @@
 package ru.vsu.amm.java.Entities;
 
 public class SmartphoneInOrder {
+    private long smartphoneInOrderId;
     private long orderNum;
-    private int smartphoneId;
+    private long smartphoneId;
     public int amount;
 
     public SmartphoneInOrder() {
     }
 
-    public SmartphoneInOrder(long orderNum, int smartphoneId, int amount) {
+    public SmartphoneInOrder(long orderNum, long smartphoneId, int amount) {
         this.orderNum = orderNum;
         this.smartphoneId = smartphoneId;
         this.amount = amount;
+    }
+
+    public long getSmartphoneInOrderId() {
+        return smartphoneInOrderId;
+    }
+
+    public void setSmartphoneInOrderId(long smartphoneInOrderId) {
+        this.smartphoneInOrderId = smartphoneInOrderId;
     }
 
     public long getOrderNum() {
@@ -26,7 +35,7 @@ public class SmartphoneInOrder {
         return smartphoneId;
     }
 
-    public void setSmartphoneId(int smartphoneId) {
+    public void setSmartphoneId(long smartphoneId) {
         this.smartphoneId = smartphoneId;
     }
 
