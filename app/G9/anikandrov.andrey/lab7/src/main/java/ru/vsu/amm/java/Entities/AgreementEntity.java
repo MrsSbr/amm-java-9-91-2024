@@ -1,6 +1,5 @@
 package ru.vsu.amm.java.Entities;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 public class AgreementEntity {
@@ -12,7 +11,8 @@ public class AgreementEntity {
     private Integer sumPrice;
 
 
-    public AgreementEntity() {}
+    public AgreementEntity() {
+    }
 
     public AgreementEntity(Long agreementID, Long userID, Long objectID, LocalDate timeStart, LocalDate timeEnd, Integer sumPrice) {
         this.agreementID = agreementID;

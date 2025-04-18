@@ -11,6 +11,7 @@
             align-items: center;
         }
         .registration-container {
+            margin-top: 50px;
             border: 1px solid #4682b4;
             border-radius: 5px;
             padding: 20px;
@@ -47,7 +48,6 @@
     </style>
 </head>
 <body>
-<img src="logo.png" alt="Логотип" width="200">
 
 <div class="registration-container">
     <h2>Регистрация</h2>
