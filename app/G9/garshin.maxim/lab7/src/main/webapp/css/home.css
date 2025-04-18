@@ -1,0 +1,24 @@
+.welcome {
+    width: 350px;
+    height: 150px;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-items: auto;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.login-button, .register-button {
+    width: 100px;
+    height: 35px;
+}
+
+.welcome-text {
+    font-size: 30px;
+    font-weight: bold;
+}

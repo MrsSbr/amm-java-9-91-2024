@@ -1,0 +1,8 @@
+.form-group {
+    width: 200px;
+    display: flex;
+}
+
+input {
+    width: 80px;
+}
