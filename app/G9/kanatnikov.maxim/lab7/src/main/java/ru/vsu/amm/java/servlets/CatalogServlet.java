@@ -34,8 +34,66 @@ public class CatalogServlet extends HttpServlet {
             return;
         }
 
+        String searchType = req.getParameter("searchType");
+        String searchValue = req.getParameter("searchValue");
+        String minPrice = req.getParameter("minPrice");
+        String maxPrice = req.getParameter("maxPrice");
+        String maxAge = req.getParameter("age");
+
         try {
-            List<BoardGame> games = boardGamesService.getAllBoardGames();
+            List<BoardGame> games;
+            if (searchType != null) {
+                switch (searchType) {
+                    case "name":
+                    case "genre":
+                    case "publisher":
+                        if (searchValue != null && !searchValue.isEmpty()) {
+                            games = boardGamesService
+                                    .getBoardGameByField(searchType.equals("name")
+                                            ? "\"Name\""
+                                            : searchType,
+                                            searchValue);
+                        } else {
+                            games = boardGamesService.getAllBoardGames();
+                        }
+                        break;
+
+                    case "price":
+                        if (minPrice != null && maxPrice != null) {
+                            try {
+                                int min = Integer.parseInt(minPrice);
+                                int max = Integer.parseInt(maxPrice);
+                                games = boardGamesService.getBoardGameByPriceRange(min, max);
+                            } catch (NumberFormatException e) {
+                                req.setAttribute("errorMessage", "Wrong price format");
+                                games = boardGamesService.getAllBoardGames();
+                            }
+                        } else {
+                            games = boardGamesService.getAllBoardGames();
+                        }
+                        break;
+
+                    case "minAge":
+                        if (maxAge != null) {
+                            try {
+                                int age = Integer.parseInt(maxAge);
+                                games = boardGamesService.getBoardGameByMinAge(age);
+                            } catch (NumberFormatException e) {
+                                req.setAttribute("errorMessage", "Wrong price format");
+                                games = boardGamesService.getAllBoardGames();
+                            }
+                        } else {
+                            games = boardGamesService.getAllBoardGames();
+                        }
+                        break;
+
+                    default:
+                        req.setAttribute("errorMessage", "Unknown search type");
+                        games = boardGamesService.getAllBoardGames();
+                }
+            } else {
+                games = boardGamesService.getAllBoardGames();
+            }
             req.setAttribute("games", games);
             req.getRequestDispatcher("/catalog.jsp").forward(req, resp);
         } catch (SQLException e) {
