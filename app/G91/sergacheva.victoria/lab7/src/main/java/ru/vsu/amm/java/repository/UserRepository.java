@@ -1,5 +1,7 @@
 package ru.vsu.amm.java.repository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.vsu.amm.java.exception.SqlException;
 import ru.vsu.amm.java.entity.User;
 
@@ -13,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserRepository implements CrudRepository<User> {
+    private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
     private final DataSource dataSource;
 
     public UserRepository(final DataSource dataSource) {
@@ -20,6 +23,7 @@ public class UserRepository implements CrudRepository<User> {
     }
 
     public Optional<User> findByLogin(String login) {
+        logger.info("Find with login = {}", login);
         String sql = "SELECT id, name, login, hash_password FROM user_entity WHERE login = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -32,11 +36,14 @@ public class UserRepository implements CrudRepository<User> {
                             resultSet.getString("name"),
                             resultSet.getString("login"),
                             resultSet.getString("hash_password"));
+
+                    logger.info("Found user: {}", user);
                     return Optional.of(user);
                 }
             }
 
         } catch (SQLException e) {
+            logger.error("User with login = {} not found {}", login, e.getMessage());
             throw new SqlException(e.getMessage());
         }
         return Optional.empty();
@@ -44,6 +51,7 @@ public class UserRepository implements CrudRepository<User> {
 
     @Override
     public Optional<User> findById(long id) {
+        logger.info("Find with id = {}", id);
         String sql = "SELECT id, name, login, hash_password FROM user_entity WHERE id = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -56,11 +64,14 @@ public class UserRepository implements CrudRepository<User> {
                     String login = resultSet.getString("login");
                     String hashPassword = resultSet.getString("hash_password");
                     User user = new User(userId, name, login, hashPassword);
+
+                    logger.info("Found user: {}", user);
                     return Optional.of(user);
                 }
             }
 
         } catch (SQLException e) {
+            logger.error("User with id = {} not found {}", id, e.getMessage());
             throw new SqlException(e.getMessage());
         }
         return Optional.empty();
@@ -68,6 +79,7 @@ public class UserRepository implements CrudRepository<User> {
 
     @Override
     public List<User> findAll() {
+        logger.info("Find all users");
         List<User> users = new ArrayList<>();
         String sql = "SELECT id, name, login, hash_password FROM user_entity";
         try (Connection connection = dataSource.getConnection();
@@ -83,15 +95,18 @@ public class UserRepository implements CrudRepository<User> {
             }
 
         } catch (SQLException e) {
+            logger.error("Not found users {}", e.getMessage());
             throw new SqlException(e.getMessage());
         }
+        logger.info("Found users size = {}", users.size());
         return users;
     }
 
     @Override
-    public void save(User user) {
-        String sql = user.getId() == null ? "INSERT INTO user_entity (name, login, hash_password) VALUES (?, ?, ?)" : "UPDATE user SET name = ?, login = ?, hash_password = ? WHERE id = ?";
-
+    public long save(User user) {
+        logger.info("Saving user with login = {}", user.getLogin());
+        String sql = user.getId() == null ? "INSERT INTO user_entity (name, login, hash_password) VALUES (?, ?, ?) RETURNING id" : "UPDATE user SET name = ?, login = ?, hash_password = ? WHERE id = ?";
+        long userId = 0;
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, user.getName());
@@ -99,16 +114,27 @@ public class UserRepository implements CrudRepository<User> {
             statement.setString(3, user.getHashPassword());
 
             if (user.getId() != null) {
+                userId = user.getId();
                 statement.setLong(4, user.getId());
+                statement.executeUpdate();
+            } else {
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    userId = resultSet.getLong("id");
+                }
             }
-            statement.executeUpdate();
+
         } catch (SQLException e) {
+            logger.error("Saving user with login = {} failed {}", user.getLogin(), e.getMessage());
             throw new SqlException(e.getMessage());
         }
+        logger.info("Saved user with login = {}", user.getLogin());
+        return userId;
     }
 
     @Override
     public void delete(User user) {
+        logger.info("Deleting user with id = {}", user.getId());
         String sql = "DELETE FROM user_entity WHERE id = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -116,7 +142,9 @@ public class UserRepository implements CrudRepository<User> {
 
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error("Deleting user with id = {} failed {}", user.getId(), e.getMessage());
             throw new SqlException(e.getMessage());
         }
+        logger.info("Deleted user with id = {}", user.getId());
     }
 }
