@@ -15,6 +15,8 @@ dependencies {
 
     implementation("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
+    implementation("org.postgresql:postgresql:42.7.5")
+    implementation("org.slf4j:slf4j-api:1.7.36")
 }
 
 tasks.test {
