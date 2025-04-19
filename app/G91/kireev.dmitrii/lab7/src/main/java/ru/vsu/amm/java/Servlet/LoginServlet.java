@@ -11,6 +11,7 @@ import ru.vsu.amm.java.Exception.DbException;
 import ru.vsu.amm.java.Model.Request.LoginRequest;
 import ru.vsu.amm.java.Model.Response.LoginResponse;
 import ru.vsu.amm.java.Service.Interface.AuthService;
+
 import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/login")
@@ -21,10 +22,13 @@ public class LoginServlet extends HttpServlet {
 
     private static final String LOGIN_PAGE = "/login.jsp";
     private static final String HOME_PAGE = "/index.jsp";
-    private static final String ERROR_MESSAGE = "errorMessage";
+    private static final String ERROR_MESSAGE = "error";
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
     private static final String SESSION_EMAIL = "email";
+
+    private static final String DB_ERROR_MESSAGE = "Ошибка бд";
+    private static final String INVALID_CREDENTIALS_MESSAGE = "Неверные данные для входа";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,9 +52,11 @@ public class LoginServlet extends HttpServlet {
                 getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
             }
         } catch (DbException e) {
-            req.setAttribute(ERROR_MESSAGE, "Ошибка бд");
+            req.setAttribute(ERROR_MESSAGE, DB_ERROR_MESSAGE);
+            getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
+        } catch (Exception e) {
+            req.setAttribute(ERROR_MESSAGE, INVALID_CREDENTIALS_MESSAGE);
             getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
         }
     }
 }
-
