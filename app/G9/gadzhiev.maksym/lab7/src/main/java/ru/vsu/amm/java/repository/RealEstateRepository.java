@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class RealEstateRepository implements BaseRepository<RealEstate> {
@@ -22,8 +24,8 @@ public class RealEstateRepository implements BaseRepository<RealEstate> {
     @Override
     public Optional<RealEstate> findById(Long id) throws SQLException {
         final String query = """
-                SELECT id, type, address, maximumNumberOfGuests, rules
-                FROM realEstate WHERE id = ?
+                SELECT id, type, address, maximum_number_of_guests, rules, image_name, price
+                FROM real_estate WHERE id = ?
                 """;
         try(Connection connection = dataSource.getConnection();
             PreparedStatement pStmt = connection.prepareStatement(query)) {
@@ -36,9 +38,10 @@ public class RealEstateRepository implements BaseRepository<RealEstate> {
                             result.getLong("id"),
                             Housing.valueOf(result.getString("type")),
                             result.getString("address"),
-                            result.getInt("maximumNumberOfGuests"),
-                            result.getString("rules")
-                    ));
+                            result.getInt("maximum_number_of_guests"),
+                            result.getString("rules"),
+                            result.getString("image_name"),
+                            result.getLong("price")));
                 }
                 return Optional.empty();
             }
@@ -49,12 +52,12 @@ public class RealEstateRepository implements BaseRepository<RealEstate> {
     public void update(RealEstate entity) throws SQLException {
         final String query = """
                 UPDATE realEstate
-                SET type = ?, address = ?, maximumNumberOfGuests = ?, rules = ?
+                SET type = ?, address = ?, maximum_number_of_guests = ?, rules = ?, image_name = ?, price = ?
                 WHERE id = ?""";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement pStmt = connection.prepareStatement(query)) {
             setPrepareStatement(pStmt, entity);
-            pStmt.setLong(5, entity.getId());
+            pStmt.setLong(7, entity.getId());
             pStmt.execute();
         }
     }
@@ -64,14 +67,15 @@ public class RealEstateRepository implements BaseRepository<RealEstate> {
         pStmt.setString(2, entity.getAddress());
         pStmt.setInt(3, entity.getMaximumNumberOfGuests());
         pStmt.setString(4, entity.getRules());
-
+        pStmt.setString(5, entity.getImageName());
+        pStmt.setLong(6, entity.getPrice());
     }
 
     @Override
     public boolean save(RealEstate entity) throws SQLException {
         final String query = """
-                INSERT INTO realEstate (type, address, maximumNumberOfGuests, rules)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO realEstate (type, address, maximum_number_of_guests, rules, image_name, price)
+                VALUES (?, ?, ?, ?, ?, ?)
                 """;
         try(Connection connection = dataSource.getConnection();
             PreparedStatement pStmt = connection.prepareStatement(query)) {
@@ -89,4 +93,28 @@ public class RealEstateRepository implements BaseRepository<RealEstate> {
              pStmt.execute();
         }
     }
+
+    public List<RealEstate> findAll() throws SQLException {
+        final String query = " SELECT id, address, type, maximum_number_of_guests, rules, image_name, price FROM real_estate ";
+
+
+        List<RealEstate> realEstateList = new ArrayList<>();
+
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement pStmt = connection.prepareStatement(query);
+            ResultSet result = pStmt.executeQuery()) {
+            while (result.next()) {
+                realEstateList.add(new RealEstate(
+                        result.getLong("id"),
+                        Housing.valueOf(result.getString("type")),
+                        result.getString("address"),
+                        result.getInt("maximum_number_of_guests"),
+                        result.getString("rules"),
+                        result.getString("image_name"),
+                        result.getLong("price")));
+            }
+        }
+        return realEstateList;
+    }
 }
+

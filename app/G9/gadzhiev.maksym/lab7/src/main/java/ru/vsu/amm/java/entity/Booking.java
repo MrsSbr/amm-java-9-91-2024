@@ -1,43 +1,44 @@
 package ru.vsu.amm.java.entity;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Booking {
     private Long id;
-    private LocalDateTime checkInDate;
-    private LocalDateTime checkOutDate;
-    private Long price;
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
     private String status;
     private Long userId;
     private Long realEstateId;
 
-    public Booking(long id, LocalDate checkInDate, LocalDate checkOutDate, long price,
+    public Booking(long id, LocalDate checkInDate, LocalDate checkOutDate,
                    String status, long userId, long realEstateId) {
         this.id = id;
-        this.checkInDate = LocalDateTime.from(checkInDate);
-        this.checkOutDate = LocalDateTime.from(checkOutDate);
-        this.price = price;
+        this.checkInDate = LocalDate.from(checkInDate);
+        this.checkOutDate = LocalDate.from(checkOutDate);
         this.status = status;
         this.userId = userId;
         this.realEstateId = realEstateId;
 
     }
+    public Booking(LocalDate checkInDate, LocalDate checkOutDate,
+                   String status, long userId, long realEstateId) {
+        this.checkInDate = LocalDate.from(checkInDate);
+        this.checkOutDate = LocalDate.from(checkOutDate);
+        this.status = status;
+        this.userId = userId;
+        this.realEstateId = realEstateId;
 
+    }
     public Long getId() {
         return id;
     }
 
-    public LocalDateTime getCheckInDate() {
+    public LocalDate getCheckInDate() {
         return checkInDate;
     }
 
-    public LocalDateTime getCheckOutDate() {
+    public LocalDate getCheckOutDate() {
         return checkOutDate;
-    }
-
-    public Long getPrice() {
-        return price;
     }
 
     public String getStatus() {

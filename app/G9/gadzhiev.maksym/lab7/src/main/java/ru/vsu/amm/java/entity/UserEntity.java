@@ -1,7 +1,5 @@
 package ru.vsu.amm.java.entity;
 
-import ru.vsu.amm.java.repository.UserEntityRepository;
-
 public class UserEntity {
     private Long id;
     private String login;
@@ -15,6 +13,13 @@ public class UserEntity {
         this.password = password;
         this.number = number;
         this.email = email;
+    }
+
+    public UserEntity(String login, String password, String email, String number) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.number = number;
     }
 
     public String getLogin() {

@@ -68,7 +68,7 @@ public class UserEntityRepository implements BaseRepository<UserEntity> {
     @Override
     public boolean save(UserEntity entity) throws SQLException {
         final String query = """
-                INSERT INTO userEntity (login, password, number, email)
+                INSERT INTO user_entity (login, password, number_phone, email)
                 VALUES (?, ?, ?, ?)
                 """;
         try (Connection connection = dataSource.getConnection();
