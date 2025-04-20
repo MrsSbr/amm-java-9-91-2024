@@ -1,12 +1,12 @@
 package ru.vsu.amm.java.Service;
 
+import org.mindrot.jbcrypt.BCrypt;
 import ru.vsu.amm.java.Exeption.NotFoundException;
 import ru.vsu.amm.java.Exeption.UnCorrectDataException;
 import ru.vsu.amm.java.Repository.Entities.Shareholder;
 import ru.vsu.amm.java.Repository.ShareholderRepository;
 import ru.vsu.amm.java.Service.Convertors.ShareholderModelToEntity;
 import ru.vsu.amm.java.Service.Entities.ShareholderCreateModel;
-import org.mindrot.jbcrypt.BCrypt;
 import ru.vsu.amm.java.Service.Interface.UserServiceInterface;
 
 import java.sql.SQLException;
@@ -35,12 +35,12 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public int login(String email, String password) throws SQLException {
+    public Shareholder login(String email, String password) throws SQLException {
         logger.info("Start login");
         Shareholder user = userRepository.getByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User not found"));
-        if(!BCrypt.checkpw(password, user.getPassword()))
+        if (!BCrypt.checkpw(password, user.getPassword()))
             throw new UnCorrectDataException("Wrong password");
-        return user.getId();
+        return user;
     }
 }

@@ -21,6 +21,11 @@ public class RegisterServlet extends HttpServlet {
     }
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/register.jsp").forward(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("Name");
         String document = req.getParameter("Document");
@@ -32,7 +37,8 @@ public class RegisterServlet extends HttpServlet {
             userService.register(user, password);
             resp.sendRedirect("/login");
         } catch (RuntimeException | SQLException e) {
-            //Обработка исключений
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    e.getMessage());
         }
     }
 }

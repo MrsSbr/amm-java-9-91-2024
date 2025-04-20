@@ -8,5 +8,5 @@ import java.sql.SQLException;
 public interface UserServiceInterface {
     boolean register(ShareholderCreateModel user, String password) throws SQLException;
 
-    int login(String email, String password) throws SQLException;
+    Shareholder login(String email, String password) throws SQLException;
 }
