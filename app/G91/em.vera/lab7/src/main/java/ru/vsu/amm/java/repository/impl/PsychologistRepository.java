@@ -121,4 +121,32 @@ public class PsychologistRepository implements CrudRepository<Psychologist> {
         }
     }
 
+    public Optional<Psychologist> findByLogin(String login) throws SQLException {
+        final String sql =
+                "SELECT id_psychologist, name, surname, birthdate, gender, experience, login, password " +
+                        "FROM psychologist WHERE login = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, login);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(new Psychologist(
+                            rs.getLong("id_psychologist"),
+                            rs.getString("name"),
+                            rs.getString("surname"),
+                            rs.getDate("birthdate").toLocalDate(),
+                            Gender.getGenderByChar(rs.getString("gender").charAt(0)),
+                            rs.getShort("experience"),
+                            rs.getString("login"),
+                            rs.getString("password")
+                    ));
+                }
+                return Optional.empty();
+            }
+        }
+    }
+
+
 }
