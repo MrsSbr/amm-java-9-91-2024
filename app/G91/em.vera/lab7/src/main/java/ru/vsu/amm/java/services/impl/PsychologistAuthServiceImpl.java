@@ -15,9 +15,12 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 @Slf4j
-@AllArgsConstructor
 public class PsychologistAuthServiceImpl implements PsychologistAuthService {
     private final PsychologistRepository psychologistRepository;
+
+    public PsychologistAuthServiceImpl(){
+        psychologistRepository = new PsychologistRepository();
+    }
 
     @Override
     public void login(PsychologistLoginRequest request) {

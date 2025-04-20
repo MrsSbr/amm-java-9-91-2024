@@ -22,6 +22,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.30")
     implementation("org.postgresql:postgresql:42.7.5")
     implementation("org.slf4j:slf4j-api:1.7.36")
+    runtimeOnly("ch.qos.logback:logback-classic:1.2.11")
     implementation("org.mindrot:jbcrypt:0.4")
     implementation("javax.servlet:javax.servlet-api:4.0.1")
     implementation("javax.servlet.jsp:javax.servlet.jsp-api:2.3.3")

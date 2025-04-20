@@ -15,9 +15,12 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 @Slf4j
-@AllArgsConstructor
 public class ClientAuthServiceImpl implements ClientAuthService {
     private final ClientRepository clientRepository;
+
+    public ClientAuthServiceImpl() {
+        this.clientRepository = new ClientRepository();
+    }
 
     @Override
     public void login(ClientLoginRequest request) {

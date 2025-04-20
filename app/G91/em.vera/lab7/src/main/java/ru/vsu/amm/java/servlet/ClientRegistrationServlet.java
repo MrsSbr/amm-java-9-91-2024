@@ -11,15 +11,22 @@ import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.models.requests.ClientRegisterRequest;
 import ru.vsu.amm.java.services.ClientAuthService;
+import ru.vsu.amm.java.services.impl.ClientAuthServiceImpl;
+
 import java.io.IOException;
 
-@AllArgsConstructor
-@WebServlet(name = "ClientRegistrationServlet", urlPatterns = "/register")
+import static ru.vsu.amm.java.utils.ServletConstants.HOME_PAGE;
+
+
+@WebServlet(name = "ClientRegistrationServlet", urlPatterns = "/client/register")
 public class ClientRegistrationServlet extends HttpServlet {
 
-    private static final String REGISTER_PAGE = "/register.jsp";
-    private static final String HOME_PAGE = "/home.jsp";
+    private static final String REGISTER_PAGE = "/clientRegister.jsp";
     private final ClientAuthService authService;
+
+    public ClientRegistrationServlet() {
+        this.authService = new ClientAuthServiceImpl();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
