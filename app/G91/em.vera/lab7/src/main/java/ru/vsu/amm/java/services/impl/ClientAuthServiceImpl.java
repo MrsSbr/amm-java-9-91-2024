@@ -9,13 +9,14 @@ import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.models.requests.ClientLoginRequest;
 import ru.vsu.amm.java.models.requests.ClientRegisterRequest;
 import ru.vsu.amm.java.repository.impl.ClientRepository;
+import ru.vsu.amm.java.services.ClientAuthService;
 
 import java.sql.SQLException;
 import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
-public class ClientAuthServiceImpl implements ru.vsu.amm.java.services.ClientAuthService {
+public class ClientAuthServiceImpl implements ClientAuthService {
     private final ClientRepository clientRepository;
 
     @Override

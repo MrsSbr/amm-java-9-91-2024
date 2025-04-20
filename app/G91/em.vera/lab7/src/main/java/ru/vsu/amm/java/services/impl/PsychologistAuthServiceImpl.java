@@ -9,13 +9,14 @@ import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.models.requests.PsychologistLoginRequest;
 import ru.vsu.amm.java.models.requests.PsychologistRegisterRequest;
 import ru.vsu.amm.java.repository.impl.PsychologistRepository;
+import ru.vsu.amm.java.services.PsychologistAuthService;
 
 import java.sql.SQLException;
 import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
-public class PsychologistAuthServiceImpl implements ru.vsu.amm.java.services.PsychologistAuthService {
+public class PsychologistAuthServiceImpl implements PsychologistAuthService {
     private final PsychologistRepository psychologistRepository;
 
     @Override
