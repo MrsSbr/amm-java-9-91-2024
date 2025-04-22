@@ -1,10 +1,14 @@
 package ru.vsu.amm.java.data.repository;
 
-import main.data.database.config.DBConfig;
-import main.data.entities.DbPlayer;
+import ru.vsu.amm.java.data.database.config.DBConfig;
+import ru.vsu.amm.java.data.entities.DbPlayer;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DbPlayerRepository implements DbRepository<DbPlayer> {
 
@@ -43,12 +47,17 @@ public class DbPlayerRepository implements DbRepository<DbPlayer> {
         final String query = "INSERT INTO player(login, password, email) VALUES (?, ?, ?)";
 
         Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(query);
+        PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
         statement.setString(1, DBPlayer.getLogin());
         statement.setString(2, DBPlayer.getPassword());
         statement.setString(3, DBPlayer.getEmail());
-        statement.executeQuery();
+        statement.executeUpdate();
+
+        ResultSet generatedKeys = statement.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            DBPlayer.setId(generatedKeys.getLong(1));
+        }
     }
 
     @Override

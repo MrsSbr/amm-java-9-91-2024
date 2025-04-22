@@ -11,7 +11,13 @@ public class DbCard {
         this.id = id;
         this.topic = topic;
         this.difficulty = difficulty;
-        this.playerId = playerId;//тут мне тоже не нужен типо
+        this.playerId = playerId;
+    }
+
+    public DbCard(String topic, String difficulty, Long playerId) {
+        this.topic = topic;
+        this.difficulty = difficulty;
+        this.playerId = playerId;
     }
 
     public DbCard() {

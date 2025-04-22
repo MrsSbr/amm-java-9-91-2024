@@ -1,13 +1,22 @@
 package ru.vsu.amm.java.data.repository;
 
-import main.data.database.config.DBConfig;
-import main.data.entities.DbCard;
+
+import ru.vsu.amm.java.data.database.config.DBConfig;
+import ru.vsu.amm.java.data.entities.DbCard;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Logger;
 
 public class DbCardRepository implements DbRepository<DbCard> {
     private final DataSource dataSource;
+
+    private static final Logger log = Logger.getLogger(DbCardRepository.class.getName());
+
 
     public DbCardRepository() {
         dataSource = DBConfig.getDataSource();
@@ -25,7 +34,7 @@ public class DbCardRepository implements DbRepository<DbCard> {
 
 
         if (resultSet.next()) {
-            DbCard DBCard =  new DbCard();
+            DbCard DBCard = new DbCard();
             DBCard.setId(resultSet.getLong("id"));
             DBCard.setTopic(resultSet.getString("topic"));
             DBCard.setDifficulty(resultSet.getString("difficulty"));
@@ -38,22 +47,24 @@ public class DbCardRepository implements DbRepository<DbCard> {
     }
 
     @Override
-    public void create(DbCard DBCard) throws SQLException {
+    public void create(DbCard dbCard) throws SQLException {
         final String query = "INSERT INTO Card(topic, difficulty, player_id) VALUES (?, ?, ?)";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query,
                 Statement.RETURN_GENERATED_KEYS);
 
-        preparedStatement.setString(1, DBCard.getTopic());
-        preparedStatement.setString(2, DBCard.getDifficulty());
-        preparedStatement.setLong(3, DBCard.getPlayerId());
+        preparedStatement.setString(1, dbCard.getTopic());
+        preparedStatement.setString(2, dbCard.getDifficulty());
+        preparedStatement.setLong(3, dbCard.getPlayerId());
+        preparedStatement.executeUpdate();
 
         ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
         if (generatedKeys.next()) {
-            DBCard.setId(generatedKeys.getLong(1));
+            dbCard.setId(generatedKeys.getLong(1));
         }
 
+        log.info("ДБ Карточка сгенерировалась" + dbCard.getId() + " " + dbCard.getTopic() + " " + dbCard.getDifficulty() + " " + dbCard.getPlayerId());
     }
 
     @Override
@@ -82,9 +93,4 @@ public class DbCardRepository implements DbRepository<DbCard> {
         preparedStatement.setLong(1, DBCard.getId());
         preparedStatement.executeUpdate();
     }
-
-//    public Long findByWordToActions(Long wordToActionId) {
-//
-//
-//    }
 }

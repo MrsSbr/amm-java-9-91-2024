@@ -1,10 +1,19 @@
 package ru.vsu.amm.java.data.repository;
 
-import main.data.database.config.DBConfig;
-import main.data.entities.DbAction;
+
+
+import ru.vsu.amm.java.data.database.config.DBConfig;
+import ru.vsu.amm.java.data.entities.DbAction;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class DbActionRepository implements DbRepository<DbAction> {
     private final DataSource dataSource;
@@ -56,7 +65,7 @@ public class DbActionRepository implements DbRepository<DbAction> {
     }
 
     @Override
-    public void update(DbAction action) throws SQLException{
+    public void update(DbAction action) throws SQLException {
 
         final String query = "UPDATE action SET name = ?, points = ? WHERE id = ?";
 
@@ -80,5 +89,26 @@ public class DbActionRepository implements DbRepository<DbAction> {
 
         statement.setLong(1, action.getId());
         statement.executeUpdate();
+    }
+
+    public List<DbAction> getAllActions() throws SQLException {
+
+        final String query = "SELECT * FROM Action";
+
+        Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        ResultSet resultSet = statement.executeQuery();
+        List<DbAction> actions = new ArrayList<>();
+
+        //добавляет только один
+        while (resultSet.next()) {
+            actions.add(new DbAction(
+                    resultSet.getLong("id"),
+                    resultSet.getString("name"),
+                    resultSet.getInt("points")));
+        }
+
+        return actions;
     }
 }

@@ -1,7 +1,8 @@
 package ru.vsu.amm.java.domain.mapper;
 
-import main.data.entities.DbAction;
-import main.domain.entities.Action;
+
+import ru.vsu.amm.java.data.entities.DbAction;
+import ru.vsu.amm.java.domain.entities.Action;
 
 public class ActionMapper {
     public Action toDomain(DbAction dbAction) {

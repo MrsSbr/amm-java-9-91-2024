@@ -10,6 +10,13 @@ public class DbWordToAction {
         this.id = id;
         this.word = word;
         this.actionId = actionId;
+        this.cardId = cardId;
+    }
+
+    public DbWordToAction(String word, Long actionId, Long cardId) {
+        this.word = word;
+        this.actionId = actionId;
+        this.cardId = cardId;
     }
 
     public void setId(Long id) {

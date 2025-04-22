@@ -1,16 +1,25 @@
 package ru.vsu.amm.java.data.repository;
 
-import main.data.database.config.DBConfig;
-import main.data.entities.DbWordToAction;
+
+import ru.vsu.amm.java.data.database.config.DBConfig;
+import ru.vsu.amm.java.data.entities.DbWordToAction;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class DbWordToActionRepository implements DbRepository<DbWordToAction> {
 
     private final DataSource datasource;
+
+    private static final Logger log = Logger.getLogger(DbWordToActionRepository.class.getName());
+
 
     public DbWordToActionRepository() {
         datasource = DBConfig.getDataSource();
@@ -18,7 +27,7 @@ public class DbWordToActionRepository implements DbRepository<DbWordToAction> {
     @Override
     public DbWordToAction findById(Long id) throws SQLException {
 
-        final String query = "SELECT id, word, action_id FROM WordToAction WHERE id = ?";
+        final String query = "SELECT * FROM WordToAction WHERE id = ?";
 
         Connection connection = datasource.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
@@ -48,7 +57,6 @@ public class DbWordToActionRepository implements DbRepository<DbWordToAction> {
                 Statement.RETURN_GENERATED_KEYS);
 
 
-
         preparedStatement.setString(1, dbWordToAction.getWord());
         preparedStatement.setLong(2, dbWordToAction.getActionId());
         preparedStatement.setLong(3, dbWordToAction.getCardId());//
@@ -59,6 +67,7 @@ public class DbWordToActionRepository implements DbRepository<DbWordToAction> {
             dbWordToAction.setId(generatedKeys.getLong(1));
         }
 
+        log.info("DbWordToAction created: " + dbWordToAction.getWord());
     }
 
     @Override

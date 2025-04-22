@@ -1,16 +1,19 @@
 package ru.vsu.amm.java.domain.entities;
 
-import main.data.utils.Difficulty;
+
+
+import ru.vsu.amm.java.data.entities.utils.Difficulty;
+import ru.vsu.amm.java.data.entities.utils.Topic;
 
 import java.util.List;
 
 public class Card {
     private Long id;
-    private String topic;
+    private Topic topic;
     private List<WordToAction> wordsToActions;
     private Difficulty difficulty;
 
-    public Card(Long id, String topic, List<WordToAction> wordsToAction, Difficulty difficulty) {
+    public Card(Long id, Topic topic, List<WordToAction> wordsToAction, Difficulty difficulty) {
         this.id = id;
         this.topic = topic;
         this.wordsToActions = wordsToAction;
@@ -22,7 +25,7 @@ public class Card {
         this.id = id;
     }
 
-    public void setTopic(String topic) {
+    public void setTopic(Topic topic) {
         this.topic = topic;
     }
 
@@ -38,7 +41,7 @@ public class Card {
         return id;
     }
 
-    public String getTopic() {
+    public Topic getTopic() {
         return topic;
     }
 

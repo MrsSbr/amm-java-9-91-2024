@@ -1,11 +1,19 @@
 package ru.vsu.amm.java.domain.mapper;
 
-import main.data.entities.DbPlayer;
-import main.domain.entities.Player;
+
+import ru.vsu.amm.java.data.entities.DbPlayer;
+import ru.vsu.amm.java.data.repository.DbPlayerRepository;
+import ru.vsu.amm.java.domain.entities.Player;
 
 import java.sql.SQLException;
 
 public class PlayerMapper {
+    private final DbPlayerRepository dbPlayerRepository;
+
+    public PlayerMapper() {
+        this.dbPlayerRepository = new DbPlayerRepository();
+    }
+
     public Player toDomain(DbPlayer dbPlayer) {
         if (dbPlayer == null) {
             return null;
@@ -14,7 +22,6 @@ public class PlayerMapper {
         return new Player(
                 dbPlayer.getId(),
                 dbPlayer.getLogin(),
-                dbPlayer.getPassword(),
                 dbPlayer.getEmail()
         );
     }
@@ -24,12 +31,7 @@ public class PlayerMapper {
             return null;
         }
 
-
-        return new DbPlayer(
-                player.getId(),
-                player.getLogin(),
-                player.getPassword(),
-                player.getEmail()
-        );
+        Long id = player.getId();
+        return dbPlayerRepository.findById(id);
     }
 }

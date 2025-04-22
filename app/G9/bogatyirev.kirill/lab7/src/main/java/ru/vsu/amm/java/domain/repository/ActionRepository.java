@@ -1,11 +1,13 @@
 package ru.vsu.amm.java.domain.repository;
 
-import main.data.entities.DbAction;
-import main.data.repository.DbActionRepository;
-import main.domain.entities.Action;
-import main.domain.mapper.ActionMapper;
+
+import ru.vsu.amm.java.data.entities.DbAction;
+import ru.vsu.amm.java.data.repository.DbActionRepository;
+import ru.vsu.amm.java.domain.entities.Action;
+import ru.vsu.amm.java.domain.mapper.ActionMapper;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class ActionRepository implements Repository<Action> {
     private final DbActionRepository dbActionRepository;
@@ -62,6 +64,19 @@ public class ActionRepository implements Repository<Action> {
             dbActionRepository.update(dbAction);
         } catch (SQLException e) {
             throw new RuntimeException("Cannot delete action", e);
+        }
+
+    }
+
+    public List<Action> getAllActions() {
+
+        try {
+            List<DbAction> dbActions = dbActionRepository.getAllActions();
+            return dbActions.stream()
+                    .map(actionMapper::toDomain)
+                    .toList();
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot get any actions", e);
         }
 
     }

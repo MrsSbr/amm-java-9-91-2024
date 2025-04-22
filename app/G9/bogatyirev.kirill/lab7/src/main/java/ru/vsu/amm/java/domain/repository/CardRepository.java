@@ -1,9 +1,11 @@
 package ru.vsu.amm.java.domain.repository;
 
-import main.data.entities.DbCard;
-import main.data.repository.DbCardRepository;
-import main.domain.entities.Card;
-import main.domain.mapper.CardMapper;
+
+
+import ru.vsu.amm.java.data.entities.DbCard;
+import ru.vsu.amm.java.data.repository.DbCardRepository;
+import ru.vsu.amm.java.domain.entities.Card;
+import ru.vsu.amm.java.domain.mapper.CardMapper;
 
 import java.sql.SQLException;
 

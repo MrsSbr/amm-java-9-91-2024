@@ -8,7 +8,7 @@ CREATE TABLE Action
 CREATE TABLE Card
 (
     id BIGSERIAL PRIMARY KEY,
-    topic TEXT NOT NULL UNIQUE,
+    topic TEXT NOT NULL,
     difficulty TEXT NOT NULL,
     player_id BIGINT,
     CONSTRAINT fk_Player FOREIGN KEY(player_id) REFERENCES Player(id)
@@ -19,7 +19,7 @@ CREATE TABLE Player
 (
     id BIGSERIAL PRIMARY KEY,
     login TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE
 );
 

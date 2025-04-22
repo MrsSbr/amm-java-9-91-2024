@@ -1,36 +1,33 @@
 package ru.vsu.amm.java.domain.mapper;
 
-import main.data.entities.DbCard;
-import main.data.entities.DbWordToAction;
-import main.data.repository.DbCardRepository;
-import main.data.utils.Difficulty;
-import main.domain.entities.Card;
-import main.domain.entities.WordToAction;
+
+import ru.vsu.amm.java.data.entities.DbCard;
+import ru.vsu.amm.java.data.entities.DbWordToAction;
+import ru.vsu.amm.java.data.entities.utils.Difficulty;
+import ru.vsu.amm.java.data.entities.utils.Topic;
+import ru.vsu.amm.java.data.repository.DbCardRepository;
+import ru.vsu.amm.java.domain.entities.Card;
+import ru.vsu.amm.java.domain.entities.WordToAction;
 
 import java.sql.SQLException;
 import java.util.List;
 
+
 public class CardMapper {
-    private final WordToActionMapper wordToActionMapper;
     private final DbCardRepository dbCardRepository;
 
-    public CardMapper() {//мб добавить сюда ворд маппер
-        this.wordToActionMapper = new WordToActionMapper();
+    public CardMapper() {
         this.dbCardRepository = new DbCardRepository();
     }
 
-    public Card toDomain(DbCard dbCard, List<DbWordToAction> dbWords) {//мб не выносить dbWords
+    public Card toDomain(DbCard dbCard, List<WordToAction> words) {//мб не выносить dbWords
         if (dbCard == null) {
             return null;
         }
 
-        List<WordToAction> words = dbWords.stream()
-                .map(wordToActionMapper::toDomain)
-                .toList();
-
         return new Card(
                 dbCard.getId(),
-                dbCard.getTopic(),
+                Topic.valueOf(dbCard.getTopic()),
                 words,
                 Difficulty.valueOf(dbCard.getDifficulty())
         );
@@ -45,13 +42,14 @@ public class CardMapper {
 
             return new DbCard(
                     card.getId(),
-                    card.getTopic(),
+                    card.getTopic().toString(),
                     card.getDifficulty().toString(),
                     dbCardRepository.findById(card.getId()).getPlayerId()
-                    );
+            );
         } catch (SQLException e) {
             throw new RuntimeException("CardMapper Error", e);
         }
 
     }
 }
+

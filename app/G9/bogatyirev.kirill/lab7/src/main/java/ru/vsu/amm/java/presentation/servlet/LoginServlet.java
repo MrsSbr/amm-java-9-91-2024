@@ -6,18 +6,21 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import main.domain.entities.Player;
-import main.domain.repository.PlayerRepository;
+import ru.vsu.amm.java.data.service.AuthService;
+import ru.vsu.amm.java.domain.entities.Player;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.util.logging.Logger;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    private final PlayerRepository playerRepository;
+    private final AuthService authService;
+
+    private static final Logger log = Logger.getLogger(LoginServlet.class.getName());
+
 
     public LoginServlet() {
-        this.playerRepository = new PlayerRepository();
+        this.authService = new AuthService();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,23 +34,19 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        try {
-            Player player = playerRepository.findByLogin(login);
+        Player player = authService.login(login, password);
 
-            if (player == null) {
-                // Пользователь не найден
-                req.setAttribute("error", "Пользователь с таким логином не найден");
-                req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
-                return;
-            }
+        if (player != null) {
+            log.info("Пользователь найден");
+            HttpSession session = req.getSession();
+            session.setAttribute("player", player);
 
-            if (playerRepository.getPassword(player).equals(password)) {
-                HttpSession session = req.getSession();
-                session.setAttribute("player", player);
-
-            }
-        } catch (SQLException e) {
-            req.setAttribute("error", e.getMessage());
+            resp.sendRedirect("/laba7/game");
         }
+        else {
+            req.setAttribute("error", "Пользователь с таким логином не найден");
+            req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
+        }
+
     }
 }

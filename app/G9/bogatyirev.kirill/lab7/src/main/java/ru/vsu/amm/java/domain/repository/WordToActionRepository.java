@@ -1,9 +1,11 @@
 package ru.vsu.amm.java.domain.repository;
 
-import main.data.entities.DbWordToAction;
-import main.data.repository.DbWordToActionRepository;
-import main.domain.entities.WordToAction;
-import main.domain.mapper.WordToActionMapper;
+
+
+import ru.vsu.amm.java.data.entities.DbWordToAction;
+import ru.vsu.amm.java.data.repository.DbWordToActionRepository;
+import ru.vsu.amm.java.domain.entities.WordToAction;
+import ru.vsu.amm.java.domain.mapper.WordToActionMapper;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -65,10 +67,13 @@ public class WordToActionRepository implements Repository<WordToAction> {
 
     }
 
-    public List<DbWordToAction> findByCardId(Long id) {
+    public List<WordToAction> findByCardId(Long id) {
 
         try {
-            return dbWordToActionRepository.findByCardId(id);
+            return dbWordToActionRepository.findByCardId(id)
+                    .stream()
+                    .map(wordToActionMapper::toDomain)
+                    .toList();
         } catch (SQLException e) {
             throw new RuntimeException("WordToActionRepository find by card id issue", e);
         }

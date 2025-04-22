@@ -1,9 +1,11 @@
 package ru.vsu.amm.java.domain.mapper;
 
-import main.data.entities.DbWordToAction;
-import main.data.repository.DbWordToActionRepository;
-import main.domain.entities.WordToAction;
-import main.domain.repository.ActionRepository;
+
+
+import ru.vsu.amm.java.data.entities.DbWordToAction;
+import ru.vsu.amm.java.data.repository.DbWordToActionRepository;
+import ru.vsu.amm.java.domain.entities.WordToAction;
+import ru.vsu.amm.java.domain.repository.ActionRepository;
 
 import java.sql.SQLException;
 

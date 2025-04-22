@@ -1,15 +1,20 @@
 package ru.vsu.amm.java.domain.repository;
 
-import main.data.entities.DbPlayer;
-import main.data.repository.DbPlayerRepository;
-import main.domain.entities.Player;
-import main.domain.mapper.PlayerMapper;
+
+import ru.vsu.amm.java.data.entities.DbPlayer;
+import ru.vsu.amm.java.data.repository.DbPlayerRepository;
+import ru.vsu.amm.java.domain.entities.Player;
+import ru.vsu.amm.java.domain.mapper.PlayerMapper;
 
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class PlayerRepository implements Repository<Player> {
     private final DbPlayerRepository dbPlayerRepository;
     private final PlayerMapper playerMapper;
+
+    private static final Logger log = Logger.getLogger(PlayerRepository.class.getName());
+
 
     public PlayerRepository() {
         this.dbPlayerRepository = new DbPlayerRepository();
@@ -34,6 +39,7 @@ public class PlayerRepository implements Repository<Player> {
         try {
             DbPlayer dbPlayer = playerMapper.toData(player);
             dbPlayerRepository.create(dbPlayer);
+            log.info("Пользователь создан");
         } catch (SQLException e) {
             throw new RuntimeException("PlayerRepository create exception",e);
         }
@@ -77,10 +83,11 @@ public class PlayerRepository implements Repository<Player> {
     public Player registratePlayer(String email, String login, String password) throws SQLException {
         DbPlayer dbPlayer = new DbPlayer(login, password, email);
         dbPlayerRepository.create(dbPlayer);
+        log.info("Пользователь зарегистрирован его логин: " + dbPlayer.getLogin());
         return playerMapper.toDomain(dbPlayer);
     }
 
-    public String getPassword (Player player) throws SQLException {
+    public String getPassword(Player player) throws SQLException {
 
         try {
             DbPlayer dbPlayer = playerMapper.toData(player);

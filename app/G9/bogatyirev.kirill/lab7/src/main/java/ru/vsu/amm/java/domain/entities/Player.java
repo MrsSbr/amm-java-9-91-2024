@@ -3,19 +3,16 @@ package ru.vsu.amm.java.domain.entities;
 public class Player {
     private Long id;
     private String login;
-    private String password;
     private String email;
 
-    public Player(Long id, String login, String password, String email) {
+    public Player(Long id, String login, String email) {
         this.id = id;
         this.login = login;
-        this.password = password;
         this.email = email;
     }
 
-    public Player(String login, String password, String email) {
+    public Player(String login, String email) {
         this.login = login;
-        this.password = password;
         this.email = email;
     }
 
@@ -38,8 +35,6 @@ public class Player {
     public String getLogin() {
         return login;
     }
-
-    public String getPassword() { return password; }
 
     public String getEmail() {
         return email;
