@@ -1,0 +1,1 @@
+DROP TABLE Action, Card, Player, Game;

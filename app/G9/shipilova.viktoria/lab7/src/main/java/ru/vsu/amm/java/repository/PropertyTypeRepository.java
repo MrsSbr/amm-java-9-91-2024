@@ -80,7 +80,7 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
     }
 
     @Override
-    public void save(PropertyType propertyType) {
+    public Long save(PropertyType propertyType) {
         final String sql = "INSERT INTO PropertyType (PropertyTypeName, NextDestinationID, StorageDays, StorageCost) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DataSourceProvider.getDataSource().getConnection();
@@ -94,7 +94,9 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new RuntimeException(e);
         }
+        return propertyType.getId();
     }
 
     @Override
@@ -130,4 +132,35 @@ public class PropertyTypeRepository implements CrudRepository<PropertyType> {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
+
+    public PropertyType getByName(PropertyTypeName propertyTypeName) {
+        PropertyType propertyType = null;
+        final String sql = "SELECT PropertyTypeID, PropertyTypeName, NextDestinationID, StorageDays, StorageCost FROM PropertyType WHERE PropertyTypeName = ?";
+
+        try (Connection conn = DataSourceProvider.getDataSource().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, propertyTypeName.name());
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                propertyType = new PropertyType();
+                propertyType.setId(rs.getLong("PropertyTypeID"));
+                propertyType.setPropertyTypeName(PropertyTypeName.valueOf(rs.getString("PropertyTypeName")));
+
+                long nextDestinationId = rs.getLong("NextDestinationID");
+                NextDestination nextDestination = new NextDestination();
+                nextDestination.setId(nextDestinationId);
+                propertyType.setNextDestination(nextDestination);
+
+                propertyType.setStorageDays(rs.getInt("StorageDays"));
+                propertyType.setStorageCost(rs.getInt("StorageCost"));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+
+        return propertyType;
+    }
+
 }

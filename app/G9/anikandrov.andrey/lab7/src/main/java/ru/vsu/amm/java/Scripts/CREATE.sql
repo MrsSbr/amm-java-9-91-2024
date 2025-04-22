@@ -1,30 +1,28 @@
 
-CREATE TABLE UserTable (
-       UserID SERIAL PRIMARY KEY,
-       UserName VARCHAR(30) NOT NULL UNIQUE,
-       Password VARCHAR(50) NOT NULL,
-       UserRole VARCHAR(5),
+CREATE TABLE User_Table (
+       User_ID BIGSERIAL PRIMARY KEY,
+       User_Name VARCHAR(200) NOT NULL UNIQUE,
+       User_Password VARCHAR(30) NOT NULL,
+       User_Role VARCHAR(30),
        Phone VARCHAR(11) UNIQUE,
-       BirthDate DATE
+       Birth_Date DATE
 );
 
-CREATE TABLE RentalObjectTable (
-        ObjectID SERIAL PRIMARY KEY,
-        ObjectName VARCHAR(100) NOT NULL,
-        ObjectType VARCHAR(10) NOT NULL,
-        ObjectInfo TEXT,
-        Price INTEGER -- rent price in rubles (for day)
+CREATE TABLE RentalObject_Table (
+        Object_ID BIGSERIAL PRIMARY KEY,
+        Object_Name VARCHAR(200) NOT NULL,
+        Object_Type VARCHAR(30) NOT NULL,
+        Object_Info TEXT,
+        Price INT -- rent price in rubles (for day)
 );
 
-CREATE TABLE AgreementTable (
-        AgreementID SERIAL PRIMARY KEY,
-        UserID INTEGER REFERENCES UserTable (UserID),
-        ObjectID INTEGER REFERENCES RentalObjectTable (ObjectID),
-        EventName VARCHAR(100) NOT NULL,
-        EventInfo TEXT,
-        TimeBegin DATE,
-        TimeEnd DATE,
-        SumPrice INT -- sum price in rubles
+CREATE TABLE Agreement_Table (
+        Agreement_ID BIGSERIAL PRIMARY KEY,
+        User_ID BIGINT REFERENCES User_Table (User_ID),
+        Object_ID BIGINT REFERENCES RentalObject_Table (Object_ID),
+        Time_Start DATE,
+        Time_End DATE,
+        Sum_Price INT -- sum price in rubles
 );
 
 

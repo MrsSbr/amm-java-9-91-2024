@@ -1,16 +1,17 @@
 package ru.vsu.amm.java.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Note {
     private long noteId;
     private String content;
-    private Date createdAt;
-    private Date updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private long userId;
     private long categoryId;
 
-    public Note(long noteId, String content, Date createdAt, Date updatedAt, long userId, long categoryId) {
+    public Note(long noteId, String content, LocalDateTime createdAt, LocalDateTime updatedAt, long userId, long categoryId) {
         this.noteId = noteId;
         this.content = content;
         this.createdAt = createdAt;
@@ -35,19 +36,19 @@ public class Note {
         this.content = content;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

@@ -15,7 +15,7 @@ public class ExchangeRateRepository implements CrudRepository<ExchangeRate> {
     private final DataSource dataSource;
 
     public ExchangeRateRepository() {
-        dataSource = DatabaseConfiguration.getDataSource();
+        dataSource = DatabaseConfiguration.getDataSourceForService();
     }
 
     @Override
@@ -79,17 +79,7 @@ public class ExchangeRateRepository implements CrudRepository<ExchangeRate> {
     }
 
     @Override
-    public void update(ExchangeRate entity) {
-
-    }
-
-    @Override
-    public void save(ExchangeRate entity) {
-
-    }
-
-    @Override
-    public void delete(ExchangeRate entity) {
-
+    public Long save(ExchangeRate entity) {
+        return null;
     }
 }

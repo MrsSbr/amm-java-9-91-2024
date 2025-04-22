@@ -1,6 +1,6 @@
 package ru.vsu.amm.java.entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class HotelEntity {
     private int id;
@@ -8,7 +8,17 @@ public class HotelEntity {
     private String address;
     private String email;
     private String phoneNumber;
-    private LocalDateTime openingDate;
+    private LocalDate openingDate;
+
+    public HotelEntity(int id, String name, String address, String email,
+                       String phoneNumber, LocalDate openingDate) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.openingDate = openingDate;
+    }
 
     public int getId() {
         return id;
@@ -50,11 +60,11 @@ public class HotelEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public LocalDateTime getOpeningDate() {
+    public LocalDate getOpeningDate() {
         return openingDate;
     }
 
-    public void setOpeningDate(LocalDateTime openingDate) {
+    public void setOpeningDate(LocalDate openingDate) {
         this.openingDate = openingDate;
     }
 }

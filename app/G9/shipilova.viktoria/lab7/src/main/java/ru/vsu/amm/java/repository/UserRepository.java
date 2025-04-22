@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 public class UserRepository implements CrudRepository<User> {
     private static final Logger logger = Logger.getLogger(UserRepository.class.getName());
+    public static final String CODE = "23505";
 
     @Override
     public User getById(long id) {
@@ -67,7 +68,7 @@ public class UserRepository implements CrudRepository<User> {
     }
 
     @Override
-    public void save(User user) {
+    public Long save(User user) {
         String sql = "INSERT INTO Users (Password, PhoneNumber, Email, Login) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DataSourceProvider.getDataSource().getConnection();
@@ -81,7 +82,12 @@ public class UserRepository implements CrudRepository<User> {
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
+            if (e.getSQLState().equals(CODE)) {
+                throw new RuntimeException("Duplicate key violation: " + e.getMessage(), e);
+            }
+            throw new RuntimeException(e);
         }
+        return user.getId();
     }
 
     @Override
@@ -119,4 +125,31 @@ public class UserRepository implements CrudRepository<User> {
         }
 
     }
+
+    public User findByLoginAndPassword(String login, String password) {
+        User user = null;
+        final String sql = "SELECT UserID, Password, PhoneNumber, Email, Login FROM users WHERE Login = ? AND Password = ?";
+
+        try (Connection conn = DataSourceProvider.getDataSource().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, login);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                user = new User();
+                user.setId(rs.getLong("UserID"));
+                user.setPassword(rs.getString("Password"));
+                user.setPhoneNumber(rs.getString("PhoneNumber"));
+                user.setEmail(rs.getString("Email"));
+                user.setLogin(rs.getString("Login"));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+        return user;
+    }
+
+
 }

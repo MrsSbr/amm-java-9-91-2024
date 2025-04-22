@@ -3,7 +3,7 @@ package ru.vsu.amm.java.entities;
 import ru.vsu.amm.java.enums.Genre;
 
 public class BoardGame {
-    private int boardGameId;
+    private Long boardGameId;
     private String name;
     private int price;
     private Genre genre;
@@ -14,7 +14,8 @@ public class BoardGame {
     public BoardGame() {
     }
 
-    public BoardGame(int boardGameId, String name, int price, Genre genre, int minAge, String publisher, String description) {
+    public BoardGame(Long boardGameId, String name, int price, Genre genre,
+                     int minAge, String publisher, String description) {
         this.boardGameId = boardGameId;
         this.name = name;
         this.price = price;
@@ -24,11 +25,11 @@ public class BoardGame {
         this.description = description;
     }
 
-    public int getBoardGameId() {
+    public Long getBoardGameId() {
         return boardGameId;
     }
 
-    public void setBoardGameId(int boardGameId) {
+    public void setBoardGameId(Long boardGameId) {
         this.boardGameId = boardGameId;
     }
 

@@ -1,7 +1,5 @@
 package ru.vsu.amm.java.entities;
 
-import java.util.Date;
-
 public class HotelRoomEntity {
     private int id;
     private int hotelId;
@@ -9,6 +7,16 @@ public class HotelRoomEntity {
     private int floorNumber;
     private int bedsCount;
     private String specifications;
+
+    public HotelRoomEntity(int id, int hotelId, int roomNumber, int floorNumber,
+                           int bedsCount, String specifications) {
+        this.id = id;
+        this.hotelId = hotelId;
+        this.roomNumber = roomNumber;
+        this.floorNumber = floorNumber;
+        this.bedsCount = bedsCount;
+        this.specifications = specifications;
+    }
 
     public int getId() {
         return id;
