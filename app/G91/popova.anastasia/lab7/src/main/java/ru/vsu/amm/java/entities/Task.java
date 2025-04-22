@@ -13,7 +13,7 @@ public class Task {
 
     public Task() {
         this.taskID = UUID.randomUUID();
-    };
+    }
 
     public UUID getTaskID() {
         return taskID;
