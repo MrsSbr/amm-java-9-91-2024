@@ -64,10 +64,33 @@
         }
         .error { color: red; }
         .success { color: green; font-weight: bold; }
+
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .login-button {
+            background-color: #555;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-button:hover {
+            background-color: #333;
+        }
     </style>
 </head>
 <body>
 <div class="container">
+    <div class="top-bar">
+        <a class="login-button" href="${pageContext.request.contextPath}/login">Login</a>
+    </div>
+
     <h2>Car Management</h2>
 
     <c:if test="${not empty errorMessage}">
@@ -116,7 +139,6 @@
                     </div>
                 </form>
             </c:if>
-
 
             <c:if test="${empty param.editCarId || param.editCarId != car.id}">
                 <strong>${car.manufacturer} ${car.model}</strong><br/>

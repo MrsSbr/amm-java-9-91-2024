@@ -12,7 +12,18 @@ public class UserCarMapper {
                 rs.getLong("car_id"),
                 rs.getTimestamp("start_trip").toLocalDateTime(),
                 rs.getTimestamp("end_trip").toLocalDateTime(),
-                rs.getBigDecimal("price_per_minute")
+                rs.getBigDecimal("price_per_minute"),
+                rs.getBigDecimal("final_price")
         );
     }
+
+/*    public static TripDto userCarEntityToTripDto(UserCarEntity userCarEntity) {
+     return new TripDto(userCarEntity.getId(),
+             userCarEntity,
+             userCarEntity.getCarId(),
+             userCarEntity.getStartTrip(),
+             userCarEntity.getEndTrip(),
+             userCarEntity.getPriceForMinute(),
+             userCarEntity.getFinalPrice());
+    }*/
 }

@@ -53,7 +53,7 @@ public class EditCarServlet extends HttpServlet {
         }
 
         try {
-            request.setAttribute(CAR_LIST_ATTRIBUTE, carService.findAllCars());
+            request.setAttribute(CAR_LIST_ATTRIBUTE, carService.findAllNotRentedCars());
         } catch (DataAccessException e) {
             errorMessages.add(e.getMessage());
         }

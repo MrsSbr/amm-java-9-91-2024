@@ -25,6 +25,7 @@ CREATE TABLE user_car
     start_trip       TIMESTAMP      NOT NULL,
     end_trip         TIMESTAMP,
     price_per_minute DECIMAL(10, 2) NOT NULL,
+    final_price DECIMAL(10, 2),
     CONSTRAINT user_car_user_fk FOREIGN KEY (user_id) REFERENCES "user" (id) ON DELETE CASCADE,
     CONSTRAINT user_car_car_fk FOREIGN KEY (car_id) REFERENCES car (id) ON DELETE RESTRICT
 );

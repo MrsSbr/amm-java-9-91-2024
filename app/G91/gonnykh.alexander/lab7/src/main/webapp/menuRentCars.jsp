@@ -15,8 +15,31 @@
             background-color: #2196F3;
             color: white;
             padding: 20px 40px;
-            text-align: center;
+            position: relative;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .login-button {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+        }
+
+        .login-button a {
+            background-color: #1976D2;
+            color: white;
+            padding: 10px 16px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .login-button a:hover {
+            background-color: #1565C0;
         }
 
         .container {
@@ -122,6 +145,9 @@
 <body>
 <div class="header">
     <h1>Available Cars</h1>
+    <div class="login-button">
+        <a href="${pageContext.request.contextPath}/login">Login</a>
+    </div>
 </div>
 <div class="container">
     <div class="sidebar">
