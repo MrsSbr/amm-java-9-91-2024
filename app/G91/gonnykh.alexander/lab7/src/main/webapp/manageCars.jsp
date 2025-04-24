@@ -64,13 +64,11 @@
         }
         .error { color: red; }
         .success { color: green; font-weight: bold; }
-
         .top-bar {
             display: flex;
             justify-content: flex-end;
             margin-bottom: 20px;
         }
-
         .login-button {
             background-color: #555;
             color: white;
@@ -79,7 +77,6 @@
             text-decoration: none;
             font-weight: bold;
         }
-
         .login-button:hover {
             background-color: #333;
         }
@@ -97,7 +94,8 @@
         <div class="error">${errorMessage}</div>
     </c:if>
 
-    <form class="add-form" id="addForm" method="post" action="${pageContext.request.contextPath}/addCar">
+    <form class="add-form" id="addForm" method="post" action="${pageContext.request.contextPath}/addCar"
+          onsubmit="return validateYear('addForm')">
         <input type="text" name="manufacturer" placeholder="Manufacturer" required />
         <input type="text" name="model" placeholder="Model" required />
         <input type="number" name="year" placeholder="Year" required />
@@ -119,7 +117,8 @@
     <c:forEach var="car" items="${cars}">
         <div class="car-card" id="car-${car.id}">
             <c:if test="${not empty param.editCarId && param.editCarId == car.id}">
-                <form method="post" action="${pageContext.request.contextPath}/updateCar/${car.id}">
+                <form method="post" action="${pageContext.request.contextPath}/updateCar/${car.id}"
+                      onsubmit="return validateYear('editForm-${car.id}')">
                     <input type="text" name="manufacturer" value="${car.manufacturer}" required/>
                     <input type="text" name="model" value="${car.model}" required/>
                     <input type="number" name="year" value="${car.year}" required/>
@@ -158,5 +157,26 @@
         </div>
     </c:forEach>
 </div>
+
+<script>
+    function validateYear(formId) {
+        const form = document.getElementById(formId);
+        const yearInput = form.querySelector('input[name="year"]');
+        const year = parseInt(yearInput.value);
+
+        if (year <= 0) {
+            alert('Year must be a positive number.');
+            return false;
+        }
+
+        const currentYear = new Date().getFullYear();
+        if (year > currentYear + 1) {
+            alert('Year cannot be in the future.');
+            return false;
+        }
+
+        return true;
+    }
+</script>
 </body>
 </html>
