@@ -29,7 +29,11 @@ public class UserRepository implements ParkingRepository<User> {
     private final DataSource dataSource;
 
     public UserRepository() {
-        dataSource = DatabaseConfiguration.getDataSource();
+        dataSource = DatabaseConfiguration.getMainDataSource();
+    }
+
+    public UserRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public Optional<User> getByLoginAndPassword(String login, String password) {

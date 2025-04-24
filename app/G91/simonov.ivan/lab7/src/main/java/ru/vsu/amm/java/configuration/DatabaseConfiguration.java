@@ -18,12 +18,24 @@ public class DatabaseConfiguration {
             "app/G91/simonov.ivan/lab7/src/main/java/ru/vsu/amm/java/logs/database-configuration-logs.log",
             SessionRepository.class.getName());
 
-    public static DataSource getDataSource() {
+    public static DataSource getMainDataSource() {
+
+        return getDataSource(false);
+
+    }
+
+    public static DataSource getTestDataSource() {
+
+        return getDataSource(true);
+
+    }
+
+    private static DataSource getDataSource(boolean isTest) {
 
         Properties properties = new Properties();
 
         try (InputStream input = DatabaseConfiguration.class.getClassLoader()
-                .getResourceAsStream("database.properties")) {
+                .getResourceAsStream(isTest ? "testdb.properties" : "database.properties")) {
 
             properties.load(input);
 

@@ -1,5 +1,7 @@
 package ru.vsu.amm.java.filters;
 
+import ru.vsu.amm.java.entities.User;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -15,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static ru.vsu.amm.java.utils.LoggerInitializer.initializeLogger;
+import static ru.vsu.amm.java.utils.Redirection.getAvailablePaths;
 
 @WebFilter("/*")
 public class AuthFilter implements Filter {
@@ -45,7 +48,8 @@ public class AuthFilter implements Filter {
         HttpSession session = httpRequest.getSession(false);
         boolean isSignedIn = session != null && session.getAttribute("user") != null;
 
-        if (isPublicPath || isSignedIn) {
+        if (isPublicPath || isSignedIn && getAvailablePaths((User) session.getAttribute("user")).stream()
+                .anyMatch(publicPath -> path.equals(publicPath) || path.startsWith(publicPath))) {
 
             logger.log(Level.INFO,
                     String.format("Filter passed by user %s!",

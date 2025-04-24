@@ -63,7 +63,7 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${sessions}" var="session">
+    <c:forEach items="${sessions}" var="session" varStatus="loop">
         <tr class="clickable-row" onclick="showSessionDetails(${session.sessionId})">
             <td>${session.vehicle.registrationNumber}</td>
             <td>${session.vehicle.model}</td>
@@ -87,7 +87,7 @@
         <tr>
             <td colspan="7" style="padding: 0;">
                 <div id="details-${session.sessionId}" class="session-details">
-                    <h3>Детали сессии #${session.sessionId}</h3>
+                    <h3>Детали сессии #${loop.count}</h3>
                     <p><strong>Пользователь:</strong>
                             ${session.user.lastName} ${session.user.firstName}
                         <c:if test="${not empty session.user.patronymic}">${session.user.patronymic}</c:if>
