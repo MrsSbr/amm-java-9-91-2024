@@ -2,22 +2,33 @@ package ru.vsu.amm.java.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ru.vsu.amm.java.entities.Author;
 import ru.vsu.amm.java.repository.AuthorRepository;
 import ru.vsu.amm.java.service.impl.AuthorServiceImpl;
 
+import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class AuthorServiceImplTest {
     @Mock
     private AuthorRepository authorRepository;
@@ -25,93 +36,95 @@ class AuthorServiceImplTest {
     @InjectMocks
     private AuthorServiceImpl authorService;
 
+    private Author testAuthor;
+    private List<Author> testAuthors;
+
     @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+    void setUp() throws Exception {
+        Field repoField = AuthorServiceImpl.class.getDeclaredField("authorRepository");
+        repoField.setAccessible(true);
+        repoField.set(authorService, authorRepository);
+
+        testAuthor = new Author(1L, "Doe", "John", null, LocalDate.now());
+        testAuthors = Collections.singletonList(testAuthor);
     }
 
     @Test
     void getAllAuthorsShouldReturnAuthors() throws SQLException {
-        // Arrange
-        Author author1 = createTestAuthor(1L);
-        Author author2 = createTestAuthor(2L);
-        when(authorRepository.findAll()).thenReturn(Arrays.asList(author1, author2));
+        when(authorRepository.findAll()).thenReturn(testAuthors);
 
-        // Act
-        List<Author> authors = authorService.getAllAuthors();
+        List<Author> result = authorService.getAllAuthors();
 
-        // Assert
-        assertEquals(2, authors.size());
+        assertEquals(1, result.size());
+        assertEquals("Doe", result.get(0).getSurname());
+        assertEquals("John", result.get(0).getName());
         verify(authorRepository, times(1)).findAll();
     }
 
     @Test
-    void getAuthorByIdShouldReturnAuthorWhenExists() throws SQLException {
-        Author expected = createTestAuthor(1L);
-        when(authorRepository.findById(1L)).thenReturn(Optional.of(expected));
+    void getAllAuthorsShouldThrowRuntimeExceptionOnError() throws SQLException {
+        when(authorRepository.findAll()).thenThrow(new SQLException("Database error"));
 
-        Author actual = authorService.getAuthorById(1L);
+        Exception exception = assertThrows(RuntimeException.class,
+                () -> authorService.getAllAuthors());
 
-        assertEquals(expected, actual);
+        assertTrue(exception.getMessage().contains("Ошибка при получении списка авторов"));
+        verify(authorRepository, times(1)).findAll();
+    }
+
+    @Test
+    void getAuthorByIdShouldReturnAuthor() throws SQLException {
+        when(authorRepository.findById(1L)).thenReturn(Optional.of(testAuthor));
+
+        Author result = authorService.getAuthorById(1L);
+
+        assertNotNull(result);
+        assertEquals("Doe", result.getSurname());
         verify(authorRepository, times(1)).findById(1L);
     }
 
     @Test
-    void createAuthorShouldSaveNewAuthor() throws SQLException {
-        // Arrange
-        Author newAuthor = createTestAuthor(null);
+    void getAuthorByIdShouldThrowRuntimeExceptionWhenNotFound() throws SQLException {
+        when(authorRepository.findById(99L)).thenReturn(Optional.empty());
 
+        Exception exception = assertThrows(RuntimeException.class,
+                () -> authorService.getAuthorById(99L));
+
+        assertTrue(exception.getMessage().contains("Автор с id 99 не найден"));
+        verify(authorRepository, times(1)).findById(99L);
+    }
+
+    @Test
+    void createAuthorShouldSaveAuthor() throws SQLException {
         doAnswer(invocation -> {
-            Author a = invocation.getArgument(0);
-            a.setId(1L);
+            Author author = invocation.getArgument(0);
+            author.setId(1L);
             return null;
         }).when(authorRepository).save(any(Author.class));
 
-        // Act
-        authorService.createAuthor(newAuthor);
+        authorService.createAuthor(testAuthor);
 
-        // Assert
-        assertNotNull(newAuthor.getId());
-        verify(authorRepository, times(1)).save(newAuthor);
+        assertNotNull(testAuthor.getId());
+        verify(authorRepository, times(1)).save(testAuthor);
     }
 
     @Test
-    void updateAuthorShouldUpdateExistingAuthor() throws SQLException {
-        // Arrange
-        Author existingAuthor = createTestAuthor(1L);
-        when(authorRepository.findById(1L)).thenReturn(Optional.of(existingAuthor));
+    void updateAuthorShouldUpdateAuthor() throws SQLException {
+        doNothing().when(authorRepository).update(any(Author.class));
 
-        doNothing().when(authorRepository).update(existingAuthor);
+        authorService.updateAuthor(testAuthor);
 
-        // Act
-        authorService.updateAuthor(existingAuthor);
-
-        // Assert
-        verify(authorRepository, times(1)).update(existingAuthor);
+        verify(authorRepository, times(1)).update(testAuthor);
     }
 
     @Test
-    void deleteAuthorShouldDeleteExistingAuthor() throws SQLException {
-        // Arrange
-        Author existingAuthor = createTestAuthor(1L);
-        when(authorRepository.findById(1L)).thenReturn(Optional.of(existingAuthor));
+    void deleteAuthorShouldDeleteAuthor() throws SQLException {
+        when(authorRepository.findById(1L)).thenReturn(Optional.of(testAuthor));
+        doNothing().when(authorRepository).delete(any(Author.class));
 
-        doNothing().when(authorRepository).delete(existingAuthor);
-
-        // Act
         authorService.deleteAuthor(1L);
 
-        // Assert
-        verify(authorRepository, times(1)).delete(existingAuthor);
-    }
-
-    private Author createTestAuthor(Long id) {
-        Author author = new Author();
-        author.setId(id);
-        author.setSurname("Doe");
-        author.setName("John");
-        author.setPatronymic("Smith");
-        author.setRegistrationDate(LocalDate.now());
-        return author;
+        verify(authorRepository, times(1)).findById(1L);
+        verify(authorRepository, times(1)).delete(testAuthor);
     }
 }

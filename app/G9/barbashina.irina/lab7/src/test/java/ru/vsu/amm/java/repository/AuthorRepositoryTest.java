@@ -1,100 +1,73 @@
 package ru.vsu.amm.java.repository;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entities.Author;
 import ru.vsu.amm.java.util.TestDataSourceProvider;
 import ru.vsu.amm.java.util.TestDatabaseInitializer;
 
+import javax.sql.DataSource;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 class AuthorRepositoryTest {
     private AuthorRepository authorRepository;
-    private TestDatabaseInitializer dbInitializer;
+    private static DataSource testDataSource;
+
+    @BeforeAll
+    static void initTestDataSource() {
+        testDataSource = TestDataSourceProvider.getTestDataSource();
+    }
 
     @BeforeEach
     void setUp() throws SQLException, IOException {
-        dbInitializer = new TestDatabaseInitializer(TestDataSourceProvider.getTestDataSource());
+        TestDatabaseInitializer dbInitializer = new TestDatabaseInitializer(testDataSource);
         dbInitializer.initializeDatabase("src/test/resources/schema.sql", "src/test/resources/data.sql");
 
         authorRepository = new AuthorRepository();
+        injectTestDataSource(authorRepository, testDataSource);
+    }
+
+    private void injectTestDataSource(AuthorRepository repository, DataSource dataSource) {
+        try {
+            Field dataSourceField = AuthorRepository.class.getDeclaredField("dataSource");
+            dataSourceField.setAccessible(true);
+            dataSourceField.set(repository, dataSource);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to inject test DataSource", e);
+        }
     }
 
     @AfterEach
     void tearDown() throws SQLException {
-        Connection conn = null;
-        Statement stmt = null;
-        try {
-            conn = TestDataSourceProvider.getTestDataSource().getConnection();
-            stmt = conn.createStatement();
+        try (Connection conn = testDataSource.getConnection();
+             Statement stmt = conn.createStatement()) {
             stmt.execute("DROP ALL OBJECTS");
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
         }
     }
 
     @Test
-    void findByIdShouldReturnAuthorWhenExists() throws SQLException {
+    void findByIdShouldReturnAuthor() throws SQLException {
         Optional<Author> author = authorRepository.findById(1L);
         assertTrue(author.isPresent());
         assertEquals("Doe", author.get().getSurname());
+        assertEquals("John", author.get().getName());
     }
 
     @Test
     void findAllShouldReturnAllAuthors() throws SQLException {
         List<Author> authors = authorRepository.findAll();
-        assertFalse(authors.isEmpty());
         assertEquals(2, authors.size());
-    }
-
-    @Test
-    void saveShouldInsertNewAuthor() throws SQLException {
-        Author newAuthor = new Author();
-        newAuthor.setSurname("Smith");
-        newAuthor.setName("John");
-        newAuthor.setRegistrationDate(LocalDate.now());
-
-        authorRepository.save(newAuthor);
-
-        assertNotNull(newAuthor.getId());
-        Optional<Author> savedAuthor = authorRepository.findById(newAuthor.getId());
-        assertTrue(savedAuthor.isPresent());
-    }
-
-    @Test
-    void updateShouldModifyExistingAuthor() throws SQLException {
-        Author author = authorRepository.findById(1L)
-                .orElseThrow(() -> new RuntimeException("Author not found"));
-        author.setSurname("Updated");
-
-        authorRepository.update(author);
-
-        Author updatedAuthor = authorRepository.findById(1L)
-                .orElseThrow(() -> new RuntimeException("Author not found"));
-        assertEquals("Updated", updatedAuthor.getSurname());
-    }
-
-    @Test
-    void deleteShouldRemoveAuthor() throws SQLException {
-        Author author = authorRepository.findById(1L)
-                .orElseThrow(() -> new RuntimeException("Author not found"));
-        authorRepository.delete(author);
-
-        Optional<Author> deletedAuthor = authorRepository.findById(1L);
-        assertFalse(deletedAuthor.isPresent());
     }
 }

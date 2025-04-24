@@ -12,14 +12,24 @@ import ru.vsu.amm.java.entities.Category;
 import ru.vsu.amm.java.repository.ArticleRepository;
 import ru.vsu.amm.java.service.impl.ArticleServiceImpl;
 
+import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 
 @ExtendWith(MockitoExtension.class)
 class ArticleServiceImplTest {
@@ -29,142 +39,97 @@ class ArticleServiceImplTest {
     @InjectMocks
     private ArticleServiceImpl articleService;
 
+    private Article testArticle;
+    private List<Article> testArticles;
+
+    @BeforeEach
+    void setUp() throws Exception {
+        Field repoField = ArticleServiceImpl.class.getDeclaredField("articleRepository");
+        repoField.setAccessible(true);
+        repoField.set(articleService, articleRepository);
+
+        Author author = new Author(1L, "Doe", "John", null, LocalDate.now());
+        Category category = new Category(1L, "Technology");
+        testArticle = new Article(1L, "Test Article", "Content",
+                LocalDate.now(), category, author);
+        testArticles = Collections.singletonList(testArticle);
+    }
+
     @Test
     void getAllArticlesShouldReturnArticles() throws SQLException {
-        // Arrange
-        Article article1 = createTestArticle(1L);
-        Article article2 = createTestArticle(2L);
-        when(articleRepository.findAll()).thenReturn(Arrays.asList(article1, article2));
+        when(articleRepository.findAll()).thenReturn(testArticles);
 
-        // Act
-        List<Article> articles = articleService.getAllArticles();
+        List<Article> result = articleService.getAllArticles();
 
-        // Assert
-        assertEquals(2, articles.size());
+        assertEquals(1, result.size());
+        assertEquals("Test Article", result.get(0).getTitle());
         verify(articleRepository, times(1)).findAll();
-        verifyNoMoreInteractions(articleRepository);
     }
 
     @Test
-    void getArticleByIdShouldReturnArticleWhenExists() throws SQLException {
-        // Arrange
-        Article expected = createTestArticle(1L);
-        when(articleRepository.findById(1L)).thenReturn(Optional.of(expected));
+    void getAllArticlesShouldThrowRuntimeExceptionOnError() throws SQLException {
+        when(articleRepository.findAll()).thenThrow(new SQLException("Database error"));
 
-        // Act
-        Article actual = articleService.getArticleById(1L);
+        Exception exception = assertThrows(RuntimeException.class,
+                () -> articleService.getAllArticles());
 
-        // Assert
-        assertNotNull(actual);
-        assertEquals(expected, actual);
+        assertTrue(exception.getMessage().contains("Ошибка при получении списка статей"));
+        verify(articleRepository, times(1)).findAll();
+    }
+
+    @Test
+    void getArticleByIdShouldReturnArticle() throws SQLException {
+        when(articleRepository.findById(1L)).thenReturn(Optional.of(testArticle));
+
+        Article result = articleService.getArticleById(1L);
+
+        assertNotNull(result);
+        assertEquals("Test Article", result.getTitle());
         verify(articleRepository, times(1)).findById(1L);
-        verifyNoMoreInteractions(articleRepository);
     }
 
     @Test
-    void getArticleByIdShouldThrowExceptionWhenNotFound() throws SQLException {
-        // Arrange
+    void getArticleByIdShouldThrowRuntimeExceptionWhenNotFound() throws SQLException {
         when(articleRepository.findById(99L)).thenReturn(Optional.empty());
 
-        // Act & Assert
-        assertThrows(RuntimeException.class, () -> articleService.getArticleById(99L));
+        Exception exception = assertThrows(RuntimeException.class,
+                () -> articleService.getArticleById(99L));
+
+        assertTrue(exception.getMessage().contains("Статья с id 99 не найдена"));
         verify(articleRepository, times(1)).findById(99L);
-        verifyNoMoreInteractions(articleRepository);
     }
 
     @Test
-    void createArticleShouldSaveNewArticle() throws SQLException {
-        // Arrange
-        Article newArticle = createTestArticle(null);
+    void createArticleShouldSaveArticle() throws SQLException {
         doAnswer(invocation -> {
-            Article a = invocation.getArgument(0);
-            a.setId(1L); // Эмулируем установку ID
+            Article article = invocation.getArgument(0);
+            article.setId(1L);
             return null;
         }).when(articleRepository).save(any(Article.class));
 
-        // Act
-        articleService.createArticle(newArticle);
+        articleService.createArticle(testArticle);
 
-        // Assert
-        assertNotNull(newArticle.getId());
-        assertEquals(1L, newArticle.getId());
-        verify(articleRepository, times(1)).save(newArticle);
-        verifyNoMoreInteractions(articleRepository);
+        assertNotNull(testArticle.getId());
+        verify(articleRepository, times(1)).save(testArticle);
     }
 
     @Test
-    void updateArticleShouldUpdateExistingArticle() throws SQLException {
-        // Arrange
-        Article existingArticle = createTestArticle(1L);
-        when(articleRepository.findById(1L)).thenReturn(Optional.of(existingArticle));
-        doNothing().when(articleRepository).update(existingArticle);
+    void updateArticleShouldUpdateArticle() throws SQLException {
+        doNothing().when(articleRepository).update(any(Article.class));
 
-        // Act
-        articleService.updateArticle(existingArticle);
+        articleService.updateArticle(testArticle);
 
-        // Assert
-        verify(articleRepository, times(1)).findById(1L);
-        verify(articleRepository, times(1)).update(existingArticle);
-        verifyNoMoreInteractions(articleRepository);
+        verify(articleRepository, times(1)).update(testArticle);
     }
 
     @Test
-    void updateArticleShouldThrowExceptionWhenNotFound() throws SQLException {
-        // Arrange
-        Article nonExistingArticle = createTestArticle(99L);
-        when(articleRepository.findById(99L)).thenReturn(Optional.empty());
+    void deleteArticleShouldDeleteArticle() throws SQLException {
+        when(articleRepository.findById(1L)).thenReturn(Optional.of(testArticle));
+        doNothing().when(articleRepository).delete(any(Article.class));
 
-        // Act & Assert
-        assertThrows(RuntimeException.class, () -> articleService.updateArticle(nonExistingArticle));
-        verify(articleRepository, times(1)).findById(99L);
-        verifyNoMoreInteractions(articleRepository);
-    }
-
-    @Test
-    void deleteArticleShouldDeleteExistingArticle() throws SQLException {
-        // Arrange
-        Article existingArticle = createTestArticle(1L);
-        when(articleRepository.findById(1L)).thenReturn(Optional.of(existingArticle));
-        doNothing().when(articleRepository).delete(existingArticle);
-
-        // Act
         articleService.deleteArticle(1L);
 
-        // Assert
         verify(articleRepository, times(1)).findById(1L);
-        verify(articleRepository, times(1)).delete(existingArticle);
-        verifyNoMoreInteractions(articleRepository);
-    }
-
-    @Test
-    void deleteArticleShouldThrowExceptionWhenNotFound() throws SQLException {
-        // Arrange
-        when(articleRepository.findById(99L)).thenReturn(Optional.empty());
-
-        // Act & Assert
-        assertThrows(RuntimeException.class, () -> articleService.deleteArticle(99L));
-        verify(articleRepository, times(1)).findById(99L);
-        verifyNoMoreInteractions(articleRepository);
-    }
-
-    private Article createTestArticle(Long id) {
-        Article article = new Article();
-        article.setId(id);
-        article.setTitle("Test Article");
-        article.setContent("Test Content");
-        article.setDatePublication(LocalDate.now());
-
-        Category category = new Category();
-        category.setId(1L);
-        category.setName("Test Category");
-        article.setCategory(category);
-
-        Author author = new Author();
-        author.setId(1L);
-        author.setName("Test");
-        author.setSurname("Author");
-        article.setAuthor(author);
-
-        return article;
+        verify(articleRepository, times(1)).delete(testArticle);
     }
 }

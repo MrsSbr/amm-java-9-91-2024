@@ -1,70 +1,72 @@
-package ru.vsu.amm.java.repository;
+    package ru.vsu.amm.java.repository;
 
-import org.junit.jupiter.api.*;
-import ru.vsu.amm.java.entities.Article;
-import ru.vsu.amm.java.util.TestDataSourceProvider;
-import ru.vsu.amm.java.util.TestDatabaseInitializer;
+    import org.junit.jupiter.api.AfterEach;
+    import org.junit.jupiter.api.BeforeAll;
+    import org.junit.jupiter.api.BeforeEach;
+    import org.junit.jupiter.api.Test;
+    import ru.vsu.amm.java.entities.Article;
+    import ru.vsu.amm.java.util.TestDataSourceProvider;
+    import ru.vsu.amm.java.util.TestDatabaseInitializer;
 
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
-import java.util.Optional;
+    import javax.sql.DataSource;
+    import java.io.IOException;
+    import java.lang.reflect.Field;
+    import java.sql.Connection;
+    import java.sql.SQLException;
+    import java.sql.Statement;
+    import java.util.List;
+    import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+    import static org.junit.jupiter.api.Assertions.assertEquals;
+    import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ArticleRepositoryTest {
-    private ArticleRepository articleRepository;
-    private static DataSource testDataSource;
 
-    @BeforeAll
-    static void initTestDataSource() {
-        testDataSource = TestDataSourceProvider.getTestDataSource();
-    }
+    class ArticleRepositoryTest {
+        private ArticleRepository articleRepository;
+        private static DataSource testDataSource;
 
-    @BeforeEach
-    void setUp() throws SQLException, IOException {
-        // Полностью изолированная инициализация тестовой БД
-        TestDatabaseInitializer dbInitializer = new TestDatabaseInitializer(testDataSource);
-        dbInitializer.initializeDatabase("src/test/resources/schema.sql", "src/test/resources/data.sql");
+        @BeforeAll
+        static void initTestDataSource() {
+            testDataSource = TestDataSourceProvider.getTestDataSource();
+        }
 
-        // Создаем репозиторий с тестовым DataSource
-        articleRepository = new ArticleRepository();
-        injectTestDataSource(articleRepository, testDataSource);
-    }
+        @BeforeEach
+        void setUp() throws SQLException, IOException {
+            TestDatabaseInitializer dbInitializer = new TestDatabaseInitializer(testDataSource);
+            dbInitializer.initializeDatabase("src/test/resources/schema.sql", "src/test/resources/data.sql");
 
-    @AfterEach
-    void tearDown() throws SQLException {
-        // Полная очистка тестовой БД
-        try (Connection conn = testDataSource.getConnection();
-             Statement stmt = conn.createStatement()) {
-            stmt.execute("DROP ALL OBJECTS");
+            articleRepository = new ArticleRepository();
+            injectTestDataSource(articleRepository, testDataSource);
+        }
+
+        @AfterEach
+        void tearDown() throws SQLException {
+            try (Connection conn = testDataSource.getConnection();
+                 Statement stmt = conn.createStatement()) {
+                stmt.execute("DROP ALL OBJECTS");
+            }
+        }
+
+        private void injectTestDataSource(ArticleRepository repository, DataSource dataSource) {
+            try {
+                Field dataSourceField = ArticleRepository.class.getDeclaredField("dataSource");
+                dataSourceField.setAccessible(true);
+                dataSourceField.set(repository, dataSource);
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to inject test DataSource", e);
+            }
+        }
+
+        @Test
+        void findByIdShouldReturnArticle() throws SQLException {
+            Optional<Article> article = articleRepository.findById(1L);
+            assertTrue(article.isPresent());
+            assertEquals("Test Article", article.get().getTitle());
+        }
+
+        @Test
+        void findAllShouldReturnAllArticles() throws SQLException {
+            List<Article> articles = articleRepository.findAll();
+            assertEquals(2, articles.size());
         }
     }
-
-    private void injectTestDataSource(ArticleRepository repository, DataSource dataSource) {
-        try {
-            Field dataSourceField = ArticleRepository.class.getDeclaredField("dataSource");
-            dataSourceField.setAccessible(true);
-            dataSourceField.set(repository, dataSource);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to inject test DataSource", e);
-        }
-    }
-
-    @Test
-    void findByIdShouldReturnArticle() throws SQLException {
-        Optional<Article> article = articleRepository.findById(1L);
-        assertTrue(article.isPresent());
-        assertEquals("Test Article", article.get().getTitle());
-    }
-
-    @Test
-    void findAllShouldReturnAllArticles() throws SQLException {
-        List<Article> articles = articleRepository.findAll();
-        assertEquals(2, articles.size());
-    }
-}
