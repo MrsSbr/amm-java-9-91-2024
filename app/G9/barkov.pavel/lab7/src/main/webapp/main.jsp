@@ -151,7 +151,7 @@
                     <td>${stock.name}</td>
                     <td>${stock.price} ₽</td>
                     <td>${stock.count}</td>
-                    <td>${stock.dividends}%</td>
+                    <td>${stock.dividends}₽</td>
                 </tr>
             </c:forEach>
             </tbody>

@@ -29,7 +29,7 @@ public class GetMyStocksServlet extends HttpServlet {
             int page = parsePageParameter(req);
             req.setAttribute("currentPage",page);
             List<Stocks> stocks = stocksService.getAll(userId,PAGE_SIZE,(page-1)*PAGE_SIZE);
-            int total = (stocksService.count(userId)+PAGE_SIZE-1) / PAGE_SIZE;
+            int total = stocksService.count(userId,PAGE_SIZE);
             req.setAttribute("totalPages", total);
             req.setAttribute("myStocks", stocks);
             RequestDispatcher dispatcher = req.getRequestDispatcher("/home.jsp");

@@ -18,7 +18,7 @@ public interface StocksServiceInterface {
 
     void buy(int userId, int stockId, int count) throws SQLException;
 
-    int count() throws SQLException;
+    int count(int size) throws SQLException;
 
-    int count(int userId) throws SQLException;
+    int count(int userId,int size) throws SQLException;
 }

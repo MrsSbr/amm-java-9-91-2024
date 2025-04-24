@@ -110,14 +110,14 @@ public class StocksService implements StocksServiceInterface {
     }
 
     @Override
-    public int count() throws SQLException {
+    public int count(int size) throws SQLException {
         logger.info("Find count");
-        return stocksRepository.count();
+        return (stocksRepository.count()+size-1) / size;
     }
 
     @Override
-    public int count(int userId) throws SQLException {
+    public int count(int userId,int size) throws SQLException {
         logger.info("Find count");
-        return stocksRepository.count(userId);
+        return (stocksRepository.count(userId)+size-1) / size;
     }
 }
