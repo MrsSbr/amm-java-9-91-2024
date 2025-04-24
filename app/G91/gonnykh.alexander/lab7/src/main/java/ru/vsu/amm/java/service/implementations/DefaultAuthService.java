@@ -17,6 +17,11 @@ public class DefaultAuthService implements AuthService {
     private final UserRepository userRepository;
     private final BcryptPasswordEncoder bcryptPasswordEncoder;
 
+    public DefaultAuthService(UserRepository userRepository, BcryptPasswordEncoder bcryptPasswordEncoder) {
+        this.bcryptPasswordEncoder = bcryptPasswordEncoder;
+        this.userRepository = userRepository;
+    }
+
     public DefaultAuthService() {
         this.bcryptPasswordEncoder = new BcryptPasswordEncoder();
         this.userRepository = new UserRepository();
