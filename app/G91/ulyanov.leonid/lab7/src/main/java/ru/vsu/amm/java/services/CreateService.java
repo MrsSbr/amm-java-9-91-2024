@@ -21,11 +21,10 @@ public class CreateService {
     private final BookRepository books;
     private final BookUpdatesRepository bookUpdates;
 
-    public CreateService(UserRepository users, BookRepository books,
-                         BookUpdatesRepository bookUpdates) {
-        this.users = users;
-        this.books = books;
-        this.bookUpdates = bookUpdates;
+    public CreateService() {
+        this.users = new UserRepository();
+        this.books = new BookRepository();
+        this.bookUpdates = new BookUpdatesRepository();
     }
 
     public void createBook(DownloadBookUpdateRequest request)

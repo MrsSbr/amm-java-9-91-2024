@@ -19,8 +19,8 @@ import java.util.NoSuchElementException;
 public class CreateBookServlet extends HttpServlet {
     private final CreateService createService;
 
-    public CreateBookServlet(CreateService createService) {
-        this.createService = createService;
+    public CreateBookServlet() {
+        this.createService = new CreateService();
     }
 
     @Override

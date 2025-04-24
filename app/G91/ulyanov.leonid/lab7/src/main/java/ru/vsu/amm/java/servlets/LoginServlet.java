@@ -17,8 +17,8 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     private final AuthService authService;
 
-    public LoginServlet(AuthService authService) {
-        this.authService = authService;
+    public LoginServlet() {
+        this.authService = new AuthService();
     }
 
     @Override

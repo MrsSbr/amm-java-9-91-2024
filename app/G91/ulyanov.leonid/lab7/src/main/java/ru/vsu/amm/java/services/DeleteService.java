@@ -20,11 +20,10 @@ public class DeleteService {
     private final BookRepository books;
     private final BookUpdatesRepository bookUpdates;
 
-    public DeleteService(UserRepository users, BookRepository books,
-                         BookUpdatesRepository bookUpdates) {
-        this.users = users;
-        this.books = books;
-        this.bookUpdates = bookUpdates;
+    public DeleteService() {
+        this.users = new UserRepository();
+        this.books = new BookRepository();
+        this.bookUpdates = new BookUpdatesRepository();
     }
 
     public void deleteBook(DeleteBookUpdateRequest request) {

@@ -18,8 +18,8 @@ import java.util.NoSuchElementException;
 public class UpdateBookServlet extends HttpServlet {
     private final UpdateService updateService;
 
-    public UpdateBookServlet(UpdateService updateService) {
-        this.updateService = updateService;
+    public UpdateBookServlet() {
+        this.updateService = new UpdateService();
     }
 
     @Override

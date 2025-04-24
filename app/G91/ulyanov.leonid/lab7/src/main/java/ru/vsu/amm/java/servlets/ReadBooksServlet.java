@@ -15,8 +15,8 @@ import java.util.List;
 public class ReadBooksServlet extends HttpServlet {
     private final BookRepository bookRepository;
 
-    public ReadBooksServlet(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    public ReadBooksServlet() {
+        this.bookRepository = new BookRepository();
     }
 
     @Override

@@ -15,8 +15,8 @@ import java.util.Optional;
 public class AuthService {
     private final UserRepository userRepository;
 
-    public AuthService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public AuthService() {
+        this.userRepository = new UserRepository();
     }
 
     public User login(LoginRequest request) throws AuthenticationException {

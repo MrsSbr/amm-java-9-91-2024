@@ -8,9 +8,8 @@ import java.util.Properties;
 import org.postgresql.ds.PGSimpleDataSource;
 
 public class DbConfig {
-    public static DataSource getDataSource() throws IOException {
+    public static DataSource getDataSource() {
         Properties props = new Properties();
-
         try (InputStream in = DbConfig.class.getClassLoader().getResourceAsStream("db.properties")) {
             props.load(in);
         } catch (IOException e) {
@@ -19,10 +18,9 @@ public class DbConfig {
 
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
 
-        dataSource.setDatabaseName(props.getProperty("database"));
-        dataSource.setUrl(props.getProperty("url"));
-        dataSource.setUser(props.getProperty("user"));
-        dataSource.setPassword(props.getProperty("password"));
+        dataSource.setUrl(props.getProperty("db.url"));
+        dataSource.setUser(props.getProperty("db.username"));
+        dataSource.setPassword(props.getProperty("db.password"));
 
         return dataSource;
     }

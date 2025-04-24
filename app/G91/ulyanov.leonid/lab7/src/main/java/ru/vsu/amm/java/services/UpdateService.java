@@ -20,11 +20,10 @@ public class UpdateService {
     private final BookRepository books;
     private final BookUpdatesRepository bookUpdates;
 
-    public UpdateService(UserRepository users, BookRepository books,
-                         BookUpdatesRepository bookUpdates) {
-        this.users = users;
-        this.books = books;
-        this.bookUpdates = bookUpdates;
+    public UpdateService() {
+        this.users = new UserRepository();
+        this.books = new BookRepository();
+        this.bookUpdates = new BookUpdatesRepository();
     }
 
     public void updateBook(ChangeBookUpdateRequest request) {

@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.repos;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.vsu.amm.java.config.DbConfig;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.mappers.UserMapper;
 
@@ -13,12 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static ru.vsu.amm.java.config.DbConfig.getDataSource;
+
 @Slf4j
 public class UserRepository implements Repository<User> {
     private final DataSource dataSource;
 
-    public UserRepository(final DataSource dataSource) {
-        this.dataSource = dataSource;
+    public UserRepository() {
+        this.dataSource = getDataSource();
     }
 
     public Optional<User> getByEmail(String email) {

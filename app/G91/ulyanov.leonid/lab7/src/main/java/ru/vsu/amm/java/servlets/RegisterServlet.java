@@ -16,8 +16,8 @@ import java.io.IOException;
 public class RegisterServlet extends HttpServlet {
     private final AuthService authService;
 
-    public RegisterServlet(AuthService authService) {
-        this.authService = authService;
+    public RegisterServlet() {
+        this.authService = new AuthService();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class RegisterServlet extends HttpServlet {
                     request.getParameter("password"),
                     request.getParameter("lastName"),
                     request.getParameter("firstName"),
-                    request.getParameter("patronymicName"),
+                    request.getParameter("patronymic"),
                     request.getParameter("phoneNumber")
             );
 

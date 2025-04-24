@@ -16,8 +16,8 @@ import java.util.NoSuchElementException;
 public class DeleteBookServlet extends HttpServlet {
     private final DeleteService deleteService;
 
-    public DeleteBookServlet(DeleteService deleteService) {
-        this.deleteService = deleteService;
+    public DeleteBookServlet() {
+        this.deleteService = new DeleteService();
     }
 
     @Override

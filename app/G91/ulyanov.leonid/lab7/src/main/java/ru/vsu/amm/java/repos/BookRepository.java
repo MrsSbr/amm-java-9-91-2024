@@ -13,12 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static ru.vsu.amm.java.config.DbConfig.getDataSource;
+
 @Slf4j
 public class BookRepository implements Repository<Book> {
     private final DataSource dataSource;
 
-    public BookRepository(final DataSource dataSource) {
-        this.dataSource = dataSource;
+    public BookRepository() {
+        this.dataSource = getDataSource();
     }
 
     public Optional<Book> getByInfo(Book book) {
