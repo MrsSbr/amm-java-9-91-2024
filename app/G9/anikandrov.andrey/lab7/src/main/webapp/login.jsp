@@ -10,6 +10,7 @@
             flex-direction: column;
             align-items: center;
         }
+
         .login-container {
             margin-top: 50px;
             border: 1px solid #4682b4;
@@ -17,6 +18,7 @@
             padding: 20px;
             width: 250px;
         }
+
         .btn {
             display: block;
             width: 100%;
@@ -32,6 +34,7 @@
             cursor: pointer;
             box-sizing: border-box;
         }
+
         input[type="text"], input[type="password"] {
             width: 100%;
             padding: 5px;
@@ -40,6 +43,7 @@
             border-radius: 3px;
             box-sizing: border-box;
         }
+
         .error-message {
             color: red;
             text-align: center;
@@ -65,7 +69,8 @@
 
     <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
     <% if (errorMessage != null) { %>
-    <div class="error-message"><%= errorMessage %></div>
+    <div class="error-message"><%= errorMessage %>
+    </div>
     <% } %>
 </div>
 </body>

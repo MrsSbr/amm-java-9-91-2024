@@ -5,12 +5,36 @@
 <head>
     <title>Аренда</title>
     <style>
-        body { font-family: Arial; padding: 20px; }
-        h1 { color: #4682b4; }
-        section { margin-bottom: 20px; }
-        div { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; }
-        button { background: #4682b4; color: white; border: none; padding: 5px 10px; }
-        input { margin: 5px 0; }
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4682b4;
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        div {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: #4682b4;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+        }
+
+        input {
+            margin: 5px 0;
+        }
+
         .error {
             color: red;
             font-weight: bold;
@@ -23,7 +47,9 @@
 </head>
 <body>
 <h1>Аренда объектов</h1>
-<a href="${pageContext.request.contextPath}/home"><button>На главную</button></a>
+<a href="${pageContext.request.contextPath}/home">
+    <button>На главную</button>
+</a>
 
 <c:if test="${not empty sessionScope.errorMessage}">
     <div class="error">${sessionScope.errorMessage}</div>
