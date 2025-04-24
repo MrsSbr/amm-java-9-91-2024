@@ -23,7 +23,7 @@ public class CarRepository implements CrudRepository<CarEntity> {
     private final DataSource dataSource;
 
     public CarRepository() {
-        this.dataSource = DatabaseConfiguration.getDataSource();
+        this.dataSource = DatabaseConfiguration.getMainDataSource();
     }
 
     @Override

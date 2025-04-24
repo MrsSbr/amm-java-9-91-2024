@@ -65,7 +65,7 @@
         <div class="error">${errorMessage}</div>
     </c:if>
 
-    <form action="${pageContext.request.contextPath}/register" method="post">
+    <form action="${pageContext.request.contextPath}/register" method="post" onsubmit="return validateForm()">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required/>
 
@@ -75,6 +75,8 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required/>
 
+        <div id="emailError" class="error"></div>
+
         <input type="submit" value="Register"/>
     </form>
 
@@ -82,5 +84,21 @@
         Already have an account? <a href="${pageContext.request.contextPath}/login">Log in</a>
     </div>
 </div>
+
+<script>
+    function validateForm() {
+        const email = document.getElementById("email").value;
+        const emailError = document.getElementById("emailError");
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!emailRegex.test(email)) {
+            emailError.textContent = "Input correct email";
+            return false;
+        }
+
+        emailError.textContent = "";
+        return true;
+    }
+</script>
 </body>
 </html>

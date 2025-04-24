@@ -28,14 +28,14 @@ class DefaultAuthServiceIntegrationTest {
 
     @BeforeEach
     public void setup() {
-        DataSource dataSource = DatabaseConfiguration.getDataSource();
+        DataSource dataSource = DatabaseConfiguration.getTestDataSource();
         this.userRepository = new UserRepository(dataSource);
         this.authService = new DefaultAuthService(userRepository, new BcryptPasswordEncoder());
     }
 
     @AfterEach
     public void cleanup() throws SQLException {
-        DataSource dataSource = DatabaseConfiguration.getDataSource();
+        DataSource dataSource = DatabaseConfiguration.getTestDataSource();
         try (Connection connection = dataSource.getConnection();
              Statement stmt = connection.createStatement()) {
             stmt.executeUpdate("DELETE FROM \"user\"");

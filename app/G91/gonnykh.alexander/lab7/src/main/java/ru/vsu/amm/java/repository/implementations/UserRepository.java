@@ -22,7 +22,7 @@ public class UserRepository implements CrudRepository<UserEntity> {
     private final DataSource dataSource;
 
     public UserRepository() {
-        this.dataSource = DatabaseConfiguration.getDataSource();
+        this.dataSource = DatabaseConfiguration.getMainDataSource();
     }
 
     public UserRepository(DataSource dataSource) {

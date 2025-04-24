@@ -31,7 +31,7 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
     private final DataSource dataSource;
 
     public UserCarRepository() {
-        this.dataSource = DatabaseConfiguration.getDataSource();
+        this.dataSource = DatabaseConfiguration.getMainDataSource();
     }
 
     @Override
