@@ -24,7 +24,7 @@ public class SmartphoneInOrderRepository implements CrudRepository<SmartphoneInO
 
     @Override
     public Optional<SmartphoneInOrder> findById(Long id) {
-        String query = "SELECT * FROM SmartphonesInOrders WHERE SmartphonesInOrdersID = ?;";
+        String query = "SELECT SmartphoneInOrderID, OrderNum, SmartphoneID, Amount FROM SmartphonesInOrders WHERE SmartphonesInOrdersID = ?;";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
