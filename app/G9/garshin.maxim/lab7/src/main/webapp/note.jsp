@@ -161,19 +161,32 @@
                         value="${note.content}"/></textarea>
             </div>
 
-            <c:set var="dateFormatter" value="<%= DateTimeUtil.getDateFormatter() %>"/>
-            <c:set var="timeFormatter" value="<%= DateTimeUtil.getTimeFormatter() %>"/>
+                <%--<c:set var="dateFormatter" value="<%= DateTimeUtil.getDateFormatter() %>"/>
+                <c:set var="timeFormatter" value="<%= DateTimeUtil.getTimeFormatter() %>"/>--%>
 
             <div class="note-meta">
                 <div class="meta-item created-at">
-                    <span class="label">Создано:</span>
-                    <span class="value">${DateTimeUtil.formatDate(note.createdAt)} в ${DateTimeUtil.formatTime(note.createdAt)}</span>
+                    <span class="label">Created:</span>
+                    <span class="value">${DateTimeUtil.formatDateTime(note.createdAt)}</span>
                 </div>
 
                 <div class="meta-item updated-at">
-                    <span class="label">Изменено:</span>
-                    <span class="value">${DateTimeUtil.formatDate(note.updatedAt)} в ${DateTimeUtil.formatTime(note.updatedAt)}</span>
+                    <span class="label">Updated:</span>
+                    <span class="value">${DateTimeUtil.formatDateTime(note.updatedAt)}</span>
                 </div>
+
+                    <%--<div class="meta-item category">
+                        <span class="label">Category:</span>
+                        <select name="categoryId" onchange="this.form.submit()">
+                            <option value="">No category</option>
+                            <c:forEach items="${categories}" var="cat">
+                                <option value="${cat.categoryId}"
+                                    ${note.categoryId eq cat.categoryId ? 'selected' : ''}>
+                                        ${cat.title}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>--%>
             </div>
 
             <div class="action-buttons">

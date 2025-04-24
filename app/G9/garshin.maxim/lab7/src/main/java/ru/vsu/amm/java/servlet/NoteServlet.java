@@ -32,11 +32,6 @@ public class NoteServlet extends HttpServlet {
             HttpSession session = req.getSession();
             String username = (String) session.getAttribute("username");
 
-            if (username == null) {
-                resp.sendRedirect("/login");
-                return;
-            }
-
             String noteIdParam = req.getParameter("id");
             if (noteIdParam == null || noteIdParam.isEmpty()) {
                 resp.sendRedirect("/notes");
@@ -71,11 +66,6 @@ public class NoteServlet extends HttpServlet {
         try {
             HttpSession session = req.getSession();
             String username = (String) session.getAttribute("username");
-
-            if (username == null) {
-                resp.sendRedirect("/login");
-                return;
-            }
 
             String action = req.getParameter("action");
             String noteIdParam = req.getParameter("id");

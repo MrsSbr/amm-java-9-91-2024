@@ -2,7 +2,6 @@ package ru.vsu.amm.java.service;
 
 import org.mindrot.jbcrypt.BCrypt;
 import ru.vsu.amm.java.entities.UserEntity;
-import ru.vsu.amm.java.exception.AuthException;
 import ru.vsu.amm.java.exception.DatabaseException;
 import ru.vsu.amm.java.exception.RegisterException;
 import ru.vsu.amm.java.repository.UserRepository;

@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import ru.vsu.amm.java.entities.Category;
 import ru.vsu.amm.java.entities.Note;
 import ru.vsu.amm.java.exception.DatabaseException;
+import ru.vsu.amm.java.service.CategoryService;
 import ru.vsu.amm.java.service.NoteService;
 
 import javax.servlet.ServletException;
@@ -21,11 +22,43 @@ import java.util.List;
 public class NotesServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(NotesServlet.class);
     private NoteService noteService;
+    private CategoryService categoryService;
 
     @Override
     public void init() {
-        logger.info("Initializing NotesServlet");
         this.noteService = new NoteService();
+        this.categoryService = new CategoryService();
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        try {
+            HttpSession session = req.getSession();
+            String username = (String) session.getAttribute("username");
+
+            if (username == null) {
+                resp.sendRedirect("/login");
+                return;
+            }
+
+            String content = req.getParameter("content");
+            if (content == null || content.trim().isEmpty()) {
+                req.setAttribute("error", "Note content cannot be empty");
+                req.getRequestDispatcher("/new-note.jsp").forward(req, resp);
+                return;
+            }
+
+            NoteService noteService = new NoteService();
+            long noteId = noteService.createNote(username, content);
+
+            resp.sendRedirect("/note?id=" + noteId);
+
+        } catch (DatabaseException | SQLException e) {
+            logger.error("Error creating note", e);
+            req.setAttribute("error", "Error creating note");
+            req.getRequestDispatcher("/new-note.jsp").forward(req, resp);
+        }
     }
 
     @Override
@@ -47,7 +80,7 @@ public class NotesServlet extends HttpServlet {
             String categoryIdParam = req.getParameter("categoryId");
             Long categoryId = null;
 
-            if (categoryIdParam != null && !categoryIdParam.isEmpty() && !categoryIdParam.equals("all")) {
+            if (categoryIdParam != null && !categoryIdParam.isEmpty()) {
                 try {
                     categoryId = Long.parseLong(categoryIdParam);
                 } catch (NumberFormatException e) {
@@ -57,12 +90,12 @@ public class NotesServlet extends HttpServlet {
 
             List<Note> notes;
             if (categoryId != null) {
-                notes = noteService.getNotesByCategory(userId, categoryId);
+                notes = categoryService.getNotesByCategory(userId, categoryId);
             } else {
                 notes = noteService.getUserNotes(username);
             }
 
-            List<Category> categories = noteService.getUserCategories(username);
+            List<Category> categories = categoryService.getUserCategories(username);
 
             req.setAttribute("notes", notes);
             req.setAttribute("categories", categories);

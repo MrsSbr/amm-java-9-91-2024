@@ -6,11 +6,7 @@ import ru.vsu.amm.java.config.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.Note;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -258,6 +254,35 @@ public class NoteRepository implements Repository<Note> {
 
             logger.info("Successfully deleted note. NoteId: {}, Rows affected: {}",
                     noteId, rowsDeleted);
+        }
+    }
+
+    public long create(Note note) throws SQLException {
+        final String query = "INSERT INTO note (content, userid, createdat, updatedat) VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        logger.info("Executing create query: {} with content: {}, userId: {}",
+                query, note.getContent(), note.getUserId());
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     query, Statement.RETURN_GENERATED_KEYS)) {
+
+            preparedStatement.setString(1, note.getContent());
+            preparedStatement.setLong(2, note.getUserId());
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating note failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    long newId = generatedKeys.getLong(1);
+                    logger.info("Successfully created new note with ID: {}", newId);
+                    return newId;
+                } else {
+                    throw new SQLException("Creating note failed, no ID obtained.");
+                }
+            }
         }
     }
 }
