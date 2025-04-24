@@ -3,6 +3,7 @@ package ru.vsu.amm.java.utils;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.enums.Role;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Redirection {
@@ -49,22 +50,41 @@ public class Redirection {
 
     public static List<String> getAvailablePaths(User user) {
 
+        List<String> commonPaths = List.of("/viewSessions");
+        List<String> staffPaths = List.of(
+                "/viewUsers",
+                "/addSession",
+                "/deleteSession",
+                "/updateSession");
+
         return switch (user.getRole()) {
-            case Role.USER -> List.of(
-                    "/viewSessions"
-            );
-            case Role.EMPLOYEE -> List.of(
-                    "/viewSessions",
-                    "/employeeActions.jsp",
-                    "/viewUsers",
-                    "/addSessionEmployee.jsp"
-            );
-            case Role.ADMIN -> List.of(
-                    "/viewSessions",
-                    "/adminActions.jsp",
-                    "/viewUsers",
-                    "/addSessionAdmin.jsp"
-            );
+
+            case Role.USER -> commonPaths;
+
+            case Role.EMPLOYEE -> {
+
+                List<String> paths = new ArrayList<>(commonPaths);
+                paths.addAll(staffPaths);
+                paths.addAll(List.of(
+                        "/employeeActions.jsp",
+                        "/addSessionEmployee.jsp"
+                ));
+                yield paths;
+
+            }
+
+            case Role.ADMIN -> {
+
+                List<String> paths = new ArrayList<>(commonPaths);
+                paths.addAll(staffPaths);
+                paths.addAll(List.of(
+                        "/adminActions.jsp",
+                        "/addSessionAdmin.jsp"
+                ));
+                yield paths;
+
+            }
+
         };
 
     }
