@@ -5,6 +5,7 @@ import ru.vsu.amm.java.requests.Auth.LoginRequest;
 import ru.vsu.amm.java.services.AuthService;
 
 import javax.naming.AuthenticationException;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,5 +38,11 @@ public class LoginServlet extends HttpServlet {
         } catch (AuthenticationException e) {
             response.sendRedirect(String.format("%s", e.getMessage())); // TODO: связать с jsp
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 }
