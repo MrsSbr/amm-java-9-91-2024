@@ -1,6 +1,8 @@
 package ru.vsu.amm.java.filter;
 
+import ru.vsu.amm.java.dtos.EmployeeDto;
 import ru.vsu.amm.java.enums.EmployeePost;
+import ru.vsu.amm.java.utils.EmployeeDtoChecker;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,8 +16,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-@WebFilter("/register_employee")
-public class RegisterEmployeeFilter implements Filter {
+@WebFilter("/hotel_manager/*")
+public class ManagerActionsFilter implements Filter {
     private static final Logger logger = Logger.getLogger(LoginFilter.class.getName());
 
     @Override
@@ -23,17 +25,24 @@ public class RegisterEmployeeFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-
         HttpSession session = req.getSession(false);
-        boolean isAdmin = (session != null
-                && EmployeePost.ADMINISTRATOR.equals(session.getAttribute("post")));
-        if (isAdmin) {
-            chain.doFilter(request, response);
-        } else {
-            String login = (session != null) ? (String) session.getAttribute("login") : null;
+        if (session != null) {
+            var employee = (EmployeeDto) session.getAttribute("employee");
+            if (EmployeeDtoChecker.isReady(employee)) {
+                if (employee.getPost().compareTo(EmployeePost.MANAGER) >= 0) {
+                    chain.doFilter(request, response);
+                } else {
 
-            logger.info("Unable to access " + login + " to register_employee");
-            resp.sendRedirect("/index.jsp");
+                    logger.info("Unable to access " + employee.getLogin() + " to manager instruments");
+                    resp.sendRedirect("/main");
+                }
+            } else {
+                logger.info("Unset data of employee " + employee.getLogin());
+                resp.sendRedirect("/main");
+            }
+        } else {
+            logger.info("Unauthorized access attempt");
+            resp.sendRedirect("/login");
         }
     }
 }

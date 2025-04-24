@@ -1,8 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Hotel administrator: register</title>
+    <title>Hotel administrator: unregister</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -56,7 +55,7 @@
     </style>
 </head>
 <body>
-<h2>Register employee</h2>
+<h2>Unregister employee</h2>
 
 <c:if test="${not empty errorMessage}">
     <div class="error">${errorMessage}</div>
@@ -66,37 +65,15 @@
     <div class="success">${successMessage}</div>
 </c:if>
 
-<form action="${pageContext.request.contextPath}/hotel_admin/register" method="POST">
+<form action="${pageContext.request.contextPath}/hotel_admin/unregister" method="POST">
     <div class="form-group">
         <input type="text" name="login" placeholder="Login" required>
-    </div>
-    <div class="form-group">
-        <input type="password" name="password" placeholder="Password" required>
-    </div>
-    <div class="form-group">
-        <label>Select post:</label>
-        <select name="post" required>
-            <c:forEach items="${requestScope.employee_posts}" var="post_name">
-                <option value="${post_name}"
-                    ${not empty param.post and param.post eq post_name.name() ? 'selected' : ''}>
-                        ${post_name.name()}
-                </option>
-            </c:forEach>
-        </select>
-    </div>
-    <div class="form-group">
-        <label>Select hotel:</label>
-        <select name="hotel_id" required>
-            <c:forEach items="${hotels}" var="hotel">
-                <option value="${hotel.id}">${hotel.name} (ID: ${hotel.id})</option>
-            </c:forEach>
-        </select>
     </div>
     <div class="button-group">
         <button type="button" class="button-back" onclick="window.location.href='${pageContext.request.contextPath}/hotel_manager/employees'">
             Back
         </button>
-        <button type="submit">Register</button>
+        <button type="submit">Unregister</button>
     </div>
 </form>
 </body>

@@ -1,6 +1,10 @@
 package ru.vsu.amm.java.filter;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +29,7 @@ public class LoginFilter implements Filter {
 
         String path = req.getRequestURI().substring(req.getContextPath().length());
         HttpSession session = req.getSession(false);
-        boolean isLoggedIn = (session != null && session.getAttribute("login") != null);
+        boolean isLoggedIn = (session != null && session.getAttribute("employee") != null);
         boolean isPathAllowed = allowedPaths.contains(path);
         if (isLoggedIn || isPathAllowed) {
             chain.doFilter(request, response);

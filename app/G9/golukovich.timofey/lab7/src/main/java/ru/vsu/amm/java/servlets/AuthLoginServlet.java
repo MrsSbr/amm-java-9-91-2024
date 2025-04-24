@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.servlets;
 
+import ru.vsu.amm.java.dtos.EmployeeDto;
 import ru.vsu.amm.java.exceptions.DatabaseException;
 import ru.vsu.amm.java.exceptions.EmployeeNotFoundException;
 import ru.vsu.amm.java.services.AuthorizationService;
@@ -10,7 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/login")
@@ -29,10 +29,10 @@ public class AuthLoginServlet extends HttpServlet {
         try {
             var employeeOpt = authService.login(login, password);
             if (employeeOpt.isPresent()) {
-                HttpSession httpSession = req.getSession();
-                httpSession.setAttribute("login", login);
-                httpSession.setAttribute("post", employeeOpt.get().getPost());
-                resp.sendRedirect("/index.jsp");
+                var session = req.getSession();
+                EmployeeDto employee = employeeOpt.get();
+                session.setAttribute("employee", employee);
+                resp.sendRedirect("/main");
             } else {
                 req.setAttribute("errorMessage", "Wrong login or password. Please, try again");
                 getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);

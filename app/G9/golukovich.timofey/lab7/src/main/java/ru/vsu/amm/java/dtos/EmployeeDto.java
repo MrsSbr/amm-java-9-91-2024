@@ -76,4 +76,15 @@ public class EmployeeDto {
     public LocalDate getBirthday() {
         return birthday;
     }
+
+    public boolean isReady() {
+        return hotelId != null
+                && name != null
+                && phoneNumber != null
+                && passportNumber != null
+                && passportSeries != null
+                && post != null
+                && salary != null
+                && birthday != null;
+    }
 }

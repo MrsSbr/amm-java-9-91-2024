@@ -8,6 +8,10 @@ CREATE TABLE hotel(
 );
 
 ALTER TABLE hotel
+    ADD CONSTRAINT Unique_Hotel_Name
+        UNIQUE(hotel_name);
+
+ALTER TABLE hotel
     ADD CONSTRAINT Unique_Hotel_Address
         UNIQUE(address);
 
@@ -36,7 +40,7 @@ ALTER TABLE hotel_room
 
 CREATE TABLE employee(
    employee_id        	SERIAL			PRIMARY KEY,
-   hotel_id           	INTEGER			REFERENCES hotel(hotel_id),
+   hotel_id           	INTEGER         REFERENCES hotel(hotel_id),
    "name"             	VARCHAR(100),
    phone_number       	CHARACTER(12),
    email              	VARCHAR(30),
@@ -58,3 +62,7 @@ ALTER TABLE employee
 
 ALTER TABLE employee
     ADD CHECK(salary > 0);
+
+ALTER TABLE employee
+    ADD CHECK(hotel_id IS NOT NULL AND post NOT LIKE 'MASTER_ADMINISTRATOR'
+                OR hotel_id IS NULL AND post LIKE 'MASTER_ADMINISTRATOR');

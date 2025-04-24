@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Hotel Staff - Login</title>
+    <title>Hotel Staff - Register employee</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,10 +27,6 @@
         }
 
         .error { color: red; margin-bottom: 10px; }
-
-        .register-link {
-            margin-top: 15px;
-        }
     </style>
 </head>
 <body>
@@ -49,8 +45,5 @@
     </div>
     <button type="submit">Login</button>
 </form>
-<div class="register-link">
-    Don't have an account? <a href="/register">Register here</a>
-</div>
 </body>
 </html>

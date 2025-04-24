@@ -44,7 +44,7 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
 
     @Override
     public List<HotelEntity> getAll() throws SQLException {
-        final String query = "SELECT hotel_id, name, address, email, phone_number, opening_date FROM hotel";
+        final String query = "SELECT hotel_id, hotel_name, address, email, phone_number, opening_date FROM hotel";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -56,7 +56,7 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
         while (resultSet.next()) {
             var entity = new HotelEntity(
                     resultSet.getInt("hotel_id"),
-                    resultSet.getString("name"),
+                    resultSet.getString("hotel_name"),
                     resultSet.getString("address"),
                     resultSet.getString("email"),
                     resultSet.getString("phone_number"),

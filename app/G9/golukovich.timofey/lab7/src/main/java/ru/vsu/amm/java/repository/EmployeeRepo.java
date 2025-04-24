@@ -92,16 +92,17 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
         preparedStatement.execute();
     }
 
-    public void save(String login, String password, EmployeePost post) throws SQLException {
+    public void save(String login, String password, EmployeePost post, Integer hotelId) throws SQLException {
         final String query = """
-                INSERT INTO employee (login, password, post)
-                VALUES(?, ?, ?)""";
+                INSERT INTO employee (login, password, post, hotel_id)
+                VALUES(?, ?, ?, ?)""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, login);
         preparedStatement.setString(2, password);
         preparedStatement.setString(3, post.toString());
+        preparedStatement.setInt(4, hotelId);
         preparedStatement.execute();
     }
 
@@ -132,6 +133,130 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
         }
 
         return Optional.empty();
+    }
+
+    public List<EmployeeEntity> getAllByParameters(Integer employee_id, Integer hotel_id, String login,
+                                               String name, String phone_number, String email,
+                                               String passport_number, String passport_series,
+                                               String post, Integer salary, LocalDate birthday) throws SQLException {
+        final String query = """
+                SELECT employee_id, hotel_id, login, password, name, phone_number,
+                email, passport_number, passport_series, post, salary, birthday
+                FROM employee
+                WHERE ? IS NOT NULL AND employee_id = ?
+                    OR ? IS NOT NULL AND hotel_id = ?
+                    OR ? IS NOT NULL AND login LIKE ?
+                    OR ? IS NOT NULL AND name LIKE ?
+                    OR ? IS NOT NULL AND phone_number LIKE ?
+                    OR ? IS NOT NULL AND email LIKE ?
+                    OR ? IS NOT NULL AND passport_number LIKE ?
+                        AND ? IS NOT NULL AND passport_series LIKE ?
+                    OR ? IS NOT NULL AND post LIKE ?
+                    OR ? IS NOT NULL AND salary = ?
+                    OR ? IS NOT NULL AND birthday = ?""";
+
+        var connection = dataSource.getConnection();
+
+        var preparedStatement = connection.prepareStatement(query);
+
+        if (employee_id == null) {
+            preparedStatement.setNull(1, Types.INTEGER);
+            preparedStatement.setNull(2, Types.INTEGER);
+        } else {
+            preparedStatement.setInt(1, employee_id);
+            preparedStatement.setInt(2, employee_id);
+        }
+
+        if (hotel_id == null) {
+            preparedStatement.setNull(3, Types.INTEGER);
+            preparedStatement.setNull(4, Types.INTEGER);
+        } else {
+            preparedStatement.setInt(3, hotel_id);
+            preparedStatement.setInt(4, hotel_id);
+        }
+
+        if (login == null) {
+            preparedStatement.setNull(5, Types.VARCHAR);
+            preparedStatement.setNull(6, Types.VARCHAR);
+        } else {
+            preparedStatement.setString(5, login);
+            preparedStatement.setString(6, login);
+        }
+
+        if (name == null) {
+            preparedStatement.setNull(7, Types.VARCHAR);
+            preparedStatement.setNull(8, Types.VARCHAR);
+        } else {
+            preparedStatement.setString(7, name);
+            preparedStatement.setString(8, name);
+        }
+
+        if (phone_number == null) {
+            preparedStatement.setNull(9, Types.VARCHAR);
+            preparedStatement.setNull(10, Types.VARCHAR);
+        } else {
+            preparedStatement.setString(9, phone_number);
+            preparedStatement.setString(10, phone_number);
+        }
+
+        if (email == null) {
+            preparedStatement.setNull(11, Types.VARCHAR);
+            preparedStatement.setNull(12, Types.VARCHAR);
+        } else {
+            preparedStatement.setString(11, email);
+            preparedStatement.setString(12, email);
+        }
+
+        if (passport_number == null) {
+            preparedStatement.setNull(13, Types.VARCHAR);
+            preparedStatement.setNull(14, Types.VARCHAR);
+        } else {
+            preparedStatement.setString(13, passport_number);
+            preparedStatement.setString(14, passport_number);
+        }
+
+        if (passport_series == null) {
+            preparedStatement.setNull(15, Types.VARCHAR);
+            preparedStatement.setNull(16, Types.VARCHAR);
+        } else {
+            preparedStatement.setString(15, passport_series);
+            preparedStatement.setString(16, passport_series);
+        }
+
+        if (post == null) {
+            preparedStatement.setNull(17, Types.VARCHAR);
+            preparedStatement.setNull(18, Types.VARCHAR);
+        } else {
+            preparedStatement.setString(17, post);
+            preparedStatement.setString(18, post);
+        }
+
+        if (salary == null) {
+            preparedStatement.setNull(19, Types.INTEGER);
+            preparedStatement.setNull(20, Types.INTEGER);
+        } else {
+            preparedStatement.setInt(19, salary);
+            preparedStatement.setInt(20, salary);
+        }
+
+        if (birthday == null) {
+            preparedStatement.setNull(21, Types.DATE);
+            preparedStatement.setNull(22, Types.DATE);
+        } else {
+            preparedStatement.setDate(21, Date.valueOf(birthday));
+            preparedStatement.setDate(22,  Date.valueOf(birthday));
+        }
+
+        preparedStatement.execute();
+
+        List<EmployeeEntity> entityList = new ArrayList<>();
+
+        var resultSet = preparedStatement.getResultSet();
+        while (resultSet.next()) {
+            entityList.add(configureEmployeeEntityFromResultSet(resultSet));
+        }
+
+        return entityList;
     }
 
     private void setPreparedStatement(PreparedStatement preparedStatement, EmployeeEntity entity) throws SQLException {

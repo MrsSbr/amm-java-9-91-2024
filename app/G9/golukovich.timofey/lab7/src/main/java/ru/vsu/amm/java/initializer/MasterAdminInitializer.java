@@ -84,7 +84,7 @@ public class MasterAdminInitializer implements ServletContextListener {
         var preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, MASTER_ADMIN_LOGIN);
         preparedStatement.setString(2, BCrypt.hashpw(MASTER_ADMIN_PASSWORD, BCrypt.gensalt()));
-        preparedStatement.setString(3, EmployeePost.ADMINISTRATOR.toString());
+        preparedStatement.setString(3, EmployeePost.MASTER_ADMINISTRATOR.toString());
         preparedStatement.execute();
     }
 }
