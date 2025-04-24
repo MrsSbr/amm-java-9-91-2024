@@ -6,5 +6,5 @@ public enum Status {
     CANCELLED, //отменено
     COMPLETED, //завершено
     REFUNDED, //возвращено
-    FAILED //ошибка оплаты
+    FAILED //ошибка оплат
 }

@@ -11,7 +11,7 @@ public class Guide {
     private String eMail;
     private String numberPhone;
 
-    public Guide(int id, String fullName, String bio, float rating, Language languages, String eMail, String numberPhone) {
+    public Guide(int id, String fullName, String bio, double rating, Language languages, String eMail, String numberPhone) {
         this.id = id;
         this.fullName = fullName;
         this.bio = bio;

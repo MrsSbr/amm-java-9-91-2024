@@ -15,5 +15,6 @@ public enum Language {
     CROATIAN,
     SIBERIAN,
     BELORUSSIAN,
-    KOMI
+    KOMI,
+    BRASILIAN
 }
