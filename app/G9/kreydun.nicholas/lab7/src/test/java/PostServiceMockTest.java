@@ -74,7 +74,7 @@ class PostServiceMockTest {
         List<Post> result = postService.getAll();
 
         assertEquals(2, result.size());
-        verify(postRepository, times(1)).getAll();
+        verify(postRepository).getAll();
     }
 
     @Test

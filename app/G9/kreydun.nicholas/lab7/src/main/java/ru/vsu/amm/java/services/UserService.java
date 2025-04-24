@@ -34,7 +34,9 @@ public class UserService {
     public boolean update(UUID userId, String username, String email, String newPassword) {
         try {
             User user = userRepository.getById(userId);
-            if (user == null) return false;
+
+            if (user == null)
+                return false;
 
             user.setUsername(username);
             user.setEmail(email);

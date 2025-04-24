@@ -73,7 +73,7 @@ public class UserRepositoryTest {
         assertTrue(isUpdated, "Обновление должно быть успешным");
 
         User updatedUser = userRepository.getById(testUserId);
-        assert updatedUser != null;
+        assertNotNull(updatedUser);
         assertEquals("UpdatedName1", updatedUser.getUsername(), "Имя пользователя не обновилось");
         assertEquals("updated1@example.com", updatedUser.getEmail(), "Email пользователя не обновился");
     }

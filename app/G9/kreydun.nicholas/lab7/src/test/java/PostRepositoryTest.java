@@ -66,7 +66,7 @@ public class PostRepositoryTest {
         assertTrue(isUpdated);
 
         Post updatedPost = postRepository.getById(testPostId);
-        assert updatedPost != null;
+        assertNotNull(updatedPost);
         assertEquals("Updated content", updatedPost.getContent());
     }
 
