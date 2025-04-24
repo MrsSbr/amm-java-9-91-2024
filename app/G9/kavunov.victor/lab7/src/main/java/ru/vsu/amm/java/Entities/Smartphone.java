@@ -1,7 +1,7 @@
 package ru.vsu.amm.java.Entities;
 
 public class Smartphone {
-    private int smartphoneId;
+    private long smartphoneId;
     private String brand;
     private String model;
     private int ram;
@@ -15,7 +15,7 @@ public class Smartphone {
     public Smartphone() {
     }
 
-    public Smartphone(int smartphoneId, String brand, String model, int ram, int storageMemory,
+    public Smartphone(long smartphoneId, String brand, String model, int ram, int storageMemory,
                       float mainCameraResolution, float screenSize, String color, float price, int amount) {
         this.smartphoneId = smartphoneId;
         this.brand = brand;
@@ -33,7 +33,7 @@ public class Smartphone {
         return this.smartphoneId;
     }
 
-    public void setSmartphoneId(int id) {
+    public void setSmartphoneId(long id) {
         this.smartphoneId = id;
     }
 
