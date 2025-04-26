@@ -2,8 +2,10 @@ package ru.vsu.amm.java.servlet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.vsu.amm.java.entities.Category;
 import ru.vsu.amm.java.entities.Note;
 import ru.vsu.amm.java.exception.DatabaseException;
+import ru.vsu.amm.java.service.CategoryService;
 import ru.vsu.amm.java.service.NoteService;
 
 import javax.servlet.ServletException;
@@ -14,15 +16,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet(name = "NoteServlet", urlPatterns = "/note")
 public class NoteServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(NoteServlet.class);
     private NoteService noteService;
+    private CategoryService categoryService;
 
     @Override
     public void init() {
         this.noteService = new NoteService();
+        this.categoryService = new CategoryService();
     }
 
     @Override
@@ -40,6 +45,7 @@ public class NoteServlet extends HttpServlet {
 
             long noteId = Long.parseLong(noteIdParam);
             Note note = noteService.getNoteById(noteId, username);
+            List<Category> categoryList = categoryService.getUserCategories(username);
 
             if (note == null) {
                 req.setAttribute("error", "Note not found or access denied");
@@ -48,6 +54,7 @@ public class NoteServlet extends HttpServlet {
             }
 
             req.setAttribute("note", note);
+            req.setAttribute("categories", categoryList);
             req.getRequestDispatcher("/note.jsp").forward(req, resp);
 
         } catch (NumberFormatException e) {
@@ -70,6 +77,7 @@ public class NoteServlet extends HttpServlet {
             String action = req.getParameter("action");
             String noteIdParam = req.getParameter("id");
             String content = req.getParameter("content");
+            String categoryIdParam = req.getParameter("categoryId");
 
             if (noteIdParam == null || noteIdParam.isEmpty()) {
                 resp.sendRedirect("/notes");
@@ -82,7 +90,10 @@ public class NoteServlet extends HttpServlet {
             if ("delete".equals(action)) {
                 noteService.deleteNote(noteId, username);
                 resp.sendRedirect("/notes");
-            } else if ("save".equals(action)) {
+                return;
+            }
+
+            if ("save".equals(action)) {
                 if (content == null || content.trim().isEmpty()) {
                     req.setAttribute("error", "Note content cannot be empty");
                     req.setAttribute("note", note);
@@ -90,8 +101,25 @@ public class NoteServlet extends HttpServlet {
                     return;
                 }
                 noteService.updateNoteContent(noteId, content, username);
-                resp.sendRedirect("/note?id=" + noteId);
+
             }
+
+            if (categoryIdParam != null) {
+                if ("null".equals(categoryIdParam)) {
+                    noteService.removeNoteCategory(noteId, username);
+                    logger.debug("Removed category from note {}", noteId);
+                } else {
+                    try {
+                        long categoryId = Long.parseLong(categoryIdParam);
+                        noteService.updateNoteCategory(noteId, categoryId, username);
+                        logger.debug("Updated category for note {} to {}", noteId, categoryId);
+                    } catch (NumberFormatException e) {
+                        logger.warn("Invalid category ID: {}", categoryIdParam);
+                    }
+                }
+            }
+
+            resp.sendRedirect("/note?id=" + noteId);
 
         } catch (NumberFormatException e) {
             logger.error("Invalid note ID parameter", e);

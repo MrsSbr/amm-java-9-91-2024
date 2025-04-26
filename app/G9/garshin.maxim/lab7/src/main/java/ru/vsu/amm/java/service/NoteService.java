@@ -101,4 +101,44 @@ public class NoteService {
             throw new DatabaseException("Failed to create note", e);
         }
     }
+
+    public void updateNoteCategory(long noteId, long categoryId, String username)
+            throws DatabaseException, SQLException {
+        try {
+            logger.info("Updating category for note ID: {}, new category ID: {}, user: {}",
+                    noteId, categoryId, username);
+
+            Optional<Note> optionalNote = noteRepository.getNoteById(noteId, username);
+            if (optionalNote.isEmpty()) {
+                logger.error("Note not found: {}", noteId);
+                throw new DatabaseException("Note not found");
+            }
+
+            noteRepository.updateNoteCategory(noteId, categoryId);
+            logger.debug("Successfully updated category for note {}", noteId);
+        } catch (SQLException e) {
+            logger.error("SQL error updating category for note {}", noteId, e);
+            throw new DatabaseException("Error updating note category", e);
+        }
+    }
+
+    public void removeNoteCategory(long noteId, String username)
+            throws DatabaseException, SQLException {
+        try {
+            logger.info("Removing category from note ID: {}, user: {}", noteId, username);
+
+            Optional<Note> optionalNote = noteRepository.getNoteById(noteId, username);
+            if (optionalNote.isEmpty()) {
+                logger.error("Note not found: {}", noteId);
+                throw new DatabaseException("Note not found");
+            }
+
+            noteRepository.removeNoteCategory(noteId);
+            logger.debug("Removed category from note {}", noteId);
+
+        } catch (SQLException e) {
+            logger.error("SQL error removing category from note {}", noteId, e);
+            throw new DatabaseException("Error removing note category", e);
+        }
+    }
 }

@@ -6,7 +6,12 @@ import ru.vsu.amm.java.config.DatabaseConfiguration;
 import ru.vsu.amm.java.entities.Note;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -283,6 +288,49 @@ public class NoteRepository implements Repository<Note> {
                     throw new SQLException("Creating note failed, no ID obtained.");
                 }
             }
+        }
+    }
+
+    public void updateNoteCategory(long noteId, long categoryId) throws SQLException {
+        String sql = "UPDATE note SET categoryid = ? WHERE noteid = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, categoryId);
+            stmt.setLong(2, noteId);
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                logger.warn("No rows affected when updating category for note {}", noteId);
+                throw new SQLException("Updating note category failed, no rows affected.");
+            }
+
+            logger.debug("Updated category for note {} to {}", noteId, categoryId);
+        } catch (SQLException e) {
+            logger.error("Error updating category for note {}", noteId, e);
+            throw e;
+        }
+    }
+
+    public void removeNoteCategory(long noteId) throws SQLException {
+        String sql = "UPDATE note SET categoryid = NULL WHERE noteid = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, noteId);
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                logger.warn("No rows affected when removing category from note {}", noteId);
+                throw new SQLException("Removing note category failed, no rows affected.");
+            }
+
+            logger.debug("Removed category from note {}", noteId);
+        } catch (SQLException e) {
+            logger.error("Error removing category from note {}", noteId, e);
+            throw e;
         }
     }
 }
