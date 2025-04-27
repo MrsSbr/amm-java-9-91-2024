@@ -17,9 +17,9 @@ import java.time.LocalDate;
 
 import ru.vsu.amm.java.enums.Gender;
 
-import static ru.vsu.amm.java.utils.ServletConstants.HOME_PAGE;
 import static ru.vsu.amm.java.utils.ServletConstants.PSY_REGISTER_PAGE;
 import static ru.vsu.amm.java.utils.ServletConstants.URL_PSY_REGISTER;
+import static ru.vsu.amm.java.utils.ServletConstants.URL_PSY_SESSIONS;
 
 @WebServlet(name = "PsychologistRegistrationServlet", urlPatterns = URL_PSY_REGISTER)
 public class PsychologistRegistrationServlet extends HttpServlet {
@@ -56,7 +56,7 @@ public class PsychologistRegistrationServlet extends HttpServlet {
 
             HttpSession session = req.getSession();
             session.setAttribute("login", login);
-            resp.sendRedirect(HOME_PAGE);
+            resp.sendRedirect(URL_PSY_SESSIONS);
 
         } catch (WrongUserCredentialsException | DataAccessException e) {
             req.setAttribute("errorMessage", e.getMessage());

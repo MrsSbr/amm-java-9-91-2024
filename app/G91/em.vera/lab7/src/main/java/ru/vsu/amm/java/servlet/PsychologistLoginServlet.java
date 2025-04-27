@@ -14,9 +14,7 @@ import ru.vsu.amm.java.services.impl.PsychologistAuthServiceImpl;
 
 import java.io.IOException;
 
-import static ru.vsu.amm.java.utils.ServletConstants.HOME_PAGE;
-import static ru.vsu.amm.java.utils.ServletConstants.PSY_LOGIN_PAGE;
-import static ru.vsu.amm.java.utils.ServletConstants.URL_PSY_LOGIN;
+import static ru.vsu.amm.java.utils.ServletConstants.*;
 
 @WebServlet(name = "PsychologistLoginServlet", urlPatterns = URL_PSY_LOGIN)
 public class PsychologistLoginServlet extends HttpServlet {
@@ -46,7 +44,7 @@ public class PsychologistLoginServlet extends HttpServlet {
 
             HttpSession session = req.getSession();
             session.setAttribute("login", login);
-            resp.sendRedirect(HOME_PAGE);
+            resp.sendRedirect(URL_PSY_SESSIONS);
 
         } catch (WrongUserCredentialsException | DataAccessException e) {
             req.setAttribute("errorMessage", e.getMessage());

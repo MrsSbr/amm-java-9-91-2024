@@ -15,5 +15,7 @@ public interface SessionService {
 
     List<SessionDto> getSessionsByClientEmail(String email);
 
+    List<SessionDto> getSessionsByPsychologistLogin(String login);
+
     List<SessionDto> getAllSessions();
 }

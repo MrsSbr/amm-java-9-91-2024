@@ -2,11 +2,13 @@ package ru.vsu.amm.java.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.entities.Client;
+import ru.vsu.amm.java.entities.Psychologist;
 import ru.vsu.amm.java.entities.Session;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.mappers.SessionMapper;
 import ru.vsu.amm.java.models.dto.SessionDto;
 import ru.vsu.amm.java.repository.impl.ClientRepository;
+import ru.vsu.amm.java.repository.impl.PsychologistRepository;
 import ru.vsu.amm.java.repository.impl.SessionRepository;
 import ru.vsu.amm.java.services.SessionService;
 
@@ -19,10 +21,12 @@ import java.util.Optional;
 public class SessionServiceImpl implements SessionService {
     private final SessionRepository sessionRepository;
     private final ClientRepository clientRepository;
+    private final PsychologistRepository psychologistRepository;
 
     public SessionServiceImpl() {
         this.sessionRepository = new SessionRepository();
         this.clientRepository = new ClientRepository();
+        this.psychologistRepository = new PsychologistRepository();
     }
 
     @Override
@@ -68,6 +72,22 @@ public class SessionServiceImpl implements SessionService {
         } catch (SQLException e) {
             log.error("Error fetching sessions for client email={}", email, e);
             throw new DataAccessException("Failed to fetch sessions by client email", e);
+        }
+    }
+
+    @Override
+    public List<SessionDto> getSessionsByPsychologistLogin(String login) {
+        try {
+            Optional<Psychologist> psychologistOpt = psychologistRepository.findByLogin(login);
+            if (psychologistOpt.isPresent()) {
+                Long psychologistId = psychologistOpt.get().getIdPsychologist();
+                return sessionRepository.findByPsychologist(psychologistId).stream().map(SessionMapper::toSessionDto).toList();
+            } else {
+                return Collections.emptyList();
+            }
+        } catch (SQLException e) {
+            log.error("Error fetching sessions for psychologist login={}", login, e);
+            throw new DataAccessException("Failed to fetch sessions by psychologist login", e);
         }
     }
 
