@@ -15,11 +15,12 @@ import ru.vsu.amm.java.services.impl.PsychologistAuthServiceImpl;
 import java.io.IOException;
 
 import static ru.vsu.amm.java.utils.ServletConstants.HOME_PAGE;
+import static ru.vsu.amm.java.utils.ServletConstants.PSY_LOGIN_PAGE;
+import static ru.vsu.amm.java.utils.ServletConstants.URL_PSY_LOGIN;
 
-@WebServlet(name = "PsychologistLoginServlet", urlPatterns = "/psychologist/login")
+@WebServlet(name = "PsychologistLoginServlet", urlPatterns = URL_PSY_LOGIN)
 public class PsychologistLoginServlet extends HttpServlet {
 
-    private static final String LOGIN_PAGE = "/psychologistLogin.jsp";
     private final PsychologistAuthService authService;
 
     public PsychologistLoginServlet() {
@@ -30,7 +31,7 @@ public class PsychologistLoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         getServletContext()
-                .getRequestDispatcher(LOGIN_PAGE)
+                .getRequestDispatcher(PSY_LOGIN_PAGE)
                 .forward(req, resp);
     }
 
@@ -50,7 +51,7 @@ public class PsychologistLoginServlet extends HttpServlet {
         } catch (WrongUserCredentialsException | DataAccessException e) {
             req.setAttribute("errorMessage", e.getMessage());
             getServletContext()
-                    .getRequestDispatcher(LOGIN_PAGE)
+                    .getRequestDispatcher(PSY_LOGIN_PAGE)
                     .forward(req, resp);
         }
     }

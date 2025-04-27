@@ -87,7 +87,7 @@
         <h2>Create Account</h2>
         <p>Join our community today</p>
     </div>
-    <form action="${pageContext.request.contextPath}/register" method="post" class="form-content">
+    <form action="${pageContext.request.contextPath}/client/register" method="post" class="form-content">
         <div class="form-group">
             <input type="text" name="name" placeholder="Your Name" required>
         </div>
@@ -100,7 +100,7 @@
         <button type="submit">Register</button>
     </form>
     <div class="footer">
-        Already have an account? <a href="${pageContext.request.contextPath}/login">Sign In</a>
+        Already have an account? <a href="${pageContext.request.contextPath}/client/login">Sign In</a>
     </div>
 </div>
 </body>

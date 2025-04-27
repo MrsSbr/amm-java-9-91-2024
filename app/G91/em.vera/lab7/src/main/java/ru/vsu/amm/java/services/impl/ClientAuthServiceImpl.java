@@ -30,7 +30,7 @@ public class ClientAuthServiceImpl implements ClientAuthService {
             if (clientOpt.isEmpty()) {
                 throw new WrongUserCredentialsException("Client with email:" + request.email() + " not found");
             }
-            if (!BCrypt.checkpw(clientOpt.get().getPassword(), request.password())) {
+            if (!BCrypt.checkpw(request.password(), clientOpt.get().getPassword())) {
                 throw new WrongUserCredentialsException("Incorrect password");
             }
         } catch (SQLException e) {

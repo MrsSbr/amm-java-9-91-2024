@@ -18,11 +18,12 @@ import java.time.LocalDate;
 import ru.vsu.amm.java.enums.Gender;
 
 import static ru.vsu.amm.java.utils.ServletConstants.HOME_PAGE;
+import static ru.vsu.amm.java.utils.ServletConstants.PSY_REGISTER_PAGE;
+import static ru.vsu.amm.java.utils.ServletConstants.URL_PSY_REGISTER;
 
-@WebServlet(name = "PsychologistRegistrationServlet", urlPatterns = "/psychologist/register")
+@WebServlet(name = "PsychologistRegistrationServlet", urlPatterns = URL_PSY_REGISTER)
 public class PsychologistRegistrationServlet extends HttpServlet {
 
-    private static final String REGISTER_PAGE = "/psychologistRegister.jsp";
     private final PsychologistAuthService authService;
 
     public PsychologistRegistrationServlet() {
@@ -33,7 +34,7 @@ public class PsychologistRegistrationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         getServletContext()
-                .getRequestDispatcher(REGISTER_PAGE)
+                .getRequestDispatcher(PSY_REGISTER_PAGE)
                 .forward(req, resp);
     }
 
@@ -60,7 +61,7 @@ public class PsychologistRegistrationServlet extends HttpServlet {
         } catch (WrongUserCredentialsException | DataAccessException e) {
             req.setAttribute("errorMessage", e.getMessage());
             getServletContext()
-                    .getRequestDispatcher(REGISTER_PAGE)
+                    .getRequestDispatcher(PSY_REGISTER_PAGE)
                     .forward(req, resp);
         }
     }

@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import lombok.AllArgsConstructor;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.models.requests.ClientRegisterRequest;
@@ -15,13 +14,12 @@ import ru.vsu.amm.java.services.impl.ClientAuthServiceImpl;
 
 import java.io.IOException;
 
-import static ru.vsu.amm.java.utils.ServletConstants.HOME_PAGE;
+import static ru.vsu.amm.java.utils.ServletConstants.*;
 
 
-@WebServlet(name = "ClientRegistrationServlet", urlPatterns = "/client/register")
+@WebServlet(name = "ClientRegistrationServlet", urlPatterns = URL_CLIENT_REGISTER)
 public class ClientRegistrationServlet extends HttpServlet {
 
-    private static final String REGISTER_PAGE = "/clientRegister.jsp";
     private final ClientAuthService authService;
 
     public ClientRegistrationServlet() {
@@ -30,7 +28,7 @@ public class ClientRegistrationServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher(REGISTER_PAGE).forward(req, resp);
+        getServletContext().getRequestDispatcher(CLIENT_REGISTER_PAGE).forward(req, resp);
     }
 
     @Override
@@ -44,10 +42,10 @@ public class ClientRegistrationServlet extends HttpServlet {
 
             HttpSession session = req.getSession();
             session.setAttribute("email", email);
-            resp.sendRedirect(HOME_PAGE);
+            resp.sendRedirect(URL_CLIENT_SESSIONS);
         } catch (WrongUserCredentialsException | DataAccessException e) {
             req.setAttribute("errorMessage", e.getMessage());
-            getServletContext().getRequestDispatcher(REGISTER_PAGE).forward(req, resp);
+            getServletContext().getRequestDispatcher(CLIENT_REGISTER_PAGE).forward(req, resp);
         }
     }
 }

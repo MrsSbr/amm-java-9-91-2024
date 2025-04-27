@@ -25,7 +25,7 @@ public class SessionRepository implements CrudRepository<Session> {
     @Override
     public Optional<Session> findById(Long id) throws SQLException {
         String sql =
-                "SELECT id_session, psychologist_id, client_id, date, price, duration " +
+                "SELECT id_session, id_psychologist, id_client, date, price, duration " +
                         "FROM session " +
                         "WHERE id_session = ?";
         try (Connection conn = dataSource.getConnection();
@@ -36,8 +36,8 @@ public class SessionRepository implements CrudRepository<Session> {
                 if (rs.next()) {
                     return Optional.of(new Session(
                             rs.getLong("id_session"),
-                            rs.getLong("psychologist_id"),
-                            rs.getLong("client_id"),
+                            rs.getLong("id_psychologist"),
+                            rs.getLong("id_client"),
                             rs.getDate("date").toLocalDate(),
                             rs.getBigDecimal("price"),
                             rs.getShort("duration")
@@ -51,7 +51,7 @@ public class SessionRepository implements CrudRepository<Session> {
     @Override
     public List<Session> findAll() throws SQLException {
         String sql =
-                "SELECT id_session, psychologist_id, client_id, date, price, duration FROM session";
+                "SELECT id_session, id_psychologist, id_client, date, price, duration FROM session";
         List<Session> list = new ArrayList<>();
 
         try (Connection conn = dataSource.getConnection();
@@ -61,8 +61,8 @@ public class SessionRepository implements CrudRepository<Session> {
             while (rs.next()) {
                 list.add(new Session(
                         rs.getLong("id_session"),
-                        rs.getLong("psychologist_id"),
-                        rs.getLong("client_id"),
+                        rs.getLong("id_psychologist"),
+                        rs.getLong("id_client"),
                         rs.getDate("date").toLocalDate(),
                         rs.getBigDecimal("price"),
                         rs.getShort("duration")
@@ -75,13 +75,13 @@ public class SessionRepository implements CrudRepository<Session> {
     @Override
     public void save(Session entity) throws SQLException {
         String sql =
-                "INSERT INTO session (psychologist_id, client_id, date, price, duration) " +
+                "INSERT INTO session (id_psychologist, id_client, date, price, duration) " +
                         "VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setLong(1, entity.getPsychologist_id());
-            ps.setLong(2, entity.getClient_id());
+            ps.setLong(1, entity.getId_psychologist());
+            ps.setLong(2, entity.getId_client());
             ps.setDate(3, Date.valueOf(entity.getDate()));
             ps.setBigDecimal(4, entity.getPrice());
             ps.setShort(5, entity.getDuration());
@@ -92,13 +92,13 @@ public class SessionRepository implements CrudRepository<Session> {
     @Override
     public void update(Session entity) throws SQLException {
         String sql =
-                "UPDATE session SET psychologist_id = ?, client_id = ?, date = ?, price = ?, duration = ? " +
+                "UPDATE session SET id_psychologist = ?, id_client = ?, date = ?, price = ?, duration = ? " +
                         "WHERE id_session = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setLong(1, entity.getPsychologist_id());
-            ps.setLong(2, entity.getClient_id());
+            ps.setLong(1, entity.getId_psychologist());
+            ps.setLong(2, entity.getId_client());
             ps.setDate(3, Date.valueOf(entity.getDate()));
             ps.setBigDecimal(4, entity.getPrice());
             ps.setShort(5, entity.getDuration());

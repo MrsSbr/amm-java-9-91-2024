@@ -14,22 +14,22 @@ import ru.vsu.amm.java.services.impl.ClientAuthServiceImpl;
 
 import java.io.IOException;
 
-import static ru.vsu.amm.java.utils.ServletConstants.HOME_PAGE;
+import static ru.vsu.amm.java.utils.ServletConstants.CLIENT_LOGIN_PAGE;
+import static ru.vsu.amm.java.utils.ServletConstants.URL_CLIENT_LOGIN;
+import static ru.vsu.amm.java.utils.ServletConstants.URL_CLIENT_SESSIONS;
 
-@WebServlet(name = "ClientLoginServlet", urlPatterns = "/client/login")
+@WebServlet(name = "ClientLoginServlet", urlPatterns = URL_CLIENT_LOGIN)
 public class ClientLoginServlet extends HttpServlet {
 
-    private static final String LOGIN_PAGE = "/clientlogin.jsp";
     private final ClientAuthService authService;
 
     public ClientLoginServlet() {
         this.authService = new ClientAuthServiceImpl();
     }
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
+        getServletContext().getRequestDispatcher(CLIENT_LOGIN_PAGE).forward(req, resp);
     }
 
     @Override
@@ -42,10 +42,10 @@ public class ClientLoginServlet extends HttpServlet {
 
             HttpSession session = req.getSession();
             session.setAttribute("email", email);
-            resp.sendRedirect(HOME_PAGE);
+            resp.sendRedirect(URL_CLIENT_SESSIONS);
         } catch (WrongUserCredentialsException | DataAccessException e) {
             req.setAttribute("errorMessage", e.getMessage());
-            getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
+            getServletContext().getRequestDispatcher(CLIENT_LOGIN_PAGE).forward(req, resp);
         }
     }
 }
