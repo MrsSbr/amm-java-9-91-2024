@@ -12,6 +12,8 @@ import java.time.LocalDate;
 @Builder
 public class SessionDto {
     private Long idSession;
+    private Long idPsychologist;
+    private Long idClient;
     private LocalDate date;
     private BigDecimal price;
     private Short duration;

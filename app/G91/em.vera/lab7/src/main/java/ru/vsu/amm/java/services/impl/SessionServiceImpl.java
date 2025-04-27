@@ -12,10 +12,14 @@ import ru.vsu.amm.java.repository.impl.PsychologistRepository;
 import ru.vsu.amm.java.repository.impl.SessionRepository;
 import ru.vsu.amm.java.services.SessionService;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static ru.vsu.amm.java.mappers.SessionMapper.toSession;
+import static ru.vsu.amm.java.utils.SessionPriceUtil.getSessionPrice;
 
 @Slf4j
 public class SessionServiceImpl implements SessionService {
@@ -30,11 +34,11 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public void createSession(Session session) {
+    public void createSession(SessionDto sessionDto) {
         try {
-            sessionRepository.save(session);
+            sessionRepository.save(toSession(sessionDto));
         } catch (SQLException e) {
-            log.error("Error creating session: {}", session, e);
+            log.error("Error creating session: {}", sessionDto, e);
             throw new DataAccessException("Failed to create session", e);
         }
     }

@@ -1,24 +1,25 @@
 package ru.vsu.amm.java.services.impl;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import ru.vsu.amm.java.entities.Client;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
+import ru.vsu.amm.java.mappers.ClientMapper;
+import ru.vsu.amm.java.models.dto.ClientDto;
 import ru.vsu.amm.java.models.requests.ClientLoginRequest;
 import ru.vsu.amm.java.models.requests.ClientRegisterRequest;
 import ru.vsu.amm.java.repository.impl.ClientRepository;
-import ru.vsu.amm.java.services.ClientAuthService;
+import ru.vsu.amm.java.services.ClientService;
 
 import java.sql.SQLException;
 import java.util.Optional;
 
 @Slf4j
-public class ClientAuthServiceImpl implements ClientAuthService {
+public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
 
-    public ClientAuthServiceImpl() {
+    public ClientServiceImpl() {
         this.clientRepository = new ClientRepository();
     }
 
@@ -60,4 +61,15 @@ public class ClientAuthServiceImpl implements ClientAuthService {
             throw new DataAccessException("Database error", e);
         }
     }
+
+    @Override
+    public Optional<ClientDto> getClientByEmail(String email) {
+        try {
+            return clientRepository.findByEmail(email).map(ClientMapper::toClientDto);
+        } catch (SQLException e) {
+            log.error("Error fetching all psychologists", e);
+            throw new DataAccessException("Failed to fetch psychologists", e);
+        }
+    }
+
 }

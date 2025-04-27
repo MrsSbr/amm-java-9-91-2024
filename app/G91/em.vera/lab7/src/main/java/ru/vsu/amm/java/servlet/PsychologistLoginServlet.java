@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.models.requests.PsychologistLoginRequest;
-import ru.vsu.amm.java.services.PsychologistAuthService;
-import ru.vsu.amm.java.services.impl.PsychologistAuthServiceImpl;
+import ru.vsu.amm.java.services.PsychologistService;
+import ru.vsu.amm.java.services.impl.PsychologistServiceImpl;
 
 import java.io.IOException;
 
@@ -19,10 +19,10 @@ import static ru.vsu.amm.java.utils.ServletConstants.*;
 @WebServlet(name = "PsychologistLoginServlet", urlPatterns = URL_PSY_LOGIN)
 public class PsychologistLoginServlet extends HttpServlet {
 
-    private final PsychologistAuthService authService;
+    private final PsychologistService psychologistService;
 
     public PsychologistLoginServlet() {
-        this.authService = new PsychologistAuthServiceImpl();
+        this.psychologistService = new PsychologistServiceImpl();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class PsychologistLoginServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         try {
-            authService.login(new PsychologistLoginRequest(login, password));
+            psychologistService.login(new PsychologistLoginRequest(login, password));
 
             HttpSession session = req.getSession();
             session.setAttribute("login", login);

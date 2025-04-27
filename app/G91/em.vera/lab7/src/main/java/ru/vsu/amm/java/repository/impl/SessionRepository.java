@@ -130,8 +130,8 @@ public class SessionRepository implements CrudRepository<Session> {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setLong(1, entity.getId_psychologist());
-            ps.setLong(2, entity.getId_client());
+            ps.setLong(1, entity.getIdPsychologist());
+            ps.setLong(2, entity.getIdClient());
             ps.setDate(3, Date.valueOf(entity.getDate()));
             ps.setBigDecimal(4, entity.getPrice());
             ps.setShort(5, entity.getDuration());
@@ -147,8 +147,8 @@ public class SessionRepository implements CrudRepository<Session> {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setLong(1, entity.getId_psychologist());
-            ps.setLong(2, entity.getId_client());
+            ps.setLong(1, entity.getIdPsychologist());
+            ps.setLong(2, entity.getIdClient());
             ps.setDate(3, Date.valueOf(entity.getDate()));
             ps.setBigDecimal(4, entity.getPrice());
             ps.setShort(5, entity.getDuration());

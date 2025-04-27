@@ -1,24 +1,26 @@
 package ru.vsu.amm.java.services.impl;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import ru.vsu.amm.java.entities.Psychologist;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
+import ru.vsu.amm.java.mappers.PsychologistMapper;
+import ru.vsu.amm.java.models.dto.PsychologistDto;
 import ru.vsu.amm.java.models.requests.PsychologistLoginRequest;
 import ru.vsu.amm.java.models.requests.PsychologistRegisterRequest;
 import ru.vsu.amm.java.repository.impl.PsychologistRepository;
-import ru.vsu.amm.java.services.PsychologistAuthService;
+import ru.vsu.amm.java.services.PsychologistService;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-public class PsychologistAuthServiceImpl implements PsychologistAuthService {
+public class PsychologistServiceImpl implements PsychologistService {
     private final PsychologistRepository psychologistRepository;
 
-    public PsychologistAuthServiceImpl(){
+    public PsychologistServiceImpl(){
         psychologistRepository = new PsychologistRepository();
     }
 
@@ -65,6 +67,28 @@ public class PsychologistAuthServiceImpl implements PsychologistAuthService {
         } catch (SQLException e) {
             log.error("Error registering psychologist with login={}", request.login(), e);
             throw new DataAccessException("Database error", e);
+        }
+    }
+
+    @Override
+    public List<PsychologistDto> getAllPsychologist() {
+        try {
+            return psychologistRepository.findAll().stream()
+                    .map(PsychologistMapper::toPsychologistDto)
+                    .toList();
+        } catch (SQLException e) {
+            log.error("Error fetching all psychologists", e);
+            throw new DataAccessException("Failed to fetch psychologists", e);
+        }
+    }
+
+    @Override
+    public Optional<PsychologistDto> getPsychologistByLogin(String login){
+        try {
+            return psychologistRepository.findByLogin(login).map(PsychologistMapper::toPsychologistDto);
+        } catch (SQLException e) {
+            log.error("Error fetching all psychologists", e);
+            throw new DataAccessException("Failed to fetch psychologists", e);
         }
     }
 }

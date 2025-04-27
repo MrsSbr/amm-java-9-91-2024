@@ -16,8 +16,8 @@ import java.time.LocalDate;
 @Builder
 public class Session {
     private Long idSession;
-    private Long id_psychologist;
-    private Long id_client;
+    private Long idPsychologist;
+    private Long idClient;
     private LocalDate date;
     private BigDecimal price;
     private Short duration;

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SessionService {
-    void createSession(Session session);
+    void createSession(SessionDto sessionDto);
 
     void cancelSession(Long sessionId);
 

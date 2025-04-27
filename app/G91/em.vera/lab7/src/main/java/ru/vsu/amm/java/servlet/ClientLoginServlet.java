@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.models.requests.ClientLoginRequest;
-import ru.vsu.amm.java.services.ClientAuthService;
-import ru.vsu.amm.java.services.impl.ClientAuthServiceImpl;
+import ru.vsu.amm.java.services.ClientService;
+import ru.vsu.amm.java.services.impl.ClientServiceImpl;
 
 import java.io.IOException;
 
@@ -21,10 +21,10 @@ import static ru.vsu.amm.java.utils.ServletConstants.URL_CLIENT_SESSIONS;
 @WebServlet(name = "ClientLoginServlet", urlPatterns = URL_CLIENT_LOGIN)
 public class ClientLoginServlet extends HttpServlet {
 
-    private final ClientAuthService authService;
+    private final ClientService clientService;
 
     public ClientLoginServlet() {
-        this.authService = new ClientAuthServiceImpl();
+        this.clientService = new ClientServiceImpl();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ClientLoginServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         try {
-            authService.login(new ClientLoginRequest(email, password));
+            clientService.login(new ClientLoginRequest(email, password));
 
             HttpSession session = req.getSession();
             session.setAttribute("email", email);

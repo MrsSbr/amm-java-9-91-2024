@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
   <title>Мои сессии</title>
@@ -125,7 +126,7 @@
   </table>
 
   <div class="actions">
-    <a href="${pageContext.request.contextPath}/psychologist/search" class="btn">
+    <a href="${pageContext.request.contextPath}/psychologist/list" class="btn">
       Поиск психологов
     </a>
   </div>
