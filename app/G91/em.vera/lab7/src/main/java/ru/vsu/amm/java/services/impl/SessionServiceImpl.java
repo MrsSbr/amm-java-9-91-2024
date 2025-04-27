@@ -61,10 +61,7 @@ public class SessionServiceImpl implements SessionService {
             Optional<Client> clientOpt = clientRepository.findByEmail(email);
             if (clientOpt.isPresent()) {
                 Long clientId = clientOpt.get().getIdClient();
-                return sessionRepository.findAll().stream()
-                        .filter(s -> s.getId_client().equals(clientId))
-                        .map(SessionMapper::toSessionDto)
-                        .toList();
+                return sessionRepository.findByClient(clientId).stream().map(SessionMapper::toSessionDto).toList();
             } else {
                 return Collections.emptyList();
             }

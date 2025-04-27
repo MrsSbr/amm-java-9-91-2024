@@ -14,7 +14,9 @@ import ru.vsu.amm.java.services.impl.ClientAuthServiceImpl;
 
 import java.io.IOException;
 
-import static ru.vsu.amm.java.utils.ServletConstants.*;
+import static ru.vsu.amm.java.utils.ServletConstants.CLIENT_REGISTER_PAGE;
+import static ru.vsu.amm.java.utils.ServletConstants.URL_CLIENT_REGISTER;
+import static ru.vsu.amm.java.utils.ServletConstants.URL_CLIENT_SESSIONS;
 
 
 @WebServlet(name = "ClientRegistrationServlet", urlPatterns = URL_CLIENT_REGISTER)
