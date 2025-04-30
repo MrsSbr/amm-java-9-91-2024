@@ -13,10 +13,18 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrderRepository {
-    private final DataSource dataSource;
+    private DataSource dataSource;
 
     public OrderRepository() {
-        dataSource = DbConfig.getDataSource();
+        dataSource = DbConfig.getDataSourceForService();
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
     }
 
     public List<Order> findByCustomerId(Long customerId) throws SQLException {

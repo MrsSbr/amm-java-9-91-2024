@@ -32,7 +32,7 @@ public class ToyService {
                 Toy toy = new Toy(null, name, Double.valueOf(price) != null ? java.math.BigDecimal.valueOf(Double.valueOf(price)) : null);
                 toyRepository.save(toy);
             } else {
-                throw new IllegalArgumentException("Игрушка уже существует");
+                throw new IllegalArgumentException("Toys aren't exist");
             }
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
@@ -47,7 +47,7 @@ public class ToyService {
             if (toyOptional.isPresent()) {
                 toyRepository.delete(Long.valueOf(toyId));
             } else {
-                throw new IllegalArgumentException("Игрушка не существует");
+                throw new IllegalArgumentException("toys aren't exist");
             }
         } catch (SQLException e) {
             throw new DbException(e.getMessage());

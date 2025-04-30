@@ -15,7 +15,7 @@ public class CustomerRepository {
     private final DataSource dataSource;
 
     public CustomerRepository() {
-        dataSource = DbConfig.getDataSource();
+        dataSource = DbConfig.getDataSourceForService();
     }
 
     public Optional<Customer> findByName(String login) throws SQLException {
@@ -47,5 +47,8 @@ public class CustomerRepository {
             preparedStatement.setString(2, entity.getPassword());
             preparedStatement.executeUpdate();
         }
+    }
+
+    public void setDataSource(DataSource dataSourceForTest) {
     }
 }

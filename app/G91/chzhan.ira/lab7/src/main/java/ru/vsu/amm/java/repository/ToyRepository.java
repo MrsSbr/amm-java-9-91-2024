@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.repository;
 
+import lombok.Setter;
 import ru.vsu.amm.java.config.DbConfig;
 import ru.vsu.amm.java.entities.Toy;
 
@@ -13,12 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 public class ToyRepository {
 
-    private final DataSource dataSource;
+    private DataSource dataSource;
 
     public ToyRepository() {
-        dataSource = DbConfig.getDataSource();
+        dataSource = DbConfig.getDataSourceForService();
+    }
+
+    public ToyRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public Optional<Toy> findByName(String name) throws SQLException {

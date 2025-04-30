@@ -1,13 +1,14 @@
-package ru.vsu.amm.java.unit_tests;
-
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entities.Customer;
 import ru.vsu.amm.java.exception.AlreadyExistsException;
 import ru.vsu.amm.java.service.AuthenticationService;
 
 import java.util.Optional;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class TestAuthentificationService {
 
@@ -36,10 +37,10 @@ public class TestAuthentificationService {
         assertFalse(customer.isPresent());
     }
 
-    @Test(expected = AlreadyExistsException.class)
+    @Test
     public void testRegisterExistingUser() {
         AuthenticationService service = new AuthenticationService();
-        service.register("admin", "0000");
+        assertThrows(AlreadyExistsException.class, () -> service.register("admin", "0000"));
     }
 
 }
