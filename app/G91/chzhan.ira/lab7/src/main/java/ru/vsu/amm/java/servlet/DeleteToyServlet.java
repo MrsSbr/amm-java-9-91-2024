@@ -11,8 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "AddToyServlet", urlPatterns = "/addToy")
-public class AddToyServlet extends HttpServlet {
+@WebServlet(name = "DeleteToyServlet", urlPatterns = "/deleteToy")
+public class DeleteToyServlet extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -25,15 +26,14 @@ public class AddToyServlet extends HttpServlet {
             return;
         }
 
-        String name = req.getParameter("name");
-        String price = req.getParameter("price");
+        String toyId = req.getParameter("toyId");
 
         ToyService toyService = new ToyService();
         try {
-            toyService.addToy(name, price);
+            toyService.deleteToy(toyId);
             resp.sendRedirect("index.jsp");
         } catch (Exception e) {
-            req.setAttribute("errorMessage", "Ошибка добавления игрушки: " + e.getMessage());
+            req.setAttribute("errorMessage", "Ошибка удаления игрушки: " + e.getMessage());
             getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
         }
     }

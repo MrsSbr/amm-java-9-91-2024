@@ -18,31 +18,34 @@ public class CustomerRepository {
         dataSource = DbConfig.getDataSource();
     }
 
-   public Optional<Customer> findByName(String login) throws SQLException {
-       final String query = "SELECT id, name, password FROM customer WHERE name = ?";
-       Connection connection = dataSource.getConnection();
-       PreparedStatement preparedStatement = connection.prepareStatement(query);
-       preparedStatement.setString(1, login);
-       preparedStatement.execute();
+    public Optional<Customer> findByName(String login) throws SQLException {
+        final String query = "SELECT id, name, password FROM customer WHERE name = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-       ResultSet resultSet = preparedStatement.getResultSet();
+            preparedStatement.setString(1, login);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Optional.of(new Customer(
+                            resultSet.getLong("id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("password")
+                    ));
+                }
+            }
+        }
+        return Optional.empty();
+    }
 
-       if (resultSet.next()) {
-           return Optional.of(new Customer(
-                   resultSet.getLong("id"),
-                   resultSet.getString("name"),
-                   resultSet.getString("password")
-           ));
-       }
-       return Optional.empty();
-   }
 
     public void save(Customer entity) throws SQLException {
         final String query = "INSERT INTO customer (name, password) VALUES (?, ?)";
-        Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, entity.getName());
-        preparedStatement.setString(2, entity.getPassword());
-        preparedStatement.execute();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, entity.getName());
+            preparedStatement.setString(2, entity.getPassword());
+            preparedStatement.executeUpdate();
+        }
     }
 }
