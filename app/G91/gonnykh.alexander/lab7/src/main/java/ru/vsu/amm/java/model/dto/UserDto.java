@@ -1,17 +1,14 @@
-package ru.vsu.amm.java.entities;
+package ru.vsu.amm.java.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import ru.vsu.amm.java.enums.Role;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-public class UserEntity {
+public class UserDto {
     private Long id;
     private String username;
-    private String password;
     private String email;
     private Role role;
 }
