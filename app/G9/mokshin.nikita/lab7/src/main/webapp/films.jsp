@@ -42,12 +42,14 @@
                     ${name}
             </td>
             <td>
+                <c:if test="${author.id == film.authorOptional.get().getId()}">
                 <a href="/films/edit?id=${film.id}">
                     <button type="button">Edit</button>
                 </a>
                 <a href="/films/delete?id=${film.id}">
                     <button type="button" style="background-color: red">Delete</button>
                 </a>
+                </c:if>
             </td>
         </tr>
     </c:forEach>
