@@ -12,8 +12,8 @@ public class DbConfiguration {
     public static DataSource getDataSource() {
         PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();
         Properties prop = new Properties();
-        try (InputStream input = DatabaseConfiguration.class.getClassLoader()
-                .getResourceAsStream("application.properties")) {
+        try (InputStream input = DbConfiguration.class.getClassLoader()
+                .getResourceAsStream("db.properties")) {
             prop.load(input);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
