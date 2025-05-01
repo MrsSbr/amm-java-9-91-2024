@@ -1,8 +1,9 @@
 package ru.vsu.amm.java.repository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entity.PlanEntity;
-
 import javax.sql.DataSource;
 import java.sql.Array;
 import java.sql.Connection;
@@ -12,15 +13,17 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class PlanRepository implements CrudRepository<PlanEntity> {
+import static ru.vsu.amm.java.util.TimeParser.parseTimes;
 
+public class PlanRepository implements CrudRepository<PlanEntity> {
+    private static final Logger logger = LoggerFactory.getLogger(PlanRepository.class);
     private final DataSource dataSource;
 
     public PlanRepository() {
         dataSource = DatabaseConfiguration.getDataSource();
+        logger.info("Инициализирован репозиторий планов лечения");
     }
 
     @Override
@@ -28,19 +31,22 @@ public class PlanRepository implements CrudRepository<PlanEntity> {
         final String query = "SELECT id, medication_name, dosage_mg, taking_time, duration_days, id_doctor, id_patient FROM plan_entity WHERE id = ?";
         List<PlanEntity> result = getPlans(id, query);
         if (result == null || result.isEmpty()) {
+            logger.debug("План лечения с ID {} не найден", id);
             return null;
-        } else {
-            return result.getFirst();
         }
+        logger.debug("Найден план лечения с ID: {}", id);
+        return result.getFirst();
     }
 
     public List<PlanEntity> findByDoctorId(long id) {
         final String query = "SELECT id, medication_name, dosage_mg, taking_time, duration_days, id_doctor, id_patient FROM plan_entity WHERE id_doctor = ?";
+        logger.debug("Поиск планов лечения для врача с ID: {}", id);
         return getPlans(id, query);
     }
 
     public List<PlanEntity> findByPatientId(long id) {
         final String query = "SELECT id, medication_name, dosage_mg, taking_time, duration_days, id_doctor, id_patient FROM plan_entity WHERE id_patient = ?";
+        logger.debug("Поиск планов лечения для пациента с ID: {}", id);
         return getPlans(id, query);
     }
 
@@ -51,12 +57,11 @@ public class PlanRepository implements CrudRepository<PlanEntity> {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                plans.add(
-                        makePlanFromResultSet(resultSet)
-                );
+                plans.add(makePlanFromResultSet(resultSet));
             }
+            logger.debug("Найдено {} планов лечения по запросу: {}", plans.size(), query);
         } catch (SQLException e) {
-            // TODO: add logging
+            logger.error("Ошибка при выполнении SQL-запроса: {}\nПараметры: [id={}]", query, id, e);
             return null;
         }
         return plans;
@@ -72,13 +77,11 @@ public class PlanRepository implements CrudRepository<PlanEntity> {
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
-                plans.add(
-                        makePlanFromResultSet(resultSet)
-                );
+                plans.add(makePlanFromResultSet(resultSet));
             }
-
+            logger.debug("Загружено всех планов лечения: {}", plans.size());
         } catch (SQLException e) {
-            // TODO add logging
+            logger.error("Ошибка при загрузке всех планов лечения", e);
             return null;
         }
         return plans;
@@ -92,8 +95,9 @@ public class PlanRepository implements CrudRepository<PlanEntity> {
             PreparedStatement statement = connection.prepareStatement(query);
             prepareUpdateStatement(connection, statement, entity);
             statement.executeUpdate();
+            logger.info("Добавлен новый план лечения: {}", entity);
         } catch (SQLException e) {
-            // TODO: add logging
+            logger.error("Ошибка при добавлении плана лечения: {}", entity, e);
         }
     }
 
@@ -106,8 +110,9 @@ public class PlanRepository implements CrudRepository<PlanEntity> {
             prepareUpdateStatement(connection, statement, entity);
             statement.setLong(7, entity.getId());
             statement.executeUpdate();
+            logger.info("Обновлен план лечения с ID {}: {}", entity.getId(), entity);
         } catch (SQLException e) {
-            // TODO: add logging
+            logger.error("Ошибка при обновлении плана лечения с ID {}: {}", entity.getId(), entity, e);
         }
     }
 
@@ -119,8 +124,9 @@ public class PlanRepository implements CrudRepository<PlanEntity> {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, entity.getId());
             statement.executeUpdate();
+            logger.info("Удален план лечения с ID: {}", entity.getId());
         } catch (SQLException e) {
-            // TODO: add logging
+            logger.error("Ошибка при удалении плана лечения с ID {}", entity.getId(), e);
         }
     }
 
@@ -137,9 +143,7 @@ public class PlanRepository implements CrudRepository<PlanEntity> {
     private PlanEntity makePlanFromResultSet(ResultSet resultSet) throws SQLException {
         Array array = resultSet.getArray("taking_time");
         Time[] timeArray = (Time[]) array.getArray();
-        List<LocalTime> takingTime = Arrays.stream(timeArray)
-                .map(Time::toLocalTime)
-                .toList();
+        List<LocalTime> takingTime = parseTimes(timeArray);
         return new PlanEntity(
                 resultSet.getLong("id"),
                 resultSet.getString("medication_name"),
