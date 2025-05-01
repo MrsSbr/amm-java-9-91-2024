@@ -1,27 +1,35 @@
 package ru.vsu.amm.java.filters;
 
-import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.Filter;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
-@WebFilter("/secure/*")  // Защищаем все URL внутри /secure/
+import static ru.vsu.amm.java.services.Logg.logger;
+
 public class AuthFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
+        logger.info("AuthFilter do filter");
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
 
         if (session == null || session.getAttribute("user") == null) {
-            resp.sendRedirect("/login.jsp");  // Перенаправление на страницу входа
+            resp.sendRedirect("login.jsp");
+            logger.info("AuthFilter do filter session is null");
         } else {
             chain.doFilter(request, response);
+            logger.info("Chain...");
         }
     }
 }
