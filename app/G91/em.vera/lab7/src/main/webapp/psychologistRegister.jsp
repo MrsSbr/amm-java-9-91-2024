@@ -116,11 +116,11 @@
         <form action="${pageContext.request.contextPath}/psychologist/register" method="post">
             <div class="input-group">
                 <span class="icon">&#128100;</span>
-                <input type="text" name="name" placeholder="Имя" required />
+                <input type="text" name="name" placeholder="Имя" autocomplete="off" required />
             </div>
             <div class="input-group">
                 <span class="icon">&#128100;</span>
-                <input type="text" name="surname" placeholder="Фамилия" required />
+                <input type="text" name="surname" placeholder="Фамилия" autocomplete="off" required />
             </div>
             <div class="input-group">
                 <span class="icon">&#128197;</span>
@@ -140,11 +140,11 @@
             </div>
             <div class="input-group">
                 <span class="icon">&#128101;</span>
-                <input type="text" name="login" placeholder="Логин" required />
+                <input type="text" name="login" placeholder="Логин" autocomplete="off" required />
             </div>
             <div class="input-group">
                 <span class="icon">&#128274;</span>
-                <input type="password" name="password" placeholder="Пароль" required />
+                <input type="password" name="password" placeholder="Пароль" autocomplete="new-password" required />
             </div>
             <button type="submit" class="btn">Зарегистрироваться</button>
         </form>
@@ -152,6 +152,9 @@
     <div class="footer">
         Уже есть аккаунт?
         <a href="${pageContext.request.contextPath}/psychologist/login">Войти</a>
+    </div>
+    <div class="footer">
+        <a href="${pageContext.request.contextPath}/client/login">Войти как клиент</a>
     </div>
 </div>
 </body>

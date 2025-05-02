@@ -115,11 +115,11 @@
         <form action="${pageContext.request.contextPath}/psychologist/login" method="post">
             <div class="input-group">
                 <span class="icon">&#128100;</span>
-                <input type="text" name="login" placeholder="Логин" required />
+                <input type="text" name="login" placeholder="Логин" autocomplete="off" required />
             </div>
             <div class="input-group">
                 <span class="icon">&#128274;</span>
-                <input type="password" name="password" placeholder="Пароль" required />
+                <input type="password" name="password" placeholder="Пароль" autocomplete="new-password" required />
             </div>
             <button type="submit" class="btn">Войти</button>
         </form>
@@ -127,6 +127,9 @@
     <div class="footer">
         Нет аккаунта?
         <a href="${pageContext.request.contextPath}/psychologist/register">Зарегистрироваться</a>
+    </div>
+    <div class="footer">
+        <a href="${pageContext.request.contextPath}/client/login">Войти как клиент</a>
     </div>
 </div>
 </body>

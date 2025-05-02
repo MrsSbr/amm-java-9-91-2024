@@ -84,9 +84,6 @@
         <p><strong>Дата:</strong> ${session.date}</p>
         <p><strong>Длительность:</strong> ${session.duration} мин.</p>
         <p><strong>Стоимость:</strong> ${session.price}</p>
-        <a href="${pageContext.request.contextPath}/client/sessions" class="btn">
-            Назад к списку
-        </a>
     </div>
 </div>
 </body>
