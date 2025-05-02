@@ -1,20 +1,16 @@
-package ru.vsu.amm.java.entities;
+package ru.vsu.amm.java.models.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import ru.vsu.amm.java.enums.Gender;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
-public class Psychologist {
+public class PsychologistDto {
     private Long idPsychologist;
     private String name;
     private String surname;
@@ -22,5 +18,4 @@ public class Psychologist {
     private Gender gender;
     private Short experience;
     private String login;
-    private String password;
 }
