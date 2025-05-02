@@ -23,4 +23,9 @@ public class ServletConstants {
     public static final String URL_CREATE_SESSION  = "/session/create";
     public static final String PAGE_CREATE_SESSION = "/сreateSession.jsp";
 
+    public static final String URL_CLIENT_CANCEL_SESSION = "/session/cancel";
+
+    public static final String URL_EDIT_SESSION   = "/session/edit";
+    public static final String PAGE_EDIT_SESSION  = "/editSession.jsp";
+
 }

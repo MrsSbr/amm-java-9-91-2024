@@ -105,4 +105,15 @@ public class SessionServiceImpl implements SessionService {
         }
     }
 
+    @Override
+    public void updateSession(SessionDto sessionDto) {
+        try {
+            sessionRepository.update(toSession(sessionDto));
+        } catch(SQLException e) {
+            log.error("Error updating session: {}", sessionDto, e);
+            throw new DataAccessException("Failed to update session", e);
+        }
+    }
+
+
 }

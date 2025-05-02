@@ -72,18 +72,19 @@ public class SessionRepository implements CrudRepository<Session> {
         return list;
     }
 
-    public Optional<Session> findByClient(Long clientId) throws SQLException {
+    public List<Session> findByClient(Long clientId) throws SQLException {
         String sql =
                 "SELECT id_session, id_psychologist, id_client, date, price, duration " +
                         "FROM session " +
                         "WHERE id_client = ?";
+        List<Session> list = new ArrayList<>();
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, clientId);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return Optional.of(new Session(
+                while (rs.next()) {
+                    list.add(new Session(
                             rs.getLong("id_session"),
                             rs.getLong("id_psychologist"),
                             rs.getLong("id_client"),
@@ -92,23 +93,24 @@ public class SessionRepository implements CrudRepository<Session> {
                             rs.getShort("duration")
                     ));
                 }
-                return Optional.empty();
             }
         }
+        return list;
     }
 
-    public Optional<Session> findByPsychologist(Long psychologistId) throws SQLException {
+    public List<Session> findByPsychologist(Long psychologistId) throws SQLException {
         String sql =
                 "SELECT id_session, id_psychologist, id_client, date, price, duration " +
                         "FROM session " +
                         "WHERE id_psychologist = ?";
+        List<Session> list = new ArrayList<>();
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, psychologistId);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return Optional.of(new Session(
+                while (rs.next()) {
+                    list.add(new Session(
                             rs.getLong("id_session"),
                             rs.getLong("id_psychologist"),
                             rs.getLong("id_client"),
@@ -117,9 +119,9 @@ public class SessionRepository implements CrudRepository<Session> {
                             rs.getShort("duration")
                     ));
                 }
-                return Optional.empty();
             }
         }
+        return list;
     }
 
     @Override

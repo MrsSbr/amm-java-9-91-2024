@@ -11,6 +11,8 @@ public interface SessionService {
 
     void cancelSession(Long sessionId);
 
+    void updateSession(SessionDto sessionDto);
+
     Optional<SessionDto> getSessionById(Long id);
 
     List<SessionDto> getSessionsByClientEmail(String email);

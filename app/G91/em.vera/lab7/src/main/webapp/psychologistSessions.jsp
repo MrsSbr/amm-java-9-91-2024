@@ -76,6 +76,30 @@
     tr:hover {
       background: #ece8f9;
     }
+
+    /* Контекстное меню */
+    #sessionMenu {
+      display: none;
+      position: absolute;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      z-index: 1000;
+      min-width: 180px;
+    }
+    #sessionMenu button {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      border: none;
+      background: none;
+      text-align: left;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    #sessionMenu button:hover {
+      background: #f0f0f0;
+    }
   </style>
 </head>
 <body>
@@ -85,9 +109,9 @@
     Войти как пациент
   </a>
 </div>
-
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <div class="container">
-  <table>
+  <table id="sessionsTable">
     <thead>
     <tr>
       <th>ID</th>
@@ -98,7 +122,8 @@
     </thead>
     <tbody>
     <c:forEach var="s" items="${sessions}">
-      <tr>
+      <!-- добавили data-id -->
+      <tr data-id="${s.idSession}">
         <td>${s.idSession}</td>
         <td>${s.date}</td>
         <td>${s.price}</td>
@@ -107,6 +132,61 @@
     </c:forEach>
     </tbody>
   </table>
+  <div id="sessionMenu">
+    <button type="button" onclick="viewDetails()">Просмотреть</button>
+    <button type="button" onclick="editSession()">Изменить</button>
+    <button type="button" onclick="cancelSession()">Отменить</button>
+  </div>
 </div>
+
+<script>
+  // теперь table не null
+  const table     = document.getElementById('sessionsTable');
+  const menu      = document.getElementById('sessionMenu');
+  let   sessionId = null;
+
+  table.addEventListener('click', e => {
+    const tr = e.target.closest('tr[data-id]');
+    if (!tr) return;
+    sessionId = tr.dataset.id;
+
+    // позиционируем меню
+    const rect = tr.getBoundingClientRect();
+    menu.style.top    = (rect.bottom  + window.scrollY) + 'px';
+    menu.style.left   = (rect.left    + window.scrollX) + 'px';
+    menu.style.display = 'block';
+  });
+
+  document.addEventListener('click', e => {
+    if (!menu.contains(e.target) && !e.target.closest('tr[data-id]')) {
+      menu.style.display = 'none';
+    }
+  });
+
+  function viewDetails() {
+    window.location.href = `${ctx}/session/detail?id=${sessionId}`;
+  }
+  function editSession() {
+    window.location.href = '${pageContext.request.contextPath}/session/edit?id=' + sessionId;
+  }
+
+  function cancelSession() {
+    if (confirm('Отменить сессию #' + sessionId + '?')) {
+      window.location.href = '${pageContext.request.contextPath}/session/cancel?id=' + sessionId;
+    }
+  }
+  function cancelSession() {
+    if (!confirm('Отменить сессию #' + sessionId + '?')) return;
+    fetch('${pageContext.request.contextPath}/session/cancel', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'id=' + encodeURIComponent(sessionId)
+    })
+            .then(() => window.location.href =
+                    '${pageContext.request.contextPath}/psychologist/sessions');
+  }
+</script>
 </body>
 </html>
