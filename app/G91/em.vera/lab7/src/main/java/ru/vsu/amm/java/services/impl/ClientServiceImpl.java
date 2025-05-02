@@ -72,4 +72,13 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
+    @Override
+    public Optional<ClientDto> getClientById(Long id) {
+        try {
+            return clientRepository.findById(id).map(ClientMapper::toClientDto);
+        } catch (SQLException e) {
+            log.error("Error fetching all psychologists", e);
+            throw new DataAccessException("Failed to fetch psychologists", e);
+        }
+    }
 }

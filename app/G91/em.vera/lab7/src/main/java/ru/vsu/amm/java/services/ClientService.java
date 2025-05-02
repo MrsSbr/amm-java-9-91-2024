@@ -12,4 +12,6 @@ public interface ClientService {
     void register(ClientRegisterRequest request);
 
     Optional<ClientDto> getClientByEmail(String email);
+
+    Optional<ClientDto> getClientById(Long id);
 }

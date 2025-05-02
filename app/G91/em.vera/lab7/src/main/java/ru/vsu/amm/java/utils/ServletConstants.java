@@ -28,4 +28,6 @@ public class ServletConstants {
     public static final String URL_EDIT_SESSION   = "/session/edit";
     public static final String PAGE_EDIT_SESSION  = "/editSession.jsp";
 
+    public static final String URL_SESSION_VIEW     = "/session/detail";
+    public static final String SESSION_VIEW_PAGE    = "/viewSession.jsp";
 }
