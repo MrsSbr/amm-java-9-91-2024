@@ -37,7 +37,7 @@ public class ClientSessionListServlet extends HttpServlet {
         String email = (String) httpSession.getAttribute("email");
 
 
-        List<SessionDto> sessions = sessionService.getSessionsByClientEmail(email);
+        List<SessionDto> sessions = sessionService.getUpcomingSessionsByClientEmail(email);
 
         req.setAttribute("sessions", sessions);
         getServletContext()

@@ -47,7 +47,7 @@ public class EditSessionServlet extends HttpServlet {
                 .getLogin();
 
         List<String> busyDates = sessionService
-                .getSessionsByPsychologistLogin(psyLogin)
+                .getUpcomingSessionsByPsychologistLogin(psyLogin)
                 .stream()
                 .map(x -> x.getDate().toString())
                 .toList();

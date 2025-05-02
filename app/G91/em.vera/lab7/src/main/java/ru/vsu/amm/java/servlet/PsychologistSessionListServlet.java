@@ -35,7 +35,7 @@ public class PsychologistSessionListServlet extends HttpServlet {
         }
         String login = (String) httpSession.getAttribute("login");
 
-        List<SessionDto> sessions = sessionService.getSessionsByPsychologistLogin(login);
+        List<SessionDto> sessions = sessionService.getUpcomingSessionsByPsychologistLogin(login);
 
         req.setAttribute("sessions", sessions);
         getServletContext()

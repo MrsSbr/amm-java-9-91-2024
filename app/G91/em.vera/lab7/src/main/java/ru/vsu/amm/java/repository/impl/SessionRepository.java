@@ -72,11 +72,12 @@ public class SessionRepository implements CrudRepository<Session> {
         return list;
     }
 
-    public List<Session> findByClient(Long clientId) throws SQLException {
+    public List<Session> findUpcomingSessionsByClientId(Long clientId) throws SQLException {
         String sql =
                 "SELECT id_session, id_psychologist, id_client, date, price, duration " +
                         "FROM session " +
-                        "WHERE id_client = ?";
+                        "WHERE id_client = ? AND date >= current_date "+
+                        "ORDER BY date ASC";
         List<Session> list = new ArrayList<>();
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -98,11 +99,12 @@ public class SessionRepository implements CrudRepository<Session> {
         return list;
     }
 
-    public List<Session> findByPsychologist(Long psychologistId) throws SQLException {
+    public List<Session> findUpcomingByPsychologistId(Long psychologistId) throws SQLException {
         String sql =
                 "SELECT id_session, id_psychologist, id_client, date, price, duration " +
                         "FROM session " +
-                        "WHERE id_psychologist = ?";
+                        "WHERE id_psychologist = ? AND date >= current_date " +
+                        "ORDER BY date ASC";
         List<Session> list = new ArrayList<>();
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
