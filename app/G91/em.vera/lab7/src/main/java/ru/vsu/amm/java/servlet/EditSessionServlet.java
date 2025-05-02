@@ -4,13 +4,16 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import ru.vsu.amm.java.models.dto.SessionDto;
+import ru.vsu.amm.java.services.PsychologistService;
 import ru.vsu.amm.java.services.SessionService;
+import ru.vsu.amm.java.services.impl.PsychologistServiceImpl;
 import ru.vsu.amm.java.services.impl.SessionServiceImpl;
 import ru.vsu.amm.java.utils.ServletConstants;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static ru.vsu.amm.java.utils.SessionPriceUtil.getSessionPrice;
@@ -19,6 +22,7 @@ import static ru.vsu.amm.java.utils.SessionPriceUtil.getSessionPrice;
 public class EditSessionServlet extends HttpServlet {
 
     private final SessionService sessionService = new SessionServiceImpl();
+    private final PsychologistService psychologistService = new PsychologistServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -36,6 +40,20 @@ public class EditSessionServlet extends HttpServlet {
                 .orElseThrow(() ->
                         new IllegalArgumentException("Session not found, id=" + sessionId)
                 );
+
+        String psyLogin = psychologistService
+                .getPsychologistById(sessionDto.getIdPsychologist())
+                .orElseThrow()
+                .getLogin();
+
+        List<String> busyDates = sessionService
+                .getSessionsByPsychologistLogin(psyLogin)
+                .stream()
+                .map(x -> x.getDate().toString())
+                .toList();
+
+        String[] busyDatesArr = busyDates.toArray(new String[0]);
+        req.setAttribute("busyDates", busyDatesArr);
 
         req.setAttribute("session", sessionDto);
         getServletContext()

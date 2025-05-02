@@ -1,11 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>Редактировать сессию</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <style>
     :root {
       --gradient-start: #8e2de2;
@@ -103,6 +105,12 @@
     <c:if test="${not empty errorMessage}">
       <div class="error">${errorMessage}</div>
     </c:if>
+    <%@ page import="java.time.LocalDate" %>
+    <%
+      // вычисляем "сегодня"
+      String today = LocalDate.now().toString();
+      request.setAttribute("minDate", today);
+    %>
     <form action="${ctx}/session/edit" method="post">
       <!-- Скрытые поля -->
       <input type="hidden" name="id"                value="${session.idSession}" />
@@ -110,7 +118,12 @@
       <!-- Выбор даты -->
       <div class="input-group">
         <span class="icon">&#128197;</span>
-        <input type="date" name="date" value="${session.date}" required />
+        <input id="datePicker"
+               type="date"
+               name="date"
+               min="${minDate}"
+               value="${session != null ? session.date : ''}"
+               required />
       </div>
 
       <!-- Ввод длительности -->
@@ -128,5 +141,19 @@
     </form>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  // Инициализируем flatpickr с выключением занятых дат
+  flatpickr("#datePicker", {
+    dateFormat: "Y-m-d",
+    minDate: "today",
+    disable: [
+      <c:forEach items="${busyDates}" var="d" varStatus="status">
+      '${d}'<c:if test="${!status.last}">,</c:if>
+      </c:forEach>
+    ]
+  });
+</script>
 </body>
 </html>

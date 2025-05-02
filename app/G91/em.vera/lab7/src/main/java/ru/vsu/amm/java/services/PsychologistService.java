@@ -15,4 +15,6 @@ public interface PsychologistService {
     List<PsychologistDto> getAllPsychologist();
 
     Optional<PsychologistDto> getPsychologistByLogin(String login);
+
+    Optional<PsychologistDto> getPsychologistById(Long id);
 }

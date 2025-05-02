@@ -87,8 +87,18 @@ public class PsychologistServiceImpl implements PsychologistService {
         try {
             return psychologistRepository.findByLogin(login).map(PsychologistMapper::toPsychologistDto);
         } catch (SQLException e) {
-            log.error("Error fetching all psychologists", e);
-            throw new DataAccessException("Failed to fetch psychologists", e);
+            log.error("Error fetching psychologist by login", e);
+            throw new DataAccessException("Failed to fetch psychologist by login", e);
+        }
+    }
+
+    @Override
+    public Optional<PsychologistDto> getPsychologistById(Long id){
+        try {
+            return psychologistRepository.findById(id).map(PsychologistMapper::toPsychologistDto);
+        } catch (SQLException e) {
+            log.error("Error fetching all psychologist by id", e);
+            throw new DataAccessException("Failed to fetch psychologist by id", e);
         }
     }
 }
