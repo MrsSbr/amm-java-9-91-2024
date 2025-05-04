@@ -15,6 +15,9 @@ public class User {
         this.hashPassword = hashPassword;
     }
 
+    public User() {
+    }
+
     public User(String name, String login, String hashPassword) {
         this.name = name;
         this.login = login;

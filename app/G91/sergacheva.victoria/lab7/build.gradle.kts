@@ -18,6 +18,7 @@ dependencies {
     implementation ("org.slf4j:slf4j-api:2.0.17")
     implementation ("ch.qos.logback:logback-classic:1.5.18")
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation ("org.mockito:mockito-core:5.16.1")
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation ("jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.2")
     implementation("org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1")

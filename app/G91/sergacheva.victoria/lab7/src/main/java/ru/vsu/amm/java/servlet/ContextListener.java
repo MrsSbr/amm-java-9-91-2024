@@ -9,6 +9,7 @@ import ru.vsu.amm.java.repository.CoffeeRepository;
 import ru.vsu.amm.java.repository.LikedCoffeeRepository;
 import ru.vsu.amm.java.repository.UserRepository;
 import ru.vsu.amm.java.service.AuthService;
+import ru.vsu.amm.java.service.CoffeeService;
 
 @WebListener
 public class ContextListener implements ServletContextListener {
@@ -18,11 +19,15 @@ public class ContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         dataSource = DatabaseConfig.getDataSource();
         UserRepository userRepository = new UserRepository(dataSource);
+        CoffeeRepository coffeeRepository = new CoffeeRepository(dataSource);
+        LikedCoffeeRepository likedCoffeeRepository = new LikedCoffeeRepository(dataSource);
+        CoffeeService coffeeService = new CoffeeService(coffeeRepository, likedCoffeeRepository);
 
         sce.getServletContext().setAttribute("dataSource", dataSource);
         sce.getServletContext().setAttribute("userRepository", userRepository);
-        sce.getServletContext().setAttribute("coffeeRepository", new CoffeeRepository(dataSource));
-        sce.getServletContext().setAttribute("likedCoffeeRepository", new LikedCoffeeRepository(dataSource));
+        sce.getServletContext().setAttribute("coffeeRepository", coffeeRepository);
+        sce.getServletContext().setAttribute("likedCoffeeRepository", likedCoffeeRepository);
+        sce.getServletContext().setAttribute("coffeeService", coffeeService);
         sce.getServletContext().setAttribute("authService", new AuthService(userRepository));
     }
 

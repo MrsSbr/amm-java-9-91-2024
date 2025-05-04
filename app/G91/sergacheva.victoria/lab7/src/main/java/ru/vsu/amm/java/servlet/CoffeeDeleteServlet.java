@@ -1,39 +1,35 @@
 package ru.vsu.amm.java.servlet;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
 import ru.vsu.amm.java.entity.Coffee;
 import ru.vsu.amm.java.entity.User;
 import ru.vsu.amm.java.exception.EntityNotFoundException;
 import ru.vsu.amm.java.exception.ForbiddenException;
 import ru.vsu.amm.java.repository.CoffeeRepository;
+import ru.vsu.amm.java.service.CoffeeService;
 
 import java.io.IOException;
 
 @WebServlet("/coffees/delete")
 public class CoffeeDeleteServlet extends HttpServlet {
-    private CoffeeRepository coffeeRepository;
+    private CoffeeService coffeeService;
 
     @Override
     public void init() {
-        coffeeRepository = (CoffeeRepository) getServletContext().getAttribute("coffeeRepository");
+        coffeeService = (CoffeeService) getServletContext().getAttribute("coffeeService");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
         try {
-            int coffeeId = Integer.parseInt(req.getParameter("id"));
+            long coffeeId = Long.parseLong(req.getParameter("id"));
 
-            Coffee coffee = coffeeRepository.findById(coffeeId).orElseThrow(()-> new EntityNotFoundException("Coffee not found with id = " + coffeeId));
-            if (!user.getId().equals(coffee.getAuthor().getId())) {
-                throw new ForbiddenException("This user cannot edit coffee with id =" + coffeeId);
-            }
-
-            coffeeRepository.delete(coffee);
+            coffeeService.delete(coffeeId, user);
         } catch (NumberFormatException e) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;

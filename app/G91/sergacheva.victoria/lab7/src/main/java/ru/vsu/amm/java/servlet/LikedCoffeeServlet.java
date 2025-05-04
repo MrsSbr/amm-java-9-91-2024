@@ -11,26 +11,25 @@ import ru.vsu.amm.java.exception.EntityNotFoundException;
 import ru.vsu.amm.java.exception.ForbiddenException;
 import ru.vsu.amm.java.repository.CoffeeRepository;
 import ru.vsu.amm.java.repository.LikedCoffeeRepository;
+import ru.vsu.amm.java.service.CoffeeService;
 
 import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/coffee-liked")
 public class LikedCoffeeServlet extends HttpServlet {
-    private LikedCoffeeRepository likedCoffeeRepository;
-    private CoffeeRepository coffeeRepository;
+    private CoffeeService coffeeService;
 
     @Override
     public void init() {
-        likedCoffeeRepository = (LikedCoffeeRepository) getServletContext().getAttribute("likedCoffeeRepository");
-        coffeeRepository = (CoffeeRepository) getServletContext().getAttribute("coffeeRepository");
+        coffeeService = (CoffeeService) getServletContext().getAttribute("coffeeService");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         User user = (User) req.getSession().getAttribute("user");
 
-        List<Coffee> coffees = likedCoffeeRepository.findByUserId(user.getId());
+        List<Coffee> coffees = coffeeService.findListLikedCoffees(user);
         req.setAttribute("coffees", coffees);
         req.getRequestDispatcher("/likedCoffees.jsp").forward(req, resp);
     }
@@ -40,11 +39,9 @@ public class LikedCoffeeServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
 
         try {
-            int coffeeId = Integer.parseInt(req.getParameter("id"));
+            long coffeeId = Long.parseLong(req.getParameter("id"));
 
-            Coffee coffee = coffeeRepository.findById(coffeeId).orElseThrow(()-> new EntityNotFoundException("Coffee not found with id = " + coffeeId));
-
-            likedCoffeeRepository.save(user, coffee);
+            coffeeService.createLikedCoffee(coffeeId, user);
         } catch (NumberFormatException e) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;

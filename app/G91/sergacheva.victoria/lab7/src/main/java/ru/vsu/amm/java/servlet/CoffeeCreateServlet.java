@@ -9,17 +9,18 @@ import ru.vsu.amm.java.entity.Coffee;
 import ru.vsu.amm.java.entity.User;
 import ru.vsu.amm.java.exception.SqlException;
 import ru.vsu.amm.java.repository.CoffeeRepository;
+import ru.vsu.amm.java.service.CoffeeService;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
 
 @WebServlet("/coffees/create")
 public class CoffeeCreateServlet extends HttpServlet {
-    private CoffeeRepository coffeeRepository;
+    private CoffeeService coffeeService;
 
     @Override
     public void init() {
-        coffeeRepository = (CoffeeRepository) getServletContext().getAttribute("coffeeRepository");
+        coffeeService = (CoffeeService) getServletContext().getAttribute("coffeeService");
     }
 
     @Override
@@ -41,8 +42,7 @@ public class CoffeeCreateServlet extends HttpServlet {
             }
             User author = (User) req.getSession(false).getAttribute("user");
 
-            Coffee coffee = new Coffee(title, description, author);
-            coffeeRepository.save(coffee);
+            coffeeService.create(title, description, author);
         } catch (InvalidParameterException | SqlException e) {
             req.setAttribute("errorMessage", e.getMessage());
             req.getRequestDispatcher("/coffeeCreate.jsp").forward(req, resp);

@@ -11,17 +11,16 @@ import ru.vsu.amm.java.exception.EntityNotFoundException;
 import ru.vsu.amm.java.exception.ForbiddenException;
 import ru.vsu.amm.java.repository.CoffeeRepository;
 import ru.vsu.amm.java.repository.LikedCoffeeRepository;
+import ru.vsu.amm.java.service.CoffeeService;
 
 import java.io.IOException;
 @WebServlet("/coffee-liked/delete")
 public class LikedCoffeeDeleteServlet extends HttpServlet {
-    private LikedCoffeeRepository likedCoffeeRepository;
-    private CoffeeRepository coffeeRepository;
+    private CoffeeService coffeeService;
 
     @Override
     public void init() {
-        likedCoffeeRepository = (LikedCoffeeRepository) getServletContext().getAttribute("likedCoffeeRepository");
-        coffeeRepository = (CoffeeRepository) getServletContext().getAttribute("coffeeRepository");
+        coffeeService = (CoffeeService) getServletContext().getAttribute("coffeeService");
     }
 
     @Override
@@ -29,11 +28,9 @@ public class LikedCoffeeDeleteServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
 
         try {
-            int coffeeId = Integer.parseInt(req.getParameter("id"));
+            long coffeeId = Long.parseLong(req.getParameter("id"));
 
-            Coffee coffee = coffeeRepository.findById(coffeeId).orElseThrow(()-> new EntityNotFoundException("Coffee not found with id = " + coffeeId));
-
-            likedCoffeeRepository.delete(user.getId(), coffeeId);
+            coffeeService.deleteLikedCoffee(coffeeId, user);
         } catch (NumberFormatException e) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
