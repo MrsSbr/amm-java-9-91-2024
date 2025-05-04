@@ -62,14 +62,14 @@ public class EmployeesServiceImpl implements EmployeesService {
     public List<EmployeeDto> getAllFilteredEmployees(Integer employee_id, Integer hotel_id, String login,
                                                      String name, String phone_number, String email,
                                                      String passport_number, String passport_series,
-                                                     String post, Integer salary, LocalDate birthday) {
+                                                     String post, LocalDate birthday) {
         logger.info("get all filtered employees");
 
         try {
             return employeeRepo.getAllByParameters(employee_id, hotel_id,
                             login, name, phone_number, email,
                             passport_number, passport_series,
-                            post, salary, birthday)
+                            post, birthday)
                     .stream()
                     .map(EmployeeDtoMapper::MapFromEntity)
                     .toList();
@@ -87,7 +87,7 @@ public class EmployeesServiceImpl implements EmployeesService {
 
         try {
             var employees = employeeRepo.getAllByParameters(employeeDto.getId(), null, null,
-                    null, phoneNumber, email, passportNumber, passportSeries, null, null, null);
+                    null, phoneNumber, email, passportNumber, passportSeries, null, null);
 
             if (employees.size() == 1 && employees.getFirst().getId() == employeeDto.getId()) {
                 var employeeEntity = employees.getFirst();

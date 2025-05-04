@@ -22,7 +22,7 @@ public class EmployeesManagerDashboardServlet extends HttpServlet {
         try {
             var employees = employeesService.getAllFilteredEmployees(
                     null, employee.getHotelId(), null, null, null,
-                    null, null, null, "STAFF", null, null);
+                    null, null, null, "STAFF", null);
             req.setAttribute("employees_table", employees);
             getServletContext().getRequestDispatcher("/employees_manager_dashboard.jsp").forward(req, resp);
         } catch (DatabaseException e) {

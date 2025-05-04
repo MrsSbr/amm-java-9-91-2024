@@ -12,7 +12,7 @@ import ru.vsu.amm.java.repository.EmployeeRepo;
 import ru.vsu.amm.java.repository.HotelRoomRepo;
 import ru.vsu.amm.java.repository.TaskRepo;
 import ru.vsu.amm.java.services.TasksService;
-import ru.vsu.amm.java.utils.TaskDtoMapper;
+import ru.vsu.amm.java.mappers.TaskDtoMapper;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;

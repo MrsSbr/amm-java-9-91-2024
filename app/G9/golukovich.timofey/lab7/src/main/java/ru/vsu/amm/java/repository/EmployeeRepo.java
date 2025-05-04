@@ -140,7 +140,7 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
     public List<EmployeeEntity> getAllByParameters(Integer employee_id, Integer hotel_id, String login,
                                                String name, String phone_number, String email,
                                                String passport_number, String passport_series,
-                                               String post, Integer salary, LocalDate birthday) throws SQLException {
+                                               String post, LocalDate birthday) throws SQLException {
         final String query = """
                 SELECT employee_id, hotel_id, login, password, name, phone_number,
                 email, passport_number, passport_series, post, birthday

@@ -12,7 +12,7 @@ public interface EmployeesService {
     List<EmployeeDto> getAllFilteredEmployees(Integer employee_id, Integer hotel_id, String login,
                                               String name, String phone_number, String email,
                                               String passport_number, String passport_series,
-                                              String post, Integer salary, LocalDate birthday);
+                                              String post, LocalDate birthday);
     EmployeeDto patchEmployee(EmployeeDto employeeDto, String name, String phoneNumber, String email,
                               String passportNumber, String passportSeries, String rawBirthday);
 

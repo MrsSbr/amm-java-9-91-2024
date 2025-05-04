@@ -7,7 +7,7 @@ public class EmployeeDtoMapper {
     public static EmployeeDto MapFromEntity(EmployeeEntity e)
     {
         return new EmployeeDto(e.getId(), e.getHotelId(), e.getLogin(),
-                e.getName(), e.getPhoneNumber(), e.getEmail(), e.getPassportSeries(),
-                e.getPassportNumber(), e.getPost(), e.getSalary(), e.getBirthday());
+                e.getName(), e.getPhoneNumber(), e.getEmail(), e.getPassportNumber(),
+                e.getPassportSeries(), e.getPost(), e.getBirthday());
     }
 }

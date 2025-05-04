@@ -38,7 +38,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 return Optional.of(new EmployeeDto(employee.getId(), employee.getHotelId(), employee.getLogin(),
                         employee.getName(), employee.getPhoneNumber(), employee.getEmail(),
                         employee.getPassportNumber(), employee.getPassportSeries(), employee.getPost(),
-                        employee.getSalary(), employee.getBirthday()));
+                        employee.getBirthday()));
             } else {
                 return Optional.empty();
             }

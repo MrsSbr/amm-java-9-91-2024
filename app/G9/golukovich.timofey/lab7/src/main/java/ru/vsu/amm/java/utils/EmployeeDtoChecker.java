@@ -12,7 +12,6 @@ public class EmployeeDtoChecker {
                         && employee.getPassportNumber() != null
                         && employee.getPassportSeries() != null
                         && employee.getPost() != null
-                        && employee.getSalary() != null
                         && employee.getBirthday() != null;
     }
 }

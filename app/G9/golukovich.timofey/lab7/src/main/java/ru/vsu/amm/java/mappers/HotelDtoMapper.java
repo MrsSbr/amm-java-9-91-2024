@@ -1,4 +1,4 @@
-package ru.vsu.amm.java.utils;
+package ru.vsu.amm.java.mappers;
 
 import ru.vsu.amm.java.dtos.HotelDto;
 import ru.vsu.amm.java.entities.HotelEntity;

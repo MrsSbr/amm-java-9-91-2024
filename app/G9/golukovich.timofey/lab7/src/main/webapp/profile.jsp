@@ -99,10 +99,6 @@
             <label>Post:</label>
             <input type="text" class="form-control" name="post" value="${sessionScope.employee.post}" readonly>
         </div>
-        <div class="form-group">
-            <label>Salary:</label>
-            <input type="text" class="form-control" name="salary" value="${sessionScope.employee.salary}" readonly>
-        </div>
         <div class="form-group editable">
             <label>Name:</label>
             <input type="text" class="form-control editable" name="name" value="${sessionScope.employee.name}" readonly>

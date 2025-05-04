@@ -34,9 +34,9 @@ public class ManageTasksServlet extends HttpServlet {
             var employeeTasks = tasksService.getAllTasksByEmployeeId(currentEmployeeId);
 
             var managers = employeesService.getAllFilteredEmployees(null, null, null, null, null, null,
-                    null, null, EmployeePost.MANAGER.name(), null, null);
+                    null, null, EmployeePost.MANAGER.name(), null);
             var employees = employeesService.getAllFilteredEmployees(null, employee.getHotelId(), null, null, null,
-                    null, null, null, null, null, null);
+                    null, null, null, null, null);
             employees = employees.stream().filter(e -> e.getPost() == EmployeePost.STAFF).toList();
 
 //            HotelRoomService hotelRoomService = new HotelRoomServiceImpl();

@@ -5,7 +5,7 @@ import ru.vsu.amm.java.exceptions.DatabaseException;
 import ru.vsu.amm.java.exceptions.HotelNotFoundException;
 import ru.vsu.amm.java.repository.HotelRepo;
 import ru.vsu.amm.java.services.HotelsService;
-import ru.vsu.amm.java.utils.HotelDtoMapper;
+import ru.vsu.amm.java.mappers.HotelDtoMapper;
 
 import java.sql.SQLException;
 import java.util.List;

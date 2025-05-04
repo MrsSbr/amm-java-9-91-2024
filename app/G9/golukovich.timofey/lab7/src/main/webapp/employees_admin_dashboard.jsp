@@ -62,7 +62,6 @@
         <th>Passport number</th>
         <th>Passport series</th>
         <th>Post</th>
-        <th>Salary</th>
         <th>Birthday</th>
     </tr>
     </thead>
@@ -78,7 +77,6 @@
             <td>${staff_employee.passportNumber}</td>
             <td>${staff_employee.passportSeries}</td>
             <td>${staff_employee.post}</td>
-            <td>${staff_employee.salary}</td>
             <td>${staff_employee.birthday}</td>
         </tr>
     </c:forEach>
