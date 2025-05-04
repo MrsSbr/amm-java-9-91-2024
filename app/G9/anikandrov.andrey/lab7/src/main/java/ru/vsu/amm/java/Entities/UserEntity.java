@@ -1,4 +1,5 @@
 package ru.vsu.amm.java.Entities;
+
 import ru.vsu.amm.java.Enums.Roles;
 
 import java.time.LocalDate;
@@ -12,11 +13,15 @@ public class UserEntity {
     private LocalDate birthDate;
 
 
-    public UserEntity() {}
+    public UserEntity() {
+    }
 
     public UserEntity(String userName, String userPassword) {
         this.userName = userName;
         this.userPassword = userPassword;
+        this.userRole = Roles.GUEST;
+        this.phone = null;
+        this.birthDate = null;
     }
 
     public UserEntity(Long userID, String userName, String userPassword) {
@@ -71,11 +76,11 @@ public class UserEntity {
     }
 
     public void setPhone(String phone) {
-        if (phone != null && phone.matches("^[0-9]{11}$")) {
-            this.phone = phone;
-        } else {
-            throw new IllegalArgumentException("setPhone Error");
+        if (phone == null || !phone.matches("^[0-9]{11}$")) {
+            throw new IllegalArgumentException(
+                    String.format("Invalid phone -- expected 11 digits, got '%s'", phone));
         }
+        this.phone = phone;
     }
 
     public LocalDate getBirthDate() {
