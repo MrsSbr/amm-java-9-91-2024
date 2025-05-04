@@ -2,7 +2,7 @@ CREATE TABLE User_Table
 (
     User_ID       BIGSERIAL PRIMARY KEY,
     User_Name     VARCHAR(200) NOT NULL UNIQUE,
-    User_Password VARCHAR(30)  NOT NULL,
+    User_Password TEXT  NOT NULL,
     User_Role     VARCHAR(30),
     Phone         VARCHAR(11) UNIQUE,
     Birth_Date    DATE
