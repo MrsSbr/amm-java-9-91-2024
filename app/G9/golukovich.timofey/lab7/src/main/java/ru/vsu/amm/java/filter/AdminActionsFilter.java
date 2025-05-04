@@ -16,9 +16,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-@WebFilter("/hotel_admin/*")
-public class AdministratorActionsFilter implements Filter {
-    private static final Logger logger = Logger.getLogger(LoginFilter.class.getName());
+//@WebFilter({"/hotel_admin/*", "/employees_dashboard"})
+public class AdminActionsFilter implements Filter {
+    private static final Logger logger = Logger.getLogger(AdminActionsFilter.class.getName());
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -27,17 +27,25 @@ public class AdministratorActionsFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
         if (session != null) {
+            var redirectUrl = req.getHeader("Referer");
+            if (redirectUrl == null || redirectUrl.isBlank()) {
+                redirectUrl = "/main.jsp";
+            }
+
             var employee = (EmployeeDto) session.getAttribute("employee");
             if (EmployeeDtoChecker.isReady(employee)) {
-                if (employee.getPost().compareTo(EmployeePost.ADMINISTRATOR) >= 0) {
+                if (employee.getPost() == EmployeePost.ADMINISTRATOR) {
                     chain.doFilter(request, response);
                 } else {
-                    logger.info("Unable to access " + employee.getLogin() + " to administrator instruments");
-                    resp.sendRedirect("/hotels_management");
+                    final String message = "Unable to access the administrator's tools";
+                    logger.info(employee.getLogin() + ": " + message);
+                    session.setAttribute("errorMessage", message);
+                    resp.sendRedirect(redirectUrl);
                 }
             } else {
-                logger.info("Unset data of employee " + employee.getLogin());
-                resp.sendRedirect("/hotels_management");
+                logger.info(employee.getLogin() + ": " + "Unsetted employee data");
+                session.setAttribute("errorMessage", "Before starting work, please set your data in the profile");
+                resp.sendRedirect(redirectUrl);
             }
         } else {
             logger.info("Unauthorized access attempt");

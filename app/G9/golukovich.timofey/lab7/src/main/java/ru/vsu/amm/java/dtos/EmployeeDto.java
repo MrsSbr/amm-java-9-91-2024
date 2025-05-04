@@ -3,6 +3,7 @@ package ru.vsu.amm.java.dtos;
 import ru.vsu.amm.java.enums.EmployeePost;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class EmployeeDto {
     private Integer id;
@@ -77,14 +78,18 @@ public class EmployeeDto {
         return birthday;
     }
 
+    public String getFormattedBirthday() {
+        return birthday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    }
+
     public boolean isReady() {
-        return hotelId != null
+        return post == EmployeePost.MASTER_ADMINISTRATOR ||
+                hotelId != null
                 && name != null
+                && email != null
                 && phoneNumber != null
                 && passportNumber != null
                 && passportSeries != null
-                && post != null
-                && salary != null
                 && birthday != null;
     }
 }

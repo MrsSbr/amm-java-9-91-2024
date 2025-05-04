@@ -2,6 +2,7 @@ package ru.vsu.amm.java.services.impl;
 
 import org.mindrot.jbcrypt.BCrypt;
 import ru.vsu.amm.java.dtos.EmployeeDto;
+import ru.vsu.amm.java.entities.EmployeeEntity;
 import ru.vsu.amm.java.enums.EmployeePost;
 import ru.vsu.amm.java.exceptions.DatabaseException;
 import ru.vsu.amm.java.exceptions.EmployeeAlreadyExistsException;
@@ -39,6 +40,8 @@ public class RegistrationServiceImpl implements RegistrationService {
                 {
                     if (employeeRepo.getByLogin(login).isEmpty()) {
                         password = BCrypt.hashpw(password, BCrypt.gensalt());
+                        var employee = new EmployeeEntity(0, hotelId, login, password, null, null, null, null, null,
+                                post, null);
                         employeeRepo.save(login, password, post, hotelId);
                         logger.info("Employee " + login + " was registered");
                     } else {

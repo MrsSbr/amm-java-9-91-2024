@@ -10,7 +10,6 @@
             border-radius: 8px;
             margin-bottom: 30px;
         }
-
         .menu-item {
             display: inline-block;
             margin-right: 15px;
@@ -20,11 +19,9 @@
             border-radius: 4px;
             text-decoration: none;
         }
-
         .menu-item:hover {
             background: #1976D2;
         }
-
         .post-badge {
             float: right;
             padding: 5px 10px;
@@ -32,28 +29,47 @@
             color: white;
             border-radius: 4px;
         }
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
 <div class="post-badge">
     Post: ${sessionScope.employee.post}
 </div>
-<div class="menu">
-    <a href="${pageContext.request.contextPath}/profile" class="menu-item">My Profile</a>
 
-    <a href="/staff/tasks" class="menu-item">My Tasks</a>
-    <a href="/main/schedule" class="menu-item">Work Schedule</a>
-    <a href="/main/requests" class="menu-item">Submit Request</a>
+<c:if test="${not empty sessionScope.errorMessage}">
+    <div class="error">${sessionScope.errorMessage}</div>
+    <% session.removeAttribute("errorMessage"); %>
+</c:if>
+
+<div class="menu">
+    <a href="${pageContext.request.contextPath}/api/profile" class="menu-item">My Profile</a>
+
+    <c:if test="${sessionScope.employee.post.name() eq 'STAFF'}">
+        <a href="${pageContext.request.contextPath}/api/tasks_dashboard" class="menu-item">My Tasks</a>
+    </c:if>
+
+    <c:if test="${sessionScope.employee.post.name() eq 'MANAGER'}">
+        <a href="${pageContext.request.contextPath}/api/employees_manager_dashboard" class="menu-item">Work Schedule</a>
+    </c:if>
+
+    <c:if test="${sessionScope.employee.post.name() eq 'ADMINISTRATOR'
+                  or sessionScope.employee.post.name() eq 'MASTER_ADMINISTRATOR'}">
+        <a href="${pageContext.request.contextPath}/financial_reports" class="menu-item">Financial Reports</a>
+        <a href="${pageContext.request.contextPath}/api/rooms_management" class="menu-item">Rooms Management</a>
+        <a href="${pageContext.request.contextPath}/api/hotels_management" class="menu-item">Hotels Management</a>
+    </c:if>
 
     <c:if test="${sessionScope.employee.post.name() eq 'MANAGER'
                   or sessionScope.employee.post.name() eq 'ADMINISTRATOR'
                   or sessionScope.employee.post.name() eq 'MASTER_ADMINISTRATOR'}">
-        <a href="/main/rooms" class="menu-item">Room Management</a>
-        <a href="/main/reports" class="menu-item">Financial Reports</a>
-        <a href="${pageContext.request.contextPath}/hotel_manager/employees" class="menu-item">Employees table</a>
+        <a href="${pageContext.request.contextPath}/api/employees_admin_dashboard" class="menu-item">Employees table</a>
     </c:if>
 
-    <a href="logout" class="menu-item">Logout</a>
+    <a href="${pageContext.request.contextPath}/auth/logout" class="menu-item">Logout</a>
 </div>
 </body>
 </html>

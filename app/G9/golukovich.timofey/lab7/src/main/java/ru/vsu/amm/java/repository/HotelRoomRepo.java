@@ -5,6 +5,7 @@ import ru.vsu.amm.java.entities.HotelRoomEntity;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +31,7 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
 
         var resultSet = preparedStatement.getResultSet();
         if (resultSet.next()) {
-            return Optional.of(new HotelRoomEntity(
-                    resultSet.getInt("room_id"),
-                    resultSet.getInt("hotel_id"),
-                    resultSet.getInt("room_number"),
-                    resultSet.getInt("floor_number"),
-                    resultSet.getInt("beds_count"),
-                    resultSet.getString("specifications"))
-            );
+            return Optional.of(configureHotelRoomEntityFromResultSet(resultSet));
         }
 
         return Optional.empty();
@@ -55,13 +49,7 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
 
         var resultSet = preparedStatement.getResultSet();
         while (resultSet.next()) {
-            var entity = new HotelRoomEntity(
-                    resultSet.getInt("room_id"),
-                    resultSet.getInt("hotel_id"),
-                    resultSet.getInt("room_number"),
-                    resultSet.getInt("floor_number"),
-                    resultSet.getInt("beds_count"),
-                    resultSet.getString("specifications"));
+            var entity = configureHotelRoomEntityFromResultSet(resultSet);
             entityList.add(entity);
         }
 
@@ -82,7 +70,7 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
     }
 
     @Override
-    public void save(HotelRoomEntity entity) throws SQLException {
+    public HotelRoomEntity save(HotelRoomEntity entity) throws SQLException {
         final String query = """
                 INSERT INTO hotel_room (hotel_id, room_number, floor_number, beds_count, specifications)
                 VALUES (?, ?, ?, ?, ?)""";
@@ -91,6 +79,8 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
         var preparedStatement = connection.prepareStatement(query);
         setPreparedStatement(preparedStatement, entity);
         preparedStatement.execute();
+
+        return configureHotelRoomEntityFromResultSet(preparedStatement.getResultSet());
     }
 
     @Override
@@ -109,5 +99,16 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
         preparedStatement.setInt(3, entity.getFloorNumber());
         preparedStatement.setInt(4, entity.getBedsCount());
         preparedStatement.setString(5, entity.getSpecifications());
+    }
+
+    private HotelRoomEntity configureHotelRoomEntityFromResultSet(ResultSet resultSet) throws SQLException {
+        return new HotelRoomEntity(
+                resultSet.getInt("room_id"),
+                resultSet.getInt("hotel_id"),
+                resultSet.getInt("room_number"),
+                resultSet.getInt("floor_number"),
+                resultSet.getInt("beds_count"),
+                resultSet.getString("specifications")
+        );
     }
 }

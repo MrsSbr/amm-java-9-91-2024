@@ -9,7 +9,6 @@
             max-width: 300px;
             margin: 50px auto;
         }
-
         .form-group {
             margin-bottom: 15px;
         }
@@ -17,7 +16,6 @@
             width: 100%;
             padding: 8px;
         }
-
         button {
             background: #4CAF50;
             color: white;
@@ -37,18 +35,15 @@
             display: flex;
             justify-content: space-between;
         }
-
         select {
             width: 100%;
             padding: 8px;
             margin-bottom: 15px;
         }
-
         .error {
             color: red;
             margin-bottom: 10px;
         }
-
         .success {
             color: #4CAF50;
             margin-bottom: 10px;
@@ -58,15 +53,17 @@
 <body>
 <h2>Register employee</h2>
 
-<c:if test="${not empty errorMessage}">
-    <div class="error">${errorMessage}</div>
+<c:if test="${not empty requestScope.errorMessage}">
+    <div class="error">${requestScope.errorMessage}</div>
+    <% request.removeAttribute("errorMessage"); %>
 </c:if>
 
-<c:if test="${not empty successMessage}">
-    <div class="success">${successMessage}</div>
+<c:if test="${not empty requestScope.successMessage}">
+    <div class="success">${requestScope.successMessage}</div>
+    <% request.removeAttribute("successMessage"); %>
 </c:if>
 
-<form action="${pageContext.request.contextPath}/hotel_admin/register" method="POST">
+<form action="${pageContext.request.contextPath}/api/register" method="POST">
     <div class="form-group">
         <input type="text" name="login" placeholder="Login" required>
     </div>
@@ -87,13 +84,13 @@
     <div class="form-group">
         <label>Select hotel:</label>
         <select name="hotel_id" required>
-            <c:forEach items="${hotels}" var="hotel">
+            <c:forEach items="${requestScope.hotels}" var="hotel">
                 <option value="${hotel.id}">${hotel.name} (ID: ${hotel.id})</option>
             </c:forEach>
         </select>
     </div>
     <div class="button-group">
-        <button type="button" class="button-back" onclick="window.location.href='${pageContext.request.contextPath}/hotel_manager/employees'">
+        <button type="button" class="button-back" onclick="window.location.href='${pageContext.request.contextPath}/api/employees_admin_dashboard'">
             Back
         </button>
         <button type="submit">Register</button>

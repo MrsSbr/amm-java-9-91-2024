@@ -82,7 +82,7 @@
 <body>
 <div class="profile-section">
     <h2>My Profile</h2>
-    <form id="profileForm" action="/profile" method="POST">
+    <form id="profileForm" action="${pageContext.request.contextPath}/api/profile" method="POST">
         <div class="form-group">
             <label>Id:</label>
             <input type="text" class="form-control" name="id" value="${sessionScope.employee.id}" readonly>
@@ -125,11 +125,11 @@
         </div>
         <div class="form-group editable">
             <label>Birthday:</label>
-            <input type="text" class="form-control editable" name="birthday" value="${sessionScope.employee.birthday}" readonly>
+            <input type="text" class="form-control editable" name="birthday" value="${sessionScope.employee.getFormattedBirthday()}" readonly>
         </div>
 
         <div class="button-group">
-            <button type="button" class="button-back" onclick="window.location.href='${pageContext.request.contextPath}/main'">Back</button>
+            <button type="button" class="button-back" onclick="window.location.href='${pageContext.request.contextPath}/api/main'">Back</button>
             <button type="button" class="button-action" id="editBtn" onclick="toggleEdit()">Edit</button>
             <button type="submit" class="button-action" id="saveBtn" disabled>Save</button>
         </div>

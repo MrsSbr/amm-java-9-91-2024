@@ -4,8 +4,11 @@ import ru.vsu.amm.java.dtos.EmployeeDto;
 import ru.vsu.amm.java.exceptions.DatabaseException;
 import ru.vsu.amm.java.exceptions.EmployeeAlreadyExistsException;
 import ru.vsu.amm.java.exceptions.EmployeeNotFoundException;
+import ru.vsu.amm.java.exceptions.HotelNotFoundException;
 import ru.vsu.amm.java.services.EmployeesService;
+import ru.vsu.amm.java.services.HotelsService;
 import ru.vsu.amm.java.services.impl.EmployeesServiceImpl;
+import ru.vsu.amm.java.services.impl.HotelsServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,11 +17,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/profile")
+@WebServlet("/api/profile")
 public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/profile.jsp").forward(req, resp);
+        var session = req.getSession(false);
+        var employee = (EmployeeDto) session.getAttribute("employee");
+        HotelsService hotelsService = new HotelsServiceImpl();
+        try {
+            var hotel = hotelsService.getHotelById(employee.getHotelId());
+            req.setAttribute("hotel_name", hotel.getName());
+            getServletContext().getRequestDispatcher("/profile.jsp").forward(req, resp);
+        } catch (HotelNotFoundException e) {
+            session.setAttribute("errorMessage", e.getMessage());
+            getServletContext().getRequestDispatcher("/api/main").forward(req, resp);
+        } catch (DatabaseException e) {
+            req.setAttribute("errorMessage", "Internal server error! Try again later");
+            getServletContext().getRequestDispatcher("/api/main").forward(req, resp);
+        }
     }
 
     @Override
@@ -50,16 +66,16 @@ public class ProfileServlet extends HttpServlet {
             var session = req.getSession();
             session.setAttribute("employee", employee);
             req.setAttribute("successMessage", "Employee + " + employee.getLogin() + " personal data was updated");
-            getServletContext().getRequestDispatcher("/register_employee.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/profile.jsp").forward(req, resp);
         } catch (EmployeeAlreadyExistsException e) {
             req.setAttribute("errorMessage", e.getMessage());
-            getServletContext().getRequestDispatcher("/register_employee.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/profile.jsp").forward(req, resp);
         } catch (DatabaseException e) {
             req.setAttribute("errorMessage", "Internal server error! Try again later");
-            getServletContext().getRequestDispatcher("/register_employee.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/profile.jsp").forward(req, resp);
         } catch (EmployeeNotFoundException e) {
             req.setAttribute("errorMessage", e.getMessage());
-            getServletContext().getRequestDispatcher("/login").forward(req, resp);
+            getServletContext().getRequestDispatcher("/auth/login").forward(req, resp);
         }
 
         getServletContext().getRequestDispatcher("/profile.jsp").forward(req, resp);

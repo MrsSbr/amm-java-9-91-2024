@@ -67,34 +67,31 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${requestScope.employees_table}" var="employee">
+    <c:forEach items="${requestScope.employees_table}" var="staff_employee">
         <tr>
-            <td>${employee.id}</td>
-            <td>${employee.hotelId}</td>
-            <td>${employee.login}</td>
-            <td>${employee.name}</td>
-            <td>${employee.phoneNumber}</td>
-            <td>${employee.email}</td>
-            <td>${employee.passportNumber}</td>
-            <td>${employee.passportSeries}</td>
-            <td>${employee.post}</td>
-            <td>${employee.salary}</td>
-            <td>${employee.birthday}</td>
+            <td>${staff_employee.id}</td>
+            <td>${staff_employee.hotelId}</td>
+            <td>${staff_employee.login}</td>
+            <td>${staff_employee.name}</td>
+            <td>${staff_employee.phoneNumber}</td>
+            <td>${staff_employee.email}</td>
+            <td>${staff_employee.passportNumber}</td>
+            <td>${staff_employee.passportSeries}</td>
+            <td>${staff_employee.post}</td>
+            <td>${staff_employee.salary}</td>
+            <td>${staff_employee.birthday}</td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
 
 <div class="button-group">
-    <a href="${pageContext.request.contextPath}/main" class="menu-item button-back">Back</a>
-    <c:if test="${sessionScope.employee.post eq 'MANAGER'}">
-        <a href="${pageContext.request.contextPath}/hotel_manager/employees/tasks_Scheduler" class="menu-item">Schedule tasks</a>
-    </c:if>
+    <a href="${pageContext.request.contextPath}/api/main" class="menu-item button-back">Back</a>
     <c:if test="${sessionScope.employee.post eq 'ADMINISTRATOR'
                   or sessionScope.employee.post.name() eq 'MASTER_ADMINISTRATOR'}">
         <span class="admin-button-group">
-            <a href="${pageContext.request.contextPath}/hotel_admin/register" class="menu-item">Register employee</a>
-            <a href="${pageContext.request.contextPath}/hotel_admin/unregister" class="menu-item">Unregister employee</a>
+            <a href="${pageContext.request.contextPath}/api/register" class="menu-item">Register employee</a>
+            <a href="${pageContext.request.contextPath}/api/unregister" class="menu-item">Unregister employee</a>
         </span>
     </c:if>
 </div>

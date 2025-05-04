@@ -65,12 +65,12 @@
     <div class="success">${successMessage}</div>
 </c:if>
 
-<form action="${pageContext.request.contextPath}/hotel_admin/unregister" method="POST">
+<form action="${pageContext.request.contextPath}/api/unregister" method="POST">
     <div class="form-group">
         <input type="text" name="login" placeholder="Login" required>
     </div>
     <div class="button-group">
-        <button type="button" class="button-back" onclick="window.location.href='${pageContext.request.contextPath}/hotel_manager/employees'">
+        <button type="button" class="button-back" onclick="window.location.href='${pageContext.request.contextPath}/api/employees_admin_dashboard'">
             Back
         </button>
         <button type="submit">Unregister</button>

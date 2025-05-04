@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/login")
+@WebServlet("/auth/login")
 public class AuthLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,7 +32,7 @@ public class AuthLoginServlet extends HttpServlet {
                 var session = req.getSession();
                 EmployeeDto employee = employeeOpt.get();
                 session.setAttribute("employee", employee);
-                resp.sendRedirect("/main");
+                resp.sendRedirect("/api/main");
             } else {
                 req.setAttribute("errorMessage", "Wrong login or password. Please, try again");
                 getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);

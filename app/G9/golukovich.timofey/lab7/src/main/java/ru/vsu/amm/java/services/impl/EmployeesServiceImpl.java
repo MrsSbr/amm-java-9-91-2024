@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 public class EmployeesServiceImpl implements EmployeesService {
@@ -23,6 +24,25 @@ public class EmployeesServiceImpl implements EmployeesService {
     public EmployeesServiceImpl() {
         logger.info("EmployeesServiceImpl configuring");
         employeeRepo = new EmployeeRepo();
+    }
+
+    @Override
+    public EmployeeDto getEmployeeById(int employeeId) {
+        logger.info("get employee by id");
+
+        try {
+            var employeeEntityOpt = employeeRepo.getById(employeeId);
+            if (employeeEntityOpt.isPresent()) {
+                return EmployeeDtoMapper.MapFromEntity(employeeEntityOpt.get());
+            } else {
+                final String message = "Employee not found by id " + employeeId;
+                logger.info(message);
+                throw new EmployeeNotFoundException(message);
+            }
+        } catch (SQLException e) {
+            logger.severe(e.getMessage());
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     @Override
@@ -62,7 +82,7 @@ public class EmployeesServiceImpl implements EmployeesService {
     public EmployeeDto patchEmployee(EmployeeDto employeeDto, String name, String phoneNumber, String email,
                                      String passportNumber, String passportSeries, String rawBirthday) {
         var birthday = rawBirthday != null
-                ? LocalDate.parse(rawBirthday, DateTimeFormatter.ofPattern("dd:MM:yyyy"))
+                ? LocalDate.parse(rawBirthday, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
                 : null;
 
         try {
@@ -73,8 +93,8 @@ public class EmployeesServiceImpl implements EmployeesService {
                 var employeeEntity = employees.getFirst();
                 employeeEntity = new EmployeeEntity(employeeEntity.getId(), employeeEntity.getHotelId(),
                         employeeEntity.getLogin(), employeeEntity.getPassword(), name, phoneNumber, email, passportNumber,
-                        passportSeries, employeeEntity.getPost(), employeeEntity.getSalary(), birthday);
-                employeeRepo.update(employeeEntity);//TODO SQLException нарушает employee_check
+                        passportSeries, employeeEntity.getPost(), birthday);
+                employeeRepo.update(employeeEntity);
 
                 return EmployeeDtoMapper.MapFromEntity(employeeEntity);
             } else if (employees.isEmpty()) {

@@ -14,17 +14,11 @@ public class EmployeeEntity {
     private String passportNumber;
     private String passportSeries;
     private EmployeePost post;
-    private Integer salary;
     private LocalDate birthday;
-
-    public EmployeeEntity(String login, String password) {
-        this.login = login;
-        this.password = password;
-    }
 
     public EmployeeEntity(int id, Integer hotelId, String login, String password, String name,
                           String phoneNumber, String email, String passportNumber, String passportSeries,
-                          EmployeePost post, Integer salary, LocalDate birthday) {
+                          EmployeePost post, LocalDate birthday) {
         this.id = id;
         this.hotelId = hotelId;
         this.login = login;
@@ -35,7 +29,6 @@ public class EmployeeEntity {
         this.passportNumber = passportNumber;
         this.passportSeries = passportSeries;
         this.post = post;
-        this.salary = salary;
         this.birthday = birthday;
     }
 
@@ -117,14 +110,6 @@ public class EmployeeEntity {
 
     public void setPost(EmployeePost post) {
         this.post = post;
-    }
-
-    public Integer getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
     }
 
     public LocalDate getBirthday() {

@@ -27,7 +27,7 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
     public Optional<EmployeeEntity> getById(int id) throws SQLException {
         final String query = """
                 SELECT employee_id, hotel_id, login, password, name, phone_number,
-                email, passport_number, passport_series, post, salary, birthday
+                email, passport_number, passport_series, post, birthday
                 FROM employee WHERE employee_id = ?""";
         var connection = dataSource.getConnection();
 
@@ -47,7 +47,7 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
     public List<EmployeeEntity> getAll() throws SQLException {
         final String query = """
                 SELECT employee_id, hotel_id, login, password, name, phone_number, email,
-                passport_number, passport_series, post, salary, birthday
+                passport_number, passport_series, post, birthday
                 FROM employee""";
         var connection = dataSource.getConnection();
 
@@ -69,27 +69,29 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
         final String query = """
                 UPDATE employee
                 SET hotel_id = ?, login = ?, password = ?, name = ?, phone_number = ?, email = ?,
-                passport_number = ?, passport_series = ?, post = ?, salary = ?, birthday = ?
+                passport_number = ?, passport_series = ?, post = ?, birthday = ?
                 WHERE employee_id = ?""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
         setPreparedStatement(preparedStatement, entity);
-        preparedStatement.setInt(12, entity.getId());
+        preparedStatement.setInt(11, entity.getId());
         preparedStatement.execute();
     }
 
     @Override
-    public void save(EmployeeEntity entity) throws SQLException {
+    public EmployeeEntity save(EmployeeEntity entity) throws SQLException {
         final String query = """
                 INSERT INTO employee (hotel_id, login, password, name, phone_number,
-                email, passport_number, passport_series, post, salary, birthday)
-                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""";
+                email, passport_number, passport_series, post, birthday)
+                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
         setPreparedStatement(preparedStatement, entity);
         preparedStatement.execute();
+
+        return configureEmployeeEntityFromResultSet(preparedStatement.getResultSet());
     }
 
     public void save(String login, String password, EmployeePost post, Integer hotelId) throws SQLException {
@@ -119,7 +121,7 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
     public Optional<EmployeeEntity> getByLogin(String login) throws SQLException {
         final String query = """
                 SELECT employee_id, hotel_id, login, password, name, phone_number,
-                email, passport_number, passport_series, post, salary, birthday
+                email, passport_number, passport_series, post, birthday
                 FROM employee WHERE login LIKE ?""";
         var connection = dataSource.getConnection();
 
@@ -141,7 +143,7 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
                                                String post, Integer salary, LocalDate birthday) throws SQLException {
         final String query = """
                 SELECT employee_id, hotel_id, login, password, name, phone_number,
-                email, passport_number, passport_series, post, salary, birthday
+                email, passport_number, passport_series, post, birthday
                 FROM employee
                 WHERE ? IS NOT NULL AND employee_id = ?
                     OR ? IS NOT NULL AND hotel_id = ?
@@ -152,7 +154,6 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
                     OR ? IS NOT NULL AND passport_number LIKE ?
                         AND ? IS NOT NULL AND passport_series LIKE ?
                     OR ? IS NOT NULL AND post LIKE ?
-                    OR ? IS NOT NULL AND salary = ?
                     OR ? IS NOT NULL AND birthday = ?""";
 
         var connection = dataSource.getConnection();
@@ -231,20 +232,12 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
             preparedStatement.setString(18, post);
         }
 
-        if (salary == null) {
-            preparedStatement.setNull(19, Types.INTEGER);
-            preparedStatement.setNull(20, Types.INTEGER);
-        } else {
-            preparedStatement.setInt(19, salary);
-            preparedStatement.setInt(20, salary);
-        }
-
         if (birthday == null) {
-            preparedStatement.setNull(21, Types.DATE);
-            preparedStatement.setNull(22, Types.DATE);
+            preparedStatement.setNull(19, Types.DATE);
+            preparedStatement.setNull(20, Types.DATE);
         } else {
-            preparedStatement.setDate(21, Date.valueOf(birthday));
-            preparedStatement.setDate(22,  Date.valueOf(birthday));
+            preparedStatement.setDate(19, Date.valueOf(birthday));
+            preparedStatement.setDate(20,  Date.valueOf(birthday));
         }
 
         preparedStatement.execute();
@@ -295,15 +288,10 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
             preparedStatement.setString(8, entity.getPassportSeries());
         }
         preparedStatement.setString(9, entity.getPost().toString());
-        if (entity.getSalary() == null) {
-            preparedStatement.setNull(10, Types.INTEGER);
-        } else {
-            preparedStatement.setInt(10, entity.getSalary());
-        }
         if (entity.getBirthday() == null) {
-            preparedStatement.setNull(11, Types.DATE);
+            preparedStatement.setNull(10, Types.DATE);
         } else {
-            preparedStatement.setDate(11, Date.valueOf(entity.getBirthday()));
+            preparedStatement.setDate(10, Date.valueOf(entity.getBirthday()));
         }
     }
 
@@ -324,7 +312,6 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
                 resultSet.getString("passport_number"),
                 resultSet.getString("passport_series"),
                 EmployeePost.valueOf(resultSet.getString("post")),
-                resultSet.getInt("salary"),
                 birthday
         );
     }

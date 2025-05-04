@@ -3,12 +3,12 @@ package ru.vsu.amm.java.dtos;
 import java.time.LocalDate;
 
 public class HotelDto {
-    private int id;
-    private String name;
-    private String address;
-    private String email;
-    private String phoneNumber;
-    private LocalDate openingDate;
+        private Integer id;
+        private String name;
+        private String address;
+        private String email;
+        private String phoneNumber;
+        private LocalDate openingDate;
 
     public HotelDto(int id, String name, String address, String email,
                        String phoneNumber, LocalDate openingDate) {
@@ -18,6 +18,22 @@ public class HotelDto {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.openingDate = openingDate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {

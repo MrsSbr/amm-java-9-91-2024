@@ -16,8 +16,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-//@WebFilter({"/hotel_manager/*", "/employees_dashboard"})
-public class ManagerActionsFilter implements Filter {
+//@WebFilter({"/hotel_master_admin/*", "/employees_dashboard"})
+public class MasterAdminActionsFilter implements Filter {
     private static final Logger logger = Logger.getLogger(LoginFilter.class.getName());
 
     @Override
@@ -34,10 +34,10 @@ public class ManagerActionsFilter implements Filter {
 
             var employee = (EmployeeDto) session.getAttribute("employee");
             if (EmployeeDtoChecker.isReady(employee)) {
-                if (employee.getPost() == EmployeePost.MANAGER) {
+                if (employee.getPost() == EmployeePost.MASTER_ADMINISTRATOR) {
                     chain.doFilter(request, response);
                 } else {
-                    final String message = "Unable to access the manager's tools";
+                    final String message = "Unable to access the master-administrator's tools";
                     logger.info(employee.getLogin() + ": " + message);
                     session.setAttribute("errorMessage", message);
                     resp.sendRedirect(redirectUrl);

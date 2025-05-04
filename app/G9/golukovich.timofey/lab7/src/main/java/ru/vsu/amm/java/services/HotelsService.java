@@ -3,7 +3,9 @@ package ru.vsu.amm.java.services;
 import ru.vsu.amm.java.dtos.HotelDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface HotelsService {
-    List<HotelDto> GetAllHotels();
+    HotelDto getHotelById(Integer hotelId);
+    List<HotelDto> getAllHotels();
 }

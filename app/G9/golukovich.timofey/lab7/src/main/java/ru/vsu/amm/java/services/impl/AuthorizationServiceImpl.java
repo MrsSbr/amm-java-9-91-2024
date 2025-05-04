@@ -37,7 +37,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             if (BCrypt.checkpw(password, employee.getPassword())) {
                 return Optional.of(new EmployeeDto(employee.getId(), employee.getHotelId(), employee.getLogin(),
                         employee.getName(), employee.getPhoneNumber(), employee.getEmail(),
-                        employee.getPassportSeries(), employee.getPassportNumber(), employee.getPost(),
+                        employee.getPassportNumber(), employee.getPassportSeries(), employee.getPost(),
                         employee.getSalary(), employee.getBirthday()));
             } else {
                 return Optional.empty();

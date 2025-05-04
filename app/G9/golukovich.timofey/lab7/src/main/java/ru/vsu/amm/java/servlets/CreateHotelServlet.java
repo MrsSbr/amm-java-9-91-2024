@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/api/main")
-public class MainServlet extends HttpServlet {
+@WebServlet("/api/hotels_management")
+public class CreateHotelServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/main.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/hotels_dashboard.jsp").forward(req, resp);
     }
 }

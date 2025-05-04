@@ -41,14 +41,14 @@ ALTER TABLE hotel_room
 CREATE TABLE employee(
    employee_id        	SERIAL			PRIMARY KEY,
    hotel_id           	INTEGER         REFERENCES hotel(hotel_id),
-   "name"             	VARCHAR(100),
-   phone_number       	CHARACTER(12),
-   email              	VARCHAR(30),
+   "name"             	VARCHAR(100)    NULL,
+   phone_number       	CHARACTER(12)   NULL,
+   email              	VARCHAR(30)     NULL,
    post               	VARCHAR(100)	NOT NULL,
-   passport_number    	CHARACTER(4),
-   passport_series    	CHARACTER(6),
-   salary             	INTEGER,
-   birthday           	DATE,
+   passport_number    	CHARACTER(4)    NULL,
+   passport_series    	CHARACTER(6)    NULL,
+   salary             	INTEGER         NULL,
+   birthday           	DATE            NULL,
    login              	VARCHAR(50)     NOT NULL,
    "password"			TEXT            NOT NULL
 );
@@ -61,8 +61,19 @@ ALTER TABLE employee
         UNIQUE(passport_number, passport_series);
 
 ALTER TABLE employee
-    ADD CHECK(salary > 0);
+    ADD CHECK(salary IS NULL OR salary >= 0);
 
 ALTER TABLE employee
-    ADD CHECK(hotel_id IS NOT NULL AND post NOT LIKE 'MASTER_ADMINISTRATOR'
-                OR hotel_id IS NULL AND post LIKE 'MASTER_ADMINISTRATOR');
+    ADD CONSTRAINT employee_master_admin_check
+        CHECK(hotel_id IS NOT NULL OR post LIKE 'MASTER_ADMINISTRATOR');
+
+
+CREATE TABLE task(
+    task_id         SERIAL      PRIMARY KEY,
+    employee_id     INTEGER     REFERENCES employee(employee_id),
+    hotel_room_id   INTEGER     REFERENCES hotel_room(room_id),
+    manager_id      INTEGER     NULL    REFERENCES employee(employee_id),
+    description     TEXT,
+    created_at      TIMESTAMP   NOT NULL,
+    updated_at      TIMESTAMP   NOT NULL
+);

@@ -6,6 +6,7 @@ import ru.vsu.amm.java.entities.HotelEntity;
 import javax.sql.DataSource;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
 
     @Override
     public Optional<HotelEntity> getById(int id) throws SQLException {
-        final String query = "SELECT hotel_id, name, address, email, phone_number, opening_date FROM hotel WHERE hotel_id = ?";
+        final String query = "SELECT hotel_id, hotel_name, address, email, phone_number, opening_date FROM hotel WHERE hotel_id = ?";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -29,14 +30,7 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
 
         var resultSet = preparedStatement.getResultSet();
         if (resultSet.next()) {
-            return Optional.of(new HotelEntity(
-                    resultSet.getInt("hotel_id"),
-                    resultSet.getString("name"),
-                    resultSet.getString("address"),
-                    resultSet.getString("email"),
-                    resultSet.getString("phone_number"),
-                    resultSet.getDate("opening_date").toLocalDate())
-            );
+            return Optional.of(configureHotelEntityFromResultSet(resultSet));
         }
 
         return Optional.empty();
@@ -54,14 +48,7 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
 
         var resultSet = preparedStatement.getResultSet();
         while (resultSet.next()) {
-            var entity = new HotelEntity(
-                    resultSet.getInt("hotel_id"),
-                    resultSet.getString("hotel_name"),
-                    resultSet.getString("address"),
-                    resultSet.getString("email"),
-                    resultSet.getString("phone_number"),
-                    resultSet.getDate("opening_date").toLocalDate()
-            );
+            var entity = configureHotelEntityFromResultSet(resultSet);
             entityList.add(entity);
         }
 
@@ -71,7 +58,7 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
     @Override
     public void update(HotelEntity entity) throws SQLException {
         final String query = """
-                UPDATE hotel SET name = ?, address = ?, email = ?, phone_number = ?, opening_date = ? 
+                UPDATE hotel SET hotel_name = ?, address = ?, email = ?, phone_number = ?, opening_date = ? 
                 WHERE hotel_id = ?""";
         var connection = dataSource.getConnection();
 
@@ -82,15 +69,17 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
     }
 
     @Override
-    public void save(HotelEntity entity) throws SQLException {
+    public HotelEntity save(HotelEntity entity) throws SQLException {
         final String query = """
-                INSERT INTO hotel (name, address, email, phone_number, opening_date)
+                INSERT INTO hotel (hotel_name, address, email, phone_number, opening_date)
                 VALUES (?, ?, ?, ?, ?)""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
         setPreparedStatement(preparedStatement, entity);
         preparedStatement.execute();
+
+        return configureHotelEntityFromResultSet(preparedStatement.getResultSet());
     }
 
     @Override
@@ -109,5 +98,16 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
         preparedStatement.setString(3, entity.getEmail());
         preparedStatement.setString(4, entity.getPhoneNumber());
         preparedStatement.setDate(5, Date.valueOf(entity.getOpeningDate()));
+    }
+
+    private HotelEntity configureHotelEntityFromResultSet(ResultSet resultSet) throws SQLException {
+        return new HotelEntity(
+                resultSet.getInt("hotel_id"),
+                resultSet.getString("hotel_name"),
+                resultSet.getString("address"),
+                resultSet.getString("email"),
+                resultSet.getString("phone_number"),
+                resultSet.getDate("opening_date").toLocalDate()
+        );
     }
 }

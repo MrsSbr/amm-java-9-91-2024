@@ -8,16 +8,13 @@
             max-width: 300px;
             margin: 50px auto;
         }
-
         .form-group {
             margin-bottom: 15px;
         }
-
         input {
             width: 100%;
             padding: 8px;
         }
-
         button {
             background: #4CAF50;
             color: white;
@@ -25,15 +22,18 @@
             border: none;
             cursor: pointer;
         }
-
-        .error { color: red; margin-bottom: 10px; }
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
 <h2>Staff Login</h2>
 
-<c:if test="${not empty errorMessage}">
-    <div class="error">${errorMessage}</div>
+<c:if test="${not empty requestScope.errorMessage}">
+    <div class="error">${requestScope.errorMessage}</div>
+    <% request.removeAttribute("errorMessage"); %>
 </c:if>
 
 <form action="login" method="POST">

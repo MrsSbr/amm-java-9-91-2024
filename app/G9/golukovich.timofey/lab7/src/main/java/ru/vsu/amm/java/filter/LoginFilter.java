@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class LoginFilter implements Filter {
     private static final Logger logger = Logger.getLogger(LoginFilter.class.getName());
     private static final List<String> allowedPaths = List.of(
-            "/login",
+            "/auth/login",
             "/login.jsp"
     );
 
@@ -35,7 +35,7 @@ public class LoginFilter implements Filter {
             chain.doFilter(request, response);
         } else {
             logger.info("Unauthorized access attempt");
-            resp.sendRedirect("/login");
+            resp.sendRedirect("/auth/login");
         }
     }
 }

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-@WebServlet("/logout")
+@WebServlet("/auth/logout")
 public class AuthLogoutServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(AuthLogoutServlet.class.getName());
 
@@ -22,6 +22,6 @@ public class AuthLogoutServlet extends HttpServlet {
             session.invalidate();
             logger.info("Employee " + employee.getLogin() + " logged out");
         }
-        resp.sendRedirect("/login");
+        resp.sendRedirect("/auth/login");
     }
 }
