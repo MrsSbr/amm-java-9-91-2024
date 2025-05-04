@@ -73,7 +73,8 @@ public class RentalObjectRepository implements DatabaseRepository<RentalObjectEn
 
     @Override
     public void save(RentalObjectEntity entity) throws SQLException {
-        final String query = "INSERT INTO rentalobject_table (object_name, object_type, object_info, price) VALUES (?, ?, ?, ?)";
+        final String query = "INSERT INTO rentalobject_table (object_name, object_type, object_info, price) " +
+                             "VALUES (?, ?, ?, ?)";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -99,7 +100,9 @@ public class RentalObjectRepository implements DatabaseRepository<RentalObjectEn
 
     @Override
     public void update(RentalObjectEntity entity) throws SQLException {
-        final String query = "UPDATE rentalobject_table SET object_name = ?, object_type = ?, object_info = ?, price = ? WHERE object_id = ?";
+        final String query = "UPDATE rentalobject_table " +
+                             "SET object_name = ?, object_type = ?, object_info = ?, price = ? " +
+                             "WHERE object_id = ?";
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
