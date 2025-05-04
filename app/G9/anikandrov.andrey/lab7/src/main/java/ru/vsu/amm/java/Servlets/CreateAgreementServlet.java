@@ -1,9 +1,10 @@
 package ru.vsu.amm.java.Servlets;
 
-import ru.vsu.amm.java.Entities.AgreementEntity;
-import ru.vsu.amm.java.Repository.AgreementRepository;
-import ru.vsu.amm.java.Repository.RentalObjectRepository;
-import ru.vsu.amm.java.Repository.UserRepository;
+import ru.vsu.amm.java.Exception.DatabaseException;
+import ru.vsu.amm.java.Exception.NotFoundException;
+import ru.vsu.amm.java.Exception.ValidationException;
+import ru.vsu.amm.java.Services.AgreementService;
+import ru.vsu.amm.java.Repository.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,13 +13,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDate;
+
 
 @WebServlet("/createAgreement")
 public class CreateAgreementServlet extends HttpServlet {
+    private AgreementService agreementService;
+
+    @Override
+    public void init() {
+        this.agreementService = new AgreementService(
+                new AgreementRepository(),
+                new UserRepository(),
+                new RentalObjectRepository()
+        );
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
 
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
@@ -32,48 +44,15 @@ public class CreateAgreementServlet extends HttpServlet {
             LocalDate startDate = LocalDate.parse(request.getParameter("startDate"));
             LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
 
-            if (startDate.isAfter(endDate)) {
-                session.setAttribute("errorMessage", "Error: The start date cannot be later than the end date!");
-                response.sendRedirect(request.getContextPath() + "/rent");
-                return;
-            }
-
-            if (startDate.isBefore(LocalDate.now())) {
-                session.setAttribute("errorMessage", "Error: Start date cannot be in the past!");
-                response.sendRedirect(request.getContextPath() + "/rent");
-                return;
-            }
-
-            UserRepository userRepository = new UserRepository();
-            RentalObjectRepository rentalObjectRepository = new RentalObjectRepository();
-            AgreementRepository agreementRepository = new AgreementRepository();
-
-            Long userId = userRepository.findByUserName(username)
-                    .orElseThrow(() -> new ServletException("User not found"))
-                    .getUserID();
-
-            int price = rentalObjectRepository.findById(objectId)
-                    .orElseThrow(() -> new ServletException("Object not found"))
-                    .getPrice();
-
-            int days = (int) (endDate.toEpochDay() - startDate.toEpochDay());
-            int totalPrice = price * days;
-
-            AgreementEntity agreement = new AgreementEntity();
-            agreement.setUserID(userId);
-            agreement.setObjectID(objectId);
-            agreement.setTimeStart(startDate);
-            agreement.setTimeEnd(endDate);
-            agreement.setSumPrice(totalPrice);
-
-            agreementRepository.save(agreement);
-
+            agreementService.createAgreement(username, objectId, startDate, endDate);
             response.sendRedirect(request.getContextPath() + "/myrent");
 
+        } catch (ValidationException | NotFoundException e) {
+            session.setAttribute("errorMessage", "Ошибка: " + e.getMessage());
+            response.sendRedirect(request.getContextPath() + "/rent");
         } catch (Exception e) {
-            session.setAttribute("errorMessage", "Error with agreement creation: " + e.getMessage());
+            session.setAttribute("errorMessage", "Ошибка сервера: " + e.getMessage());
             response.sendRedirect(request.getContextPath() + "/rent");
         }
-
     }
 }

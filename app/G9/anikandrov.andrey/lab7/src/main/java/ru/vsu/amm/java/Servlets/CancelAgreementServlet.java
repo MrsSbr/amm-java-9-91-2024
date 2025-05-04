@@ -2,6 +2,9 @@ package ru.vsu.amm.java.Servlets;
 
 import ru.vsu.amm.java.Entities.AgreementEntity;
 import ru.vsu.amm.java.Repository.AgreementRepository;
+import ru.vsu.amm.java.Repository.RentalObjectRepository;
+import ru.vsu.amm.java.Repository.UserRepository;
+import ru.vsu.amm.java.Services.AgreementService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +16,7 @@ import java.sql.SQLException;
 
 @WebServlet("/cancel")
 public class CancelAgreementServlet extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
