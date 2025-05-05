@@ -24,23 +24,19 @@ public class GameRepository implements CrudRepository<GameEntity> {
     @Override
     public GameEntity findById(long id) {
         final String query = """
-                    SELECT id, first_player_id, second_player_id, finished, result,
-                    first_players_rating_before, second_players_rating_before FROM game WHERE id = ?
+                    SELECT id, first_players_id, second_players_id, finished, result,
+                    first_players_rating_before, second_players_rating_before,
+                    first_players_rating_change, second_players_rating_change
+                    FROM game WHERE id = ?
                 """;
 
-        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return new GameEntity(
-                        resultSet.getLong("id"),
-                        resultSet.getLong("first_player_id"),
-                        resultSet.getLong("first_player_id"),
-                        resultSet.getTimestamp("finished").toLocalDateTime(),
-                        GameResultMapper.mapStringToGameResult(resultSet.getString("result")),
-                        resultSet.getDouble("first_players_rating_before"),
-                        resultSet.getDouble("first_players_rating_before")
-                );
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return makeGameFromResultSet(resultSet);
+                }
             }
         } catch (SQLException e) {
             // log
@@ -51,49 +47,120 @@ public class GameRepository implements CrudRepository<GameEntity> {
 
     @Override
     public List<GameEntity> findAll() {
-        List<GameEntity> users = new ArrayList<>();
-
         final String query = """
-                    SELECT id, first_player_id, second_player_id, finished, result,
-                    first_players_rating_before, second_players_rating_before FROM game
+                    SELECT id, first_players_id, second_players_id, finished, result,
+                    first_players_rating_before, second_players_rating_before,
+                    first_players_rating_change, second_players_rating_change
+                    FROM game
                 """;
 
-        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+        List<GameEntity> games = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
-                users.add(
-                        new GameEntity(
-                                resultSet.getLong("id"),
-                                resultSet.getLong("first_player_id"),
-                                resultSet.getLong("first_player_id"),
-                                resultSet.getTimestamp("finished").toLocalDateTime(),
-                                GameResultMapper.mapStringToGameResult(resultSet.getString("result")),
-                                resultSet.getDouble("first_players_rating_before"),
-                                resultSet.getDouble("first_players_rating_before")
-                        )
-                );
+                games.add(makeGameFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             // log
         }
 
-        return users;
+        return games;
+    }
+
+    public List<GameEntity> findLast(long count) {
+        final String query = """
+                    SELECT id, first_players_id, second_players_id, finished, result,
+                    first_players_rating_before, second_players_rating_before,
+                    first_players_rating_change, second_players_rating_change
+                    FROM game ORDER BY finished DESC LIMIT ?
+                """;
+
+        List<GameEntity> games = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, count);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    games.add(makeGameFromResultSet(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            // log
+        }
+
+        return games;
+    }
+
+    public List<GameEntity> findByPlayersId(long id) {
+        final String query = """
+                    SELECT id, first_players_id, second_players_id, finished, result,
+                    first_players_rating_before, second_players_rating_before,
+                    first_players_rating_change, second_players_rating_change
+                    FROM game WHERE first_players_id IS NOT NULL AND first_players_id = ? OR
+                    second_players_id IS NOT NULL AND second_players_id = ?
+                """;
+
+        List<GameEntity> games = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, id);
+            statement.setLong(2, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    games.add(makeGameFromResultSet(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            // log
+        }
+
+        return games;
+    }
+
+    public List<GameEntity> findLastByPlayersId(long id, long count) {
+        final String query = """
+                    SELECT id, first_players_id, second_players_id, finished, result,
+                    first_players_rating_before, second_players_rating_before,
+                    first_players_rating_change, second_players_rating_change
+                    FROM game WHERE first_players_id IS NOT NULL AND first_players_id = ? OR
+                    second_players_id IS NOT NULL AND second_players_id = ?
+                    ORDER BY finished DESC LIMIT ?
+                """;
+
+        List<GameEntity> games = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, id);
+            statement.setLong(2, id);
+            statement.setLong(3, count);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    games.add(makeGameFromResultSet(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            // log
+        }
+
+        return games;
     }
 
     @Override
     public void create(GameEntity entity) {
         final String query = """
-                    INSERT INTO game (first_player_id, second_player_id, finished, result,
-                    first_players_rating_before, second_players_rating_before) VALUES (?, ?, ?, ?, ?, ?)
+                    INSERT INTO game (first_players_id, second_players_id, finished, result,
+                    first_players_rating_before, second_players_rating_before,
+                    first_players_rating_change, second_players_rating_change) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """;
 
-        try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, entity.getFirstPlayerId());
-            statement.setLong(2, entity.getSecondPlayerId());
-            statement.setTimestamp(3, Timestamp.valueOf(entity.getFinished()));
-            statement.setString(4, GameResultMapper.mapGameResultToString(entity.getResult()));
-            statement.setDouble(5, entity.getFirstPlayersRating());
-            statement.setDouble(6, entity.getSecondPlayersRating());
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            prepareInsertOrUpdateStatement(statement, entity);
             statement.executeUpdate();
         } catch (SQLException e) {
             // log
@@ -103,18 +170,14 @@ public class GameRepository implements CrudRepository<GameEntity> {
     @Override
     public void update(GameEntity entity) {
         final String query = """
-                    UPDATE game SET first_player_id = ?, second_player_id = ?, finished = ?, result = ?,
-                    first_players_rating_before = ?, second_players_rating_before = ? WHERE id = ?
+                    UPDATE game SET first_players_id = ?, second_players_id = ?, finished = ?, result = ?,
+                    first_players_rating_before = ?, second_players_rating_before = ?,
+                    first_players_rating_change = ?, second_players_rating_change = ? WHERE id = ?
                 """;
 
-        try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, entity.getFirstPlayerId());
-            statement.setLong(2, entity.getSecondPlayerId());
-            statement.setTimestamp(3, Timestamp.valueOf(entity.getFinished()));
-            statement.setString(4, GameResultMapper.mapGameResultToString(entity.getResult()));
-            statement.setDouble(5, entity.getFirstPlayersRating());
-            statement.setDouble(6, entity.getSecondPlayersRating());
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            prepareInsertOrUpdateStatement(statement, entity);
             statement.setLong(7, entity.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -126,12 +189,38 @@ public class GameRepository implements CrudRepository<GameEntity> {
     public void delete(GameEntity entity) {
         final String query = "DELETE FROM game WHERE id = ?";
 
-        try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, entity.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             // log
         }
+    }
+
+    private GameEntity makeGameFromResultSet(ResultSet resultSet) throws SQLException {
+        return new GameEntity(
+                resultSet.getLong("id"),
+                resultSet.getLong("first_players_id"),
+                resultSet.getLong("second_players_id"),
+                resultSet.getTimestamp("finished").toLocalDateTime(),
+                GameResultMapper.mapStringToGameResult(resultSet.getString("result")),
+                resultSet.getDouble("first_players_rating_before"),
+                resultSet.getDouble("second_players_rating_before"),
+                resultSet.getDouble("first_players_rating_change"),
+                resultSet.getDouble("second_players_rating_change")
+        );
+    }
+
+    private void prepareInsertOrUpdateStatement(PreparedStatement statement, GameEntity entity)
+            throws SQLException {
+        statement.setLong(1, entity.getFirstPlayersId());
+        statement.setLong(2, entity.getSecondPlayersId());
+        statement.setTimestamp(3, Timestamp.valueOf(entity.getFinished()));
+        statement.setString(4, GameResultMapper.mapGameResultToString(entity.getResult()));
+        statement.setDouble(5, entity.getFirstPlayersRatingBefore());
+        statement.setDouble(6, entity.getSecondPlayersRatingBefore());
+        statement.setDouble(7, entity.getFirstPlayersRatingChange());
+        statement.setDouble(8, entity.getSecondPlayersRatingChange());
     }
 }
