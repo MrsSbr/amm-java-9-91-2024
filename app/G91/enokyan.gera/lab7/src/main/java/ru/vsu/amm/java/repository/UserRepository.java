@@ -11,31 +11,45 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Array;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserRepository implements CrudRepository<UserEntity> {
+    private static final Logger logger = Logger.getLogger(UserRepository.class.getName());
 
     private final DataSource dataSource;
 
     public UserRepository() {
         dataSource = DatabaseConfiguration.getDataSource();
+        logger.log(Level.INFO, "Инициализирован репозиторий пользователей");
     }
 
     @Override
     public UserEntity findById(long id) {
         final String query = "SELECT id, nickname, password, rating, roles FROM elo_user WHERE id = ?";
 
+        logger.log(Level.FINE, MessageFormat.format("Поиск пользователя с id={0}", id));
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
+                    logger.log(Level.FINE, MessageFormat.format("Найден пользователь с id={0}", id));
                     return makeUserFromResultSet(resultSet);
+                } else {
+                    logger.log(Level.FINE, MessageFormat.format("Пользователь с id={0} не найден", id));
                 }
             }
         } catch (SQLException e) {
-            // log
+            logger.log(
+                    Level.SEVERE,
+                    MessageFormat.format("Ошибка при выполнении запроса\n{0}\nс параметрами [id={1}]", query, id),
+                    e
+            );
         }
 
         return null;
@@ -44,16 +58,25 @@ public class UserRepository implements CrudRepository<UserEntity> {
     public UserEntity findByNickname(String nickname) {
         final String query = "SELECT id, nickname, password, rating, roles FROM elo_user WHERE nickname = ?";
 
+        logger.log(Level.FINE, MessageFormat.format("Поиск пользователя с nickname={0}", nickname));
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, nickname);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
+                    logger.log(Level.FINE, MessageFormat.format("Найден пользователь с nickname={0}", nickname));
                     return makeUserFromResultSet(resultSet);
+                } else {
+                    logger.log(Level.FINE, MessageFormat.format("Пользователь с nickname={0} не найден", nickname));
                 }
             }
         } catch (SQLException e) {
-            // log
+            logger.log(
+                    Level.SEVERE,
+                    MessageFormat.format("Ошибка при выполнении запроса\n{0}\nс параметрами [nickname={1}]", query, nickname),
+                    e
+            );
         }
 
         return null;
@@ -63,6 +86,8 @@ public class UserRepository implements CrudRepository<UserEntity> {
     public List<UserEntity> findAll() {
         final String query = "SELECT id, nickname, password, rating, roles FROM elo_user";
 
+        logger.log(Level.FINE, "Поиск всех пользователей");
+
         List<UserEntity> users = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
@@ -71,8 +96,13 @@ public class UserRepository implements CrudRepository<UserEntity> {
             while (resultSet.next()) {
                 users.add(makeUserFromResultSet(resultSet));
             }
+            logger.log(Level.FINE, MessageFormat.format("Найдено пользователей: {0}", users.size()));
         } catch (SQLException e) {
-            // log
+            logger.log(
+                    Level.SEVERE,
+                    MessageFormat.format("Ошибка при выполнении запроса\n{0}", query),
+                    e
+            );
         }
 
         return users;
@@ -80,6 +110,8 @@ public class UserRepository implements CrudRepository<UserEntity> {
 
     public List<UserEntity> findTopRated(long count) {
         final String query = "SELECT id, nickname, password, rating, roles FROM elo_user ORDER BY rating DESC, nickname LIMIT ?";
+
+        logger.log(Level.FINE, MessageFormat.format("Поиск топ-{0} пользователей", count));
 
         List<UserEntity> users = new ArrayList<>();
 
@@ -90,8 +122,13 @@ public class UserRepository implements CrudRepository<UserEntity> {
             while (resultSet.next()) {
                 users.add(makeUserFromResultSet(resultSet));
             }
+            logger.log(Level.FINE, MessageFormat.format("Найдено топ-{0} пользователей", users.size()));
         } catch (SQLException e) {
-            // log
+            logger.log(
+                    Level.SEVERE,
+                    MessageFormat.format("Ошибка при выполнении запроса\n{0}", query),
+                    e
+            );
         }
 
         return users;
@@ -101,12 +138,15 @@ public class UserRepository implements CrudRepository<UserEntity> {
     public void create(UserEntity entity) {
         final String query = "INSERT INTO elo_user (nickname, password, rating, roles) VALUES (?, ?, ?, ?)";
 
+        logger.log(Level.FINE, MessageFormat.format("Добавление нового пользователя {0}", entity));
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             prepareInsertOrUpdateStatement(connection, statement, entity);
             statement.executeUpdate();
+            logger.log(Level.FINE, MessageFormat.format("Добавлен новый пользователь {0}", entity));
         } catch (SQLException e) {
-            //log
+            logger.log(Level.FINE, MessageFormat.format("Ошибка при добавлении пользователя {0}", entity), e);
         }
     }
 
@@ -114,13 +154,16 @@ public class UserRepository implements CrudRepository<UserEntity> {
     public void update(UserEntity entity) {
         final String query = "UPDATE elo_user SET nickname = ?, password = ?, rating = ?, roles = ? WHERE id = ?";
 
+        logger.log(Level.FINE, MessageFormat.format("Обновление пользователя {0}", entity));
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             prepareInsertOrUpdateStatement(connection, statement, entity);
             statement.setLong(5, entity.getId());
             statement.executeUpdate();
+            logger.log(Level.FINE, MessageFormat.format("Обновлен пользователь {0}", entity));
         } catch (SQLException e) {
-            // log
+            logger.log(Level.FINE, MessageFormat.format("Ошибка при обновлении пользователя {0}", entity), e);
         }
     }
 
@@ -128,12 +171,15 @@ public class UserRepository implements CrudRepository<UserEntity> {
     public void delete(UserEntity entity) {
         final String query = "DELETE FROM elo_user WHERE id = ?";
 
+        logger.log(Level.FINE, MessageFormat.format("Удаление пользователя {0}", entity));
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, entity.getId());
             statement.executeUpdate();
+            logger.log(Level.FINE, MessageFormat.format("Удален пользователь {0}", entity));
         } catch (SQLException e) {
-            // log
+            logger.log(Level.FINE, MessageFormat.format("Ошибка при удалении пользователя {0}", entity), e);
         }
     }
 

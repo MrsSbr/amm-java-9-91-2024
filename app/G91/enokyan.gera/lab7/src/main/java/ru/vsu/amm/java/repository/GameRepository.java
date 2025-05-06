@@ -10,15 +10,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GameRepository implements CrudRepository<GameEntity> {
+    private static final Logger logger = Logger.getLogger(GameRepository.class.getName());
 
     private final DataSource dataSource;
 
     public GameRepository() {
         dataSource = DatabaseConfiguration.getDataSource();
+        logger.log(Level.INFO, "Инициализирован репозиторий партий");
     }
 
     @Override
@@ -30,16 +35,25 @@ public class GameRepository implements CrudRepository<GameEntity> {
                     FROM game WHERE id = ?
                 """;
 
+        logger.log(Level.FINE, MessageFormat.format("Поиск партии с id={0}", id));
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
+                    logger.log(Level.FINE, MessageFormat.format("Найдена партия с id={0}", id));
                     return makeGameFromResultSet(resultSet);
+                } else {
+                    logger.log(Level.FINE, MessageFormat.format("Партия с id={0} не найдена", id));
                 }
             }
         } catch (SQLException e) {
-            // log
+            logger.log(
+                    Level.SEVERE,
+                    MessageFormat.format("Ошибка при выполнении запроса\n{0}\nс параметрами [id={1}]", query, id),
+                    e
+            );
         }
 
         return null;
@@ -54,6 +68,8 @@ public class GameRepository implements CrudRepository<GameEntity> {
                     FROM game
                 """;
 
+        logger.log(Level.FINE, "Поиск всех партий");
+
         List<GameEntity> games = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
@@ -62,8 +78,13 @@ public class GameRepository implements CrudRepository<GameEntity> {
             while (resultSet.next()) {
                 games.add(makeGameFromResultSet(resultSet));
             }
+            logger.log(Level.FINE, MessageFormat.format("Найдено партий: {0}", games.size()));
         } catch (SQLException e) {
-            // log
+            logger.log(
+                    Level.SEVERE,
+                    MessageFormat.format("Ошибка при выполнении запроса\n{0}", query),
+                    e
+            );
         }
 
         return games;
@@ -77,6 +98,8 @@ public class GameRepository implements CrudRepository<GameEntity> {
                     FROM game ORDER BY finished DESC LIMIT ?
                 """;
 
+        logger.log(Level.FINE, MessageFormat.format("Поиск последних {0} партий", count));
+
         List<GameEntity> games = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
@@ -86,9 +109,14 @@ public class GameRepository implements CrudRepository<GameEntity> {
                 while (resultSet.next()) {
                     games.add(makeGameFromResultSet(resultSet));
                 }
+                logger.log(Level.FINE, MessageFormat.format("Найдено последних партий: {0}", games.size()));
             }
         } catch (SQLException e) {
-            // log
+            logger.log(
+                    Level.SEVERE,
+                    MessageFormat.format("Ошибка при выполнении запроса\n{0}\nс параметрами [count={1}]", query, count),
+                    e
+            );
         }
 
         return games;
@@ -103,6 +131,8 @@ public class GameRepository implements CrudRepository<GameEntity> {
                     second_players_id IS NOT NULL AND second_players_id = ?
                 """;
 
+        logger.log(Level.FINE, MessageFormat.format("Поиск партий игрока с id={0}", id));
+
         List<GameEntity> games = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
@@ -113,9 +143,14 @@ public class GameRepository implements CrudRepository<GameEntity> {
                 while (resultSet.next()) {
                     games.add(makeGameFromResultSet(resultSet));
                 }
+                logger.log(Level.FINE, MessageFormat.format("Найдено партий игрока с id={0}: {1}", id, games.size()));
             }
         } catch (SQLException e) {
-            // log
+            logger.log(
+                    Level.SEVERE,
+                    MessageFormat.format("Ошибка при выполнении запроса\n{0}\nс параметрами [id={1}]", query, id),
+                    e
+            );
         }
 
         return games;
@@ -131,6 +166,8 @@ public class GameRepository implements CrudRepository<GameEntity> {
                     ORDER BY finished DESC LIMIT ?
                 """;
 
+        logger.log(Level.FINE, MessageFormat.format("Поиск последних {0} партий игрока с id={1}", count, id));
+
         List<GameEntity> games = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
@@ -142,9 +179,14 @@ public class GameRepository implements CrudRepository<GameEntity> {
                 while (resultSet.next()) {
                     games.add(makeGameFromResultSet(resultSet));
                 }
+                logger.log(Level.FINE, MessageFormat.format("Найдено последних партий игрока с id={0}: {1}", id, games.size()));
             }
         } catch (SQLException e) {
-            // log
+            logger.log(
+                    Level.SEVERE,
+                    MessageFormat.format("Ошибка при выполнении запроса\n{0}\nс параметрами [id={1}, count={2}]", query, id, count),
+                    e
+            );
         }
 
         return games;
@@ -158,12 +200,15 @@ public class GameRepository implements CrudRepository<GameEntity> {
                     first_players_rating_change, second_players_rating_change) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """;
 
+        logger.log(Level.FINE, MessageFormat.format("Добавление новой партии {0}", entity));
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             prepareInsertOrUpdateStatement(statement, entity);
             statement.executeUpdate();
+            logger.log(Level.FINE, MessageFormat.format("Добавлена новая партия {0}", entity));
         } catch (SQLException e) {
-            // log
+            logger.log(Level.FINE, MessageFormat.format("Ошибка при добавлении партии {0}", entity), e);
         }
     }
 
@@ -175,13 +220,16 @@ public class GameRepository implements CrudRepository<GameEntity> {
                     first_players_rating_change = ?, second_players_rating_change = ? WHERE id = ?
                 """;
 
+        logger.log(Level.FINE, MessageFormat.format("Обновление партии {0}", entity));
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             prepareInsertOrUpdateStatement(statement, entity);
             statement.setLong(7, entity.getId());
             statement.executeUpdate();
+            logger.log(Level.FINE, MessageFormat.format("Обновлена партия {0}", entity));
         } catch (SQLException e) {
-            // log
+            logger.log(Level.FINE, MessageFormat.format("Ошибка при обновлении партии {0}", entity), e);
         }
     }
 
@@ -189,12 +237,15 @@ public class GameRepository implements CrudRepository<GameEntity> {
     public void delete(GameEntity entity) {
         final String query = "DELETE FROM game WHERE id = ?";
 
+        logger.log(Level.FINE, MessageFormat.format("Удаление партии {0}", entity));
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, entity.getId());
             statement.executeUpdate();
+            logger.log(Level.FINE, MessageFormat.format("Удалена партия {0}", entity));
         } catch (SQLException e) {
-            // log
+            logger.log(Level.FINE, MessageFormat.format("Ошибка при удалении партии {0}", entity), e);
         }
     }
 
