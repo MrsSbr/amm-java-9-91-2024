@@ -32,8 +32,6 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         String ip = request.getRemoteAddr();
 
-        logger.log(Level.INFO, MessageFormat.format("Попытка входа с nickname={0}, ip={1}", nickname, ip));
-
         UserEntity user = userService.getUserByNickname(nickname);
 
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {

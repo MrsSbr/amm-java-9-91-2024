@@ -6,11 +6,7 @@ import ru.vsu.amm.java.entity.UserEntity;
 import ru.vsu.amm.java.util.RolesMapper;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Array;
+import java.sql.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +21,11 @@ public class UserRepository implements CrudRepository<UserEntity> {
     public UserRepository() {
         dataSource = DatabaseConfiguration.getDataSource();
         logger.log(Level.INFO, "Инициализирован репозиторий пользователей");
+    }
+
+    public UserRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+        logger.log(Level.INFO, "Инициализирован репозиторий пользователей с заданным dataSource");
     }
 
     @Override
@@ -135,19 +136,26 @@ public class UserRepository implements CrudRepository<UserEntity> {
     }
 
     @Override
-    public void create(UserEntity entity) {
+    public long create(UserEntity entity) {
         final String query = "INSERT INTO elo_user (nickname, password, rating, roles) VALUES (?, ?, ?, ?)";
 
         logger.log(Level.FINE, MessageFormat.format("Добавление нового пользователя {0}", entity));
 
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             prepareInsertOrUpdateStatement(connection, statement, entity);
             statement.executeUpdate();
-            logger.log(Level.FINE, MessageFormat.format("Добавлен новый пользователь {0}", entity));
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    logger.log(Level.FINE, MessageFormat.format("Добавлен новый пользователь {0}", entity));
+                    return generatedKeys.getLong(1);
+                }
+            }
         } catch (SQLException e) {
             logger.log(Level.FINE, MessageFormat.format("Ошибка при добавлении пользователя {0}", entity), e);
         }
+
+        return -1;
     }
 
     @Override

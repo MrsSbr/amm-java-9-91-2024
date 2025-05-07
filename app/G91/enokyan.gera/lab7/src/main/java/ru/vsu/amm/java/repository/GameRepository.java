@@ -193,7 +193,7 @@ public class GameRepository implements CrudRepository<GameEntity> {
     }
 
     @Override
-    public void create(GameEntity entity) {
+    public long create(GameEntity entity) {
         final String query = """
                     INSERT INTO game (first_players_id, second_players_id, finished, result,
                     first_players_rating_before, second_players_rating_before,
@@ -206,10 +206,17 @@ public class GameRepository implements CrudRepository<GameEntity> {
              PreparedStatement statement = connection.prepareStatement(query)) {
             prepareInsertOrUpdateStatement(statement, entity);
             statement.executeUpdate();
-            logger.log(Level.FINE, MessageFormat.format("Добавлена новая партия {0}", entity));
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    logger.log(Level.FINE, MessageFormat.format("Добавлена новая партия {0}", entity));
+                    return generatedKeys.getLong(1);
+                }
+            }
         } catch (SQLException e) {
             logger.log(Level.FINE, MessageFormat.format("Ошибка при добавлении партии {0}", entity), e);
         }
+
+        return -1;
     }
 
     @Override

@@ -20,6 +20,11 @@ public class UserService {
         logger.log(Level.INFO, "Сервис пользователей инициализирован");
     }
 
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+        logger.log(Level.INFO, "Сервис пользователей инициализирован с заданным репозиторием");
+    }
+
     public void addUser(String nickname, String password, List<Role> roles) {
         logger.log(Level.FINE, MessageFormat.format(
                 "Запрос на добавление нового пользователя с nickname={0}, roles={1}",

@@ -20,6 +20,7 @@ dependencies {
     implementation("jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.2")
     implementation("org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1")
     implementation("org.mindrot:jbcrypt:0.4")
+    testImplementation("org.mockito:mockito-core:5.17.0")
 }
 
 tasks.test {

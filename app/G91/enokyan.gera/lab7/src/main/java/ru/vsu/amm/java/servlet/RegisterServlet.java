@@ -33,15 +33,15 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String ip = request.getRemoteAddr();
 
-        logger.log(Level.INFO, MessageFormat.format("Попытка регистрации с nickname={0}, ip={1}", nickname, ip));
-
         if (userService.getUserByNickname(nickname) != null) {
+            logger.log(Level.WARNING, MessageFormat.format("Неудачная попытка регистрации с nickname={0}, ip={1}", nickname, ip));
             response.sendRedirect("/auth/register?error=nicknameIsAlreadyTaken");
             return;
         }
 
         userService.addUser(nickname, password, List.of(Role.Player));
 
+        logger.log(Level.WARNING, MessageFormat.format("Успешная регистрации с nickname={0}, ip={1}", nickname, ip));
         response.sendRedirect("/auth/login?success=1");
     }
 
