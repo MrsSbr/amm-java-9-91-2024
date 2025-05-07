@@ -6,11 +6,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RolesMapper {
-    public static String mapRolesToString(List<Role> roles) {
-        return String.join(",", roles.stream().map(Enum::name).toList());
+    public static String[] mapRolesToArrayOfStrings(List<Role> roles) {
+        return roles.stream().map(Enum::name).toArray(String[]::new);
     }
 
-    public static List<Role> mapStringToRoles(String roles) {
-        return Arrays.stream(roles.split(",")).map(Role::valueOf).toList();
+    public static List<Role> mapArrayOfStringsToRoles(String[] roles) {
+        return Arrays.stream(roles).map(Role::valueOf).toList();
     }
 }

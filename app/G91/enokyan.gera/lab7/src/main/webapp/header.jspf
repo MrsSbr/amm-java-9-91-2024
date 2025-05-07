@@ -1,0 +1,24 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<div class="container" style="width: 40%">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <ul class="nav col-12 col-md-auto justify-content-center mb-md-0">
+            <li><a href="${pageContext.request.contextPath}/leaderboard" class="nav-link ${requestScope.activePage.equals('leaderboard') ? 'link-secondary' : ''} px-2">Таблица лидеров</a></li>
+            <li><a href="${pageContext.request.contextPath}/games" class="nav-link ${requestScope.activePage == 'games' ? 'link-secondary' : ''} px-2">Последние игры</a></li>
+            <c:if test="${sessionScope.isReferee}">
+                <li><a href="${pageContext.request.contextPath}/protected/referee/add" class="nav-link ${requestScope.activePage == 'add' ? 'link-secondary' : ''} px-2">Добавить партию</a></li>
+            </c:if>
+        </ul>
+        <div class="d-flex me-2">
+            <c:choose>
+                <c:when test="${not empty sessionScope.user}">
+                    <a class="btn btn-outline-primary me-2" href="${pageContext.request.contextPath}/player/${sessionScope.user.getNickname()}">${sessionScope.user.nickname}</a>
+                    <a class="btn btn-outline-danger" href="${pageContext.request.contextPath}/logout">Выйти</a>
+                </c:when>
+                <c:otherwise>
+                    <a class="btn btn-outline-primary me-2" href="${pageContext.request.contextPath}/auth/login">Вход</a>
+                    <a class="btn btn-primary" href="${pageContext.request.contextPath}/auth/register">Регистрация</a>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </header>
+</div>
