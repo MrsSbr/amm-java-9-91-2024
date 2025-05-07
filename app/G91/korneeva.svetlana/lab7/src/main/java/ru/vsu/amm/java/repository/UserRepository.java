@@ -6,6 +6,7 @@ import ru.vsu.amm.java.config.DbConfig;
 import ru.vsu.amm.java.entity.UserEntity;
 
 import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,8 +18,8 @@ public class UserRepository {
 
     private final DataSource dataSource;
 
-    public UserRepository() {
-        dataSource = DbConfig.getDataSource();
+    public UserRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public Optional<UserEntity> findByEmail(String email) throws SQLException {

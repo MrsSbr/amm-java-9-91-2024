@@ -20,8 +20,8 @@ public class TransactionRepository {
 
     private final DataSource dataSource;
 
-    public TransactionRepository() {
-        dataSource = DbConfig.getDataSource();
+    public TransactionRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public Optional<Transaction> findById(Long id) throws SQLException {

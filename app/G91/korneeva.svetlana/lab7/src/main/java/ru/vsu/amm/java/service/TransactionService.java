@@ -16,37 +16,38 @@ import java.util.List;
 import java.util.Optional;
 
 public class TransactionService {
+    private final TransactionRepository transactionRepository;
     private static final Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
-    public TransactionResponse findAll(UserEntity user) {
-        TransactionRepository transactionRepository = new TransactionRepository();
+    public TransactionService(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+    }
 
+    public TransactionResponse findAll(UserEntity user) {
         List<Transaction> transactions;
         try {
             transactions = transactionRepository.findByUserId(user.getId());
         } catch (SQLException e) {
-            logger.error("Ошибка при получении всех транзакций для пользователя с id={}", user.getId(), e);
+            logger.error("РћС€РёР±РєР° РїСЂРё РїРѕР»СѓС‡РµРЅРёРё РІСЃРµС… С‚СЂР°РЅР·Р°РєС†РёР№ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СЃ id={}", user.getId(), e);
             throw new TransactionException("Unknown exception");
         }
 
-        logger.info("Найдено {} транзакций для пользователя с id={}", transactions.size(), user.getId());
+        logger.info("РќР°Р№РґРµРЅРѕ {} С‚СЂР°РЅР·Р°РєС†РёР№ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СЃ id={}", transactions.size(), user.getId());
         return getTransactionResponse(transactions);
     }
 
     public TransactionResponse findByTimeRange(UserEntity user, LocalDateTime start, LocalDateTime end) {
-        TransactionRepository transactionRepository = new TransactionRepository();
-
         if (start.isAfter(end)) {
-            logger.info("Начальная дата позже конечной: {} > {}", start, end);
-            throw new TransactionException("Начальная дата позже конечной");
+            logger.info("РќР°С‡Р°Р»СЊРЅР°СЏ РґР°С‚Р° РїРѕР·Р¶Рµ РєРѕРЅРµС‡РЅРѕР№: {} > {}", start, end);
+            throw new TransactionException("РќР°С‡Р°Р»СЊРЅР°СЏ РґР°С‚Р° РїРѕР·Р¶Рµ РєРѕРЅРµС‡РЅРѕР№");
         }
 
         List<Transaction> transactions;
         try {
             transactions = transactionRepository.findByUserIdAndTimeRange(user.getId(), start, end);
-            logger.info("Найдено {} транзакций в интервале {} - {} для пользователя с id={}", transactions.size(), start, end, user.getId());
+            logger.info("РќР°Р№РґРµРЅРѕ {} С‚СЂР°РЅР·Р°РєС†РёР№ РІ РёРЅС‚РµСЂРІР°Р»Рµ {} - {} РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СЃ id={}", transactions.size(), start, end, user.getId());
         } catch (SQLException e) {
-            logger.error("Ошибка при получении транзакций по диапазону времени", e);
+            logger.error("РћС€РёР±РєР° РїСЂРё РїРѕР»СѓС‡РµРЅРёРё С‚СЂР°РЅР·Р°РєС†РёР№ РїРѕ РґРёР°РїР°Р·РѕРЅСѓ РІСЂРµРјРµРЅРё", e);
             throw new TransactionException("Unknown exception");
         }
 
@@ -54,32 +55,28 @@ public class TransactionService {
     }
 
     public void save(UserEntity user, Transaction transaction) {
-        TransactionRepository transactionRepository = new TransactionRepository();
-
         if (transaction.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
-            logger.info("Попытка сохранить транзакцию с некорректной суммой: {}", transaction.getAmount());
+            logger.info("РџРѕРїС‹С‚РєР° СЃРѕС…СЂР°РЅРёС‚СЊ С‚СЂР°РЅР·Р°РєС†РёСЋ СЃ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕР№ СЃСѓРјРјРѕР№: {}", transaction.getAmount());
             throw new TransactionException("Amount must be greater than zero");
         }
         transaction.setUserId(user.getId());
 
         try {
             transactionRepository.save(transaction);
-            logger.info("Транзакция успешно сохранена для пользователя с id={}", user.getId());
+            logger.info("РўСЂР°РЅР·Р°РєС†РёСЏ СѓСЃРїРµС€РЅРѕ СЃРѕС…СЂР°РЅРµРЅР° РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СЃ id={}", user.getId());
         } catch (SQLException e) {
-            logger.error("Ошибка при сохранении транзакции", e);
+            logger.error("РћС€РёР±РєР° РїСЂРё СЃРѕС…СЂР°РЅРµРЅРёРё С‚СЂР°РЅР·Р°РєС†РёРё", e);
             throw new TransactionException("Unknown exception");
         }
     }
 
     public void delete(UserEntity user, long idTransaction) {
-        TransactionRepository transactionRepository = new TransactionRepository();
-
         try {
             Optional<Transaction> optionalTransaction = transactionRepository.findById(idTransaction);
 
             if (optionalTransaction.isPresent()) {
                 if (!optionalTransaction.get().getUserId().equals(user.getId())) {
-                    logger.info("Попытка удалить чужую транзакцию: userId={}, ownerId={}", user.getId(), optionalTransaction.get().getUserId());
+                    logger.info("РџРѕРїС‹С‚РєР° СѓРґР°Р»РёС‚СЊ С‡СѓР¶СѓСЋ С‚СЂР°РЅР·Р°РєС†РёСЋ: userId={}, ownerId={}", user.getId(), optionalTransaction.get().getUserId());
                     throw new ForbiddenException("You are not allowed to delete this transaction");
                 }
             } else {
@@ -87,9 +84,9 @@ public class TransactionService {
             }
 
             transactionRepository.deleteById(idTransaction);
-            logger.info("Транзакция с id={} удалена", idTransaction);
+            logger.info("РўСЂР°РЅР·Р°РєС†РёСЏ СЃ id={} СѓРґР°Р»РµРЅР°", idTransaction);
         } catch (SQLException e) {
-            logger.error("Ошибка при удалении транзакции", e);
+            logger.error("РћС€РёР±РєР° РїСЂРё СѓРґР°Р»РµРЅРёРё С‚СЂР°РЅР·Р°РєС†РёРё", e);
             throw new TransactionException("Unknown exception");
         }
     }

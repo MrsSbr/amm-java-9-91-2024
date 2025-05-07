@@ -2,6 +2,7 @@ package ru.vsu.amm.java.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.vsu.amm.java.config.DbConfig;
 import ru.vsu.amm.java.entity.UserEntity;
 import ru.vsu.amm.java.exception.AuthException;
 import ru.vsu.amm.java.exception.DatabaseException;
@@ -17,7 +18,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserRepository userRepository;
 
     public AuthenticationServiceImpl() {
-        userRepository = new UserRepository();
+        userRepository = new UserRepository(DbConfig.getDataSource());
     }
 
     @Override

@@ -6,9 +6,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import ru.vsu.amm.java.config.DbConfig;
 import ru.vsu.amm.java.entity.UserEntity;
 import ru.vsu.amm.java.exception.ForbiddenException;
 import ru.vsu.amm.java.exception.TransactionException;
+import ru.vsu.amm.java.repository.TransactionRepository;
 import ru.vsu.amm.java.service.TransactionService;
 
 import java.io.IOException;
@@ -18,7 +20,7 @@ public class TransactionDeleteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TransactionService service = new TransactionService();
+        TransactionService service = new TransactionService(new TransactionRepository(DbConfig.getDataSource()));
         HttpSession session = req.getSession(false);
         UserEntity user = (UserEntity) session.getAttribute("user");
         String idParam = req.getParameter("id");

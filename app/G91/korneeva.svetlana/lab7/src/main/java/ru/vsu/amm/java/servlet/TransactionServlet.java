@@ -6,11 +6,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import ru.vsu.amm.java.config.DbConfig;
 import ru.vsu.amm.java.entity.Transaction;
 import ru.vsu.amm.java.entity.UserEntity;
 import ru.vsu.amm.java.entity.response.TransactionResponse;
 import ru.vsu.amm.java.enums.Category;
 import ru.vsu.amm.java.exception.TransactionException;
+import ru.vsu.amm.java.repository.TransactionRepository;
 import ru.vsu.amm.java.service.TransactionService;
 
 import java.io.IOException;
@@ -23,7 +25,7 @@ public class TransactionServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TransactionService service = new TransactionService();
+        TransactionService service = new TransactionService(new TransactionRepository(DbConfig.getDataSource()));
         HttpSession session = req.getSession(false);
         UserEntity user = (UserEntity) session.getAttribute("user");
         TransactionResponse response = null;
@@ -58,7 +60,7 @@ public class TransactionServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TransactionService service = new TransactionService();
+        TransactionService service = new TransactionService(new TransactionRepository(DbConfig.getDataSource()));
         HttpSession session = req.getSession(false);
         UserEntity user = (UserEntity) session.getAttribute("user");
 
@@ -73,7 +75,7 @@ public class TransactionServlet extends HttpServlet {
         Category category = Category.valueOf(categoryParam);
 
         if (amount.scale() > 2) {
-            req.setAttribute("errorSave", "Сумма должна содержать не более двух знаков после запятой.");
+            req.setAttribute("errorSave", "РЎСѓРјРјР° РґРѕР»Р¶РЅР° СЃРѕРґРµСЂР¶Р°С‚СЊ РЅРµ Р±РѕР»РµРµ РґРІСѓС… Р·РЅР°РєРѕРІ РїРѕСЃР»Рµ Р·Р°РїСЏС‚РѕР№.");
         } else {
             Transaction transaction = Transaction.builder()
                     .amount(amount)
