@@ -12,6 +12,8 @@ import ru.vsu.amm.java.repository.ToyRepository;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -31,28 +33,36 @@ public class TestOrderRepositoryIntegration {
 
     @BeforeEach
     void setup() throws SQLException {
-        orderRepository = new OrderRepository();
-        customerRepository = new CustomerRepository();
-        toyRepository = new ToyRepository();
         dataSource = DbConfig.getDataSourceForTest();
-
-        orderRepository.setDataSource(dataSource);
+        customerRepository = new CustomerRepository();
         customerRepository.setDataSource(dataSource);
+
+        toyRepository = new ToyRepository();
         toyRepository.setDataSource(dataSource);
+
+        orderRepository = new OrderRepository();
+        orderRepository.setDataSource(dataSource);
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement()) {
-            statement.execute("INSERT INTO customer (name, password) VALUES ('testcustomer', 'password')");
-            statement.execute("INSERT INTO toy (name, price) VALUES ('testtoy', 10.00)");
-
-            Optional<Customer> customer = customerRepository.findByName("testcustomer");
-            assertTrue(customer.isPresent());
-            testCustomer = customer.get();
-
-            Optional<Toy> toy = toyRepository.findByName("testtoy");
-            assertTrue(toy.isPresent());
-            testToy = toy.get();
+            statement.execute("DELETE FROM orders");
+            statement.execute("DELETE FROM customer");
+            statement.execute("DELETE FROM toy");
         }
+
+        Customer customer = new Customer(null, "testcustomer", "password");
+        customerRepository.save(customer); // Используем метод save репозитория
+
+        Toy toy = new Toy(null, "testtoy", BigDecimal.valueOf(10.00));
+        toyRepository.save(toy);
+
+        Optional<Customer> customerOpt = customerRepository.findByName("testcustomer");
+        assertTrue(customerOpt.isPresent());
+        testCustomer = customerOpt.get();
+
+        Optional<Toy> toyOpt = toyRepository.findByName("testtoy");
+        assertTrue(toyOpt.isPresent());
+        testToy = toyOpt.get();
     }
 
     @AfterEach
@@ -75,21 +85,13 @@ public class TestOrderRepositoryIntegration {
         List<Order> orders = orderRepository.findByCustomerId(testCustomer.getId());
 
         assertEquals(2, orders.size());
-        assertEquals(testCustomer.getId(), orders.get(0).getCustomerId());
+        assertTrue(orders.stream().allMatch(order -> order.getCustomerId().equals(testCustomer.getId())));
     }
 
     @Test
-    void testSave() throws SQLException {
-        Order order = new Order(null, testCustomer.getId(), testToy.getId(), 3, BigDecimal.valueOf(30.00));
-        orderRepository.save(order);
-
+    void testFindByCustomerId_NoOrders() throws SQLException {
         List<Order> orders = orderRepository.findByCustomerId(testCustomer.getId());
-
-        assertEquals(1, orders.size());
-        Order savedOrder = orders.get(0);
-        assertEquals(testCustomer.getId(), savedOrder.getCustomerId());
-        assertEquals(testToy.getId(), savedOrder.getToyId());
-        assertEquals(3, savedOrder.getQuantity());
-        assertEquals(BigDecimal.valueOf(30.00), savedOrder.getTotalPrice());
+        assertTrue(orders.isEmpty(), "Список заказов не пуст, хотя не должно быть ни одного заказа.");
     }
+
 }

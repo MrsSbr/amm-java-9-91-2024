@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class CustomerRepository {
 
-    private final DataSource dataSource;
+    private DataSource dataSource;
 
     public CustomerRepository() {
         dataSource = DbConfig.getDataSourceForService();
@@ -49,6 +49,7 @@ public class CustomerRepository {
         }
     }
 
-    public void setDataSource(DataSource dataSourceForTest) {
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 }
