@@ -16,8 +16,8 @@ import java.util.Optional;
 public class StocksRepository implements SRepositoryInterface {
     private final DataSource dataSource;
 
-    public StocksRepository() {
-        dataSource = DBConfiguration.getDataSource();
+    public StocksRepository(DataSource source) {
+        dataSource = source;
     }
 
     @Override

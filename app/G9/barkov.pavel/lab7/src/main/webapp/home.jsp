@@ -1,8 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"  language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Мои акции</title>
     <style>
         /* Основные стили */
@@ -109,11 +110,20 @@
         .button:hover {
             background-color: #0056b3;
         }
+
+        .error{
+            background-color: #ff3b00;
+        }
     </style>
 </head>
 <body>
 <c:if test="${empty sessionScope.userId}">
     <c:redirect url="/login"/>
+</c:if>
+
+<c:if test="${not empty sessionScope.error}">
+    <div class="error">${sessionScope.error}</div>
+    <c:remove var="error" scope="session"/>
 </c:if>
 
 <div class="header">

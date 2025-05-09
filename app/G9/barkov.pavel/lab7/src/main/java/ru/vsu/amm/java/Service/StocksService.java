@@ -19,9 +19,9 @@ public class StocksService implements StocksServiceInterface {
     private ConcurrentHashMap<Integer, Object> locker = new ConcurrentHashMap<>();
     private static final Logger logger = Logger.getLogger(StocksService.class.getName());
 
-    public StocksService() {
+    public StocksService(StocksRepository stocksRepository) {
         logger.info("Create service");
-        stocksRepository = new StocksRepository();
+        this.stocksRepository = stocksRepository;
     }
 
     @Override
@@ -49,19 +49,6 @@ public class StocksService implements StocksServiceInterface {
         return stocksRepository.getByName(stocksName)
                 .orElseThrow(() -> new NotFoundException("Stock not found"));
     }
-
-    /* @Override
-    public void update(int id, int change) throws SQLException {
-        logger.info("Update stock count");
-        Stocks stock = stocksRepository.get(id)
-                .orElseThrow(() -> new NotFoundException("Stock not found"));
-        if(stock.getCount()>change) {
-            stock.setCount(stock.getCount() - change);
-        }
-        else {
-            throw new UnCorrectDataException("There are not that many stocks available");
-        }
-    }*/
 
     @Override
     public void sell(int userId, int stockId, int count) throws SQLException {

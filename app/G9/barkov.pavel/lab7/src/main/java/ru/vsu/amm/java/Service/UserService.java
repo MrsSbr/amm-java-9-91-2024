@@ -10,15 +10,16 @@ import ru.vsu.amm.java.Service.Entities.ShareholderCreateModel;
 import ru.vsu.amm.java.Service.Interface.UserServiceInterface;
 
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 public class UserService implements UserServiceInterface {
     private ShareholderRepository userRepository;
     private static final Logger logger = Logger.getLogger(UserService.class.getName());
 
-    public UserService() {
+    public UserService(ShareholderRepository userRepository) {
         logger.info("Create service");
-        userRepository = new ShareholderRepository();
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -42,5 +43,10 @@ public class UserService implements UserServiceInterface {
         if (!BCrypt.checkpw(password, user.getPassword()))
             throw new UnCorrectDataException("Wrong password");
         return user;
+    }
+
+    @Override
+    public Optional<Shareholder> get(int userId) throws SQLException {
+        return userRepository.get(userId);
     }
 }

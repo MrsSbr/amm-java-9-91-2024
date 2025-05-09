@@ -1,7 +1,9 @@
 package ru.vsu.amm.java.Servlet;
 
+import ru.vsu.amm.java.DBConnection.DBConfiguration;
 import ru.vsu.amm.java.Exeption.UnCorrectDataException;
 import ru.vsu.amm.java.Repository.Entities.Shareholder;
+import ru.vsu.amm.java.Repository.ShareholderRepository;
 import ru.vsu.amm.java.Service.UserService;
 
 import javax.servlet.ServletException;
@@ -19,7 +21,7 @@ public class LoginServlet extends HttpServlet {
     private UserService userService;
 
     public LoginServlet() {
-        userService = new UserService();
+        userService =  new UserService(new ShareholderRepository(DBConfiguration.getDataSource()));
     }
 
     @Override

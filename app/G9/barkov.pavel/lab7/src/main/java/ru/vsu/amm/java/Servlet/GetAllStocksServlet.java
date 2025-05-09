@@ -1,6 +1,8 @@
 package ru.vsu.amm.java.Servlet;
 
+import ru.vsu.amm.java.DBConnection.DBConfiguration;
 import ru.vsu.amm.java.Repository.Entities.Stocks;
+import ru.vsu.amm.java.Repository.StocksRepository;
 import ru.vsu.amm.java.Service.StocksService;
 
 import javax.servlet.RequestDispatcher;
@@ -19,7 +21,7 @@ public class GetAllStocksServlet extends HttpServlet {
     private StocksService stocksService;
 
     public GetAllStocksServlet() {
-        stocksService = new StocksService();
+        stocksService = new StocksService(new StocksRepository(DBConfiguration.getDataSource()));
     }
 
     @Override
