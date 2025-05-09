@@ -14,8 +14,8 @@ import java.util.Optional;
 public class ShareholderRepository implements RepositoryInterface<Shareholder> {
     private final DataSource dataSource;
 
-    public ShareholderRepository() {
-        dataSource = DBConfiguration.getDataSource();
+    public ShareholderRepository(DataSource source) {
+        dataSource = source;
     }
 
     @Override
