@@ -1,14 +1,17 @@
 package ru.vsu.amm.java.servlets;
 
 import ru.vsu.amm.java.dtos.EmployeeDto;
-import ru.vsu.amm.java.entities.HotelRoomEntity;
 import ru.vsu.amm.java.enums.EmployeePost;
+import ru.vsu.amm.java.enums.TaskStatus;
 import ru.vsu.amm.java.exceptions.DatabaseException;
 import ru.vsu.amm.java.exceptions.EmployeeNotFoundException;
 import ru.vsu.amm.java.services.EmployeesService;
+import ru.vsu.amm.java.services.HotelRoomsService;
 import ru.vsu.amm.java.services.TasksService;
 import ru.vsu.amm.java.services.impl.EmployeesServiceImpl;
+import ru.vsu.amm.java.services.impl.HotelRoomsServiceImpl;
 import ru.vsu.amm.java.services.impl.TasksServiceImpl;
+import ru.vsu.amm.java.utils.ServletMessageHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 @WebServlet("/api/manage_tasks")
 public class ManageTasksServlet extends HttpServlet {
@@ -27,11 +30,20 @@ public class ManageTasksServlet extends HttpServlet {
             var employee = (EmployeeDto) session.getAttribute("employee");
 
             EmployeesService employeesService = new EmployeesServiceImpl();
-            var currentEmployeeId = Integer.parseInt(req.getParameter("current_employee_id"));
+
+            int currentEmployeeId;
+            if (req.getParameter("current_employee_id") != null) {
+                currentEmployeeId = Integer.parseInt(req.getParameter("current_employee_id"));
+            } else {
+                currentEmployeeId = (Integer) session.getAttribute("current_employee_id");
+                session.removeAttribute("current_employee_id");
+            }
             var currentEmployee = employeesService.getEmployeeById(currentEmployeeId);
 
             TasksService tasksService = new TasksServiceImpl();
             var employeeTasks = tasksService.getAllTasksByEmployeeId(currentEmployeeId);
+
+            var taskStatuses = Arrays.stream(TaskStatus.values()).toList();
 
             var managers = employeesService.getAllFilteredEmployees(null, null, null, null, null, null,
                     null, null, EmployeePost.MANAGER.name(), null);
@@ -39,15 +51,20 @@ public class ManageTasksServlet extends HttpServlet {
                     null, null, null, null, null);
             employees = employees.stream().filter(e -> e.getPost() == EmployeePost.STAFF).toList();
 
-//            HotelRoomService hotelRoomService = new HotelRoomServiceImpl();
-//            var hotelRooms = hotelRoomService.getAllRoomsByHotelId(employee.getHotelId());
-            var hotelRooms = new ArrayList<HotelRoomEntity>();
+            HotelRoomsService hotelRoomsService = new HotelRoomsServiceImpl();
+            var hotelRooms = hotelRoomsService.getHotelRoomsByHotelId(employee.getHotelId());
 
             req.setAttribute("current_employee", currentEmployee);
+            req.setAttribute("employees", employees);
             req.setAttribute("tasks", employeeTasks);
+            req.setAttribute("task_statuses", taskStatuses);
             req.setAttribute("managers", managers);
             req.setAttribute("staff", employees);
-            req.setAttribute("hotelRooms", hotelRooms);
+            req.setAttribute("hotel_rooms", hotelRooms);
+
+            ServletMessageHelper.CopyErrorMessage(req, session);
+            ServletMessageHelper.CopySuccessMessage(req, session);
+
             getServletContext().getRequestDispatcher("/manage_tasks.jsp").forward(req, resp);
         } catch (NumberFormatException e) {
             req.setAttribute("errorMessage", "Incorrect employee id. Please, try again");

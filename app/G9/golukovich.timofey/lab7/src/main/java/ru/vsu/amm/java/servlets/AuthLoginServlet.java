@@ -32,7 +32,7 @@ public class AuthLoginServlet extends HttpServlet {
                 var session = req.getSession();
                 EmployeeDto employee = employeeOpt.get();
                 session.setAttribute("employee", employee);
-                resp.sendRedirect("/api/main");
+                resp.sendRedirect(req.getContextPath() + "/api/main");
             } else {
                 req.setAttribute("errorMessage", "Wrong login or password. Please, try again");
                 getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);

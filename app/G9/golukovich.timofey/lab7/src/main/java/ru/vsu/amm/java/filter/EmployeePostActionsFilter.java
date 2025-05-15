@@ -2,6 +2,7 @@ package ru.vsu.amm.java.filter;
 
 import ru.vsu.amm.java.dtos.EmployeeDto;
 import ru.vsu.amm.java.enums.EmployeePost;
+import ru.vsu.amm.java.utils.EmployeeDtoChecker;
 import ru.vsu.amm.java.utils.EmployeePostActionsFilterPaths;
 
 import javax.servlet.Filter;
@@ -40,7 +41,7 @@ public class EmployeePostActionsFilter implements Filter {
             return;
         }
 
-        boolean isReady = path.endsWith("/api/main") || path.endsWith("/api/profile") || employee.isReady();
+        boolean isReady = path.endsWith("/api/main") || path.endsWith("/api/profile") || EmployeeDtoChecker.isReady(employee);
         if (!isReady) {
             logger.info(employee.getLogin() + ": " + "Unsetted employee data");
             session.setAttribute("errorMessage", "Before starting work, please set your data in the profile");

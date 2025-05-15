@@ -22,24 +22,25 @@ public class CreateTaskServlet extends HttpServlet {
         var manager = (EmployeeDto) session.getAttribute("employee");
 
         var managerId = manager.getId();
-        var currentEmployeeId = (int) req.getAttribute("current_employee_id");
-        var hotelRoomId = (int) req.getAttribute("hotel_room_id");
-        var description = req.getParameter("task_description");
+        var currentEmployeeId = req.getParameter("create_task_employeeId");
+        var hotelRoomId = req.getParameter("create_task_hotelRoomId");
+        var description = req.getParameter("create_task_description");
 
-        TasksService manageTasksService = new TasksServiceImpl();
         try {
+            TasksService manageTasksService = new TasksServiceImpl();
             var taskDto = manageTasksService.createTask(managerId, currentEmployeeId, hotelRoomId, description);
-            req.setAttribute("successMessage", "New task to " + taskDto.getEmployeeLogin() + " was created");
-            getServletContext().getRequestDispatcher("/api/employees_manager_dashboard").forward(req, resp);
+            session.setAttribute("successMessage", "New task to " + taskDto.getEmployeeLogin() + " was created");
+            session.setAttribute("current_employee_id", Integer.parseInt(currentEmployeeId));
+            resp.sendRedirect(req.getContextPath() + "/api/manage_tasks");
         } catch (EmployeeNotFoundException e) {
-            req.setAttribute("errorMessage", e.getMessage());
-            getServletContext().getRequestDispatcher("/api/employees_manager_dashboard").forward(req, resp);
+            session.setAttribute("errorMessage", e.getMessage());
+            resp.sendRedirect(req.getContextPath() + "/api/manage_tasks");
         } catch (NotAllowedActionException e) {
             req.setAttribute("errorMessage", e.getMessage());
             getServletContext().getRequestDispatcher("/api/main").forward(req, resp);
         } catch (DatabaseException e) {
-            req.setAttribute("errorMessage", "Internal server error! Try again later");
-            getServletContext().getRequestDispatcher("/api/employees_manager_dashboard").forward(req, resp);
+            session.setAttribute("errorMessage", "Internal server error! Try again later");
+            resp.sendRedirect(req.getContextPath() + "/api/manage_tasks");
         }
     }
 }

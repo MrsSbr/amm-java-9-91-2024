@@ -4,10 +4,8 @@ import ru.vsu.amm.java.dtos.TaskDto;
 import ru.vsu.amm.java.entities.EmployeeEntity;
 import ru.vsu.amm.java.entities.TaskEntity;
 import ru.vsu.amm.java.enums.EmployeePost;
-import ru.vsu.amm.java.exceptions.DatabaseException;
-import ru.vsu.amm.java.exceptions.EmployeeNotFoundException;
-import ru.vsu.amm.java.exceptions.NotAllowedActionException;
-import ru.vsu.amm.java.exceptions.TaskNotFoundException;
+import ru.vsu.amm.java.enums.TaskStatus;
+import ru.vsu.amm.java.exceptions.*;
 import ru.vsu.amm.java.repository.EmployeeRepo;
 import ru.vsu.amm.java.repository.HotelRoomRepo;
 import ru.vsu.amm.java.repository.TaskRepo;
@@ -70,42 +68,54 @@ public class TasksServiceImpl implements TasksService {
     }
 
     @Override
-    public TaskDto createTask(Integer managerId, int employeeId, int hotelRoomId, String description) {
+    public TaskDto createTask(Integer managerId, String rawEmployeeId, String rawHotelRoomId, String description) {
         logger.info("create task");
 
         try {
+            var employeeId = Integer.parseInt(rawEmployeeId);
+            var hotelRoomId = Integer.parseInt(rawHotelRoomId);
+
             var manager = getManager(managerId);
             var employee = getEmployee(employeeId, manager);
             checkHotelRoomById(hotelRoomId);
 
-            var taskEntity = new TaskEntity(0, employeeId, hotelRoomId, managerId, description, LocalDateTime.now(), LocalDateTime.now());
+            var status = TaskStatus.TODO;
+            var taskEntity = new TaskEntity(0, employeeId, hotelRoomId, managerId, status, description, LocalDateTime.now(), LocalDateTime.now());
             taskEntity = taskRepo.save(taskEntity);
 
             return TaskDtoMapper.mapFromEntity(taskEntity, manager.getLogin(), employee.getLogin());
         } catch (SQLException e) {
             logger.severe(e.getMessage());
             throw new DatabaseException(e.getMessage());
+        } catch (NumberFormatException e) {
+            final String errorMessage = "Id must be number";
+            logger.info(errorMessage);
+            throw new NumberFormatException(errorMessage);
         }
     }
 
     @Override
-    public TaskDto updateTask(int managerId, int taskId, Integer updatedManagerId, int updatedEmployeeId, int updatedHotelRoomId, String updatedDescription) {
-        logger.info("edit task " + taskId);
+    public TaskDto updateTask(int managerId, int taskId, String updatedManagerLogin, String updatedEmployeeLogin, int updatedHotelRoomId,
+                              String updatedStatusName, String updatedDescription) {
+        logger.info("update task " + taskId);
 
         try {
+            var updatedStatus = TaskStatus.valueOf(updatedStatusName);
+
             var manager = getManager(managerId);
 
             var taskEntity = getTask(taskId);
 
             checkManagerPost(manager, taskEntity.getManagerId());
 
-            var updatedManager = getManager(updatedManagerId);
-            var updatedEmployee = getEmployee(updatedEmployeeId, updatedManager);
+            var updatedManager = getManager(updatedManagerLogin);
+            var updatedEmployee = getEmployee(updatedEmployeeLogin, updatedManager);
             checkHotelRoomById(updatedHotelRoomId);
 
-            taskEntity.setManagerId(updatedManagerId);
-            taskEntity.setEmployeeId(updatedEmployeeId);
+            taskEntity.setManagerId(updatedManager.getId());
+            taskEntity.setEmployeeId(updatedEmployee.getId());
             taskEntity.setHotelRoomId(updatedHotelRoomId);
+            taskEntity.setStatus(updatedStatus);
             taskEntity.setDescription(updatedDescription);
             taskEntity.setUpdatedAt(LocalDateTime.now());
             taskRepo.update(taskEntity);
@@ -114,17 +124,25 @@ public class TasksServiceImpl implements TasksService {
         } catch (SQLException e) {
             logger.severe(e.getMessage());
             throw new DatabaseException(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            final String message = "Task status " + updatedStatusName + " does not exist";
+            logger.info(message);
+            throw new TaskStatusDoesNotExistException(message);
         }
     }
 
     @Override
-    public void removeTask(int managerId, int taskId) {
+    public void removeTask(int managerId, int taskId, int employeeId) {
         logger.info("remove task " + taskId);
 
         try {
             var manager = getManager(managerId);
 
             var taskEntity = getTask(taskId);
+
+            if (taskEntity.getEmployeeId() != employeeId) {
+                throw new EmployeeNotFoundException("Employee " + employeeId + " can't do task " + taskId);
+            }
 
             checkManagerPost(manager, taskEntity.getManagerId());
 
@@ -159,6 +177,30 @@ public class TasksServiceImpl implements TasksService {
         return managerEntity;
     }
 
+    private EmployeeEntity getManager(String managerLogin) throws SQLException {
+        EmployeeEntity managerEntity;
+
+        if (managerLogin == null) {
+            managerEntity = null;
+        } else {
+            var managerEntityOpt = employeeRepo.getByLogin(managerLogin);
+            if (managerEntityOpt.isPresent()) {
+                managerEntity = managerEntityOpt.get();
+                if (managerEntity.getPost() == EmployeePost.STAFF) {
+                    final String message = "Employee " + managerEntity.getLogin() + " can't own tasks";
+                    logger.info(message);
+                    throw new NotAllowedActionException(message);
+                }
+            } else {
+                final String message = "Manager not found by login " + managerLogin;
+                logger.info(message);
+                throw new EmployeeNotFoundException(message);
+            }
+        }
+
+        return managerEntity;
+    }
+
     private EmployeeEntity getEmployee(int employeeId, EmployeeEntity manager) throws SQLException {
         EmployeeEntity employeeEntity;
 
@@ -171,13 +213,34 @@ public class TasksServiceImpl implements TasksService {
             throw new EmployeeNotFoundException(message);
         }
 
-        if (manager != null && manager.getPost().compareTo(employeeEntity.getPost()) <= 0) {
-            final String message = "Employee " + manager.getLogin() + " can't own " + employeeEntity.getLogin() + " tasks";
+        CheckEmployeePermission(employeeEntity, manager);
+
+        return employeeEntity;
+    }
+
+    private EmployeeEntity getEmployee(String employeeLogin, EmployeeEntity manager) throws SQLException {
+        EmployeeEntity employeeEntity;
+
+        var employeeEntityOpt = employeeRepo.getByLogin(employeeLogin);
+        if (employeeEntityOpt.isPresent()) {
+            employeeEntity = employeeEntityOpt.get();
+        } else {
+            final String message = "Employee not found by login " + employeeLogin;
+            logger.info(message);
+            throw new EmployeeNotFoundException(message);
+        }
+
+        CheckEmployeePermission(employeeEntity, manager);
+
+        return employeeEntity;
+    }
+
+    private void CheckEmployeePermission(EmployeeEntity employee, EmployeeEntity manager) {
+        if (manager != null && manager.getPost().compareTo(employee.getPost()) < 0) {
+            final String message = "Employee " + manager.getLogin() + " can't own " + employee.getLogin() + " tasks";
             logger.info(message);
             throw new NotAllowedActionException(message);
         }
-
-        return employeeEntity;
     }
 
     private TaskEntity getTask(int taskId) throws SQLException {
@@ -201,7 +264,7 @@ public class TasksServiceImpl implements TasksService {
             }
 
             if (currentTaskManager != null && manager.getPost().compareTo(currentTaskManager.getPost()) < 0) {
-                final String message = "Manager " + manager.getLogin() + " can't edit this task, while " + currentTaskManager.getLogin() + " is owner";
+                final String message = "Manager " + manager.getLogin() + " can't update this task, while " + currentTaskManager.getLogin() + " is owner";
                 logger.info(message);
                 throw new NotAllowedActionException(message);
             }

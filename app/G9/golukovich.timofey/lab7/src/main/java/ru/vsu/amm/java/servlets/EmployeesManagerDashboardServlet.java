@@ -18,11 +18,12 @@ public class EmployeesManagerDashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var session = req.getSession(false);
         var employee = (EmployeeDto) session.getAttribute("employee");
-        EmployeesService employeesService = new EmployeesServiceImpl();
         try {
+            EmployeesService employeesService = new EmployeesServiceImpl();
             var employees = employeesService.getAllFilteredEmployees(
                     null, employee.getHotelId(), null, null, null,
                     null, null, null, "STAFF", null);
+
             req.setAttribute("employees_table", employees);
             getServletContext().getRequestDispatcher("/employees_manager_dashboard.jsp").forward(req, resp);
         } catch (DatabaseException e) {

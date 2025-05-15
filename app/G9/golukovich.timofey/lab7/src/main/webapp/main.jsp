@@ -33,6 +33,10 @@
             color: red;
             margin-bottom: 10px;
         }
+        .success {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -43,6 +47,18 @@
 <c:if test="${not empty sessionScope.errorMessage}">
     <div class="error">${sessionScope.errorMessage}</div>
     <% session.removeAttribute("errorMessage"); %>
+</c:if>
+<c:if test="${not empty sessionScope.successMessage}">
+    <div class="success">${sessionScope.successMessage}</div>
+    <% session.removeAttribute("successMessage"); %>
+</c:if>
+<c:if test="${not empty requestScope.errorMessage}">
+    <div class="error">${requestScope.errorMessage}</div>
+    <% request.removeAttribute("errorMessage"); %>
+</c:if>
+<c:if test="${not empty requestScope.successMessage}">
+    <div class="error">${requestScope.successMessage}</div>
+    <% request.removeAttribute("successMessage"); %>
 </c:if>
 
 <div class="menu">
@@ -58,18 +74,21 @@
 
     <c:if test="${sessionScope.employee.post.name() eq 'ADMINISTRATOR'
                   or sessionScope.employee.post.name() eq 'MASTER_ADMINISTRATOR'}">
-        <a href="${pageContext.request.contextPath}/financial_reports" class="menu-item">Financial Reports</a>
         <a href="${pageContext.request.contextPath}/api/rooms_management" class="menu-item">Rooms Management</a>
         <a href="${pageContext.request.contextPath}/api/hotels_management" class="menu-item">Hotels Management</a>
     </c:if>
 
-    <c:if test="${sessionScope.employee.post.name() eq 'MANAGER'
-                  or sessionScope.employee.post.name() eq 'ADMINISTRATOR'
+    <c:if test="${sessionScope.employee.post.name() eq 'ADMINISTRATOR'
                   or sessionScope.employee.post.name() eq 'MASTER_ADMINISTRATOR'}">
         <a href="${pageContext.request.contextPath}/api/employees_admin_dashboard" class="menu-item">Employees table</a>
     </c:if>
 
     <a href="${pageContext.request.contextPath}/auth/logout" class="menu-item">Logout</a>
 </div>
+<h2>
+    <font size="100vh" >
+        Тут могла быть ваша реклама
+    </font>
+</h2>
 </body>
 </html>

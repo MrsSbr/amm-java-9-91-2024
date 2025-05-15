@@ -75,15 +75,4 @@ public class EmployeeDto {
     public String getFormattedBirthday() {
         return birthday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
-
-    public boolean isReady() {
-        return post == EmployeePost.MASTER_ADMINISTRATOR ||
-                hotelId != null
-                && name != null
-                && email != null
-                && phoneNumber != null
-                && passportNumber != null
-                && passportSeries != null
-                && birthday != null;
-    }
 }

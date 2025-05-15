@@ -17,18 +17,12 @@ public class EmployeePostActionsFilterPaths {
         paths.put("/api/create_task", List.of(EmployeePost.MANAGER));
         paths.put("/api/edit_task", List.of(EmployeePost.MANAGER));
         paths.put("/api/remove_task", List.of(EmployeePost.MANAGER));
-        paths.put("/api/hotels_management", List.of(EmployeePost.ADMINISTRATOR, EmployeePost.MASTER_ADMINISTRATOR));
+        paths.put("/api/hotels_management", List.of(EmployeePost.MASTER_ADMINISTRATOR));
+        paths.put("/api/hotel_rooms_management", List.of(EmployeePost.ADMINISTRATOR, EmployeePost.MASTER_ADMINISTRATOR));
         paths.put("/api/employees_dashboard", List.of(EmployeePost.MANAGER, EmployeePost.ADMINISTRATOR, EmployeePost.MASTER_ADMINISTRATOR));
         paths.put("/api/register_employee", List.of(EmployeePost.ADMINISTRATOR, EmployeePost.MASTER_ADMINISTRATOR));
         paths.put("/api/unregister_employee", List.of(EmployeePost.ADMINISTRATOR, EmployeePost.MASTER_ADMINISTRATOR));
 
         return paths;
-    }
-
-    public static List<String> getAllowed() {
-        return List.of(
-                "/login",
-                "/logout"
-        );
     }
 }

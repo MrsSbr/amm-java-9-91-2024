@@ -35,7 +35,7 @@ public class LoginFilter implements Filter {
             chain.doFilter(request, response);
         } else {
             logger.info("Unauthorized access attempt");
-            resp.sendRedirect("/auth/login");
+            resp.sendRedirect(req.getContextPath() + "/auth/login");
         }
     }
 }

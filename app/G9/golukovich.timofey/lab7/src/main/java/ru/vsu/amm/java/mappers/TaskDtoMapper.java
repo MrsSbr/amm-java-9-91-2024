@@ -7,11 +7,11 @@ public class TaskDtoMapper {
     public static TaskDto mapFromEntity(TaskEntity entity) {
         return new TaskDto(entity.getId(), "Employee id: " + entity.getEmployeeId(), entity.getHotelRoomId(),
                 "Manager id: " + (entity.getManagerId() == null ? "-" : entity.getManagerId()),
-                entity.getDescription(), entity.getCreatedAt(), entity.getUpdatedAt());
+                entity.getStatus(), entity.getDescription(), entity.getCreatedAt(), entity.getUpdatedAt());
     }
 
     public static TaskDto mapFromEntity(TaskEntity entity, String managerLogin, String employeeLogin) {
         return new TaskDto(entity.getId(), employeeLogin, entity.getHotelRoomId(),
-                managerLogin, entity.getDescription(), entity.getCreatedAt(), entity.getUpdatedAt());
+                managerLogin, entity.getStatus(), entity.getDescription(), entity.getCreatedAt(), entity.getUpdatedAt());
     }
 }

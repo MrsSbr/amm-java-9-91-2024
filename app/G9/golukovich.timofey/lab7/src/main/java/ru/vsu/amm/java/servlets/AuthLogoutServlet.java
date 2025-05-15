@@ -22,6 +22,6 @@ public class AuthLogoutServlet extends HttpServlet {
             session.invalidate();
             logger.info("Employee " + employee.getLogin() + " logged out");
         }
-        resp.sendRedirect("/auth/login");
+        resp.sendRedirect(req.getContextPath() + "/auth/login");
     }
 }

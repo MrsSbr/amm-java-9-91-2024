@@ -69,10 +69,11 @@ ALTER TABLE employee
 
 
 CREATE TABLE task(
-    task_id         SERIAL      PRIMARY KEY,
+    task_id         BIGSERIAL      PRIMARY KEY,
     employee_id     INTEGER     REFERENCES employee(employee_id),
     hotel_room_id   INTEGER     REFERENCES hotel_room(room_id),
     manager_id      INTEGER     NULL    REFERENCES employee(employee_id),
+    status          TEXT        NOT NULL,
     description     TEXT,
     created_at      TIMESTAMP   NOT NULL,
     updated_at      TIMESTAMP   NOT NULL

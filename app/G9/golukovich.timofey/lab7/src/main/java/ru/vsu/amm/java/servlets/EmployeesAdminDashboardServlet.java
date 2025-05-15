@@ -22,7 +22,7 @@ public class EmployeesAdminDashboardServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/employees_admin_dashboard.jsp").forward(req, resp);
         } catch (DatabaseException e) {
             req.setAttribute("errorMessage", "Internal server error! Try again later");
-            getServletContext().getRequestDispatcher("/main").forward(req, resp);
+            getServletContext().getRequestDispatcher("/api/main").forward(req, resp);
         }
     }
 }

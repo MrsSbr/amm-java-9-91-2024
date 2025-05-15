@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.dtos;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class HotelDto {
         private Integer id;
@@ -66,5 +67,9 @@ public class HotelDto {
 
     public void setOpeningDate(LocalDate openingDate) {
         this.openingDate = openingDate;
+    }
+
+    public String getFormattedOpeningDate() {
+        return openingDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }

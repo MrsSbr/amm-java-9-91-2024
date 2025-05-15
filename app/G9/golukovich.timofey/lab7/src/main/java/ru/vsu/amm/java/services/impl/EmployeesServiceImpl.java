@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 public class EmployeesServiceImpl implements EmployeesService {
@@ -36,6 +35,25 @@ public class EmployeesServiceImpl implements EmployeesService {
                 return EmployeeDtoMapper.MapFromEntity(employeeEntityOpt.get());
             } else {
                 final String message = "Employee not found by id " + employeeId;
+                logger.info(message);
+                throw new EmployeeNotFoundException(message);
+            }
+        } catch (SQLException e) {
+            logger.severe(e.getMessage());
+            throw new DatabaseException(e.getMessage());
+        }
+    }
+
+    @Override
+    public EmployeeDto getEmployeeByLogin(String employeeLogin) {
+        logger.info("get employee by id");
+
+        try {
+            var employeeEntityOpt = employeeRepo.getByLogin(employeeLogin);
+            if (employeeEntityOpt.isPresent()) {
+                return EmployeeDtoMapper.MapFromEntity(employeeEntityOpt.get());
+            } else {
+                final String message = "Employee not found by login " + employeeLogin;
                 logger.info(message);
                 throw new EmployeeNotFoundException(message);
             }

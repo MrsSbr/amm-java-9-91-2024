@@ -6,22 +6,83 @@
 <head>
     <title>Hotels Management</title>
     <style>
-        .container { max-width: 1200px; margin: 20px auto; padding: 20px; }
-        .hotel-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .hotel-table th, .hotel-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        .hotel-table tr:nth-child(even) { background-color: #f9f9f9; }
-        .action-buttons { display: flex; gap: 5px; }
-        .btn { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; }
-        .btn-primary { background-color: #4CAF50; color: white; }
-        .btn-danger { background-color: #f44336; color: white; }
-        .btn-edit { background-color: #2196F3; color: white; }
-        .form-section { margin-top: 30px; padding: 20px; border: 1px solid #ddd; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; }
-        .form-control { width: 100%; padding: 8px; border: 1px solid #ddd; }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .hotel-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .hotel-table th, .hotel-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .hotel-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-danger {
+            background-color: #f44336;
+            color: white;
+        }
+        .btn-edit {
+            background-color: #2196F3;
+            color: white;
+        }
+        .form-section {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+        .success {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
+<c:if test="${not empty requestScope.errorMessage}">
+    <div class="error">${requestScope.errorMessage}</div>
+    <% request.removeAttribute("errorMessage"); %>
+</c:if>
+<c:if test="${not empty requestScope.successMessage}">
+    <div class="success">${requestScope.successMessage}</div>
+    <% request.removeAttribute("successMessage"); %>
+</c:if>
+
 <div class="container">
     <h1>Hotels Management</h1>
 
@@ -38,19 +99,20 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${hotels}" var="hotel">
+        <c:forEach items="${requestScope.hotels_table}" var="hotel">
             <tr>
                 <td>${hotel.id}</td>
                 <td>${hotel.name}</td>
                 <td>${hotel.address}</td>
                 <td>${hotel.email}</td>
                 <td>${hotel.phoneNumber}</td>
-                <td><fmt:formatDate value="${hotel.openingDate}" pattern="yyyy-MM-dd"/></td>
+                <td>${hotel.getFormattedOpeningDate()}</td>
                 <td>
                     <div class="action-buttons">
                         <button class="btn btn-edit"
-                                onclick="openEditModal(${hotel.id})">Edit</button>
-                        <form action="delete-hotel" method="POST" style="margin:0;">
+                                onclick="openEditModal(${hotel.id})">Edit
+                        </button>
+                        <form action="${pageContext.request.contextPath}/api/delete_hotel" method="POST" style="margin:0;">
                             <input type="hidden" name="hotelId" value="${hotel.id}">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
@@ -63,7 +125,7 @@
 
     <div class="form-section">
         <h2>Create New Hotel</h2>
-        <form action="create-hotel" method="POST">
+        <form action="${pageContext.request.contextPath}/api/create_hotel" method="POST">
             <div class="form-group">
                 <label>Name:</label>
                 <input type="text" class="form-control" name="name" required>
@@ -91,7 +153,7 @@
     <div id="editModal" style="display:none; position:fixed; top:20%; left:30%;
              background:white; padding:20px; border:1px solid #ddd; z-index:1000;">
         <h3>Edit Hotel</h3>
-        <form id="editForm" action="update-hotel" method="POST">
+        <form id="editForm" action="${pageContext.request.contextPath}/api/edit_hotel" method="POST">
             <input type="hidden" id="editId" name="id">
             <div class="form-group">
                 <label>Name:</label>
@@ -123,7 +185,7 @@
         </form>
     </div>
 
-    <a href="/main" class="btn btn-primary" style="margin-top:20px;">Back</a>
+    <a href="${pageContext.request.contextPath}/api/main" class="btn btn-primary" style="margin-top:20px;">Back</a>
 </div>
 
 <script>

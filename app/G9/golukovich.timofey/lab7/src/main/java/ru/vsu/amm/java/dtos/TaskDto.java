@@ -1,22 +1,27 @@
 package ru.vsu.amm.java.dtos;
 
+import ru.vsu.amm.java.enums.TaskStatus;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TaskDto {
     private Integer id;
     private String employeeLogin;
     private Integer hotelRoomId;
     private String managerLogin;
+    private TaskStatus status;
     private String description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public TaskDto(Integer id, String employeeLogin, Integer hotelRoomId, String managerLogin,
-                   String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+                   TaskStatus status, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.employeeLogin = employeeLogin;
         this.hotelRoomId = hotelRoomId;
         this.managerLogin = managerLogin;
+        this.status = status;
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -54,6 +59,14 @@ public class TaskDto {
         this.managerLogin = managerLogin;
     }
 
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -76,5 +89,9 @@ public class TaskDto {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getFormattedUpdatedAt() {
+        return updatedAt.format(DateTimeFormatter.ofPattern("HH:mm:ss yyyy-MM-dd"));
     }
 }

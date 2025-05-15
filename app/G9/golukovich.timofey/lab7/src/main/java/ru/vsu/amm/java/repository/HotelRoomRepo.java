@@ -56,6 +56,25 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
         return entityList;
     }
 
+    public List<HotelRoomEntity> getAllByHotelId(int hotelId) throws SQLException {
+        final String query = "SELECT room_id, hotel_id, room_number, floor_number, beds_count, specifications FROM hotel_room WHERE hotel_id = ?";
+        var connection = dataSource.getConnection();
+
+        var preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, hotelId);
+        preparedStatement.execute();
+
+        List<HotelRoomEntity> entityList = new ArrayList<>();
+
+        var resultSet = preparedStatement.getResultSet();
+        while (resultSet.next()) {
+            var entity = configureHotelRoomEntityFromResultSet(resultSet);
+            entityList.add(entity);
+        }
+
+        return entityList;
+    }
+
     @Override
     public void update(HotelRoomEntity entity) throws SQLException {
         final String query = """
