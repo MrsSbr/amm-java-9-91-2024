@@ -2,7 +2,11 @@ package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.connection.DataSourceProvider;
 import ru.vsu.amm.java.entities.Course;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -37,7 +41,7 @@ public class CourseRepository implements CrudRepository<Course> {
     @Override
     public List<Course> getAll() {
         List<Course> courses = new ArrayList<>();
-        final String sql = "SELECT CourseId, Title, Description FROM Courses";
+        final String sql = "SELECT courseid, title, description FROM Courses";
 
         try (Connection conn = DataSourceProvider.getDataSource().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -45,9 +49,9 @@ public class CourseRepository implements CrudRepository<Course> {
 
             while (rs.next()) {
                 Course course = new Course();
-                course.setCourseId(rs.getLong("CourseId"));
-                course.setTitle(rs.getString("Title"));
-                course.setDescription(rs.getString("Description"));
+                course.setCourseId(rs.getLong("courseid"));
+                course.setTitle(rs.getString("title"));
+                course.setDescription(rs.getString("description"));
                 courses.add(course);
             }
         } catch (SQLException e) {
