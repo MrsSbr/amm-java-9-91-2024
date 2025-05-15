@@ -11,7 +11,8 @@ public class RentalObjectEntity {
     private Integer price;
 
 
-    public RentalObjectEntity() {}
+    public RentalObjectEntity() {
+    }
 
     public RentalObjectEntity(Long objectID, String objectName, ObjectType objectType, String objectInfo, Integer price) {
         this.objectID = objectID;

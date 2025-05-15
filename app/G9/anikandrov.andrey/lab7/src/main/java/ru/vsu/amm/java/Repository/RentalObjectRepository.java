@@ -23,7 +23,10 @@ public class RentalObjectRepository implements DatabaseRepository<RentalObjectEn
 
     @Override
     public Optional<RentalObjectEntity> findById(Long id) throws SQLException {
-        final String query = "SELECT objectID, objectName, objectType, info, price FROM RentalObjectTable WHERE objectID = ?";
+        final String query = """
+                            SELECT object_id, object_name, object_type, object_info, price
+                            FROM rentalobject_table WHERE object_id = ?
+                            """;
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -33,12 +36,12 @@ public class RentalObjectRepository implements DatabaseRepository<RentalObjectEn
 
         ResultSet resultSet = preparedStatement.getResultSet();
         if (resultSet.next()) {
-            ObjectType objectType = ObjectType.valueOf(resultSet.getString("objectType"));
+            ObjectType objectType = ObjectType.valueOf(resultSet.getString("object_type"));
             return Optional.of(new RentalObjectEntity(
-                    resultSet.getLong("objectID"),
-                    resultSet.getString("objectName"),
+                    resultSet.getLong("object_id"),
+                    resultSet.getString("object_name"),
                     objectType,
-                    resultSet.getString("info"),
+                    resultSet.getString("object_info"),
                     resultSet.getInt("price")
             ));
         }
@@ -48,7 +51,10 @@ public class RentalObjectRepository implements DatabaseRepository<RentalObjectEn
 
     @Override
     public List<RentalObjectEntity> findAll() throws SQLException {
-        final String query = "SELECT objectID, objectName, objectType, info, price FROM RentalObjectTable";
+        final String query = """
+                            SELECT object_id, object_name, object_type, object_info, price
+                            FROM rentalobject_table
+                            """;
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -58,12 +64,12 @@ public class RentalObjectRepository implements DatabaseRepository<RentalObjectEn
 
         List<RentalObjectEntity> rentalObjects = new ArrayList<>();
         while (resultSet.next()) {
-            ObjectType objectType = ObjectType.valueOf(resultSet.getString("objectType"));
+            ObjectType objectType = ObjectType.valueOf(resultSet.getString("object_type"));
             rentalObjects.add(new RentalObjectEntity(
-                    resultSet.getLong("objectID"),
-                    resultSet.getString("objectName"),
+                    resultSet.getLong("object_id"),
+                    resultSet.getString("object_name"),
                     objectType,
-                    resultSet.getString("info"),
+                    resultSet.getString("object_info"),
                     resultSet.getInt("price")
             ));
         }
@@ -73,7 +79,10 @@ public class RentalObjectRepository implements DatabaseRepository<RentalObjectEn
 
     @Override
     public void save(RentalObjectEntity entity) throws SQLException {
-        final String query = "INSERT INTO RentalObjectTable (objectName, objectType, info, price) VALUES (?, ?, ?, ?)";
+        final String query = """
+                             INSERT INTO rentalobject_table (object_name, object_type, object_info, price)
+                             VALUES (?, ?, ?, ?)
+                             """;
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -88,7 +97,10 @@ public class RentalObjectRepository implements DatabaseRepository<RentalObjectEn
 
     @Override
     public void delete(RentalObjectEntity entity) throws SQLException {
-        final String query = "DELETE FROM RentalObjectTable WHERE objectID = ?";
+        final String query = """
+                            DELETE FROM rentalobject_table
+                            WHERE object_id = ?
+                            """;
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -99,7 +111,11 @@ public class RentalObjectRepository implements DatabaseRepository<RentalObjectEn
 
     @Override
     public void update(RentalObjectEntity entity) throws SQLException {
-        final String query = "UPDATE RentalObjectTable SET objectName = ?, objectType = ?, info = ?, price = ? WHERE objectID = ?";
+        final String query = """
+                             UPDATE rentalobject_table
+                             SET object_name = ?, object_type = ?, object_info = ?, price = ?
+                             WHERE object_id = ?
+                             """;
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
