@@ -5,6 +5,7 @@ import ru.vsu.amm.java.entities.HotelRoomEntity;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,8 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
     @Override
     public Optional<HotelRoomEntity> getById(int id) throws SQLException {
         final String query = """
-                SELECT id, hotelId, roomNumber, floorNumber, bedsCount, specifications
-                FROM hotel_room WHERE id = ?""";
+                SELECT room_id, hotel_id, room_number, floor_number, beds_count, specifications
+                FROM hotel_room WHERE room_id = ?""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -30,14 +31,7 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
 
         var resultSet = preparedStatement.getResultSet();
         if (resultSet.next()) {
-            return Optional.of(new HotelRoomEntity(
-                    resultSet.getInt("id"),
-                    resultSet.getInt("hotelId"),
-                    resultSet.getInt("roomNumber"),
-                    resultSet.getInt("floorNumber"),
-                    resultSet.getInt("bedsCount"),
-                    resultSet.getString("specifications"))
-            );
+            return Optional.of(configureHotelRoomEntityFromResultSet(resultSet));
         }
 
         return Optional.empty();
@@ -45,7 +39,7 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
 
     @Override
     public List<HotelRoomEntity> getAll() throws SQLException {
-        final String query = "SELECT id, hotelId, roomNumber, floorNumber, bedsCount, specifications FROM hotel_room";
+        final String query = "SELECT room_id, hotel_id, room_number, floor_number, beds_count, specifications FROM hotel_room";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -55,13 +49,26 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
 
         var resultSet = preparedStatement.getResultSet();
         while (resultSet.next()) {
-            var entity = new HotelRoomEntity(
-                    resultSet.getInt("id"),
-                    resultSet.getInt("hotelId"),
-                    resultSet.getInt("roomNumber"),
-                    resultSet.getInt("floorNumber"),
-                    resultSet.getInt("bedsCount"),
-                    resultSet.getString("specifications"));
+            var entity = configureHotelRoomEntityFromResultSet(resultSet);
+            entityList.add(entity);
+        }
+
+        return entityList;
+    }
+
+    public List<HotelRoomEntity> getAllByHotelId(int hotelId) throws SQLException {
+        final String query = "SELECT room_id, hotel_id, room_number, floor_number, beds_count, specifications FROM hotel_room WHERE hotel_id = ?";
+        var connection = dataSource.getConnection();
+
+        var preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, hotelId);
+        preparedStatement.execute();
+
+        List<HotelRoomEntity> entityList = new ArrayList<>();
+
+        var resultSet = preparedStatement.getResultSet();
+        while (resultSet.next()) {
+            var entity = configureHotelRoomEntityFromResultSet(resultSet);
             entityList.add(entity);
         }
 
@@ -71,8 +78,8 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
     @Override
     public void update(HotelRoomEntity entity) throws SQLException {
         final String query = """
-                UPDATE hotel_room SET hotelId = ?, roomNumber = ?, floorNumber = ?,
-                bedsCount = ?, specifications = ? WHERE id = ?""";
+                UPDATE hotel_room SET hotel_id = ?, room_number = ?, floor_number = ?,
+                beds_count = ?, specifications = ? WHERE room_id = ?""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -82,20 +89,22 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
     }
 
     @Override
-    public void save(HotelRoomEntity entity) throws SQLException {
+    public HotelRoomEntity save(HotelRoomEntity entity) throws SQLException {
         final String query = """
-                INSERT INTO hotel_room (hotelId, roomNumber, floorNumber, bedsCount, specifications)
+                INSERT INTO hotel_room (hotel_id, room_number, floor_number, beds_count, specifications)
                 VALUES (?, ?, ?, ?, ?)""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
         setPreparedStatement(preparedStatement, entity);
         preparedStatement.execute();
+
+        return configureHotelRoomEntityFromResultSet(preparedStatement.getResultSet());
     }
 
     @Override
     public void delete(int id) throws SQLException {
-        final String query = "DELETE FROM hotel_room WHERE id = ?";
+        final String query = "DELETE FROM hotel_room WHERE room_id = ?";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -109,5 +118,16 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
         preparedStatement.setInt(3, entity.getFloorNumber());
         preparedStatement.setInt(4, entity.getBedsCount());
         preparedStatement.setString(5, entity.getSpecifications());
+    }
+
+    private HotelRoomEntity configureHotelRoomEntityFromResultSet(ResultSet resultSet) throws SQLException {
+        return new HotelRoomEntity(
+                resultSet.getInt("room_id"),
+                resultSet.getInt("hotel_id"),
+                resultSet.getInt("room_number"),
+                resultSet.getInt("floor_number"),
+                resultSet.getInt("beds_count"),
+                resultSet.getString("specifications")
+        );
     }
 }
