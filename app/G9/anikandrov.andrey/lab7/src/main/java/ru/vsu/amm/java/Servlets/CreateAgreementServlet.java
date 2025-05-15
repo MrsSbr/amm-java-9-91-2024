@@ -3,8 +3,11 @@ package ru.vsu.amm.java.Servlets;
 import ru.vsu.amm.java.Exception.DatabaseException;
 import ru.vsu.amm.java.Exception.NotFoundException;
 import ru.vsu.amm.java.Exception.ValidationException;
+import ru.vsu.amm.java.Repository.AgreementRepository;
+import ru.vsu.amm.java.Repository.RentalObjectRepository;
+import ru.vsu.amm.java.Repository.UserRepository;
 import ru.vsu.amm.java.Services.AgreementService;
-import ru.vsu.amm.java.Repository.*;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
