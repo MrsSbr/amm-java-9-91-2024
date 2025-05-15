@@ -4,10 +4,9 @@ import ru.vsu.amm.java.config.DbConfig;
 import ru.vsu.amm.java.entities.Toy;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ToyRepository {
@@ -34,5 +33,31 @@ public class ToyRepository {
         }
 
         return Optional.empty();
+    }
+
+    public List<Toy> findAll() throws SQLException {
+        final String query = "SELECT id, name, price FROM toy";
+        List<Toy> toys = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            while (resultSet.next()) {
+                toys.add(new Toy(resultSet.getLong("id"),
+                                 resultSet.getString("name"),
+                                 resultSet.getBigDecimal("price")));
+
+            }
+        }
+        return toys;
+    }
+
+    public void save(Toy toy) throws SQLException {
+        final String query = "INSERT INTO toy(name, price) VALUES(?, ?)";
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, toy.getName());
+            preparedStatement.setBigDecimal(2, toy.getPrice());
+            preparedStatement.executeUpdate();
+        }
     }
 }

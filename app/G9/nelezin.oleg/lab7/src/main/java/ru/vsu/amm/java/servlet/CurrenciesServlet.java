@@ -38,7 +38,7 @@ public class CurrenciesServlet extends HttpServlet {
             ExchangeService exchangeService = new ExchangeServiceImpl();
             BigDecimal result = exchangeService.exchangeCurrencies(
                     firstCurrencyCode, secondCurrencyCode, amount);
-            req.setAttribute("result", result.toString());
+            req.setAttribute("result", result.toString() + " " + secondCurrencyCode);
         } catch (DatabaseException | DataNotFoundException e) {
             req.setAttribute("errorMessage", e.getMessage());
         }

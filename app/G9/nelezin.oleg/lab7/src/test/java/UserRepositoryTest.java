@@ -1,83 +1,89 @@
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.entity.UserEntity;
 import ru.vsu.amm.java.repository.UserRepository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class UserRepositoryTest {
 
     private UserRepository userRepository;
 
+    private PreparedStatement preparedStatement;
+
+    private ResultSet resultSet;
+
     @BeforeEach
-    void setup() {
-        userRepository = new UserRepository();
+    void setUp() throws Exception {
+        DataSource dataSource = mock(DataSource.class);
+        Connection connection = mock(Connection.class);
+        preparedStatement = mock(PreparedStatement.class);
+        resultSet = mock(ResultSet.class);
+
+        when(dataSource.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(anyString(), anyInt())).thenReturn(preparedStatement);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+
+        userRepository = new UserRepository(dataSource);
     }
 
-    @AfterEach
-    public void cleanup() throws SQLException {
-        DataSource dataSource = DatabaseConfiguration.getDataSource();
-        Connection connection = dataSource.getConnection();
-        try (Statement statement = connection.createStatement()) {
-            statement.execute("DELETE FROM user_entity");
-        }
-    }
 
     @Test
-    public void testSaveAndFindById() throws SQLException {
+    void testSave() throws Exception {
         UserEntity user = new UserEntity(null, "testUser", "testPass");
-        userRepository.save(user);
 
-        Optional<UserEntity> fetchedByLogin = userRepository.findByLogin("testUser");
-        assertTrue(fetchedByLogin.isPresent(), "Пользователь должен быть найден по логину после сохранения");
+        when(preparedStatement.executeUpdate()).thenReturn(1);
+        when(preparedStatement.getGeneratedKeys()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getLong(1)).thenReturn(1L);
 
-        Long userId = fetchedByLogin.get().getId();
-        assertNotNull(userId, "Id пользователя не должен быть null");
-
-        Optional<UserEntity> fetchedById = userRepository.findById(userId);
-        assertTrue(fetchedById.isPresent(), "Пользователь должен быть найден по id");
-        assertEquals("testUser", fetchedById.get().getLogin());
-        assertEquals("testPass", fetchedById.get().getPassword());
+        Long id = userRepository.save(user);
+        assertNotNull(id);
+        assertEquals(1L, id);
     }
 
     @Test
-    public void testFindByLogin() throws SQLException {
-        UserEntity user = new UserEntity(null, "user", "pass");
-        userRepository.save(user);
+    void testFindById() throws Exception {
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getLong("id")).thenReturn(1L);
+        when(resultSet.getString("login")).thenReturn("testUser");
+        when(resultSet.getString("password")).thenReturn("testPass");
 
-        Optional<UserEntity> fetchedUser = userRepository.findByLogin("user");
-        assertTrue(fetchedUser.isPresent(), "Пользователь должен быть найден по логину");
-        assertEquals("user", fetchedUser.get().getLogin());
-        assertEquals("pass", fetchedUser.get().getPassword());
+        Optional<UserEntity> userOpt = userRepository.findById(1L);
+
+        assertTrue(userOpt.isPresent());
+        UserEntity user = userOpt.get();
+        assertEquals("testUser", user.getLogin());
+        assertEquals("testPass", user.getPassword());
     }
 
     @Test
-    public void testFindAll() throws SQLException {
-        List<UserEntity> users = userRepository.findAll();
-        assertEquals(0, users.size(), "В начале теста пользователей быть не должно");
+    void testFindByLogin() throws Exception {
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getLong("id")).thenReturn(1L);
+        when(resultSet.getString("login")).thenReturn("user");
+        when(resultSet.getString("password")).thenReturn("pass");
 
-        userRepository.save(new UserEntity(null, "user1", "pass1"));
-        userRepository.save(new UserEntity(null, "user2", "pass2"));
+        Optional<UserEntity> userOpt = userRepository.findByLogin("user");
 
-        users = userRepository.findAll();
-        assertEquals(2, users.size(), "Должно быть найдено 2 пользователя");
-
-        boolean foundUser1 = users.stream()
-                .anyMatch(u -> "user1".equals(u.getLogin()) && "pass1".equals(u.getPassword()));
-        boolean foundUser2 = users.stream()
-                .anyMatch(u -> "user2".equals(u.getLogin()) && "pass2".equals(u.getPassword()));
-
-        assertTrue(foundUser1 && foundUser2, "Оба пользователя должны быть найдены с корректными данными");
+        assertTrue(userOpt.isPresent());
+        UserEntity user = userOpt.get();
+        assertEquals("user", user.getLogin());
+        assertEquals("pass", user.getPassword());
     }
+
 }

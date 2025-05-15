@@ -11,13 +11,25 @@ import java.util.logging.Logger;
 
 public class DatabaseConfiguration {
 
+    private static final String FILENAME_FOR_SERVICE = "db.properties";
+
+    private static final String FILENAME_FOR_TEST = "test.properties";
+
     private static final Logger log = Logger.getLogger(DatabaseConfiguration.class.getName());
 
-    public static DataSource getDataSource() {
+    public static DataSource getDataSourceForService() {
+        return getDataSource(FILENAME_FOR_SERVICE);
+    }
+
+    public static DataSource getDataSourceForTest() {
+        return getDataSource(FILENAME_FOR_TEST);
+    }
+
+    private static DataSource getDataSource(String fileName) {
         PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();
         Properties prop = new Properties();
         try (InputStream input = DatabaseConfiguration.class.getClassLoader()
-                .getResourceAsStream("db.properties")) {
+                .getResourceAsStream(fileName)) {
             prop.load(input);
         } catch (IOException e) {
             throw new PropertiesFileException("Ошибка доступа к файлу конфигурации");

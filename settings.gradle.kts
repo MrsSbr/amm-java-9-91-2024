@@ -28,6 +28,7 @@ student("kireev.dmitrii", G91) {
     lab(4)
     lab(5)
     lab(6)
+    lab(7)
 }
 
 student("sbrodova.daria", G91) {
@@ -70,6 +71,7 @@ student("belozerov.alexei", G91) {
     lab(4)
     lab(5)
     lab(6)
+    lab(7)
 }
 
 student("gonnykh.alexander", G91) {
@@ -130,6 +132,7 @@ student("bogatyirev.kirill", G9){
     lab(2)
     lab(3)
     lab(4)
+    lab(7)
 }
 
 
@@ -152,6 +155,7 @@ student("abdrahmanova.evgeniya", G91) {
     lab(2)
     lab(3)
     lab(4)
+    lab(7)
 }
 
 student("barbashina.irina", G9) {
@@ -161,6 +165,8 @@ student("barbashina.irina", G9) {
     lab(3)
     lab(4)
     lab(5)
+    lab(6)
+    lab(7)
 }
 
 student("em.vera", G91) {

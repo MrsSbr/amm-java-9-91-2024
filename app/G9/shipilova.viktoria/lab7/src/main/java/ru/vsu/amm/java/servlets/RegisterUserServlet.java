@@ -1,7 +1,7 @@
 package ru.vsu.amm.java.servlets;
 
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.repository.UserRepository;
+import ru.vsu.amm.java.services.UserService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 
 @WebServlet("/register")
 public class RegisterUserServlet extends HttpServlet {
-    private UserRepository userRepository = new UserRepository();
+    private UserService userService = new UserService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -30,7 +30,7 @@ public class RegisterUserServlet extends HttpServlet {
         user.setPhoneNumber(phone);
 
         try {
-            userRepository.save(user);
+            userService.registerUser(user);
 
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
@@ -40,15 +40,10 @@ public class RegisterUserServlet extends HttpServlet {
                 redirectTo = "index.jsp";
             }
 
-            String successMessage = URLEncoder.encode("Регистрация успешна, войдите в свой аккаунт", StandardCharsets.UTF_8.toString());
-            response.sendRedirect("login.jsp?message=" + successMessage + "&redirectTo=" + URLEncoder.encode(redirectTo, StandardCharsets.UTF_8.toString()));
+            String successMessage = URLEncoder.encode("Регистрация успешна, войдите в свой аккаунт", StandardCharsets.UTF_8);
+            response.sendRedirect("login.jsp?message=" + successMessage + "&redirectTo=" + URLEncoder.encode(redirectTo, StandardCharsets.UTF_8));
         } catch (RuntimeException e) {
-            String errorMessage;
-            if (e.getMessage().contains("Duplicate key detected")) {
-                errorMessage = URLEncoder.encode("Такой логин уже существует", StandardCharsets.UTF_8.toString());
-            } else {
-                errorMessage = URLEncoder.encode("Ошибка при регистрации. Попробуйте снова", StandardCharsets.UTF_8.toString());
-            }
+            String errorMessage = URLEncoder.encode("Ошибка при регистрации. Попробуйте снова", StandardCharsets.UTF_8);
             response.sendRedirect("register.jsp?error=" + errorMessage);
         }
     }

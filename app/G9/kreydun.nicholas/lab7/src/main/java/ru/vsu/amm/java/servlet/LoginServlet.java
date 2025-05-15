@@ -1,30 +1,35 @@
 package ru.vsu.amm.java.servlet;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.repository.UserRepository;
+import ru.vsu.amm.java.services.UserService;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+    private UserService userService;
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = request.getParameter("email");  // Email – строка
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        userService = new UserService();
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        UserRepository userRepository = new UserRepository();
-        User user = userRepository.getByEmail(email);  // ✅ Теперь мы можем искать по email
+        User user = userService.getByEmail(email);
 
-        if (user != null && user.getPassword().equals(password)) {  // Тут лучше добавить хеширование пароля
+        if (user != null && user.getPassword().equals(password)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-            response.sendRedirect("dashboard.jsp");  // Перенаправление в личный кабинет
+            session.setAttribute("userId", user.getId());
+            response.sendRedirect("dashboard.jsp");
         } else {
             response.sendRedirect("login.jsp?error=1");
         }

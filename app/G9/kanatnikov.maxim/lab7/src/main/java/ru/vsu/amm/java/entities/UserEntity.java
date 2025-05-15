@@ -3,21 +3,21 @@ package ru.vsu.amm.java.entities;
 import ru.vsu.amm.java.enums.Role;
 
 public class UserEntity {
-    private long userId;
+    private Long userId;
     private String firstName;
     private String lastName;
     private String patronymic;
     private String city;
     private String email;
     private String phoneNumber;
-    private String passwordHash;
+    private String password;
     private Role role;
 
     public UserEntity() {
     }
 
-    public UserEntity(long userId, String firstName, String lastName, String patronymic,
-                      String city, String email, String phoneNumber, String passwordHash, Role role) {
+    public UserEntity(Long userId, String firstName, String lastName, String patronymic,
+                      String city, String email, String phoneNumber, String password, Role role) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,15 +25,15 @@ public class UserEntity {
         this.city = city;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.passwordHash = passwordHash;
+        this.password = password;
         this.role = role;
     }
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -85,12 +85,12 @@ public class UserEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public ru.vsu.amm.java.enums.Role getRole() {

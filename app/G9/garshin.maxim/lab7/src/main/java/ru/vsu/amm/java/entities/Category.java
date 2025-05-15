@@ -1,7 +1,15 @@
 package ru.vsu.amm.java.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Data
+@AllArgsConstructor
 public class Category {
     private long categoryId;
+    private long userId;
     private String title;
 
     public Category(long categoryId, String title) {
@@ -9,19 +17,13 @@ public class Category {
         this.title = title;
     }
 
-    public long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(long categoryId) {
+    public Category(long categoryId, long userId) {
         this.categoryId = categoryId;
+        this.userId = userId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
+    public Category(String title, long userId) {
         this.title = title;
+        this.userId = userId;
     }
 }

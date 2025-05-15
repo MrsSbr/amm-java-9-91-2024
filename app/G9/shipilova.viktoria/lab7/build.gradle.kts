@@ -24,6 +24,12 @@ dependencies {
     testImplementation("org.apache.tomcat.embed:tomcat-embed-core:10.1.13")
     testImplementation("org.apache.tomcat.embed:tomcat-embed-jasper:10.1.13")
     testImplementation("javax.servlet:javax.servlet-api:4.0.1")
+    testImplementation ("org.apache.tomcat.embed:tomcat-embed-core:10.1.13")
+    testImplementation ("org.apache.tomcat.embed:tomcat-embed-jasper:10.1.13")
+    testImplementation ("javax.servlet:javax.servlet-api:4.0.1")
+    testImplementation ("org.junit.jupiter:junit-jupiter:5.9.3")
+    testImplementation ("org.mockito:mockito-core:4.11.0")
+    testImplementation ("org.mockito:mockito-junit-jupiter:4.11.0")
 }
 
 tasks.test {
