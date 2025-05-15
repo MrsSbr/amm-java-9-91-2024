@@ -19,6 +19,6 @@ public interface TaskServiceInterface {
     Task updateStartDate(UUID taskID, LocalDate newStartDate);
     Task updateEndDate(UUID taskID, LocalDate newEndDate);
     Task moveToColumn(UUID taskID, UUID newColumnID);
-    boolean deleteTask(UUID taskID);
+    void deleteTask(UUID taskID);
 
 }

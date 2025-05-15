@@ -18,6 +18,19 @@ import java.util.logging.Logger;
 public class TaskRepository implements CRUDRepository<Task> {
     private static final Logger logger = Logger.getLogger(TaskRepository.class.getName());
 
+    private Task mapResultSetToTask(ResultSet rs) throws SQLException{
+        Task task = new Task();
+        task.setTaskID((UUID)rs.getObject("TaskID"));
+        task.setColumnID((UUID)rs.getObject("ColumnID"));
+        task.setTaskTitle(rs.getString("TaskTitle"));
+        task.setTaskDescription(rs.getString("TaskDescription"));
+        Date startDate = rs.getDate("StartDate");
+        if (startDate != null) task.setStartDate(startDate.toLocalDate());
+        Date endDate = rs.getDate("EndDate");
+        if (endDate != null) task.setEndDate(endDate.toLocalDate());
+        return task;
+    }
+
     @Override
     public Task getByID(UUID taskID) {
         final String sql = "SELECT TaskID, ColumnID, TaskTitle, TaskDescription," +
@@ -30,15 +43,7 @@ public class TaskRepository implements CRUDRepository<Task> {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                Task task = new Task();
-                task.setTaskID((UUID)rs.getObject("TaskID"));
-                task.setColumnID((UUID)rs.getObject("ColumnID"));
-                task.setTaskTitle(rs.getString("TaskTitle"));
-                Date startDate = rs.getDate("StartDate");
-                if (startDate != null) task.setStartDate(startDate.toLocalDate());
-                Date endDate = rs.getDate("EndDate");
-                if (endDate != null) task.setEndDate(endDate.toLocalDate());
-                return task;
+                return mapResultSetToTask(rs);
             }
 
         } catch (SQLException e) {
@@ -60,15 +65,7 @@ public class TaskRepository implements CRUDRepository<Task> {
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
-                Task task = new Task();
-                task.setTaskID((UUID)rs.getObject("TaskID"));
-                task.setColumnID((UUID)rs.getObject("ColumnID"));
-                task.setTaskTitle(rs.getString("TaskTitle"));
-                Date startDate = rs.getDate("StartDate");
-                if (startDate != null) task.setStartDate(startDate.toLocalDate());
-                Date endDate = rs.getDate("EndDate");
-                if (endDate != null) task.setEndDate(endDate.toLocalDate());
-                tasks.add(task);
+                tasks.add(mapResultSetToTask(rs));
             }
 
         } catch (SQLException e) {
@@ -91,15 +88,7 @@ public class TaskRepository implements CRUDRepository<Task> {
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
-                Task task = new Task();
-                task.setTaskID((UUID)rs.getObject("TaskID"));
-                task.setColumnID(columnID);
-                task.setTaskTitle(rs.getString("TaskTitle"));
-                Date startDate = rs.getDate("StartDate");
-                if (startDate != null) task.setStartDate(startDate.toLocalDate());
-                Date endDate = rs.getDate("EndDate");
-                if (endDate != null) task.setEndDate(endDate.toLocalDate());
-                tasks.add(task);
+                tasks.add(mapResultSetToTask(rs));
             }
 
         } catch (SQLException e) {

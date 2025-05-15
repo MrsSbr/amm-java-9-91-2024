@@ -16,6 +16,15 @@ import java.util.List;
 public class UserRepository implements CRUDRepository<User> {
     private static final Logger logger = Logger.getLogger(UserRepository.class.getName());
 
+    private User mapResultSetToUser(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setUserID((UUID)rs.getObject("UserID"));
+        user.setPassword(rs.getString("Password"));
+        user.setEmail(rs.getString("Email"));
+        user.setName(rs.getString("Name"));
+        return user;
+    }
+
     @Override
     public User getByID(UUID userID) {
 
@@ -28,12 +37,7 @@ public class UserRepository implements CRUDRepository<User> {
 
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
-                User user = new User();
-                user.setUserID((UUID)rs.getObject("UserID"));
-                user.setPassword(rs.getString("Password"));
-                user.setEmail(rs.getString("Email"));
-                user.setName(rs.getString("Name"));
-                return user;
+                return mapResultSetToUser(rs);
             }
 
         } catch(SQLException e) {
@@ -52,12 +56,7 @@ public class UserRepository implements CRUDRepository<User> {
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {
-                User user = new User();
-                user.setUserID((UUID)rs.getObject("UserID"));
-                user.setPassword(rs.getString("Password"));
-                user.setEmail(rs.getString("Email"));
-                user.setName(rs.getString("Name"));
-                return user;
+               return mapResultSetToUser(rs);
             }
 
 
@@ -80,12 +79,7 @@ public class UserRepository implements CRUDRepository<User> {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                User user = new User();
-                user.setUserID((UUID)rs.getObject("UserID"));
-                user.setPassword(rs.getString("Password"));
-                user.setEmail(rs.getString("Email"));
-                user.setName(rs.getString("Name"));
-                users.add(user);
+                users.add(mapResultSetToUser(rs));
             }
 
         } catch (SQLException e) {

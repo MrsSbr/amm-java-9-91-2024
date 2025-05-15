@@ -15,6 +15,14 @@ import java.util.logging.Logger;
 public class ColumnRepository implements CRUDRepository<Column> {
     private static final Logger logger = Logger.getLogger(ColumnRepository.class.getName());
 
+    private Column mapResultSetToColumn(ResultSet rs) throws SQLException {
+        Column column = new Column();
+        column.setColumnID((UUID)rs.getObject("ColumnID"));
+        column.setBoardID((UUID)rs.getObject("BoardID"));
+        column.setColumnTitle(rs.getString("ColumnTitle"));
+        return column;
+    }
+
     @Override
     public Column getByID(UUID columnID) {
         final String sql = "SELECT ColumnID, BoardID, ColumnTitle FROM columns WHERE ColumnID = ?";
@@ -26,11 +34,7 @@ public class ColumnRepository implements CRUDRepository<Column> {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                Column column = new Column();
-                column.setColumnID((UUID)rs.getObject("ColumnID"));
-                column.setBoardID((UUID)rs.getObject("BoardID"));
-                column.setColumnTitle(rs.getString("ColumnTitle"));
-                return column;
+                return mapResultSetToColumn(rs);
             }
 
         } catch (SQLException e) {
@@ -51,11 +55,7 @@ public class ColumnRepository implements CRUDRepository<Column> {
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
-                Column column = new Column();
-                column.setColumnID((UUID)rs.getObject("ColumnID"));
-                column.setBoardID((UUID)rs.getObject("BoardID"));
-                column.setColumnTitle(rs.getString("ColumnTitle"));
-                columns.add(column);
+                columns.add(mapResultSetToColumn(rs));
             }
 
         } catch (SQLException e) {

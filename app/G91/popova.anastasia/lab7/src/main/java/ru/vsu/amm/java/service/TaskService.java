@@ -99,13 +99,8 @@ public class TaskService implements TaskServiceInterface{
     }
 
     @Override
-    public boolean deleteTask(UUID taskID){
+    public void deleteTask(UUID taskID){
         Task task = taskRepository.getByID(taskID);
-        if (task != null){
-            taskRepository.delete(taskID);
-            return true;
-        }
-        return false;
     }
 
 }

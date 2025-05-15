@@ -12,14 +12,28 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class BoardRepository implements CRUDRepository<Board> {
-    private static final Logger logger = Logger.getLogger(BoardRepository.class.getName());
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(BoardRepository.class);
+
+    private Board mapResultSetToBoard(ResultSet rs) throws SQLException{
+        Board board = new Board();
+        board.setBoardID((UUID)rs.getObject("BoardID"));
+        board.setUserID((UUID)rs.getObject("UserID"));
+        board.setBoardTitle(rs.getString("BoardTitle"));
+        board.setBoardDescription(rs.getString("BoardDescription"));
+        return board;
+    }
 
     @Override
     public Board getByID(UUID boardID) {
         final String sql = "SELECT BoardID, UserID, BoardTitle, BoardDescription FROM boards WHERE BoardID = ?";
+
+        log.debug("getting board by ID^ {}", boardID);
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -28,16 +42,13 @@ public class BoardRepository implements CRUDRepository<Board> {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                Board board = new Board();
-                board.setBoardID((UUID)rs.getObject("BoardID"));
-                board.setUserID((UUID)rs.getObject("UserID"));
-                board.setBoardTitle(rs.getString("BoardTitle"));
-                board.setBoardDescription(rs.getString("BoardDescription"));
+                Board board = mapResultSetToBoard(rs);
+                log.debug("found board: {}", board);
                 return board;
             }
 
         } catch (SQLException e) {
-            logger.severe("error while trying to get board: " + e.getMessage());
+            log.error("failed to get board by ID: {}", boardID, e);
         }
 
         return null;
@@ -47,6 +58,7 @@ public class BoardRepository implements CRUDRepository<Board> {
     public List<Board> getAll() {
         List<Board> boards = new ArrayList<>();
         final String sql = "SELECT BoardID, UserID, BoardTitle, BoardDescription FROM boards";
+        log.debug("getting all boards...");
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -54,16 +66,12 @@ public class BoardRepository implements CRUDRepository<Board> {
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
-                Board board = new Board();
-                board.setBoardID((UUID) rs.getObject("BoardID"));
-                board.setUserID((UUID) rs.getObject("UserID"));
-                board.setBoardTitle(rs.getString("BoardTitle"));
-                board.setBoardDescription(rs.getString("BoardDescription"));
-                boards.add(board);
+                boards.add(mapResultSetToBoard(rs));
             }
+            log.debug("found {} boards", boards.size());
 
         } catch (SQLException e) {
-            logger.severe("error while trying to get all boards: " + e.getMessage());
+            log.error("error while trying to get all boards: ", e);
             //return null;
         }
 
@@ -73,6 +81,7 @@ public class BoardRepository implements CRUDRepository<Board> {
     @Override
     public void save(Board board) {
         final String sql = "INSERT INTO boards (BoardID, UserID, BoardTitle, BoardDescription) VALUES (?, ?, ?, ?)";
+        log.debug("saving new board: {}", board);
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -83,8 +92,10 @@ public class BoardRepository implements CRUDRepository<Board> {
             ps.setString(4, board.getBoardDescription());
             ps.executeUpdate();
 
+            log.info("board saved successfully: {}", board.getBoardID());
+
         } catch (SQLException e) {
-            logger.severe("error while trying to save board: " + e.getMessage());
+            log.error("error while trying to save board: {}", board, e);
         }
 
     }
@@ -92,6 +103,7 @@ public class BoardRepository implements CRUDRepository<Board> {
     @Override
     public void update(Board board) {
         final String sql = "UPDATE boards SET BoardTitle = ?, BoardDescription = ? WHERE BoardID = ?";
+        log.debug("updating board: {}", board);
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -104,11 +116,12 @@ public class BoardRepository implements CRUDRepository<Board> {
             }
             ps.setObject(3, board.getBoardID());
 
-
             ps.executeUpdate();
 
+            log.info("board updated successfully: {}", board.getBoardID());
+
         } catch (SQLException e) {
-            logger.severe("error while trying to update board: " + e.getMessage());
+           log.error("error while trying to update board: {}", board, e);
         }
 
     }
@@ -116,6 +129,7 @@ public class BoardRepository implements CRUDRepository<Board> {
     @Override
     public void delete(UUID boardID) {
         final String sql = "DELETE FROM boards WHERE BoardID = ?";
+        log.debug("deleting board: {}", boardID);
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -123,8 +137,11 @@ public class BoardRepository implements CRUDRepository<Board> {
              ps.setObject(1, boardID);
              ps.executeUpdate();
 
+            log.info("board deleted successfully: {}", boardID);
+
+
         } catch (SQLException e) {
-            logger.severe("error while trying to delete board: " + e.getMessage());
+            log.error("error while trying to delete board: {}", boardID, e);
         }
 
     }
