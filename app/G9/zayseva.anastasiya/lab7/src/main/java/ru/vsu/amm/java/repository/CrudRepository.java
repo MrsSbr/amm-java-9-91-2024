@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.repository;
 
-import org.jetbrains.annotations.Nullable;
+import jakarta.annotation.Nullable;
+
 import java.util.List;
 
 public interface CrudRepository<T>{

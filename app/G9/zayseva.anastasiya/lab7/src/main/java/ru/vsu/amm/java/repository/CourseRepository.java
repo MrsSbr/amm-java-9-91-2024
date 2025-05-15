@@ -2,7 +2,11 @@ package ru.vsu.amm.java.repository;
 
 import ru.vsu.amm.java.connection.DataSourceProvider;
 import ru.vsu.amm.java.entities.Course;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;

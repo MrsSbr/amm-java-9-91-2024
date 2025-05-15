@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 public class DatabaseProperties {
     private static final Logger logger = Logger.getLogger(DatabaseProperties.class.getName());
-    private static final String PROPERTIES_FILE = "education_db.properties";
+    private static final String PROPERTIES_FILE = "db.properties";
 
     private final String url;
     private final String username;

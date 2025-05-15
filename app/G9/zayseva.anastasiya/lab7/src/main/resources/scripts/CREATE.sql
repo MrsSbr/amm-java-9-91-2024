@@ -23,7 +23,7 @@ CREATE TABLE UsersCourses
     SubscriptionDate DATE   NOT NULL,
     EnrollmentStatus VARCHAR(50) DEFAULT 'Active',
     CONSTRAINT FK_UsersCourses_Users FOREIGN KEY (UserId) REFERENCES Users (UserId),
-    CONSTRAINT FK_UsersCourses_Courses FOREIGN KEY (CourseId) REFERENCES Courses (CourseId)
+    CONSTRAINT FK_UsersCourses_Courses FOREIGN KEY (CourseId) REFERENCES Courses (CourseId),
     CONSTRAINT CHK_EnrollmentStatus CHECK (EnrollmentStatus IN ('ACTIVE', 'COMPLETED', 'CANCELLED', 'PAUSED'))
 );
 
