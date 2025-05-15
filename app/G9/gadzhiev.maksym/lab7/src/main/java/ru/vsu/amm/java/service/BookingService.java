@@ -29,10 +29,10 @@ public class BookingService {
             Optional<RealEstate> realEstateOptional = realEstateRepository.findById(estateId);
             RealEstate realEstate = realEstateOptional.get();
             UserEntity user = userEntityOptional.get();
-            if(guests < 1 || guests > realEstate.getMaximumNumberOfGuests()) {
+            if (guests < 1 || guests > realEstate.getMaximumNumberOfGuests()) {
                 throw new BookingException("wrong number of people");
             }
-            if(checkIn.isBefore(LocalDate.now())) {
+            if (checkIn.isBefore(LocalDate.now())) {
                 throw new BookingException("Incorrect check-in date");
             }
             if (checkOut.isBefore(checkIn)) {
@@ -42,7 +42,7 @@ public class BookingService {
             if (bookingRepository.checkBusy(estateId, checkIn, checkOut)) {
                 throw new BookingException("These dates are already taken");
             }
-            Booking booking = new Booking(checkIn, checkOut, "Забронировано", user.getId(), estateId);
+            Booking booking = new Booking(checkIn, checkOut, "booked", user.getId(), estateId);
             bookingRepository.save(booking);
 
         } catch (SQLException e) {

@@ -4,7 +4,11 @@ import ru.vsu.amm.java.config.DatabaseConfig;
 import ru.vsu.amm.java.entity.Booking;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Date;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -134,7 +138,7 @@ public class BookingRepository implements BaseRepository<Booking> {
     public boolean checkBusy(Long estateId, LocalDate checkIn, LocalDate checkOut) throws SQLException {
         final String query = """ 
                 SELECT EXISTS (SELECT 1 FROM booking
-                WHERE real_estate_id = ? AND status = 'Забронировано' AND check_in_date < ? AND check_out_date > ?)
+                WHERE real_estate_id = ? AND status = 'booked' AND check_in_date < ? AND check_out_date > ?)
                 """;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement pStmt = connection.prepareStatement(query)) {
