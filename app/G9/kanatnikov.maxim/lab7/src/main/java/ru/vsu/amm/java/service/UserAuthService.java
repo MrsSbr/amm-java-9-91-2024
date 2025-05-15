@@ -22,6 +22,10 @@ public class UserAuthService implements AuthService {
         userRepository = new UserRepository();
     }
 
+    public UserAuthService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
     public UserEntity login(LoginRequest request) throws SQLException, AuthenticationException {
         Optional<UserEntity> userOptional = userRepository.findByEmail(request.email());
