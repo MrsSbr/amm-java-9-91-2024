@@ -37,9 +37,11 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
     @Override
     public Optional<UserEntity> findById(Long id) throws SQLException {
         logger.log(Level.INFO, "Try to find user by ID: " + id);
-        final String query = "SELECT User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date " +
-                             "FROM User_Table " +
-                             "WHERE User_ID = ?";
+        final String query = """
+                             SELECT User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date
+                             FROM User_Table
+                             WHERE User_ID = ?;
+                             """;
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -70,9 +72,11 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
     public Optional<UserEntity> findByUserName(String username) throws SQLException {
         logger.log(Level.INFO, "Try to find user by username: " + username);
 
-        final String query = "SELECT User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date " +
-                             "FROM User_Table " +
-                             "WHERE User_Name = ?";
+        final String query = """
+                            SELECT User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date
+                            FROM User_Table
+                            WHERE User_Name = ?
+                            """;
 
         try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -105,8 +109,10 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
     public List<UserEntity> findAll() throws SQLException {
         logger.log(Level.INFO, "Try to find all users");
 
-        final String query = "SELECT User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date " +
-                             "FROM User_Table";
+        final String query = """
+                             SELECT User_ID, User_Name, User_Password, User_Role, Phone, Birth_Date
+                             FROM User_Table
+                             """;
 
         List<UserEntity> users = new ArrayList<>();
 
@@ -125,8 +131,10 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
     public void save(UserEntity entity) throws SQLException {
         logger.log(Level.INFO, "Try to save user: " + entity.getUserName());
 
-        final String query = "INSERT INTO User_Table (User_Name, User_Password, User_Role, Phone, Birth_Date) " +
-                             "VALUES (?, ?, ?, ?, ?)";
+        final String query = """
+                             INSERT INTO User_Table (User_Name, User_Password, User_Role, Phone, Birth_Date)
+                             VALUES (?, ?, ?, ?, ?)
+                             """;
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -169,7 +177,10 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
     public void delete(UserEntity entity) throws SQLException {
         logger.log(Level.INFO, "Try to delete user with ID: " + entity.getUserID());
 
-        final String query = "DELETE FROM User_Table WHERE User_ID = ?";
+        final String query = """
+                            DELETE FROM User_Table
+                            WHERE User_ID = ?
+                            """;
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -183,7 +194,11 @@ public class UserRepository implements DatabaseRepository<UserEntity> {
     public void update(UserEntity entity) throws SQLException {
         logger.log(Level.INFO, "Try to update user with ID: " + entity.getUserID());
 
-        final String query = "UPDATE User_Table SET User_Name = ?, User_Password = ?  WHERE User_ID = ?";
+        final String query = """
+                            UPDATE User_Table
+                            SET User_Name = ?, User_Password = ?
+                            WHERE User_ID = ?
+                            """;
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);

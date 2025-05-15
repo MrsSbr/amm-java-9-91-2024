@@ -31,9 +31,11 @@ public class AgreementRepository implements DatabaseRepository<AgreementEntity> 
     public Optional<AgreementEntity> findById(Long id) throws SQLException {
         logger.log(Level.INFO, "Try to find agreement by ID: " + id);
 
-        final String query = "SELECT agreement_id, user_id, object_id, time_start, time_end, sum_price " +
-                             "FROM Agreement_Table " +
-                             "WHERE agreement_id = ?";
+        final String query = """
+                             SELECT agreement_id, user_id, object_id, time_start, time_end, sum_price
+                             FROM Agreement_Table
+                             WHERE agreement_id = ?
+                             """;
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -63,8 +65,10 @@ public class AgreementRepository implements DatabaseRepository<AgreementEntity> 
     @Override
     public List<AgreementEntity> findAll() throws SQLException {
         logger.log(Level.INFO, "Try to find all agreements");
-        final String query = "SELECT agreement_id, user_id, object_id, time_start, time_end, sum_price " +
-                             "FROM Agreement_Table";
+        final String query = """
+                             SELECT agreement_id, user_id, object_id, time_start, time_end, sum_price
+                             FROM Agreement_Table
+                             """;
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -89,8 +93,10 @@ public class AgreementRepository implements DatabaseRepository<AgreementEntity> 
     @Override
     public void save(AgreementEntity entity) throws SQLException {
         logger.log(Level.INFO, "Try to save agreement for user ID: " + entity.getUserID());
-        final String query = "INSERT INTO agreement_table (user_id, object_id, time_start, time_end, sum_price) " +
-                             "VALUES (?, ?, ?, ?, ?)";
+        final String query = """
+                             INSERT INTO agreement_table (user_id, object_id, time_start, time_end, sum_price) 
+                             VALUES (?, ?, ?, ?, ?)
+                             """;
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -108,7 +114,10 @@ public class AgreementRepository implements DatabaseRepository<AgreementEntity> 
     @Override
     public void delete(AgreementEntity entity) throws SQLException {
         logger.log(Level.INFO, "Try to delete agreement with ID: " + entity.getAgreementID());
-        final String query = "DELETE FROM agreement_table WHERE agreement_id = ?";
+        final String query = """
+                            DELETE FROM agreement_table
+                            WHERE agreement_id = ?
+                            """;
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -121,8 +130,11 @@ public class AgreementRepository implements DatabaseRepository<AgreementEntity> 
     @Override
     public void update(AgreementEntity entity) throws SQLException {
         logger.log(Level.INFO, "Try to update agreement with ID: " + entity.getAgreementID());
-        final String query = "UPDATE agreement_table SET user_id = ?, object_id = ?, time_start = ?, time_end = ?, sum_price = ? " +
-                             "WHERE agreement_id = ?";
+        final String query = """
+                             UPDATE agreement_table
+                             SET user_id = ?, object_id = ?, time_start = ?, time_end = ?, sum_price = ?
+                             WHERE agreement_id = ?
+                             """;
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
