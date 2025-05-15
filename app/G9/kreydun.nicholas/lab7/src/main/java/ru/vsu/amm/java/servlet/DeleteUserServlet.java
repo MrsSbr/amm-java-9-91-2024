@@ -11,8 +11,8 @@ import ru.vsu.amm.java.services.UserService;
 import java.io.IOException;
 import java.util.UUID;
 
-@WebServlet("/createUser")
-public class CreateUserServlet extends HttpServlet {
+@WebServlet("/deleteUser")
+public class DeleteUserServlet extends HttpServlet {
     private UserService userService;
 
     @Override
@@ -25,18 +25,21 @@ public class CreateUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
 
-        String username = request.getParameter("username");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        Object userIdAttr = session.getAttribute("userId");
+        if (userIdAttr == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
 
-        UUID resultId = userService.create(username, email, password);
+        UUID userId = UUID.fromString(userIdAttr.toString());
+        boolean isDeleted = userService.delete(userId);
 
-        if (resultId != null) {
-            response.sendRedirect("userCreated.jsp");
+        if (isDeleted) {
+            session.invalidate();
+            response.sendRedirect("login.jsp");
         } else {
-            session.setAttribute("error", "Такой пользователь уже есть!");
-            response.sendRedirect("register.jsp");
+            session.setAttribute("error", "Ошибка при удалении аккаунта.");
+            response.sendRedirect("dashboard.jsp");
         }
     }
 }
-
