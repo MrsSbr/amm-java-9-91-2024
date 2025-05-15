@@ -9,7 +9,7 @@ public interface Repository<T> {
 
     List<T> getAll() throws SQLException;
 
-    void create(T object) throws SQLException;
+    Integer create(T object) throws SQLException;
 
     void update(T object) throws SQLException;
 

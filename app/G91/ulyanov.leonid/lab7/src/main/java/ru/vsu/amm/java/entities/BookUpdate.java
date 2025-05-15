@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
-public class BookUpdates {
+public class BookUpdate {
     @Setter
     private Integer updateId;
     @Setter
@@ -20,7 +20,7 @@ public class BookUpdates {
     @Setter
     private UpdateType updateType;
 
-    public BookUpdates() {}
+    public BookUpdate() {}
 
     public void setUpdateTime(LocalDateTime updateTime) {
         if (updateTime.isAfter(LocalDateTime.now())) {
