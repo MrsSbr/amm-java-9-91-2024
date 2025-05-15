@@ -2,6 +2,7 @@ package repositories;
 
 import configuration.TestDbConfiguration;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entities.BoardGame;
@@ -21,6 +22,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class BoardGameRepositoryIntegrationTest {
 
     private BoardGameRepository boardGameRepository;
+    private static List<BoardGame> testGames;
+
+    @BeforeAll
+    static void setUpAll() {
+        testGames = List.of(
+                new BoardGame(null, "D&D", 3990, Genre.RPG, 12, "HobbyWorld",
+                        "Fantastic role-playing board game!"),
+                new BoardGame(null, "Cheap", 1000, Genre.DUEL, 6, "A", ""),
+                new BoardGame(null, "Expensive", 5000, Genre.WARGAME, 12, "B", ""),
+                new BoardGame(null, "Carcassonne", 2490, Genre.FAMILY, 3, "HobbyWorld", ""),
+                new BoardGame(null, "Codenames", 1990, Genre.DETECTIVE, 12, "Gaga", "Great card game")
+        );
+    }
 
     @BeforeEach
     void setUp() throws SQLException {
@@ -41,21 +55,25 @@ public class BoardGameRepositoryIntegrationTest {
         }
     }
 
+    private BoardGame copyBoardGame(BoardGame original) {
+        return new BoardGame(
+                null,
+                original.getName(),
+                original.getPrice(),
+                original.getGenre(),
+                original.getMinAge(),
+                original.getPublisher(),
+                original.getDescription()
+        );
+    }
+
     @Test
     void allCrudOperations() throws SQLException {
 
         List<BoardGame> games = boardGameRepository.findAll();
         assertEquals(0, games.size());
 
-        String name = "D&D";
-        int price = 3990;
-        Genre genre = Genre.RPG;
-        int minAge = 12;
-        String publisher = "HobbyWorld";
-        String description = "Fantastic role-playing board game!";
-
-        BoardGame game = new BoardGame(null,
-                name, price, genre, minAge, publisher, description);
+        BoardGame game = copyBoardGame(testGames.get(0));
 
         boardGameRepository.save(game);
 
@@ -78,10 +96,8 @@ public class BoardGameRepositoryIntegrationTest {
     @Test
     void findByPrice_ShouldReturnListOfGames() throws SQLException {
 
-        BoardGame cheap = new BoardGame(null, "Cheap", 1000,
-                Genre.DUEL, 6, "A", "");
-        BoardGame expensive = new BoardGame(null, "Expensive", 5000,
-                Genre.WARGAME, 12, "B", "");
+        BoardGame cheap = copyBoardGame(testGames.get(1));
+        BoardGame expensive = copyBoardGame(testGames.get(2));
 
         boardGameRepository.save(cheap);
         boardGameRepository.save(expensive);
@@ -101,35 +117,9 @@ public class BoardGameRepositoryIntegrationTest {
     @Test
     void findBy_ShouldBeCaseInsensitive() throws SQLException {
 
-        String name = "D&D";
-        int price = 3990;
-        Genre genre = Genre.RPG;
-        int minAge = 12;
-        String publisher = "HobbyWorld";
-        String description = "Fantastic role-playing board game!";
-
-        BoardGame game1 = new BoardGame(null,
-                name, price, genre, minAge, publisher, description);
-
-        name = "Carcassonne";
-        price = 2490;
-        genre = Genre.FAMILY;
-        minAge = 3;
-        publisher = "HobbyWorld";
-        description = "";
-
-        BoardGame game2 = new BoardGame(null,
-                name, price, genre, minAge, publisher, description);
-
-        name = "Codenames";
-        price = 1990;
-        genre = Genre.DETECTIVE;
-        minAge = 12;
-        publisher = "Gaga";
-        description = "Great card game";
-
-        BoardGame game3 = new BoardGame(null,
-                name, price, genre, minAge, publisher, description);
+        BoardGame game1 = copyBoardGame(testGames.get(0));
+        BoardGame game2 = copyBoardGame(testGames.get(3));
+        BoardGame game3 = copyBoardGame(testGames.get(4));
 
         boardGameRepository.save(game1);
         boardGameRepository.save(game2);
@@ -142,35 +132,9 @@ public class BoardGameRepositoryIntegrationTest {
     @Test
     void findBy_ReturnEmptyList() throws SQLException {
 
-        String name = "D&D";
-        int price = 3990;
-        Genre genre = Genre.RPG;
-        int minAge = 12;
-        String publisher = "HobbyWorld";
-        String description = "Fantastic role-playing board game!";
-
-        BoardGame game1 = new BoardGame(null,
-                name, price, genre, minAge, publisher, description);
-
-        name = "Carcassonne";
-        price = 2490;
-        genre = Genre.FAMILY;
-        minAge = 3;
-        publisher = "HobbyWorld";
-        description = "";
-
-        BoardGame game2 = new BoardGame(null,
-                name, price, genre, minAge, publisher, description);
-
-        name = "Codenames";
-        price = 1990;
-        genre = Genre.DETECTIVE;
-        minAge = 12;
-        publisher = "Gaga";
-        description = "Great card game";
-
-        BoardGame game3 = new BoardGame(null,
-                name, price, genre, minAge, publisher, description);
+        BoardGame game1 = copyBoardGame(testGames.get(0));
+        BoardGame game2 = copyBoardGame(testGames.get(3));
+        BoardGame game3 = copyBoardGame(testGames.get(4));
 
         boardGameRepository.save(game1);
         boardGameRepository.save(game2);
@@ -183,35 +147,9 @@ public class BoardGameRepositoryIntegrationTest {
     @Test
     void findByAge_ReturnList() throws SQLException {
 
-        String name = "D&D";
-        int price = 3990;
-        Genre genre = Genre.RPG;
-        int minAge = 12;
-        String publisher = "HobbyWorld";
-        String description = "Fantastic role-playing board game!";
-
-        BoardGame game1 = new BoardGame(null,
-                name, price, genre, minAge, publisher, description);
-
-        name = "Carcassonne";
-        price = 2490;
-        genre = Genre.FAMILY;
-        minAge = 3;
-        publisher = "HobbyWorld";
-        description = "";
-
-        BoardGame game2 = new BoardGame(null,
-                name, price, genre, minAge, publisher, description);
-
-        name = "Codenames";
-        price = 1990;
-        genre = Genre.DETECTIVE;
-        minAge = 12;
-        publisher = "Gaga";
-        description = "Great card game";
-
-        BoardGame game3 = new BoardGame(null,
-                name, price, genre, minAge, publisher, description);
+        BoardGame game1 = copyBoardGame(testGames.get(0));
+        BoardGame game2 = copyBoardGame(testGames.get(3));
+        BoardGame game3 = copyBoardGame(testGames.get(4));
 
         boardGameRepository.save(game1);
         boardGameRepository.save(game2);
@@ -225,35 +163,9 @@ public class BoardGameRepositoryIntegrationTest {
     @Test
     void findByAge_ReturnEmptyList() throws SQLException {
 
-        String name = "D&D";
-        int price = 3990;
-        Genre genre = Genre.RPG;
-        int minAge = 12;
-        String publisher = "HobbyWorld";
-        String description = "Fantastic role-playing board game!";
-
-        BoardGame game1 = new BoardGame(null,
-                name, price, genre, minAge, publisher, description);
-
-        name = "Carcassonne";
-        price = 2490;
-        genre = Genre.FAMILY;
-        minAge = 3;
-        publisher = "HobbyWorld";
-        description = "";
-
-        BoardGame game2 = new BoardGame(null,
-                name, price, genre, minAge, publisher, description);
-
-        name = "Codenames";
-        price = 1990;
-        genre = Genre.DETECTIVE;
-        minAge = 12;
-        publisher = "Gaga";
-        description = "Great card game";
-
-        BoardGame game3 = new BoardGame(null,
-                name, price, genre, minAge, publisher, description);
+        BoardGame game1 = copyBoardGame(testGames.get(0));
+        BoardGame game2 = copyBoardGame(testGames.get(3));
+        BoardGame game3 = copyBoardGame(testGames.get(4));
 
         boardGameRepository.save(game1);
         boardGameRepository.save(game2);
