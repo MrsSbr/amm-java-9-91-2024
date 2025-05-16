@@ -51,7 +51,7 @@ public class TestOrderRepositoryIntegration {
         }
 
         Customer customer = new Customer(null, "testcustomer", "password");
-        customerRepository.save(customer); // Используем метод save репозитория
+        customerRepository.save(customer);
 
         Toy toy = new Toy(null, "testtoy", BigDecimal.valueOf(10.00));
         toyRepository.save(toy);
