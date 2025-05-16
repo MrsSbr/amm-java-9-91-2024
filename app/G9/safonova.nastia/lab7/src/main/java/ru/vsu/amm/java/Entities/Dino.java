@@ -1,3 +1,9 @@
+package ru.vsu.amm.java.Entities;
+
+import ru.vsu.amm.java.Enums.Kind;
+
+import java.time.LocalDate;
+
 public class Dino {
     private long idDino;
     private double weight;

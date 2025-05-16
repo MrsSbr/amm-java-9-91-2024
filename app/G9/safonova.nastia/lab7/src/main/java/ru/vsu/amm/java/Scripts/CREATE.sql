@@ -9,6 +9,8 @@ CREATE TABLE Dino (
 
  CREATE TABLE Employee (
     IdEmpl SERIAL PRIMARY KEY,
+    LoginEmpl VARCHAR(100) NOT NULL,
+    PasswordEmpl VARCHAR(100) NOT NULL,
     SurnameEmpl VARCHAR(50) NOT NULL,
     NameEmpl VARCHAR(50) NOT NULL,
     PatronumicEmpl VARCHAR(50),
