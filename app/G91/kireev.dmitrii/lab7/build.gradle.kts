@@ -14,9 +14,18 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
-    // Сервлеты и JSP
+    // Сервлеты и JSP для Jakarta EE
+    implementation("jakarta.servlet:jakarta.servlet-api:5.0.0")
+    implementation("jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.0.0")
+
+    // JSTL для Jakarta
+    implementation("org.glassfish:jakarta.servlet.jsp.jstl:2.0.0")
+
+    // Сервлеты и JSP для javax (старые версии)
     implementation("javax.servlet:javax.servlet-api:4.0.1")
     implementation("javax.servlet.jsp:javax.servlet.jsp-api:2.3.3")
+
+    // JSTL для javax
     implementation("javax.servlet:jstl:1.2")
 
     // PostgreSQL JDBC драйвер
@@ -31,11 +40,6 @@ dependencies {
     // Lombok
     compileOnly("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")
-
-    // Jakarta EE
-    implementation("jakarta.servlet:jakarta.servlet-api:5.0.0")
-    implementation("jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.0.0")
-
 }
 
 tasks.test {
