@@ -6,16 +6,16 @@ import ru.vsu.amm.java.repository.BoardRepository;
 import java.util.List;
 import java.util.UUID;
 
-public class BoardService implements BoardServiceInterface{
+public class BoardService implements BoardServiceInterface {
 
     private final BoardRepository boardRepository;
 
-    public BoardService(BoardRepository boardRepository){
+    public BoardService(BoardRepository boardRepository) {
         this.boardRepository = boardRepository;
     }
 
     @Override
-    public Board createBoard(UUID userID, String title, String description){
+    public Board createBoard(UUID userID, String title, String description) {
         Board board = new Board();
         board.setUserID(userID);
         board.setBoardTitle(title);
@@ -26,17 +26,17 @@ public class BoardService implements BoardServiceInterface{
     }
 
     @Override
-    public Board getBoardByID(UUID boardID){
+    public Board getBoardByID(UUID boardID) {
         return boardRepository.getByID(boardID);
     }
 
     @Override
-    public List<Board> getAllBoards(){
+    public List<Board> getAllBoards() {
         return boardRepository.getAll();
     }
 
     @Override
-    public Board updateBoardTitle(UUID boardID, String newTitle){
+    public Board updateBoardTitle(UUID boardID, String newTitle) {
         Board board = boardRepository.getByID(boardID);
 
         if (board != null) {
@@ -50,11 +50,11 @@ public class BoardService implements BoardServiceInterface{
     }
 
     @Override
-    public Board updateBoardDescription(UUID boardID, String newDescription){
+    public Board updateBoardDescription(UUID boardID, String newDescription) {
         Board board = boardRepository.getByID(boardID);
 
         if (board != null){
-            if (newDescription != null){
+            if (newDescription != null) {
                 board.setBoardDescription(newDescription);
             }
             boardRepository.update(board);
@@ -64,15 +64,9 @@ public class BoardService implements BoardServiceInterface{
     }
 
     @Override
-    public boolean deleteBoard(UUID boardID){
+    public void deleteBoard(UUID boardID) {
         Board board = boardRepository.getByID(boardID);
-
-        if (board != null){
-           boardRepository.delete(boardID);
-           return true;
-        }
-
-        return false;
+        boardRepository.delete(boardID);
     }
 
 }

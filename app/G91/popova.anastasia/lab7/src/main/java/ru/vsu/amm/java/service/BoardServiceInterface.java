@@ -11,5 +11,5 @@ public interface BoardServiceInterface {
     List<Board> getAllBoards();
     Board updateBoardTitle(UUID boardID, String newTitle);
     Board updateBoardDescription(UUID boardID, String newDescription);
-    boolean deleteBoard(UUID boardID);
+    void deleteBoard(UUID boardID);
 }

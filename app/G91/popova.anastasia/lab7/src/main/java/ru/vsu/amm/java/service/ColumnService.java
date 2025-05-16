@@ -7,15 +7,15 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class ColumnService implements ColumnServiceInterface{
+public class ColumnService implements ColumnServiceInterface {
     private final ColumnRepository columnRepository;
 
-    public ColumnService(ColumnRepository columnRepository){
+    public ColumnService(ColumnRepository columnRepository) {
         this.columnRepository = columnRepository;
     }
 
     @Override
-    public Column createColumn(UUID boardID, String title){
+    public Column createColumn(UUID boardID, String title) {
         Column column = new Column();
         column.setBoardID(boardID);
         column.setColumnTitle(title);
@@ -24,12 +24,12 @@ public class ColumnService implements ColumnServiceInterface{
     }
 
     @Override
-    public Column getColumnByID(UUID columnID){
+    public Column getColumnByID(UUID columnID) {
         return columnRepository.getByID(columnID);
     }
 
     @Override
-    public List<Column> getColumnsByBoard(UUID bosrdID){
+    public List<Column> getColumnsByBoard(UUID bosrdID) {
         List<Column> columns = columnRepository.getAll();
         return columns.stream()
                 .filter(column -> column.getBoardID().equals(bosrdID))
@@ -37,9 +37,9 @@ public class ColumnService implements ColumnServiceInterface{
     }
 
     @Override
-    public Column updateColumnTitle(UUID columnID, String newTitle){
+    public Column updateColumnTitle(UUID columnID, String newTitle) {
         Column column = columnRepository.getByID(columnID);
-        if (column != null && newTitle != null){
+        if (column != null && newTitle != null) {
             column.setColumnTitle(newTitle);
             columnRepository.update(column);
         }
@@ -47,13 +47,9 @@ public class ColumnService implements ColumnServiceInterface{
     }
 
     @Override
-    public boolean deleteColumn(UUID columnID){
+    public void deleteColumn(UUID columnID) {
         Column column = columnRepository.getByID(columnID);
-        if (column != null){
-            columnRepository.delete(columnID);
-            return true;
-        }
-        return false;
+        columnRepository.delete(columnID);
     }
 
 }

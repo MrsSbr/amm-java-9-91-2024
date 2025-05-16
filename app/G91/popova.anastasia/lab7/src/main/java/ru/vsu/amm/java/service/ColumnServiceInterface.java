@@ -11,6 +11,6 @@ public interface ColumnServiceInterface {
     Column getColumnByID(UUID columnID);
     List<Column> getColumnsByBoard(UUID boardID);
     Column updateColumnTitle(UUID columnID, String newTitle);
-    boolean deleteColumn(UUID columnID);
+    void deleteColumn(UUID columnID);
 
 }
