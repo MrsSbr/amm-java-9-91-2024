@@ -1,0 +1,39 @@
+CREATE TABLE Hotel (
+    HotelID SERIAL PRIMARY KEY,
+    HotelName VARCHAR(100) NOT NULL,
+    Address VARCHAR(200) NOT NULL,
+    City VARCHAR(50) NOT NULL,
+    Country VARCHAR(50) NOT NULL,
+    Rating DECIMAL(2,1),
+    Description TEXT
+);
+
+CREATE TABLE Users (
+    UserID SERIAL PRIMARY KEY,
+    Username VARCHAR(50) NOT NULL UNIQUE,
+    UserPassword VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    UserRole VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE Room (
+    RoomID SERIAL PRIMARY KEY,
+    HotelID INTEGER NOT NULL REFERENCES Hotel(HotelID),
+    RoomType VARCHAR(20) NOT NULL,
+    PricePerNight DECIMAL(10,2) NOT NULL,
+    Capacity INTEGER NOT NULL,
+    Description TEXT
+);
+
+CREATE TABLE Booking (
+    BookingID SERIAL PRIMARY KEY,
+    UserID INTEGER NOT NULL REFERENCES Users(UserID),
+    RoomID INTEGER NOT NULL REFERENCES Room(RoomID),
+    CheckInDate DATE NOT NULL,
+    CheckOutDate DATE NOT NULL,
+    NumberOfGuests INTEGER NOT NULL,
+    TotalAmount DECIMAL(10,2) NOT NULL,
+    BookingStatus VARCHAR(20) NOT NULL
+);
