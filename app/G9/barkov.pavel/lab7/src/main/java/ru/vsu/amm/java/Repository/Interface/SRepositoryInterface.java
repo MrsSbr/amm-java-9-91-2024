@@ -13,9 +13,9 @@ public interface SRepositoryInterface {
 
     Optional<ShareholderStocks> get(int userId, int stocksId) throws SQLException;
 
-    List<Stocks> getAll() throws SQLException;
+    List<Stocks> getAll(int limit,int offset) throws SQLException;
 
-    List<Stocks> getAll(int userId) throws SQLException;
+    List<Stocks> getAll(int userId,int limit,int offset) throws SQLException;
 
     void create(Stocks entity) throws SQLException;
 
@@ -28,4 +28,8 @@ public interface SRepositoryInterface {
     void delete(int stocksId) throws SQLException;
 
     void delete(int userId, int stocksId) throws SQLException;
+
+    int count() throws SQLException;
+
+    int count(int userId) throws SQLException;
 }

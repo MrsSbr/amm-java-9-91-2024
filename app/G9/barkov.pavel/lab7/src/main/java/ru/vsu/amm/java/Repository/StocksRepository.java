@@ -16,13 +16,13 @@ import java.util.Optional;
 public class StocksRepository implements SRepositoryInterface {
     private final DataSource dataSource;
 
-    public StocksRepository() {
-        dataSource = DBConfiguration.getDataSource();
+    public StocksRepository(DataSource source) {
+        dataSource = source;
     }
 
     @Override
     public Optional<Stocks> get(int stocksId) throws SQLException {
-        final String query = "SELECT id,price,count,name,edividends FROM stocks WHERE id = ?";
+        final String query = "SELECT id,price,count,name,dividends FROM stocks WHERE id = ?";
         var connection = dataSource.getConnection();
         var preparedStation = connection.prepareStatement(query);
         preparedStation.setInt(1, stocksId);
@@ -54,7 +54,7 @@ public class StocksRepository implements SRepositoryInterface {
     }
 
     public Optional<Stocks> getByName(String stocksName) throws SQLException {
-        final String query = "SELECT id,price,count,name,edividends FROM stocks WHERE name = ?";
+        final String query = "SELECT id,price,count,name,dividends FROM stocks WHERE name = ?";
         var connection = dataSource.getConnection();
         var preparedStation = connection.prepareStatement(query);
         preparedStation.setString(1, stocksName);
@@ -67,10 +67,12 @@ public class StocksRepository implements SRepositoryInterface {
     }
 
     @Override
-    public List<Stocks> getAll() throws SQLException {
-        final String query = "SELECT id,price,count,name,dividends FROM stocks";
+    public List<Stocks> getAll(int limit, int offset) throws SQLException {
+        final String query = "SELECT id,price,count,name,dividends FROM stocks LIMIT ? OFFSET ?";
         var connection = dataSource.getConnection();
         var preparedStation = connection.prepareStatement(query);
+        preparedStation.setInt(1, limit);
+        preparedStation.setInt(2, offset);
         preparedStation.execute();
         List<Stocks> list = new ArrayList<>();
         var result = preparedStation.getResultSet();
@@ -81,15 +83,18 @@ public class StocksRepository implements SRepositoryInterface {
     }
 
     @Override
-    public List<Stocks> getAll(int userId) throws SQLException {
+    public List<Stocks> getAll(int userId, int limit, int offset) throws SQLException {
         final String query = """
                 SELECT s.id,s.price,ss.count,s.name,s.dividends
-                FROM stocks s JOIN shareholder_stocks ss ON s.id = ss.shareholder
+                FROM stocks s JOIN shareholder_stocks ss ON s.id = ss.stock_id
                 WHERE ss.shareholder_id = ?
+                LIMIT ? OFFSET ?
                 """;
         var connection = dataSource.getConnection();
         var preparedStation = connection.prepareStatement(query);
         preparedStation.setInt(1, userId);
+        preparedStation.setInt(2, limit);
+        preparedStation.setInt(3, offset);
         preparedStation.execute();
         List<Stocks> list = new ArrayList<>();
         var result = preparedStation.getResultSet();
@@ -163,5 +168,30 @@ public class StocksRepository implements SRepositoryInterface {
         preparedStation.setInt(1, userId);
         preparedStation.setInt(2, stocksId);
         preparedStation.execute();
+    }
+
+    @Override
+    public int count() throws SQLException {
+        final String query = "SELECT COUNT(*) FROM stocks";
+        var connection = dataSource.getConnection();
+        var preparedStation = connection.prepareStatement(query);
+        preparedStation.execute();
+        var result = preparedStation.getResultSet();
+        if (!result.next())
+            return 0;
+        return result.getInt(1);
+    }
+
+    @Override
+    public int count(int userId) throws SQLException {
+        final String query = "SELECT COUNT(*) FROM shareholder_stocks WHERE shareholder_id = ?";
+        var connection = dataSource.getConnection();
+        var preparedStation = connection.prepareStatement(query);
+        preparedStation.setInt(1, userId);
+        preparedStation.execute();
+        var result = preparedStation.getResultSet();
+        if (!result.next())
+            return 0;
+        return result.getInt(1);
     }
 }
