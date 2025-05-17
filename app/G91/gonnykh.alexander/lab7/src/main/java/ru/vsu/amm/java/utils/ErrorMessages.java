@@ -20,4 +20,11 @@ public class ErrorMessages {
     public static final String USER_NOT_FOUND = "Failed to find user";
     public static final String INCORRECT_PASSWORD = "Incorrect password";
     public static final String USER_ALREADY_EXISTS = "User already exists";
+    public static final String BOOK_CAR = "Failed to book car: ";
+    public static final String CAR_ALREADY_RENTED = "Failed to car rented: ";
+    public static final String FETCH_ACTIVE_TRIPS = "Failed to fetch active trips: ";
+    public static final String TRIP_NOT_FOUND = "Trip not found: ";
+    public static final String START_TIME_IS_NULL = "Start time is null: ";
+    public static final String END_TRIP = "Failed to end trip: ";
+    public static final String TRIP_ALREADY_COMPLETED = "The trip has already been completed: ";
 }
