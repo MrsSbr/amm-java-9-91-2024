@@ -18,11 +18,15 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         String name = req.getParameter("name");
         String password = req.getParameter("password");
 
@@ -35,7 +39,7 @@ public class LoginServlet extends HttpServlet {
                 httpSession.setAttribute("customer", customer);
                 resp.sendRedirect("/index.jsp");
             } else {
-                req.setAttribute("errorMessage", "Неверное имя пользователя или пароль. Такого пользователя не существует, зарегестрируйтесь");
+                req.setAttribute("errorMessage", "Uncorrect username or password");
                 getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
             }
         } catch (DbException e) {
