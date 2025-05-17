@@ -3,7 +3,6 @@ package ru.vsu.amm.java.service.implementations;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.entities.UserEntity;
-import ru.vsu.amm.java.enums.Role;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.mappers.UserMapper;
 import ru.vsu.amm.java.model.dto.UserDto;
@@ -12,12 +11,14 @@ import ru.vsu.amm.java.model.requests.RegisterRequest;
 import ru.vsu.amm.java.repository.implementations.UserRepository;
 import ru.vsu.amm.java.utils.BcryptPasswordEncoder;
 import ru.vsu.amm.java.utils.ErrorMessages;
+import utils.TestDataFactory;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class DefaultAuthServiceUnitTest {
@@ -34,56 +35,95 @@ class DefaultAuthServiceUnitTest {
 
     @Test
     void loginShouldReturnUserDtoWhenCredentialsAreCorrect() {
-        String email = "test@example.com";
-        String password = "password123";
-        UserEntity user = new UserEntity(1L, "Test User", "hashed", email, Role.USER);
-        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
-        when(passwordEncoder.checkPassword(password, user.getPassword())).thenReturn(true);
+        UserEntity admin = TestDataFactory.adminEntity();
+        when(userRepository.findByEmail(admin.getEmail()))
+                .thenReturn(Optional.of(admin));
+        when(passwordEncoder.checkPassword(
+                TestDataFactory.correctLoginRequest().password(),
+                admin.getPassword()))
+                .thenReturn(true);
 
-        LoginRequest request = new LoginRequest(email, password);
-
+        LoginRequest request = TestDataFactory.correctLoginRequest();
         UserDto result = authService.login(request);
 
-        assertEquals(UserMapper.UserEntityToUserDto(user), result);
+        assertEquals(
+                UserMapper.UserEntityToUserDto(admin),
+                result
+        );
 
+        verify(userRepository).findByEmail(admin.getEmail());
+        verify(passwordEncoder).checkPassword(
+                request.password(), admin.getPassword()
+        );
     }
 
     @Test
     void loginShouldThrowWhenUserNotFound() {
-        when(userRepository.findByEmail("missing@example.com")).thenReturn(Optional.empty());
-        LoginRequest request = new LoginRequest("missing@example.com", "any");
+        String missingEmail = "missing@example.com";
+        when(userRepository.findByEmail(missingEmail))
+                .thenReturn(Optional.empty());
 
-        WrongUserCredentialsException ex = assertThrows(WrongUserCredentialsException.class, () ->
-                authService.login(request));
+        LoginRequest request = new LoginRequest(missingEmail, "any");
 
-        assertEquals(ErrorMessages.USER_NOT_FOUND, ex.getMessage());
+        WrongUserCredentialsException ex = assertThrows(
+                WrongUserCredentialsException.class,
+                () -> authService.login(request)
+        );
+
+        assertEquals(
+                ErrorMessages.USER_NOT_FOUND,
+                ex.getMessage()
+        );
+
+        verify(userRepository).findByEmail(missingEmail);
     }
 
     @Test
     void loginShouldThrowWhenPasswordIsWrong() {
-        UserEntity user = new UserEntity(1L, "Test", "hashed",
-                "email@test.com", Role.USER);
+        UserEntity admin = TestDataFactory.adminEntity();
+        when(userRepository.findByEmail(admin.getEmail()))
+                .thenReturn(Optional.of(admin));
+        when(passwordEncoder.checkPassword(
+                TestDataFactory.wrongLoginRequest().password(),
+                admin.getPassword()))
+                .thenReturn(false);
 
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
-        when(passwordEncoder.checkPassword("wrongpass", "hashed")).thenReturn(false);
+        LoginRequest request = TestDataFactory.wrongLoginRequest();
 
-        LoginRequest request = new LoginRequest(user.getEmail(), "wrongpass");
+        WrongUserCredentialsException ex = assertThrows(
+                WrongUserCredentialsException.class,
+                () -> authService.login(request)
+        );
 
-        WrongUserCredentialsException ex = assertThrows(WrongUserCredentialsException.class, () ->
-                authService.login(request));
+        assertEquals(
+                ErrorMessages.INCORRECT_PASSWORD,
+                ex.getMessage()
+        );
 
-        assertEquals(ErrorMessages.INCORRECT_PASSWORD, ex.getMessage());
+        verify(userRepository).findByEmail(admin.getEmail());
+        verify(passwordEncoder).checkPassword(
+                request.password(), admin.getPassword()
+        );
     }
 
     @Test
     void registerShouldThrowWhenUserAlreadyExists() {
-        RegisterRequest request = new RegisterRequest("Name", "password", "email@test.com", Role.USER);
-        when(userRepository.findByEmail(request.email())).thenReturn(Optional.of(new UserEntity()));
+        when(userRepository.findByEmail(
+                TestDataFactory.userRegister().email()))
+                .thenReturn(Optional.of(TestDataFactory.userEntity()));
 
-        WrongUserCredentialsException ex = assertThrows(WrongUserCredentialsException.class, () ->
-                authService.register(request));
+        RegisterRequest request = TestDataFactory.userRegister();
 
-        assertEquals(ErrorMessages.USER_ALREADY_EXISTS, ex.getMessage());
+        WrongUserCredentialsException ex = assertThrows(
+                WrongUserCredentialsException.class,
+                () -> authService.register(request)
+        );
+
+        assertEquals(
+                ErrorMessages.USER_ALREADY_EXISTS,
+                ex.getMessage()
+        );
+
+        verify(userRepository).findByEmail(request.email());
     }
-
 }

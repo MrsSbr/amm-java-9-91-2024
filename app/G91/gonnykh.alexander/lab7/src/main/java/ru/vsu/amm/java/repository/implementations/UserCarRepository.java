@@ -198,56 +198,76 @@ public class UserCarRepository implements CrudRepository<UserCarEntity> {
     }
 
     public void finishTrip(Long tripId) {
-        final String selectTripQuery = "SELECT * FROM user_car WHERE id = ? FOR UPDATE";
-        final String updateTripQuery = "UPDATE user_car SET end_trip = ?, final_price = ? WHERE id = ?";
-        final String updateCarStatusQuery = "UPDATE car SET status = ? WHERE id = ?";
+        final String selectForUpdate =
+                "SELECT uc.car_id, uc.start_trip, uc.price_per_minute, uc.end_trip" +
+                        "  FROM user_car uc " +
+                        "  JOIN car c ON c.id = uc.car_id " +
+                        " WHERE uc.id = ? " +
+                        "   FOR UPDATE";
+
+        final String updateTripSql =
+                "UPDATE user_car " +
+                        "   SET end_trip = ?, final_price = ? " +
+                        " WHERE id = ?";
+
+        final String updateCarSql =
+                "UPDATE car " +
+                        "   SET status = ? " +
+                        " WHERE id = ?";
 
         try (Connection conn = dataSource.getConnection()) {
             conn.setAutoCommit(false);
-
             long carId;
             LocalDateTime startTrip;
             BigDecimal pricePerMinute;
-
-            try (PreparedStatement selectStmt = conn.prepareStatement(selectTripQuery)) {
-                selectStmt.setLong(1, tripId);
-                try (ResultSet rs = selectStmt.executeQuery()) {
+            try (PreparedStatement pst = conn.prepareStatement(selectForUpdate)) {
+                pst.setLong(1, tripId);
+                try (ResultSet rs = pst.executeQuery()) {
                     if (!rs.next()) {
                         conn.rollback();
-                        throw new NoSuchElementException(ErrorMessages.TRIP_NOT_FOUND + tripId);
+                        throw new NoSuchElementException(
+                                ErrorMessages.TRIP_NOT_FOUND + tripId);
                     }
                     carId = rs.getLong("car_id");
-                    Timestamp startTimestamp = rs.getTimestamp("start_trip");
-                    if (startTimestamp == null) {
+                    Timestamp ts = rs.getTimestamp("start_trip");
+                    Timestamp existingEnd = rs.getTimestamp("end_trip");
+
+                    if (existingEnd != null) {
                         conn.rollback();
-                        throw new IllegalStateException(ErrorMessages.START_TIME_IS_NULL);
+                        throw new IllegalStateException(ErrorMessages.TRIP_ALREADY_COMPLETED + tripId);
                     }
-                    startTrip = startTimestamp.toLocalDateTime();
+
+                    if (ts == null) {
+                        conn.rollback();
+                        throw new IllegalStateException(
+                                ErrorMessages.START_TIME_IS_NULL);
+                    }
+                    startTrip = ts.toLocalDateTime();
                     pricePerMinute = rs.getBigDecimal("price_per_minute");
                 }
             }
 
             LocalDateTime endTrip = LocalDateTime.now();
-            long durationMinutes = Duration.between(startTrip, endTrip).toMinutes();
-            if (durationMinutes == 0) {
-                durationMinutes = 1;
-            }
-            BigDecimal finalPrice = pricePerMinute.multiply(BigDecimal.valueOf(durationMinutes));
+            long minutes = Duration.between(startTrip, endTrip).toMinutes();
+            if (minutes == 0) minutes = 1;
+            BigDecimal finalPrice = pricePerMinute
+                    .multiply(BigDecimal.valueOf(minutes));
 
-            try (PreparedStatement updateTripStmt = conn.prepareStatement(updateTripQuery)) {
-                updateTripStmt.setTimestamp(1, Timestamp.valueOf(endTrip));
-                updateTripStmt.setBigDecimal(2, finalPrice);
-                updateTripStmt.setLong(3, tripId);
-                updateTripStmt.executeUpdate();
+            try (PreparedStatement pst = conn.prepareStatement(updateTripSql)) {
+                pst.setTimestamp(1, Timestamp.valueOf(endTrip));
+                pst.setBigDecimal(2, finalPrice);
+                pst.setLong(3, tripId);
+                pst.executeUpdate();
             }
 
-            try (PreparedStatement updateCarStmt = conn.prepareStatement(updateCarStatusQuery)) {
-                updateCarStmt.setString(1, Status.AVAILABLE.toString());
-                updateCarStmt.setLong(2, carId);
-                updateCarStmt.executeUpdate();
+            try (PreparedStatement pst = conn.prepareStatement(updateCarSql)) {
+                pst.setString(1, Status.AVAILABLE.toString());
+                pst.setLong(2, carId);
+                pst.executeUpdate();
             }
 
             conn.commit();
+
         } catch (SQLException e) {
             log.error(ErrorMessages.END_TRIP + tripId, e);
             throw new DataAccessException(ErrorMessages.END_TRIP + tripId, e);

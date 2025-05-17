@@ -26,4 +26,5 @@ public class ErrorMessages {
     public static final String TRIP_NOT_FOUND = "Trip not found: ";
     public static final String START_TIME_IS_NULL = "Start time is null: ";
     public static final String END_TRIP = "Failed to end trip: ";
+    public static final String TRIP_ALREADY_COMPLETED = "The trip has already been completed: ";
 }

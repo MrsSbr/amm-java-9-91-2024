@@ -16,14 +16,4 @@ public class UserCarMapper {
                 rs.getBigDecimal("final_price")
         );
     }
-
-/*    public static TripDto userCarEntityToTripDto(UserCarEntity userCarEntity) {
-     return new TripDto(userCarEntity.getId(),
-             userCarEntity,
-             userCarEntity.getCarId(),
-             userCarEntity.getStartTrip(),
-             userCarEntity.getEndTrip(),
-             userCarEntity.getPriceForMinute(),
-             userCarEntity.getFinalPrice());
-    }*/
 }

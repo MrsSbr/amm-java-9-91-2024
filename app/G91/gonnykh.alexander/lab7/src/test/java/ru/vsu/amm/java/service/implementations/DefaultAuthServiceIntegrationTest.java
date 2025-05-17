@@ -4,7 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
-import ru.vsu.amm.java.entities.UserEntity;
 import ru.vsu.amm.java.enums.Role;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.model.dto.UserDto;
@@ -12,6 +11,7 @@ import ru.vsu.amm.java.model.requests.LoginRequest;
 import ru.vsu.amm.java.model.requests.RegisterRequest;
 import ru.vsu.amm.java.repository.implementations.UserRepository;
 import ru.vsu.amm.java.utils.BcryptPasswordEncoder;
+import utils.TestDataFactory;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -27,68 +27,57 @@ class DefaultAuthServiceIntegrationTest {
     private UserRepository userRepository;
 
     @BeforeEach
-    public void setup() {
-        DataSource dataSource = DatabaseConfiguration.getTestDataSource();
-        this.userRepository = new UserRepository(dataSource);
-        this.authService = new DefaultAuthService(userRepository, new BcryptPasswordEncoder());
+    void setup() {
+        DataSource ds = DatabaseConfiguration.getTestDataSource();
+        userRepository = new UserRepository(ds);
+        authService = new DefaultAuthService(userRepository, new BcryptPasswordEncoder());
     }
 
     @AfterEach
-    public void cleanup() throws SQLException {
-        DataSource dataSource = DatabaseConfiguration.getTestDataSource();
-        try (Connection connection = dataSource.getConnection();
-             Statement stmt = connection.createStatement()) {
+    void cleanup() throws SQLException {
+        DataSource ds = DatabaseConfiguration.getTestDataSource();
+        try (Connection conn = ds.getConnection();
+             Statement stmt = conn.createStatement()) {
             stmt.executeUpdate("DELETE FROM \"user\"");
         }
     }
 
     @Test
-    public void testRegisterNewUserSuccess() {
-        RegisterRequest request = new RegisterRequest("Alice", "alice@mail.com", "password123", Role.USER);
+    void testRegisterNewUserSuccess() {
+        RegisterRequest request = TestDataFactory.userRegister();
         authService.register(request);
 
-        var user = userRepository.findByEmail("alice@mail.com");
+        var user = userRepository.findByEmail("user@mail.com");
         assertTrue(user.isPresent());
-        assertEquals("Alice", user.get().getUsername());
+        assertEquals("User", user.get().getUsername());
     }
 
     @Test
-    public void testRegisterExistingUserThrowsException() {
-        RegisterRequest request = new RegisterRequest("Bob", "bob@mail.com", "pass123", Role.USER);
-        UserEntity userEntity = new UserEntity(null, "Bob",
-                new BcryptPasswordEncoder().hashPassword("pass123"), "bob@mail.com", Role.USER);
-        userRepository.save(userEntity);
+    void testRegisterExistingUserThrowsException() {
+        RegisterRequest request = TestDataFactory.userRegister();
+        userRepository.save(TestDataFactory.userEntity());
 
-        assertThrows(WrongUserCredentialsException.class, () -> authService.register(request));
+        assertThrows(WrongUserCredentialsException.class,
+                () -> authService.register(request));
     }
 
     @Test
-    public void testLoginWithCorrectCredentialsReturnsUserDto() {
-        String email = "carol@mail.com";
-        String rawPassword = "carol123";
-        String hashedPassword = new BcryptPasswordEncoder().hashPassword(rawPassword);
+    void testLoginWithCorrectCredentialsReturnsUserDto() {
+        userRepository.save(TestDataFactory.adminEntity());
+        LoginRequest login = TestDataFactory.correctLoginRequest();
+        UserDto dto = authService.login(login);
 
-        UserEntity userEntity = new UserEntity(null, "Carol", hashedPassword, email, Role.ADMIN);
-        userRepository.save(userEntity);
-
-        LoginRequest loginRequest = new LoginRequest(email, rawPassword);
-        UserDto dto = authService.login(loginRequest);
-
-        assertEquals("Carol", dto.getUsername());
-        assertEquals(email, dto.getEmail());
+        assertEquals("Admin", dto.getUsername());
+        assertEquals("admin@mail.com", dto.getEmail());
         assertEquals(Role.ADMIN, dto.getRole());
     }
 
     @Test
-    public void testLoginWithWrongPasswordThrowsException() {
-        String email = "dave@mail.com";
-        String password = "rightpass";
-        UserEntity userEntity = new UserEntity(null, "Dave", new BcryptPasswordEncoder().hashPassword(password), email, Role.USER);
-        userRepository.save(userEntity);
+    void testLoginWithWrongPasswordThrowsException() {
+        userRepository.save(TestDataFactory.adminEntity());
+        LoginRequest login = TestDataFactory.wrongLoginRequest();
 
-        LoginRequest loginRequest = new LoginRequest(email, "wrongpass");
-
-        assertThrows(WrongUserCredentialsException.class, () -> authService.login(loginRequest));
+        assertThrows(WrongUserCredentialsException.class,
+                () -> authService.login(login));
     }
-
 }
