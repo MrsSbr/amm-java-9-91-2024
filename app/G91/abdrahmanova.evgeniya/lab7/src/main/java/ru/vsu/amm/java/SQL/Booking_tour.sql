@@ -3,6 +3,7 @@ id_guide SERIAL PRIMARY KEY,
 Full_name VARCHAR(100) NOT NULL,
 Bio TEXT NOT NULL,
 Rating INTEGER NOT NULL,
+Languages STRING NOT NULL,
 E_mail VARCHAR(50) NOT NULL,
 Number_phone VARCHAR(20) NOT NULL
 );
@@ -43,7 +44,7 @@ CREATE TABLE Booking (
 id_booking SERIAL PRIMARY KEY,
 id_tour INTEGER NOT NULL REFERENCES Tour(id_tour),
 id_user INTEGER NOT NULL REFERENCES User_tour(id_user),
-Date DATE NOT NULL,
+Date_booking DATE NOT NULL,
 Count_participation INTEGER NOT NULL,
 Total_price INTEGER NOT NULL,
 Status VARCHAR(50) NOT NULL
