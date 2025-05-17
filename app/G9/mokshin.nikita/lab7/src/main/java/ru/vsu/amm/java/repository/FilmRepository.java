@@ -95,7 +95,7 @@ public class FilmRepository implements CrudRepository<Film> {
 
             logger.info("Film saved successfully: {}", film);
         } catch (SQLException e) {
-            logger.error("Error saving film: {}", e.getMessage());
+            logger.error("Error saving film {}: {}", film, e.getMessage());
             throw new SqlException(e.getMessage());
         }
     }
