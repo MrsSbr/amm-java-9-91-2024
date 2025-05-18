@@ -10,19 +10,16 @@ CREATE TABLE Author
 ALTER TABLE Author
 ADD CONSTRAINT pk_author PRIMARY KEY(id_author);
 
-ALTER TABLE Author
-ADD CONSTRAINT ch_date CHECK(registration_date <= CURRENT_DATE);
-
-CREATE TABLE Сategory
+CREATE TABLE Category
 (
 	id_category BIGSERIAL,
 	name_category TEXT NOT NULL
 );
 
-ALTER TABLE Сategory
+ALTER TABLE Category
 ADD CONSTRAINT pk_category PRIMARY KEY(id_category);
 
-ALTER TABLE Сategory
+ALTER TABLE Category
 ADD CONSTRAINT unique_name UNIQUE(name_category);
 
 CREATE TABLE Article
@@ -36,12 +33,9 @@ CREATE TABLE Article
 ALTER TABLE Article
 ADD CONSTRAINT pk_article PRIMARY KEY(id_article);
 
-ALTER TABLE Article
-ADD CONSTRAINT ch_date CHECK(date_publication <= CURRENT_DATE);
-
 ALTER TABLE Article ADD ref_category BIGINT;
 ALTER TABLE Article
-ADD CONSTRAINT fk_id_category FOREIGN KEY(ref_category) REFERENCES Сategory(id_category);
+ADD CONSTRAINT fk_id_category FOREIGN KEY(ref_category) REFERENCES Category(id_category);
 
 ALTER TABLE Article ADD ref_author BIGINT;
 ALTER TABLE Article
