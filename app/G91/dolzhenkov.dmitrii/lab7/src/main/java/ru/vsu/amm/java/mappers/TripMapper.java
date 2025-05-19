@@ -2,6 +2,8 @@ package ru.vsu.amm.java.mappers;
 
 import ru.vsu.amm.java.entities.TripEntity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.*;
 
 public class TripMapper {
@@ -34,17 +36,17 @@ public class TripMapper {
             preparedStatement.setNull(4, java.sql.Types.TIMESTAMP);
         }
 
-        preparedStatement.setDouble(5, entity.getStartLatitude());
-        preparedStatement.setDouble(6, entity.getStartLongitude());
+        preparedStatement.setDouble(5, roundCoordinate(entity.getStartLatitude()));
+        preparedStatement.setDouble(6, roundCoordinate(entity.getStartLongitude()));
 
         if (entity.getEndLatitude()!=null) {
-            preparedStatement.setDouble(7, entity.getEndLatitude());
+            preparedStatement.setDouble(7, roundCoordinate(entity.getEndLatitude()));
         } else {
             preparedStatement.setNull(7, Types.DOUBLE);
         }
 
         if (entity.getEndLongitude()!=null) {
-            preparedStatement.setDouble(8, entity.getEndLongitude());
+            preparedStatement.setDouble(8, roundCoordinate(entity.getEndLongitude()));
         } else {
             preparedStatement.setNull(8, Types.DOUBLE);
         }
@@ -62,20 +64,27 @@ public class TripMapper {
             preparedStatement.setNull(5, java.sql.Types.TIMESTAMP);
         }
 
-        preparedStatement.setDouble(6, entity.getStartLatitude());
-        preparedStatement.setDouble(7, entity.getStartLongitude());
+        preparedStatement.setDouble(6, roundCoordinate(entity.getStartLatitude()));
+        preparedStatement.setDouble(7, roundCoordinate(entity.getStartLongitude()));
 
         if (entity.getEndLatitude()!=null) {
-            preparedStatement.setDouble(8, entity.getEndLatitude());
+            preparedStatement.setDouble(8, roundCoordinate(entity.getEndLatitude()));
         } else {
             preparedStatement.setNull(8, Types.DOUBLE);
         }
 
         if (entity.getEndLongitude()!=null) {
-            preparedStatement.setDouble(9, entity.getEndLongitude());
+            preparedStatement.setDouble(9, roundCoordinate(entity.getEndLongitude()));
         } else {
             preparedStatement.setNull(9, Types.DOUBLE);
         }
         preparedStatement.setLong(10, entity.getId());
+    }
+
+    public static double roundCoordinate(double coordinate) {
+        if (coordinate < -180 || coordinate > 180) {
+            throw new IllegalArgumentException("Координата вне допустимого диапазона (-180 до 180)");
+        }
+        return BigDecimal.valueOf(coordinate).setScale(6, RoundingMode.HALF_UP).doubleValue();
     }
 }

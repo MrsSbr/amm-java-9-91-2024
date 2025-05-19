@@ -1,7 +1,6 @@
 package ru.vsu.amm.java.servlet;
 
 import ru.vsu.amm.java.dto.ScooterDto;
-import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.service.implementations.ScooterServiceImpl;
 import ru.vsu.amm.java.service.implementations.TripServiceImpl;
 import ru.vsu.amm.java.service.interfaces.ScooterService;

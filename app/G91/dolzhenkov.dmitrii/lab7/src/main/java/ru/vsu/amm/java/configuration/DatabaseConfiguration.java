@@ -10,20 +10,30 @@ import java.util.Properties;
 
 @Slf4j
 public class DatabaseConfiguration {
+
     public static DataSource getDataSource() {
+        return buildDataSource("database.properties");
+    }
+
+    public static DataSource getTestDataSource() {
+        return buildDataSource("test-database.properties");
+    }
+
+    private static DataSource buildDataSource(String fileName) {
         Properties properties = new Properties();
         try (InputStream inputStream = DatabaseConfiguration.class.getClassLoader()
-                .getResourceAsStream("database.properties")) {
+                .getResourceAsStream(fileName)) {
             properties.load(inputStream);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-            throw new RuntimeException(e.getMessage());
+        } catch (IOException | NullPointerException e) {
+            log.error("Ошибка при загрузке конфигурации БД из {}", fileName);
+            throw new RuntimeException("Не удалось загрузить настройки БД: " + fileName);
         }
+
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setUrl(properties.getProperty("db.url"));
         dataSource.setUser(properties.getProperty("db.user"));
         dataSource.setPassword(properties.getProperty("db.password"));
-        log.info("DataSource собран успешно.");
+        log.info("DataSource [{}] собран успешно.", fileName);
         return dataSource;
     }
 }

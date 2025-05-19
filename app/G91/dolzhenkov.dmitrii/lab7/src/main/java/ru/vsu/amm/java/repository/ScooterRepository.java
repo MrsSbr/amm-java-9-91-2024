@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static ru.vsu.amm.java.mappers.TripMapper.roundCoordinate;
+
 @Slf4j
 public class ScooterRepository implements CrudRepository<ScooterEntity>{
     private final DataSource dataSource;
@@ -68,8 +70,8 @@ public class ScooterRepository implements CrudRepository<ScooterEntity>{
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, entity.getModel());
-            preparedStatement.setDouble(2, entity.getLatitude());
-            preparedStatement.setDouble(3, entity.getLongitude());
+            preparedStatement.setDouble(2, roundCoordinate(entity.getLatitude()));
+            preparedStatement.setDouble(3, roundCoordinate(entity.getLongitude()));
             preparedStatement.setString(4, entity.getStatus().toString());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -84,8 +86,8 @@ public class ScooterRepository implements CrudRepository<ScooterEntity>{
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, entity.getModel());
-            preparedStatement.setDouble(2, entity.getLatitude());
-            preparedStatement.setDouble(3, entity.getLongitude());
+            preparedStatement.setDouble(2, roundCoordinate(entity.getLatitude()));
+            preparedStatement.setDouble(3, roundCoordinate(entity.getLongitude()));
             preparedStatement.setString(4, entity.getStatus().toString());
             preparedStatement.setLong(5, entity.getId());
             preparedStatement.executeUpdate();
