@@ -1,66 +1,58 @@
 package ru.vsu.amm.java.Servlet;
 
+
+import ru.vsu.amm.java.Service.Interface.AuthService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import ru.vsu.amm.java.Exception.DbException;
-import ru.vsu.amm.java.Model.Request.LoginRequest;
-import ru.vsu.amm.java.Model.Response.LoginResponse;
-import ru.vsu.amm.java.Service.Impl.DefaultAuthServiceImpl;
-import ru.vsu.amm.java.Service.Interface.AuthService;
-
 import java.io.IOException;
 
-@WebServlet(name = "LoginServlet", urlPatterns = "/login")
+@WebServlet(name = "AuthServlet", urlPatterns = "/signin")
 public class LoginServlet extends HttpServlet {
+    private static final String AUTH_VIEW  = "/signin.jsp";
+    private static final String ADD_SCOOTER_VIEW = "/addScooter.jsp";
+    private static final String MAIN_UI  = "/main.jsp";
 
-    private final AuthService authService;
-
-    private static final String LOGIN_PAGE = "/login.jsp";
-    private static final String HOME_PAGE = "/index.jsp";
-    private static final String ERROR_MESSAGE = "error";
-    private static final String EMAIL_PARAM = "email";
-    private static final String PASSWORD_PARAM = "password";
-    private static final String SESSION_EMAIL = "email";
-
-    private static final String DB_ERROR_MESSAGE = "Ошибка бд";
-    private static final String INVALID_CREDENTIALS_MESSAGE = "Неверные данные для входа";
 
     public LoginServlet() {
-        this.authService = new DefaultAuthServiceImpl();
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        showAccessInterface(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = req.getParameter(EMAIL_PARAM);
-        String password = req.getParameter(PASSWORD_PARAM);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("login");
+        String password = request.getParameter("password");
 
-        try {
-            LoginResponse loginResponse = authService.login(new LoginRequest(email, password));
+       // try {
+            //UserRole role = authService.login(new UserRequest(name, password));
 
-            if (loginResponse.code() == 200) {
-                HttpSession session = req.getSession();
-                session.setAttribute(SESSION_EMAIL, email);
-                resp.sendRedirect(HOME_PAGE);
-            } else {
-                req.setAttribute(ERROR_MESSAGE, loginResponse.message());
-                getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
-            }
-        } catch (DbException e) {
-            req.setAttribute(ERROR_MESSAGE, DB_ERROR_MESSAGE);
-            getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
-        } catch (Exception e) {
-            req.setAttribute(ERROR_MESSAGE, INVALID_CREDENTIALS_MESSAGE);
-            getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
-        }
+            HttpSession session = request.getSession();
+            session.setAttribute("login", name);
+           // switch (role) {
+             //   case USER -> response.sendRedirect(MAIN_UI);
+//case ADMIN -> response.sendRedirect(ADD_SCOOTER_VIEW);
+              //  case null, default -> {
+              //      request.setAttribute(ErrorMessages.ERROR_MESSAGE, ErrorMessages.FIND_USER_ROLE);
+//getServletContext().getRequestDispatcher(AUTH_VIEW).forward(request, response);
+              //  }
+//}
+       // } catch (WrongUserCredentialsException | DataAccessException e) {
+         //   request.setAttribute(ErrorMessages.ERROR_MESSAGE, e.getMessage());
+//getServletContext().getRequestDispatcher(AUTH_VIEW).forward(request, response);
+        //}
+    }
+
+    private void showAccessInterface(HttpServletRequest request,
+                                     HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher(AUTH_VIEW).forward(request, response);
     }
 }
