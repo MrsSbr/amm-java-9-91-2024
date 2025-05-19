@@ -1,15 +1,15 @@
 package ru.vsu.amm.java.Filter;
 
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import javax.servlet.annotation.WebFilter;
+
 
 import java.io.IOException;
 import java.util.logging.Logger;
 
-@WebFilter(filterName = "AuthFilter", urlPatterns = "/*")
 public class AuthFilter implements Filter {
 
     private static final Logger log = Logger.getLogger(AuthFilter.class.getName());

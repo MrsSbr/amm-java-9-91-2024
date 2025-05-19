@@ -10,12 +10,12 @@ import lombok.AllArgsConstructor;
 import ru.vsu.amm.java.Exception.DbException;
 import ru.vsu.amm.java.Model.Request.RegisterRequest;
 import ru.vsu.amm.java.Model.Response.RegisterResponse;
+import ru.vsu.amm.java.Service.Impl.DefaultAuthServiceImpl;
 import ru.vsu.amm.java.Service.Interface.AuthService;
 
 import java.io.IOException;
 
 @WebServlet(name = "RegisterServlet", urlPatterns = "/register")
-@AllArgsConstructor
 public class RegisterServlet extends HttpServlet {
 
     private final AuthService authService;
@@ -30,6 +30,10 @@ public class RegisterServlet extends HttpServlet {
     private static final String PHONE_PARAM = "phone";
 
     private static final String DB_ERROR_MESSAGE = "Ошибка бд";
+
+    public RegisterServlet() {
+        this.authService = new DefaultAuthServiceImpl();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

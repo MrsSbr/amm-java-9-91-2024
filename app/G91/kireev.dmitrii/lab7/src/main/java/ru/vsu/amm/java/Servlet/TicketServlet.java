@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import ru.vsu.amm.java.Exception.DbException;
 import ru.vsu.amm.java.Model.Entity.TicketEntity;
 import ru.vsu.amm.java.Model.Enum.TicketStatus;
+import ru.vsu.amm.java.Service.Impl.DefaultTicketServiceImpl;
 import ru.vsu.amm.java.Service.Interface.TicketService;
 
 import javax.servlet.ServletException;
@@ -15,7 +16,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
 @WebServlet(name = "TicketServlet", urlPatterns = "/ticket")
-@RequiredArgsConstructor
 public class TicketServlet extends HttpServlet {
 
     private final TicketService ticketService;
@@ -35,6 +35,10 @@ public class TicketServlet extends HttpServlet {
     private static final String START_TIME_PARAM = "startTime";
     private static final String END_TIME_PARAM = "endTime";
     private static final String TICKET_ID_PARAM = "ticketId";
+
+    public TicketServlet() {
+        this.ticketService = new DefaultTicketServiceImpl();
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

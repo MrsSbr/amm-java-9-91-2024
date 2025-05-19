@@ -3,6 +3,7 @@ package ru.vsu.amm.java.Servlet;
 import lombok.AllArgsConstructor;
 import ru.vsu.amm.java.Exception.DbException;
 import ru.vsu.amm.java.Model.Entity.FilmEntity;
+import ru.vsu.amm.java.Service.Impl.DefaultFilmServiceImpl;
 import ru.vsu.amm.java.Service.Interface.FilmService;
 
 import javax.servlet.ServletException;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name = "FilmServlet", urlPatterns = "/films")
-@AllArgsConstructor
 public class FilmServlet extends HttpServlet {
 
     private final FilmService filmService;
@@ -34,6 +34,10 @@ public class FilmServlet extends HttpServlet {
 
     private static final String ERROR_FETCHING_FILMS = "Ошибка при получении списка фильмов";
     private static final String ERROR_PROCESSING_FILM = "Ошибка при обработке фильма";
+
+    public FilmServlet() {
+        this.filmService = new DefaultFilmServiceImpl();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

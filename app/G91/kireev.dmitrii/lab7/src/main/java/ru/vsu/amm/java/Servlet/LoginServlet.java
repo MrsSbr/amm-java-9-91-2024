@@ -1,21 +1,21 @@
 package ru.vsu.amm.java.Servlet;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import lombok.AllArgsConstructor;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import ru.vsu.amm.java.Exception.DbException;
 import ru.vsu.amm.java.Model.Request.LoginRequest;
 import ru.vsu.amm.java.Model.Response.LoginResponse;
+import ru.vsu.amm.java.Service.Impl.DefaultAuthServiceImpl;
 import ru.vsu.amm.java.Service.Interface.AuthService;
 
 import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/login")
-@AllArgsConstructor
 public class LoginServlet extends HttpServlet {
 
     private final AuthService authService;
@@ -30,9 +30,13 @@ public class LoginServlet extends HttpServlet {
     private static final String DB_ERROR_MESSAGE = "Ошибка бд";
     private static final String INVALID_CREDENTIALS_MESSAGE = "Неверные данные для входа";
 
+    public LoginServlet() {
+        this.authService = new DefaultAuthServiceImpl();
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
+        req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
     }
 
     @Override
