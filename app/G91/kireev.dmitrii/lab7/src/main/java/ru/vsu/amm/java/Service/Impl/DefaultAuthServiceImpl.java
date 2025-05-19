@@ -34,7 +34,7 @@ public class DefaultAuthServiceImpl implements AuthService {
     private static final Logger log = Logger.getLogger(DefaultAuthServiceImpl.class.getName());
 
     public DefaultAuthServiceImpl() {
-        this.userRepo = new UserRepo(DatabaseConfig.getDataSource(), new UserMapper());
+        this.userRepo = new UserRepo();
         this.bcryptPasswordEncoder = new BcryptPasswordEncoder();
     }
 
