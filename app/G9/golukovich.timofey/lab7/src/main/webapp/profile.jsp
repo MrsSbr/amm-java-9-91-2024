@@ -59,6 +59,14 @@
             background-color: #cccccc;
             cursor: not-allowed;
         }
+        .error {
+             color: red;
+             margin-bottom: 10px;
+         }
+        .success {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
     </style>
     <script>
         function toggleEdit() {
@@ -80,6 +88,23 @@
     </script>
 </head>
 <body>
+<c:if test="${not empty sessionScope.errorMessage}">
+    <div class="error">${sessionScope.errorMessage}</div>
+    <% session.removeAttribute("errorMessage"); %>
+</c:if>
+<c:if test="${not empty sessionScope.successMessage}">
+    <div class="success">${sessionScope.successMessage}</div>
+    <% session.removeAttribute("successMessage"); %>
+</c:if>
+<c:if test="${not empty requestScope.errorMessage}">
+    <div class="error">${requestScope.errorMessage}</div>
+    <% request.removeAttribute("errorMessage"); %>
+</c:if>
+<c:if test="${not empty requestScope.successMessage}">
+    <div class="error">${requestScope.successMessage}</div>
+    <% request.removeAttribute("successMessage"); %>
+</c:if>
+
 <div class="profile-section">
     <h2>My Profile</h2>
     <form id="profileForm" action="${pageContext.request.contextPath}/api/profile" method="POST">

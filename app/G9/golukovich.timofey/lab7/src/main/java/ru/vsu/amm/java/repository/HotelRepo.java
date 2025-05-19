@@ -21,7 +21,11 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
 
     @Override
     public Optional<HotelEntity> getById(int id) throws SQLException {
-        final String query = "SELECT hotel_id, hotel_name, address, email, phone_number, opening_date FROM hotel WHERE hotel_id = ?";
+        final String query = """
+                SELECT hotel_id, hotel_name, address, email, phone_number, opening_date
+                FROM hotel
+                WHERE hotel_id = ?
+                FOR UPDATE""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -38,7 +42,10 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
 
     @Override
     public List<HotelEntity> getAll() throws SQLException {
-        final String query = "SELECT hotel_id, hotel_name, address, email, phone_number, opening_date FROM hotel";
+        final String query = """
+                SELECT hotel_id, hotel_name, address, email, phone_number, opening_date
+                FROM hotel
+                FOR UPDATE""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);

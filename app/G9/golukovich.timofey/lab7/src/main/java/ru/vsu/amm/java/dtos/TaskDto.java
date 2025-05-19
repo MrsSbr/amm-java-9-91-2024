@@ -92,6 +92,10 @@ public class TaskDto {
     }
 
     public String getFormattedUpdatedAt() {
-        return updatedAt.format(DateTimeFormatter.ofPattern("HH:mm:ss yyyy-MM-dd"));
+        if (updatedAt != null) {
+            return updatedAt.format(DateTimeFormatter.ofPattern("HH:mm:ss yyyy-MM-dd"));
+        } else {
+            return "";
+        }
     }
 }

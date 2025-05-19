@@ -28,7 +28,8 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
         final String query = """
                 SELECT employee_id, hotel_id, login, password, name, phone_number,
                 email, passport_number, passport_series, post, birthday
-                FROM employee WHERE employee_id = ?""";
+                FROM employee WHERE employee_id = ?
+                FOR UPDATE""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -48,7 +49,8 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
         final String query = """
                 SELECT employee_id, hotel_id, login, password, name, phone_number, email,
                 passport_number, passport_series, post, birthday
-                FROM employee""";
+                FROM employee
+                FOR UPDATE""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -122,7 +124,8 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
         final String query = """
                 SELECT employee_id, hotel_id, login, password, name, phone_number,
                 email, passport_number, passport_series, post, birthday
-                FROM employee WHERE login LIKE ?""";
+                FROM employee WHERE login LIKE ?
+                FOR UPDATE""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -145,16 +148,17 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
                 SELECT employee_id, hotel_id, login, password, name, phone_number,
                 email, passport_number, passport_series, post, birthday
                 FROM employee
-                WHERE ? IS NOT NULL AND employee_id = ?
-                    OR ? IS NOT NULL AND hotel_id = ?
-                    OR ? IS NOT NULL AND login LIKE ?
-                    OR ? IS NOT NULL AND name LIKE ?
-                    OR ? IS NOT NULL AND phone_number LIKE ?
-                    OR ? IS NOT NULL AND email LIKE ?
-                    OR ? IS NOT NULL AND passport_number LIKE ?
-                        AND ? IS NOT NULL AND passport_series LIKE ?
-                    OR ? IS NOT NULL AND post LIKE ?
-                    OR ? IS NOT NULL AND birthday = ?""";
+                WHERE COALESCE(?, -1) = employee_id
+                    OR COALESCE(?, -1) = hotel_id
+                    OR COALESCE(?, '') LIKE login
+                    OR COALESCE(?, '') LIKE name
+                    OR COALESCE(?, '') LIKE phone_number
+                    OR COALESCE(?, '') LIKE email
+                    OR COALESCE(?, '') LIKE passport_number
+                        AND COALESCE(?, '') LIKE passport_series
+                    OR COALESCE(?, '') LIKE post
+                    OR COALESCE(?, now()) = birthday
+                FOR UPDATE""";
 
         var connection = dataSource.getConnection();
 
@@ -162,82 +166,62 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
 
         if (employee_id == null) {
             preparedStatement.setNull(1, Types.INTEGER);
-            preparedStatement.setNull(2, Types.INTEGER);
         } else {
             preparedStatement.setInt(1, employee_id);
-            preparedStatement.setInt(2, employee_id);
         }
 
         if (hotel_id == null) {
-            preparedStatement.setNull(3, Types.INTEGER);
-            preparedStatement.setNull(4, Types.INTEGER);
+            preparedStatement.setNull(2, Types.INTEGER);
         } else {
-            preparedStatement.setInt(3, hotel_id);
-            preparedStatement.setInt(4, hotel_id);
+            preparedStatement.setInt(2, hotel_id);
         }
 
         if (login == null) {
-            preparedStatement.setNull(5, Types.VARCHAR);
-            preparedStatement.setNull(6, Types.VARCHAR);
+            preparedStatement.setNull(3, Types.VARCHAR);
         } else {
-            preparedStatement.setString(5, login);
-            preparedStatement.setString(6, login);
+            preparedStatement.setString(3, login);
         }
 
         if (name == null) {
-            preparedStatement.setNull(7, Types.VARCHAR);
-            preparedStatement.setNull(8, Types.VARCHAR);
+            preparedStatement.setNull(4, Types.VARCHAR);
         } else {
-            preparedStatement.setString(7, name);
-            preparedStatement.setString(8, name);
+            preparedStatement.setString(4, name);
         }
 
         if (phone_number == null) {
-            preparedStatement.setNull(9, Types.VARCHAR);
-            preparedStatement.setNull(10, Types.VARCHAR);
+            preparedStatement.setNull(5, Types.VARCHAR);
         } else {
-            preparedStatement.setString(9, phone_number);
-            preparedStatement.setString(10, phone_number);
+            preparedStatement.setString(5, phone_number);
         }
 
         if (email == null) {
-            preparedStatement.setNull(11, Types.VARCHAR);
-            preparedStatement.setNull(12, Types.VARCHAR);
+            preparedStatement.setNull(6, Types.VARCHAR);
         } else {
-            preparedStatement.setString(11, email);
-            preparedStatement.setString(12, email);
+            preparedStatement.setString(6, email);
         }
 
         if (passport_number == null) {
-            preparedStatement.setNull(13, Types.VARCHAR);
-            preparedStatement.setNull(14, Types.VARCHAR);
+            preparedStatement.setNull(7, Types.VARCHAR);
         } else {
-            preparedStatement.setString(13, passport_number);
-            preparedStatement.setString(14, passport_number);
+            preparedStatement.setString(7, passport_number);
         }
 
         if (passport_series == null) {
-            preparedStatement.setNull(15, Types.VARCHAR);
-            preparedStatement.setNull(16, Types.VARCHAR);
+            preparedStatement.setNull(8, Types.VARCHAR);
         } else {
-            preparedStatement.setString(15, passport_series);
-            preparedStatement.setString(16, passport_series);
+            preparedStatement.setString(8, passport_series);
         }
 
         if (post == null) {
-            preparedStatement.setNull(17, Types.VARCHAR);
-            preparedStatement.setNull(18, Types.VARCHAR);
+            preparedStatement.setNull(9, Types.VARCHAR);
         } else {
-            preparedStatement.setString(17, post);
-            preparedStatement.setString(18, post);
+            preparedStatement.setString(9, post);
         }
 
         if (birthday == null) {
-            preparedStatement.setNull(19, Types.DATE);
-            preparedStatement.setNull(20, Types.DATE);
+            preparedStatement.setNull(10, Types.DATE);
         } else {
-            preparedStatement.setDate(19, Date.valueOf(birthday));
-            preparedStatement.setDate(20,  Date.valueOf(birthday));
+            preparedStatement.setDate(10, Date.valueOf(birthday));
         }
 
         preparedStatement.execute();

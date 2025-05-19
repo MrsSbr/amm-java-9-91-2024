@@ -70,6 +70,10 @@ public class HotelDto {
     }
 
     public String getFormattedOpeningDate() {
-        return openingDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        if (openingDate != null) {
+            return openingDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        } else {
+            return "";
+        }
     }
 }

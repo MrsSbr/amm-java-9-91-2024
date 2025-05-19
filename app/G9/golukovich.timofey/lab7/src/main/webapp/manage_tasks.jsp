@@ -45,7 +45,7 @@
         }
         .edit-btn {
             padding: 5px 10px;
-            background: #4CAF50;
+            background: #2196F3;
             color: white;
             text-decoration: none;
             border-radius: 4px;
@@ -53,15 +53,19 @@
         .delete-form {
             display: inline;
         }
-        .edit-form {
-            display: none;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 10px;
+        .delete-btn {
+            padding: 5px 10px;
+            background: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
         }
-        .edit-form.active {
-            display: block;
+        .save-btn {
+            padding: 5px 10px;
+            background: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
         }
         .form-row {
             margin-bottom: 10px;
@@ -71,16 +75,10 @@
         }
         select, input[type="text"] {
             padding: 6px;
-            width: 200px;
+            width: 160px;
         }
         .form-actions {
             margin-top: 10px;
-        }
-        .header-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
         }
         .add-button {
             background: #4CAF50;
@@ -308,22 +306,14 @@
                                   method="POST">
                                 <input type="hidden" name="task_id" value="${task.id}">
                                 <input type="hidden" name="task_employee_login" value="${task.employeeLogin}">
-                                <button type="submit" style="background:none; border:none; cursor:pointer;">
+                                <button type="submit" class="delete-btn" style="cursor:pointer;">
                                     🗑️
                                 </button>
                             </form>
 
-<%--                            <form action="${pageContext.request.contextPath}/api/edit_task" method="POST">--%>
-<%--                                <input type="hidden" name="task_id" value="${task.id}">--%>
-<%--                                <input type="hidden" name="task_manager_login" value="managerLogin">--%>
-<%--                                <input type="hidden" name="task_employee_login" value="employeeLogin">--%>
-<%--                                <input type="hidden" name="task_hotel_room_id" value="hotelRoomId">--%>
-<%--                                <input type="hidden" name="task_status" value="status">--%>
-<%--                                <input type="hidden" name="task_description" value="${description.value}">--%>
-                                <button id="saveBtn" disabled hidden type="submit" style="background:none; border:none; cursor:pointer;">
-                                    ✔️
-                                </button>
-<%--                            </form>--%>
+                            <button id="saveBtn" class="save-btn" disabled hidden type="submit" style="cursor:pointer;">
+                                ✔️
+                            </button>
                         </div>
                     </td>
                 </tr>

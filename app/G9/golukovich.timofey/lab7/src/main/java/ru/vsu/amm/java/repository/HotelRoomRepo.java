@@ -22,7 +22,9 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
     public Optional<HotelRoomEntity> getById(int id) throws SQLException {
         final String query = """
                 SELECT room_id, hotel_id, room_number, floor_number, beds_count, specifications
-                FROM hotel_room WHERE room_id = ?""";
+                FROM hotel_room
+                WHERE room_id = ?
+                FOR UPDATE""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -39,7 +41,10 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
 
     @Override
     public List<HotelRoomEntity> getAll() throws SQLException {
-        final String query = "SELECT room_id, hotel_id, room_number, floor_number, beds_count, specifications FROM hotel_room";
+        final String query = """
+                SELECT room_id, hotel_id, room_number, floor_number, beds_count, specifications
+                FROM hotel_room
+                FOR UPDATE""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -57,7 +62,11 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
     }
 
     public List<HotelRoomEntity> getAllByHotelId(int hotelId) throws SQLException {
-        final String query = "SELECT room_id, hotel_id, room_number, floor_number, beds_count, specifications FROM hotel_room WHERE hotel_id = ?";
+        final String query = """
+                SELECT room_id, hotel_id, room_number, floor_number, beds_count, specifications
+                FROM hotel_room
+                WHERE hotel_id = ?
+                FOR UPDATE""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);

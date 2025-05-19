@@ -73,6 +73,10 @@ public class EmployeeDto {
     }
 
     public String getFormattedBirthday() {
-        return birthday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        if (birthday != null) {
+            return birthday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        } else {
+            return "";
+        }
     }
 }

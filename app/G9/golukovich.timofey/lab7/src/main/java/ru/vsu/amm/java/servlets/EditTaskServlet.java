@@ -24,9 +24,9 @@ public class EditTaskServlet extends HttpServlet {
             var employee = (EmployeeDto) session.getAttribute("employee");
 
             var taskId = Integer.parseInt(req.getParameter("task_id"));
-            var updatedManagerLogin = (String) req.getParameter("managerLogin");
-            var currentEmployeeLogin = (String) req.getParameter("employeeLogin");
-            var updatedHotelRoomId = Integer.parseInt(req.getParameter("hotel_room_id"));
+            var updatedManagerLogin = (String) req.getParameter("task_manager_login");
+            var currentEmployeeLogin = (String) req.getParameter("task_employee_login");
+            var updatedHotelRoomId = Integer.parseInt(req.getParameter("task_hotel_room_id"));
             var updatedStatus = req.getParameter("task_status");
             var updatedDescription = req.getParameter("task_description");
 

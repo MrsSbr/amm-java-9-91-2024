@@ -23,7 +23,11 @@ public class TaskRepo implements CrudRepo<TaskEntity> {
 
     @Override
     public Optional<TaskEntity> getById(int id) throws SQLException {
-        final String query = "SELECT task_id, employee_id, hotel_room_id, manager_id, status, description, created_at, updated_at FROM task WHERE task_id = ?";
+        final String query = """
+                SELECT task_id, employee_id, hotel_room_id, manager_id, status, description, created_at, updated_at
+                FROM task
+                WHERE task_id = ?
+                FOR UPDATE""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -40,7 +44,10 @@ public class TaskRepo implements CrudRepo<TaskEntity> {
 
     @Override
     public List<TaskEntity> getAll() throws SQLException {
-        final String query = "SELECT task_id, employee_od, hotel_room_id, manager_id, status, description, created_at, updated_at FROM task";
+        final String query = """
+                SELECT task_id, employee_od, hotel_room_id, manager_id, status, description, created_at, updated_at
+                FROM task
+                FOR UPDATE""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -61,7 +68,8 @@ public class TaskRepo implements CrudRepo<TaskEntity> {
         final String query = """
                 SELECT task_id, employee_id, hotel_room_id, manager_id, status, description, created_at, updated_at
                 FROM task
-                WHERE employee_id = ?""";
+                WHERE employee_id = ?
+                FOR UPDATE""";
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -82,7 +90,7 @@ public class TaskRepo implements CrudRepo<TaskEntity> {
     @Override
     public void update(TaskEntity entity) throws SQLException {
         final String query = """
-                UPDATE task SET employee_id = ?, hotel_room_id = ?, manager_id = ?, status = ?, description = ?, created_at = ?, updated_at = ?
+                UPDATE taskSET employee_id = ?, hotel_room_id = ?, manager_id = ?, status = ?, description = ?, created_at = ?, updated_at = ?
                 WHERE task_id = ?""";
         var connection = dataSource.getConnection();
 

@@ -16,17 +16,17 @@ import java.util.logging.Logger;
 
 @WebListener
 public class MasterAdminInitializer implements ServletContextListener {
-    private final String MASTER_ADMIN_LOGIN;
-    private final String MASTER_ADMIN_PASSWORD;
+    private record MasterAdminData(String login, String password) {
+    }
+
+    private final MasterAdminData masterAdminData;
     private static final Logger logger = Logger.getLogger(MasterAdminInitializer.class.getName());
     private final DataSource dataSource;
 
     public MasterAdminInitializer() {
         super();
         dataSource = DatabaseConfiguration.getDataSource();
-        var masterAdminData = getMasterAdminData();
-        MASTER_ADMIN_LOGIN = masterAdminData[0];
-        MASTER_ADMIN_PASSWORD = masterAdminData[1];
+        masterAdminData = getMasterAdminData();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class MasterAdminInitializer implements ServletContextListener {
         }
     }
 
-    private String[] getMasterAdminData() {
+    private MasterAdminData getMasterAdminData() {
         var prop = new Properties();
         try (InputStream input = DatabaseConfiguration.class.getClassLoader()
                 .getResourceAsStream("master_admin.properties")) {
@@ -52,22 +52,19 @@ public class MasterAdminInitializer implements ServletContextListener {
             throw new RuntimeException(e.getMessage());
         }
 
-        var data = new String[2];
-        data[0] = prop.getProperty("master_admin.login");
-        data[1] = prop.getProperty("master_admin.password");
-        return data;
+        return new MasterAdminData(prop.getProperty("master_admin.login"), prop.getProperty("master_admin.password"));
     }
 
     private boolean isMasterAdminExists() throws SQLException {
         final String query = """
-                    SELECT 1
-                    FROM employee
-                    WHERE login = ?""";
+                SELECT 1
+                FROM employee
+                WHERE login = ?""";
 
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, MASTER_ADMIN_LOGIN);
+        preparedStatement.setString(1, masterAdminData.login);
         preparedStatement.execute();
 
         var resultSet = preparedStatement.getResultSet();
@@ -76,14 +73,14 @@ public class MasterAdminInitializer implements ServletContextListener {
 
     private void createMasterAdmin() throws SQLException {
         final String query = """
-                    INSERT INTO employee (login, password, post)
-                    VALUES(?, ?, ?)""";
+                INSERT INTO employee (login, password, post)
+                VALUES(?, ?, ?)""";
 
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, MASTER_ADMIN_LOGIN);
-        preparedStatement.setString(2, BCrypt.hashpw(MASTER_ADMIN_PASSWORD, BCrypt.gensalt()));
+        preparedStatement.setString(1, masterAdminData.login);
+        preparedStatement.setString(2, BCrypt.hashpw(masterAdminData.password, BCrypt.gensalt()));
         preparedStatement.setString(3, EmployeePost.MASTER_ADMINISTRATOR.toString());
         preparedStatement.execute();
     }
