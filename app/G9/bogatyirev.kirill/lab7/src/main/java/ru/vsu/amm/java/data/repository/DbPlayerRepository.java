@@ -21,7 +21,7 @@ public class DbPlayerRepository implements DbRepository<DbPlayer> {
     @Override
     public DbPlayer findById(Long id) throws SQLException {
 
-        final String query = "SELECT * FROM player WHERE id = ?";
+        final String query = "SELECT id, login, password, email FROM player WHERE id = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);

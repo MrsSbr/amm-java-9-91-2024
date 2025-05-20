@@ -27,7 +27,7 @@ public class DbWordToActionRepository implements DbRepository<DbWordToAction> {
     @Override
     public DbWordToAction findById(Long id) throws SQLException {
 
-        final String query = "SELECT * FROM WordToAction WHERE id = ?";
+        final String query = "SELECT id, word, action_id, card_id FROM WordToAction WHERE id = ?";
 
         Connection connection = datasource.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);

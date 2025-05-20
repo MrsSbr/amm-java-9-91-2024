@@ -24,7 +24,7 @@ public class DbCardRepository implements DbRepository<DbCard> {
 
     @Override
     public DbCard findById(Long id) throws SQLException {
-        final String query = "SELECT * FROM card WHERE id = ?";
+        final String query = "SELECT id, topic, difficulty, player_id FROM card WHERE id = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);

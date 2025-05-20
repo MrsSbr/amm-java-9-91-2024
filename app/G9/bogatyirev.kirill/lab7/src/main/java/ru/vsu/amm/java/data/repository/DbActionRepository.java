@@ -25,7 +25,7 @@ public class DbActionRepository implements DbRepository<DbAction> {
     @Override
     public DbAction findById(Long id) throws SQLException {
 
-        final String query = "SELECT * FROM action WHERE id = ?";
+        final String query = "SELECT id, name, points FROM action WHERE id = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
@@ -93,7 +93,7 @@ public class DbActionRepository implements DbRepository<DbAction> {
 
     public List<DbAction> getAllActions() throws SQLException {
 
-        final String query = "SELECT * FROM Action";
+        final String query = "SELECT id, name, points FROM Action";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
