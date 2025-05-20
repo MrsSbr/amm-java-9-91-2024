@@ -15,7 +15,7 @@
 <form action="register" method="post">
     <p>
         <b>Логин:</b><br>
-        <input type="text" name="login" size="30">
+        <input type="text" name="login" size="30" value="${savedLogin}">
     </p>
     <p>
         <b>Пароль:</b><br>
@@ -23,15 +23,15 @@
     </p>
     <p>
         <b>Email:</b><br>
-        <input type="text" name="email" size="30">
+        <input type="text" name="email" size="30" value="${savedEmail}">
     </p>
     <p>
         <b>Ник:</b><br>
-        <input type="text" name="nickname" size="30">
+        <input type="text" name="nickname" size="30" value="${savedNickname}">
     </p>
     <p>
         <b>Номер телефона:</b><br>
-        <input type="text" name="phonenumber" size="30">
+        <input type="text" name="phonenumber" size="30" value="${savedPhonenumber}">
     </p>
     <p>
         <input type="submit" value="ОК">

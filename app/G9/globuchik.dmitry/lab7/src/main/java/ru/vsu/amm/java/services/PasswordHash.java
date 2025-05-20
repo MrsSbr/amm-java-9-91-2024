@@ -13,7 +13,8 @@ public class PasswordHash {
     private final int SALTSIZE = 16;
     private final String ALGORITHM = "PBKDF2WithHmacSHA1";
 
-    public PasswordHash() {}
+    public PasswordHash() {
+    }
 
     public final byte[][] encrypt(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SecureRandom random = new SecureRandom();

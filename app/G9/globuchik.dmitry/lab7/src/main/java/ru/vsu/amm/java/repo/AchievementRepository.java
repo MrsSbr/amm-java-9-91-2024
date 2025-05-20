@@ -60,6 +60,16 @@ public class AchievementRepository implements Repository<Achievement> {
         }
     }
 
+    public void insertAchievements(Long userId) throws SQLException {
+        final String sql = "INSERT INTO earnedachievement (achievement_id, user_id, obtainedat, status) " +
+                "SELECT a.id, ?, NULL, 'LOCKED' FROM achievement a";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setLong(1, userId);
+            statement.executeUpdate();
+        }
+    }
+
     @Override
     public void update(Achievement object) {
 

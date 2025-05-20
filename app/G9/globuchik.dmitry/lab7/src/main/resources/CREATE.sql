@@ -1,6 +1,6 @@
---DROP TABLE IF EXISTS achievement CASCADE;
---DROP TABLE IF EXISTS userentity CASCADE;
---DROP TABLE IF EXISTS earnedachievement CASCADE;
+DROP TABLE IF EXISTS achievement CASCADE;
+DROP TABLE IF EXISTS userentity CASCADE;
+DROP TABLE IF EXISTS earnedachievement CASCADE;
 
 CREATE TABLE achievement
 (
@@ -26,11 +26,15 @@ CREATE TABLE earnedachievement
     id              BIGSERIAL PRIMARY KEY,
     achievement_id  BIGINT NOT NULL,
     user_id         BIGINT NOT NULL,
-    obtainedat      TIME NOT NULL,
+    obtainedat      TIME,
     status          TEXT NOT NULL,
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES userentity (id),
     CONSTRAINT fk_achievement FOREIGN KEY (achievement_id) REFERENCES achievement (id)
 );
+
+INSERT INTO achievement (name, description, type)
+VALUES ('test', 'test_desc', 'COMMON');
+
 
 CREATE INDEX idx_user_id_earnedachievement ON earnedachievement(user_id);
 CREATE INDEX idx_earnedachievement_id_achievement ON earnedachievement(achievement_id);
@@ -38,3 +42,5 @@ CREATE INDEX idx_earnedachievement_id_achievement ON earnedachievement(achieveme
 SELECT * FROM userentity;
 
 TRUNCATE TABLE userentity CASCADE ;
+
+SELECT * FROM earnedachievement;

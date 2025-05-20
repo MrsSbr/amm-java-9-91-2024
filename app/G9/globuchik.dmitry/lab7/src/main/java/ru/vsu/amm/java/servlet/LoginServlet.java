@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        AuthenticationService service = new AuthenticationService(); //TODO EXCEPTION HANDLER + CHANGE LOGIC + ADD FILTERS
+        AuthenticationService service = new AuthenticationService();
         if (service.login(login, password)) {
             HttpSession session = req.getSession();
             session.setAttribute("login", login);

@@ -2,12 +2,12 @@ package ru.vsu.amm.java.entity;
 
 public class UserEntity {
     private Long id;
-    private String login;
-    private String nickname;
-    private String phoneNumber;
-    private String passwordHash;
-    private String email;
-    private String salt;
+    private final String login;
+    private final String nickname;
+    private final String phoneNumber;
+    private final String passwordHash;
+    private final String email;
+    private final String salt;
 
 
     public UserEntity(Long id, String login, String nickname, String phoneNumber, String passwordHash, String email, String salt) {
@@ -39,6 +39,10 @@ public class UserEntity {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -57,9 +61,5 @@ public class UserEntity {
 
     public String getEmail() {
         return email;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 }

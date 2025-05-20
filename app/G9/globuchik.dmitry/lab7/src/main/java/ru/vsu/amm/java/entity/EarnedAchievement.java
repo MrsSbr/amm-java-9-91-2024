@@ -42,4 +42,5 @@ public class EarnedAchievement {
     public void setStatus(AchievementStatus status) {
         this.status = status;
     }
+
 }

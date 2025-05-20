@@ -3,6 +3,7 @@ package ru.vsu.amm.java.services;
 import ru.vsu.amm.java.DatabaseAccess;
 import ru.vsu.amm.java.entity.UserEntity;
 import ru.vsu.amm.java.exceptions.AuthenticationException;
+import ru.vsu.amm.java.repo.AchievementRepository;
 import ru.vsu.amm.java.repo.UserRepository;
 
 import java.io.IOException;
@@ -14,10 +15,10 @@ import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 public class AuthenticationService {
-    private static final Logger logger = Logger.getLogger(AuthenticationService.class.getName());
+    private final Logger logger = Logger.getLogger(AuthenticationService.class.getName());
     private final UserRepository userRepository = new UserRepository(DatabaseAccess.getDataSource());
-    ;
 
     public AuthenticationService() throws IOException {
         logger.log(Level.INFO, "Initializing Authentication Service");
@@ -67,9 +68,15 @@ public class AuthenticationService {
                         Base64.getEncoder().encodeToString(passwordHash),
                         email,
                         Base64.getEncoder().encodeToString(salt));
-                return userRepository.save(authUser);
+                boolean saved = userRepository.save(authUser);
+                if (saved) {
+                    logger.log(Level.INFO, "Successfully registered");
+                    AchievementRepository achievementRepository = new AchievementRepository(DatabaseAccess.getDataSource());
+                    achievementRepository.insertAchievements(authUser.getId());
+                }
+                return saved;
             }
-        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException | IOException e) {
             throw new RuntimeException(e);
         }
         return false;

@@ -1,18 +1,14 @@
 package ru.vsu.amm.java.repo;
 
 import ru.vsu.amm.java.entity.EarnedAchievement;
-
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Optional;
-
 import ru.vsu.amm.java.enums.AchievementStatus;
 
+import javax.sql.DataSource;
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class EarnedAchievementRepository implements Repository<EarnedAchievement> {
     private final DataSource dataSource;
@@ -59,6 +55,40 @@ public class EarnedAchievementRepository implements Repository<EarnedAchievement
                             resultSet.getLong("user_id"),
                             resultSet.getTimestamp("obtainedat").toLocalDateTime(),
                             AchievementStatus.valueOf(resultSet.getString("status"))));
+                }
+                return achievements;
+            }
+        }
+    }
+
+    public List<EarnedAchievement> findAllForUser(Long userId) throws SQLException {
+        final String sql = "SELECT id, achievement_id, user_id, obtainedat, status "
+                + "FROM earnedachievement "
+                + "WHERE user_id = ? "
+                + "ORDER BY achievement_id";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setLong(1, userId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                List<EarnedAchievement> achievements = new ArrayList<>();
+                while (resultSet.next()) {
+                    Timestamp obtainedAtTimestamp = resultSet.getTimestamp("obtainedat");
+                    LocalDateTime obtainedAt = null;
+
+                    if (!resultSet.wasNull()) {
+                        obtainedAt = obtainedAtTimestamp.toLocalDateTime();
+                    }
+
+                    achievements.add(new EarnedAchievement(
+                            resultSet.getLong("id"),
+                            resultSet.getLong("achievement_id"),
+                            resultSet.getLong("user_id"),
+                            obtainedAt,
+                            AchievementStatus.valueOf(resultSet.getString("status"))
+                    ));
                 }
                 return achievements;
             }

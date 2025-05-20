@@ -1,7 +1,6 @@
 package ru.vsu.amm.java.servlet;
 
 import lombok.AllArgsConstructor;
-
 import ru.vsu.amm.java.services.AuthenticationService;
 
 import javax.servlet.ServletException;
@@ -28,10 +27,29 @@ public class RegisterServlet extends HttpServlet {
         String nickname = req.getParameter("nickname");
         String phonenumber = req.getParameter("phonenumber");
 
-        AuthenticationService service = new AuthenticationService();  //TODO EXCEPTION HANDLER + REDIRECT TO HOME + ADD ALL ACHIEVEMENTS TO earnedachievement of this user
-        service.register(login, password, email, nickname, phonenumber);
+        AuthenticationService service = new AuthenticationService();
+        try {
+            boolean isRegistered = service.register(login, password, email, nickname, phonenumber);
+            if (isRegistered) {
+                HttpSession session = req.getSession();
+                session.setAttribute("login", login);
+                resp.sendRedirect("/laba7/home");
+            } else {
+                setSavedAttributes(req, login, email, nickname, phonenumber);
+                req.setAttribute("errorMessage", "Такой пользователь уже зарегестрирован");
+                req.getRequestDispatcher("/register.jsp").forward(req, resp);
+            }
+        } catch (Exception e) {
+            setSavedAttributes(req, login, email, nickname, phonenumber);
+            req.setAttribute("errorMessage", "Ошибка регистрации. Попробуйте снова.");
+            req.getRequestDispatcher("/register.jsp").forward(req, resp);
+        }
+    }
 
-        HttpSession session = req.getSession();
-        session.setAttribute("login", login);
+    private void setSavedAttributes(HttpServletRequest req, String login, String email, String nickname, String phonenumber) {
+        req.setAttribute("savedLogin", login);
+        req.setAttribute("savedEmail", email);
+        req.setAttribute("savedNickname", nickname);
+        req.setAttribute("savedPhonenumber", phonenumber);
     }
 }
