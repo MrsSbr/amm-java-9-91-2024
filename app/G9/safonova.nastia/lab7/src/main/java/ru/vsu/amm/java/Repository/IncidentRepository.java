@@ -4,7 +4,11 @@ import ru.vsu.amm.java.Configuration.DbConfiguration;
 import ru.vsu.amm.java.Entities.Incident;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +23,7 @@ public class IncidentRepository implements DbRepository<Incident> {
 
     @Override
     public Optional<Incident> findById(Long id) throws SQLException {
-        final String query = "SELECT IdIncident, EmplId, DinoId, DateOfIncident, Description FROM Incident WHERE IdIncident = ?";
+        final String query = "SELECT IdIncident, EmplId, DinoId, DateOfIncident, Description  FROM Incident WHERE IdIncident = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -44,7 +48,7 @@ public class IncidentRepository implements DbRepository<Incident> {
 
     @Override
     public List<Incident> findAll() throws SQLException {
-        final String query = "SELECT IdIncident, EmplId, DinoId, DateOfIncident, Description FROM Incident";
+        final String query = "SELECT IdIncident, EmplId, DinoId, DateOfIncident, description FROM Incident";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -74,7 +78,7 @@ public class IncidentRepository implements DbRepository<Incident> {
         preparedStatement.setLong(1, entity.getEmplId());
         preparedStatement.setLong(2, entity.getDinoId());
         preparedStatement.setDate(3, Date.valueOf(entity.getDateOfIncident()));
-        preparedStatement.setString(4, entity.getDiscription());
+        preparedStatement.setString(4, entity.getDescription());
 
         preparedStatement.execute();
     }
@@ -100,7 +104,7 @@ public class IncidentRepository implements DbRepository<Incident> {
         preparedStatement.setLong(1, entity.getEmplId());
         preparedStatement.setLong(2, entity.getDinoId());
         preparedStatement.setDate(3, Date.valueOf(entity.getDateOfIncident()));
-        preparedStatement.setString(4, entity.getDiscription());
+        preparedStatement.setString(4, entity.getDescription());
         preparedStatement.setLong(5, entity.getIdIncident());
 
         preparedStatement.execute();

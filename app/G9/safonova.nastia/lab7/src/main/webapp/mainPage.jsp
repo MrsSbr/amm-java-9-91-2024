@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Пользователь
-  Date: 13.04.2025
-  Time: 18:27
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -80,16 +73,12 @@
 <div class="main-container">
     <h1>Система управления инцидентами</h1>
 
-    <div class="welcome-message">
-        Добро пожаловать, <%= request.getRemoteUser() %>
-    </div>
-
     <div class="btn-container">
-        <button onclick="location.href='incidents.jsp'" class="btn">Посмотреть все инциденты</button>
-        <button onclick="location.href='add_incident.jsp'" class="btn">Добавить инцидент</button>
+        <button onclick="location.href='incidents'" class="btn">Посмотреть все инциденты</button>
+        <button onclick="location.href='add_incident'" class="btn">Добавить инцидент</button>
     </div>
 
-    <form action="logout" method="post">
+    <form action="logout" method="get">
         <button type="submit" class="btn logout-btn">Выйти из системы</button>
     </form>
 </div>
