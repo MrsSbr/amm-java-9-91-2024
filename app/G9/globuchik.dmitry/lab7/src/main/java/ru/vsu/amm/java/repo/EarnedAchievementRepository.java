@@ -14,9 +14,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 public class EarnedAchievementRepository implements Repository<EarnedAchievement> {
     private final DataSource dataSource;
+    Logger logger = Logger.getLogger(EarnedAchievementRepository.class.getName());
 
     public EarnedAchievementRepository(final DataSource dataSource) {
         this.dataSource = dataSource;
@@ -81,11 +83,7 @@ public class EarnedAchievementRepository implements Repository<EarnedAchievement
                 List<EarnedAchievement> achievements = new ArrayList<>();
                 while (resultSet.next()) {
                     Timestamp obtainedAtTimestamp = resultSet.getTimestamp("obtainedat");
-                    LocalDateTime obtainedAt = null;
-
-                    if (!resultSet.wasNull()) {
-                        obtainedAt = obtainedAtTimestamp.toLocalDateTime();
-                    }
+                    LocalDateTime obtainedAt = obtainedAtTimestamp != null ? obtainedAtTimestamp.toLocalDateTime() : null;
 
                     achievements.add(new EarnedAchievement(
                             resultSet.getLong("id"),

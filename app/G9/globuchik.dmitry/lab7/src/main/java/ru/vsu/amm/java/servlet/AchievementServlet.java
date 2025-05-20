@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.servlet;
 
+import ru.vsu.amm.java.DatabaseAccess;
 import ru.vsu.amm.java.entity.Achievement;
 import ru.vsu.amm.java.entity.EarnedAchievement;
 import ru.vsu.amm.java.entity.EarnedAchievementView;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,7 @@ public class AchievementServlet extends HttpServlet {
         }
 
         String login = (String) session.getAttribute("login");
-        AchievementService service = new AchievementService();
+        AchievementService service = new AchievementService(DatabaseAccess.getDataSource());
 
         try {
             List<EarnedAchievement> earnedAchievements = service.getAllAchievements(login);

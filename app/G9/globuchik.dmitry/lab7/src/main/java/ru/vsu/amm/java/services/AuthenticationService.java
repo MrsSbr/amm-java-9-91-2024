@@ -6,6 +6,7 @@ import ru.vsu.amm.java.exceptions.AuthenticationException;
 import ru.vsu.amm.java.repo.AchievementRepository;
 import ru.vsu.amm.java.repo.UserRepository;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -18,11 +19,13 @@ import java.util.logging.Logger;
 
 public class AuthenticationService {
     private final Logger logger = Logger.getLogger(AuthenticationService.class.getName());
-    private final UserRepository userRepository = new UserRepository(DatabaseAccess.getDataSource());
+    private final UserRepository userRepository;
+    private final AchievementRepository achievementRepository;
 
-    public AuthenticationService() throws IOException {
-        logger.log(Level.INFO, "Initializing Authentication Service");
-        logger.log(Level.INFO, "Authentication Service successfully initialized");
+    public AuthenticationService(DataSource dataSource) {
+        this.userRepository = new UserRepository(dataSource);
+        this.achievementRepository = new AchievementRepository(dataSource);
+        logger.log(Level.INFO, "Authentication Service initialized");
     }
 
     public boolean login(String login, String password) {
