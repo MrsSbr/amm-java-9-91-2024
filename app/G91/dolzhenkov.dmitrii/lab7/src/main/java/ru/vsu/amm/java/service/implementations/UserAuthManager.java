@@ -19,6 +19,11 @@ public class UserAuthManager implements AuthService {
         this.userRepository = new UserRepository();
     }
 
+    public UserAuthManager(UserRepository userRepository, BcryptPasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @Override
     public UserRole login(UserRequest request) {
         UserEntity user = userRepository.findByName(request.name())

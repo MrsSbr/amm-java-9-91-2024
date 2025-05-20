@@ -4,19 +4,27 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.vsu.amm.java.configuration.DatabaseConfiguration;
-import ru.vsu.amm.java.entities.UserEntity;
-import ru.vsu.amm.java.enums.UserRole;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.model.requests.UserRequest;
 import ru.vsu.amm.java.repository.UserRepository;
-import ru.vsu.amm.java.utils.BcryptPasswordEncoder;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static ru.vsu.amm.java.service.implementations.UserTestData.USERNAME_ALICE;
+import static ru.vsu.amm.java.service.implementations.UserTestData.aliceRequest;
+import static ru.vsu.amm.java.service.implementations.UserTestData.bobEntity;
+import static ru.vsu.amm.java.service.implementations.UserTestData.bobRequest;
+import static ru.vsu.amm.java.service.implementations.UserTestData.carolEntity;
+import static ru.vsu.amm.java.service.implementations.UserTestData.carolRequest;
+import static ru.vsu.amm.java.service.implementations.UserTestData.daveEntity;
+import static ru.vsu.amm.java.service.implementations.UserTestData.daveWrongRequest;
+import static ru.vsu.amm.java.service.implementations.UserTestData.ghostRequest;
 
 class UserAuthManagerIntegrationTest {
 
@@ -35,62 +43,50 @@ class UserAuthManagerIntegrationTest {
         DataSource dataSource = DatabaseConfiguration.getTestDataSource();
         try (Connection connection = dataSource.getConnection();
              Statement stmt = connection.createStatement()) {
-            stmt.executeUpdate("DELETE FROM \"user\"");
+            stmt.executeUpdate("DELETE FROM User");
         }
     }
 
     @Test
     public void testRegisterNewUserSuccess() {
-        UserRequest request = new UserRequest("Alice", "securePass");
+        UserRequest request = aliceRequest();
         authManager.register(request);
 
-        var user = userRepository.findByName("Alice");
+        var user = userRepository.findByName(USERNAME_ALICE);
         assertTrue(user.isPresent());
-        assertEquals("Alice", user.get().getUserName());
+        assertEquals(USERNAME_ALICE, user.get().getUserName());
     }
 
     @Test
     public void testRegisterExistingUserThrowsException() {
-        UserEntity user = new UserEntity(null, "Bob", new BcryptPasswordEncoder(12).hashPassword("12345"), UserRole.USER);
-        userRepository.save(user);
-
-        UserRequest request = new UserRequest("Bob", "12345");
+        userRepository.save(bobEntity());
+        UserRequest request = bobRequest();
 
         assertThrows(WrongUserCredentialsException.class, () -> authManager.register(request));
     }
 
     @Test
     public void testLoginSuccessReturnsCorrectRole() {
-        String name = "Carol";
-        String password = "mySecret";
-        String hashedPassword = new BcryptPasswordEncoder(12).hashPassword(password);
+        userRepository.save(carolEntity());
+        UserRequest request = carolRequest();
 
-        UserEntity user = new UserEntity(null, name, hashedPassword, UserRole.ADMIN);
-        userRepository.save(user);
+        var role = authManager.login(request);
 
-        UserRequest request = new UserRequest(name, password);
-        UserRole role = authManager.login(request);
-
-        assertEquals(UserRole.ADMIN, role);
+        assertEquals(carolEntity().getUserRole(), role);
     }
 
     @Test
     public void testLoginWithWrongPasswordThrowsException() {
-        String name = "Dave";
-        String correctPassword = "correct";
-        String wrongPassword = "wrong";
-
-        UserEntity user = new UserEntity(null, name, new BcryptPasswordEncoder(12).hashPassword(correctPassword), UserRole.USER);
-        userRepository.save(user);
-
-        UserRequest request = new UserRequest(name, wrongPassword);
+        userRepository.save(daveEntity());
+        UserRequest request = daveWrongRequest();
 
         assertThrows(WrongUserCredentialsException.class, () -> authManager.login(request));
     }
 
     @Test
     public void testLoginWithNonExistentUserThrowsException() {
-        UserRequest request = new UserRequest("Ghost", "noSuchUser");
+        UserRequest request = ghostRequest();
+
         assertThrows(WrongUserCredentialsException.class, () -> authManager.login(request));
     }
 }

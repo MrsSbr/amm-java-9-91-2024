@@ -4,7 +4,11 @@ import ru.vsu.amm.java.entities.TripEntity;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
 
 public class TripMapper {
     public static TripEntity resultSetToUserCarEntity(ResultSet rs) throws SQLException {
