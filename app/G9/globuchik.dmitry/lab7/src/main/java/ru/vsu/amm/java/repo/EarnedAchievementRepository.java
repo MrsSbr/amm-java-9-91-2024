@@ -4,7 +4,12 @@ import ru.vsu.amm.java.entity.EarnedAchievement;
 import ru.vsu.amm.java.enums.AchievementStatus;
 
 import javax.sql.DataSource;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
