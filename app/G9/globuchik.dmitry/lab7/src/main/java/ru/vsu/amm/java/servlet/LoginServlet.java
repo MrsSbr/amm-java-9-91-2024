@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.servlet;
 
 import lombok.AllArgsConstructor;
+import ru.vsu.amm.java.DatabaseAccess;
 import ru.vsu.amm.java.services.AuthenticationService;
 
 import javax.servlet.ServletException;
@@ -25,7 +26,7 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        AuthenticationService service = new AuthenticationService();
+        AuthenticationService service = new AuthenticationService(DatabaseAccess.getDataSource());
         if (service.login(login, password)) {
             HttpSession session = req.getSession();
             session.setAttribute("login", login);

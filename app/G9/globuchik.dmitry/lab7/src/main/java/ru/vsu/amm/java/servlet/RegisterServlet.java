@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.servlet;
 
 import lombok.AllArgsConstructor;
+import ru.vsu.amm.java.DatabaseAccess;
 import ru.vsu.amm.java.services.AuthenticationService;
 
 import javax.servlet.ServletException;
@@ -27,7 +28,7 @@ public class RegisterServlet extends HttpServlet {
         String nickname = req.getParameter("nickname");
         String phonenumber = req.getParameter("phonenumber");
 
-        AuthenticationService service = new AuthenticationService();
+        AuthenticationService service = new AuthenticationService(DatabaseAccess.getDataSource());
         try {
             boolean isRegistered = service.register(login, password, email, nickname, phonenumber);
             if (isRegistered) {
