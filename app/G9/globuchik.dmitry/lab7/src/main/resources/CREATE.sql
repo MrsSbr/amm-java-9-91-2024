@@ -34,3 +34,7 @@ CREATE TABLE earnedachievement
 
 CREATE INDEX idx_user_id_earnedachievement ON earnedachievement(user_id);
 CREATE INDEX idx_earnedachievement_id_achievement ON earnedachievement(achievement_id);
+
+SELECT * FROM userentity;
+
+TRUNCATE TABLE userentity CASCADE ;

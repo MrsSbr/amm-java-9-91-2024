@@ -10,43 +10,53 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AuthenticationService {
-    private static final Logger LOGGER = Logger.getLogger(AuthenticationService.class.getName());
+    private static final Logger logger = Logger.getLogger(AuthenticationService.class.getName());
     private final UserRepository userRepository = new UserRepository(DatabaseAccess.getDataSource());
     ;
 
     public AuthenticationService() throws IOException {
-        LOGGER.log(Level.INFO, "Initializing Authentication Service");
-        LOGGER.log(Level.INFO, "Authentication Service successfully initialized");
+        logger.log(Level.INFO, "Initializing Authentication Service");
+        logger.log(Level.INFO, "Authentication Service successfully initialized");
     }
 
     public boolean login(String login, String password) {
-        LOGGER.log(Level.INFO, "Attempting to login");
+        logger.log(Level.INFO, "Attempting to login");
         try {
             UserEntity authUser = userRepository.findByLogin(login);
+
             if (authUser == null) {
-                LOGGER.log(Level.SEVERE, "User not found");
+                logger.log(Level.SEVERE, "User not found");
                 throw new AuthenticationException("Login does not exist");
             }
-            LOGGER.log(Level.INFO, "Logged successfully");
-            byte[] salt = authUser.getSalt().getBytes();
+            logger.log(Level.INFO, "User found successfully");
+
+
+            byte[] salt = Base64.getDecoder().decode(authUser.getSalt());
             PasswordHash hash = new PasswordHash();
-            return Arrays.equals(authUser.getPasswordHash().getBytes(), hash.encrypt(password, salt));
+            boolean pass = Arrays.equals(Base64.getDecoder().decode(authUser.getPasswordHash()), hash.encrypt(password, salt));
+            if (pass) {
+                logger.log(Level.INFO, "Successfully logged in");
+            }
+            return pass;
+
         } catch (SQLException | AuthenticationException | NoSuchAlgorithmException | InvalidKeySpecException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
     public boolean register(String login, String password, String email, String nickname, String phonenumber) {
-        LOGGER.log(Level.INFO, "Attempting to register");
+        logger.log(Level.INFO, "Attempting to register");
         try {
             UserEntity authUser = userRepository.findByLogin(login);
             //UserEntity authUser = null;
             if (authUser == null) {
+                logger.log(Level.INFO, "Existing user not found");
                 PasswordHash hash = new PasswordHash();
                 byte[][] passHashAndSalt = hash.encrypt(password);
                 byte[] passwordHash = passHashAndSalt[0];
@@ -54,9 +64,9 @@ public class AuthenticationService {
                 authUser = new UserEntity(login,
                         nickname,
                         phonenumber,
-                        Arrays.toString(passwordHash),
+                        Base64.getEncoder().encodeToString(passwordHash),
                         email,
-                        Arrays.toString(salt));
+                        Base64.getEncoder().encodeToString(salt));
                 return userRepository.save(authUser);
             }
         } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {

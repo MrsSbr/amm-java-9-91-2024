@@ -15,7 +15,6 @@ import java.io.IOException;
 @WebServlet(name = "LoginServlet", urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
@@ -31,6 +30,10 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("login", login);
             resp.sendRedirect("/laba7/home");
+        } else {
+            req.setAttribute("savedLogin", login);
+            req.setAttribute("errorMessage", "Неверный логин или пароль");
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
         }
     }
 }

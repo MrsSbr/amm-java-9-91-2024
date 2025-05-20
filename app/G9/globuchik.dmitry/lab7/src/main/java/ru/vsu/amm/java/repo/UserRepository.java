@@ -71,6 +71,7 @@ public class UserRepository implements Repository<UserEntity> {
 
     public UserEntity findByLogin(String login) throws SQLException {
         final String sql = "SELECT id, login, nickname, phonenumber, passwordhash, email, salt FROM userentity WHERE login = ? ORDER BY id";
+
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, login);
