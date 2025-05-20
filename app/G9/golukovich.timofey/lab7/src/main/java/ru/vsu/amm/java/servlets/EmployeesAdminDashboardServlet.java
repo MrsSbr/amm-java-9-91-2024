@@ -17,7 +17,7 @@ public class EmployeesAdminDashboardServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             var hotelsManagerService = new EmployeesServiceImpl();
-            var employees = hotelsManagerService.getAllEmployees();
+            var employees = hotelsManagerService.getAllEmployees(false);
             req.setAttribute("employees_table", employees);
             getServletContext().getRequestDispatcher("/employees_admin_dashboard.jsp").forward(req, resp);
         } catch (DatabaseException e) {

@@ -25,7 +25,7 @@ public class ProfileServlet extends HttpServlet {
         var employee = (EmployeeDto) session.getAttribute("employee");
         HotelsService hotelsService = new HotelsServiceImpl();
         try {
-            var hotel = hotelsService.getHotelById(employee.getHotelId());
+            var hotel = hotelsService.getHotelById(employee.getHotelId(), false);
             req.setAttribute("hotel_name", hotel.getName());
             getServletContext().getRequestDispatcher("/profile.jsp").forward(req, resp);
         } catch (HotelNotFoundException e) {

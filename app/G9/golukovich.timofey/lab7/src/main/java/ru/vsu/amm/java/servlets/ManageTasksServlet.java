@@ -38,7 +38,7 @@ public class ManageTasksServlet extends HttpServlet {
                 currentEmployeeId = (Integer) session.getAttribute("current_employee_id");
                 session.removeAttribute("current_employee_id");
             }
-            var currentEmployee = employeesService.getEmployeeById(currentEmployeeId);
+            var currentEmployee = employeesService.getEmployeeById(currentEmployeeId, false);
 
             TasksService tasksService = new TasksServiceImpl();
             var employeeTasks = tasksService.getAllTasksByEmployeeId(currentEmployeeId);
@@ -46,13 +46,13 @@ public class ManageTasksServlet extends HttpServlet {
             var taskStatuses = Arrays.stream(TaskStatus.values()).toList();
 
             var managers = employeesService.getAllFilteredEmployees(null, null, null, null, null, null,
-                    null, null, EmployeePost.MANAGER.name(), null);
+                    null, null, EmployeePost.MANAGER.name(), null, true);
             var employees = employeesService.getAllFilteredEmployees(null, employee.getHotelId(), null, null, null,
-                    null, null, null, null, null);
+                    null, null, null, null, null, false);
             employees = employees.stream().filter(e -> e.getPost() == EmployeePost.STAFF).toList();
 
             HotelRoomsService hotelRoomsService = new HotelRoomsServiceImpl();
-            var hotelRooms = hotelRoomsService.getHotelRoomsByHotelId(employee.getHotelId());
+            var hotelRooms = hotelRoomsService.getHotelRoomsByHotelId(employee.getHotelId(), false);
 
             req.setAttribute("current_employee", currentEmployee);
             req.setAttribute("employees", employees);

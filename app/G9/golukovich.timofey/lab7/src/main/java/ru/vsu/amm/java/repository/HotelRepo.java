@@ -20,12 +20,13 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
     }
 
     @Override
-    public Optional<HotelEntity> getById(int id) throws SQLException {
-        final String query = """
+    public Optional<HotelEntity> getById(int id, boolean isForUpdate) throws SQLException {
+        String query = """
                 SELECT hotel_id, hotel_name, address, email, phone_number, opening_date
                 FROM hotel
-                WHERE hotel_id = ?
-                FOR UPDATE""";
+                WHERE hotel_id = ?""";
+        query = makeSelectQueryForUpdateOrNot(query, isForUpdate);
+
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -41,11 +42,12 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
     }
 
     @Override
-    public List<HotelEntity> getAll() throws SQLException {
-        final String query = """
+    public List<HotelEntity> getAll(boolean isForUpdate) throws SQLException {
+        String query = """
                 SELECT hotel_id, hotel_name, address, email, phone_number, opening_date
-                FROM hotel
-                FOR UPDATE""";
+                FROM hotel""";
+        query = makeSelectQueryForUpdateOrNot(query, isForUpdate);
+
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -97,6 +99,13 @@ public class HotelRepo implements CrudRepo<HotelEntity> {
         var preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, id);
         preparedStatement.execute();
+    }
+
+    private String makeSelectQueryForUpdateOrNot(String query, boolean isForUpdate) {
+        if (isForUpdate) {
+            query += " FOR UPDATE";
+        }
+        return query;
     }
 
     private void setPreparedStatement(PreparedStatement preparedStatement, HotelEntity entity) throws SQLException {

@@ -2,7 +2,11 @@ package ru.vsu.amm.java.servlets;
 
 import ru.vsu.amm.java.dtos.EmployeeDto;
 import ru.vsu.amm.java.enums.EmployeePost;
-import ru.vsu.amm.java.exceptions.*;
+import ru.vsu.amm.java.exceptions.DatabaseException;
+import ru.vsu.amm.java.exceptions.EmployeeAlreadyExistsException;
+import ru.vsu.amm.java.exceptions.HotelNotFoundException;
+import ru.vsu.amm.java.exceptions.NotAllowedActionException;
+import ru.vsu.amm.java.exceptions.PostDoesNotExistException;
 import ru.vsu.amm.java.services.HotelsService;
 import ru.vsu.amm.java.services.RegistrationService;
 import ru.vsu.amm.java.services.impl.HotelsServiceImpl;
@@ -23,7 +27,7 @@ public class RegisterEmployeeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             HotelsService hotelsService = new HotelsServiceImpl();
-            var hotels = hotelsService.getAllHotels();
+            var hotels = hotelsService.getAllHotels(false);
 
             var employeePosts = Arrays.stream(EmployeePost.values())
                     .filter(p -> p != EmployeePost.MASTER_ADMINISTRATOR)

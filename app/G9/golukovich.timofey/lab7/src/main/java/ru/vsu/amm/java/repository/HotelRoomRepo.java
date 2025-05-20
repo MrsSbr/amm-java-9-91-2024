@@ -19,12 +19,13 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
     }
 
     @Override
-    public Optional<HotelRoomEntity> getById(int id) throws SQLException {
-        final String query = """
+    public Optional<HotelRoomEntity> getById(int id, boolean isForUpdate) throws SQLException {
+        String query = """
                 SELECT room_id, hotel_id, room_number, floor_number, beds_count, specifications
                 FROM hotel_room
-                WHERE room_id = ?
-                FOR UPDATE""";
+                WHERE room_id = ?""";
+        query = makeSelectQueryForUpdateOrNot(query, isForUpdate);
+
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -40,11 +41,12 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
     }
 
     @Override
-    public List<HotelRoomEntity> getAll() throws SQLException {
-        final String query = """
+    public List<HotelRoomEntity> getAll(boolean isForUpdate) throws SQLException {
+        String query = """
                 SELECT room_id, hotel_id, room_number, floor_number, beds_count, specifications
-                FROM hotel_room
-                FOR UPDATE""";
+                FROM hotel_room""";
+        query = makeSelectQueryForUpdateOrNot(query, isForUpdate);
+
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -61,12 +63,13 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
         return entityList;
     }
 
-    public List<HotelRoomEntity> getAllByHotelId(int hotelId) throws SQLException {
-        final String query = """
+    public List<HotelRoomEntity> getAllByHotelId(int hotelId, boolean isForUpdate) throws SQLException {
+        String query = """
                 SELECT room_id, hotel_id, room_number, floor_number, beds_count, specifications
                 FROM hotel_room
-                WHERE hotel_id = ?
-                FOR UPDATE""";
+                WHERE hotel_id = ?""";
+        query = makeSelectQueryForUpdateOrNot(query, isForUpdate);
+
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -119,6 +122,13 @@ public class HotelRoomRepo implements CrudRepo<HotelRoomEntity> {
         var preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, id);
         preparedStatement.execute();
+    }
+
+    private String makeSelectQueryForUpdateOrNot(String query, boolean isForUpdate) {
+        if (isForUpdate) {
+            query += " FOR UPDATE";
+        }
+        return query;
     }
 
     private void setPreparedStatement(PreparedStatement preparedStatement, HotelRoomEntity entity) throws SQLException {

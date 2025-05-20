@@ -22,12 +22,13 @@ public class TaskRepo implements CrudRepo<TaskEntity> {
     }
 
     @Override
-    public Optional<TaskEntity> getById(int id) throws SQLException {
-        final String query = """
+    public Optional<TaskEntity> getById(int id, boolean isForUpdate) throws SQLException {
+        String query = """
                 SELECT task_id, employee_id, hotel_room_id, manager_id, status, description, created_at, updated_at
                 FROM task
-                WHERE task_id = ?
-                FOR UPDATE""";
+                WHERE task_id = ?""";
+        query = makeSelectQueryForUpdateOrNot(query, isForUpdate);
+
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -43,11 +44,12 @@ public class TaskRepo implements CrudRepo<TaskEntity> {
     }
 
     @Override
-    public List<TaskEntity> getAll() throws SQLException {
-        final String query = """
+    public List<TaskEntity> getAll(boolean isForUpdate) throws SQLException {
+        String query = """
                 SELECT task_id, employee_od, hotel_room_id, manager_id, status, description, created_at, updated_at
-                FROM task
-                FOR UPDATE""";
+                FROM task""";
+        query = makeSelectQueryForUpdateOrNot(query, isForUpdate);
+
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -64,12 +66,13 @@ public class TaskRepo implements CrudRepo<TaskEntity> {
         return entityList;
     }
 
-    public List<TaskEntity> getAllByEmployeeId(int employeeId) throws SQLException {
-        final String query = """
+    public List<TaskEntity> getAllByEmployeeId(int employeeId, boolean isForUpdate) throws SQLException {
+        String query = """
                 SELECT task_id, employee_id, hotel_room_id, manager_id, status, description, created_at, updated_at
                 FROM task
-                WHERE employee_id = ?
-                FOR UPDATE""";
+                WHERE employee_id = ?""";
+        query = makeSelectQueryForUpdateOrNot(query, isForUpdate);
+
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -90,7 +93,7 @@ public class TaskRepo implements CrudRepo<TaskEntity> {
     @Override
     public void update(TaskEntity entity) throws SQLException {
         final String query = """
-                UPDATE taskSET employee_id = ?, hotel_room_id = ?, manager_id = ?, status = ?, description = ?, created_at = ?, updated_at = ?
+                UPDATE task SET employee_id = ?, hotel_room_id = ?, manager_id = ?, status = ?, description = ?, created_at = ?, updated_at = ?
                 WHERE task_id = ?""";
         var connection = dataSource.getConnection();
 
@@ -129,6 +132,13 @@ public class TaskRepo implements CrudRepo<TaskEntity> {
         var preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, id);
         preparedStatement.execute();
+    }
+
+    private String makeSelectQueryForUpdateOrNot(String query, boolean isForUpdate) {
+        if (isForUpdate) {
+            query += " FOR UPDATE";
+        }
+        return query;
     }
 
     private void setPreparedStatement(PreparedStatement preparedStatement, TaskEntity entity) throws SQLException {

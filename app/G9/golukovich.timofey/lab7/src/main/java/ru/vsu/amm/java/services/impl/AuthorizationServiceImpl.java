@@ -26,7 +26,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     public Optional<EmployeeDto> login(String login, String password) {
         logger.info("login " + login);
         try {
-            var employee = employeeRepo.getByLogin(login)
+            var employee = employeeRepo.getByLogin(login, false)
                     .orElseThrow(
                             () -> {
                                 final String message = "Employee " + login + " not exists, try again";

@@ -21,9 +21,9 @@ public class HotelsServiceImpl implements HotelsService {
     }
 
     @Override
-    public HotelDto getHotelById(Integer hotelId) {
+    public HotelDto getHotelById(Integer hotelId, boolean isForUpdate) {
         try {
-            var hotelOpt = hotelRepo.getById(hotelId);
+            var hotelOpt = hotelRepo.getById(hotelId, isForUpdate);
             if (hotelOpt.isPresent()) {
                 return HotelDtoMapper.mapFromEntity(hotelOpt.get());
             } else {
@@ -38,11 +38,11 @@ public class HotelsServiceImpl implements HotelsService {
     }
 
     @Override
-    public List<HotelDto> getAllHotels() {
+    public List<HotelDto> getAllHotels(boolean isForUpdate) {
         logger.info("get all hotels");
 
         try {
-            return hotelRepo.getAll().stream()
+            return hotelRepo.getAll(isForUpdate).stream()
                     .map(HotelDtoMapper::mapFromEntity)
                     .toList();
         } catch (SQLException e) {

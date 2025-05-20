@@ -26,11 +26,11 @@ public class EmployeesServiceImpl implements EmployeesService {
     }
 
     @Override
-    public EmployeeDto getEmployeeById(int employeeId) {
+    public EmployeeDto getEmployeeById(int employeeId, boolean isForUpdate) {
         logger.info("get employee by id");
 
         try {
-            var employeeEntityOpt = employeeRepo.getById(employeeId);
+            var employeeEntityOpt = employeeRepo.getById(employeeId, isForUpdate);
             if (employeeEntityOpt.isPresent()) {
                 return EmployeeDtoMapper.MapFromEntity(employeeEntityOpt.get());
             } else {
@@ -45,11 +45,11 @@ public class EmployeesServiceImpl implements EmployeesService {
     }
 
     @Override
-    public EmployeeDto getEmployeeByLogin(String employeeLogin) {
+    public EmployeeDto getEmployeeByLogin(String employeeLogin, boolean isForUpdate) {
         logger.info("get employee by id");
 
         try {
-            var employeeEntityOpt = employeeRepo.getByLogin(employeeLogin);
+            var employeeEntityOpt = employeeRepo.getByLogin(employeeLogin, isForUpdate);
             if (employeeEntityOpt.isPresent()) {
                 return EmployeeDtoMapper.MapFromEntity(employeeEntityOpt.get());
             } else {
@@ -64,11 +64,11 @@ public class EmployeesServiceImpl implements EmployeesService {
     }
 
     @Override
-    public List<EmployeeDto> getAllEmployees() {
+    public List<EmployeeDto> getAllEmployees(boolean isForUpdate) {
         logger.info("get all employees");
 
         try {
-            return employeeRepo.getAll().stream()
+            return employeeRepo.getAll(isForUpdate).stream()
                     .map(EmployeeDtoMapper::MapFromEntity)
                     .toList();
         } catch (SQLException e) {
@@ -80,14 +80,14 @@ public class EmployeesServiceImpl implements EmployeesService {
     public List<EmployeeDto> getAllFilteredEmployees(Integer employee_id, Integer hotel_id, String login,
                                                      String name, String phone_number, String email,
                                                      String passport_number, String passport_series,
-                                                     String post, LocalDate birthday) {
+                                                     String post, LocalDate birthday, boolean isForUpdate) {
         logger.info("get all filtered employees");
 
         try {
             return employeeRepo.getAllByParameters(employee_id, hotel_id,
                             login, name, phone_number, email,
                             passport_number, passport_series,
-                            post, birthday)
+                            post, birthday, isForUpdate)
                     .stream()
                     .map(EmployeeDtoMapper::MapFromEntity)
                     .toList();
@@ -105,7 +105,7 @@ public class EmployeesServiceImpl implements EmployeesService {
 
         try {
             var employees = employeeRepo.getAllByParameters(employeeDto.getId(), null, null,
-                    null, phoneNumber, email, passportNumber, passportSeries, null, null);
+                    null, phoneNumber, email, passportNumber, passportSeries, null, null, true);
 
             if (employees.size() == 1 && employees.getFirst().getId() == employeeDto.getId()) {
                 var employeeEntity = employees.getFirst();

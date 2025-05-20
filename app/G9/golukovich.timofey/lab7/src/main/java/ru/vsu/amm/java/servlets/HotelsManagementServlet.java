@@ -19,7 +19,7 @@ public class HotelsManagementServlet extends HttpServlet {
         var session = req.getSession(false);
         try {
             HotelsService hotelsService = new HotelsServiceImpl();
-            var hotels = hotelsService.getAllHotels();
+            var hotels = hotelsService.getAllHotels(false);
 
             req.setAttribute("hotels_table", hotels);
 

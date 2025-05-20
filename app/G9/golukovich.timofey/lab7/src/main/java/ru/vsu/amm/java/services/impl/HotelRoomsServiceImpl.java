@@ -21,11 +21,11 @@ public class HotelRoomsServiceImpl implements HotelRoomsService {
     }
 
     @Override
-    public List<HotelRoomDto> getHotelRoomsByHotelId(int hotelId) {
+    public List<HotelRoomDto> getHotelRoomsByHotelId(int hotelId, boolean isForUpdate) {
         logger.info("get hotel rooms by hotel id");
 
         try {
-            return hotelRoomRepo.getAllByHotelId(hotelId).stream()
+            return hotelRoomRepo.getAllByHotelId(hotelId, isForUpdate).stream()
                     .map(HotelRoomDtoMapper::mapFromEntity)
                     .toList();
         } catch (SQLException e) {

@@ -5,6 +5,6 @@ import ru.vsu.amm.java.dtos.HotelDto;
 import java.util.List;
 
 public interface HotelsService {
-    HotelDto getHotelById(Integer hotelId);
-    List<HotelDto> getAllHotels();
+    HotelDto getHotelById(Integer hotelId, boolean isForUpdate);
+    List<HotelDto> getAllHotels(boolean isForUpdate);
 }

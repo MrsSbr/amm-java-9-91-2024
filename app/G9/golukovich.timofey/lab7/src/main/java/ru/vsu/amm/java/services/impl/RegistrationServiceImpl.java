@@ -35,10 +35,10 @@ public class RegistrationServiceImpl implements RegistrationService {
         try {
             var post = EmployeePost.valueOf(rawPost);
             if (adminDto.getPost().compareTo(post) > 0) {
-                var hotelOpt = hotelRepo.getById(hotelId);
+                var hotelOpt = hotelRepo.getById(hotelId, false);
                 if (hotelOpt.isPresent())
                 {
-                    if (employeeRepo.getByLogin(login).isEmpty()) {
+                    if (employeeRepo.getByLogin(login, false).isEmpty()) {
                         password = BCrypt.hashpw(password, BCrypt.gensalt());
                         var employee = new EmployeeEntity(0, hotelId, login, password, null, null, null, null, null,
                                 post, null);
@@ -74,7 +74,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         logger.info("unregister employee " + login);
 
         try {
-            var employeeOpt = employeeRepo.getByLogin(login);
+            var employeeOpt = employeeRepo.getByLogin(login, true);
             if (employeeOpt.isPresent()) {
                 var employee = employeeOpt.get();
                 if (adminDto.getPost().compareTo(employee.getPost()) > 0) {

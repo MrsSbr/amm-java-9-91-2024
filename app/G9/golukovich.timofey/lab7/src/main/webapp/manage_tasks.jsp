@@ -73,7 +73,11 @@
             gap: 10px;
             align-items: center;
         }
-        select, input[type="text"] {
+        select {
+            padding: 6px;
+            width: 176px;
+        }
+        input[type="text"] {
             padding: 6px;
             width: 160px;
         }
@@ -121,6 +125,9 @@
             color: #4CAF50;
             margin-bottom: 10px;
         }
+        .field-to-select {
+            margin-right: 27px;
+        }
     </style>
     <script>
         function toggleCreate() {
@@ -136,28 +143,29 @@
         }
 
         function toggleEdit(taskId) {
-            const editBtn = document.getElementById("editBtn");
-            if (editBtn.textContent === "⚙️") {
-                editBtn.textContent = "✖️";
+            const editBtn = document.getElementById("edit-btn-" + taskId);
+            if (editBtn.textContent === "⚙") {
+                editBtn.textContent = "✖";
             } else {
-                editBtn.textContent = "⚙️";
+                editBtn.textContent = "⚙";
             }
 
-            const manager = document.getElementById("manager-select-" + taskId);
-            manager.disabled = !manager.disabled;
-            const employee = document.getElementById("employee-select-" + taskId);
-            employee.disabled = !employee.disabled;
-            const room = document.getElementById("room-select-" + taskId);
-            room.disabled = !room.disabled;
-            const status = document.getElementById("status-select-" + taskId);
-            status.disabled = !status.disabled;
-            const description = document.getElementById("description-select-" + taskId);
-            description.disabled = !description.disabled
-            description.readOnly = !description.readOnly;
+            const editForm = document.getElementById("edit-form-" + taskId);
+            editForm.hidden = !editForm.hidden;
 
-            const saveBtn = document.getElementById('saveBtn');
+            const manager = document.getElementById("edit-manager-select-" + taskId);
+            manager.disabled = !manager.disabled;
+            const employee = document.getElementById("edit-employee-select-" + taskId);
+            employee.disabled = !employee.disabled;
+            const room = document.getElementById("edit-room-select-" + taskId);
+            room.disabled = !room.disabled;
+            const status = document.getElementById("edit-status-select-" + taskId);
+            status.disabled = !status.disabled;
+            const description = document.getElementById("edit-description-input-" + taskId);
+            description.readOnly = !description.readOnly
+
+            const saveBtn = document.getElementById("save-btn-" + taskId);
             saveBtn.disabled = !saveBtn.disabled;
-            saveBtn.hidden = !saveBtn.hidden;
         }
     </script>
 </head>
@@ -169,6 +177,14 @@
 <c:if test="${not empty requestScope.successMessage}">
     <div class="success">${requestScope.successMessage}</div>
     <% request.removeAttribute("successMessage"); %>
+</c:if>
+<c:if test="${not empty sessionScope.errorMessage}">
+    <div class="error">${sessionScope.errorMessage}</div>
+    <% session.removeAttribute("errorMessage"); %>
+</c:if>
+<c:if test="${not empty sessionScope.successMessage}">
+    <div class="success">${sessionScope.successMessage}</div>
+    <% session.removeAttribute("successMessage"); %>
 </c:if>
 
 <div class="container">
@@ -215,7 +231,7 @@
                     <select name="create_task_hotelRoomId" required>
                         <c:forEach items="${requestScope.hotel_rooms}" var="room">
                             <option value="${room.id}">
-                                ${room.roomNumber} (${room.id})
+                                    ${room.roomNumber} (${room.id})
                             </option>
                         </c:forEach>
                     </select>
@@ -249,58 +265,16 @@
             <c:forEach items="${requestScope.tasks}" var="task">
                 <tr>
                     <td>${task.id}</td>
-                    <td>
-                        <select id="manager-select-${task.id}" name="managerLogin" required disabled>
-                            <c:forEach items="${requestScope.managers}" var="manager">
-                                <option value="${manager.login}"
-                                    ${manager.login eq task.managerLogin ? 'selected' : ''}>
-                                        ${manager.name} (${manager.login})
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </td>
-                    <td>
-                        <select id="employee-select-${task.id}" name="employeeLogin" required disabled>
-                            <c:forEach items="${requestScope.employees}" var="staff_employee">
-                                <option value="${staff_employee.login}"
-                                    ${staff_employee.login eq task.employeeLogin ? 'selected' : ''}>
-                                        ${staff_employee.name} (${staff_employee.login})
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </td>
-                    <td>
-                        <select id="room-select-${task.id}" name="hotelRoomId" required disabled>
-                            <c:forEach items="${requestScope.hotel_rooms}" var="room">
-                                <option value="${room.id}"
-                                    ${room.id == task.hotelRoomId ? 'selected' : ''}>
-                                        ${room.roomNumber} (${room.id})
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </td>
-                    <td>
-                        <select id="status-select-${task.id}" name="status" required disabled>
-                            <c:forEach items="${requestScope.task_statuses}" var="status_name">
-                                <option value="${status_name}"
-                                    ${not empty param.task_status and param.task_status eq status_name.name() ? 'selected' : ''}>
-                                        ${status_name.name()}
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </td>
-                    <td>
-                        <input id="description-select-${task.id}" type="text" name="description"
-                               value="${task.description}" disabled readonly>
-                    </td>
-                    <td>
-                        <label>
-                            ${task.getFormattedUpdatedAt()}
-                        </label>
-                    </td>
+                    <td><input readonly value="${task.managerLogin}" type="text"></td>
+                    <td><input readonly value="${task.employeeLogin}" type="text"></td>
+                    <td><input readonly value="${task.hotelRoomId}" type="text"></td>
+                    <td><input readonly value="${task.status.name()}" type="text"></td>
+                    <td><input readonly value="${task.description}" type="text"></td>
+                    <td><input readonly value="${task.getFormattedUpdatedAt()}" type="text"></td>
                     <td>
                         <div class="action-buttons">
-                            <button id="editBtn" onclick="toggleEdit(${task.id})" class="edit-btn">⚙️</button>
+                            <button id="edit-btn-${task.id}" onclick="toggleEdit(${task.id})" class="edit-btn">⚙
+                            </button>
 
                             <form class="delete-form" action="${pageContext.request.contextPath}/api/remove_task"
                                   method="POST">
@@ -310,11 +284,61 @@
                                     🗑️
                                 </button>
                             </form>
-
-                            <button id="saveBtn" class="save-btn" disabled hidden type="submit" style="cursor:pointer;">
-                                ✔️
-                            </button>
                         </div>
+                    </td>
+                </tr>
+                <tr id="edit-form-${task.id}" class="edit-form" hidden>
+                    <td><label>${task.id}</label></td>
+                    <td colspan="7">
+                        <form action="${pageContext.request.contextPath}/api/edit_task" method="POST" class="field-to-select">
+                            <input hidden="hidden" name="employee_id" value="${requestScope.current_employee.id}">
+                            <input hidden="hidden" name="edit_task_id" value="${task.id}">
+
+                            <select id="edit-manager-select-${task.id}" name="edit_task_manager_login" required disabled class="field-to-select">
+                                <c:forEach items="${requestScope.managers}" var="manager">
+                                    <option value="${manager.login}"
+                                        ${manager.login eq task.managerLogin ? 'selected' : ''}>
+                                            ${manager.name} (${manager.login})
+                                    </option>
+                                </c:forEach>
+                            </select>
+
+                            <select id="edit-employee-select-${task.id}" name="edit_task_employee_login" required disabled class="field-to-select">
+                                <c:forEach items="${requestScope.employees}" var="staff_employee">
+                                    <option value="${staff_employee.login}"
+                                        ${staff_employee.login eq task.employeeLogin ? 'selected' : ''}>
+                                            ${staff_employee.name} (${staff_employee.login})
+                                    </option>
+                                </c:forEach>
+                            </select>
+
+                            <select id="edit-room-select-${task.id}" name="edit_task_hotel_room_id" required disabled class="field-to-select">
+                                <c:forEach items="${requestScope.hotel_rooms}" var="room">
+                                    <option value="${room.id}"
+                                        ${room.id == task.hotelRoomId ? 'selected' : ''}>
+                                            ${room.roomNumber} (${room.id})
+                                    </option>
+                                </c:forEach>
+                            </select>
+
+                            <select id="edit-status-select-${task.id}" name="edit_task_status" required disabled class="field-to-select">
+                                <c:forEach items="${requestScope.task_statuses}" var="status_name">
+                                    <option value="${status_name}"
+                                        ${not empty status_name.name() and status_name.name() eq task.status.name() ? 'selected' : ''}>
+                                            ${status_name.name()}
+                                    </option>
+                                </c:forEach>
+                            </select>
+
+                            <input id="edit-description-input-${task.id}" type="text" name="edit_task_description"
+                                   value="${task.description}" required readonly class="field-to-select">
+
+                            <input type="text" value="${task.getFormattedUpdatedAt()}" readonly class="field-to-select">
+
+                            <button id="save-btn-${task.id}" type="submit" class="save-btn" disabled style="cursor:pointer;">
+                                ✔
+                            </button>
+                        </form>
                     </td>
                 </tr>
             </c:forEach>

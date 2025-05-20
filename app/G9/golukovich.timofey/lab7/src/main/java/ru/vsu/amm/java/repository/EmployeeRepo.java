@@ -20,16 +20,16 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
 
     public EmployeeRepo() {
         dataSource = DatabaseConfiguration.getDataSource();
-
     }
 
     @Override
-    public Optional<EmployeeEntity> getById(int id) throws SQLException {
-        final String query = """
+    public Optional<EmployeeEntity> getById(int id, boolean isForUpdate) throws SQLException {
+        String query = """
                 SELECT employee_id, hotel_id, login, password, name, phone_number,
                 email, passport_number, passport_series, post, birthday
-                FROM employee WHERE employee_id = ?
-                FOR UPDATE""";
+                FROM employee WHERE employee_id = ?""";
+        query = makeSelectQueryForUpdateOrNot(query, isForUpdate);
+
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -45,12 +45,14 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
     }
 
     @Override
-    public List<EmployeeEntity> getAll() throws SQLException {
-        final String query = """
+    public List<EmployeeEntity> getAll(boolean isForUpdate) throws SQLException {
+        String query = """
                 SELECT employee_id, hotel_id, login, password, name, phone_number, email,
                 passport_number, passport_series, post, birthday
                 FROM employee
                 FOR UPDATE""";
+        query = makeSelectQueryForUpdateOrNot(query, isForUpdate);
+
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -120,12 +122,14 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
         preparedStatement.execute();
     }
 
-    public Optional<EmployeeEntity> getByLogin(String login) throws SQLException {
-        final String query = """
+    public Optional<EmployeeEntity> getByLogin(String login, boolean isForUpdate) throws SQLException {
+        String query = """
                 SELECT employee_id, hotel_id, login, password, name, phone_number,
                 email, passport_number, passport_series, post, birthday
                 FROM employee WHERE login LIKE ?
                 FOR UPDATE""";
+        query = makeSelectQueryForUpdateOrNot(query, isForUpdate);
+
         var connection = dataSource.getConnection();
 
         var preparedStatement = connection.prepareStatement(query);
@@ -143,8 +147,8 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
     public List<EmployeeEntity> getAllByParameters(Integer employee_id, Integer hotel_id, String login,
                                                String name, String phone_number, String email,
                                                String passport_number, String passport_series,
-                                               String post, LocalDate birthday) throws SQLException {
-        final String query = """
+                                               String post, LocalDate birthday, boolean isForUpdate) throws SQLException {
+        String query = """
                 SELECT employee_id, hotel_id, login, password, name, phone_number,
                 email, passport_number, passport_series, post, birthday
                 FROM employee
@@ -157,8 +161,9 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
                     OR COALESCE(?, '') LIKE passport_number
                         AND COALESCE(?, '') LIKE passport_series
                     OR COALESCE(?, '') LIKE post
-                    OR COALESCE(?, now()) = birthday
-                FOR UPDATE""";
+                    OR COALESCE(?, now()) = birthday""";
+        query = makeSelectQueryForUpdateOrNot(query, isForUpdate);
+
 
         var connection = dataSource.getConnection();
 
@@ -234,6 +239,13 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
         }
 
         return entityList;
+    }
+
+    private String makeSelectQueryForUpdateOrNot(String query, boolean isForUpdate) {
+        if (isForUpdate) {
+            query += " FOR UPDATE";
+        }
+        return query;
     }
 
     private void setPreparedStatement(PreparedStatement preparedStatement, EmployeeEntity entity) throws SQLException {

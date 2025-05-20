@@ -41,14 +41,14 @@ public class TasksServiceImpl implements TasksService {
         logger.info("HotelsServiceImpl get all tasks by employee login");
 
         try {
-            var employeeOpt = employeeRepo.getById(employeeId);
+            var employeeOpt = employeeRepo.getById(employeeId, false);
             if (employeeOpt.isPresent()) {
-                var taskEntities = taskRepo.getAllByEmployeeId(employeeId);
+                var taskEntities = taskRepo.getAllByEmployeeId(employeeId, false);
 
                 var employeeLogin = employeeOpt.get().getLogin();
                 List<TaskDto> taskDtos = new ArrayList<>();
                 for (var task : taskEntities) {
-                    var managerOpt = employeeRepo.getById(task.getManagerId());
+                    var managerOpt = employeeRepo.getById(task.getManagerId(), false);
                     if (managerOpt.isPresent()) {
                         var managerLogin = managerOpt.get().getLogin();
 
@@ -79,8 +79,8 @@ public class TasksServiceImpl implements TasksService {
             var employeeId = Integer.parseInt(rawEmployeeId);
             var hotelRoomId = Integer.parseInt(rawHotelRoomId);
 
-            var manager = getManager(managerId);
-            var employee = getEmployee(employeeId, manager);
+            var manager = getManager(managerId, true);
+            var employee = getEmployee(employeeId, manager, true);
             checkHotelRoomById(hotelRoomId);
 
             var status = TaskStatus.TODO;
@@ -106,14 +106,14 @@ public class TasksServiceImpl implements TasksService {
         try {
             var updatedStatus = TaskStatus.valueOf(updatedStatusName);
 
-            var manager = getManager(managerId);
+            var manager = getManager(managerId, false);
 
-            var taskEntity = getTask(taskId);
+            var taskEntity = getTask(taskId, true);
 
             checkManagerPost(manager, taskEntity.getManagerId());
 
-            var updatedManager = getManager(updatedManagerLogin);
-            var updatedEmployee = getEmployee(updatedEmployeeLogin, updatedManager);
+            var updatedManager = getManager(updatedManagerLogin, true);
+            var updatedEmployee = getEmployee(updatedEmployeeLogin, updatedManager, true);
             checkHotelRoomById(updatedHotelRoomId);
 
             taskEntity.setManagerId(updatedManager.getId());
@@ -140,9 +140,9 @@ public class TasksServiceImpl implements TasksService {
         logger.info("remove task " + taskId);
 
         try {
-            var manager = getManager(managerId);
+            var manager = getManager(managerId, false);
 
-            var taskEntity = getTask(taskId);
+            var taskEntity = getTask(taskId, true);
 
             if (taskEntity.getEmployeeId() != employeeId) {
                 throw new EmployeeNotFoundException("Employee " + employeeId + " can't do task " + taskId);
@@ -157,13 +157,13 @@ public class TasksServiceImpl implements TasksService {
         }
     }
 
-    private EmployeeEntity getManager(Integer managerId) throws SQLException {
+    private EmployeeEntity getManager(Integer managerId, boolean isForUpdate) throws SQLException {
         EmployeeEntity managerEntity;
 
         if (managerId == null) {
             managerEntity = null;
         } else {
-            var managerEntityOpt = employeeRepo.getById(managerId);
+            var managerEntityOpt = employeeRepo.getById(managerId, isForUpdate);
             if (managerEntityOpt.isPresent()) {
                 managerEntity = managerEntityOpt.get();
                 if (managerEntity.getPost() == EmployeePost.STAFF) {
@@ -181,13 +181,13 @@ public class TasksServiceImpl implements TasksService {
         return managerEntity;
     }
 
-    private EmployeeEntity getManager(String managerLogin) throws SQLException {
+    private EmployeeEntity getManager(String managerLogin, boolean isForUpdate) throws SQLException {
         EmployeeEntity managerEntity;
 
         if (managerLogin == null) {
             managerEntity = null;
         } else {
-            var managerEntityOpt = employeeRepo.getByLogin(managerLogin);
+            var managerEntityOpt = employeeRepo.getByLogin(managerLogin, isForUpdate);
             if (managerEntityOpt.isPresent()) {
                 managerEntity = managerEntityOpt.get();
                 if (managerEntity.getPost() == EmployeePost.STAFF) {
@@ -205,10 +205,10 @@ public class TasksServiceImpl implements TasksService {
         return managerEntity;
     }
 
-    private EmployeeEntity getEmployee(int employeeId, EmployeeEntity manager) throws SQLException {
+    private EmployeeEntity getEmployee(int employeeId, EmployeeEntity manager, boolean isForUpdate) throws SQLException {
         EmployeeEntity employeeEntity;
 
-        var employeeEntityOpt = employeeRepo.getById(employeeId);
+        var employeeEntityOpt = employeeRepo.getById(employeeId, isForUpdate);
         if (employeeEntityOpt.isPresent()) {
             employeeEntity = employeeEntityOpt.get();
         } else {
@@ -222,10 +222,11 @@ public class TasksServiceImpl implements TasksService {
         return employeeEntity;
     }
 
-    private EmployeeEntity getEmployee(String employeeLogin, EmployeeEntity manager) throws SQLException {
+    private EmployeeEntity getEmployee(String employeeLogin, EmployeeEntity manager,
+                                       boolean isForUpdate) throws SQLException {
         EmployeeEntity employeeEntity;
 
-        var employeeEntityOpt = employeeRepo.getByLogin(employeeLogin);
+        var employeeEntityOpt = employeeRepo.getByLogin(employeeLogin, isForUpdate);
         if (employeeEntityOpt.isPresent()) {
             employeeEntity = employeeEntityOpt.get();
         } else {
@@ -247,8 +248,8 @@ public class TasksServiceImpl implements TasksService {
         }
     }
 
-    private TaskEntity getTask(int taskId) throws SQLException {
-        var taskEntityOpt = taskRepo.getById(taskId);
+    private TaskEntity getTask(int taskId, boolean isForUpdate) throws SQLException {
+        var taskEntityOpt = taskRepo.getById(taskId, isForUpdate);
         if (taskEntityOpt.isEmpty()) {
             final String message = "Task not found by id " + taskId;
             logger.info(message);
@@ -262,7 +263,7 @@ public class TasksServiceImpl implements TasksService {
             EmployeeEntity currentTaskManager;
 
             try {
-                currentTaskManager = getManager(currentManagerId);
+                currentTaskManager = getManager(currentManagerId, false);
             } catch (EmployeeNotFoundException e) {
                 currentTaskManager = null;
             }
@@ -276,7 +277,7 @@ public class TasksServiceImpl implements TasksService {
     }
 
     private void checkHotelRoomById(int hotelRoomId) throws SQLException {
-        var hotelRoomEntityOpt = hotelRoomRepo.getById(hotelRoomId);
+        var hotelRoomEntityOpt = hotelRoomRepo.getById(hotelRoomId, false);
         if (hotelRoomEntityOpt.isEmpty()) {
             final String message = "Hotel room not found by id " + hotelRoomId;
             logger.info(message);

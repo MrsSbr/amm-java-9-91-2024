@@ -28,7 +28,7 @@ public class RemoveTaskServlet extends HttpServlet {
             var taskEmployeeLogin = req.getParameter("task_employee_login");
 
             EmployeesService employeesService = new EmployeesServiceImpl();
-            var taskEmployee = employeesService.getEmployeeByLogin(taskEmployeeLogin);
+            var taskEmployee = employeesService.getEmployeeByLogin(taskEmployeeLogin, true);
 
             TasksService manageTasksService = new TasksServiceImpl();
             manageTasksService.removeTask(manager.getId(), taskId, taskEmployee.getId());

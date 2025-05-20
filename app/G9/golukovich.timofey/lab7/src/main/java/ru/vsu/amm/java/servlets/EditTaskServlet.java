@@ -21,20 +21,21 @@ public class EditTaskServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             var session = req.getSession(false);
-            var employee = (EmployeeDto) session.getAttribute("employee");
+            var manager = (EmployeeDto) session.getAttribute("employee");
+            var currentEmployeeId = Integer.parseInt(req.getParameter("employee_id"));
 
-            var taskId = Integer.parseInt(req.getParameter("task_id"));
-            var updatedManagerLogin = (String) req.getParameter("task_manager_login");
-            var currentEmployeeLogin = (String) req.getParameter("task_employee_login");
-            var updatedHotelRoomId = Integer.parseInt(req.getParameter("task_hotel_room_id"));
-            var updatedStatus = req.getParameter("task_status");
-            var updatedDescription = req.getParameter("task_description");
+            var taskId = Integer.parseInt(req.getParameter("edit_task_id"));
+            var updatedManagerLogin = (String) req.getParameter("edit_task_manager_login");
+            var currentEmployeeLogin = (String) req.getParameter("edit_task_employee_login");
+            var updatedHotelRoomId = Integer.parseInt(req.getParameter("edit_task_hotel_room_id"));
+            var updatedStatus = req.getParameter("edit_task_status");
+            var updatedDescription = req.getParameter("edit_task_description");
 
             TasksService manageTasksService = new TasksServiceImpl();
 
-            var taskDto = manageTasksService.updateTask(employee.getId(), taskId, updatedManagerLogin, currentEmployeeLogin, updatedHotelRoomId, updatedStatus, updatedDescription);
+            var taskDto = manageTasksService.updateTask(manager.getId(), taskId, updatedManagerLogin, currentEmployeeLogin, updatedHotelRoomId, updatedStatus, updatedDescription);
             session.setAttribute("successMessage", "Task " + taskDto.getId() + " was updated");
-            session.setAttribute("current_employee_id", currentEmployeeLogin);
+            session.setAttribute("current_employee_id", currentEmployeeId);
             resp.sendRedirect(req.getContextPath() + "/api/manage_tasks");
         } catch (NumberFormatException e) {
             req.setAttribute("errorMessage", "Incorrect value");
