@@ -9,7 +9,7 @@ public interface Repository<T> {
 
     List<T> findAll() throws SQLException;
 
-    void update(final T object);
+    void update(final T object) throws SQLException;
 
     //void insert(final T object) throws SQLException;
     void delete(final T object);

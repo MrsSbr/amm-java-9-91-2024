@@ -47,20 +47,22 @@ public class UserRepository implements Repository<UserEntity> {
 
     @Override
     public List<UserEntity> findAll() throws SQLException {
-        final String sql = "SELECT id, login, nickname, phonenumber, passwordhash,email, salt FROM userentity";
+        final String sql = "SELECT id, login, nickname, phonenumber, passwordhash,email, salt, login_count FROM userentity";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 List<UserEntity> users = new ArrayList<>();
                 while (resultSet.next()) {
+                    ResultSet reslutSet;
                     users.add(new UserEntity(resultSet.getLong("id"),
                             resultSet.getString("login"),
                             resultSet.getString("nickname"),
                             resultSet.getString("phonenumber"),
                             resultSet.getString("passwordhash"),
                             resultSet.getString("email"),
-                            resultSet.getString("salt")));
+                            resultSet.getString("salt"),
+                            resultSet.getInt("login_count")));
                 }
                 return users;
             }
@@ -68,7 +70,7 @@ public class UserRepository implements Repository<UserEntity> {
     }
 
     public UserEntity findByLogin(String login) throws SQLException {
-        final String sql = "SELECT id, login, nickname, phonenumber, passwordhash, email, salt FROM userentity WHERE login = ? ORDER BY id";
+        final String sql = "SELECT id, login, nickname, phonenumber, passwordhash, email, salt, login_count FROM userentity WHERE login = ? ORDER BY id";
 
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -83,7 +85,8 @@ public class UserRepository implements Repository<UserEntity> {
                             resultSet.getString("phonenumber"),
                             resultSet.getString("passwordhash"),
                             resultSet.getString("email"),
-                            resultSet.getString("salt")
+                            resultSet.getString("salt"),
+                            resultSet.getInt("login_count")
                     );
                 }
             }
@@ -92,8 +95,24 @@ public class UserRepository implements Repository<UserEntity> {
     }
 
     @Override
-    public void update(UserEntity object) {
+    public void update(UserEntity user) throws SQLException {
+        String sql = "UPDATE userentity SET login = ?, nickname = ?, phonenumber = ?, "
+                + "passwordhash = ?, salt = ?, email = ?, login_count = ? WHERE id = ?";
 
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getNickname());
+            statement.setString(3, user.getPhoneNumber());
+            statement.setString(4, user.getPasswordHash());
+            statement.setString(5, user.getSalt());
+            statement.setString(6, user.getEmail());
+            statement.setInt(7, user.getLoginCount());
+            statement.setLong(8, user.getId());
+
+            statement.executeUpdate();
+        }
     }
 
     @Override

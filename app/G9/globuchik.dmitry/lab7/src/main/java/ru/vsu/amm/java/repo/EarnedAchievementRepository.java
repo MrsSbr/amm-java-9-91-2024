@@ -98,6 +98,17 @@ public class EarnedAchievementRepository implements Repository<EarnedAchievement
         }
     }
 
+    public void unlockAchievement(Long userId, Long achievementId) throws SQLException {
+        String sql = "UPDATE earnedachievement SET status = 'UNLOCKED', obtainedat = NOW() " +
+                "WHERE user_id = ? AND achievement_id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setLong(1, userId);
+            statement.setLong(2, achievementId);
+            statement.executeUpdate();
+        }
+    }
+
     @Override
     public void update(EarnedAchievement object) {
 

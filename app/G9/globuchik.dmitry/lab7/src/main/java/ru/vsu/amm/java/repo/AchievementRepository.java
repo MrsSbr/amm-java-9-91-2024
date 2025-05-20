@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.repo;
 
 import ru.vsu.amm.java.entity.Achievement;
+import ru.vsu.amm.java.entity.UserEntity;
 import ru.vsu.amm.java.enums.AchievementType;
 
 import javax.sql.DataSource;
@@ -62,11 +63,33 @@ public class AchievementRepository implements Repository<Achievement> {
 
     public void insertAchievements(Long userId) throws SQLException {
         final String sql = "INSERT INTO earnedachievement (achievement_id, user_id, obtainedat, status) " +
-                "SELECT a.id, ?, NULL, 'LOCKED' FROM achievement a";
+                "SELECT a.id, ?, NULL, 'LOCKED' " +
+                "FROM achievement a " +
+                "WHERE NOT EXISTS (" +
+                "   SELECT 1 FROM earnedachievement ea " +
+                "   WHERE ea.user_id = ? AND ea.achievement_id = a.id" +
+                ")";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, userId);
+            statement.setLong(2, userId);
             statement.executeUpdate();
+        }
+    }
+
+    public Optional<Achievement> findByType(AchievementType type) throws SQLException {
+        String sql = "SELECT * FROM achievement WHERE type = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1, type.name());
+            try (ResultSet resultSet = statement.executeQuery()) {
+            return resultSet.next()
+                    ? Optional.of(new Achievement(resultSet.getLong("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("description"),
+                    AchievementType.valueOf(resultSet.getString("type"))))
+                    : Optional.empty();
+            }
         }
     }
 
