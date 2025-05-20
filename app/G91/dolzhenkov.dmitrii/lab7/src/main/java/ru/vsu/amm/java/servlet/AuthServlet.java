@@ -45,10 +45,6 @@ public class AuthServlet extends HttpServlet {
             switch (role) {
                 case USER -> response.sendRedirect(MAIN_UI);
                 case ADMIN -> response.sendRedirect(ADD_SCOOTER_VIEW);
-                case null, default -> {
-                    request.setAttribute(ErrorMessages.ERROR_MESSAGE, ErrorMessages.FIND_USER_ROLE);
-                    getServletContext().getRequestDispatcher(AUTH_VIEW).forward(request, response);
-                }
             }
         } catch (WrongUserCredentialsException | DataAccessException e) {
             request.setAttribute(ErrorMessages.ERROR_MESSAGE, e.getMessage());
