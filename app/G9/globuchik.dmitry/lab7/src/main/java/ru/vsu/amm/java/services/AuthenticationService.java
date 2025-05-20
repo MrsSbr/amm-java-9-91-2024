@@ -32,9 +32,9 @@ public class AuthenticationService {
                 throw new AuthenticationException("Login does not exist");
             }
             LOGGER.log(Level.INFO, "Logged successfully");
-            byte[] salt = authUser.getSalt();
+            byte[] salt = authUser.getSalt().getBytes();
             PasswordHash hash = new PasswordHash();
-            return Arrays.equals(authUser.getPasswordHash(), hash.encrypt(password, salt));
+            return Arrays.equals(authUser.getPasswordHash().getBytes(), hash.encrypt(password, salt));
         } catch (SQLException | AuthenticationException | NoSuchAlgorithmException | InvalidKeySpecException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
             throw new RuntimeException(e);
@@ -54,11 +54,10 @@ public class AuthenticationService {
                 authUser = new UserEntity(login,
                         nickname,
                         phonenumber,
-                        passwordHash,
+                        Arrays.toString(passwordHash),
                         email,
-                        salt);
-                userRepository.save(authUser);
-                return true;
+                        Arrays.toString(salt));
+                return userRepository.save(authUser);
             }
         } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new RuntimeException(e);

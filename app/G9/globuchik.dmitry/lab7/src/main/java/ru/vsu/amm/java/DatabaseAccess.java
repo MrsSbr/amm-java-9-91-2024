@@ -12,10 +12,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DatabaseAccess {
-    private static final Logger LOGGER = Logger.getLogger(DatabaseAccess.class.getName());
+    private static final Logger logger = Logger.getLogger(DatabaseAccess.class.getName());
 
     public static DataSource getDataSource() throws IOException {
-        LOGGER.log(Level.INFO, "Attempting to get datasource");
+        logger.log(Level.INFO, "Attempting to get datasource");
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         Properties properties = new Properties();
         try (InputStream inputStream = DatabaseAccess.class.getResourceAsStream("/db.properties")) {
@@ -26,7 +26,7 @@ public class DatabaseAccess {
         dataSource.setUrl(properties.getProperty("db.url"));
         dataSource.setUser(properties.getProperty("db.username"));
         dataSource.setPassword(properties.getProperty("db.password"));
-        LOGGER.log(Level.INFO, "Successfully get datasource");
+        logger.log(Level.INFO, "Successfully get datasource");
         return dataSource;
     }
 }

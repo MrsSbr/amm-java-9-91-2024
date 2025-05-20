@@ -76,7 +76,7 @@ public class EarnedAchievementRepository implements Repository<EarnedAchievement
     }
 
     @Override
-    public void save(EarnedAchievement object) throws SQLException {
-
+    public boolean save(EarnedAchievement object) throws SQLException {
+        return false;
     }
 }

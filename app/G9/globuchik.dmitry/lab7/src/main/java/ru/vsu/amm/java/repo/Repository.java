@@ -14,5 +14,5 @@ public interface Repository<T> {
     //void insert(final T object) throws SQLException;
     void delete(final T object);
 
-    void save(final T object) throws SQLException;
+    boolean save(final T object) throws SQLException;
 }

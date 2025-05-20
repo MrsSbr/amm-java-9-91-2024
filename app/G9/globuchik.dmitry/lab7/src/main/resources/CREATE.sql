@@ -16,16 +16,16 @@ CREATE TABLE userentity
     login           TEXT NOT NULL UNIQUE,
     nickname        TEXT NOT NULL,
     phonenumber     TEXT NOT NULL UNIQUE,
-    passwordhash    bytea NOT NULL,
-    salt            bytea NOT NULL,
+    passwordhash    TEXT NOT NULL,
+    salt            TEXT NOT NULL,
     email           TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE earnedachievement
 (
     id              BIGSERIAL PRIMARY KEY,
-    achievement_id  BIGSERIAL NOT NULL,
-    user_id         BIGSERIAL NOT NULL,
+    achievement_id  BIGINT NOT NULL,
+    user_id         BIGINT NOT NULL,
     obtainedat      TIME NOT NULL,
     status          TEXT NOT NULL,
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES userentity (id),

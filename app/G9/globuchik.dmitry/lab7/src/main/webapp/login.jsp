@@ -11,7 +11,7 @@
   <title>Вход</title>
 </head>
 <body>
-<h2>Регистрация</h2>
+<h2>Вход</h2>
 <form action="login" method="post">
   <p>
     <b>Логин:</b><br>

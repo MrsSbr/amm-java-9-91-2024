@@ -37,9 +37,9 @@ public class UserRepository implements Repository<UserEntity> {
                             resultSet.getString("login"),
                             resultSet.getString("nickname"),
                             resultSet.getString("phonenumber"),
-                            resultSet.getBytes("passwordhash"),
+                            resultSet.getString("passwordhash"),
                             resultSet.getString("email"),
-                            resultSet.getBytes("salt")
+                            resultSet.getString("salt")
                     ));
                 }
             }
@@ -60,9 +60,9 @@ public class UserRepository implements Repository<UserEntity> {
                             resultSet.getString("login"),
                             resultSet.getString("nickname"),
                             resultSet.getString("phonenumber"),
-                            resultSet.getBytes("passwordhash"),
+                            resultSet.getString("passwordhash"),
                             resultSet.getString("email"),
-                            resultSet.getBytes("salt")));
+                            resultSet.getString("salt")));
                 }
                 return users;
             }
@@ -82,9 +82,9 @@ public class UserRepository implements Repository<UserEntity> {
                             resultSet.getString("login"),
                             resultSet.getString("nickname"),
                             resultSet.getString("phonenumber"),
-                            resultSet.getBytes("passwordhash"),
+                            resultSet.getString("passwordhash"),
                             resultSet.getString("email"),
-                            resultSet.getBytes("salt")
+                            resultSet.getString("salt")
                     );
                 }
             }
@@ -103,15 +103,15 @@ public class UserRepository implements Repository<UserEntity> {
     }
 
     @Override
-    public void save(UserEntity user) throws SQLException {
+    public boolean save(UserEntity user) throws SQLException {
         String sql = "INSERT INTO public.userentity (login, nickname, phonenumber, passwordhash, salt, email) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getNickname());
             statement.setString(3, user.getPhoneNumber());
-            statement.setBytes(4, user.getPasswordHash());
-            statement.setBytes(5, user.getSalt());
+            statement.setString(4, user.getPasswordHash());
+            statement.setString(5, user.getSalt());
             statement.setString(6, user.getEmail());
 
             statement.executeUpdate();
@@ -121,6 +121,7 @@ public class UserRepository implements Repository<UserEntity> {
                     user.setId(generatedKeys.getLong(1));
                 }
             }
+            return true;
         }
     }
 }
