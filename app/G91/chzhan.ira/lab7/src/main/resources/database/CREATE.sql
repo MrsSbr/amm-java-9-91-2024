@@ -2,6 +2,7 @@ CREATE TABLE customer (
                           id BIGSERIAL PRIMARY KEY,
                           name TEXT NOT NULL,
                           password TEXT NOT NULL
+
 );
 
 CREATE TABLE toy (
@@ -22,3 +23,6 @@ CREATE TABLE orders (
 
 CREATE INDEX idx_orders_customer_id ON orders(customer_id);
 CREATE INDEX idx_orders_toy_id ON orders(toy_id);
+
+ALTER TABLE customer
+    ADD COLUMN is_admin BOOLEAN DEFAULT FALSE;

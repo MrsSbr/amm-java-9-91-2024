@@ -14,8 +14,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.logging.Logger; // Import Logger
-import java.util.logging.Level; // Import Level
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 @WebServlet(name = "OrderServlet", urlPatterns = "/order")
 public class OrderServlet extends HttpServlet {
@@ -24,6 +24,8 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         try {
             Long toyId = Long.parseLong(req.getParameter("toyId"));
             int quantity = Integer.parseInt(req.getParameter("quantity"));

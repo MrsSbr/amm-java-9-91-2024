@@ -21,6 +21,8 @@ public class OrdersServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         Customer customer = (Customer) session.getAttribute("customer");
 
@@ -37,7 +39,7 @@ public class OrdersServlet extends HttpServlet {
             throw new DbException(e.getMessage());
         }
 
-        req.setAttribute("orders", orders); // Устанавливаем атрибут "orders" в запросе
+        req.setAttribute("orders", orders);
         getServletContext().getRequestDispatcher("/orders.jsp").forward(req, resp);
     }
 }
