@@ -34,16 +34,14 @@
             background: #d2b48c;
             margin-left: 10px;
         }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -62,7 +60,7 @@
             <p>Сотрудник: ${incident.emplId}</p>
             <p>Динозавр: ${incident.dinoId}</p>
             <div class="action-buttons">
-                <button class="btn btn-edit" onclick="openEditModal(${incident.idIncident})">Изменить</button>
+                <a href="edit-incident?id=${incident.idIncident}" class="btn btn-edit">Изменить</a>
                 <form action="delete-incident" method="post" style="display:inline;">
                     <input type="hidden" name="id" value="${incident.idIncident}">
                     <button type="submit" class="btn btn-delete">Удалить</button>
@@ -71,39 +69,5 @@
         </div>
     </c:forEach>
 </div>
-
-<div id="editModal" class="modal">
-    <h2>Редактировать инцидент</h2>
-    <form action="update-incident" method="post">
-        <input type="hidden" id="editId" name="id">
-        <div class="form-group">
-            <label>Дата:</label>
-            <input type="date" id="editDate" name="date" required>
-        </div>
-        <div class="form-group">
-            <label>Описание:</label>
-            <textarea id="editDescription" name="description" rows="4" required></textarea>
-        </div>
-        <button type="submit" class="btn">Сохранить</button>
-        <button type="button" class="btn btn-cancel" onclick="closeEditModal()">Отмена</button>
-    </form>
-</div>
-
-<script>
-    function openEditModal(id) {
-        fetch('get-incident?id=' + id)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('editId').value = data.idIncident;
-                document.getElementById('editDate').value = data.dateOfIncident;
-                document.getElementById('editDescription').value = data.description;
-                document.getElementById('editModal').style.display = 'block';
-            });
-    }
-
-    function closeEditModal() {
-        document.getElementById('editModal').style.display = 'none';
-    }
-</script>
 </body>
 </html>

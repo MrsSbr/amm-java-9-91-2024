@@ -38,7 +38,7 @@
         <div style="color: red; margin-bottom: 15px;">${error}</div>
     </c:if>
 
-    <form action="add_incident" method="post">
+    <form action="add_incident" method="post" accept-charset="UTF-8">
         <div class="form-group">
             <label>Сотрудник:</label>
             <select name="emplId" required>

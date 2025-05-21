@@ -33,13 +33,12 @@ public class AuthService {
         }
     }
 
-    public void register(String login, String password) {
-        validateCredentials(login, password);
+    public void register(Employee employee) {
+        validateCredentials(employee.getLogin(), employee.getPassword());
 
         try {
-            if (employeeRepository.findByLogin(login).isEmpty()) {
-                Employee customer = new Employee(login, password);
-                employeeRepository.save(customer);
+            if (employeeRepository.findByLogin(employee.getLogin()).isEmpty()) {
+                employeeRepository.save(employee);
             } else {
                 throw new AlreadyExistException("User with this login already exists");
             }

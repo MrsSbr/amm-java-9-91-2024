@@ -89,7 +89,7 @@
 </head>
 <body>
 <div class="auth-container">
-    <h2>Вход в систему</h2>
+    <h2>Регистрация</h2>
 
     <% if (request.getParameter("error") != null) { %>
     <div class="error">Неверный логин или пароль</div>
@@ -97,20 +97,42 @@
 
     <form action="register" method="POST">
         <div class="form-group">
-            <label for="username">Логин:</label>
-            <input type="text" id="username" name="j_username" required>
+            <label for="login">Логин:</label>
+            <input type="text" id="login" name="login" required>
         </div>
 
         <div class="form-group">
             <label for="password">Пароль:</label>
-            <input type="password" id="password" name="j_password" required>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <label>Фамилия:</label>
+            <input type="text" id="surname" name="surname" required>
+        </div>
+
+        <div class="form-group">
+            <label>Имя:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Отчество:</label>
+            <input type="text" id="patronumic" name="patronumic" required>
+        </div>
+
+        <div class="form-group">
+            <label>Дата рождения:</label>
+            <input type="date" id="birthDate" name="birthDate" required>
         </div>
 
         <div class="button-group">
-            <button type="submit" class="btn">Войти</button>
-            <button type="button" onclick="location.href='register.jsp'" class="btn btn-register">Регистрация</button>
+            <button type="submit" class="btn btn-register">Зарегистрироваться</button>
+
         </div>
     </form>
+
+    <a href="login.jsp" class="btn">Отмена</a>
 </div>
 </body>
 </html>
