@@ -4,7 +4,11 @@ import ru.vsu.amm.java.Configuration.DbConfiguration;
 import ru.vsu.amm.java.Entities.Employee;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +23,7 @@ public class EmployeeRepository implements DbRepository<Employee> {
 
     @Override
     public Optional<Employee> findById(Long id) throws SQLException {
-        final String query = "SELECT IdEmpl, EmplLogin, EmplPassword, SurnameEmpl, NameEmpl, PatronumicEmpl, DateOfBirthEmpl FROM Employee WHERE id = ?";
+        final String query = "SELECT IdEmpl, LoginEmpl, PasswordEmpl, SurnameEmpl, NameEmpl, PatronumicEmpl, DateOfBirthEmpl FROM Employee WHERE idempl = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -32,8 +36,8 @@ public class EmployeeRepository implements DbRepository<Employee> {
         if (resultSet.next()) {
             return Optional.of(new Employee(
                     resultSet.getLong("IdEmpl"),
-                    resultSet.getString("EmplLogin"),
-                    resultSet.getString("EmplPassword"),
+                    resultSet.getString("LoginEmpl"),
+                    resultSet.getString("PasswordEmpl"),
                     resultSet.getString("SurnameEmpl"),
                     resultSet.getString("NameEmpl"),
                     resultSet.getString("PatronumicEmpl"),
@@ -46,18 +50,18 @@ public class EmployeeRepository implements DbRepository<Employee> {
 
     @Override
     public List<Employee> findAll() throws SQLException {
-        final String query = "SELECT IdEmpl, EmplLogin, EmplPassword, SurnameEmpl, NameEmpl, PatronumicEmpl, DateOfBirthEmpl FROM Employee WHERE id = ?";
+        final String query = "SELECT IdEmpl, LoginEmpl, PasswordEmpl, SurnameEmpl, NameEmpl, PatronumicEmpl, DateOfBirthEmpl FROM Employee";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ResultSet resultSet = preparedStatement.getResultSet();
+        ResultSet resultSet = preparedStatement.executeQuery();
 
         List<Employee> empls = new ArrayList<>();
         while (resultSet.next()) {
             empls.add(new Employee(
                     resultSet.getLong("IdEmpl"),
-                    resultSet.getString("EmplLogin"),
-                    resultSet.getString("EmplPassword"),
+                    resultSet.getString("LoginEmpl"),
+                    resultSet.getString("PasswordEmpl"),
                     resultSet.getString("SurnameEmpl"),
                     resultSet.getString("NameEmpl"),
                     resultSet.getString("PatronumicEmpl"),
