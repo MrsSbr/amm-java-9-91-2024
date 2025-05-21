@@ -48,6 +48,15 @@ public class EmployeeService {
         }
     }
 
+    public Employee getEmployeeByLogin(String login) {
+        try {
+            return employeeRepository.findByLogin(login)
+                    .orElseThrow(() -> new NotFoundException("Employee not found"));
+        } catch (SQLException e) {
+            throw new DbException("Error fetching employee by login", e);
+        }
+    }
+
     public void updateEmployee(Long id, Employee updatedEmployee) {
         try {
             Employee existing = employeeRepository.findById(id)

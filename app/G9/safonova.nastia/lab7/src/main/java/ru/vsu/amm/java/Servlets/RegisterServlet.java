@@ -24,29 +24,22 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
-        String surname = req.getParameter("surname");
-        String name = req.getParameter("name");
-        String patronumic = req.getParameter("patronumic");
-        LocalDate birthDate = LocalDate.parse(req.getParameter("birthDate"));
-
         try {
             Employee employee = new Employee(
                     0L,
-                    login,
-                    password,
-                    surname,
-                    name,
-                    patronumic,
-                    birthDate
+                    req.getParameter("login"),
+                    req.getParameter("password"),
+                    req.getParameter("surname"),
+                    req.getParameter("name"),
+                    req.getParameter("patronumic"),
+                    LocalDate.parse(req.getParameter("birthDate"))
             );
 
             AuthService authService = new AuthService();
             authService.register(employee);
 
             resp.sendRedirect("login");
-        } catch (AlreadyExistException | DbException e) {
+        } catch (AlreadyExistException | DbException | IllegalArgumentException e) {
             req.setAttribute("errorMessage", e.getMessage());
             getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
         }

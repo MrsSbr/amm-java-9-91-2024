@@ -85,15 +85,27 @@
         .button-group {
             margin-top: 10px;
         }
+
+        .cancel-link {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            text-align: center;
+            color: #6b8e23;
+            text-decoration: none;
+            padding: 10px 0;
+            border: 1px solid #8fbc8f;
+            border-radius: 20px;
+        }
     </style>
 </head>
 <body>
 <div class="auth-container">
     <h2>Регистрация</h2>
 
-    <% if (request.getParameter("error") != null) { %>
-    <div class="error">Неверный логин или пароль</div>
-    <% } %>
+    <c:if test="${not empty errorMessage}">
+        <div class="error">${errorMessage}</div>
+    </c:if>
 
     <form action="register" method="POST">
         <div class="form-group">
@@ -132,7 +144,7 @@
         </div>
     </form>
 
-    <a href="login.jsp" class="btn">Отмена</a>
+    <a href="login.jsp" class="cancel-link">Отмена</a>
 </div>
 </body>
 </html>
