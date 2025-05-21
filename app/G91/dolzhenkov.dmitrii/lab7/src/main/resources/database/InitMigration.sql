@@ -1,7 +1,8 @@
 CREATE TABLE User(
     id BIGSERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    role   varchar(10) not null check (role in ('ADMIN', 'USER'))
 );
 
 CREATE TABLE Scooter (
