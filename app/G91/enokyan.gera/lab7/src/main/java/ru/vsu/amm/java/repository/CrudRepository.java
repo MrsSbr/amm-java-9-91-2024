@@ -7,7 +7,7 @@ public interface CrudRepository<T> {
 
     List<T> findAll();
 
-    void create(T entity);
+    long create(T entity);
 
     void update(T entity);
 
