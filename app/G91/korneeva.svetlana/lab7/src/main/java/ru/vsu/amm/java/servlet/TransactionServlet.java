@@ -33,23 +33,8 @@ public class TransactionServlet extends HttpServlet {
         String fromParam = req.getParameter("from");
         String toParam = req.getParameter("to");
 
-        LocalDateTime fromDate = null;
-        LocalDateTime toDate = null;
-
-        if (fromParam != null && !fromParam.isEmpty()) {
-            fromDate = LocalDate.parse(fromParam).atStartOfDay();
-        }
-
-        if (toParam != null && !toParam.isEmpty()) {
-            toDate = LocalDate.parse(toParam).atTime(23, 59, 59);
-        }
-
         try {
-            if (fromDate != null && toDate != null) {
-                response = service.findByTimeRange(user, fromDate, toDate);
-            } else {
-                response = service.findAll(user);
-            }
+            response = service.findByTimeRange(user, fromParam, toParam);
         } catch (TransactionException e) {
             req.setAttribute("errorMessage", e.getMessage());
         }
@@ -74,21 +59,17 @@ public class TransactionServlet extends HttpServlet {
         LocalDateTime date = LocalDateTime.parse(dateParam);
         Category category = Category.valueOf(categoryParam);
 
-        if (amount.scale() > 2) {
-            req.setAttribute("errorSave", "Сумма должна содержать не более двух знаков после запятой.");
-        } else {
-            Transaction transaction = Transaction.builder()
-                    .amount(amount)
-                    .category(category)
-                    .date(date)
-                    .type(type)
-                    .build();
+        Transaction transaction = Transaction.builder()
+                .amount(amount)
+                .category(category)
+                .date(date)
+                .type(type)
+                .build();
 
-            try {
-                service.save(user, transaction);
-            } catch (TransactionException e) {
-                req.setAttribute("errorSave", e.getMessage());
-            }
+        try {
+            service.save(user, transaction);
+        } catch (TransactionException e) {
+            req.setAttribute("errorSave", e.getMessage());
         }
 
         TransactionResponse response = null;

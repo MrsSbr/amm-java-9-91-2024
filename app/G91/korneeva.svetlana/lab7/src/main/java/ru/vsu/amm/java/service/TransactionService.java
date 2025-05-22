@@ -11,6 +11,7 @@ import ru.vsu.amm.java.repository.TransactionRepository;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -36,16 +37,31 @@ public class TransactionService {
         return getTransactionResponse(transactions);
     }
 
-    public TransactionResponse findByTimeRange(UserEntity user, LocalDateTime start, LocalDateTime end) {
-        if (start.isAfter(end)) {
+    public TransactionResponse findByTimeRange(UserEntity user, String start, String end) {
+        LocalDateTime startDate = null;
+        LocalDateTime endDate = null;
+
+        if (start != null && !start.isEmpty()) {
+            startDate = LocalDate.parse(start).atStartOfDay();
+        }
+
+        if (end != null && !end.isEmpty()) {
+            endDate = LocalDate.parse(end).atTime(23, 59, 59);
+        }
+
+        if (startDate == null || endDate == null) {
+            return findAll(user);
+        }
+
+        if (startDate.isAfter(endDate)) {
             logger.info("Начальная дата позже конечной: {} > {}", start, end);
             throw new TransactionException("Начальная дата позже конечной");
         }
 
         List<Transaction> transactions;
         try {
-            transactions = transactionRepository.findByUserIdAndTimeRange(user.getId(), start, end);
-            logger.info("Найдено {} транзакций в интервале {} - {} для пользователя с id={}", transactions.size(), start, end, user.getId());
+            transactions = transactionRepository.findByUserIdAndTimeRange(user.getId(), startDate, endDate);
+            logger.info("Найдено {} транзакций в интервале {} - {} для пользователя с id={}", transactions.size(), startDate, endDate, user.getId());
         } catch (SQLException e) {
             logger.error("Ошибка при получении транзакций по диапазону времени", e);
             throw new TransactionException("Unknown exception");
@@ -55,6 +71,10 @@ public class TransactionService {
     }
 
     public void save(UserEntity user, Transaction transaction) {
+        if (transaction.getAmount().scale() > 2) {
+            throw new TransactionException("Не больше 2 чисел после зпятой");
+        }
+
         if (transaction.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
             logger.info("Попытка сохранить транзакцию с некорректной суммой: {}", transaction.getAmount());
             throw new TransactionException("Amount must be greater than zero");
