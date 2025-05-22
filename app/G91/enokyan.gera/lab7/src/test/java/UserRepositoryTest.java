@@ -5,7 +5,6 @@ import ru.vsu.amm.java.entity.UserEntity;
 import ru.vsu.amm.java.repository.UserRepository;
 
 import javax.sql.DataSource;
-
 import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +12,8 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;

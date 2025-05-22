@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.repository;
 
+import java.sql.Connection;
 import java.util.List;
 
 public interface CrudRepository<T> {
@@ -11,5 +12,5 @@ public interface CrudRepository<T> {
 
     void update(T entity);
 
-    void delete(T entity);
+    void delete(Connection connection, T entity);
 }

@@ -59,6 +59,37 @@ public class GameRepository implements CrudRepository<GameEntity> {
         return null;
     }
 
+    public GameEntity findByIdForUpdate(Connection connection, long id) {
+        final String query = """
+                    SELECT id, first_players_id, second_players_id, finished, result,
+                    first_players_rating_before, second_players_rating_before,
+                    first_players_rating_change, second_players_rating_change
+                    FROM game WHERE id = ? FOR UPDATE
+                """;
+
+        logger.log(Level.FINE, MessageFormat.format("Поиск партии с id={0} для обновления", id));
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    logger.log(Level.FINE, MessageFormat.format("Найдена партия с id={0} для обновления", id));
+                    return makeGameFromResultSet(resultSet);
+                } else {
+                    logger.log(Level.FINE, MessageFormat.format("Партия с id={0} не найдена для обновления", id));
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(
+                    Level.SEVERE,
+                    MessageFormat.format("Ошибка при выполнении запроса\n{0}\nс параметрами [id={1}]", query, id),
+                    e
+            );
+        }
+
+        return null;
+    }
+
     @Override
     public List<GameEntity> findAll() {
         final String query = """
@@ -137,6 +168,39 @@ public class GameRepository implements CrudRepository<GameEntity> {
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, id);
+            statement.setLong(2, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    games.add(makeGameFromResultSet(resultSet));
+                }
+                logger.log(Level.FINE, MessageFormat.format("Найдено партий игрока с id={0}: {1}", id, games.size()));
+            }
+        } catch (SQLException e) {
+            logger.log(
+                    Level.SEVERE,
+                    MessageFormat.format("Ошибка при выполнении запроса\n{0}\nс параметрами [id={1}]", query, id),
+                    e
+            );
+        }
+
+        return games;
+    }
+
+    public List<GameEntity> findByPlayersId(Connection connection, long id) {
+        final String query = """
+                    SELECT id, first_players_id, second_players_id, finished, result,
+                    first_players_rating_before, second_players_rating_before,
+                    first_players_rating_change, second_players_rating_change
+                    FROM game WHERE first_players_id IS NOT NULL AND first_players_id = ? OR
+                    second_players_id IS NOT NULL AND second_players_id = ?
+                """;
+
+        logger.log(Level.FINE, MessageFormat.format("Поиск партий игрока с id={0}", id));
+
+        List<GameEntity> games = new ArrayList<>();
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             statement.setLong(2, id);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -241,13 +305,12 @@ public class GameRepository implements CrudRepository<GameEntity> {
     }
 
     @Override
-    public void delete(GameEntity entity) {
+    public void delete(Connection connection, GameEntity entity) {
         final String query = "DELETE FROM game WHERE id = ?";
 
         logger.log(Level.FINE, MessageFormat.format("Удаление партии {0}", entity));
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, entity.getId());
             statement.executeUpdate();
             logger.log(Level.FINE, MessageFormat.format("Удалена партия {0}", entity));
