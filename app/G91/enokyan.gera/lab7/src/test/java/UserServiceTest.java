@@ -9,7 +9,9 @@ import ru.vsu.amm.java.service.UserService;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -26,17 +28,8 @@ public class UserServiceTest {
 
     @Test
     void testGetAllUsers() {
-        UserEntity user1 = new UserEntity();
-        user1.setNickname("test1");
-        user1.setPassword("test");
-        user1.setRating(1000d);
-        user1.setRoles(List.of(Role.Player));
-
-        UserEntity user2 = new UserEntity();
-        user2.setNickname("test2");
-        user2.setPassword("test");
-        user2.setRating(1000d);
-        user2.setRoles(List.of(Role.Player));
+        UserEntity user1 = new UserEntity("test1", "test", 1000d, List.of(Role.Player));
+        UserEntity user2 = new UserEntity("test2", "test", 1000d, List.of(Role.Player));
 
         when(userRepository.findAll()).thenReturn(Arrays.asList(user1, user2));
 
@@ -49,11 +42,7 @@ public class UserServiceTest {
 
     @Test
     void testGetUserByNickname() {
-        UserEntity user = new UserEntity();
-        user.setNickname("test");
-        user.setPassword("test");
-        user.setRating(1000d);
-        user.setRoles(List.of(Role.Player));
+        UserEntity user = new UserEntity("test", "test", 1000d, List.of(Role.Player));
 
         when(userRepository.findByNickname("test")).thenReturn(user);
 
