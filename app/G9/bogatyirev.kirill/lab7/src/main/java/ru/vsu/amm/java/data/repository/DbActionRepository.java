@@ -1,32 +1,40 @@
 package ru.vsu.amm.java.data.repository;
 
 
+
 import ru.vsu.amm.java.data.database.config.DBConfig;
-import ru.vsu.amm.java.data.entities.Action;
+import ru.vsu.amm.java.data.entities.DbAction;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ActionRepository implements DBRepository<Action>{
+
+public class DbActionRepository implements DbRepository<DbAction> {
     private final DataSource dataSource;
 
-    ActionRepository() {
+    public DbActionRepository() {
         dataSource = DBConfig.getDataSource();
     }
 
     @Override
-    public Action findById(int id) throws SQLException {
+    public DbAction findById(Long id) throws SQLException {
 
-        final String query = "SELECT * FROM action WHERE id = ?";
+        final String query = "SELECT id, name, points FROM action WHERE id = ?";
 
         Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
 
-        statement.setInt(1, id);
+        statement.setLong(1, id);
         ResultSet resultSet = statement.executeQuery();
 
         if (resultSet.next()) {
-            return new Action(
+            return new DbAction(
                     resultSet.getLong("id"),
                     resultSet.getString("name"),
                     resultSet.getInt("points")
@@ -37,7 +45,7 @@ public class ActionRepository implements DBRepository<Action>{
     }
 
     @Override
-    public void create(Action action) throws SQLException {
+    public void create(DbAction action) throws SQLException {
 
         final String query = "INSERT INTO action (name, points) VALUES (?, ?)";
 
@@ -57,7 +65,7 @@ public class ActionRepository implements DBRepository<Action>{
     }
 
     @Override
-    public void update(Action action) throws SQLException{
+    public void update(DbAction action) throws SQLException {
 
         final String query = "UPDATE action SET name = ?, points = ? WHERE id = ?";
 
@@ -72,7 +80,7 @@ public class ActionRepository implements DBRepository<Action>{
     }
 
     @Override
-    public void delete(Action action) throws SQLException {
+    public void delete(DbAction action) throws SQLException {
 
         final String query = "DELETE FROM action WHERE id = ?";
 
@@ -81,5 +89,26 @@ public class ActionRepository implements DBRepository<Action>{
 
         statement.setLong(1, action.getId());
         statement.executeUpdate();
+    }
+
+    public List<DbAction> getAllActions() throws SQLException {
+
+        final String query = "SELECT id, name, points FROM Action";
+
+        Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        ResultSet resultSet = statement.executeQuery();
+        List<DbAction> actions = new ArrayList<>();
+
+        //добавляет только один
+        while (resultSet.next()) {
+            actions.add(new DbAction(
+                    resultSet.getLong("id"),
+                    resultSet.getString("name"),
+                    resultSet.getInt("points")));
+        }
+
+        return actions;
     }
 }

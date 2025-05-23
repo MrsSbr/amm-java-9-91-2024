@@ -1,1 +1,1 @@
-DROP TABLE Action, Card, Player, Game;
+DROP TABLE Action, Card, Player, Word_to_action;
