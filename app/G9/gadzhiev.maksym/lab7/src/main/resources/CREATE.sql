@@ -4,7 +4,9 @@ CREATE TABLE real_estate
     address                  TEXT NOT NULL UNIQUE,
     type                     TEXT NOT NULL,
     maximum_number_of_guests INT  NOT NULL,
-    rules                    TEXT NOT NULL
+    rules                    TEXT NOT NULL,
+    image_name               TEXT,
+    price                    BIGINT
 );
 
 CREATE TABLE user_entity
@@ -21,8 +23,7 @@ CREATE TABLE booking
     id             BIGSERIAL PRIMARY KEY,
     check_in_date  DATE    NOT NULL,
     check_out_date DATE    NOT NULL,
-    price          BIGINT  NOT NULL,
-    status         BOOLEAN NOT NULL,
+    status         TEXT NOT NULL,
     user_id        BIGINT,
     real_estate_id BIGINT,
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES user_entity (id),
