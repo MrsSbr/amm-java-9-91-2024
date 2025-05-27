@@ -26,6 +26,10 @@ public class Employee {
         this.password = password;
     }
 
+    public Employee() {
+
+    }
+
     public long getIdEmpl() {
         return idEmpl;
     }

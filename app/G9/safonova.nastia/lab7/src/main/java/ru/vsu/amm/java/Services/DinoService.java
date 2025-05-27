@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class DinoService {
-    private final DinoRepository dinoRepository;
+    public DinoRepository dinoRepository;
 
     public DinoService() {
         this.dinoRepository = new DinoRepository();
