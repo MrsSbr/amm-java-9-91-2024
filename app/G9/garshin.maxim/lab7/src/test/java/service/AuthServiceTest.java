@@ -35,7 +35,7 @@ class AuthServiceTest {
     private UserRepository userRepositoryMock;
 
     @Test
-    void testSuccessfulLogin() throws SQLException {
+    void login_ShouldReturnTrue_WhenValidCredentialsProvided() throws SQLException {
         String username = "user";
         String password = "user";
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -47,7 +47,7 @@ class AuthServiceTest {
     }
 
     @Test
-    void testLoginWithIncorrectPassword() throws SQLException {
+    void login_ShouldReturnFalse_WhenIncorrectPasswordProvided() throws SQLException {
         String username = "user";
         String password = "юзер";
         String hashedPassword = BCrypt.hashpw("user", BCrypt.gensalt());
@@ -59,7 +59,7 @@ class AuthServiceTest {
     }
 
     @Test
-    void testLoginUserNotFound() throws SQLException {
+    void login_ShouldThrowDatabaseException_WhenUserNotFound() throws SQLException {
         when(userRepositoryMock.findByUsername("notfound")).thenReturn(Optional.empty());
 
         DatabaseException exception = assertThrows(DatabaseException.class,
@@ -68,7 +68,7 @@ class AuthServiceTest {
     }
 
     @Test
-    void testRegisterSuccess() throws SQLException {
+    void register_ShouldReturnTrue_WhenNewUserProvided() throws SQLException {
         String username = "newuser";
         String password = "password";
         String email = "new@mail.com";
@@ -82,7 +82,7 @@ class AuthServiceTest {
     }
 
     @Test
-    void testRegisterUserAlreadyExists() throws SQLException {
+    void register_ShouldThrowRegisterException_WhenUserAlreadyExists() throws SQLException {
         String username = "existinguser";
         String password = "password";
         String email = "exists@mail.com";
