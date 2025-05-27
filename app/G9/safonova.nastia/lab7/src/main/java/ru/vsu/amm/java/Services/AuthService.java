@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 public class AuthService {
 
-    private final EmployeeRepository employeeRepository;
+    public EmployeeRepository employeeRepository;
 
     public AuthService() {
         this.employeeRepository = new EmployeeRepository();
