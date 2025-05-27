@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -74,19 +75,26 @@ public class EmployeeRepository implements DbRepository<Employee> {
 
     @Override
     public void save(Employee entity) throws SQLException {
-        final String query = "INSERT INTO Employee (LoginEmpl, PasswordEmpl, SurnameEmpl, NameEmpl, PatronumicEmpl, DateOfBirthEmpl) VALUES (?, ?, ?, ?, ?, ?)";
+        final String query = "INSERT INTO Employee (LoginEmpl, PasswordEmpl, SurnameEmpl, NameEmpl, PatronumicEmpl, DateOfBirthEmpl) VALUES (?, ?, ?, ?, ?, ?) RETURNING IdEmpl";
 
-        Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-        preparedStatement.setString(1, entity.getLogin());
-        preparedStatement.setString(2, entity.getPassword());
-        preparedStatement.setString(3, entity.getSurnameEmpl());
-        preparedStatement.setString(4, entity.getNameEmpl());
-        preparedStatement.setString(5, entity.getPatronumicEmpl());
-        preparedStatement.setDate(6, Date.valueOf(entity.getDateOfBirthEmpl()));
+            preparedStatement.setString(1, entity.getLogin());
+            preparedStatement.setString(2, entity.getPassword());
+            preparedStatement.setString(3, entity.getSurnameEmpl());
+            preparedStatement.setString(4, entity.getNameEmpl());
+            preparedStatement.setString(5, entity.getPatronumicEmpl());
+            preparedStatement.setDate(6, Date.valueOf(entity.getDateOfBirthEmpl()));
 
-        preparedStatement.execute();
+            preparedStatement.execute();
+
+            try (ResultSet rs = preparedStatement.getGeneratedKeys()) {
+                if (rs.next()) {
+                    entity.setIdEmpl(rs.getLong(1));
+                }
+            }
+        }
     }
 
     @Override
@@ -111,6 +119,7 @@ public class EmployeeRepository implements DbRepository<Employee> {
         preparedStatement.setString(2, entity.getNameEmpl());
         preparedStatement.setString(3, entity.getPatronumicEmpl());
         preparedStatement.setDate(4, Date.valueOf(entity.getDateOfBirthEmpl()));
+        preparedStatement.setLong(5, entity.getIdEmpl());
 
         preparedStatement.execute();
     }
