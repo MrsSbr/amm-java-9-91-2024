@@ -17,6 +17,10 @@ public class AuthService {
         userRepository = new UserRepository();
     }
 
+    public AuthService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     public boolean login(String username, String password) {
         try {
             UserEntity user = userRepository.findByUsername(username).orElseThrow(
