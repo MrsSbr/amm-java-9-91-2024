@@ -1,34 +1,35 @@
-package ru.vsu.amm.java.data.entities;
+package ru.vsu.amm.java.domain.entities;
+
+
 
 import ru.vsu.amm.java.data.entities.utils.Difficulty;
+import ru.vsu.amm.java.data.entities.utils.Topic;
 
 import java.util.List;
 
 public class Card {
     private Long id;
-    private String topic;
-    private List<Long> wordsToActions;//может id word to action
+    private Topic topic;
+    private List<WordToAction> wordsToActions;
     private Difficulty difficulty;
 
-    public Card(Long id, String topic, List<Long> wordsToAction, Difficulty difficulty) {
+    public Card(Long id, Topic topic, List<WordToAction> wordsToAction, Difficulty difficulty) {
         this.id = id;
         this.topic = topic;
         this.wordsToActions = wordsToAction;
         this.difficulty = difficulty;
     }
 
-    public Card() {
-    }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setTopic(String topic) {
+    public void setTopic(Topic topic) {
         this.topic = topic;
     }
 
-    public void setWordsToActions(List<Long> wordsToActions) {
+    public void setWordsToActions(List<WordToAction> wordsToActions) {
         this.wordsToActions = wordsToActions;
     }
 
@@ -40,11 +41,11 @@ public class Card {
         return id;
     }
 
-    public String getTopic() {
+    public Topic getTopic() {
         return topic;
     }
 
-    public List<Long> getWordsToActions() {
+    public List<WordToAction> getWordsToActions() {
         return wordsToActions;
     }
 

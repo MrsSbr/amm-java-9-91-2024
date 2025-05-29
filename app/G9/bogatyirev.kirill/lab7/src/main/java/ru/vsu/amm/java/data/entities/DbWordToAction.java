@@ -1,13 +1,19 @@
 package ru.vsu.amm.java.data.entities;
 
-public class WordToAction {
+public class DbWordToAction {
     private Long id;
     private String word;
     private Long actionId;
     private Long cardId;
 
-    public WordToAction(Long id, String word, Long actionId, Long cardId) {
+    public DbWordToAction(Long id, String word, Long actionId, Long cardId) {
         this.id = id;
+        this.word = word;
+        this.actionId = actionId;
+        this.cardId = cardId;
+    }
+
+    public DbWordToAction(String word, Long actionId, Long cardId) {
         this.word = word;
         this.actionId = actionId;
         this.cardId = cardId;
