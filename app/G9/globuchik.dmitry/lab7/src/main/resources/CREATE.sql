@@ -7,7 +7,8 @@ CREATE TABLE achievement
     id                  BIGSERIAL PRIMARY KEY,
     name                TEXT UNIQUE NOT NULL,
     description         TEXT NOT NULL,
-    type                TEXT NOT NULL
+    type                TEXT NOT NULL,
+    required_progress   INT NOT NULL
 );
 
 CREATE TABLE userentity
@@ -29,17 +30,18 @@ CREATE TABLE earnedachievement
     user_id         BIGINT NOT NULL,
     obtainedat      TIME,
     status          TEXT NOT NULL,
+    progress        INT DEFAULT 0,
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES userentity (id),
     CONSTRAINT fk_achievement FOREIGN KEY (achievement_id) REFERENCES achievement (id)
 );
 
-INSERT INTO achievement (name, description, type)
-VALUES ('test', 'test_desc', 'COMMON');
+INSERT INTO achievement (name, description, type, required_progress)
+VALUES ('test', 'test_desc', 'COMMON', 5);
 
-INSERT INTO achievement (name, description, type)
+INSERT INTO achievement (name, description, type, required_progress)
 VALUES
-    ('Регистрация', 'Добро пожаловать! Вы зарегистрировались.', 'REGISTRATION'),
-    ('Активный пользователь', 'Вошел в систему 5 раз.', 'LOGIN_COUNT');
+    ('Регистрация', 'Добро пожаловать! Вы зарегистрировались.', 'REGISTRATION', 1),
+    ('Активный пользователь', 'Вошел в систему 5 раз.', 'LOGIN_COUNT', 5);
 
 
 CREATE INDEX idx_user_id_earnedachievement ON earnedachievement(user_id);

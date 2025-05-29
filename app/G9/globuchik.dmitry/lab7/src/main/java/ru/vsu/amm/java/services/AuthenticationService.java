@@ -55,12 +55,6 @@ public class AuthenticationService {
             authUser.setLoginCount(authUser.getLoginCount() + 1);
             userRepository.update(authUser);
             achievementRepository.insertAchievements(authUser.getId());
-            if (authUser.getLoginCount() == 5) {
-                Achievement loginAchievement = achievementRepository.findByType(AchievementType.LOGIN_COUNT)
-                        .orElseThrow();
-
-                earnedAchievementRepository.unlockAchievement(authUser.getId(), loginAchievement.getId());
-            }
             return pass;
 
         } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
@@ -91,10 +85,10 @@ public class AuthenticationService {
                     logger.log(Level.INFO, "Successfully registered");
                     AchievementRepository achievementRepository = new AchievementRepository(DatabaseAccess.getDataSource());
                     achievementRepository.insertAchievements(authUser.getId());
+                    Achievement regAchievement = achievementRepository.findByType(AchievementType.REGISTRATION)
+                            .orElseThrow();
+                    earnedAchievementRepository.unlockAchievement(authUser.getId(), regAchievement.getId());
                 }
-                Achievement regAchievement = achievementRepository.findByType(AchievementType.REGISTRATION)
-                        .orElseThrow();
-                earnedAchievementRepository.unlockAchievement(authUser.getId(), regAchievement.getId());
                 return saved;
             }
         } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException | IOException e) {

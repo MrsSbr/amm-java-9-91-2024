@@ -5,11 +5,21 @@ import ru.vsu.amm.java.enums.AchievementStatus;
 import java.time.LocalDateTime;
 
 public class EarnedAchievement {
-    private Long id;
-    private Long achievementId;
-    private Long userId;
-    private LocalDateTime obtainedAt;
+    private final Long id;
+    private final Long achievementId;
+    private final Long userId;
+    private final LocalDateTime obtainedAt;
     private AchievementStatus status;
+    private final int progress;
+
+    public EarnedAchievement(Long id, Long achievementId, Long userId, LocalDateTime obtainedAt, AchievementStatus status, int progress) {
+        this.id = id;
+        this.achievementId = achievementId;
+        this.userId = userId;
+        this.obtainedAt = obtainedAt;
+        this.status = status;
+        this.progress = progress;
+    }
 
     public EarnedAchievement(Long id, Long achievementId, Long userId, LocalDateTime obtainedAt, AchievementStatus status) {
         this.id = id;
@@ -17,6 +27,7 @@ public class EarnedAchievement {
         this.userId = userId;
         this.obtainedAt = obtainedAt;
         this.status = status;
+        this.progress = 0;
     }
 
     public Long getId() {
@@ -31,6 +42,10 @@ public class EarnedAchievement {
         return status;
     }
 
+    public void setStatus(AchievementStatus status) {
+        this.status = status;
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -39,8 +54,7 @@ public class EarnedAchievement {
         return achievementId;
     }
 
-    public void setStatus(AchievementStatus status) {
-        this.status = status;
+    public int getProgress() {
+        return progress;
     }
-
 }

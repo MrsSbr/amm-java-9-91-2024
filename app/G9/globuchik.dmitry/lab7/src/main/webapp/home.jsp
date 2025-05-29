@@ -57,6 +57,9 @@
         <td style="color: <%= "UNLOCKED".equals(String.valueOf(achievement.getEarned().getStatus())) ? "green" : "red" %>">
             <%= achievement.getEarned().getStatus() %>
         </td>
+        <td>
+            <%= achievement.getAchievement().getRequiredProgress() %> / <%= achievement.getEarned().getProgress() %>
+        </td>
     </tr>
     <%
         }

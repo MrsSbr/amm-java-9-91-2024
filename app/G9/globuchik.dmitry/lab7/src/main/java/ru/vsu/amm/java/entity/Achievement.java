@@ -7,12 +7,18 @@ public class Achievement {
     private final String name;
     private final String description;
     private final AchievementType type;
+    private final int requiredProgress;
 
-    public Achievement(Long id, String name, String description, AchievementType type) {
+    public Achievement(Long id, String name, String description, AchievementType type, int requiredProgress) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.type = type;
+        this.requiredProgress = requiredProgress;
+    }
+
+    public int getRequiredProgress() {
+        return requiredProgress;
     }
 
     public Long getId() {

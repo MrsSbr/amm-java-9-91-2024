@@ -26,7 +26,7 @@ public class EarnedAchievementRepository implements Repository<EarnedAchievement
 
     @Override
     public Optional<EarnedAchievement> findById(final Long id) throws SQLException {
-        final String sql = "SELECT id, achievement_id, user_id, obtainedat, status FROM earnedachievement WHERE id = ?";
+        final String sql = "SELECT id, achievement_id, user_id, obtainedat, status, progress FROM earnedachievement WHERE id = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, id);
@@ -38,7 +38,8 @@ public class EarnedAchievementRepository implements Repository<EarnedAchievement
                             resultSet.getLong("achievement_id"),
                             resultSet.getLong("user_id"),
                             resultSet.getTimestamp("obtainedat").toLocalDateTime(),
-                            AchievementStatus.valueOf(resultSet.getString("status"))));
+                            AchievementStatus.valueOf(resultSet.getString("status")),
+                            resultSet.getInt("progress")));
                 }
             }
             return Optional.empty();
@@ -48,7 +49,7 @@ public class EarnedAchievementRepository implements Repository<EarnedAchievement
 
     @Override
     public List<EarnedAchievement> findAll() throws SQLException {
-        final String sql = "SELECT id, achievement_id, user_id, obtainedat, status FROM earnedachievement ORDER BY achievement_id";
+        final String sql = "SELECT id, achievement_id, user_id, obtainedat, status, progress FROM earnedachievement ORDER BY achievement_id";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -61,7 +62,8 @@ public class EarnedAchievementRepository implements Repository<EarnedAchievement
                             resultSet.getLong("achievement_id"),
                             resultSet.getLong("user_id"),
                             resultSet.getTimestamp("obtainedat").toLocalDateTime(),
-                            AchievementStatus.valueOf(resultSet.getString("status"))));
+                            AchievementStatus.valueOf(resultSet.getString("status")),
+                            resultSet.getInt("progress")));
                 }
                 return achievements;
             }
@@ -69,7 +71,7 @@ public class EarnedAchievementRepository implements Repository<EarnedAchievement
     }
 
     public List<EarnedAchievement> findAllForUser(Long userId) throws SQLException {
-        final String sql = "SELECT id, achievement_id, user_id, obtainedat, status "
+        final String sql = "SELECT id, achievement_id, user_id, obtainedat, status, progress "
                 + "FROM earnedachievement "
                 + "WHERE user_id = ? "
                 + "ORDER BY achievement_id";
@@ -90,7 +92,8 @@ public class EarnedAchievementRepository implements Repository<EarnedAchievement
                             resultSet.getLong("achievement_id"),
                             resultSet.getLong("user_id"),
                             obtainedAt,
-                            AchievementStatus.valueOf(resultSet.getString("status"))
+                            AchievementStatus.valueOf(resultSet.getString("status")),
+                            resultSet.getInt("progress")
                     ));
                 }
                 return achievements;
@@ -110,8 +113,21 @@ public class EarnedAchievementRepository implements Repository<EarnedAchievement
     }
 
     @Override
-    public void update(EarnedAchievement object) {
+    public void update(EarnedAchievement earnedAchievement) throws SQLException {
+        String sql = "UPDATE earnedachievement SET "
+                + "status = ?, "
+                + "progress = ? "
+                + "WHERE id = ?";
 
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, earnedAchievement.getStatus().toString());
+            ps.setInt(2, earnedAchievement.getProgress());
+            ps.setLong(3, earnedAchievement.getId());
+
+            ps.executeUpdate();
+        }
     }
 
     @Override

@@ -48,5 +48,4 @@ public class AchievementServlet extends HttpServlet {
             req.getRequestDispatcher("/error.jsp").forward(req, resp);
         }
     }
-
 }

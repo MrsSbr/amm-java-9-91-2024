@@ -1,7 +1,7 @@
 package ru.vsu.amm.java.repo;
 
 import ru.vsu.amm.java.entity.Achievement;
-import ru.vsu.amm.java.entity.UserEntity;
+import ru.vsu.amm.java.entity.EarnedAchievement;
 import ru.vsu.amm.java.enums.AchievementType;
 
 import javax.sql.DataSource;
@@ -22,7 +22,7 @@ public class AchievementRepository implements Repository<Achievement> {
 
     @Override
     public Optional<Achievement> findById(Long id) throws SQLException {
-        final String sql = "SELECT id, name, description, type FROM achievement WHERE id = ? ORDER BY id";
+        final String sql = "SELECT id, name, description, type, required_progress FROM achievement WHERE id = ? ORDER BY id";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, id);
@@ -33,7 +33,8 @@ public class AchievementRepository implements Repository<Achievement> {
                             resultSet.getLong("id"),
                             resultSet.getString("name"),
                             resultSet.getString("description"),
-                            AchievementType.valueOf(resultSet.getString("type"))));
+                            AchievementType.valueOf(resultSet.getString("type")),
+                            resultSet.getInt("required_progress")));
                 }
             }
             return Optional.empty();
@@ -42,7 +43,7 @@ public class AchievementRepository implements Repository<Achievement> {
 
     @Override
     public List<Achievement> findAll() throws SQLException {
-        final String sql = "SELECT id, name, description, type FROM achievement ORDER BY id";
+        final String sql = "SELECT id, name, description, type, required_progress FROM achievement ORDER BY id";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -54,7 +55,8 @@ public class AchievementRepository implements Repository<Achievement> {
                             resultSet.getLong("id"),
                             resultSet.getString("name"),
                             resultSet.getString("description"),
-                            AchievementType.valueOf(resultSet.getString("type"))));
+                            AchievementType.valueOf(resultSet.getString("type")),
+                            resultSet.getInt("required_progress")));
                 }
                 return achievements;
             }
@@ -87,15 +89,15 @@ public class AchievementRepository implements Repository<Achievement> {
                     ? Optional.of(new Achievement(resultSet.getLong("id"),
                     resultSet.getString("name"),
                     resultSet.getString("description"),
-                    AchievementType.valueOf(resultSet.getString("type"))))
+                    AchievementType.valueOf(resultSet.getString("type")),
+                    resultSet.getInt("required_progress")))
                     : Optional.empty();
             }
         }
     }
 
     @Override
-    public void update(Achievement object) {
-
+    public void update(Achievement object)   {
     }
 
     @Override

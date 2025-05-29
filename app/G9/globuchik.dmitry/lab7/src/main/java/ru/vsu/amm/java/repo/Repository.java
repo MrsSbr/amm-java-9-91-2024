@@ -1,5 +1,7 @@
 package ru.vsu.amm.java.repo;
 
+import ru.vsu.amm.java.entity.EarnedAchievement;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;

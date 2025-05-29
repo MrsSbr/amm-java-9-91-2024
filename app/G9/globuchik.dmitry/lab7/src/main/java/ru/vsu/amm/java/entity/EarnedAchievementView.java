@@ -19,4 +19,5 @@ public class EarnedAchievementView {
     public Achievement getAchievement() {
         return achievement;
     }
+
 }
