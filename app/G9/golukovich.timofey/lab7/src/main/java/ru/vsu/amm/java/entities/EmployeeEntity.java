@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class EmployeeEntity {
     private int id;
-    private int hotelId;
+    private Integer hotelId;
     private String login;
     private String password;
     private String name;
@@ -14,12 +14,11 @@ public class EmployeeEntity {
     private String passportNumber;
     private String passportSeries;
     private EmployeePost post;
-    private int salary;
     private LocalDate birthday;
 
-    public EmployeeEntity(int id, int hotelId, String login, String password, String name,
+    public EmployeeEntity(int id, Integer hotelId, String login, String password, String name,
                           String phoneNumber, String email, String passportNumber, String passportSeries,
-                          EmployeePost post, int salary, LocalDate birthday) {
+                          EmployeePost post, LocalDate birthday) {
         this.id = id;
         this.hotelId = hotelId;
         this.login = login;
@@ -30,7 +29,6 @@ public class EmployeeEntity {
         this.passportNumber = passportNumber;
         this.passportSeries = passportSeries;
         this.post = post;
-        this.salary = salary;
         this.birthday = birthday;
     }
 
@@ -42,7 +40,7 @@ public class EmployeeEntity {
         this.id = id;
     }
 
-    public int getHotelId() {
+    public Integer getHotelId() {
         return hotelId;
     }
 
@@ -112,14 +110,6 @@ public class EmployeeEntity {
 
     public void setPost(EmployeePost post) {
         this.post = post;
-    }
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
     }
 
     public LocalDate getBirthday() {

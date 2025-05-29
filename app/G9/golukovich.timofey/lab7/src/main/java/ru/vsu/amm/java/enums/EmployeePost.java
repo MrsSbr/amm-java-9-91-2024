@@ -1,9 +1,8 @@
 package ru.vsu.amm.java.enums;
 
 public enum EmployeePost {
-    ADMINISTRATOR,
-    OWNER,
+    STAFF,
     MANAGER,
-    MAID,
-    PORTER
+    ADMINISTRATOR,
+    MASTER_ADMINISTRATOR
 }
