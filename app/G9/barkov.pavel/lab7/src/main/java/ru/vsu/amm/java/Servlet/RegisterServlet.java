@@ -1,5 +1,7 @@
 package ru.vsu.amm.java.Servlet;
 
+import ru.vsu.amm.java.DBConnection.DBConfiguration;
+import ru.vsu.amm.java.Repository.ShareholderRepository;
 import ru.vsu.amm.java.Service.Entities.ShareholderCreateModel;
 import ru.vsu.amm.java.Service.UserService;
 
@@ -17,7 +19,12 @@ public class RegisterServlet extends HttpServlet {
     private UserService userService;
 
     public RegisterServlet() {
-        userService = new UserService();
+        userService = new UserService(new ShareholderRepository(DBConfiguration.getDataSource()));
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/register.jsp").forward(req, resp);
     }
 
     @Override
@@ -32,7 +39,8 @@ public class RegisterServlet extends HttpServlet {
             userService.register(user, password);
             resp.sendRedirect("/login");
         } catch (RuntimeException | SQLException e) {
-            //Обработка исключений
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    e.getMessage());
         }
     }
 }
