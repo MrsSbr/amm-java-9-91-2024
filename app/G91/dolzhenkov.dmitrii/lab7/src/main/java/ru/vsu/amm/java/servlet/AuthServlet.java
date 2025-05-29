@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.servlet;
 
+import ru.vsu.amm.java.enums.UserRole;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.model.requests.UserRequest;
@@ -15,14 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "AuthController", urlPatterns = "/signin")
-public class AuthController extends HttpServlet {
-
+@WebServlet(name = "AuthServlet", urlPatterns = "/signin")
+public class AuthServlet extends HttpServlet {
     private static final String AUTH_VIEW  = "/signin.jsp";
-    private static final String MAIN_UI  = "/index.jsp";
+    private static final String ADD_SCOOTER_VIEW = "/addScooter.jsp";
+    private static final String MAIN_UI  = "/main.jsp";
     private final AuthService authService;
 
-    public AuthController() {
+    public AuthServlet() {
         this.authService = new UserAuthManager();
     }
 
@@ -37,11 +38,14 @@ public class AuthController extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-            authService.login(new UserRequest(name, password));
+            UserRole role = authService.login(new UserRequest(name, password));
 
             HttpSession session = request.getSession();
             session.setAttribute("login", name);
-            response.sendRedirect(MAIN_UI);
+            switch (role) {
+                case USER -> response.sendRedirect(MAIN_UI);
+                case ADMIN -> response.sendRedirect(ADD_SCOOTER_VIEW);
+            }
         } catch (WrongUserCredentialsException | DataAccessException e) {
             request.setAttribute(ErrorMessages.ERROR_MESSAGE, e.getMessage());
             getServletContext().getRequestDispatcher(AUTH_VIEW).forward(request, response);

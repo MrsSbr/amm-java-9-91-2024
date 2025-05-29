@@ -2,6 +2,7 @@ package ru.vsu.amm.java.service.implementations;
 
 
 import ru.vsu.amm.java.entities.UserEntity;
+import ru.vsu.amm.java.enums.UserRole;
 import ru.vsu.amm.java.exceptions.WrongUserCredentialsException;
 import ru.vsu.amm.java.model.requests.UserRequest;
 import ru.vsu.amm.java.repository.UserRepository;
@@ -18,19 +19,25 @@ public class UserAuthManager implements AuthService {
         this.userRepository = new UserRepository();
     }
 
+    public UserAuthManager(UserRepository userRepository, BcryptPasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @Override
-    public void login(UserRequest request) {
+    public UserRole login(UserRequest request) {
         UserEntity user = userRepository.findByName(request.name())
                 .orElseThrow(() -> new WrongUserCredentialsException(ErrorMessages.USER_NOT_FOUND));
 
         performPasswordCheck(user.getPassword(), request.password());
+        return user.getUserRole();
     }
 
     @Override
     public void register(UserRequest request) {
         checkUserExistence(request.name());
         UserEntity userEntity = new UserEntity(null, request.name(),
-                    passwordEncoder.hashPassword(request.password()));
+                    passwordEncoder.hashPassword(request.password()), UserRole.USER);
         userRepository.save(userEntity);
     }
 
@@ -41,7 +48,7 @@ public class UserAuthManager implements AuthService {
     }
 
     private void performPasswordCheck(String storedHash, String rawPassword) {
-        if (!passwordEncoder.checkPassword(storedHash, rawPassword)) {
+        if (!passwordEncoder.checkPassword(rawPassword, storedHash)) {
             throw new WrongUserCredentialsException(ErrorMessages.INCORRECT_PASSWORD);
         }
     }
