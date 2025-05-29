@@ -6,7 +6,12 @@ import ru.vsu.amm.java.entity.UserEntity;
 import ru.vsu.amm.java.util.RolesMapper;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Array;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +41,32 @@ public class UserRepository implements CrudRepository<UserEntity> {
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    logger.log(Level.FINE, MessageFormat.format("Найден пользователь с id={0}", id));
+                    return makeUserFromResultSet(resultSet);
+                } else {
+                    logger.log(Level.FINE, MessageFormat.format("Пользователь с id={0} не найден", id));
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(
+                    Level.SEVERE,
+                    MessageFormat.format("Ошибка при выполнении запроса\n{0}\nс параметрами [id={1}]", query, id),
+                    e
+            );
+        }
+
+        return null;
+    }
+
+    public UserEntity findById(Connection connection, long id) {
+        final String query = "SELECT id, nickname, password, rating, roles FROM elo_user WHERE id = ?";
+
+        logger.log(Level.FINE, MessageFormat.format("Поиск пользователя с id={0}", id));
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -175,14 +206,28 @@ public class UserRepository implements CrudRepository<UserEntity> {
         }
     }
 
+    public void update(Connection connection, UserEntity entity) {
+        final String query = "UPDATE elo_user SET nickname = ?, password = ?, rating = ?, roles = ? WHERE id = ?";
+
+        logger.log(Level.FINE, MessageFormat.format("Обновление пользователя {0}", entity));
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            prepareInsertOrUpdateStatement(connection, statement, entity);
+            statement.setLong(5, entity.getId());
+            statement.executeUpdate();
+            logger.log(Level.FINE, MessageFormat.format("Обновлен пользователь {0}", entity));
+        } catch (SQLException e) {
+            logger.log(Level.FINE, MessageFormat.format("Ошибка при обновлении пользователя {0}", entity), e);
+        }
+    }
+
     @Override
-    public void delete(UserEntity entity) {
+    public void delete(Connection connection, UserEntity entity) {
         final String query = "DELETE FROM elo_user WHERE id = ?";
 
         logger.log(Level.FINE, MessageFormat.format("Удаление пользователя {0}", entity));
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, entity.getId());
             statement.executeUpdate();
             logger.log(Level.FINE, MessageFormat.format("Удален пользователь {0}", entity));
@@ -199,7 +244,8 @@ public class UserRepository implements CrudRepository<UserEntity> {
                 resultSet.getLong("id"),
                 resultSet.getString("nickname"),
                 resultSet.getString("password"),
-                resultSet.getDouble("rating"), roles
+                resultSet.getDouble("rating"),
+                roles
         );
     }
 

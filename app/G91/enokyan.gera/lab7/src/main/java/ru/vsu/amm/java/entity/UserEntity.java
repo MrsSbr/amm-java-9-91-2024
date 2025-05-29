@@ -17,4 +17,11 @@ public class UserEntity {
     private String password;
     private double rating;
     private List<Role> roles;
+
+    public UserEntity(String nickname, String password, double rating, List<Role> roles) {
+        this.nickname = nickname;
+        this.password = password;
+        this.rating = rating;
+        this.roles = roles;
+    }
 }

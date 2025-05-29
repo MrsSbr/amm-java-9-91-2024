@@ -1,5 +1,6 @@
 package ru.vsu.amm.java.service;
 
+import ru.vsu.amm.java.configuration.DatabaseConfiguration;
 import ru.vsu.amm.java.dto.GameViewDto;
 import ru.vsu.amm.java.dto.GameViewExtendedDto;
 import ru.vsu.amm.java.entity.GameEntity;
@@ -8,6 +9,8 @@ import ru.vsu.amm.java.entity.UserEntity;
 import ru.vsu.amm.java.repository.GameRepository;
 import ru.vsu.amm.java.repository.UserRepository;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -102,9 +105,9 @@ public class GameService {
         ));
         List<GameEntity> games = gameRepository.findLastByPlayersId(id, count);
         if (games.isEmpty()) {
-            logger.log(Level.WARNING, MessageFormat.format("Не получено ни одной игры пользователя с id={0}", id));
+            logger.log(Level.WARNING, MessageFormat.format("Не получено ни одной партии пользователя с id={0}", id));
         } else {
-            logger.log(Level.FINE, MessageFormat.format("Получено последних игр пользователя с id={0}: {1}", id, games.size()));
+            logger.log(Level.FINE, MessageFormat.format("Получено последних партий пользователя с id={0}: {1}", id, games.size()));
         }
         return getGameViewDtos(games);
     }
@@ -112,36 +115,53 @@ public class GameService {
     public boolean deleteGame(long id) {
         logger.log(Level.FINE, MessageFormat.format("Запрос на аннулирование партии с id={0}", id));
 
-        GameEntity game = gameRepository.findById(id);
-        if (game == null) {
-            logger.log(Level.WARNING, MessageFormat.format("Не найдена игра с id={0}", id));
-            return false;
+        boolean result = false;
+
+        try (Connection connection = DatabaseConfiguration.getDataSource().getConnection()) {
+            connection.setAutoCommit(false);
+
+            GameEntity game = gameRepository.findByIdForUpdate(connection, id);
+
+            if (game == null) {
+                logger.log(Level.WARNING, MessageFormat.format("Не найдена партия с id={0} для аннулирования", id));
+                connection.rollback();
+            } else {
+                boolean isLastGameForBoth =
+                        gameRepository.findByPlayersId(connection, game.getFirstPlayersId()).stream()
+                                .noneMatch(g -> g.getFinished().isAfter(game.getFinished())) &&
+                        gameRepository.findByPlayersId(connection, game.getSecondPlayersId()).stream()
+                                .noneMatch(g -> g.getFinished().isAfter(game.getFinished()));
+
+                if (isLastGameForBoth) {
+                    UserEntity firstPlayer = userRepository.findById(connection, game.getFirstPlayersId());
+                    firstPlayer.setRating(game.getFirstPlayersRatingBefore());
+                    userRepository.update(connection, firstPlayer);
+
+                    UserEntity secondPlayer = userRepository.findById(connection, game.getSecondPlayersId());
+                    secondPlayer.setRating(game.getSecondPlayersRatingBefore());
+                    userRepository.update(connection, secondPlayer);
+
+                    gameRepository.delete(connection, game);
+
+                    logger.log(Level.FINE, MessageFormat.format("Удалена партия с id={0}", id));
+                    connection.commit();
+                    result = true;
+                } else {
+                    connection.rollback();
+                }
+            }
+
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            logger.log(
+                    Level.SEVERE,
+                    MessageFormat.format("Ошибка БД при попытке аннулирования партии с id={0}", id),
+                    e
+            );
         }
 
-        List<GameEntity> firstPlayersGames = gameRepository.findByPlayersId(game.getFirstPlayersId()).stream()
-                .filter(g -> g.getFinished().isAfter(game.getFinished()))
-                .toList();
-        List<GameEntity> secondPlayersGames = gameRepository.findByPlayersId(game.getSecondPlayersId()).stream()
-                .filter(g -> g.getFinished().isAfter(game.getFinished()))
-                .toList();
-
-        if (firstPlayersGames.isEmpty() && secondPlayersGames.isEmpty()) {
-            UserEntity firstPlayer = userRepository.findById(game.getFirstPlayersId());
-            firstPlayer.setRating(game.getFirstPlayersRatingBefore());
-            userRepository.update(firstPlayer);
-
-            UserEntity secondPlayer = userRepository.findById(game.getSecondPlayersId());
-            secondPlayer.setRating(game.getSecondPlayersRatingBefore());
-            userRepository.update(secondPlayer);
-
-            gameRepository.delete(game);
-
-            logger.log(Level.FINE, MessageFormat.format("Удалена партия с id={0}", id));
-            return true;
-        }
-
-        logger.log(Level.WARNING, MessageFormat.format("Партия с id={0} не удалена", id));
-        return false;
+        logger.log(Level.WARNING, MessageFormat.format("Партия с id={0} не аннулирована", id));
+        return result;
     }
 
     private int getPlayersCoefficient(UserEntity user) {

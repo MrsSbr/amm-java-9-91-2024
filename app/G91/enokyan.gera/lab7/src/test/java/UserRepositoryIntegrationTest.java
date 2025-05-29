@@ -35,11 +35,7 @@ public class UserRepositoryIntegrationTest {
 
     @Test
     public void testCreateAndFindById() {
-        UserEntity user = new UserEntity();
-        user.setNickname("test");
-        user.setPassword("test");
-        user.setRating(1000d);
-        user.setRoles(List.of(Role.Player));
+        UserEntity user = new UserEntity("test", "test", 1000d, List.of(Role.Player));
 
         long id = userRepository.create(user);
 
@@ -51,11 +47,7 @@ public class UserRepositoryIntegrationTest {
 
     @Test
     public void testFindByNickname() {
-        UserEntity user = new UserEntity();
-        user.setNickname("test");
-        user.setPassword("test");
-        user.setRating(1000d);
-        user.setRoles(List.of(Role.Player));
+        UserEntity user = new UserEntity("test", "test", 1000d, List.of(Role.Player));
 
         userRepository.create(user);
 
@@ -70,17 +62,8 @@ public class UserRepositoryIntegrationTest {
         List<UserEntity> users = userRepository.findAll();
         assertEquals(0, users.size());
 
-        UserEntity user1 = new UserEntity();
-        user1.setNickname("test1");
-        user1.setPassword("test");
-        user1.setRating(1000d);
-        user1.setRoles(List.of(Role.Player));
-
-        UserEntity user2 = new UserEntity();
-        user2.setNickname("test2");
-        user2.setPassword("test");
-        user2.setRating(1000d);
-        user2.setRoles(List.of(Role.Player));
+        UserEntity user1 = new UserEntity("test1", "test", 1000d, List.of(Role.Player));
+        UserEntity user2 = new UserEntity("test2", "test", 1000d, List.of(Role.Player));
 
         userRepository.create(user1);
         userRepository.create(user2);
