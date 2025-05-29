@@ -9,7 +9,15 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class DBConfiguration {
-    public static DataSource getDataSource() {
+    public static DataSource getDataSource(){
+        return getDataSource("db.url");
+    }
+
+    public static DataSource getTestDataSource(){
+        return getDataSource("db.test");
+    }
+
+    private static DataSource getDataSource(String url) {
         PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();
         Properties properties = new Properties();
         try (InputStream is = DBConfiguration.class.getClassLoader()
@@ -18,7 +26,7 @@ public class DBConfiguration {
         } catch (IOException e) {
             throw new RuntimeException("Ошибка получения конфигурации:(");
         }
-        pgSimpleDataSource.setUrl(properties.getProperty("db.url"));
+        pgSimpleDataSource.setUrl(properties.getProperty(url));
         pgSimpleDataSource.setUser(properties.getProperty("db.user"));
         pgSimpleDataSource.setPassword(properties.getProperty("db.password"));
         return pgSimpleDataSource;

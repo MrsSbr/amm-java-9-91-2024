@@ -2,6 +2,7 @@ package ru.vsu.amm.java.Service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import ru.vsu.amm.java.Exeption.NotFoundException;
 import ru.vsu.amm.java.Exeption.UnCorrectDataException;
 import ru.vsu.amm.java.Repository.Entities.ShareholderStocks;
@@ -13,8 +14,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 class StocksServiceUnitTest {
@@ -37,6 +37,8 @@ class StocksServiceUnitTest {
         stocksService.sell(userId,stocksId,2);
         assertEquals(sellStock.getCount(),12);
         assertEquals(userStock.getCount(),3);
+        Mockito.verify(stocksRepository,Mockito.times(1)).get(stocksId);
+        Mockito.verify(stocksRepository,Mockito.times(1)).get(userId,stocksId);
     }
 
     @Test
@@ -74,6 +76,8 @@ class StocksServiceUnitTest {
         stocksService.buy(userId,stocksId,2);
         assertEquals(sellStock.getCount(),8);
         assertEquals(userStock.getCount(),7);
+        Mockito.verify(stocksRepository,Mockito.times(1)).get(stocksId);
+        Mockito.verify(stocksRepository,Mockito.times(1)).get(userId,stocksId);
     }
 
     @Test
