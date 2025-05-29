@@ -21,13 +21,13 @@ public class CourseServlet extends HttpServlet {
 
         if (action == null || action.equals("/list")) {
             req.setAttribute("courses", courseRepository.getAll());
-            req.getRequestDispatcher("/courseslist.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/courses/list.jsp").forward(req, resp);
         } else if (action.equals("/new")) {
-            getServletContext().getRequestDispatcher("/coursesform.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/courses/form.jsp").forward(req, resp);
         } else if (action.equals("/edit")) {
             long id = Long.parseLong(req.getParameter("id"));
-            getServletContext().setAttribute("course", courseRepository.getById(id));
-            getServletContext().getRequestDispatcher("/coursesform.jsp").forward(req, resp);
+            req.setAttribute("course", courseRepository.getById(id));
+            req.getRequestDispatcher("/WEB-INF/views/courses/form.jsp").forward(req, resp);
         } else if (action.equals("/delete")) {
             long id = Long.parseLong(req.getParameter("id"));
             courseRepository.delete(id);

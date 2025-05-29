@@ -5,8 +5,6 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.vsu.amm.java.entities.User;
 
 import java.io.IOException;
@@ -15,40 +13,40 @@ import java.util.List;
 
 @WebFilter("/*")
 public class AuthFilter implements Filter {
-    private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
-    private final List<String> allowedPaths = List.of(
-            "/",
-            "",
-            "/home",
+
+    private static final List<String> ALLOWED_PATHS = Arrays.asList(
             "/auth/login",
-            "/login.jsp",
-            "/auth/register",
-            "/register.jsp"
+            "/auth/logout",
+            "/static/",
+            "/register",
+            "/css/",
+            "/js/"
     );
 
+
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse resp = (HttpServletResponse) response;
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        HttpSession session = httpRequest.getSession(false);
 
-        String path = req.getRequestURI().substring(req.getContextPath().length());
-        HttpSession session = req.getSession(false);
+        String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
 
-        boolean loggedIn = session != null && session.getAttribute("user") != null;
-        boolean isAllowedPath = allowedPaths.contains(path);
+        boolean isAllowedPath = ALLOWED_PATHS.stream().anyMatch(path::startsWith);
 
-        logger.info("Request received: method={}, path={}, loggedIn={}", req.getMethod(), path, loggedIn);
-
-        if (loggedIn || isAllowedPath) {
-            User user = null;
-            if (session != null) {
-                user = (User) session.getAttribute("user");
-            }
-            logger.info("Access granted: path={} (loggedIn={}, allowed={}) user={}", path, loggedIn, isAllowedPath, user);
-            filterChain.doFilter(request, response);
-        } else {
-            logger.info("Unauthorized access attempt: path={}", path);
-            resp.sendRedirect("/auth/login");
+        if (isAllowedPath) {
+            chain.doFilter(request, response);
+            return;
         }
+
+        User loggedInUser = (session != null) ? (User) session.getAttribute("user") : null;
+
+        if (loggedInUser == null) {
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/auth/login");
+            return;
+        }
+
+        chain.doFilter(request, response);
     }
 }

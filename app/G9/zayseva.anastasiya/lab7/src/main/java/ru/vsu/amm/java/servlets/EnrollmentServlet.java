@@ -29,17 +29,17 @@ public class EnrollmentServlet extends HttpServlet {
             req.setAttribute("enrollments", enrollmentRepository.getAll());
             req.setAttribute("users", userRepository.getAll());
             req.setAttribute("courses", courseRepository.getAll());
-            req.getRequestDispatcher("/enrollmentslist.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/enrollments/list.jsp").forward(req, resp);
         } else if (action.equals("/new")) {
             req.setAttribute("users", userRepository.getAll());
             req.setAttribute("courses", courseRepository.getAll());
-            req.getRequestDispatcher("/enrollmentsform.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/enrollments/form.jsp").forward(req, resp);
         } else if (action.equals("/edit")) {
             long id = Long.parseLong(req.getParameter("id"));
             req.setAttribute("enrollment", enrollmentRepository.getById(id));
             req.setAttribute("users", userRepository.getAll());
             req.setAttribute("courses", courseRepository.getAll());
-            req.getRequestDispatcher("/enrollmentsform.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/enrollments/form.jsp").forward(req, resp);
         } else if (action.equals("/delete")) {
             long id = Long.parseLong(req.getParameter("id"));
             enrollmentRepository.delete(id);
