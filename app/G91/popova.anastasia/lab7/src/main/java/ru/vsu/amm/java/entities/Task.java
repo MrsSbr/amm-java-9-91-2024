@@ -7,68 +7,59 @@ public class Task {
     private UUID taskID;
     private UUID columnID;
     private String taskTitle;
-    private String taskUrgency;
     private String taskDescription;
     private LocalDate startDate;
     private LocalDate endDate;
 
     public Task() {
         this.taskID = UUID.randomUUID();
-    };
+    }
 
-    private UUID getTaskID() {
+    public UUID getTaskID() {
         return taskID;
     }
 
-    private void setTaskID(UUID taskID) {
+    public void setTaskID(UUID taskID) {
         this.taskID = taskID;
     }
 
-    private UUID getColumnID() {
+    public UUID getColumnID() {
         return columnID;
     }
 
-    private void setColumnID(UUID columnID) {
+    public void setColumnID(UUID columnID) {
         this.columnID = columnID;
     }
 
-    private String getTaskTitle() {
+    public String getTaskTitle() {
         return taskTitle;
     }
 
-    private void setTaskTitle(String taskTitle) {
+    public void setTaskTitle(String taskTitle) {
         this.taskTitle = taskTitle;
     }
 
-    private String getTaskUrgency() {
-        return taskUrgency;
-    }
-
-    private void setTaskUrgency(String taskUrgency) {
-        this.taskUrgency = taskUrgency;
-    }
-
-    private String getTaskDescription() {
+    public String getTaskDescription() {
         return taskDescription;
     }
 
-    private void setTaskDescription(String taskDescription) {
+    public void setTaskDescription(String taskDescription) {
         this.taskDescription = taskDescription;
     }
 
-    private LocalDate gestartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    private void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    private LocalDate getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    private void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 }

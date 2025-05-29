@@ -12,27 +12,27 @@ public class Column {
         this.columnID = UUID.randomUUID();
     };
 
-    private UUID getColumnID() {
+   public UUID getColumnID() {
         return columnID;
     }
 
-    private void setColumnID(UUID columnID) {
+    public void setColumnID(UUID columnID) {
         this.columnID = columnID;
     }
 
-    private UUID getBoardID() {
+    public UUID getBoardID() {
         return boardID;
     }
 
-    private void setBoardID(UUID boardID) {
+    public void setBoardID(UUID boardID) {
         this.boardID = boardID;
     }
 
-    private String getColumnTitle() {
+    public String getColumnTitle() {
         return columnTitle;
     }
 
-    private void setColumnTitle(String columnTitle) {
+    public void setColumnTitle(String columnTitle) {
         this.columnTitle = columnTitle;
     }
 }
