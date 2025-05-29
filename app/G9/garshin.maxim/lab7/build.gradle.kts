@@ -26,6 +26,8 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.5.18")
     compileOnly("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")
+    testImplementation("org.mockito:mockito-core:4.11.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:4.11.0")
 }
 
 tasks.test {

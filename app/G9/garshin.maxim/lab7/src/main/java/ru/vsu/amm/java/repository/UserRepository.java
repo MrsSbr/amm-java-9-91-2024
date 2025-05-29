@@ -22,6 +22,10 @@ public class UserRepository implements Repository<UserEntity> {
         this.dataSource = DatabaseConfiguration.getDataSource();
     }
 
+    public UserRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Override
     public Optional<UserEntity> findById(Long id) throws SQLException {
         final String query = "SELECT userId, username, email, userPassword FROM UserEntity WHERE userId = ?";
