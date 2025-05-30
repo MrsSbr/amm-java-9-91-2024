@@ -5,7 +5,6 @@ import ru.vsu.amm.java.Model.Entity.FilmEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Duration;
 
 public class FilmMapper implements Mapper<FilmEntity> {
 
@@ -14,7 +13,7 @@ public class FilmMapper implements Mapper<FilmEntity> {
         return new FilmEntity(rs.getLong("filmId"),
                 rs.getString("name"),
                 rs.getString("genre"),
-                Duration.parse(rs.getString("duration")),
+                Integer.parseInt(rs.getString("duration")),
                 rs.getString("screenWriter"),
                 rs.getDouble("rating"));
 

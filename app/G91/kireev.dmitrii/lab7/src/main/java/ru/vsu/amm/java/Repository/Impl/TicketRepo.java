@@ -22,7 +22,7 @@ public class TicketRepo implements CrudRepo<TicketEntity> {
 
     @Override
     public Optional<TicketEntity> findById(Long id) throws SQLException {
-        final String query = "SELECT ticketId, status, hallNumber, placeNumber, startTime, endTime, userId, filmId FROM Ticket WHERE ticketId = ?";
+        final String query = "SELECT ticketId, status, hallNumber, placeNumber, startTime, endTime, userId, filmId FROM ticket WHERE ticketId = ?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -36,7 +36,7 @@ public class TicketRepo implements CrudRepo<TicketEntity> {
 
     @Override
     public List<TicketEntity> findAll() throws SQLException {
-        final String query = "SELECT ticketId, status, hallNumber, placeNumber, startTime, endTime, userId, filmId FROM Ticket";
+        final String query = "SELECT ticketId, status, hallNumber, placeNumber, startTime, endTime, userId, filmId FROM ticket";
         try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<TicketEntity> tickets = new ArrayList<>();
@@ -50,7 +50,7 @@ public class TicketRepo implements CrudRepo<TicketEntity> {
 
     @Override
     public void save(TicketEntity entity) throws SQLException {
-        final String query = "INSERT INTO Ticket(status, hallNumber, placeNumber, startTime, endTime, userId, filmId) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        final String query = "INSERT INTO ticket(status, hallNumber, placeNumber, startTime, endTime, userId, filmId) VALUES(?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, entity.getStatus().name());
             preparedStatement.setInt(2, entity.getHallNumber());
@@ -71,7 +71,7 @@ public class TicketRepo implements CrudRepo<TicketEntity> {
 
     @Override
     public void update(TicketEntity entity) throws SQLException {
-        final String query = "UPDATE Ticket SET status = ?, hallNumber = ?, placeNumber = ?, startTime = ?, endTime = ?, userId = ?, filmId = ? WHERE ticketId = ?";
+        final String query = "UPDATE ticket SET status = ?, hallNumber = ?, placeNumber = ?, startTime = ?, endTime = ?, userId = ?, filmId = ? WHERE ticketId = ?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, entity.getStatus().name());
             preparedStatement.setInt(2, entity.getHallNumber());
@@ -87,7 +87,7 @@ public class TicketRepo implements CrudRepo<TicketEntity> {
 
     @Override
     public void delete(Long id) throws SQLException {
-        final String query = "DELETE FROM Ticket WHERE ticketId = ?";
+        final String query = "DELETE FROM ticket WHERE ticketId = ?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
