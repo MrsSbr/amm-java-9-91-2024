@@ -1,4 +1,6 @@
 package ru.vsu.amm.java.model.requests;
 
-public record RegisterRequest(String name, String email, String password) {
+import ru.vsu.amm.java.enums.Role;
+
+public record RegisterRequest(String name, String email, String password, Role role) {
 }

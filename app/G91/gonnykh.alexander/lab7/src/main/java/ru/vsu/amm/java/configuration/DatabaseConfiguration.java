@@ -10,10 +10,18 @@ import java.util.Properties;
 
 @Slf4j
 public class DatabaseConfiguration {
-    public static DataSource getDataSource() {
+    public static DataSource getMainDataSource() {
+        return getDataSource(true);
+    }
+
+    public static DataSource getTestDataSource() {
+        return getDataSource(false);
+    }
+
+    public static DataSource getDataSource(boolean testFlag) {
         Properties prop = new Properties();
         try (InputStream input = DatabaseConfiguration.class.getClassLoader()
-                .getResourceAsStream("database.properties")) {
+                .getResourceAsStream(testFlag ? "database.properties" : "testdb.properties")) {
             prop.load(input);
         } catch (IOException e) {
             log.error(e.getMessage());

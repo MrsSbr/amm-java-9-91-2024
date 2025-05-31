@@ -22,12 +22,16 @@ public class UserRepository implements CrudRepository<UserEntity> {
     private final DataSource dataSource;
 
     public UserRepository() {
-        this.dataSource = DatabaseConfiguration.getDataSource();
+        this.dataSource = DatabaseConfiguration.getMainDataSource();
+    }
+
+    public UserRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Override
     public Optional<UserEntity> findById(Long id) {
-        final String query = "SELECT id, username, password, email FROM user WHERE id = ?";
+        final String query = "SELECT id, username, password, email, role FROM \"user\" WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -35,7 +39,7 @@ public class UserRepository implements CrudRepository<UserEntity> {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return Optional.of(UserMapper.ResultSetToUserEntity(resultSet));
+                    return Optional.of(UserMapper.resultSetToUserEntity(resultSet));
                 }
             }
         } catch (SQLException e) {
@@ -47,14 +51,14 @@ public class UserRepository implements CrudRepository<UserEntity> {
 
     @Override
     public List<UserEntity> findAll() {
-        final String query = "SELECT id, username, password, email FROM user";
+        final String query = "SELECT id, username, password, email, role FROM \"user\"";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<UserEntity> users = new ArrayList<>();
                 while (resultSet.next()) {
-                    users.add(UserMapper.ResultSetToUserEntity(resultSet));
+                    users.add(UserMapper.resultSetToUserEntity(resultSet));
                 }
                 return users;
             }
@@ -66,13 +70,14 @@ public class UserRepository implements CrudRepository<UserEntity> {
 
     @Override
     public void save(UserEntity entity) {
-        final String query = "INSERT INTO user(username, password, email) VALUES(?,?,?)";
+        final String query = "INSERT INTO \"user\"(username, password, email, role) VALUES(?,?,?,?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, entity.getUsername());
             preparedStatement.setString(2, entity.getPassword());
             preparedStatement.setString(3, entity.getEmail());
+            preparedStatement.setString(4, String.valueOf(entity.getRole()));
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             log.error(ErrorMessages.SAVE_USER, e);
@@ -82,14 +87,15 @@ public class UserRepository implements CrudRepository<UserEntity> {
 
     @Override
     public void update(UserEntity entity) {
-        final String query = "UPDATE user SET username = ?, password = ?, email = ? WHERE id = ?";
+        final String query = "UPDATE \"user\" SET username = ?, password = ?, email = ?, role=? WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, entity.getUsername());
             preparedStatement.setString(2, entity.getPassword());
             preparedStatement.setString(3, entity.getEmail());
-            preparedStatement.setLong(4, entity.getId());
+            preparedStatement.setString(4, String.valueOf(entity.getRole()));
+            preparedStatement.setLong(5, entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             log.error(ErrorMessages.UPDATE_USER + entity, e);
@@ -99,7 +105,7 @@ public class UserRepository implements CrudRepository<UserEntity> {
 
     @Override
     public void delete(Long id) {
-        final String query = "DELETE FROM user WHERE id = ?";
+        final String query = "DELETE FROM \"user\" WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -112,7 +118,7 @@ public class UserRepository implements CrudRepository<UserEntity> {
     }
 
     public Optional<UserEntity> findByEmail(String email) {
-        final String query = "SELECT id, username, password, email FROM user WHERE email = ?";
+        final String query = "SELECT id, username, password, email, role FROM \"user\" WHERE email = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -120,7 +126,7 @@ public class UserRepository implements CrudRepository<UserEntity> {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return Optional.of(UserMapper.ResultSetToUserEntity(resultSet));
+                    return Optional.of(UserMapper.resultSetToUserEntity(resultSet));
                 }
             }
         } catch (SQLException e) {
