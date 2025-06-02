@@ -20,14 +20,14 @@ public class UserServlet extends HttpServlet {
         String action = req.getPathInfo();
 
         if (action == null || action.equals("/list")) {
-            req.setAttribute("users", userRepository.getAll());
-            req.getRequestDispatcher("/WEB-INF/views/users/list.jsp").forward(req, resp);
+            getServletContext().setAttribute("users", userRepository.getAll());
+            getServletContext().getRequestDispatcher("/userlist.jsp").forward(req, resp);
         } else if (action.equals("/new")) {
-            req.getRequestDispatcher("/WEB-INF/views/users/form.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/userform.jsp").forward(req, resp);
         } else if (action.equals("/edit")) {
             long id = Long.parseLong(req.getParameter("id"));
             req.setAttribute("user", userRepository.getById(id));
-            req.getRequestDispatcher("/WEB-INF/views/users/form.jsp").forward(req, resp);
+            req.getRequestDispatcher("/userform.jsp").forward(req, resp);
         } else if (action.equals("/delete")) {
             long id = Long.parseLong(req.getParameter("id"));
             userRepository.delete(id);
@@ -41,22 +41,7 @@ public class UserServlet extends HttpServlet {
         String action = req.getPathInfo();
 
         if (action.equals("/save")) {
-            User user = new User();
-            user.setPassword(req.getParameter("password"));
-            user.setPhoneNumber(req.getParameter("phoneNumber"));
-            user.setEmail(req.getParameter("email"));
-            user.setLogin(req.getParameter("login"));
-            user.setUsername(req.getParameter("username"));
 
-            String idParam = req.getParameter("id");
-            if (idParam == null || idParam.isEmpty()) {
-                userRepository.save(user);
-            } else {
-                user.setUserId(Long.parseLong(idParam));
-                userRepository.update(user);
-            }
-
-            resp.sendRedirect(req.getContextPath() + "/users/list");
         }
     }
 }

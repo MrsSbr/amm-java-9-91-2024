@@ -20,6 +20,6 @@ public class MainServlet extends HttpServlet {
             throws ServletException, IOException {
         req.setAttribute("courses", courseRepository.getAll());
         req.setAttribute("usersCount", userRepository.getAll().size());
-        req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
+        req.getRequestDispatcher("/home.jsp").forward(req, resp);
     }
 }

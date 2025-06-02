@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Вход в систему</title>
@@ -11,12 +11,9 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h4>Вход</h4>
+                    <h4 class="text-center">Вход в систему</h4>
                 </div>
                 <div class="card-body">
-                    <c:if test="${not empty error}">
-                        <div class="alert alert-danger">${error}</div>
-                    </c:if>
                     <form action="${pageContext.request.contextPath}/auth/login" method="post">
                         <div class="mb-3">
                             <label for="login" class="form-label">Логин</label>
@@ -26,7 +23,12 @@
                             <label for="password" class="form-label">Пароль</label>
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Войти</button>
+                        <c:if test="${not empty error}">
+                            <div class="alert alert-danger">${error}</div>
+                        </c:if>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Войти</button>
+                        </div>
                     </form>
                 </div>
             </div>

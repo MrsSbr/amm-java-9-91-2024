@@ -13,14 +13,16 @@ import java.io.IOException;
 @WebServlet("/auth/*")
 public class AuthServlet extends HttpServlet {
     private final UserRepository userRepository = new UserRepository();
-
+    private Boolean isFail = false;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String action = req.getPathInfo();
 
         if (action == null || action.equals("/login")) {
-            req.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
+        } else if (action.equals("/register")) {
+            getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
         } else if (action.equals("/logout")) {
             req.getSession().invalidate();
             resp.sendRedirect(req.getContextPath() + "/auth/login");
@@ -30,18 +32,37 @@ public class AuthServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
+        String action = req.getPathInfo();
+        User user = null;
+        if (action.equals("/login")) {
+            String login = req.getParameter("login");
+            String password = req.getParameter("password");
 
-        User user = userRepository.findByLoginAndPassword(login, password);
+            user = userRepository.findByLoginAndPassword(login, password);
+        } else if (action.equals("/register")) {
+            try {
+            user = new User();
+            user.setPassword(req.getParameter("password"));
+            user.setPhoneNumber(req.getParameter("phoneNumber"));
+            user.setEmail(req.getParameter("email"));
+            user.setLogin(req.getParameter("login"));
+            user.setUsername(req.getParameter("username"));
 
+            userRepository.save(user);
+            } catch (IllegalArgumentException e){
+                getServletContext().setAttribute("error","A user with this username or number already exists");
+                getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
+                return;
+            }
+
+        }
         if (user != null) {
-            HttpSession session = req.getSession();
+            HttpSession session = req.getSession(true);
             session.setAttribute("user", user);
             resp.sendRedirect(req.getContextPath() + "/home");
         } else {
-            req.setAttribute("error", "Invalid login or password");
-            req.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(req, resp);
+            getServletContext().setAttribute("error", "Invalid login or password");
+            getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
         }
     }
 }

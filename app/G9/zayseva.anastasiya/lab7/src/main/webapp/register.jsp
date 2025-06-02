@@ -8,7 +8,9 @@
 <body>
 <div class="container mt-4">
     <h2>Регистрация</h2>
-
+    <c:if test="${not empty error}">
+        <div class="alter alter-danger">${error}</div>
+    </c:if>
     <form action="${pageContext.request.contextPath}/auth/register" method="post">
         <input type="hidden" name="id" value="${user.userId}">
 
