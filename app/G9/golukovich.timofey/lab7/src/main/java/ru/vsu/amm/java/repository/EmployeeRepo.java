@@ -126,8 +126,7 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
         String query = """
                 SELECT employee_id, hotel_id, login, password, name, phone_number,
                 email, passport_number, passport_series, post, birthday
-                FROM employee WHERE login LIKE ?
-                FOR UPDATE""";
+                FROM employee WHERE login LIKE ?""";
         query = makeSelectQueryForUpdateOrNot(query, isForUpdate);
 
         var connection = dataSource.getConnection();
