@@ -18,8 +18,7 @@ import java.io.IOException;
 @WebServlet(name = "AuthServlet", urlPatterns = "/signin")
 public class LoginServlet extends HttpServlet {
     private static final String AUTH_VIEW  = "/signin.jsp";
-    private static final String ADD_SCOOTER_VIEW = "/addScooter.jsp";
-    private static final String MAIN_UI  = "/main.jsp";
+    private static final String MAIN_UI  = "/home";
     private static final String ERROR_MESSAGE = "error";
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
@@ -50,7 +49,7 @@ public class LoginServlet extends HttpServlet {
             if (loginResponse.code() == 200) {
                 HttpSession session = request.getSession();
                 session.setAttribute(SESSION_EMAIL, email);
-                response.sendRedirect(MAIN_UI);
+                response.sendRedirect(request.getContextPath()+ MAIN_UI);
             } else {
                 request.setAttribute(ERROR_MESSAGE, loginResponse.message());
                 getServletContext().getRequestDispatcher(AUTH_VIEW).forward(request, response);

@@ -31,6 +31,7 @@ public class DefaultFilmServiceImpl implements FilmService {
             Optional<FilmEntity> film = filmRepo.findById(id);
             if (film.isPresent()) {
                 log.info("Фильм с ID " + id + " найден.");
+                log.info(film.toString());
             } else {
                 log.warning("Фильм с ID " + id + " не найден.");
             }

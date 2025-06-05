@@ -22,6 +22,7 @@ public class TicketEntity {
 
     private long userId;
     private long filmId;
+    private String filmName;
 
 
 }

@@ -21,7 +21,7 @@ public class FilmRepo implements CrudRepo<FilmEntity> {
 
     @Override
     public Optional<FilmEntity> findById(Long id) throws SQLException {
-        final String query = "SELECT filmId, name, genre, duration, screenWriter, rating FROM film WHERE filmId = ?";
+        final String query = "SELECT film_id, name, genre, duration, screenwriter, rating FROM film WHERE film_id = ?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -35,7 +35,7 @@ public class FilmRepo implements CrudRepo<FilmEntity> {
 
     @Override
     public List<FilmEntity> findAll() throws SQLException {
-        final String query = "SELECT filmId, name, genre, duration, screenWriter, rating FROM film";
+        final String query = "SELECT film_id, name, genre, duration, screenwriter, rating FROM film";
         try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<FilmEntity> films = new ArrayList<>();
@@ -49,8 +49,9 @@ public class FilmRepo implements CrudRepo<FilmEntity> {
 
     @Override
     public void save(FilmEntity entity) throws SQLException {
-        final String query = "INSERT INTO film(name, genre, duration, screenWriter, rating) VALUES(?, ?, ?, ?, ?)";
-        try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        final String query = "INSERT INTO film(name, genre, duration, screenwriter, rating) VALUES(?, ?, ?, ?, ?)";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getGenre());
             preparedStatement.setObject(3, entity.getDuration());
@@ -68,7 +69,7 @@ public class FilmRepo implements CrudRepo<FilmEntity> {
 
     @Override
     public void update(FilmEntity entity) throws SQLException {
-        final String query = "UPDATE film SET name = ?, genre = ?, duration = ?, screenWriter = ?, rating = ? WHERE filmId = ?";
+        final String query = "UPDATE film SET name = ?, genre = ?, duration = ?, screenwriter = ?, rating = ? WHERE film_id = ?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getGenre());
@@ -82,7 +83,7 @@ public class FilmRepo implements CrudRepo<FilmEntity> {
 
     @Override
     public void delete(Long id) throws SQLException {
-        final String query = "DELETE FROM film WHERE filmId = ?";
+        final String query = "DELETE FROM film WHERE film_id = ?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();

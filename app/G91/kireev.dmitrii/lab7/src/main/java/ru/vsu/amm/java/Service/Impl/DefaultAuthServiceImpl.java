@@ -49,8 +49,9 @@ public class DefaultAuthServiceImpl implements AuthService {
                 log.warning("Пользователь с email " + request.email() + " не найден.");
                 return new LoginResponse(STATUS_BAD_REQUEST, USER_NOT_FOUND);
             }
-
-            if (!bcryptPasswordEncoder.checkPassword(userOptional.get().getPassword(), request.password())) {
+            String x = userOptional.get().getPassword();
+            String y = request.password();
+            if (!bcryptPasswordEncoder.checkPassword(request.password(),userOptional.get().getPassword())) {
                 log.warning("Неверный пароль для пользователя с email: " + request.email());
                 return new LoginResponse(STATUS_BAD_REQUEST, INVALID_PASSWORD);
             }
@@ -75,7 +76,7 @@ public class DefaultAuthServiceImpl implements AuthService {
                 log.warning("Пользователь с email " + request.email() + " уже существует.");
                 return new RegisterResponse(STATUS_BAD_REQUEST, USER_ALREADY_EXISTS);
             } else {
-                UserEntity userEntity = new UserEntity(null, request.name(), request.email(), request.password(), request.phone());
+                UserEntity userEntity = new UserEntity(null, request.name(), request.email(), bcryptPasswordEncoder.hashPassword(request.password()), request.phone());
                 userRepo.save(userEntity);
                 log.info("Пользователь с email " + request.email() + " успешно зарегистрирован.");
             }

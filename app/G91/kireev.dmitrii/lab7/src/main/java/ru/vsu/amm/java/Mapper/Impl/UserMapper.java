@@ -10,7 +10,7 @@ public class UserMapper implements Mapper<UserEntity> {
 
     @Override
     public UserEntity resultSetToEntity(ResultSet rs) throws SQLException {
-        return new UserEntity(rs.getLong("userId"),
+        return new UserEntity(rs.getLong("user_id"),
                 rs.getString("name"),
                 rs.getString("email"),
                 rs.getString("password"),

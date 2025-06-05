@@ -10,11 +10,11 @@ public class FilmMapper implements Mapper<FilmEntity> {
 
     @Override
     public FilmEntity resultSetToEntity(ResultSet rs) throws SQLException {
-        return new FilmEntity(rs.getLong("filmId"),
+        return new FilmEntity(rs.getLong("film_id"),
                 rs.getString("name"),
                 rs.getString("genre"),
                 Integer.parseInt(rs.getString("duration")),
-                rs.getString("screenWriter"),
+                rs.getString("screenwriter"),
                 rs.getDouble("rating"));
 
 

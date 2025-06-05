@@ -1,6 +1,5 @@
 package ru.vsu.amm.java.Servlet;
 
-import lombok.AllArgsConstructor;
 import ru.vsu.amm.java.Exception.DbException;
 import ru.vsu.amm.java.Model.Entity.FilmEntity;
 import ru.vsu.amm.java.Service.Impl.DefaultFilmServiceImpl;
@@ -48,7 +47,7 @@ public class FilmServlet extends HttpServlet {
             req.setAttribute(ERROR_MESSAGE, ERROR_FETCHING_FILMS);
         }
 
-        getServletContext().getRequestDispatcher(FILMS_PAGE).forward(req, resp);
+       showAccessInterface(req, resp);
     }
 
     @Override
@@ -74,5 +73,11 @@ public class FilmServlet extends HttpServlet {
         }
 
         resp.sendRedirect(req.getContextPath() + "/films");
+    }
+
+    private void showAccessInterface(HttpServletRequest request,
+                                     HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher(FILMS_PAGE).forward(request, response);
     }
 }

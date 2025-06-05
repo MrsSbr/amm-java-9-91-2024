@@ -62,7 +62,7 @@
                 <td>
                     <form class="action-form" action="${pageContext.request.contextPath}/films" method="post">
                         <input type="hidden" name="action" value="delete">
-                        <input type="hidden" name="filmId" value="${film.id}">
+                        <input type="hidden" name="filmId" value="${film.filmId}">
                         <button type="submit">Удалить</button>
                     </form>
                 </td>

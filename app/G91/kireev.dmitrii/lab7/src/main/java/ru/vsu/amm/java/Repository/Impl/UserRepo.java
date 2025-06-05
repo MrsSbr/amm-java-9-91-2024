@@ -1,6 +1,7 @@
 package ru.vsu.amm.java.Repository.Impl;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.Config.DatabaseConfig;
 import ru.vsu.amm.java.Mapper.Impl.UserMapper;
 import ru.vsu.amm.java.Model.Entity.UserEntity;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
+@Slf4j
 public class UserRepo implements CrudRepo<UserEntity> {
 
     private final DataSource dataSource;
@@ -28,7 +29,7 @@ public class UserRepo implements CrudRepo<UserEntity> {
 
     @Override
     public Optional<UserEntity> findById(Long id) throws SQLException {
-        final String query = "SELECT user_id,name,email,password,phone FROM user WHERE id = ?";
+        final String query = "SELECT user_id,name,email,password,phone FROM \"user\" WHERE user_id = ?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -43,7 +44,7 @@ public class UserRepo implements CrudRepo<UserEntity> {
 
     @Override
     public List<UserEntity> findAll() throws SQLException {
-        final String query = "SELECT user_id,name,email,password,phone FROM user";
+        final String query = "SELECT user_id,name,email,password,phone FROM \"user\"";
         try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<UserEntity> users = new ArrayList<>();
@@ -69,7 +70,7 @@ public class UserRepo implements CrudRepo<UserEntity> {
 
     @Override
     public void update(UserEntity entity) throws SQLException {
-        final String query = "UPDATE user SET name = ?, password = ? WHERE user_id = ?";
+        final String query = "UPDATE \"user\" SET name = ?, password = ? WHERE user_id = ?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getPassword());
@@ -86,7 +87,7 @@ public class UserRepo implements CrudRepo<UserEntity> {
 
     @Override
     public void delete(Long id) throws SQLException {
-        final String query = "DELETE FROM user WHERE user_id = ?";
+        final String query = "DELETE FROM \"user\" WHERE user_id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
@@ -101,6 +102,7 @@ public class UserRepo implements CrudRepo<UserEntity> {
             preparedStatement.setString(1, email);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
+                    log.info(userMapper.resultSetToEntity(resultSet).toString());
                     return Optional.of(userMapper.resultSetToEntity(resultSet));
                 }
             }
