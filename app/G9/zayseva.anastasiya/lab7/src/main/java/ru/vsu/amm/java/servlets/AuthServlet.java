@@ -50,7 +50,7 @@ public class AuthServlet extends HttpServlet {
 
             userRepository.save(user);
             } catch (IllegalArgumentException e){
-                getServletContext().setAttribute("error","A user with this username or number already exists");
+                getServletContext().setAttribute("error","Error");
                 getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
                 return;
             }
