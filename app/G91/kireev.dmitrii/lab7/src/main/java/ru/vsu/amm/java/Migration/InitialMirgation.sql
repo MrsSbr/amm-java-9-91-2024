@@ -28,6 +28,7 @@ CREATE TABLE TICKET (
                         status VARCHAR(50) NOT NULL,
                         start_time TIMESTAMP NOT NULL,
                         end_time TIMESTAMP NOT NULL,
+                        film_name VARCHAR(20) ,
                         FOREIGN KEY (film_id) REFERENCES FILM(film_id) ON DELETE CASCADE,
                         FOREIGN KEY (user_id) REFERENCES USER(user_id) ON DELETE CASCADE
 );
