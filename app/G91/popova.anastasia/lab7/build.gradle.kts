@@ -25,6 +25,7 @@ dependencies {
     implementation("jakarta.servlet:jakarta.servlet-api:6.0.0")
     implementation ("org.slf4j:slf4j-api:2.0.7")
     implementation ("ch.qos.logback:logback-classic:1.5.13")
+    implementation ("org.slf4j:jul-to-slf4j:2.0.13")
 }
 
 tasks.test {
