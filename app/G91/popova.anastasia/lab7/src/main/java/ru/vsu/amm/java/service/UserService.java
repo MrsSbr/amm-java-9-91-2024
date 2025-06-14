@@ -45,6 +45,9 @@ public class UserService implements UserServiceInterface {
     public User login(String email, String password){
         User user = userRepository.getByEmail(email);
 
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
+            throw new IllegalArgumentException("Email и пароль обязательны для заполнения");
+        }
         if (user == null){
             throw new SecurityException("Пользователь не найден");
         }
@@ -72,5 +75,13 @@ public class UserService implements UserServiceInterface {
         userRepository.delete(userID);
     }
 
+    @Override
+    public User getByID(UUID userID) {
+        User user = userRepository.getByID(userID);
+        if (user == null) {
+            throw new IllegalArgumentException("Пользователь не найден");
+        }
+        return user;
+    }
 
 }

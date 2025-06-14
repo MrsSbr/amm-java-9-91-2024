@@ -25,7 +25,7 @@ public class ColumnRepository implements CRUDRepository<Column> {
 
     @Override
     public Column getByID(UUID columnID) {
-        final String sql = "SELECT ColumnID, BoardID, ColumnTitle FROM columns WHERE ColumnID = ?";
+        final String sql = "SELECT \"ColumnID\", \"BoardID\", \"ColumnTitle\" FROM columns WHERE \"ColumnID\" = ?";
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -47,7 +47,7 @@ public class ColumnRepository implements CRUDRepository<Column> {
     @Override
     public List<Column> getAll() {
         List<Column> columns = new ArrayList<>();
-        final String sql = "SELECT ColumnID, ColumnTitle FROM columns";
+        final String sql = "SELECT \"ColumnID\", \"ColumnTitle\" FROM columns";
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -67,7 +67,7 @@ public class ColumnRepository implements CRUDRepository<Column> {
 
     @Override
     public void save(Column column) {
-        final String sql = "INSERT INTO columns (ColumnID, BoardID, ColumnTitle) VALUES (?, ?, ?)";
+        final String sql = "INSERT INTO columns (\"ColumnID\", \"BoardID\", \"ColumnTitle\") VALUES (?, ?, ?)";
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -85,7 +85,7 @@ public class ColumnRepository implements CRUDRepository<Column> {
 
     @Override
     public void update(Column column) {
-        final String sql = "UPDATE columns SET ColumnTitle = ? WHERE ColumnID = ?";
+        final String sql = "UPDATE columns SET \"ColumnTitle\" = ? WHERE \"ColumnID\" = ?";
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -102,7 +102,7 @@ public class ColumnRepository implements CRUDRepository<Column> {
 
     @Override
     public void delete(UUID columnID) {
-        final String sql = "DELETE FROM columns WHERE ColumnID = ?";
+        final String sql = "DELETE FROM columns WHERE \"ColumnID\" = ?";
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
