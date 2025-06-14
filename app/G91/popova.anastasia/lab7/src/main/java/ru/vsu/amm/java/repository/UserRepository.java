@@ -128,7 +128,7 @@ public class UserRepository implements CRUDRepository<User> {
 
     @Override
     public void delete(UUID userID) {
-       final String sql = "DELETE FROM users WHERE \"serID\" = ?";
+       final String sql = "DELETE FROM users WHERE \"UserID\" = ?";
 
         try (Connection c = DatabaseConnection.getConnection();
             PreparedStatement ps = c.prepareStatement(sql)) {
