@@ -1,11 +1,11 @@
-CREATE TABLE IF EXISTS client (
+CREATE TABLE IF NOT EXISTS client (
     client_id BIGSERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL
 );
 
-CREATE TABLE IF EXISTS flight (
+CREATE TABLE IF NOT EXISTS flight (
   flight_id BIGSERIAL PRIMARY KEY,
   origin TEXT NOT NULL,
   destination TEXT NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE IF EXISTS flight (
   price DECIMAL(10,2) NOT NULL CHECK (price >= 0)
 );
 
-CREATE TABLE IF EXISTS booking (
+CREATE TABLE IF NOT EXISTS booking (
     booking_id BIGSERIAL PRIMARY KEY,
     client_id BIGINT NOT NULL REFERENCES client (client_id) ON DELETE CASCADE,
     flight_id BIGINT NOT NULL REFERENCES flight (flight_id) ON DELETE CASCADE,
