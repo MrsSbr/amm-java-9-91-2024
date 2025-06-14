@@ -4,15 +4,13 @@
 <head>
     <title>Регистрация</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="css/register_style.css" />
 </head>
 <body>
 <h1>Регистрация</h1>
 
 <c:if test="${not empty param.error}">
-    <p style="color: red;">${param.error}</p>
-</c:if>
-<c:if test="${not empty param.message}">
-    <p style="color: green;">${param.message}</p>
+    <p style="color: red; text-align:center;">${param.error}</p>
 </c:if>
 
 <form action="register" method="post" accept-charset="UTF-8">

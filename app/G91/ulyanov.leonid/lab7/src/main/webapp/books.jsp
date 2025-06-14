@@ -1,45 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@page import="java.time.format.DateTimeFormatter" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
     <title>Книги</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        tr {
-            background-color: #f5f5f5;
-        }
-
-        .action-buttons button {
-            margin-right: 10px;
-            padding: 5px 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/books_style.css" />
 </head>
 <body>
 <h1>Список доступных книг</h1>
 
 <c:if test="${not empty param.message}">
-    <p style="color: green;">${param.message}</p>
+    <p style="color: green; text-align:center;">${param.message}</p>
 </c:if>
 <c:if test="${not empty param.error}">
-    <p style="color: red;">${param.error}</p>
+    <p style="color: red; text-align:center;">${param.error}</p>
 </c:if>
 
 <table>
@@ -51,20 +25,34 @@
         <th>Год издания</th>
         <th>Количество страниц</th>
         <th>Тип книги</th>
+        <th>Действия</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${books}" var="book">
+    <c:forEach items="${books}" var="bookItem">
         <tr>
-            <td>${book.title}</td>
-            <td>${book.author}</td>
-            <td>${book.publishedYear}</td>
-            <td>${book.numberOfPages}</td>
-            <td>${book.bookType}</td>
+            <td>${bookItem.title}</td>
+            <td>${bookItem.author}</td>
+            <td>${bookItem.publisher}</td>
+            <td>${bookItem.publishedYear}</td>
+            <td>${bookItem.numberOfPages}</td>
+            <td>${bookItem.bookType.ruName}</td>
+            <td>
+                <form class="action-form" action="delete" method="post">
+                    <input type="hidden" name="userId" value="${sessionScope.user.userId}">
+                    <input type="hidden" name="bookId" value="${bookItem.bookId}">
+                    <button type="submit">Удалить</button>
+                </form>
+                <form class="action-form" action="update" method="get">
+                    <input type="hidden" name="userId" value="${sessionScope.user.userId}">
+                    <input type="hidden" name="bookId" value="${bookItem.bookId}">
+                    <button type="submit">Изменить</button>
+                </form>
+            </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
-<p><a href="addBook.jsp" class="return-link">Добавить новую книгу</a></p>
+<p><a href="create" class="return-link">Добавить новую книгу</a></p>
 </body>
 </html>

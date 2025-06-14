@@ -1,7 +1,5 @@
 package ru.vsu.amm.java.servlets;
 
-import ru.vsu.amm.java.enums.UpdateType;
-import ru.vsu.amm.java.requests.BookUpdate.DeleteBookUpdateRequest;
 import ru.vsu.amm.java.services.DeleteService;
 
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.NoSuchElementException;
 
 @WebServlet("/delete")
@@ -23,18 +22,20 @@ public class DeleteBookServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws IOException {
+        String redirectPath = "/read";
         try {
-            DeleteBookUpdateRequest deleteUpdateRequest = new DeleteBookUpdateRequest(
-                    Integer.parseInt(request.getParameter("userId")),
-                    Integer.parseInt(request.getParameter("bookId")),
-                    LocalDateTime.parse(request.getParameter("updateTime")),
-                    UpdateType.valueOf(request.getParameter("updateType"))
-            );
-
-            deleteService.deleteBook(deleteUpdateRequest);
-            response.sendRedirect("books.jsp");
+            Integer bookId = Integer.parseInt(request.getParameter("bookId"));
+            Integer userId = Integer.parseInt(request.getParameter("userId"));
+            deleteService.deleteBook(bookId, userId);
+            String redirectUrl = request.getContextPath()
+                                 + redirectPath + "?message="
+                                 + URLEncoder.encode("Книга успешно удалена!", StandardCharsets.UTF_8);
+            response.sendRedirect(redirectUrl);
         } catch (IllegalArgumentException | NoSuchElementException e) {
-            response.sendRedirect(String.format("%s", e.getMessage())); // TODO: связать с jsp
+            String redirectUrl = request.getContextPath()
+                                 + redirectPath
+                                 + String.format("?error=%s", e.getMessage());
+            response.sendRedirect(redirectUrl);
         }
     }
 

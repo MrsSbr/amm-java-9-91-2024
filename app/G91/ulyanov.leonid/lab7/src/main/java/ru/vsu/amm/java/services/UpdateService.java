@@ -4,13 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.entities.Book;
 import ru.vsu.amm.java.entities.BookUpdate;
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.enums.UpdateType;
 import ru.vsu.amm.java.repos.BookRepository;
 import ru.vsu.amm.java.repos.BookUpdatesRepository;
 import ru.vsu.amm.java.repos.UserRepository;
 import ru.vsu.amm.java.requests.BookUpdate.ChangeBookUpdateRequest;
 
-import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -30,8 +28,8 @@ public class UpdateService {
         BookUpdate bookUpdate = new BookUpdate();
 
         try {
-            bookUpdate.setUpdateTime(LocalDateTime.now());
-            bookUpdate.setUpdateType(UpdateType.CHANGE);
+            bookUpdate.setUpdateTime(request.updateTime());
+            bookUpdate.setUpdateType(request.updateType());
             Optional<User> user = users.getById(request.userId());
 
             if (user.isPresent()) {
@@ -42,12 +40,14 @@ public class UpdateService {
             }
 
             Book book = new Book(request.changeBookRequest());
-            Optional<Book> bookOptional = books.getByInfo(book);
+            Optional<Book> bookOptional = books.getById(request.bookId());
 
             if (bookOptional.isPresent()) {
                 Integer id = request.bookId();
                 book.setBookId(id);
                 books.update(book);
+                bookUpdate.setBookId(id);
+                bookUpdates.create(bookUpdate);
             } else {
                 log.error("Update failed: Book not found");
                 throw new NoSuchElementException("Book not found.");
@@ -56,7 +56,5 @@ public class UpdateService {
             log.error("Update failed: {}", e.getMessage());
             throw new IllegalArgumentException(e.getMessage());
         }
-
-        bookUpdates.create(bookUpdate);
     }
 }
