@@ -4,15 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class Author {
-    private long id;
+    private Long id;
     private String surname;
     private String name;
     private String patronymic;
-    private java.sql.Date registrationDate;
+    private LocalDate registrationDate;
 }
