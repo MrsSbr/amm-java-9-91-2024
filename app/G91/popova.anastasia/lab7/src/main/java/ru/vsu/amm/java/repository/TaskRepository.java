@@ -33,8 +33,8 @@ public class TaskRepository implements CRUDRepository<Task> {
 
     @Override
     public Task getByID(UUID taskID) {
-        final String sql = "SELECT TaskID, ColumnID, TaskTitle, TaskDescription," +
-                "StartDate, EndDate FROM tasks WHERE TaskID = ?";
+        final String sql = "SELECT \"TaskID\", \"ColumnID\", \"TaskTitle\", \"TaskDescription\"," +
+                "\"StartDate\", \"EndDate\" FROM tasks WHERE \"TaskID\" = ?";
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -57,7 +57,8 @@ public class TaskRepository implements CRUDRepository<Task> {
     @Override
     public List<Task> getAll() {
         List<Task> tasks = new ArrayList<>();
-        final String sql = "SELECT TaskID, ColumnID, TaskTitle, TaskDescription, StartDate, EndDate FROM tasks";
+        final String sql = "SELECT \"TaskID\", \"ColumnID\", \"TaskTitle\", \"TaskDescription\"," +
+                "\"StartDate\", \"EndDate\" FROM tasks";
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -78,8 +79,8 @@ public class TaskRepository implements CRUDRepository<Task> {
 
     public List<Task> getByColumn(UUID columnID) {
         List<Task> tasks = new ArrayList<>();
-        final String sql = "SELECT TaskID, ColumnID, TaskTitle, TaskDescription," +
-                "StartDate, EndDate FROM tasks WHERE ColumnID = ?";
+        final String sql = "SELECT \"TaskID\", \"ColumnID\", \"TaskTitle\", \"TaskDescription\"," +
+                "\"StartDate\", \"EndDate\" FROM tasks WHERE \"ColumnID\" = ?";
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -102,8 +103,8 @@ public class TaskRepository implements CRUDRepository<Task> {
     @Override
     public void save(Task task) {
 
-        final String sql = "INSERT INTO tasks (TaskID, ColumnID, TaskTitle, TaskDescription," +
-                "StartDate, EndDate) VALUES (?, ?, ?, ?, ?)";
+        final String sql = "INSERT INTO tasks (\"TaskID\", \"ColumnID\", \"TaskTitle\", \"TaskDescription\"," +
+                "\"StartDate\", \"EndDate\") VALUES (?, ?, ?, ?, ?)";
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -136,8 +137,8 @@ public class TaskRepository implements CRUDRepository<Task> {
 
     @Override
     public void update(Task task) {
-        final String sql = "UPDATE tasks SET TaskTitle = ?, TaskDescription = ?," +
-                "StartDate = ?, EndDate = ?, ColumnID = ? WHERE TaskID = ?";
+        final String sql = "UPDATE tasks SET \"TaskTitle\" = ?, \"TaskDescription\" = ?," +
+                "\"StartDate\" = ?, \"EndDate\" = ?, \"ColumnID\" = ? WHERE \"TaskID\" = ?";
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -162,7 +163,7 @@ public class TaskRepository implements CRUDRepository<Task> {
     @Override
     public void delete(UUID taskID) {
 
-        final String sql = "DELETE FROM tasks WHERE TaskID = ?";
+        final String sql = "DELETE FROM tasks WHERE \"TaskID\" = ?";
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {

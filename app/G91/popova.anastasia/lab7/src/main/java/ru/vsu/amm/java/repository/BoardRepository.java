@@ -31,7 +31,8 @@ public class BoardRepository implements CRUDRepository<Board> {
 
     @Override
     public Board getByID(UUID boardID) {
-        final String sql = "SELECT BoardID, UserID, BoardTitle, BoardDescription FROM boards WHERE BoardID = ?";
+        final String sql = "SELECT \"BoardID\", \"UserID\", \"BoardTitle\"," +
+                "\"BoardDescription\" FROM boards WHERE \"BoardID\" = ?";
 
         log.debug("getting board by ID^ {}", boardID);
 
@@ -57,7 +58,7 @@ public class BoardRepository implements CRUDRepository<Board> {
     @Override
     public List<Board> getAll() {
         List<Board> boards = new ArrayList<>();
-        final String sql = "SELECT BoardID, UserID, BoardTitle, BoardDescription FROM boards";
+        final String sql = "SELECT \"BoardID\", \"UserID\", \"BoardTitle\", \"BoardDescription\" FROM boards";
         log.debug("getting all boards...");
 
         try (Connection c = DatabaseConnection.getConnection();
@@ -80,7 +81,8 @@ public class BoardRepository implements CRUDRepository<Board> {
 
     @Override
     public void save(Board board) {
-        final String sql = "INSERT INTO boards (BoardID, UserID, BoardTitle, BoardDescription) VALUES (?, ?, ?, ?)";
+        final String sql = "INSERT INTO boards (\"BoardID\", \"UserID\", \"BoardTitle\"," +
+                "\"BoardDescription\") VALUES (?, ?, ?, ?)";
         log.debug("saving new board: {}", board);
 
         try (Connection c = DatabaseConnection.getConnection();
@@ -102,7 +104,7 @@ public class BoardRepository implements CRUDRepository<Board> {
 
     @Override
     public void update(Board board) {
-        final String sql = "UPDATE boards SET BoardTitle = ?, BoardDescription = ? WHERE BoardID = ?";
+        final String sql = "UPDATE boards SET \"BoardTitle\" = ?, \"BoardDescription\" = ? WHERE \"BoardID\" = ?";
         log.debug("updating board: {}", board);
 
         try (Connection c = DatabaseConnection.getConnection();
@@ -128,7 +130,7 @@ public class BoardRepository implements CRUDRepository<Board> {
 
     @Override
     public void delete(UUID boardID) {
-        final String sql = "DELETE FROM boards WHERE BoardID = ?";
+        final String sql = "DELETE FROM boards WHERE \"BoardID\" = ?";
         log.debug("deleting board: {}", boardID);
 
         try (Connection c = DatabaseConnection.getConnection();
