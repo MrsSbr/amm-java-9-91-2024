@@ -30,6 +30,12 @@ public class SessionServiceImpl implements SessionService {
         this.psychologistRepository = new PsychologistRepository();
     }
 
+    public SessionServiceImpl(SessionRepository sessionRepository, ClientRepository clientRepository, PsychologistRepository psychologistRepository) {
+        this.sessionRepository = sessionRepository;
+        this.clientRepository = clientRepository;
+        this.psychologistRepository = psychologistRepository;
+    }
+
     @Override
     public void createSession(SessionDto sessionDto) {
         try {
