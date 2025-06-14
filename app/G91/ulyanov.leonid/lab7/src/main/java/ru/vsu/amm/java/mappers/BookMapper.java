@@ -30,7 +30,7 @@ public class BookMapper implements Mapper<Book> {
     public PreparedStatement mapObjectToRow(Book book,
                                             Connection connection,
                                             String query) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement(query);
+        PreparedStatement ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
         ps.setString(1, book.getTitle());
         ps.setString(2, book.getAuthor());
         ps.setString(3, book.getPublisher());

@@ -1,7 +1,6 @@
 package ru.vsu.amm.java.repos;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.vsu.amm.java.config.DbConfig;
 import ru.vsu.amm.java.entities.User;
 import ru.vsu.amm.java.mappers.UserMapper;
 
@@ -26,8 +25,8 @@ public class UserRepository implements Repository<User> {
 
     public Optional<User> getByEmail(String email) {
         String query = """
-                SELECT Email, "Password", LastName, FirstName, PatronymicName, PhoneNumber
-                FROM "User" WHERE Email = ? AND "Password" = ?;
+                SELECT Id_user, Email, "Password", LastName, FirstName, PatronymicName, PhoneNumber
+                FROM "User" WHERE Email = ?;
                 """;
 
         try (Connection connection = dataSource.getConnection()) {
@@ -49,7 +48,7 @@ public class UserRepository implements Repository<User> {
     @Override
     public Optional<User> getById(int id) {
         String query = """
-                SELECT Email, "Password", LastName, FirstName, PatronymicName, PhoneNumber
+                SELECT Id_user, Email, "Password", LastName, FirstName, PatronymicName, PhoneNumber
                 FROM "User" WHERE Id_user = ?;
                 """;
 
@@ -97,7 +96,7 @@ public class UserRepository implements Repository<User> {
     @Override
     public Integer create(User user) {
         String query = """
-                INSERT INTO "User"(Email, Password, LastName, FirstName, PatronymicName, PhoneNumber)
+                INSERT INTO "User"(Email, "Password", LastName, FirstName, PatronymicName, PhoneNumber)
                 VALUES (?, ?, ?, ?, ?, ?);
                 """;
 
