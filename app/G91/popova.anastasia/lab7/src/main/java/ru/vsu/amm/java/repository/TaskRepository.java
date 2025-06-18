@@ -177,6 +177,20 @@ public class TaskRepository implements CRUDRepository<Task> {
 
     }
 
+    public static void deleteTasksByColumnId(UUID columnId) {
+        final String sql = "DELETE FROM tasks WHERE \"ColumnID\" = ?";
+
+        try (Connection c = DatabaseConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setObject(1, columnId);
+            int deleted = ps.executeUpdate();
+
+        } catch (SQLException e) {
+            logger.severe("error while trying to delete tasks: " + e.getMessage());
+        }
+    }
 
 
-}
+
+    }

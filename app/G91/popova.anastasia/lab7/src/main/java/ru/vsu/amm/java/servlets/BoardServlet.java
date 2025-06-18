@@ -22,7 +22,7 @@ public class BoardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User currentUser = (User) req.getSession().getAttribute("user");
         if (currentUser == null) {
-            resp.sendRedirect("/auth/login");
+            resp.sendRedirect(req.getContextPath() + "/auth/login");
             return;
         }
 
@@ -34,6 +34,9 @@ public class BoardServlet extends HttpServlet {
                     .toList();
             req.setAttribute("boards", boards);
             req.getRequestDispatcher("/WEB-INF/views/boards/list.jsp").forward(req, resp);
+        } else if (pathInfo.equals("/create")) {
+            // Создание доски
+            req.getRequestDispatcher("/WEB-INF/views/boards/create.jsp").forward(req, resp);
         } else {
             // Показать конкретную доску
             String[] parts = pathInfo.split("/");
@@ -56,7 +59,7 @@ public class BoardServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User currentUser = (User) req.getSession().getAttribute("user");
         if (currentUser == null) {
-            resp.sendRedirect("/auth/login");
+            resp.sendRedirect(req.getContextPath() + "/auth/login");
             return;
         }
 
@@ -71,7 +74,7 @@ public class BoardServlet extends HttpServlet {
             }
             try {
                 boardService.createBoard(currentUser.getUserID(), title.trim(), description);
-                resp.sendRedirect("/boards");
+                resp.sendRedirect(req.getContextPath() + "/boards");
             } catch (Exception e) {
                 req.setAttribute("error", e.getMessage());
                 req.getRequestDispatcher("/WEB-INF/views/boards/create.jsp").forward(req, resp);
@@ -85,7 +88,7 @@ public class BoardServlet extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User currentUser = (User) req.getSession().getAttribute("user");
         if (currentUser == null) {
-            resp.sendRedirect("/auth/login");
+            resp.sendRedirect(req.getContextPath() + "/auth/login");
             return;
         }
 
@@ -108,7 +111,7 @@ public class BoardServlet extends HttpServlet {
                     if (newDescription != null) {
                         boardService.updateBoardDescription(boardId, newDescription);
                     }
-                    resp.sendRedirect("/boards/" + boardId);
+                    resp.sendRedirect(req.getContextPath() + "/boards/" + boardId);
                 } catch (Exception e) {
                     req.setAttribute("error", e.getMessage());
                     req.setAttribute("board", board);
@@ -123,10 +126,11 @@ public class BoardServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         User currentUser = (User) req.getSession().getAttribute("user");
         if (currentUser == null) {
-            resp.sendRedirect("/auth/login");
+            resp.sendRedirect(req.getContextPath() + "/auth/login");
             return;
         }
 
@@ -142,7 +146,7 @@ public class BoardServlet extends HttpServlet {
                 }
                 try {
                     boardService.deleteBoard(boardId);
-                    resp.sendRedirect("/boards");
+                    resp.sendRedirect(req.getContextPath() + "/boards");
                 } catch (Exception e) {
                     resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 }

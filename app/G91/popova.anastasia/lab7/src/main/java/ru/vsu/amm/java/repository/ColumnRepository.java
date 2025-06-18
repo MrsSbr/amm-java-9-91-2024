@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class ColumnRepository implements CRUDRepository<Column> {
     private static final Logger logger = Logger.getLogger(ColumnRepository.class.getName());
 
-    private Column mapResultSetToColumn(ResultSet rs) throws SQLException {
+    private static Column mapResultSetToColumn(ResultSet rs) throws SQLException {
         Column column = new Column();
         column.setColumnID((UUID)rs.getObject("ColumnID"));
         column.setBoardID((UUID)rs.getObject("BoardID"));
@@ -114,6 +114,40 @@ public class ColumnRepository implements CRUDRepository<Column> {
             logger.severe("error while trying to delete column: " + e.getMessage());
         }
 
+    }
+
+    public List<Column> getColumnsByBoardId(UUID boardId) {
+        final String sql = "SELECT \"ColumnID\", \"BoardID\", \"ColumnTitle\" FROM columns WHERE \"BoardID\" = ?";
+        try (Connection c = DatabaseConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setObject(1, boardId);
+            ResultSet rs = ps.executeQuery();
+
+            List<Column> columns = new ArrayList<>();
+            while (rs.next()) {
+                columns.add(mapResultSetToColumn(rs));
+            }
+
+            return columns;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteColumnsByBoardId(UUID boardId) {
+        final String sql = "DELETE FROM columns WHERE \"BoardID\" = ?";
+
+        try (Connection c = DatabaseConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setObject(1, boardId);
+            int deleted = ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
