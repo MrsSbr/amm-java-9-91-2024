@@ -1,17 +1,17 @@
 <configuration>
 
-    <!-- Console appender -->
+    <!-- для консольки -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{36}) - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- File appender -->
+    <!-- для файла -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/application.log</file>
+        <file>app/G91/popova.anastasia/lab7/logs/application.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>logs/application.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>app/G91/popova.anastasia/lab7/logs/application.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>10MB</maxFileSize>
             <maxHistory>30</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>
@@ -21,13 +21,13 @@
         </encoder>
     </appender>
 
-    <!-- Root logger -->
-    <root level="INFO">
+    <!-- корневой уровень логгирования -->
+    <root level="DEBUG">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE" />
     </root>
 
-    <!-- DB-specific logging -->
+    <!-- отдельно настройка для бд -->
     <logger name="ru.vsu.amm.java.DB_config" level="DEBUG" />
 
 </configuration>
