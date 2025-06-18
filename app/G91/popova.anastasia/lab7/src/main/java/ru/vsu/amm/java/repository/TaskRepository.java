@@ -17,7 +17,7 @@ import java.util.UUID;
 public class TaskRepository implements CRUDRepository<Task> {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(TaskRepository.class);
 
-    private Task mapResultSetToTask(ResultSet rs) throws SQLException{
+    private Task mapResultSetToTask(ResultSet rs) throws SQLException {
         Task task = new Task();
         task.setTaskID((UUID)rs.getObject("TaskID"));
         task.setColumnID((UUID)rs.getObject("ColumnID"));

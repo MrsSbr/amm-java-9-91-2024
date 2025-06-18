@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 public class BoardRepository implements CRUDRepository<Board> {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(BoardRepository.class);
 
-    private Board mapResultSetToBoard(ResultSet rs) throws SQLException{
+    private Board mapResultSetToBoard(ResultSet rs) throws SQLException {
         Board board = new Board();
         board.setBoardID((UUID)rs.getObject("BoardID"));
         board.setUserID((UUID)rs.getObject("UserID"));
@@ -65,7 +65,7 @@ public class BoardRepository implements CRUDRepository<Board> {
 
             ResultSet rs = ps.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 boards.add(mapResultSetToBoard(rs));
             }
             log.debug("Fetched {} boards successfully", boards.size());

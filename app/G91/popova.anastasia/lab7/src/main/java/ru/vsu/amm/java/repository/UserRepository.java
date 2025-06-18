@@ -33,11 +33,11 @@ public class UserRepository implements CRUDRepository<User> {
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setObject(1, userID);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 return mapResultSetToUser(rs);
             }
             log.info("Successfully fetched user: {}", userID);
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             log.error("Failed to fetch user: {}", userID + e.getMessage());
         }
         return null;
@@ -51,7 +51,7 @@ public class UserRepository implements CRUDRepository<User> {
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                return mapResultSetToUser(rs);
             }
             log.info("Successfully fetched user");

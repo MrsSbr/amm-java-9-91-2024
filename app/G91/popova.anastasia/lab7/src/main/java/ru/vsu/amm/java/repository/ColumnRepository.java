@@ -51,7 +51,7 @@ public class ColumnRepository implements CRUDRepository<Column> {
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 columns.add(mapResultSetToColumn(rs));
             }
             log.info("Successfully fetched {} columns", columns.size());
