@@ -62,7 +62,7 @@ class AuthServiceIntegrationTest {
     @Test
     void testRegisterExistingUserThrowsException() {
         userRepository.create(UserFactory.newUser());
-        RegisterRequest request = UserFactory.correctRegisterRequest();
+        RegisterRequest request = UserFactory.wrongRegisterRequest();
 
         assertThrows(AuthenticationException.class, () -> authService.register(request));
     }

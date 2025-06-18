@@ -16,7 +16,6 @@ public class Book {
     private final static String ENG_REGEX = "^[a-zA-Z]+$";
     @Setter
     private Integer bookId;
-    @Setter
     private String title;
     private String author;
     @Setter
@@ -36,6 +35,13 @@ public class Book {
         setPublishedYear(request.publishedYear());
         setNumberOfPages(request.numberOfPages());
         this.bookType = request.bookType();
+    }
+
+    public void setTitle(String title) {
+        if (!title.matches(ENG_REGEX)) {
+            throw new IllegalArgumentException("Invalid title, latin letters only");
+        }
+        this.title = title;
     }
 
     public void setAuthor(String author) {
