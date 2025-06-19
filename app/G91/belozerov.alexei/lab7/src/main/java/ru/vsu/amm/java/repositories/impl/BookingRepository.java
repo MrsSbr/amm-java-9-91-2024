@@ -89,10 +89,10 @@ public class BookingRepository implements CrudRepository<BookingEntity> {
         }
     }
 
-    public List<BookingEntity> findAllByClientId(Long clientId) throws SQLException {
-        String sql = "SELECT * FROM booking " +
-                "WHERE client_id = ? AND date >= current_date " +
-                "ORDER BY date ASC";
+    public List<BookingEntity> findAllByClientIdAndDateGreaterThanCurrent(Long clientId) throws SQLException {
+        String sql = "SELECT * FROM booking b JOIN flight f ON f.flight_id = b.flight_id " +
+                "WHERE b.client_id = ? AND f.departure_time >= current_date " +
+                "ORDER BY f.departure_time ASC";
         List<BookingEntity> list = new ArrayList<>();
         try (Connection conn = ds.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -105,8 +105,9 @@ public class BookingRepository implements CrudRepository<BookingEntity> {
         return list;
     }
 
-    public List<String> findAllByFlightId(Long flightId) throws SQLException {
-        String sql = "SELECT seat_number FROM booking WHERE flight_id = ? AND date >= current_date";
+    public List<String> findAllByFlightIdAndDateGreaterThanCurrent(Long flightId) throws SQLException {
+        String sql = "SELECT seat_number FROM booking b JOIN flight f ON f.flight_id = b.flight_id " +
+                "WHERE b.flight_id = ? AND f.departure_time >= current_date";
         List<String> list = new ArrayList<>();
         try (Connection conn = ds.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sql);

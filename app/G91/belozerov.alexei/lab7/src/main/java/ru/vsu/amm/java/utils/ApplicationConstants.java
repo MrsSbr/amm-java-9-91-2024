@@ -15,8 +15,10 @@ public class ApplicationConstants {
     public static final String FLIGHTS_PAGE = "/flights.jsp";
 
     public static final String AVAILABLE_BOOKINGS_URL = "/available-bookings";
-    public static final String AVAILABLE_BOOKINGS_PAGE = "/available-bookings.jsp";
+    public static final String AVAILABLE_BOOKINGS_PAGE = "/availableBookings.jsp";
 
     public static final String BOOK_URL = "/book";
     public static final String BOOK_PAGE = "/book.jsp";
+
+    public static final String LOGOUT_URL = "/logout";
 }

@@ -42,7 +42,7 @@ public class ClientLoginServlet extends HttpServlet {
 
             HttpSession session = req.getSession();
             session.setAttribute("email", email);
-            resp.sendRedirect(CLIENT_BOOKINGS_URL);
+            resp.sendRedirect(req.getContextPath() + CLIENT_BOOKINGS_URL);
         } catch (WrongUserCredentialsException | DataAccessException e) {
             req.setAttribute("errorMessage", e.getMessage());
             getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(req, resp);

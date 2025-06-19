@@ -8,8 +8,8 @@ public class SeatsGenerator {
         char row = 'A';
         String[] seats = new String[seatsInRowNumber * rowsNumber];
         for (int i = 0; i < rowsNumber; i++) {
-            for (int j = 1; j <= seatsInRowNumber; j++) {
-                seats[i * seatsInRowNumber + j] = String.valueOf(row) + j;
+            for (int j = 0; j < seatsInRowNumber; j++) {
+                seats[i * seatsInRowNumber + j] = String.valueOf(row) + (j + 1);
             }
             row++;
         }

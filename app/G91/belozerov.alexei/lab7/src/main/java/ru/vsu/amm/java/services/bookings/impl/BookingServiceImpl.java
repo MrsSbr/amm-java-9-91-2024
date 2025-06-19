@@ -2,6 +2,7 @@ package ru.vsu.amm.java.services.bookings.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.converters.BookingConverter;
+import ru.vsu.amm.java.entities.BookingEntity;
 import ru.vsu.amm.java.entities.ClientEntity;
 import ru.vsu.amm.java.exceptions.DataAccessException;
 import ru.vsu.amm.java.models.dto.BookingDto;
@@ -12,6 +13,7 @@ import ru.vsu.amm.java.utils.SeatsGenerator;
 
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +36,10 @@ public class BookingServiceImpl implements BookingService {
             Optional<ClientEntity> clientOpt = clientRepository.findByEmail(email);
             if (clientOpt.isPresent()) {
                 Long clientId = clientOpt.get().getClientId();
-                return bookingRepository.findAllByClientId(clientId).stream().map(BookingConverter::toDto).toList();
+                return bookingRepository.findAllByClientIdAndDateGreaterThanCurrent(clientId).stream()
+                        .sorted(Comparator.comparingLong(BookingEntity::getBookingId))
+                        .map(BookingConverter::toDto)
+                        .toList();
             } else {
                 return Collections.emptyList();
             }
@@ -47,7 +52,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<String> getAvailableSeatsByFlightId(Long flightId) {
         try {
-            List<String> bookedSeats = bookingRepository.findAllByFlightId(flightId);
+            List<String> bookedSeats = bookingRepository.findAllByFlightIdAndDateGreaterThanCurrent(flightId);
             return seats.stream()
                     .filter(x -> !bookedSeats.contains(x))
                     .toList();

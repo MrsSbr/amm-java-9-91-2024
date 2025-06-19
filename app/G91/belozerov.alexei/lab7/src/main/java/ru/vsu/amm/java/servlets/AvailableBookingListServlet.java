@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ru.vsu.amm.java.models.dto.BookingDto;
 import ru.vsu.amm.java.services.bookings.BookingService;
 import ru.vsu.amm.java.services.bookings.impl.BookingServiceImpl;
 
@@ -34,10 +33,18 @@ public class AvailableBookingListServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + LOGIN_URL);
             return;
         }
-        Long flightId = Long.parseLong((String) httpSession.getAttribute("flightId"));
-        List<String> availableSeats = bookingService.getAvailableSeatsByFlightId(flightId);
 
-        req.setAttribute("availableSeats", availableSeats);
+        String paramId = req.getParameter("flightId");
+        if (paramId != null) {
+            httpSession.setAttribute("flightId", Long.valueOf(paramId));
+        }
+
+        Long flightId = (Long) httpSession.getAttribute("flightId");
+        if (flightId != null) {
+            List<String> availableSeats = bookingService.getAvailableSeatsByFlightId(flightId);
+            req.setAttribute("availableSeats", availableSeats);
+        }
+
         getServletContext()
                 .getRequestDispatcher(AVAILABLE_BOOKINGS_PAGE)
                 .forward(req, resp);
