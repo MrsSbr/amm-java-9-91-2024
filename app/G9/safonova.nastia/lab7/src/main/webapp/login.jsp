@@ -83,9 +83,9 @@
 <div class="auth-container">
     <h2>Вход в систему</h2>
 
-    <% if (request.getParameter("error") != null) { %>
-    <div class="error">Неверный логин или пароль</div>
-    <% } %>
+    <c:if test="${not empty errorMessage}">
+        <div class="error">${errorMessage}</div>
+    </c:if>
 
     <form action="login" method="POST">
         <div class="form-group">
@@ -102,6 +102,7 @@
     </form>
 
     <a href="register.jsp" class="btn btn-register">Регистрация</a>
+
 </div>
 </body>
 </html>
