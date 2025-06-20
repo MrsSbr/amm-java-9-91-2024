@@ -36,5 +36,4 @@ public class Achievement {
     public AchievementType getType() {
         return type;
     }
-
 }

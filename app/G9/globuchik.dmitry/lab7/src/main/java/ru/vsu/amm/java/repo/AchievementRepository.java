@@ -27,17 +27,7 @@ public class AchievementRepository implements Repository<Achievement> {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, id);
 
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return Optional.of(new Achievement(
-                            resultSet.getLong("id"),
-                            resultSet.getString("name"),
-                            resultSet.getString("description"),
-                            AchievementType.valueOf(resultSet.getString("type")),
-                            resultSet.getInt("required_progress")));
-                }
-            }
-            return Optional.empty();
+            return getAchievement(statement);
         }
     }
 
@@ -84,16 +74,22 @@ public class AchievementRepository implements Repository<Achievement> {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, type.name());
-            try (ResultSet resultSet = statement.executeQuery()) {
-            return resultSet.next()
-                    ? Optional.of(new Achievement(resultSet.getLong("id"),
-                    resultSet.getString("name"),
-                    resultSet.getString("description"),
-                    AchievementType.valueOf(resultSet.getString("type")),
-                    resultSet.getInt("required_progress")))
-                    : Optional.empty();
+            return getAchievement(statement);
+        }
+    }
+
+    private Optional<Achievement> getAchievement(PreparedStatement statement) throws SQLException {
+        try (ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return Optional.of(new Achievement(
+                        resultSet.getLong("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        AchievementType.valueOf(resultSet.getString("type")),
+                        resultSet.getInt("required_progress")));
             }
         }
+        return Optional.empty();
     }
 
     @Override

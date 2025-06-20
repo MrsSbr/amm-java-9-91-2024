@@ -4,12 +4,11 @@ import ru.vsu.amm.java.entity.EarnedAchievement;
 import ru.vsu.amm.java.enums.AchievementStatus;
 
 import javax.sql.DataSource;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -127,6 +126,48 @@ public class EarnedAchievementRepository implements Repository<EarnedAchievement
             ps.setLong(3, earnedAchievement.getId());
 
             ps.executeUpdate();
+        }
+    }
+
+
+
+    public void addProgress(Long userId, Long achievementId, int progress) throws SQLException {
+        String sql = "UPDATE earnedachievement SET progress = ? " +
+                "WHERE user_id = ? AND achievement_id = ?";
+
+        int currProgress = findByUserIdAchievementId(userId, achievementId).get().getProgress();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, currProgress + progress);
+            ps.setLong(2, userId);
+            ps.setLong(3, achievementId);
+
+            ps.executeUpdate();
+        }
+    }
+
+    public Optional<EarnedAchievement> findByUserIdAchievementId(Long userId, Long achievementId) throws SQLException {
+        final String sql = "SELECT id, achievement_id, user_id, obtainedat, status, progress FROM earnedachievement WHERE user_id = ? AND achievement_id = ?";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setLong(1, userId);
+            statement.setLong(2, achievementId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    Timestamp obtainedAtTimestamp = resultSet.getTimestamp("obtainedat");
+                    LocalDateTime obtainedAt = obtainedAtTimestamp != null ? obtainedAtTimestamp.toLocalDateTime() : null;
+                    return Optional.of(new EarnedAchievement(
+                            resultSet.getLong("id"),
+                            resultSet.getLong("achievement_id"),
+                            resultSet.getLong("user_id"),
+                            obtainedAt,
+                            AchievementStatus.valueOf(resultSet.getString("status")),
+                            resultSet.getInt("progress")));
+                }
+            }
+            return Optional.empty();
         }
     }
 
