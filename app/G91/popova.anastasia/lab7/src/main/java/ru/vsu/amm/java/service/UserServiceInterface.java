@@ -9,4 +9,5 @@ public interface UserServiceInterface {
     User login(String email, String password);
     void updateUserName(UUID userID, String newName);
     void deleteUser(UUID userID);
+    User getByID(UUID userID);
 }

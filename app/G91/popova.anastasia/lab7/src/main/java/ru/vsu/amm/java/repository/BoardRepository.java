@@ -13,14 +13,13 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.List;
 
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 public class BoardRepository implements CRUDRepository<Board> {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(BoardRepository.class);
 
-    private Board mapResultSetToBoard(ResultSet rs) throws SQLException{
+    private Board mapResultSetToBoard(ResultSet rs) throws SQLException {
         Board board = new Board();
         board.setBoardID((UUID)rs.getObject("BoardID"));
         board.setUserID((UUID)rs.getObject("UserID"));
@@ -31,9 +30,10 @@ public class BoardRepository implements CRUDRepository<Board> {
 
     @Override
     public Board getByID(UUID boardID) {
-        final String sql = "SELECT BoardID, UserID, BoardTitle, BoardDescription FROM boards WHERE BoardID = ?";
+        final String sql = "SELECT \"BoardID\", \"UserID\", \"BoardTitle\"," +
+                "\"BoardDescription\" FROM boards WHERE \"BoardID\" = ?";
 
-        log.debug("getting board by ID^ {}", boardID);
+        log.debug("Fetching board with ID: {}", boardID);
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -43,12 +43,12 @@ public class BoardRepository implements CRUDRepository<Board> {
 
             if (rs.next()) {
                 Board board = mapResultSetToBoard(rs);
-                log.debug("found board: {}", board);
+                log.debug("Fetched board successfully: {}", board);
                 return board;
             }
 
         } catch (SQLException e) {
-            log.error("failed to get board by ID: {}", boardID, e);
+            log.error("Failed to fetch board with ID: {}", boardID, e);
         }
 
         return null;
@@ -57,7 +57,7 @@ public class BoardRepository implements CRUDRepository<Board> {
     @Override
     public List<Board> getAll() {
         List<Board> boards = new ArrayList<>();
-        final String sql = "SELECT BoardID, UserID, BoardTitle, BoardDescription FROM boards";
+        final String sql = "SELECT \"BoardID\", \"UserID\", \"BoardTitle\", \"BoardDescription\" FROM boards";
         log.debug("getting all boards...");
 
         try (Connection c = DatabaseConnection.getConnection();
@@ -65,23 +65,22 @@ public class BoardRepository implements CRUDRepository<Board> {
 
             ResultSet rs = ps.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 boards.add(mapResultSetToBoard(rs));
             }
-            log.debug("found {} boards", boards.size());
+            log.debug("Fetched {} boards successfully", boards.size());
 
         } catch (SQLException e) {
-            log.error("error while trying to get all boards: ", e);
-            //return null;
+            log.error("Failed to fetch all boards: ", e);
         }
-
         return boards;
     }
 
     @Override
     public void save(Board board) {
-        final String sql = "INSERT INTO boards (BoardID, UserID, BoardTitle, BoardDescription) VALUES (?, ?, ?, ?)";
-        log.debug("saving new board: {}", board);
+        final String sql = "INSERT INTO boards (\"BoardID\", \"UserID\", \"BoardTitle\"," +
+                "\"BoardDescription\") VALUES (?, ?, ?, ?)";
+        log.debug("Saving new board: {}", board);
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -92,18 +91,18 @@ public class BoardRepository implements CRUDRepository<Board> {
             ps.setString(4, board.getBoardDescription());
             ps.executeUpdate();
 
-            log.info("board saved successfully: {}", board.getBoardID());
+            log.info("Board saved successfully: {}", board.getBoardID());
 
         } catch (SQLException e) {
-            log.error("error while trying to save board: {}", board, e);
+            log.error("Failed to save board: {}", board, e);
         }
 
     }
 
     @Override
     public void update(Board board) {
-        final String sql = "UPDATE boards SET BoardTitle = ?, BoardDescription = ? WHERE BoardID = ?";
-        log.debug("updating board: {}", board);
+        final String sql = "UPDATE boards SET \"BoardTitle\" = ?, \"BoardDescription\" = ? WHERE \"BoardID\" = ?";
+        log.debug("Updating board: {}", board);
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -118,32 +117,27 @@ public class BoardRepository implements CRUDRepository<Board> {
 
             ps.executeUpdate();
 
-            log.info("board updated successfully: {}", board.getBoardID());
+            log.info("Board updated successfully: {}", board.getBoardID());
 
         } catch (SQLException e) {
-           log.error("error while trying to update board: {}", board, e);
+           log.error("Failed to update board: {}", board, e);
         }
 
     }
 
     @Override
     public void delete(UUID boardID) {
-        final String sql = "DELETE FROM boards WHERE BoardID = ?";
-        log.debug("deleting board: {}", boardID);
+        final String sql = "DELETE FROM boards WHERE \"BoardID\" = ?";
+        log.debug("Deleting board: {}", boardID);
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
-
              ps.setObject(1, boardID);
              ps.executeUpdate();
-
-            log.info("board deleted successfully: {}", boardID);
-
-
+            log.info("Board deleted successfully: {}", boardID);
         } catch (SQLException e) {
-            log.error("error while trying to delete board: {}", boardID, e);
+            log.error("Failed to delete board: {}", boardID, e);
         }
-
     }
 
 }

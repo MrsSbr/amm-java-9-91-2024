@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS "columns" (
 "BoardID" UUID NOT NULL,
 "ColumnTitle" TEXT NOT NULL,
 CONSTRAINT "PK_Column" PRIMARY KEY("ColumnID"),
-CONSTRAINT "FK_ColumnToBoard" FOREIGN KEY("BoardID") REFERENCES "boards"("BoardID"),
+CONSTRAINT "FK_ColumnToBoard" FOREIGN KEY("BoardID") REFERENCES "boards"("BoardID") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "tasks" (
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS "tasks" (
 "StartDate" DATE,
 "EndDate" DATE,
 CONSTRAINT "PK_Task" PRIMARY KEY("TaskID"),
-CONSTRAINT "FK_TaskToColumn" FOREIGN KEY("ColumnID") REFERENCES "columns"("ColumnID"),
+CONSTRAINT "FK_TaskToColumn" FOREIGN KEY("ColumnID") REFERENCES "columns"("ColumnID") ON DELETE CASCADE
 );
 
 
