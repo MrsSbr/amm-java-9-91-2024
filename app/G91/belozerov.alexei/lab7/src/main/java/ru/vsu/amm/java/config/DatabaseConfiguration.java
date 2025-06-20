@@ -33,7 +33,7 @@ public class DatabaseConfiguration {
 
         PGSimpleDataSource ds = new PGSimpleDataSource();
         ds.setUrl(prop.getProperty("db.url"));
-        ds.setUser(prop.getProperty("db.user"));
+        ds.setUser(prop.getProperty("db.username"));
         ds.setPassword(prop.getProperty("db.password"));
         log.info("DataSource configured: url=" + ds.getUrl() + ", user=" + ds.getUser());
         return ds;

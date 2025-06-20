@@ -84,6 +84,19 @@ public class ClientRepository implements CrudRepository<ClientEntity> {
         }
     }
 
+    public Optional<ClientEntity> findByEmail(String email) throws SQLException {
+        String query = "SELECT client_id, name, email, password FROM client WHERE email = ?";
+        try (Connection conn = ds.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return Optional.of(createClient(rs));
+            }
+        }
+        return Optional.empty();
+    }
+
     private ClientEntity createClient(ResultSet rs) throws SQLException {
         return new ClientEntity(
             rs.getLong("client_id"),
