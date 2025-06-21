@@ -4,14 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.entities.Book;
 import ru.vsu.amm.java.entities.BookUpdate;
 import ru.vsu.amm.java.entities.User;
-import ru.vsu.amm.java.enums.UpdateType;
 import ru.vsu.amm.java.repos.BookRepository;
 import ru.vsu.amm.java.repos.BookUpdatesRepository;
 import ru.vsu.amm.java.repos.UserRepository;
 import ru.vsu.amm.java.requests.BookUpdate.DownloadBookUpdateRequest;
 
 import javax.management.InstanceAlreadyExistsException;
-import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -32,8 +30,8 @@ public class CreateService {
         BookUpdate bookUpdate = new BookUpdate();
 
         try {
-            bookUpdate.setUpdateTime(LocalDateTime.now());
-            bookUpdate.setUpdateType(UpdateType.DOWNLOAD);
+            bookUpdate.setUpdateTime(request.updateTime());
+            bookUpdate.setUpdateType(request.updateType());
             Optional<User> user = users.getById(request.userId());
 
             if (user.isPresent()) {
@@ -53,14 +51,12 @@ public class CreateService {
                 Integer id = books.create(book);
                 book.setBookId(id);
                 bookUpdate.setBookId(id);
+                bookUpdates.create(bookUpdate);
             }
 
         } catch (IllegalArgumentException e) {
             log.error("Creation failed: {}", e.getMessage());
             throw new IllegalArgumentException(e.getMessage());
         }
-
-        bookUpdates.create(bookUpdate);
     }
-
 }

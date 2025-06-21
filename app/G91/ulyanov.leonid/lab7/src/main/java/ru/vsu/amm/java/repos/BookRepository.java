@@ -25,22 +25,15 @@ public class BookRepository implements Repository<Book> {
 
     public Optional<Book> getByInfo(Book book) {
         String query = """
-                SELECT Title, Author, Publisher, NumberOfPages, PublishedYear, BookType
+                SELECT Id_book, Title, Author, Publisher, NumberOfPages, PublishedYear, BookType
                 FROM Book WHERE Title = ? AND Author = ? AND Publisher = ?
                             AND NumberOfPages = ? AND PublishedYear = ? AND BookType = ?;
                 """;
 
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, book.getTitle());
-            ps.setString(2, book.getAuthor());
-            ps.setString(3, book.getPublisher());
-            ps.setInt(4, book.getNumberOfPages());
-            ps.setInt(5, book.getPublishedYear());
-            ps.setString(6, book.getBookType().name());
-            ResultSet resultSet = ps.executeQuery();
             BookMapper bookMapper = new BookMapper();
-
+            PreparedStatement ps = bookMapper.mapObjectToRow(book, connection, query);
+            ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()) {
                 return Optional.of(bookMapper.mapRowToObject(resultSet));
             }
@@ -54,7 +47,7 @@ public class BookRepository implements Repository<Book> {
     @Override
     public Optional<Book> getById(int id) {
         String query = """
-                SELECT Title, Author, Publisher, NumberOfPages, PublishedYear, BookType
+                SELECT Id_book, Title, Author, Publisher, NumberOfPages, PublishedYear, BookType
                 FROM Book WHERE Id_book = ?;
                 """;
 
@@ -77,7 +70,7 @@ public class BookRepository implements Repository<Book> {
     @Override
     public List<Book> getAll() {
         String query = """
-                SELECT Title, Author, Publisher, NumberOfPages, PublishedYear, BookType
+                SELECT Id_book, Title, Author, Publisher, NumberOfPages, PublishedYear, BookType
                 FROM Book;
                 """;
 
@@ -108,10 +101,9 @@ public class BookRepository implements Repository<Book> {
                 """;
 
         try (Connection connection = dataSource.getConnection()) {
-
             BookMapper bookMapper = new BookMapper();
             PreparedStatement ps = bookMapper.mapObjectToRow(book, connection, query);
-            ps.execute();
+            ps.executeUpdate();
 
             ResultSet resultSet = ps.getGeneratedKeys();
             if (resultSet.next()) {
@@ -136,7 +128,7 @@ public class BookRepository implements Repository<Book> {
 
             BookMapper bookMapper = new BookMapper();
             PreparedStatement ps = bookMapper.mapObjectToRow(book, connection, query);
-            ps.setInt(1, book.getBookId());
+            ps.setInt(7, book.getBookId());
             ps.execute();
 
         } catch (SQLException e) {
@@ -146,15 +138,24 @@ public class BookRepository implements Repository<Book> {
 
     @Override
     public void delete(Book book) {
-        String query = """
+        String queryUpdates = """
+                DELETE FROM BookUpdates
+                WHERE Id_book = ?;
+                """;
+
+        String queryBooks = """
                 DELETE FROM Book
                 WHERE Id_book = ?;
                 """;
 
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(queryUpdates);
             ps.setInt(1, book.getBookId());
-            ps.execute();
+            ps.executeUpdate();
+
+            ps = connection.prepareStatement(queryBooks);
+            ps.setInt(1, book.getBookId());
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             log.error(e.getMessage(), e);

@@ -27,6 +27,7 @@ dependencies {
     implementation("javax.servlet:javax.servlet-api:4.0.1")
     implementation("javax.servlet:jstl:1.2")
     implementation("org.mindrot:jbcrypt:0.4")
+    testImplementation("org.mockito:mockito-core:5.11.0")
 }
 
 tasks.test {
