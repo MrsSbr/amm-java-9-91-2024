@@ -24,6 +24,10 @@ public class PsychologistServiceImpl implements PsychologistService {
         psychologistRepository = new PsychologistRepository();
     }
 
+    public PsychologistServiceImpl(PsychologistRepository psychologistRepository){
+        this.psychologistRepository = psychologistRepository;
+    }
+
     @Override
     public void login(PsychologistLoginRequest request) {
         try {
