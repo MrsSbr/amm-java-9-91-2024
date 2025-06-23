@@ -18,14 +18,18 @@ import java.util.Optional;
 public class UserRepository implements CrudRepository<User> {
     private final DataSource dataSource;
 
+    public UserRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     public UserRepository() {
         dataSource = DbConfiguration.getDataSource();
     }
 
     @Override
     public Optional<User> findById(Long id) {
-        String query = "SELECT UserID, Surname, Name, Patronymicname, PhoneNumber, Email, Password, Birthday, Role " +
-                "FROM Users WHERE UserId = ?;";
+        String query = "SELECT User_id, Surname, Name, Patronymicname, Phone_number, Email, Password " +
+                "FROM Users WHERE User_id = ?;";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
@@ -44,7 +48,7 @@ public class UserRepository implements CrudRepository<User> {
 
     @Override
     public List<User> findAll() throws SQLException {
-        String query = "SELECT UserID, Surname, Name, Patronymicname, PhoneNumber, Email, Password, Birthday, Role " +
+        String query = "SELECT User_id, Surname, Name, Patronymicname, Phone_number, Email, Password " +
                 "FROM Users;";
         List<User> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
@@ -64,8 +68,7 @@ public class UserRepository implements CrudRepository<User> {
 
     @Override
     public void save(User entity) throws SQLException {
-        String query = "INSERT INTO Users(Surname, Name, Patronymicname, PhoneNumber, Email, Password, Birthday, Role) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
+        String query = "INSERT INTO Users(Surname, Name, Patronymicname, Phone_number, Email, Password) VALUES(?, ?, ?, ?, ?, ?);";
         try (Connection connection = dataSource.getConnection()) {
             UserMapper userMapper = new UserMapper();
             PreparedStatement statement = userMapper.mapObjectToRow(entity, connection, query);
@@ -77,15 +80,12 @@ public class UserRepository implements CrudRepository<User> {
 
     @Override
     public void update(User entity) throws SQLException {
-        String query = "UPDATE Users " +
-                "SET Surname = ?, Name = ?, Patronymicname = ?, PhoneNumber = ?, Email = ?, Password = ?, " +
-                "Birthday = ?, Role = ? " +
-                "WHERE UserID = ?;";
+        String query = "UPDATE Users SET Surname = ?, Name = ?, Patronymicname = ?, Phone_number = ?, Email = ?, Password = ? WHERE User_id = ?;";
 
         try (Connection connection = dataSource.getConnection()) {
             UserMapper userMapper = new UserMapper();
             PreparedStatement statement = userMapper.mapObjectToRow(entity, connection, query);
-            statement.setLong(9, entity.getUserId());
+            statement.setLong(7, entity.getUserId());
             statement.execute();
         } catch (SQLException e) {
             log.error(e.getMessage());
@@ -94,7 +94,7 @@ public class UserRepository implements CrudRepository<User> {
 
     @Override
     public void delete(Long id) throws SQLException {
-        String query = "DELETE FROM Users WHERE UserId = ?;";
+        String query = "DELETE FROM Users WHERE user_id = ?;";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
@@ -105,8 +105,8 @@ public class UserRepository implements CrudRepository<User> {
     }
 
     public Optional<User> findByPhoneNumber(String phoneNumber) {
-        String query = "SELECT UserID, Surname, Name, Patronymicname, PhoneNumber, Email, Password, Birthday, Role " +
-                "FROM Users WHERE PhoneNumber = ?;";
+        String query = "SELECT User_id, Surname, Name, Patronymicname, Phone_number, Email, Password " +
+                "FROM Users WHERE Phone_number = ?;";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, phoneNumber);
@@ -124,7 +124,7 @@ public class UserRepository implements CrudRepository<User> {
     }
 
     public Optional<User> findByEmail(String email) {
-        String query = "SELECT UserID, Surname, Name, Patronymicname, PhoneNumber, Email, Password, Birthday, Role " +
+        String query = "SELECT User_id, Surname, Name, Patronymicname, Phone_number, Email, Password " +
                 "FROM Users WHERE Email = ?;";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -140,17 +140,5 @@ public class UserRepository implements CrudRepository<User> {
         }
 
         return Optional.empty();
-    }
-
-    public void updatePassword(Long id, String password) {
-        String query = "UPDATE Users SET Password = ? WHERE UserID = ?;";
-        try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, password);
-            statement.setLong(2, id);
-            statement.execute();
-        } catch (SQLException e) {
-            log.error(e.getMessage());
-        }
     }
 }

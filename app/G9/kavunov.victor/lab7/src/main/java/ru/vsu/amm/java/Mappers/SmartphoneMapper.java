@@ -15,13 +15,13 @@ public class SmartphoneMapper implements Mapper<Smartphone> {
     public Smartphone mapRowToObject(ResultSet rs) throws SQLException {
         Smartphone smartphone = new Smartphone();
 
-        smartphone.setSmartphoneId(rs.getLong("SmartphoneID"));
+        smartphone.setSmartphoneId(rs.getLong("Smartphone_id"));
         smartphone.setBrand(rs.getString("Brand"));
         smartphone.setModel(rs.getString("Model"));
-        smartphone.setRam(rs.getInt("RAM"));
-        smartphone.setStorageMemory(rs.getInt("StorageMemory"));
-        smartphone.setMainCameraResolution(rs.getFloat("MainCameraResolution"));
-        smartphone.setScreenSize(rs.getFloat("ScreenSize"));
+        smartphone.setRam(rs.getInt("Ram"));
+        smartphone.setStorageMemory(rs.getInt("Storage_memory"));
+        smartphone.setMainCameraResolution(rs.getFloat("Main_camera_resolution"));
+        smartphone.setScreenSize(rs.getFloat("Screen_size"));
         smartphone.setColor(rs.getString("Color"));
         smartphone.setPrice(rs.getFloat("Price"));
         smartphone.setAmount(rs.getInt("Amount"));
