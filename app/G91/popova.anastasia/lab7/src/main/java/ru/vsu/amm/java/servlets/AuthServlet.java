@@ -19,7 +19,7 @@ public class AuthServlet extends HttpServlet {
     private final UserService userService = new UserService(new UserRepository());
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         log.debug("Processing GET request to /auth{}", req.getPathInfo());
 
@@ -43,7 +43,7 @@ public class AuthServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+    public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         log.debug("Processing POST request to /auth{}", req.getPathInfo());
 

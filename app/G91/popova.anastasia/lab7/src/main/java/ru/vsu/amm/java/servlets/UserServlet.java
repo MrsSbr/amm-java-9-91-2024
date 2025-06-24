@@ -21,7 +21,7 @@ public class UserServlet extends HttpServlet {
     private final UserService userService = new UserService(new UserRepository());
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         log.debug("Processing GET request to /users{}", req.getPathInfo());
 
@@ -42,7 +42,7 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+    public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         log.debug("Processing POST request to /users{}", req.getPathInfo());
 
@@ -56,7 +56,7 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp)
+    public void doPut(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         log.debug("Processing PUT request to /users{}", req.getPathInfo());
 
@@ -78,7 +78,7 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
+    public void doDelete(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         log.debug("Processing DELETE request to /users{}", req.getPathInfo());
 

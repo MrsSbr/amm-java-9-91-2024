@@ -16,12 +16,19 @@ public class BoardService implements BoardServiceInterface {
     private final BoardRepository boardRepository;
     private final ColumnRepository columnRepository;
 
+    /*
     public BoardService (BoardRepository boardRepository) {
         this.boardRepository = boardRepository;
         this.columnRepository = new ColumnRepository();
     }
+     */
 
-    private void createDefaultColumns(UUID boardID) {
+    public BoardService (BoardRepository boardRepository, ColumnRepository columnRepository) {
+        this.boardRepository = boardRepository;
+        this.columnRepository = columnRepository;
+    }
+
+    public void createDefaultColumns(UUID boardID) {
         String[] defaultTitles = {"Сделать", "В процессе", "Готово"};
         log.debug("Creating default columns for board: {}", boardID);
         for (String title : defaultTitles) {
