@@ -24,7 +24,7 @@ public class BookingRepository implements CrudRepository<BookingEntity> {
     @Override
     public Optional<BookingEntity> findById(Long id) throws SQLException {
         final String query = "SELECT booking_id, client_id, flight_id, seat_number, ticket_number " +
-            "FROM booking WHERE booking_id = ?";
+                "FROM booking WHERE booking_id = ?";
         try (Connection conn = ds.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setLong(1, id);
@@ -52,15 +52,14 @@ public class BookingRepository implements CrudRepository<BookingEntity> {
 
     @Override
     public void save(BookingEntity entity) throws SQLException {
-        final String query = "INSERT INTO booking (booking_id, client_id, flight_id, seat_number, ticket_number) " +
-            "VALUES (?, ?, ?, ?, ?)";
+        final String query = "INSERT INTO booking (client_id, flight_id, seat_number, ticket_number) " +
+                "VALUES (?, ?, ?, ?)";
         try (Connection conn = ds.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setLong(1, entity.getBookingId());
-            ps.setLong(2, entity.getClientId());
-            ps.setLong(3, entity.getFlightId());
-            ps.setString(4, entity.getSeatNumber());
-            ps.setString(5, entity.getTicketNumber());
+            ps.setLong(1, entity.getClientId());
+            ps.setLong(2, entity.getFlightId());
+            ps.setString(3, entity.getSeatNumber());
+            ps.setString(4, entity.getTicketNumber());
             ps.executeUpdate();
         }
     }
@@ -68,7 +67,7 @@ public class BookingRepository implements CrudRepository<BookingEntity> {
     @Override
     public void update(BookingEntity entity) throws SQLException {
         final String query = "UPDATE booking SET client_id = ?, flight_id = ?, seat_number = ?, " +
-            "ticket_number = ? WHERE booking_id = ?";
+                "ticket_number = ? WHERE booking_id = ?";
         try (Connection conn = ds.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setLong(1, entity.getClientId());
@@ -90,13 +89,44 @@ public class BookingRepository implements CrudRepository<BookingEntity> {
         }
     }
 
+    public List<BookingEntity> findAllByClientIdAndDateGreaterThanCurrent(Long clientId) throws SQLException {
+        String sql = "SELECT * FROM booking b JOIN flight f ON f.flight_id = b.flight_id " +
+                "WHERE b.client_id = ? AND f.departure_time >= current_date " +
+                "ORDER BY f.departure_time ASC";
+        List<BookingEntity> list = new ArrayList<>();
+        try (Connection conn = ds.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setLong(1, clientId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(createBooking(rs));
+            }
+        }
+        return list;
+    }
+
+    public List<String> findAllByFlightIdAndDateGreaterThanCurrent(Long flightId) throws SQLException {
+        String sql = "SELECT seat_number FROM booking b JOIN flight f ON f.flight_id = b.flight_id " +
+                "WHERE b.flight_id = ? AND f.departure_time >= current_date";
+        List<String> list = new ArrayList<>();
+        try (Connection conn = ds.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setLong(1, flightId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getString("seat_number"));
+            }
+        }
+        return list;
+    }
+
     private BookingEntity createBooking(ResultSet rs) throws SQLException {
         return new BookingEntity(
-            rs.getLong("booking_id"),
-            rs.getLong("client_id"),
-            rs.getLong("flight_id"),
-            rs.getString("seat_number"),
-            rs.getString("ticket_number")
+                rs.getLong("booking_id"),
+                rs.getLong("client_id"),
+                rs.getLong("flight_id"),
+                rs.getString("seat_number"),
+                rs.getString("ticket_number")
         );
     }
 }
