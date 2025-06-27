@@ -30,6 +30,11 @@ public class BookingServiceImpl implements BookingService {
         this.clientRepository = new ClientRepository();
     }
 
+    public BookingServiceImpl(BookingRepository bookingRepository, ClientRepository clientRepository) {
+        this.bookingRepository = bookingRepository;
+        this.clientRepository = clientRepository;
+    }
+
     @Override
     public List<BookingDto> getBookingsByEmail(String email) {
         try {

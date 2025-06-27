@@ -19,6 +19,10 @@ public class FlightServiceImpl implements FlightService {
         flightRepository = new FlightRepository();
     }
 
+    public FlightServiceImpl(FlightRepository flightRepository){
+        this.flightRepository = flightRepository;
+    }
+
     @Override
     public List<FlightDto> getAllFlights() {
         try {
