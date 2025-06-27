@@ -95,7 +95,12 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
         setPreparedStatement(preparedStatement, entity);
         preparedStatement.execute();
 
-        return configureEmployeeEntityFromResultSet(preparedStatement.getResultSet());
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                entity.setId(generatedKeys.getInt(1));
+            }
+            return entity;
+        }
     }
 
     public void save(String login, String password, EmployeePost post, Integer hotelId) throws SQLException {
