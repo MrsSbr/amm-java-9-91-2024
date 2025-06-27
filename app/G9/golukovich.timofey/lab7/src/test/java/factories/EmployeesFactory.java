@@ -19,22 +19,42 @@ public class EmployeesFactory {
     public static final EmployeePost EMPLOYEE_POST = EmployeePost.MASTER_ADMINISTRATOR;
     public static final LocalDate BIRTHDAY = LocalDate.now().minusYears(30);
 
-    public static EmployeeEntity buildDefaultEmployeeEntity() {
-        return new EmployeeEntity(
+    private EmployeeEntity entity;
+
+    public EmployeesFactory() {
+        entity = null;
+    }
+
+    public EmployeesFactory setDefaultEmployeeEntity() {
+        entity = new EmployeeEntity(
                 ID, HOTEL_ID,
                 LOGIN, PASSWORD,
                 NAME, PHONE_NUMBER, EMAIL,
                 PASSPORT_NUMBER, PASSPORT_SERIES,
                 EMPLOYEE_POST, BIRTHDAY
         );
+        return this;
     }
 
-    public static EmployeeDto buildDefaultEmployeeDto() {
-        return new EmployeeDto(
-                ID, HOTEL_ID,
-                LOGIN, NAME, PHONE_NUMBER, EMAIL,
-                PASSPORT_NUMBER, PASSPORT_SERIES,
-                EMPLOYEE_POST, BIRTHDAY
-        );
+    public EmployeesFactory next() {
+        entity.setId(entity.getId() + 1);
+        entity.setLogin(replaceLastChar(entity.getLogin()));
+        entity.setName(replaceLastChar(entity.getName()));
+        entity.setPhoneNumber(replaceLastChar(entity.getPhoneNumber()));
+        entity.setEmail(replaceLastChar(entity.getEmail()));
+        entity.setPassportNumber(replaceLastChar(entity.getPassportNumber()));
+        entity.setPassportSeries(replaceLastChar(entity.getPassportSeries()));
+
+        return this;
+    }
+
+    private String replaceLastChar(String str) {
+        var c = (char)(str.charAt(str.length() - 1) + 1);
+        var s = str.substring(0, str.length() - 1) + c;
+        return s;
+    }
+
+    public EmployeeEntity buildEntity() {
+        return entity;
     }
 }

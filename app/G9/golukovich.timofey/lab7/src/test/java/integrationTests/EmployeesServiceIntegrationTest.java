@@ -43,8 +43,9 @@ public class EmployeesServiceIntegrationTest {
     @Test
     @DisplayName("Успешная попытка поиска существующего сотрудника")
     public void testCreateNewEmployee() throws SQLException {
+        var builder = new EmployeesFactory();
         var login = "employee_login";
-        var entity = EmployeesFactory.buildDefaultEmployeeEntity();
+        var entity = builder.setDefaultEmployeeEntity().buildEntity();
         entity.setLogin(login);
         entity = employeeRepo.save(entity);
 
@@ -58,5 +59,25 @@ public class EmployeesServiceIntegrationTest {
     public void testGetEmployeeByLoginThrowsWhenDoesNotExists() throws SQLException {
         var login = "employee_login";
         assertThrows(EmployeeNotFoundException.class, () -> employeesService.getEmployeeByLogin(login, false));
+    }
+
+    @Test
+    @DisplayName("Успешное получение всех сотрудников")
+    public void testDeleteEmployee() throws SQLException {
+        var dtos = employeesService.getAllEmployees(false);
+        assertEquals(0, dtos.size());
+
+        var builder = new EmployeesFactory();
+        var entity = builder.setDefaultEmployeeEntity().buildEntity();
+        employeeRepo.save(entity);
+
+        dtos = employeesService.getAllEmployees(false);
+        assertEquals(1, dtos.size());
+
+        entity = builder.setDefaultEmployeeEntity().next().buildEntity();
+        employeeRepo.save(entity);
+
+        dtos = employeesService.getAllEmployees(false);
+        assertEquals(2, dtos.size());
     }
 }

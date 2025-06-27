@@ -91,7 +91,7 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
                 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""";
         var connection = dataSource.getConnection();
 
-        var preparedStatement = connection.prepareStatement(query);
+        var preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
         setPreparedStatement(preparedStatement, entity);
         preparedStatement.execute();
 
