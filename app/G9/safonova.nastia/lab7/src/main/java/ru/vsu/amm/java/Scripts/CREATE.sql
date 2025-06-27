@@ -21,6 +21,7 @@ CREATE TABLE Dino (
     IdIncident SERIAL PRIMARY KEY,
     EmplId INTEGER REFERENCES Employee(IdEmpl),
     DinoId INTEGER REFERENCES Dino(IdDino),
-    DateOfIncident DATE NOT NULL
+    DateOfIncident DATE NOT NULL,
+    Description TEXT
  );
 

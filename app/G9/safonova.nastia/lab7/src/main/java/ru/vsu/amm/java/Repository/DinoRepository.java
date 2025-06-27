@@ -35,12 +35,12 @@ public class DinoRepository implements DbRepository<Dino> {
         ResultSet resultSet = preparedStatement.getResultSet();
 
         if (resultSet.next()) {
-            Kind kind = Kind.valueOf(resultSet.getString("Kind"));
+            Kind kind = Kind.valueOf(resultSet.getString("KindOfDino"));
             return Optional.of(new Dino(
                     resultSet.getLong("IdDino"),
                     resultSet.getDouble("Weight"),
-                    resultSet.getDate("DateOfDeath").toLocalDate(),
                     resultSet.getDate("DateOfBirthDino").toLocalDate(),
+                    resultSet.getDate("DateOfDeath") != null ? resultSet.getDate("DateOfDeath").toLocalDate() : null,
                     kind,
                     resultSet.getString("NameDino")
             ));
@@ -59,12 +59,12 @@ public class DinoRepository implements DbRepository<Dino> {
 
         List<Dino> dinos = new ArrayList<>();
         while (resultSet.next()) {
-            Kind kind = Kind.valueOf(resultSet.getString("Kind"));
+            Kind kind = Kind.valueOf(resultSet.getString("KindOfDino"));
             dinos.add(new Dino(
                     resultSet.getLong("IdDino"),
                     resultSet.getDouble("Weight"),
-                    resultSet.getDate("DateOfDeath").toLocalDate(),
                     resultSet.getDate("DateOfBirthDino").toLocalDate(),
+                    resultSet.getDate("DateOfDeath") != null ? resultSet.getDate("DateOfDeath").toLocalDate() : null,
                     kind,
                     resultSet.getString("NameDino")
             ));

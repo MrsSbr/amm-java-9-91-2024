@@ -7,16 +7,16 @@ public class Incident {
     private long emplId;
     private long dinoId;
     private LocalDate dateOfIncident;
-    private String discription;
+    private String description;
 
     public Incident() {}
 
-    public Incident(long idIncident, long emplId, long dinoId, LocalDate dateOfIncident, String discription) {
+    public Incident(long idIncident, long emplId, long dinoId, LocalDate dateOfIncident, String description) {
         this.idIncident = idIncident;
         this.emplId = emplId;
         this.dinoId = dinoId;
         this.dateOfIncident = dateOfIncident;
-        this.discription = discription;
+        this.description = description;
     }
 
     public long getIdIncident() {
@@ -51,7 +51,11 @@ public class Incident {
         this.dateOfIncident = dateOfIncident;
     }
 
-    public void setDiscription(String discription){this.discription = discription;}
+    public String getDescription() {
+        return description;
+    }
 
-    public String getDiscription(){return discription;}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

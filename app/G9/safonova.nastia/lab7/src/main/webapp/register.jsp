@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Пользователь
-  Date: 13.04.2025
-  Time: 18:21
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -92,32 +85,66 @@
         .button-group {
             margin-top: 10px;
         }
+
+        .cancel-link {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            text-align: center;
+            color: #6b8e23;
+            text-decoration: none;
+            padding: 10px 0;
+            border: 1px solid #8fbc8f;
+            border-radius: 20px;
+        }
     </style>
 </head>
 <body>
 <div class="auth-container">
-    <h2>Вход в систему</h2>
+    <h2>Регистрация</h2>
 
-    <% if (request.getParameter("error") != null) { %>
-    <div class="error">Неверный логин или пароль</div>
-    <% } %>
+    <c:if test="${not empty errorMessage}">
+        <div class="error">${errorMessage}</div>
+    </c:if>
 
     <form action="register" method="POST">
         <div class="form-group">
-            <label for="username">Логин:</label>
-            <input type="text" id="username" name="j_username" required>
+            <label for="login">Логин:</label>
+            <input type="text" id="login" name="login" required>
         </div>
 
         <div class="form-group">
             <label for="password">Пароль:</label>
-            <input type="password" id="password" name="j_password" required>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <label>Фамилия:</label>
+            <input type="text" id="surname" name="surname" required>
+        </div>
+
+        <div class="form-group">
+            <label>Имя:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Отчество:</label>
+            <input type="text" id="patronumic" name="patronumic" required>
+        </div>
+
+        <div class="form-group">
+            <label>Дата рождения:</label>
+            <input type="date" id="birthDate" name="birthDate" required>
         </div>
 
         <div class="button-group">
-            <button type="submit" class="btn">Войти</button>
-            <button type="button" onclick="location.href='register.jsp'" class="btn btn-register">Регистрация</button>
+            <button type="submit" class="btn btn-register">Зарегистрироваться</button>
+
         </div>
     </form>
+
+    <a href="login.jsp" class="cancel-link">Отмена</a>
 </div>
 </body>
 </html>

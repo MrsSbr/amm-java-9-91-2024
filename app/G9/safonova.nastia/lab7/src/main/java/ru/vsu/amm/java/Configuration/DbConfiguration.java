@@ -18,7 +18,7 @@ public class DbConfiguration {
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
-        pgSimpleDataSource.setUrl(prop.getProperty("db.url"));
+        pgSimpleDataSource.setUrl(prop.getProperty("db.url") + "?useUnicode=true&characterEncoding=UTF-8");
         pgSimpleDataSource.setUser(prop.getProperty("db.username"));
         pgSimpleDataSource.setPassword(prop.getProperty("db.password"));
         return pgSimpleDataSource;

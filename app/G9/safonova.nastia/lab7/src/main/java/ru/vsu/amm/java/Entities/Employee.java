@@ -26,6 +26,19 @@ public class Employee {
         this.password = password;
     }
 
+    public Employee() {
+
+    }
+
+    public Employee(String login, String password, String surnameEmpl, String nameEmpl, String patronumicEmpl, LocalDate dateOfBirthEmpl) {
+        this.login = login;
+        this.password = password;
+        this.surnameEmpl = surnameEmpl;
+        this.nameEmpl = nameEmpl;
+        this.patronumicEmpl = patronumicEmpl;
+        this.dateOfBirthEmpl = dateOfBirthEmpl;
+    }
+
     public long getIdEmpl() {
         return idEmpl;
     }

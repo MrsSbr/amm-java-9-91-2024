@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Главная страница</title>
+    <title>Личный кабинет</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,7 +15,7 @@
             margin: 0;
         }
 
-        .main-container {
+        .profile-container {
             background-color: #e9ffd9;
             padding: 30px;
             border-radius: 15px;
@@ -25,13 +26,17 @@
 
         h1 {
             color: #556b2f;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
-        .btn-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .user-info {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .user-info p {
+            margin: 10px 0;
+            color: #6b8e23;
         }
 
         .btn {
@@ -52,36 +57,21 @@
         .btn:hover {
             background-color: #7ca57c;
         }
-
-        .logout-btn {
-            margin-top: 30px;
-            background-color: #d2b48c;
-        }
-
-        .logout-btn:hover {
-            background-color: #c0a47b;
-        }
-
-        .welcome-message {
-            color: #6b8e23;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
-<div class="main-container">
-    <h1>Система управления инцидентами</h1>
+<div class="profile-container">
+    <h1>Личный кабинет</h1>
 
-    <div class="btn-container">
-        <button onclick="location.href='incidents'" class="btn">Посмотреть все инциденты</button>
-        <button onclick="location.href='add_incident'" class="btn">Добавить инцидент</button>
-        <button onclick="location.href='profile'" class="btn">Личный кабинет</button>
+    <div class="user-info">
+        <p><strong>Логин:</strong> ${employee.login}</p>
+        <p><strong>Фамилия:</strong> ${employee.surnameEmpl}</p>
+        <p><strong>Имя:</strong> ${employee.nameEmpl}</p>
+        <p><strong>Отчество:</strong> ${employee.patronumicEmpl}</p>
+        <p><strong>Дата рождения:</strong> ${employee.dateOfBirthEmpl}</p>
     </div>
 
-    <form action="logout" method="get">
-        <button type="submit" class="btn logout-btn">Выйти из системы</button>
-    </form>
+    <button onclick="location.href='mainPage.jsp'" class="btn">На главную</button>
 </div>
 </body>
 </html>

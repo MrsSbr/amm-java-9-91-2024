@@ -17,11 +17,13 @@ public class Dino {
     public Dino(long idDino, double weight, LocalDate dateOfDeath, LocalDate dateOfBirthDino, Kind kindOfDino, String nameDino) {
         this.idDino = idDino;
         this.weight = weight;
-        this.dateOfDeath = dateOfDeath;
         this.dateOfBirthDino = dateOfBirthDino;
+        this.dateOfDeath = dateOfDeath;
         this.kindOfDino = kindOfDino;
         this.nameDino = nameDino;
     }
+
+
 
     public long getIdDino() {
         return idDino;
