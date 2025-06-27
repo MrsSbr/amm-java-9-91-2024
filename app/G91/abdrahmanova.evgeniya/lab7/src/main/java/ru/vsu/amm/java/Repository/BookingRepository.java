@@ -113,16 +113,18 @@ public class BookingRepository implements Repository<Booking> {
 
     @Override
     public void save(Booking entity) throws SQLException {
-        final String sql = "INSERT INTO Booking (id_tour, id_user, Date, Count_participantions," +
+        final String sql = "INSERT INTO Booking (id_tour, id_user, Date_booking, Count_participation," +
                 " Total_price, Status) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (var conn = dataSource.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sql);
 
-            ps.setDate(1, Date.valueOf(entity.getDate()));
-            ps.setInt(2, entity.getCountParticipants());
-            ps.setInt(3, entity.getTotalPrice());
-            ps.setString(4, String.valueOf(entity.getStatus()));
+            ps.setInt(1, entity.getIdTour());
+            ps.setInt(2, entity.getIdUser());
+            ps.setDate(3, Date.valueOf(entity.getDate()));
+            ps.setInt(4, entity.getCountParticipants());
+            ps.setInt(5, entity.getTotalPrice());
+            ps.setString(6, String.valueOf(entity.getStatus()));
 
             ps.execute();
         } catch (SQLException ex) {
@@ -142,5 +144,35 @@ public class BookingRepository implements Repository<Booking> {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
             throw new SQLException(ex.getMessage());
         }
+    }
+
+    public List<Booking> findAllByUserId(int userId) throws SQLException {
+        List<Booking> bookings = new ArrayList<>();
+        final String sql = "SELECT id_booking, id_tour, id_user, Date_booking, " +
+                "Count_participation, Total_price, Status FROM Booking WHERE id_user = ?";
+
+        try (var conn = dataSource.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                Status status = Status.valueOf(rs.getString("Status"));
+                bookings.add(new Booking(
+                        rs.getInt("id_booking"),
+                        rs.getInt("id_tour"),
+                        rs.getInt("id_user"),
+                        rs.getDate("Date_booking").toLocalDate(),
+                        rs.getInt("Count_participation"),
+                        rs.getInt("Total_price"),
+                        status
+                ));
+            }
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            throw new SQLException(ex.getMessage());
+        }
+        return bookings;
     }
 }

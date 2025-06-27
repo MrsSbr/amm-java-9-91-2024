@@ -20,7 +20,7 @@ public class DbConfiguration {
 
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setURL(props.getProperty("db.url"));
-        dataSource.setUser(props.getProperty("db.user"));
+        dataSource.setUser(props.getProperty("db.username"));
         dataSource.setPassword(props.getProperty("db.password"));
         return dataSource;
     }
