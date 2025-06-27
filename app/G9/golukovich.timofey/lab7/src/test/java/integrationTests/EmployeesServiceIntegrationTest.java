@@ -15,7 +15,9 @@ import ru.vsu.amm.java.services.impl.EmployeesServiceImpl;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class EmployeesServiceIntegrationTest {
     private static EmployeesService employeesService;
