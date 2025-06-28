@@ -1,0 +1,4 @@
+DROP TABLE IF EXISTS    task;
+DROP TABLE IF EXISTS    employee;
+DROP TABLE IF EXISTS    hotel_room;
+DROP TABLE IF EXISTS    hotel;

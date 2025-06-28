@@ -91,11 +91,16 @@ public class EmployeeRepo implements CrudRepo<EmployeeEntity> {
                 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""";
         var connection = dataSource.getConnection();
 
-        var preparedStatement = connection.prepareStatement(query);
+        var preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
         setPreparedStatement(preparedStatement, entity);
         preparedStatement.execute();
 
-        return configureEmployeeEntityFromResultSet(preparedStatement.getResultSet());
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                entity.setId(generatedKeys.getInt(1));
+            }
+            return entity;
+        }
     }
 
     public void save(String login, String password, EmployeePost post, Integer hotelId) throws SQLException {
