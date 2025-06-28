@@ -101,7 +101,7 @@ public class TaskRepository implements CRUDRepository<Task> {
 
             ps.setObject(1, task.getTaskID());
             ps.setObject(2, task.getColumnID());
-            ps.setObject(3, task.getTaskTitle());
+            ps.setString(3, task.getTaskTitle());
             if (task.getTaskDescription() != null) {
                 ps.setString(4, task.getTaskDescription());
             } else {

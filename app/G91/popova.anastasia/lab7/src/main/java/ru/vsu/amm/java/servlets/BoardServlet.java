@@ -27,12 +27,12 @@ import java.util.stream.Collectors;
 public class BoardServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger((BoardServlet.class));
 
-    private final BoardService boardService = new BoardService(new BoardRepository());
+    private final BoardService boardService = new BoardService(new BoardRepository(), new ColumnRepository());
     private final ColumnService columnService = new ColumnService(new ColumnRepository());
     private final TaskService taskService = new TaskService(new TaskRepository());
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("Processing GET request to /boards{}", req.getPathInfo());
 
         User currentUser = getCurrentUserOrRedirect(req, resp);
@@ -140,7 +140,7 @@ public class BoardServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+    public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         log.debug("Processing POST request to /boards{}", req.getPathInfo());
         User currentUser = getCurrentUserOrRedirect(req, resp);
@@ -156,7 +156,7 @@ public class BoardServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp)
+    public void doPut(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         log.debug("Processing PUT request to /boards{}", req.getPathInfo());
         User currentUser = getCurrentUserOrRedirect(req, resp);
@@ -180,7 +180,7 @@ public class BoardServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
+    public void doDelete(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         log.debug("Processing DELETE request to /boards{}", req.getPathInfo());
         User currentUser = getCurrentUserOrRedirect(req, resp);
