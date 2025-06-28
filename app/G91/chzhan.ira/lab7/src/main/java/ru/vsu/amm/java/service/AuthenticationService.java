@@ -3,9 +3,8 @@ package ru.vsu.amm.java.service;
 import ru.vsu.amm.java.entities.Customer;
 import ru.vsu.amm.java.exception.AlreadyExistsException;
 import ru.vsu.amm.java.exception.DbException;
-import ru.vsu.amm.java.exception.NotFoundException;
 import ru.vsu.amm.java.repository.CustomerRepository;
-import org.mindrot.jbcrypt.BCrypt; // добавьте эту зависимость в pom.xml или build.gradle
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -40,7 +39,7 @@ public class AuthenticationService {
         try {
             if (customerRepository.findByName(name).isEmpty()) {
                 String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-                Customer customer = new Customer(null, name, hashedPassword); // хешируем пароль
+                Customer customer = new Customer(null, name, hashedPassword); // хеширование
                 customerRepository.save(customer);
             } else {
                 throw new AlreadyExistsException("Пользователь уже существует");
@@ -48,6 +47,5 @@ public class AuthenticationService {
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         }
-
     }
 }

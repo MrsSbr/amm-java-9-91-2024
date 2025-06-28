@@ -28,11 +28,26 @@ public class AuthentificationFilter implements Filter {
 
         String loginUrl = req.getContextPath() + "/login";
         String registerUrl = req.getContextPath() + "/register";
-        boolean loggedIn = httpSession != null && httpSession.getAttribute("customer") != null; // проверяем наличие объекта Customer
+        String addToyUrl = req.getContextPath() + "/addToy";
+        String deleteToyUrl = req.getContextPath() + "/deleteToy";
+
+        boolean loggedIn = httpSession != null && httpSession.getAttribute("customer") != null;
         boolean loginRequest = req.getRequestURI().equals(loginUrl) || req.getRequestURI().endsWith("login.jsp");
         boolean registerRequest = req.getRequestURI().equals(registerUrl) || req.getRequestURI().endsWith("register.jsp");
 
-        if (loginRequest || registerRequest || loggedIn) {
+        // Check if the user is trying to add/delete toys
+        boolean addToyRequest = req.getRequestURI().equals(addToyUrl);
+        boolean deleteToyRequest = req.getRequestURI().equals(deleteToyUrl);
+        boolean isAdmin = false;
+
+        if (loggedIn) {
+            Customer customer = (Customer) httpSession.getAttribute("customer");
+            if ("admin".equals(customer.getName())) {
+                isAdmin = true;
+            }
+        }
+
+        if (loginRequest || registerRequest || loggedIn || (addToyRequest && isAdmin) || (deleteToyRequest && isAdmin)) {
             log.info("filter passed!");
             chain.doFilter(req, resp);
         } else {

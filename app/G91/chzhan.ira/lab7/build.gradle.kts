@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("war")
 }
 
 group = "ru.vsu.amm.java"
@@ -19,8 +20,12 @@ dependencies {
     implementation("org.mindrot:jbcrypt:0.4")
     compileOnly("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.mockito:mockito-core:3.12.4")
 }
 
 tasks.test {
     useJUnitPlatform()
 }
+
