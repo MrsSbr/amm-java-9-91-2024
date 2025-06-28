@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -24,6 +26,8 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws IOException {
+        String successPath = "read";
+        String failurePath = "/login.jsp";
         try {
             LoginRequest loginRequest = new LoginRequest(
                     request.getParameter("email"),
@@ -34,9 +38,15 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession httpSession = request.getSession();
             httpSession.setAttribute("user", user);
-            response.sendRedirect("books.jsp");
+            String redirectUrl = request.getContextPath()
+                                 + successPath + "?message="
+                                 + URLEncoder.encode("Вы успешно вошли!", StandardCharsets.UTF_8);
+            response.sendRedirect(redirectUrl);
         } catch (AuthenticationException e) {
-            response.sendRedirect(String.format("%s", e.getMessage())); // TODO: связать с jsp
+            String redirectUrl = request.getContextPath()
+                                 + failurePath
+                                 + String.format("?error=%s", e.getMessage());
+            response.sendRedirect(redirectUrl);
         }
     }
 

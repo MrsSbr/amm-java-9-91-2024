@@ -38,7 +38,7 @@ public class AuthService {
     public User register(RegisterRequest request) throws AuthenticationException {
         UserMapper userMapper = new UserMapper();
         User user = userMapper.mapRequestToObject(request);
-
+        user.setPassword(BCrypt.hashpw(request.password(), BCrypt.gensalt()));
         if (userRepository.getByEmail(request.email()).isEmpty()) {
             userRepository.create(user);
             return user;
