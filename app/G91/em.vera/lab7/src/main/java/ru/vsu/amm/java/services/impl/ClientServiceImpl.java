@@ -23,6 +23,10 @@ public class ClientServiceImpl implements ClientService {
         this.clientRepository = new ClientRepository();
     }
 
+    public ClientServiceImpl(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+
     @Override
     public void login(ClientLoginRequest request) {
         try {

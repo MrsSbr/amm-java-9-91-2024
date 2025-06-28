@@ -31,6 +31,7 @@ dependencies {
     implementation("jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.0.0")
     implementation("jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0")
     runtimeOnly("org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1")
+    testImplementation("org.mockito:mockito-core:5.17.0")
 
 }
 
