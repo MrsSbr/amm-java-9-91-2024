@@ -1,52 +1,23 @@
 package ru.vsu.amm.java.Entities;
 
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
+@Data
 public class Order {
-    private long orderNum;
-    private long userId;
+    private Long id;
+    private Long userId;
+    private Long smartphoneId;
     private LocalDateTime registrationDate;
-    private float totalCost;
+    private Boolean isPaid;
 
-    public Order() {
-    }
+    public Order() {}
 
-    public Order(long orderNum, long userId, LocalDateTime registrationDate, float totalCost) {
-        this.orderNum = orderNum;
+    public Order(long userId, long smartphoneId, LocalDateTime registrationDate, boolean isPaid) {
         this.userId = userId;
+        this.smartphoneId = smartphoneId;
         this.registrationDate = registrationDate;
-        this.totalCost = totalCost;
-    }
-
-    public long getOrderNum() {
-        return orderNum;
-    }
-
-    public void setOrderNum(long orderNum) {
-        this.orderNum = orderNum;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public LocalDateTime getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(LocalDateTime registrationDate) {
-        this.registrationDate = registrationDate;
-    }
-
-    public float getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(float totalCost) {
-        this.totalCost = totalCost;
+        this.isPaid = isPaid;
     }
 }

@@ -3,6 +3,7 @@ package ru.vsu.amm.java.Repositories;
 import lombok.extern.slf4j.Slf4j;
 import ru.vsu.amm.java.Configuration.DbConfiguration;
 import ru.vsu.amm.java.Entities.Order;
+import ru.vsu.amm.java.Entities.User;
 import ru.vsu.amm.java.Mappers.OrderMapper;
 
 import javax.sql.DataSource;
@@ -24,7 +25,7 @@ public class OrderRepository implements CrudRepository<Order> {
 
     @Override
     public Optional<Order> findById(Long id) {
-        String query = "SELECT OrderNum, UserId, TotalCost, RegitrationDate FROM Orders WHERE OrderNum = ?;";
+        String query = "SELECT Order_id, User_id, Is_paid, Registration_date, Smartphone_id FROM Orders WHERE Order_id = ?;";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
@@ -42,7 +43,7 @@ public class OrderRepository implements CrudRepository<Order> {
 
     @Override
     public List<Order> findAll() {
-        String query = "SELECT OrderNum, UserId, TotalCost, RegitrationDate FROM Orders;";
+        String query = "SELECT Order_id, User_id, Smartphone_id, Is_paid, Registration_date FROM Orders;";
         List<Order> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -61,7 +62,7 @@ public class OrderRepository implements CrudRepository<Order> {
 
     @Override
     public void save(Order entity) {
-        String query = "INSERT INTO Orders VALUES(?, ?, ?, ?);";
+        String query = "INSERT INTO Orders(User_id, Smartphone_id, Is_paid, Registration_date) VALUES(?, ?, ?, ?);";
         try (Connection connection = dataSource.getConnection()) {
             OrderMapper orderMapper = new OrderMapper();
             PreparedStatement statement = orderMapper.mapObjectToRow(entity, connection, query);
@@ -73,14 +74,12 @@ public class OrderRepository implements CrudRepository<Order> {
 
     @Override
     public void update(Order entity) {
-        String query = "UPDATE Smartphones " +
-                "SET UserID = ?, TotalCost = ?, RegistrationDate " +
-                "WHERE OrderNum = ?;";
+        String query = "UPDATE Orders SET User_id = ?, Smartphone_id = ?, is_paid = ?, Registration_date = ? WHERE Order_id = ?;";
 
         try (Connection connection = dataSource.getConnection()) {
             OrderMapper orderMapper = new OrderMapper();
             PreparedStatement statement = orderMapper.mapObjectToRow(entity, connection, query);
-            statement.setLong(4, entity.getOrderNum());
+            statement.setLong(5, entity.getId());
             statement.execute();
         } catch (SQLException e) {
             log.error(e.getMessage());
@@ -89,7 +88,7 @@ public class OrderRepository implements CrudRepository<Order> {
 
     @Override
     public void delete(Long id) {
-        String query = "DELETE FROM Orders WHERE OrderNum = ?;";
+        String query = "DELETE FROM Orders WHERE Order_id = ?;";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
@@ -99,8 +98,28 @@ public class OrderRepository implements CrudRepository<Order> {
         }
     }
 
+    public List<Order> findAllByUserAndPaid(Long userId, boolean paid) {
+        String query = "SELECT Order_id, User_id, Smartphone_id, Is_paid, Registration_date FROM Orders WHERE User_id = ? AND Is_paid = ?;";
+        List<Order> result = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, userId);
+            statement.setBoolean(2, paid);
+            ResultSet resultSet = statement.executeQuery();
+            OrderMapper orderMapper = new OrderMapper();
+
+            while (resultSet.next()) {
+                Order order = orderMapper.mapRowToObject(resultSet);
+                result.add(order);
+            }
+        } catch (SQLException e) {
+            log.error(e.getMessage());
+        }
+        return result;
+    }
+
     public List<Order> findAllByUser(Long userId) {
-        String query = "SELECT OrderNum, UserId, TotalCost, RegitrationDate FROM Orders WHERE UserID = ?;";
+        String query = "SELECT Order_id, User_id, Smartphone_id, Is_paid, Registration_date FROM Orders WHERE User_id = ?;";
         List<Order> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);

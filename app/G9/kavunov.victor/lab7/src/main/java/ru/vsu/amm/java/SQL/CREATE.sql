@@ -1,57 +1,43 @@
 CREATE TABLE IF NOT EXISTS Users(
-    UserID BIGSERIAL PRIMARY KEY,
+    User_id BIGSERIAL PRIMARY KEY,
     Surname VARCHAR(200) NOT NULL,
-    "Name" VARCHAR(200) NOT NULL,
+    name VARCHAR(200) NOT NULL,
     Patronymicname VARCHAR(200),
-    PhoneNumber VARCHAR(14) NOT NULL,
+    Phone_number VARCHAR(14) NOT NULL,
     Email VARCHAR(300) NOT NULL,
-    "Password" TEXT NOT NULL,
-    Birthday DATE NOT NULL,
-    "Role" TEXT NOT NULL
+    Password TEXT NOT NULL
 );
 
 ALTER TABLE IF EXISTS Users
-ADD CONSTRAINT U_UsersFullName UNIQUE(Surname, "Name", Patronymicname);
+    ADD CONSTRAINT U_UsersFullName UNIQUE(Surname, name, Patronymicname);
 
 ALTER TABLE IF EXISTS Users
-ADD CONSTRAINT U_UsersEmail UNIQUE(Email);
-
-ALTER TABLE IF EXISTS Users
-ADD CONSTRAINT U_UsersPhoneNumber UNIQUE(PhoneNumber);
+    ADD CONSTRAINT U_UsersEmail UNIQUE(Email);
 
 CREATE TABLE IF NOT EXISTS Smartphones(
-    SmartphoneID BIGSERIAL PRIMARY KEY,
+    Smartphone_id BIGSERIAL PRIMARY KEY,
     Brand VARCHAR(100) NOT NULL,
     Model VARCHAR(200) NOT NULL,
-    RAM INTEGER NOT NULL,
-    StorageMemory INTEGER NOT NULL,
-    MainCameraResolution NUMERIC(,1) NOT NULL,
-    ScreenSize NUMERIC(,2) NOT NULL,
+    Ram INTEGER NOT NULL,
+    Storage_memory INTEGER NOT NULL,
+    Main_camera_resolution NUMERIC(5, 1) NOT NULL,
+    Screen_size NUMERIC(5, 2) NOT NULL,
     Color VARCHAR(100),
-    Price NUMERIC(,2) NOT NULL,
+    Price NUMERIC(10, 2) NOT NULL,
     Amount INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Orders(
-    OrderNum BIGINT PRIMARY KEY,
-    UserID BIGINT NOT NULL,
-    TotalCost NUMERIC(,2) NOT NULL,
-    RegiatrationDate TIMESTAMP
+    Order_id BIGSERIAL PRIMARY KEY,
+    User_id BIGINT NOT NULL,
+    Smartphone_id BIGINT NOT NULL,
+    Is_paid BOOLEAN NOT NULL,
+    Registration_date TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS SmartphonesInOrders(
-    SmartphoneInOrderID BIGSERAIL PRIMARY KEY
-    OrderNum BIGINT NOT NULL,
-    SmartphoneID BIGINT NOT NULL,
-    Amount INTEGER NOT NULL,
-);
 
 ALTER TABLE IF EXISTS Orders
-ADD CONSTRAINT FK_OrdersUserID FOREIGN KEY(UserID) REFERENCES Users(UserID);
+    ADD CONSTRAINT FK_OrdersUserID FOREIGN KEY(User_id) REFERENCES Users(User_id);
 
-ALTER TABLE IF EXISTS SmartphonesInOrders
-ADD CONSTRAINT FK_SmartphonesInOrdersOrderNum FOREIGN KEY(OrderNum) REFERENCES Orders(OrderNum);
-
-ALTER TABLE IF EXISTS SmartphonesInOrders
-ADD CONSTRAINT FK_SmartphonesInOrdersSmartphoneID FOREIGN KEY(SmartphoneID) REFERENCES Smartphones(SmartphoneID);
-
+ALTER TABLE IF EXISTS Orders
+    ADD CONSTRAINT Fk_OrdersSmartphoneID FOREIGN KEY(Smartphone_id) REFERENCES Smartphones(Smartphone_id);
