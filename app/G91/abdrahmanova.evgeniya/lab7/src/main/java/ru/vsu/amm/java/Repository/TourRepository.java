@@ -88,7 +88,7 @@ public class TourRepository implements Repository<Tour> {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
             throw new SQLException(ex.getMessage());
         }
-        return List.of();
+        return tours;
     }
 
     @Override

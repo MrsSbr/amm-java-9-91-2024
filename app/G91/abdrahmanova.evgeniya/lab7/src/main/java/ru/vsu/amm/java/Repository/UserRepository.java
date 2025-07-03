@@ -2,6 +2,7 @@ package ru.vsu.amm.java.Repository;
 
 import ru.vsu.amm.java.Configuration.DbConfiguration;
 import ru.vsu.amm.java.Entities.User;
+import ru.vsu.amm.java.Enums.Role;
 
 import javax.sql.DataSource;
 import java.sql.Date;
@@ -25,7 +26,7 @@ public class UserRepository implements Repository<User> {
 
     @Override
     public Optional<User> findById(int id) throws SQLException {
-        final String sql = "SELECT id_user, Full_name, Birthday, E_mail, Number_phone" +
+        final String sql = "SELECT id_user, Password, Full_name, Birthday, E_mail, Number_phone, User_role" +
                 " FROM User_tour WHERE id = ?";
 
         try (var conn = dataSource.getConnection()) {
@@ -38,10 +39,12 @@ public class UserRepository implements Repository<User> {
             if (rs.next()) {
                 return Optional.of(new User(
                         rs.getInt("id_user"),
+                        rs.getString("Password"),
                         rs.getString("Full_name"),
                         rs.getDate("Birthday").toLocalDate(),
                         rs.getString("E_mail"),
-                        rs.getString("Number_phone")
+                        rs.getString("Number_phone"),
+                        Role.values()[rs.getInt("User_role")]
                 ));
             }
         }
@@ -56,7 +59,7 @@ public class UserRepository implements Repository<User> {
     public List<User> findAll() throws SQLException {
         List<User> users = new ArrayList<>();
 
-        final String sql = "SELECT id_user, Full_name, Birthday, E_mail, Number_phone" +
+        final String sql = "SELECT id_user, Full_name, Birthday, E_mail, Number_phone, User_role" +
                 " FROM User_tour";
 
         try (var conn = dataSource.getConnection()) {
@@ -66,10 +69,12 @@ public class UserRepository implements Repository<User> {
             while (rs.next()) {
                 users.add(new User(
                         rs.getInt("id_user"),
+                        null,
                         rs.getString("Full_name"),
                         rs.getDate("Birthday").toLocalDate(),
                         rs.getString("E_mail"),
-                        rs.getString("Number_phone")
+                        rs.getString("Number_phone"),
+                        Role.values()[rs.getInt("User_role")]
                 ));
             }
         }
@@ -82,17 +87,19 @@ public class UserRepository implements Repository<User> {
 
     @Override
     public void update(User entity) throws SQLException {
-        final String sql = "UPDATE User_tour SET Full_name = ?, Birthday = ?," +
-                "E_mail = ?, Number_phone WHERE id_user = ?";
+        final String sql = "UPDATE User_tour SET Password = ?, Full_name = ?, Birthday = ?," +
+                "E_mail = ?, Number_phone = ?, User_role = ? WHERE id_user = ?";
 
         try (var conn = dataSource.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sql);
 
-            ps.setString(1, entity.getFullName());
-            ps.setDate(2, Date.valueOf(entity.getBirthday()));
-            ps.setString(3, entity.geteMail());
-            ps.setString(4, entity.getNumberPhone());
-            ps.setInt(5, entity.getId());
+            ps.setString(1, entity.getPassword());
+            ps.setString(2, entity.getFullName());
+            ps.setDate(3, Date.valueOf(entity.getBirthday()));
+            ps.setString(4, entity.geteMail());
+            ps.setString(5, entity.getNumberPhone());
+            ps.setInt(6, entity.getUserRole().ordinal());
+            ps.setInt(7, entity.getId());
 
             ps.execute();
         }
@@ -104,16 +111,18 @@ public class UserRepository implements Repository<User> {
 
     @Override
     public void save(User entity) throws SQLException {
-        final String sql = "INSERT INTO User_tour(Full_name, Birthday, E_mail, Number_phone)" +
-                " VALUES (?,?,?,?)";
+        final String sql = "INSERT INTO User_tour(Password, Full_name, Birthday, E_mail, Number_phone, User_role)" +
+                " VALUES (?,?,?,?,?, ?)";
 
         try (var conn = dataSource.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sql);
 
-            ps.setString(1, entity.getFullName());
-            ps.setDate(2, Date.valueOf(entity.getBirthday()));
-            ps.setString(3, entity.geteMail());
-            ps.setString(4, entity.getNumberPhone());
+            ps.setString(1, entity.getPassword());
+            ps.setString(2, entity.getFullName());
+            ps.setDate(3, Date.valueOf(entity.getBirthday()));
+            ps.setString(4, entity.geteMail());
+            ps.setString(5, entity.getNumberPhone());
+            ps.setInt(6, entity.getUserRole().ordinal());
 
             ps.execute();
         }
@@ -125,7 +134,7 @@ public class UserRepository implements Repository<User> {
 
     @Override
     public void delete(User entity) throws SQLException {
-        final String sql = "DELETE FROM User WHERE id_user = ?";
+        final String sql = "DELETE FROM User_tour WHERE id_user = ?";
         try (var conn = dataSource.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, entity.getId());
@@ -135,5 +144,35 @@ public class UserRepository implements Repository<User> {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
             throw new SQLException(ex.getMessage());
         }
+    }
+
+    public Optional<User> findByEmail(String email) throws SQLException {
+        final String sql = "SELECT id_user, Password, Full_name, Birthday, E_mail, Number_phone, User_role" +
+                " FROM User_tour WHERE E_mail = ?";
+
+        try (var conn = dataSource.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+
+            if (rs.next()) {
+                return Optional.of(new User(
+                        rs.getInt("id_user"),
+                        rs.getString("Password"),
+                        rs.getString("Full_name"),
+                        rs.getDate("Birthday").toLocalDate(),
+                        rs.getString("E_mail"),
+                        rs.getString("Number_phone"),
+                        Role.values()[rs.getInt("User_role")]
+                ));
+            }
+        }
+        catch (SQLException ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            throw new SQLException(ex.getMessage());
+        }
+        return Optional.empty();
     }
 }
