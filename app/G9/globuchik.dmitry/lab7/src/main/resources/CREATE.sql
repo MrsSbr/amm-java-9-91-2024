@@ -5,11 +5,13 @@ DROP TABLE IF EXISTS earnedachievement CASCADE;
 CREATE TABLE achievement
 (
     id                  BIGSERIAL PRIMARY KEY,
-    name                TEXT UNIQUE NOT NULL,
+    name                TEXT NOT NULL,
     description         TEXT NOT NULL,
-    type                TEXT NOT NULL,
+    type                TEXT UNIQUE NOT NULL,
     required_progress   INT NOT NULL
 );
+
+SELECT * FROM achievement;
 
 CREATE TABLE userentity
 (
@@ -50,7 +52,10 @@ CREATE INDEX idx_earnedachievement_id_achievement ON earnedachievement(achieveme
 SELECT * FROM userentity;
 
 TRUNCATE TABLE userentity CASCADE ;
+
 TRUNCATE TABLE achievement CASCADE ;
 
 SELECT * FROM achievement;
 SELECT * FROM earnedachievement;
+
+SELECT * FROM achievement WHERE type = ('LOGIN_COUNT');

@@ -58,7 +58,7 @@
             <%= achievement.getEarned().getStatus() %>
         </td>
         <td>
-            <%= achievement.getAchievement().getRequiredProgress() %> / <%= achievement.getEarned().getProgress() %>
+           <%= achievement.getEarned().getProgress() %> / <%= achievement.getAchievement().getRequiredProgress() %>
         </td>
     </tr>
     <%

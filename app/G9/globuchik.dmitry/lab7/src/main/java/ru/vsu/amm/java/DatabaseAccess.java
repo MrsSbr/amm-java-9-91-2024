@@ -27,4 +27,4 @@ public class DatabaseAccess {
         logger.log(Level.INFO, "Successfully get datasource");
         return dataSource;
     }
-}
+};
